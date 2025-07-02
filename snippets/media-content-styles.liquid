@@ -247,7 +247,6 @@ top: 50%;
 left: 50%;
 }
 
-/* 文本对齐样式 */
 .text-align-left {
 text-align: left;
 }
@@ -258,6 +257,26 @@ text-align: center;
 
 .text-align-right {
 text-align: right;
+}
+
+.text-block {
+  z-index: 1;
+}
+
+.text-align-left .rte {
+  text-align: left !important;
+}
+
+.text-align-center .rte {
+  text-align: center !important;
+}
+
+.text-align-right .rte {
+  text-align: right !important;
+}
+
+.text-align-justify .rte {
+  text-align: justify !important;
 }
 
 @media (max-width: 768px) {
