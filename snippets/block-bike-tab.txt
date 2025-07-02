@@ -104,16 +104,6 @@
     font-weight: bold;
   }
 
-  .sub-content-link {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 5;
-    cursor: pointer;
-  }
-
   .banner-content {
     display: none;
   }
@@ -137,7 +127,6 @@
 
 {% assign show_main_tabs = block.settings.show_main_tabs | default: true %}
 {% assign show_sub_tabs = block.settings.show_sub_tabs | default: true %}
-{% assign global_link_url = block.settings.global_link_url %}
 
 <div class="bike-tabs-block" id="block-{{ block.id }}">
   <div class="banner-header">
@@ -155,7 +144,7 @@
                 {% assign has_sub_tabs = true %}
               {% endif %}
             {% endfor %}
-
+            
             {% if has_sub_tabs %}
               <div
                 class="banner-tab {% if forloop.first %}active{% endif %}"
@@ -207,7 +196,7 @@
                 {% assign has_sub_tabs = true %}
               {% endif %}
             {% endfor %}
-
+            
             {% if has_sub_tabs %}
               <div
                 class="sub-tabs-group {% if forloop.first %}active{% endif %}"
@@ -218,12 +207,7 @@
                     {% assign image_key = 'tab_' | append: i | append: '_sub_tab_' | append: j | append: '_image' %}
                     {% assign image = block.settings[image_key] %}
                     {% if image != blank %}
-                      {% assign bg_color_key = 'tab_'
-                        | append: i
-                        | append: '_sub_tab_'
-                        | append: j
-                        | append: '_bg_color'
-                      %}
+                      {% assign bg_color_key = 'tab_' | append: i | append: '_sub_tab_' | append: j | append: '_bg_color' %}
                       {% assign bg_color = block.settings[bg_color_key] | default: '#ffffff' %}
                       <div
                         class="sub-tab {% if forloop.first %}active{% endif %}"
@@ -231,15 +215,7 @@
                         data-subtab-id="subtab-{{ block.id }}-{{ i }}-{{ j }}"
                         data-parent-tab="tab-{{ block.id }}-{{ i }}"
                         data-block-id="block-{{ block.id }}"
-                      >
-                        {% if global_link_url != blank %}
-                          <a
-                            href="{{ global_link_url }}"
-                            class="sub-content-link"
-                            aria-label="View product"
-                          ></a>
-                        {% endif %}
-                      </div>
+                      ></div>
                     {% endif %}
                   {% endfor %}
                 </div>
@@ -264,7 +240,7 @@
             {% assign has_sub_tabs = true %}
           {% endif %}
         {% endfor %}
-
+        
         {% if has_sub_tabs %}
           <div
             id="tab-{{ block.id }}-{{ i }}"
@@ -281,7 +257,7 @@
                     style="background-image: url('{{ image | img_url: '800x' }}');"
                   >
                     <a
-                      href="{{ block.settings.global_link_url }}"
+                      href="{{ block.settings.footer_button_url }}"
                       class="sub-content-link"
                       aria-label="{{ 'View product' | t }}"
                     ></a>
@@ -322,7 +298,7 @@
           !bannerHeader.querySelector('.banner-tab') && 
           !bannerHeader.querySelector('.sub-tab')) {
         bannerHeader.classList.add('hidden');
-      }  
+      }
     }
 
     document.querySelectorAll('.banner-tab').forEach((tab) => {
