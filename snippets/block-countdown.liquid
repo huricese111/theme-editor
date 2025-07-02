@@ -1,0 +1,54 @@
+<script src="{{ 'countdown-timer.js' | asset_url }}" defer></script>
+{% style %}
+  .block-id-{{ block.id }} .countdown {
+    --countdown-desktop-size: {{ block.settings.number_size }}px;
+  }
+
+  .block-id-{{ block.id }}
+  .countdown-timer__number {
+    color: {{ block.settings.countdown_number_color }};
+  }
+
+  .block-id-{{ block.id }}
+  .countdown-timer__label {
+    color: {{ block.settings.countdown_label_color }};
+  }
+{% endstyle %}
+
+<div class="block-id-{{ block.id }} lightly-spaced-row lightish-spaced-row-above countdown-font-{{ block.settings.number_font }} countdown-divider-{{ block.settings.divider_type }}">
+  {% assign days_text = 'days' %}
+  {% assign hours_text = 'hours' %}
+  {% assign minutes_text = 'minutes' %}
+  {% assign seconds_text = 'seconds' %}
+
+  {% case locale_prefix %}
+    {% when 'de' %}
+      {% assign days_text = 'Tage' %}
+      {% assign hours_text = 'Stunden' %}
+      {% assign minutes_text = 'Minuten' %}
+      {% assign seconds_text = 'Sekunden' %}
+    {% when 'fr' %}
+      {% assign days_text = 'jours' %}
+      {% assign hours_text = 'heures' %}
+      {% assign minutes_text = 'minutes' %}
+      {% assign seconds_text = 'secondes' %}
+    {% when 'fi' %}
+      {% assign days_text = 'päivää' %}
+      {% assign hours_text = 'tuntia' %}
+      {% assign minutes_text = 'minuuttia' %}
+      {% assign seconds_text = 'sekuntia' %}
+  {% endcase %}
+
+  {% render 'countdown-timer',
+    end_date: block.settings.end_date,
+    end_time: block.settings.end_time,
+    end_text: block.settings.end_text,
+    end_midnight: true,
+    hide_on_end: block.settings.hide_on_end,
+    show_labels: block.settings.show_timer_labels,
+    days_text: days_text,
+    hours_text: hours_text,
+    minutes_text: minutes_text,
+    seconds_text: seconds_text
+  %}
+</div>

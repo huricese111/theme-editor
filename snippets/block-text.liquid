@@ -1,0 +1,14 @@
+{% capture block_text %}
+                    {% case locale_prefix %}
+                      {% when 'de' %}{{ block.settings.text_de | default: block.settings.text }}
+                      {% when 'fr' %}{{ block.settings.text_fr | default: block.settings.text }}
+                      {% when 'fi' %}{{ block.settings.text_fi | default: block.settings.text }}
+                      {% else %}{{ block.settings.text }}
+                    {% endcase %}
+                  {% endcapture %}
+<div
+  class="rte lightly-spaced-row {% if block.settings.enlarge_text %}large-text{% endif %}"
+  data-format-number
+>
+  {{ block_text }}
+</div>

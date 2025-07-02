@@ -1,0 +1,17 @@
+{% capture block_title %}
+                    {% case locale_prefix %}
+                      {% when 'de' %}{{ block.settings.title_de | default: block.settings.title }}
+                      {% when 'fr' %}{{ block.settings.title_fr | default: block.settings.title }}
+                      {% when 'fi' %}{{ block.settings.title_fi | default: block.settings.title }}
+                      {% else %}{{ block.settings.title }}
+                    {% endcase %}
+                  {% endcapture %}
+{% if block.settings.use_h1 %}
+  <h1 class="majortitle in-content" data-format-number>
+    {{ block_title | escape }}
+  </h1>
+{% else %}
+  <h2 class="majortitle in-content h1" data-format-number>
+    {{ block_title | escape }}
+  </h2>
+{% endif %}

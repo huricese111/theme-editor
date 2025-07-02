@@ -1,0 +1,371 @@
+{% style %}
+  .banner-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 10;
+    padding: 15px;
+  }
+
+  .sub-tabs-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+  }
+  .banner-tab-content {
+    position: relative;
+    min-height: 300px;
+  }
+
+  .sub-content {
+    position: relative;
+    height: 300px;
+  }
+
+  .sub-content-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: none;
+  }
+
+  .sub-content-item.active {
+    display: block;
+  }
+
+  .banner-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 5px;
+  }
+
+  .banner-tab {
+    align-items: center;
+    justify-content: center;
+    padding: 6px 10px;
+    background-color: white;
+    margin-left: 5px;
+    border-radius: 50px;
+    transition: background-color 0.3s;
+    white-space: nowrap;
+    cursor: pointer;
+    color: black;
+    min-width: 60px;
+    max-height: 40px;
+    display: flex;
+  }
+
+  .banner-tab.active,
+  .banner-tab:hover {
+    background-color: #dedede;
+  }
+
+  .sub-tabs-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+  }
+
+  .sub-tabs {
+    display: flex;
+    gap: 6px;
+    justify-content: flex-end;
+    margin-top: 5px;
+  }
+
+  .sub-tab {
+    padding: 10px;
+    margin-left: 5px;
+    border-radius: 24px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    min-width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .sub-tab.active::before {
+    content: '\2713 ';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: black;
+    font-weight: bold;
+  }
+
+  .banner-content {
+    display: none;
+  }
+
+  .banner-content.active {
+    display: block;
+  }
+
+  .sub-tabs-group {
+    display: none;
+  }
+
+  .sub-tabs-group.active {
+    display: block;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+{% endstyle %}
+
+{% assign show_main_tabs = block.settings.show_main_tabs | default: true %}
+{% assign show_sub_tabs = block.settings.show_sub_tabs | default: true %}
+
+<div class="bike-tabs-block" id="block-{{ block.id }}">
+  <div class="banner-header">
+    {% if show_main_tabs %}
+      <div class="banner-tabs">
+        {% for i in (1..3) %}
+          {% assign tab_type_key = 'tab_' | append: i | append: '_type' %}
+          {% assign tab_type = block.settings[tab_type_key] %}
+          {% if tab_type != blank %}
+            {% assign has_sub_tabs = false %}
+            {% for j in (1..4) %}
+              {% assign image_key = 'tab_' | append: i | append: '_sub_tab_' | append: j | append: '_image' %}
+              {% assign image = block.settings[image_key] %}
+              {% if image != blank %}
+                {% assign has_sub_tabs = true %}
+              {% endif %}
+            {% endfor %}
+            
+            {% if has_sub_tabs %}
+              <div
+                class="banner-tab {% if forloop.first %}active{% endif %}"
+                data-tab-id="tab-{{ block.id }}-{{ i }}"
+                data-block-id="block-{{ block.id }}"
+                data-tab-index="{{ i }}"
+              >
+                {% case tab_type %}
+                  {% when 'step_through' %}
+                    <img
+                      src="https://cdn.shopify.com/s/files/1/0560/0080/6985/files/noun-frame-bicycle-4002006_5.png?v=1708600271"
+                      alt="Step Through"
+                      height="30px"
+                      width="30px"
+                    >
+                  {% when 'high_step' %}
+                    <img
+                      src="https://cdn.shopify.com/s/files/1/0560/0080/6985/files/noun-frame-bicycle-4002006_6.png?v=1708600271"
+                      alt="High Step"
+                      height="30px"
+                      width="30px"
+                    >
+                  {% when 'low_step' %}
+                    <img
+                      src="https://cdn.shopify.com/s/files/1/0560/0080/6985/files/noun-frame-bicycle-4002006_4.png?v=1708600271"
+                      alt="Low Step"
+                      height="30px"
+                      width="30px"
+                    >
+                {% endcase %}
+              </div>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% if show_sub_tabs %}
+      <div class="sub-tabs-container">
+        {% for i in (1..3) %}
+          {% assign tab_type_key = 'tab_' | append: i | append: '_type' %}
+          {% assign tab_type = block.settings[tab_type_key] %}
+          {% if tab_type != blank %}
+            {% assign has_sub_tabs = false %}
+            {% for j in (1..4) %}
+              {% assign image_key = 'tab_' | append: i | append: '_sub_tab_' | append: j | append: '_image' %}
+              {% assign image = block.settings[image_key] %}
+              {% if image != blank %}
+                {% assign has_sub_tabs = true %}
+              {% endif %}
+            {% endfor %}
+            
+            {% if has_sub_tabs %}
+              <div
+                class="sub-tabs-group {% if forloop.first %}active{% endif %}"
+                data-tab-group="tab-{{ block.id }}-{{ i }}"
+              >
+                <div class="sub-tabs">
+                  {% for j in (1..4) %}
+                    {% assign image_key = 'tab_' | append: i | append: '_sub_tab_' | append: j | append: '_image' %}
+                    {% assign image = block.settings[image_key] %}
+                    {% if image != blank %}
+                      {% assign bg_color_key = 'tab_' | append: i | append: '_sub_tab_' | append: j | append: '_bg_color' %}
+                      {% assign bg_color = block.settings[bg_color_key] | default: '#ffffff' %}
+                      <div
+                        class="sub-tab {% if forloop.first %}active{% endif %}"
+                        style="background-color: {{ bg_color }};"
+                        data-subtab-id="subtab-{{ block.id }}-{{ i }}-{{ j }}"
+                        data-parent-tab="tab-{{ block.id }}-{{ i }}"
+                        data-block-id="block-{{ block.id }}"
+                      ></div>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              </div>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="banner-tab-content">
+    {% for i in (1..3) %}
+      {% assign tab_type_key = 'tab_' | append: i | append: '_type' %}
+      {% assign tab_type = block.settings[tab_type_key] %}
+      {% if tab_type != blank %}
+        {% assign has_sub_tabs = false %}
+        {% for j in (1..4) %}
+          {% assign image_key = 'tab_' | append: i | append: '_sub_tab_' | append: j | append: '_image' %}
+          {% assign image = block.settings[image_key] %}
+          {% if image != blank %}
+            {% assign has_sub_tabs = true %}
+          {% endif %}
+        {% endfor %}
+        
+        {% if has_sub_tabs %}
+          <div
+            id="tab-{{ block.id }}-{{ i }}"
+            class="banner-content {% if forloop.first %}active{% endif %}"
+          >
+            <div class="sub-content">
+              {% for j in (1..4) %}
+                {% assign image_key = 'tab_' | append: i | append: '_sub_tab_' | append: j | append: '_image' %}
+                {% assign image = block.settings[image_key] %}
+                {% if image != blank %}
+                  <div
+                    id="subtab-{{ block.id }}-{{ i }}-{{ j }}"
+                    class="sub-content-item {% if forloop.first %}active{% endif %}"
+                    style="background-image: url('{{ image | img_url: '800x' }}');"
+                  >
+                    <a
+                      href="{{ block.settings.footer_button_url }}"
+                      class="sub-content-link"
+                      aria-label="{{ 'View product' | t }}"
+                    ></a>
+                  </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    function initBikeTabs(blockId) {
+      const blockElement = document.getElementById(blockId);
+      if (!blockElement) return;
+
+      const firstTab = blockElement.querySelector('.banner-tab');
+      if (firstTab) {
+        firstTab.dispatchEvent(new Event('click'));
+      } else {
+        const firstContent = blockElement.querySelector('.banner-content');
+        if (firstContent) firstContent.classList.add('active');
+      }
+
+      if (!blockElement.querySelector('.show_sub_tabs')) {
+        blockElement.querySelectorAll('.banner-content').forEach((content) => {
+          const firstSubItem = content.querySelector('.sub-content-item');
+          if (firstSubItem) firstSubItem.classList.add('active');
+        });
+      }
+
+      const bannerHeader = blockElement.querySelector('.banner-header');
+      if (bannerHeader && 
+          !bannerHeader.querySelector('.banner-tab') && 
+          !bannerHeader.querySelector('.sub-tab')) {
+        bannerHeader.classList.add('hidden');
+      }
+    }
+
+    document.querySelectorAll('.banner-tab').forEach((tab) => {
+      tab.addEventListener('click', function () {
+        const blockId = this.dataset.blockId;
+        const tabId = this.dataset.tabId;
+        const tabIndex = this.dataset.tabIndex;
+        const blockElement = document.getElementById(blockId);
+
+        blockElement.querySelectorAll('.banner-tab').forEach((t) => {
+          t.classList.remove('active');
+        });
+        this.classList.add('active');
+
+        blockElement.querySelectorAll('.banner-content').forEach((c) => {
+          c.classList.remove('active');
+        });
+
+        const content = blockElement.querySelector(`#${tabId}`);
+        if (content) content.classList.add('active');
+
+        if (blockElement.querySelector('.sub-tabs-container')) {
+          blockElement.querySelectorAll('.sub-tabs-group').forEach((group) => {
+            group.classList.remove('active');
+          });
+
+          const currentTabGroup = blockElement.querySelector(`.sub-tabs-group[data-tab-group="${tabId}"]`);
+          if (currentTabGroup) {
+            currentTabGroup.classList.add('active');
+
+            const firstSubTab = currentTabGroup.querySelector('.sub-tab');
+            if (firstSubTab) firstSubTab.dispatchEvent(new Event('click'));
+          }
+        }
+      });
+    });
+
+    document.querySelectorAll('.sub-tab').forEach((subTab) => {
+      subTab.addEventListener('click', function () {
+        const blockId = this.dataset.blockId;
+        const subtabId = this.dataset.subtabId;
+        const parentTabId = this.dataset.parentTab;
+        const blockElement = document.getElementById(blockId);
+
+        const subTabGroup = blockElement.querySelector(`.sub-tabs-group[data-tab-group="${parentTabId}"]`);
+        if (subTabGroup) {
+          subTabGroup.querySelectorAll('.sub-tab').forEach((st) => {
+            st.classList.remove('active');
+          });
+        }
+
+        this.classList.add('active');
+
+        const parentContent = blockElement.querySelector(`#${parentTabId}`);
+        if (parentContent) {
+          parentContent.querySelectorAll('.sub-content-item').forEach((item) => {
+            item.classList.remove('active');
+          });
+
+          const contentItem = parentContent.querySelector(`#${subtabId}`);
+          if (contentItem) contentItem.classList.add('active');
+        }
+      });
+    });
+
+    document.querySelectorAll('.bike-tabs-block').forEach((block) => {
+      initBikeTabs(block.id);
+    });
+  });
+</script>

@@ -1,0 +1,95 @@
+<style>
+  .columns-container-{{ block.id }} {
+    display: grid;
+    grid-template-columns: repeat({{ block.settings.columns_count | default: 4 }}, 1fr);
+    gap: 15px;
+    margin-top: 15px;
+  }
+
+  .column-item {
+    text-align: center;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 6px;
+  }
+
+  .columns-container-{{ block.id }} .column-title {
+    color: {{ block.settings.column_title_color }};
+    font-size: {{ block.settings.column_title_size_desktop }}px;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+
+  .columns-container-{{ block.id }} .column-description {
+    color: {{ block.settings.column_description_color }};
+    font-size: {{ block.settings.column_description_size_desktop }}px;
+    line-height: 1.4;
+  }
+
+  @media (max-width: 768px) {
+    .columns-container-{{ block.id }} {
+      grid-template-columns: {% if block.settings.columns_count > 1 %}repeat(2, 1fr){% else %}1fr{% endif %};
+      gap: 10px;
+    }
+
+    .columns-container-{{ block.id }} .column-title {
+      font-size: {{ block.settings.column_title_size_mobile }}px;
+    }
+
+    .columns-container-{{ block.id }} .column-description {
+      font-size: {{ block.settings.column_description_size_mobile }}px;
+    }
+  }
+</style>
+
+<div class="columns-container-{{ block.id }}">
+  {%- for i in (1..4) -%}
+    {%- assign title_setting = 'column_' | append: i | append: '_title' -%}
+    {%- assign title = block.settings[title_setting] -%}
+
+    {%- assign description_setting = 'column_' | append: i | append: '_description' -%}
+    {%- assign description = block.settings[description_setting] -%}
+
+    {%- if title != blank or description != blank -%}
+      <div class="column-item">
+        {%- if title != blank -%}
+          <h3 class="column-title">
+            {%- assign title_de_setting = 'column_' | append: i | append: '_title_de' -%}
+            {%- assign title_fr_setting = 'column_' | append: i | append: '_title_fr' -%}
+            {%- assign title_fi_setting = 'column_' | append: i | append: '_title_fi' -%}
+
+            {%- case locale_prefix -%}
+              {%- when 'de' -%}
+                {{ block.settings[title_de_setting] | default: title }}
+              {%- when 'fr' -%}
+                {{ block.settings[title_fr_setting] | default: title }}
+              {%- when 'fi' -%}
+                {{ block.settings[title_fi_setting] | default: title }}
+              {%- else -%}
+                {{ title }}
+            {%- endcase -%}
+          </h3>
+        {%- endif -%}
+
+        {%- if description != blank -%}
+          <div class="column-description">
+            {%- assign description_de_setting = 'column_' | append: i | append: '_description_de' -%}
+            {%- assign description_fr_setting = 'column_' | append: i | append: '_description_fr' -%}
+            {%- assign description_fi_setting = 'column_' | append: i | append: '_description_fi' -%}
+
+            {%- case locale_prefix -%}
+              {%- when 'de' -%}
+                {{ block.settings[description_de_setting] | default: description }}
+              {%- when 'fr' -%}
+                {{ block.settings[description_fr_setting] | default: description }}
+              {%- when 'fi' -%}
+                {{ block.settings[description_fi_setting] | default: description }}
+              {%- else -%}
+                {{ description }}
+            {%- endcase -%}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  {%- endfor -%}
+</div>

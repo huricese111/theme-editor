@@ -1,0 +1,66 @@
+<div class="signup-form signup-form--{{ block.settings.alignment }}">
+  {% form 'customer', id: 'home_newsletter_signup' %}
+    {% if form.posted_successfully? %}
+      <div class="signup-form__response signup-form__response--success">
+        <h4>{{ 'newsletter.success' | t }}</h4>
+      </div>
+    {% else %}
+      {%- assign form_errors_id = section.id | append: '-error' -%}
+      {%- render 'form-errors', form: form, id: form_errors_id, class: 'inline-block' -%}
+      <input
+        type="hidden"
+        name="contact[tags]"
+        value="{{ block.settings.tags | default: 'prospect,newsletter' }}"
+      >
+      {% capture placeholder_text %}
+                          {% case locale_prefix %}
+                          {% when 'de' %}{{ block.settings.placeholder_de | default: block.settings.placeholder }}
+                            {% when 'fr' %}{{ block.settings.placeholder_fr | default: block.settings.placeholder }}
+                              {% when 'fi' %}{{ block.settings.placeholder_fi | default: block.settings.placeholder }}
+                                 {% else %}{{ block.settings.placeholder }}
+                                {% endcase %}
+                              {% endcapture %}
+      {% capture button_text %}
+                          {% case locale_prefix %}
+                          {% when 'de' %}{{ block.settings.button_text_de | default: block.settings.button_text }}
+                            {% when 'fr' %}{{ block.settings.button_text_fr | default: block.settings.button_text }}
+                              {% when 'fi' %}{{ block.settings.button_text_fi | default: block.settings.button_text }}
+                                {% else %}{{ block.settings.button_text | default: 'Subscribe' }}
+                              {% endcase %}
+                            {% endcapture %}
+      <div>
+        <div class="signup-form__inline-container">
+          <input
+            type="email"
+            placeholder="{{ placeholder_text | strip }}"
+            class="signup-form__email"
+            value=""
+            name="contact[email]"
+            aria-label="{{ 'newsletter.label' | t }}"
+            {% if form.errors %}
+              autofocus
+              aria-invalid="true"
+              aria-describedby="{{ form_errors_id }}"
+            {%- endif %}
+            required
+            style="
+              background-color: {{ block.settings.input_bg_color }};
+              color: {{ block.settings.input_text_color }};
+            "
+          >
+          <button
+            class="btn signup-form__button"
+            type="submit"
+            style="
+              background: {{ block.settings.button_bg_color }};
+              color: {{ block.settings.button_text_color }};
+              border:none;
+            "
+          >
+            {{- button_text | strip -}}
+          </button>
+        </div>
+      </div>
+    {% endif %}
+  {% endform %}
+</div>
