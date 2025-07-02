@@ -1,0 +1,40 @@
+<a href="{{ ad_link }}">
+  <div class="ad-image">
+    <a href="{{ ad_link }}" style="display: block; text-decoration: none">
+      <div
+        style="justify-content: flex-end; border-radius:8px; background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 100%), {% if image != blank %} url('{{ image | img_url: '3000x3000' }}') {% else %} none {% endif %}; background-color: {{ background_color }}; background-repeat: no-repeat; background-position: {{ background_position }}; background-size: {% if background_size == 'cover' or background_size == 'contain' %} {{ background_size }} {% else %} {{ background_size }}% {% endif %}; place-content: flex-end; align-items: {{ background_align_items }}; padding-top: {{ background_padding_top }}px; padding-left: {{ background_padding_left }}px; padding-right: {{ background_padding_right }}px; padding-bottom: {{ background_padding_bottom }}px; min-height: 600px; flex-direction: column; border-radius: 0;"
+      >
+        {%- if title_1 != blank -%}
+          <div
+            class="two-column-slide__heading first-heading"
+            style="color: {{ heading_color_1 }}; font-size: {{ heading_size_1 }}px; line-height: {{ heading_size_1 | times: 1.3 }}px; text-align: left; font-weight: 700;"
+          >
+            <p>
+              {% if request.locale.iso_code == 'de' %}
+                {{ title_1_de }}
+              {% elsif request.locale.iso_code == 'fr' %}
+                {{ title_1_fr }}
+              {% elsif request.locale.iso_code == 'fi' %}
+                {{ title_1_fi }}
+              {% else %}
+                {{ title_1 }}
+              {% endif %}
+            </p>
+          </div>
+        {%- endif -%}
+        <span class="custom-button first-button">
+          {% if request.locale.iso_code == 'de' %}
+            {{ button_label_de }}
+          {% elsif request.locale.iso_code == 'fr' %}
+            {{ button_label_fr }}
+          {% elsif request.locale.iso_code == 'fi' %}
+            {{ button_label_fi }}
+          {% else %}
+            {{ button_label }}
+          {% endif %}
+          &rarr;
+        </span>
+      </div>
+    </a>
+  </div>
+</a>

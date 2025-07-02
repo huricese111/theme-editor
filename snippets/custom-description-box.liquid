@@ -1,0 +1,53 @@
+<div class="description-box">
+  <h3>
+    <a href="{{ product.url }}" class="producttitle">{{ product.title }}</a>
+  </h3>
+
+  {% if section.settings.show_description %}
+    {% assign motor_torque = product.metafields.custom.motor_torque_2.value %}
+    {% assign battery_capacity = product.metafields.custom.battery_capacity.value %}
+    {% assign display_size = product.metafields.custom.display_size.value %}
+    {% case request.locale.iso_code %}
+      {% when 'de' %}
+        {{ motor_torque }}
+        {{ 'ebike.motor' | t }} / {{ battery_capacity }}
+        {{ 'ebike.battery' | t }} / {{ display_size }}
+        {{ 'ebike.display' | t }}
+      {% when 'fr' %}
+        {{ 'ebike.motor' | t }} de {{ motor_torque }} / {{ 'ebike.battery' | t }} de {{ battery_capacity }} /
+        {{ 'ebike.display' | t }} de{{ display_size }}
+      {% when 'fi' %}
+        {{ 'ebike.motor' | t }}
+        {{ motor_torque }} / {{ 'ebike.battery' | t }}
+        {{ battery_capacity }} / {{ 'ebike.display' | t }}
+        {{ display_size }}
+      {% else %}
+        {{ motor_torque }}
+        {{ 'ebike.motor' | t }} / {{ battery_capacity }}
+        {{ 'ebike.battery' | t }} / {{ display_size }}
+        {{ 'ebike.display' | t }}
+    {% endcase %}
+  {% endif %}
+
+  <div class="product-info__price product-price product-price--large priceblock">
+    {% unless bss_check_variant %}
+      {% render 'price',
+        product: product,
+        show_currency_code: settings.product_currency_code_enabled,
+        for_variant_picker: true,
+        current_variant: current_variant
+      %}
+    {% else %}
+      <span class="bsscommerce-hv-message">Lock</span>
+    {% endunless %}
+  </div>
+
+  <div class="specification_simple">
+    {% if localization.country.iso_code == 'DE' %}
+      {% if product.metafields.custom.zinia_financing.value %}
+        Financing from €{{ product.metafields.custom.zinia_financing.value }}/month with
+        {% render 'icon-zinia' %}
+      {% endif %}
+    {% endif %}
+  </div>
+</div>

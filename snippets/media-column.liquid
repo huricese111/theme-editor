@@ -1,0 +1,82 @@
+{% if section.settings.show_media_column %}
+  <div class="column column--media media-column {% if section.settings.media_position_setting == 'right' %}column--order-push-desktop{% endif %}">
+    <div class="background-container">
+      {% if section.settings.media_bg_video != blank %}
+        <video class="background-video" autoplay muted loop playsinline>
+          <source src="{{ section.settings.media_bg_video }}" type="video/mp4">
+        </video>
+      {% endif %}
+
+      <div class="media-overlap__background" style="background-color: {{ section.settings.media_bg_color }};{% if section.settings.media_bg_image != blank %}background-image: url('{{ section.settings.media_bg_image | img_url: '2000x' }}');{% endif %}background-position: {{ section.settings.media_position | replace: '-', ' ' }};background-size: {{ section.settings.media_size }};"></div>
+    </div>
+
+    <div class="media-text-wrapper text-align" data-cc-animate>
+      {% if section.settings.media_heading != blank %}
+        {% capture media_heading %}
+          {% case locale_prefix %}
+            {% when 'de' %}{{ section.settings.media_heading_de | default: section.settings.media_heading }}
+            {% when 'fr' %}{{ section.settings.media_heading_fr | default: section.settings.media_heading }}
+            {% when 'fi' %}{{ section.settings.media_heading_fi | default: section.settings.media_heading }}
+            {% else %}{{ section.settings.media_heading }}
+          {% endcase %}
+        {% endcapture %}
+        
+        {% if section.settings.media_use_h1 %}
+          <h1 class="majortitle in-content" data-format-number>{{ media_heading | escape }}</h1>
+        {% else %}
+          <h2 class="majortitle in-content h1" data-format-number>{{ media_heading | escape }}</h2>
+        {% endif %}
+      {% endif %}
+
+      {% if section.settings.media_subheading != blank %}
+        {% capture media_subheading %}
+          {% case locale_prefix %}
+            {% when 'de' %}{{ section.settings.media_subheading_de | default: section.settings.media_subheading }}
+            {% when 'fr' %}{{ section.settings.media_subheading_fr | default: section.settings.media_subheading }}
+            {% when 'fi' %}{{ section.settings.media_subheading_fi | default: section.settings.media_subheading }}
+            {% else %}{{ section.settings.media_subheading }}
+          {% endcase %}
+        {% endcapture %}
+        <div class="subheading subheading--over lightish-spaced-row-above" data-format-number>{{ media_subheading | escape }}</div>
+      {% endif %}
+
+      {% if section.settings.media_text != blank %}
+        {% capture media_text %}
+          {% case locale_prefix %}
+            {% when 'de' %}{{ section.settings.media_text_de | default: section.settings.media_text }}
+            {% when 'fr' %}{{ section.settings.media_text_fr | default: section.settings.media_text }}
+            {% when 'fi' %}{{ section.settings.media_text_fi | default: section.settings.media_text }}
+            {% else %}{{ section.settings.media_text }}
+          {% endcase %}
+        {% endcapture %}
+        <div class="rte lightly-spaced-row {% if section.settings.media_enlarge_text %}large-text{% endif %}" data-format-number>{{ media_text }}</div>
+      {% endif %}
+
+      <div class="button-container lightly-spaced-row">
+        {% if section.settings.media_button1_label != blank and section.settings.media_button1_link != blank %}
+          {% capture media_button1_label %}
+            {% case locale_prefix %}
+              {% when 'de' %}{{ section.settings.media_button1_label_de | default: section.settings.media_button1_label }}
+              {% when 'fr' %}{{ section.settings.media_button1_label_fr | default: section.settings.media_button1_label }}
+              {% when 'fi' %}{{ section.settings.media_button1_label_fi | default: section.settings.media_button1_label }}
+              {% else %}{{ section.settings.media_button1_label }}
+            {% endcase %}
+          {% endcapture %}
+          <a class="btn btn--{{ section.settings.media_button1_style }} button-row__btn btn-1" href="{{ section.settings.media_button1_link }}">{{ media_button1_label | escape }}</a>
+        {% endif %}
+
+        {% if section.settings.media_button2_label != blank and section.settings.media_button2_link != blank %}
+          {% capture media_button2_label %}
+            {% case locale_prefix %}
+              {% when 'de' %}{{ section.settings.media_button2_label_de | default: section.settings.media_button2_label }}
+              {% when 'fr' %}{{ section.settings.media_button2_label_fr | default: section.settings.media_button2_label }}
+              {% when 'fi' %}{{ section.settings.media_button2_label_fi | default: section.settings.media_button2_label }}
+              {% else %}{{ section.settings.media_button2_label }}
+            {% endcase %}
+          {% endcapture %}
+          <a class="btn btn--{{ section.settings.media_button2_style }} button-row__btn btn-2" href="{{ section.settings.media_button2_link }}">{{ media_button2_label | escape }}</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endif %}

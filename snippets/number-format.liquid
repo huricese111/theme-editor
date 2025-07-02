@@ -1,0 +1,82 @@
+{%- liquid
+  assign current_locale = request.locale.iso_code | default: 'en'
+  assign locale_prefix = current_locale | slice: 0, 2
+  assign format_rules = "en:comma,de:dot,fr:narrow-space,fi:space,sv:space" | split: ','
+  assign current_format = "comma"
+  
+  for rule in format_rules
+    assign parts = rule | split: ':'
+    if parts[0] == locale_prefix
+      assign current_format = parts[1]
+      break
+    endif
+  endfor
+-%}
+
+<script>
+const CURRENCY_REGEX = /([$\u20AC\u00A3\u00A5\u20B9\u20BD\u20A9\u20AA\u20AB\u20AD\u20AE\u20B1\u20B4\u20BA\u20BC\u20BF]|USD|EUR|GBP|JPY|CNY|RUB|KRW|TRY)/;
+
+function formatNumberWithLocale(text, formatType) {
+  const numberPattern = /[-+]?[\d,]+(\.\d+)?/;
+  const numberMatch = text.match(numberPattern);
+  if (!numberMatch) return text;
+
+  const numberStr = numberMatch[0];
+  const prefixText = text.substring(0, numberMatch.index);
+  let suffixText = text.substring(numberMatch.index + numberStr.length);
+
+  let currencySymbol = '';
+  const suffixSymbolMatch = suffixText.match(CURRENCY_REGEX);
+  if (suffixSymbolMatch) {
+    currencySymbol = suffixSymbolMatch[0];
+    suffixText = suffixText.replace(new RegExp(`\\s*${currencySymbol}\\s*`), '');
+  } 
+  else {
+    const prefixSymbolMatch = prefixText.match(CURRENCY_REGEX);
+    if (prefixSymbolMatch) {
+      currencySymbol = prefixSymbolMatch[0];
+      prefixText = prefixText.replace(new RegExp(`\\s*${currencySymbol}\\s*`), '');
+    }
+  }
+
+  const num = parseFloat(numberStr.replace(/[^\d.-]/g, ''));
+  if (isNaN(num)) return text;
+
+  let formattedNumber;
+  switch(formatType) {
+    case 'comma': 
+      formattedNumber = num.toLocaleString('en-US'); // 1,000.00
+      break;
+    case 'dot': 
+      formattedNumber = num.toLocaleString('de-DE'); // 1.000,00
+      break;
+    case 'narrow-space': 
+      formattedNumber = num.toLocaleString('fr-FR').replace(/,/g, '\u202F'); // 1 000,00
+      break;
+    case 'space': 
+      formattedNumber = num.toLocaleString('fi-FI').replace(/,/g, ' '); // 1 000,00
+      break;
+    default: 
+      formattedNumber = num.toLocaleString('en-US');
+  }
+
+  return `${prefixText.trim()} ${formattedNumber}${currencySymbol ? currencySymbol + ' ' : ''}${suffixText.trim()}`.replace(/\s+/g, ' ');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const formatType = '{{ current_format }}';
+  
+  document.querySelectorAll('[data-format-number]').forEach(el => {
+    el.textContent = formatNumberWithLocale(el.textContent.trim(), formatType);
+  });
+  
+  window.formatDynamicNumber = (element) => {
+    element.textContent = formatNumberWithLocale(element.textContent.trim(), formatType);
+  };
+});
+
+window.numberFormatter = {
+  format: formatNumberWithLocale,
+  currentLocale: '{{ current_format }}'
+};
+</script>

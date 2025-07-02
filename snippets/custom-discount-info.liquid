@@ -1,0 +1,22 @@
+<div style="display: flex; gap: 8px; position: absolute; top: 10px; right: 10px; z-index: 1;">
+  {% assign discounts = product.metafields.custom %}
+  
+  {% if localization.country.iso_code == 'DE' and discounts.discount_2 %}
+    <div class="discount-label">{{ discounts.discount_2 }}</div>
+  {% endif %}
+  
+  {% if discounts.discount %}
+    <div class="discount-label">{{ discounts.discount }}</div>
+  {% endif %}
+</div>
+
+{% if product.metafields.custom.discount_image %}
+<div class="discount-image"> 
+  <img src="{{ product.metafields.custom.discount_image | file_url }}" alt="{{ product.title }}" style=" aspect-ratio: auto; height: 50px; padding: 0; border-radius: 10px; " > 
+</div>
+ {% endif %}
+{% if product.metafields.custom.discount_image2 %}
+<div class="discount-image2"> 
+  <img src="{{ product.metafields.custom.discount_image2 | file_url }}" alt="{{ product.title }}" style="aspect-ratio: auto; height: 120px" >
+</div> 
+{% endif %}
