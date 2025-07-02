@@ -588,6 +588,122 @@
           "label": "Set as primary heading",
           "info": "Use <h1> tag. One per page recommended.",
           "default": false
+        },
+        {
+          "type": "select",
+          "id": "position_mode",
+          "label": "Position Mode",
+          "options": [
+            {
+              "value": "relative",
+              "label": "Relative (Normal Flow)"
+            },
+            {
+              "value": "absolute",
+              "label": "Absolute (Free Positioning)"
+            }
+          ],
+          "default": "relative"
+        },
+        {
+          "type": "select",
+          "id": "position",
+          "label": "Absolute Position",
+          "info": "Only applies in Absolute mode",
+          "options": [
+            { "value": "top-left", "label": "Top Left" },
+            { "value": "top-center", "label": "Top Center" },
+            { "value": "top-right", "label": "Top Right" },
+            { "value": "middle-left", "label": "Middle Left" },
+            { "value": "middle-center", "label": "Center" },
+            { "value": "middle-right", "label": "Middle Right" },
+            { "value": "bottom-left", "label": "Bottom Left" },
+            { "value": "bottom-center", "label": "Bottom Center" },
+            { "value": "bottom-right", "label": "Bottom Right" },
+            { "value": "custom", "label": "Custom Position" }
+          ],
+          "default": "middle-center"
+        },
+        {
+          "type": "range",
+          "id": "offset_x",
+          "min": -50,
+          "max": 50,
+          "step": 1,
+          "unit": "%",
+          "label": "Horizontal Offset",
+          "info": "Only applies in Custom position",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "offset_y",
+          "min": -50,
+          "max": 50,
+          "step": 1,
+          "unit": "%",
+          "label": "Vertical Offset",
+          "info": "Only applies in Custom position",
+          "default": 0
+        },
+        {
+          "type": "header",
+          "content": "Margin Settings"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Top",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_right",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Right",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Bottom",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_left",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Left",
+          "default": 0
+        },
+        {
+          "type": "header",
+          "content": "Text Alignment"
+        },
+        {
+          "type": "select",
+          "id": "text_align",
+          "label": "Text Alignment",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "center"
         }
       ]
     },

@@ -1,17 +1,42 @@
 {% capture block_title %}
-                    {% case locale_prefix %}
-                      {% when 'de' %}{{ block.settings.title_de | default: block.settings.title }}
-                      {% when 'fr' %}{{ block.settings.title_fr | default: block.settings.title }}
-                      {% when 'fi' %}{{ block.settings.title_fi | default: block.settings.title }}
-                      {% else %}{{ block.settings.title }}
-                    {% endcase %}
-                  {% endcapture %}
-{% if block.settings.use_h1 %}
-  <h1 class="majortitle in-content" data-format-number>
-    {{ block_title | escape }}
-  </h1>
-{% else %}
-  <h2 class="majortitle in-content h1" data-format-number>
-    {{ block_title | escape }}
-  </h2>
+  {% case locale_prefix %}
+    {% when 'de' %}{{ block.settings.title_de | default: block.settings.title }}
+    {% when 'fr' %}{{ block.settings.title_fr | default: block.settings.title }}
+    {% when 'fi' %}{{ block.settings.title_fi | default: block.settings.title }}
+    {% else %}{{ block.settings.title }}
+  {% endcase %}
+{% endcapture %}
+
+{% assign is_absolute = false %}
+{% if block.settings.position_mode == "absolute" %}
+  {% assign is_absolute = true %}
 {% endif %}
+
+{% assign is_custom = false %}
+{% if is_absolute and block.settings.position == "custom" %}
+  {% assign is_custom = true %}
+{% endif %}
+
+{% assign position_class = "" %}
+{% if is_absolute %}
+  {% assign position_class = "position-" | append: block.settings.position %}
+{% endif %}
+
+{% assign text_align_class = "text-align-" | append: block.settings.text_align %}
+
+<div class="heading-block {{ position_class }} {{ text_align_class }} {% if is_absolute %}absolute-position{% else %}relative-position{% endif %}" 
+     style="
+       {% if is_custom %}transform: translate({{ block.settings.offset_x }}%, {{ block.settings.offset_y }}%);{% endif %}
+       margin: {{ block.settings.margin_top }}px {{ block.settings.margin_right }}px {{ block.settings.margin_bottom }}px {{ block.settings.margin_left }}px;
+     ">
+
+  {% if block.settings.use_h1 %}
+    <h1 class="majortitle in-content" data-format-number>
+      {{ block_title | escape }}
+    </h1>
+  {% else %}
+    <h2 class="majortitle in-content h1" data-format-number>
+      {{ block_title | escape }}
+    </h2>
+  {% endif %}
+</div>

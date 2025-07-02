@@ -21,7 +21,7 @@
     {% endif %}
   </div>
 
-  <div class="text-content-wrapper">
+  <div class="text-content-wrapper" style="position: relative;">
     {% for block in section.blocks %}
       <div class="block-{{ block.id }}" {{ block.shopify_attributes }}>
         {% case block.type %}
