@@ -1,427 +1,1274 @@
-
 {% schema %}
 {
-  "name": "4-Column Promo Banner",
-  "class": "section-promo-banner",
+  "name": "Dynamic Promo Blocks",
   "settings": [
     {
-      "type": "checkbox",
-      "id": "enable_mobile_row",
-      "label": "Enable bottom row on mobile",
-      "default": true
+      "type": "header",
+      "content": "Layout Settings"
     },
     {
       "type": "range",
       "id": "desktop_height",
-      "min": 400,
+      "label": "Desktop Height",
+      "min": 500,
       "max": 1000,
       "step": 50,
-      "unit": "px",
-      "label": "Desktop section height",
-      "default": 700
+      "default": 700,
+      "unit": "px"
     },
     {
       "type": "range",
       "id": "mobile_height",
+      "label": "Mobile Height",
       "min": 300,
       "max": 800,
       "step": 50,
-      "unit": "px",
-      "label": "Mobile section height",
-      "default": 500
+      "default": 500,
+      "unit": "px"
     },
     {
       "type": "header",
-      "content": "Left module"
+      "content": "Left Module"
     },
     {
       "type": "image_picker",
       "id": "left_image",
-      "label": "Background image"
+      "label": "Desktop Background Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "left_mobile_image",
+      "label": "Mobile Background Image"
     },
     {
       "type": "select",
-      "id": "left_layout",
-      "label": "Content alignment",
+      "id": "left_bg_size",
+      "label": "Background Size",
       "options": [
-        {"value": "left", "label": "Left"},
-        {"value": "center", "label": "Center"},
-        {"value": "right", "label": "Right"}
+        { "value": "cover", "label": "Cover" },
+        { "value": "contain", "label": "Contain" },
+        { "value": "auto", "label": "Auto" },
+        { "value": "80%", "label": "80%" },
+        { "value": "60%", "label": "60%" },
+        { "value": "40%", "label": "40%" }
       ],
-      "default": "left"
+      "default": "cover"
+    },
+    {
+      "type": "select",
+      "id": "left_bg_position",
+      "label": "Background Position",
+      "options": [
+        { "value": "center", "label": "Center" },
+        { "value": "top left", "label": "Top Left" },
+        { "value": "top center", "label": "Top Center" },
+        { "value": "top right", "label": "Top Right" },
+        { "value": "bottom left", "label": "Bottom Left" },
+        { "value": "bottom center", "label": "Bottom Center" },
+        { "value": "bottom right", "label": "Bottom Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "left_content_position",
+      "label": "Content Position",
+      "options": [
+        { "value": "flex-start", "label": "Top" },
+        { "value": "center", "label": "Center" },
+        { "value": "flex-end", "label": "Bottom" }
+      ],
+      "default": "flex-end"
+    },
+    {
+      "type": "select",
+      "id": "left_content_position_mobile",
+      "label": "Mobile Content Position",
+      "options": [
+        { "value": "flex-start", "label": "Top" },
+        { "value": "center", "label": "Center" },
+        { "value": "flex-end", "label": "Bottom" }
+      ],
+      "default": "flex-end"
     },
     {
       "type": "text",
-      "id": "left_eyebrow",
-      "label": "Eyebrow text",
-      "default": "Limited time"
+      "id": "left_tag",
+      "label": "Tag Text",
+      "default": "Free 100 Nm Upgrade"
+    },
+    {
+      "type": "text",
+      "id": "left_tag_de",
+      "label": "Tag Text (DE)"
+    },
+    {
+      "type": "text",
+      "id": "left_tag_fr",
+      "label": "Tag Text (FR)"
+    },
+    {
+      "type": "text",
+      "id": "left_tag_fi",
+      "label": "Tag Text (FI)"
     },
     {
       "type": "text",
       "id": "left_title",
-      "label": "Heading",
-      "default": "Main promotion"
-    },
-    {
-      "type": "url",
-      "id": "left_link",
-      "label": "Link"
+      "label": "Title",
+      "default": "Left Column Module"
     },
     {
       "type": "text",
-      "id": "left_cta",
-      "label": "Button text",
-      "default": "Shop now"
+      "id": "left_title_de",
+      "label": "Title (DE)"
+    },
+    {
+      "type": "text",
+      "id": "left_title_fr",
+      "label": "Title (FR)"
+    },
+    {
+      "type": "text",
+      "id": "left_title_fi",
+      "label": "Title (FI)"
+    },
+    {
+      "type": "range",
+      "id": "left_title_size",
+      "label": "Title Font Size (Desktop)",
+      "min": 24,
+      "max": 100,
+      "step": 2,
+      "default": 70,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "left_title_size_mobile",
+      "label": "Title Font Size (Mobile)",
+      "min": 18,
+      "max": 60,
+      "step": 2,
+      "default": 40,
+      "unit": "px"
     },
     {
       "type": "color",
-      "id": "left_text_color",
-      "label": "Text color",
+      "id": "left_title_color",
+      "label": "Title Color",
       "default": "#ffffff"
     },
     {
-      "type": "color_background",
-      "id": "left_overlay",
-      "label": "Image overlay",
-      "default": "linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3))"
+      "type": "text",
+      "id": "left_button",
+      "label": "Button Text",
+      "default": "Left Column Button"
+    },
+    {
+      "type": "text",
+      "id": "left_button_de",
+      "label": "Button Text (DE)"
+    },
+    {
+      "type": "text",
+      "id": "left_button_fr",
+      "label": "Button Text (FR)"
+    },
+    {
+      "type": "text",
+      "id": "left_button_fi",
+      "label": "Button Text (FI)"
+    },
+    {
+      "type": "url",
+      "id": "left_button_url",
+      "label": "Button URL"
+    },
+    {
+      "type": "color",
+      "id": "left_button_color",
+      "label": "Button Background",
+      "default": "#e34a38"
+    },
+    {
+      "type": "color",
+      "id": "left_button_text_color",
+      "label": "Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "left_background_color",
+      "label": "Background Color",
+      "default": "#ffffff"
     },
     {
       "type": "header",
-      "content": "Right modules"
+      "content": "Right Module 1"
     },
     {
       "type": "image_picker",
       "id": "right_image_1",
-      "label": "Module 1 image"
+      "label": "Desktop Background Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "right_mobile_image_1",
+      "label": "Mobile Background Image"
+    },
+    {
+      "type": "select",
+      "id": "right1_bg_size",
+      "label": "Background Size",
+      "options": [
+        { "value": "cover", "label": "Cover" },
+        { "value": "contain", "label": "Contain" },
+        { "value": "auto", "label": "Auto" },
+        { "value": "80%", "label": "80%" },
+        { "value": "60%", "label": "60%" },
+        { "value": "40%", "label": "40%" }
+      ],
+      "default": "cover"
+    },
+    {
+      "type": "select",
+      "id": "right1_bg_position",
+      "label": "Background Position",
+      "options": [
+        { "value": "center", "label": "Center" },
+        { "value": "top left", "label": "Top Left" },
+        { "value": "top center", "label": "Top Center" },
+        { "value": "top right", "label": "Top Right" },
+        { "value": "bottom left", "label": "Bottom Left" },
+        { "value": "bottom center", "label": "Bottom Center" },
+        { "value": "bottom right", "label": "Bottom Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "right1_content_position",
+      "label": "Content Position",
+      "options": [
+        { "value": "flex-start", "label": "Top" },
+        { "value": "center", "label": "Center" },
+        { "value": "flex-end", "label": "Bottom" }
+      ],
+      "default": "flex-end"
+    },
+    {
+      "type": "select",
+      "id": "right1_content_position_mobile",
+      "label": "Mobile Content Position",
+      "options": [
+        { "value": "flex-start", "label": "Top" },
+        { "value": "center", "label": "Center" },
+        { "value": "flex-end", "label": "Bottom" }
+      ],
+      "default": "flex-end"
+    },
+    {
+      "type": "text",
+      "id": "right1_tag",
+      "label": "Tag Text",
+      "default": "Special Offer"
+    },
+    {
+      "type": "text",
+      "id": "right1_tag_de",
+      "label": "Tag Text (DE)"
+    },
+    {
+      "type": "text",
+      "id": "right1_tag_fr",
+      "label": "Tag Text (FR)"
+    },
+    {
+      "type": "text",
+      "id": "right1_tag_fi",
+      "label": "Tag Text (FI)"
     },
     {
       "type": "text",
       "id": "right1_title",
-      "label": "Module 1 heading",
-      "default": "Promo 1"
+      "label": "Title",
+      "default": "Right Module 1"
+    },
+    {
+      "type": "text",
+      "id": "right1_title_de",
+      "label": "Title (DE)"
+    },
+    {
+      "type": "text",
+      "id": "right1_title_fr",
+      "label": "Title (FR)"
+    },
+    {
+      "type": "text",
+      "id": "right1_title_fi",
+      "label": "Title (FI)"
+    },
+    {
+      "type": "range",
+      "id": "right1_title_size",
+      "label": "Title Font Size (Desktop)",
+      "min": 18,
+      "max": 60,
+      "step": 2,
+      "default": 36,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "right1_title_size_mobile",
+      "label": "Title Font Size (Mobile)",
+      "min": 16,
+      "max": 40,
+      "step": 2,
+      "default": 30,
+      "unit": "px"
+    },
+    {
+      "type": "color",
+      "id": "right1_title_color",
+      "label": "Title Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "right1_button",
+      "label": "Button Text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "text",
+      "id": "right1_button_de",
+      "label": "Button Text (DE)"
+    },
+    {
+      "type": "text",
+      "id": "right1_button_fr",
+      "label": "Button Text (FR)"
+    },
+    {
+      "type": "text",
+      "id": "right1_button_fi",
+      "label": "Button Text (FI)"
     },
     {
       "type": "url",
-      "id": "right1_link",
-      "label": "Module 1 link"
+      "id": "right1_button_url",
+      "label": "Button URL"
+    },
+    {
+      "type": "color",
+      "id": "right1_button_color",
+      "label": "Button Background",
+      "default": "#e34a38"
+    },
+    {
+      "type": "color",
+      "id": "right1_button_text_color",
+      "label": "Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "right1_background_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Right Module 2"
     },
     {
       "type": "image_picker",
       "id": "right_image_2",
-      "label": "Module 2 image"
+      "label": "Desktop Background Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "right_mobile_image_2",
+      "label": "Mobile Background Image"
+    },
+    {
+      "type": "select",
+      "id": "right2_bg_size",
+      "label": "Background Size",
+      "options": [
+        { "value": "cover", "label": "Cover" },
+        { "value": "contain", "label": "Contain" },
+        { "value": "auto", "label": "Auto" },
+        { "value": "80%", "label": "80%" },
+        { "value": "60%", "label": "60%" },
+        { "value": "40%", "label": "40%" }
+      ],
+      "default": "cover"
+    },
+    {
+      "type": "select",
+      "id": "right2_bg_position",
+      "label": "Background Position",
+      "options": [
+        { "value": "center", "label": "Center" },
+        { "value": "top left", "label": "Top Left" },
+        { "value": "top center", "label": "Top Center" },
+        { "value": "top right", "label": "Top Right" },
+        { "value": "bottom left", "label": "Bottom Left" },
+        { "value": "bottom center", "label": "Bottom Center" },
+        { "value": "bottom right", "label": "Bottom Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "right2_content_position",
+      "label": "Content Position",
+      "options": [
+        { "value": "flex-start", "label": "Top" },
+        { "value": "center", "label": "Center" },
+        { "value": "flex-end", "label": "Bottom" }
+      ],
+      "default": "flex-end"
+    },
+    {
+      "type": "select",
+      "id": "right2_content_position_mobile",
+      "label": "Mobile Content Position",
+      "options": [
+        { "value": "flex-start", "label": "Top" },
+        { "value": "center", "label": "Center" },
+        { "value": "flex-end", "label": "Bottom" }
+      ],
+      "default": "flex-end"
     },
     {
       "type": "text",
       "id": "right2_title",
-      "label": "Module 2 heading",
-      "default": "Promo 2"
+      "label": "Title",
+      "default": "Right Module 2"
+    },
+    {
+      "type": "text",
+      "id": "right2_title_de",
+      "label": "Title (DE)"
+    },
+    {
+      "type": "text",
+      "id": "right2_title_fr",
+      "label": "Title (FR)"
+    },
+    {
+      "type": "text",
+      "id": "right2_title_fi",
+      "label": "Title (FI)"
+    },
+    {
+      "type": "range",
+      "id": "right2_title_size",
+      "label": "Title Font Size (Desktop)",
+      "min": 16,
+      "max": 48,
+      "step": 2,
+      "default": 26,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "right2_title_size_mobile",
+      "label": "Title Font Size (Mobile)",
+      "min": 14,
+      "max": 36,
+      "step": 2,
+      "default": 22,
+      "unit": "px"
+    },
+    {
+      "type": "color",
+      "id": "right2_title_color",
+      "label": "Title Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "right2_button",
+      "label": "Button Text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "text",
+      "id": "right2_button_de",
+      "label": "Button Text (DE)"
+    },
+    {
+      "type": "text",
+      "id": "right2_button_fr",
+      "label": "Button Text (FR)"
+    },
+    {
+      "type": "text",
+      "id": "right2_button_fi",
+      "label": "Button Text (FI)"
     },
     {
       "type": "url",
-      "id": "right2_link",
-      "label": "Module 2 link"
+      "id": "right2_button_url",
+      "label": "Button URL"
+    },
+    {
+      "type": "color",
+      "id": "right2_button_color",
+      "label": "Button Background",
+      "default": "#e34a38"
+    },
+    {
+      "type": "color",
+      "id": "right2_button_text_color",
+      "label": "Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "right2_background_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Right Module 3"
     },
     {
       "type": "image_picker",
       "id": "right_image_3",
-      "label": "Module 3 image"
+      "label": "Desktop Background Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "right_mobile_image_3",
+      "label": "Mobile Background Image"
+    },
+    {
+      "type": "select",
+      "id": "right3_bg_size",
+      "label": "Background Size",
+      "options": [
+        { "value": "cover", "label": "Cover" },
+        { "value": "contain", "label": "Contain" },
+        { "value": "auto", "label": "Auto" },
+        { "value": "80%", "label": "80%" },
+        { "value": "60%", "label": "60%" },
+        { "value": "40%", "label": "40%" }
+      ],
+      "default": "cover"
+    },
+    {
+      "type": "select",
+      "id": "right3_bg_position",
+      "label": "Background Position",
+      "options": [
+        { "value": "center", "label": "Center" },
+        { "value": "top left", "label": "Top Left" },
+        { "value": "top center", "label": "Top Center" },
+        { "value": "top right", "label": "Top Right" },
+        { "value": "bottom left", "label": "Bottom Left" },
+        { "value": "bottom center", "label": "Bottom Center" },
+        { "value": "bottom right", "label": "Bottom Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "right3_content_position",
+      "label": "Content Position",
+      "options": [
+        { "value": "flex-start", "label": "Top" },
+        { "value": "center", "label": "Center" },
+        { "value": "flex-end", "label": "Bottom" }
+      ],
+      "default": "flex-end"
+    },
+    {
+      "type": "select",
+      "id": "right3_content_position_mobile",
+      "label": "Mobile Content Position",
+      "options": [
+        { "value": "flex-start", "label": "Top" },
+        { "value": "center", "label": "Center" },
+        { "value": "flex-end", "label": "Bottom" }
+      ],
+      "default": "flex-end"
     },
     {
       "type": "text",
       "id": "right3_title",
-      "label": "Module 3 heading",
-      "default": "Promo 3"
+      "label": "Title",
+      "default": "Right Module 3"
     },
     {
-      "type": "url",
-      "id": "right3_link",
-      "label": "Module 3 link"
+      "type": "text",
+      "id": "right3_title_de",
+      "label": "Title (DE)"
+    },
+    {
+      "type": "text",
+      "id": "right3_title_fr",
+      "label": "Title (FR)"
+    },
+    {
+      "type": "text",
+      "id": "right3_title_fi",
+      "label": "Title (FI)"
+    },
+    {
+      "type": "range",
+      "id": "right3_title_size",
+      "label": "Title Font Size (Desktop)",
+      "min": 16,
+      "max": 48,
+      "step": 2,
+      "default": 26,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "right3_title_size_mobile",
+      "label": "Title Font Size (Mobile)",
+      "min": 14,
+      "max": 36,
+      "step": 2,
+      "default": 22,
+      "unit": "px"
     },
     {
       "type": "color",
-      "id": "right_text_color",
-      "label": "Right text color",
+      "id": "right3_title_color",
+      "label": "Title Color",
       "default": "#ffffff"
     },
     {
-      "type": "color_background",
-      "id": "right_overlay",
-      "label": "Right overlay",
-      "default": "linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2))"
+      "type": "text",
+      "id": "right3_button",
+      "label": "Button Text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "text",
+      "id": "right3_button_de",
+      "label": "Button Text (DE)"
+    },
+    {
+      "type": "text",
+      "id": "right3_button_fr",
+      "label": "Button Text (FR)"
+    },
+    {
+      "type": "text",
+      "id": "right3_button_fi",
+      "label": "Button Text (FI)"
+    },
+    {
+      "type": "url",
+      "id": "right3_button_url",
+      "label": "Button URL"
+    },
+    {
+      "type": "color",
+      "id": "right3_button_color",
+      "label": "Button Background",
+      "default": "#e34a38"
+    },
+    {
+      "type": "color",
+      "id": "right3_button_text_color",
+      "label": "Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "right3_background_color",
+      "label": "Background Color",
+      "default": "#ffffff"
     }
   ],
   "presets": [
     {
-      "name": "4-Column promo banner",
-      "category": "Promotional"
+      "name": "Dynamic Promo Blocks",
+      "category": "Custom"
     }
   ]
 }
 {% endschema %}
 
-{%- liquid
-  # Performance optimizations
-  assign left_image = section.settings.left_image | image_url: width: 1200
-  assign right1_image = section.settings.right_image_1 | image_url: width: 800
-  assign right2_image = section.settings.right_image_2 | image_url: width: 800
-  assign right3_image = section.settings.right_image_3 | image_url: width: 800
-
-  # CSS variables for dynamic control
-  capture style_vars
-    echo '--desktop-height:' | append: section.settings.desktop_height | append: 'px;'
-    echo '--mobile-height:' | append: section.settings.mobile_height | append: 'px;'
-    echo '--left-text:' | append: section.settings.left_text_color | append: ';'
-    echo '--right-text:' | append: section.settings.right_text_color | append: ';'
-    echo '--left-overlay:' | append: section.settings.left_overlay | append: ';'
-    echo '--right-overlay:' | append: section.settings.right_overlay | append: ';'
-  endcapture
--%}
-
 <style>
-  .section-promo-banner {
-    --gap: 20px;
-    --radius: 12px;
-    --transition: all 0.3s ease;
-    
-    {% if section.settings.enable_mobile_row %}
-      --mobile-row-display: flex;
-    {% else %}
-      --mobile-row-display: none;
-    {% endif %}
+    :root {
+      --banner-height-desktop: {{ section.settings.desktop_height }}px;
+      --banner-height-mobile: {{ section.settings.mobile_height }}px;
+      --module-radius: 12px;
+      --module-padding: 20px;
+      --button-radius: 50px;
+      --button-padding: 10px 20px;
+      --button-font-size: 14px;
+      --tag-bg-color: #f8e71c;
+      --tag-color: #000;
+      --desktop-gap: 20px;
+    }
+
+     .promo-section-container {
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .banner-desktop {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr;
+      gap: var(--desktop-gap);
+      width: 100%;
+      min-height: var(--banner-height-desktop);
+    }
+
+    .banner-left {
+      grid-column: 1;
+      grid-row: 1;
+      height: 100%;
+    }
+
+    .banner-right {
+      grid-column: 2;
+      grid-row: 1;
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+      gap: var(--desktop-gap);
+      height: 100%;
+    }
+
+    .banner-right-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--desktop-gap);
+    }
+
+    .banner-mobile {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .banner-mobile-left,
+    .banner-mobile-right-row {
+      height: var(--banner-height-mobile);
+    }
+
+    .module {
+      position: relative;
+      padding: var(--module-padding);
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      background-repeat: no-repeat;
+      border-radius: var(--module-radius);
+      background-size: cover;
+      overflow: hidden;
+      height: 100%;
+    }
+
+    .module::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.2);
+      z-index: 1;
+    }
+
+    .module__inner {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+       justify-content: flex-end;
+    }
+
+     .module-position-top .module__inner {
+    justify-content: flex-start;
   }
 
-  .promo-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto;
-    gap: var(--gap);
-    min-height: var(--desktop-height);
+  .module-position-center .module__inner {
+    justify-content: center;
   }
 
-  .promo-main {
-    grid-row: span 2;
-    position: relative;
-    border-radius: var(--radius);
-    overflow: hidden;
-  }
-
-  .promo-main::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--left-overlay);
-    z-index: 1;
-  }
-
-  .promo-main-content {
-    position: relative;
-    z-index: 2;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+  .module-position-bottom .module__inner {
     justify-content: flex-end;
-    padding: 2rem;
-    color: var(--left-text);
-    text-align: {{ section.settings.left_layout }};
   }
 
-  .promo-main-eyebrow {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    text-transform: uppercase;
-  }
-
-  .promo-main-heading {
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    font-weight: 700;
-    line-height: 1.2;
-    margin-bottom: 1.5rem;
-  }
-
-  .promo-main-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    background: var(--left-text);
-    color: {{ section.settings.left_text_color | color_contrast: section.settings.left_text_color }};
-    border-radius: 50px;
-    text-decoration: none;
-    transition: var(--transition);
-    align-self: flex-start;
-  }
-
-  .promo-main-link:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  }
-
-  .promo-secondary {
-    position: relative;
-    border-radius: var(--radius);
-    overflow: hidden;
-  }
-
-  .promo-secondary::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--right-overlay);
-    z-index: 1;
-  }
-
-  .promo-secondary-content {
-    position: relative;
-    z-index: 2;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 1.5rem;
-    color: var(--right-text);
-  }
-
-  .promo-secondary-heading {
-    font-size: clamp(1.25rem, 3vw, 2rem);
-    font-weight: 700;
-    line-height: 1.2;
-    margin-bottom: 1rem;
-  }
-
-  .promo-secondary-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: inherit;
-    text-decoration: none;
-    transition: var(--transition);
-  }
-
-  .promo-secondary-link:hover {
-    opacity: 0.8;
-  }
-
-  .promo-secondary-link::after {
-    content: '→';
-  }
-
-  @media (max-width: 767px) {
-    .promo-grid {
-      grid-template-columns: 1fr;
-      grid-template-rows: auto auto auto;
-      min-height: var(--mobile-height);
+    .module__content {
+      padding: 10px;
+      min-width: 140px;
     }
 
-    .promo-main {
-      grid-row: auto;
+    .banner-left .module__title {
+      font-weight: 700;
+      font-size: {{ section.settings.left_title_size }}px;
+      line-height: {{ section.settings.left_title_size | times: 1.14 }}px;
+      margin: 0 0 20px;
     }
 
-    .promo-row {
-      display: var(--mobile-row-display);
-      gap: var(--gap);
+    .module__title--medium {
+      font-weight: 700;
+      font-size: {{ section.settings.right1_title_size }}px;
+      line-height: {{ section.settings.right1_title_size | times: 1.28 }}px;
     }
 
-    .promo-secondary {
-      flex: 1;
+    .module__title--small {
+      font-weight: 700;
+      font-size: {{ section.settings.right2_title_size }}px;
+      line-height: {{ section.settings.right2_title_size | times: 1.3 }}px;
     }
-  }
+
+    .module__tag {
+      margin: 0 0 10px;
+      font-size: 22px;
+      line-height: 40px;
+      height: 40px;
+      font-family: Arial, sans-serif;
+      font-weight: 600;
+      color: var(--tag-color);
+      text-align: center;
+      display: inline-block;
+      padding: 0 10px;
+      background-color: var(--tag-bg-color);
+      border-radius: 8px;
+      white-space: nowrap;
+    }
+
+    .module__button {
+      border-radius: var(--button-radius);
+      text-decoration: none;
+      font-weight: 400;
+      font-size: var(--button-font-size);
+      cursor: pointer;
+      margin-top: 10px;
+      align-self: flex-start;
+      padding: var(--button-padding);
+      display: inline-block;
+      transition: opacity 0.3s ease;
+    }
+
+    .module__button:hover {
+      opacity: 0.8;
+    }
+
+
+    .hide-on-mobile {
+      display: none;
+    }
+
+    @media (min-width: 769px) {
+      .banner-mobile {
+        display: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .promo-section-container {
+      padding: 0;
+    }
+
+      .module {
+      border-radius: 0;
+    }
+
+      .banner-desktop {
+        display: none;
+      }
+
+      .banner-mobile {
+        display: block;
+      }
+
+      .banner-mobile-left .module,
+      .banner-mobile-right .module {
+        height: 100%;
+      }
+
+      .banner-mobile-left,
+      .banner-mobile-right-row {
+        height: var(--banner-height-mobile);
+      }
+
+      .banner-mobile-left .module__title {
+        font-size: {{ section.settings.left_title_size_mobile }}px;
+        line-height: {{ section.settings.left_title_size_mobile | times: 1.14 }}px;
+      }
+
+      .module__title--medium {
+        font-size: {{ section.settings.right1_title_size_mobile }}px;
+        line-height: {{ section.settings.right1_title_size_mobile | times: 1.28 }}px;
+      }
+
+      .module__title--small {
+        font-size: {{ section.settings.right2_title_size_mobile }}px;
+        line-height: {{ section.settings.right2_title_size_mobile | times: 1.3 }}px;
+      }
+
+      .module__tag {
+        font-size: 16px;
+      }
+
+      .module__button {
+        font-size: 12px;
+      }
+
+      .banner-mobile-left .module {
+        {% if section.settings.left_mobile_image != blank %}
+          background-image: url({{ section.settings.left_mobile_image | img_url: '1024x1024' }}) !important;
+        {% endif %}
+      }
+
+      .module-right-1 {
+        {% if section.settings.right_mobile_image_1 != blank %}
+          background-image: url({{ section.settings.right_mobile_image_1 | img_url: '1024x1024' }}) !important;
+        {% endif %}
+      }
+    }
 </style>
 
-<div class="section-promo-banner" style="{{ style_vars }}">
-  <div class="promo-grid">
-    <!-- Main promo (left) -->
-    <div class="promo-main">
-      {%- if section.settings.left_image -%}
-        {{ section.settings.left_image | image_url: width: 1200 | image_tag:
-          loading: 'lazy',
-          sizes: '(min-width: 768px) 50vw, 100vw',
-          widths: '400, 600, 800, 1000, 1200',
-          class: 'promo-main-image',
-          alt: section.settings.left_title | escape
-        }}
-      {%- endif -%}
-      
-      <div class="promo-main-content">
-        {%- if section.settings.left_eyebrow != blank -%}
-          <p class="promo-main-eyebrow">{{ section.settings.left_eyebrow }}</p>
-        {%- endif -%}
-        
-        <h2 class="promo-main-heading">{{ section.settings.left_title }}</h2>
-        
-        {%- if section.settings.left_link != blank -%}
-          <a href="{{ section.settings.left_link }}" class="promo-main-link">
-            {{ section.settings.left_cta }}
+{% assign current_locale = request.locale.iso_code %}
+
+{% assign left_tag = section.settings.left_tag %}
+{% assign left_title = section.settings.left_title %}
+{% assign left_button = section.settings.left_button %}
+
+{% if current_locale == 'de' and section.settings.left_tag_de != blank %}
+  {% assign left_tag = section.settings.left_tag_de %}
+{% endif %}
+{% if current_locale == 'fr' and section.settings.left_tag_fr != blank %}
+  {% assign left_tag = section.settings.left_tag_fr %}
+{% endif %}
+{% if current_locale == 'fi' and section.settings.left_tag_fi != blank %}
+  {% assign left_tag = section.settings.left_tag_fi %}
+{% endif %}
+
+{% if current_locale == 'de' and section.settings.left_title_de != blank %}
+  {% assign left_title = section.settings.left_title_de %}
+{% endif %}
+{% if current_locale == 'fr' and section.settings.left_title_fr != blank %}
+  {% assign left_title = section.settings.left_title_fr %}
+{% endif %}
+{% if current_locale == 'fi' and section.settings.left_title_fi != blank %}
+  {% assign left_title = section.settings.left_title_fi %}
+{% endif %}
+
+{% if current_locale == 'de' and section.settings.left_button_de != blank %}
+  {% assign left_button = section.settings.left_button_de %}
+{% endif %}
+{% if current_locale == 'fr' and section.settings.left_button_fr != blank %}
+  {% assign left_button = section.settings.left_button_fr %}
+{% endif %}
+{% if current_locale == 'fi' and section.settings.left_button_fi != blank %}
+  {% assign left_button = section.settings.left_button_fi %}
+{% endif %}
+
+{% assign right1_tag = section.settings.right1_tag %}
+{% assign right1_title = section.settings.right1_title %}
+{% assign right1_button = section.settings.right1_button %}
+
+{% if current_locale == 'de' and section.settings.right1_tag_de != blank %}
+  {% assign right1_tag = section.settings.right1_tag_de %}
+{% endif %}
+{% if current_locale == 'fr' and section.settings.right1_tag_fr != blank %}
+  {% assign right1_tag = section.settings.right1_tag_fr %}
+{% endif %}
+{% if current_locale == 'fi' and section.settings.right1_tag_fi != blank %}
+  {% assign right1_tag = section.settings.right1_tag_fi %}
+{% endif %}
+
+{% if current_locale == 'de' and section.settings.right1_title_de != blank %}
+  {% assign right1_title = section.settings.right1_title_de %}
+{% endif %}
+{% if current_locale == 'fr' and section.settings.right1_title_fr != blank %}
+  {% assign right1_title = section.settings.right1_title_fr %}
+{% endif %}
+{% if current_locale == 'fi' and section.settings.right1_title_fi != blank %}
+  {% assign right1_title = section.settings.right1_title_fi %}
+{% endif %}
+
+{% if current_locale == 'de' and section.settings.right1_button_de != blank %}
+  {% assign right1_button = section.settings.right1_button_de %}
+{% endif %}
+{% if current_locale == 'fr' and section.settings.right1_button_fr != blank %}
+  {% assign right1_button = section.settings.right1_button_fr %}
+{% endif %}
+{% if current_locale == 'fi' and section.settings.right1_button_fi != blank %}
+  {% assign right1_button = section.settings.right1_button_fi %}
+{% endif %}
+
+{% assign right2_tag = section.settings.right2_tag %}
+{% assign right2_title = section.settings.right2_title %}
+{% assign right2_button = section.settings.right2_button %}
+
+{% if current_locale == 'de' and section.settings.right2_tag_de != blank %}
+  {% assign right2_tag = section.settings.right2_tag_de %}
+{% endif %}
+{% if current_locale == 'fr' and section.settings.right2_tag_fr != blank %}
+  {% assign right2_tag = section.settings.right2_tag_fr %}
+{% endif %}
+{% if current_locale == 'fi' and section.settings.right2_tag_fi != blank %}
+  {% assign right2_tag = section.settings.right2_tag_fi %}
+{% endif %}
+
+{% if current_locale == 'de' and section.settings.right2_title_de != blank %}
+  {% assign right2_title = section.settings.right2_title_de %}
+{% endif %}
+{% if current_locale == 'fr' and section.settings.right2_title_fr != blank %}
+  {% assign right2_title = section.settings.right2_title_fr %}
+{% endif %}
+{% if current_locale == 'fi' and section.settings.right2_title_fi != blank %}
+  {% assign right2_title = section.settings.right2_title_fi %}
+{% endif %}
+
+{% if current_locale == 'de' and section.settings.right2_button_de != blank %}
+  {% assign right2_button = section.settings.right2_button_de %}
+{% endif %}
+{% if current_locale == 'fr' and section.settings.right2_button_fr != blank %}
+  {% assign right2_button = section.settings.right2_button_fr %}
+{% endif %}
+{% if current_locale == 'fi' and section.settings.right2_button_fi != blank %}
+  {% assign right2_button = section.settings.right2_button_fi %}
+{% endif %}
+
+{% assign right3_tag = section.settings.right3_tag %}
+{% assign right3_title = section.settings.right3_title %}
+{% assign right3_button = section.settings.right3_button %}
+
+{% if current_locale == 'de' and section.settings.right3_tag_de != blank %}
+  {% assign right3_tag = section.settings.right3_tag_de %}
+{% endif %}
+{% if current_locale == 'fr' and section.settings.right3_tag_fr != blank %}
+  {% assign right3_tag = section.settings.right3_tag_fr %}
+{% endif %}
+{% if current_locale == 'fi' and section.settings.right3_tag_fi != blank %}
+  {% assign right3_tag = section.settings.right3_tag_fi %}
+{% endif %}
+
+{% if current_locale == 'de' and section.settings.right3_title_de != blank %}
+  {% assign right3_title = section.settings.right3_title_de %}
+{% endif %}
+{% if current_locale == 'fr' and section.settings.right3_title_fr != blank %}
+  {% assign right3_title = section.settings.right3_title_fr %}
+{% endif %}
+{% if current_locale == 'fi' and section.settings.right3_title_fi != blank %}
+  {% assign right3_title = section.settings.right3_title_fi %}
+{% endif %}
+
+{% if current_locale == 'de' and section.settings.right3_button_de != blank %}
+  {% assign right3_button = section.settings.right3_button_de %}
+{% endif %}
+{% if current_locale == 'fr' and section.settings.right3_button_fr != blank %}
+  {% assign right3_button = section.settings.right3_button_fr %}
+{% endif %}
+{% if current_locale == 'fi' and section.settings.right3_button_fi != blank %}
+  {% assign right3_button = section.settings.right3_button_fi %}
+{% endif %}
+
+<div class="promo-section-container">
+  <div class="banner-desktop">
+    <div class="banner-left">
+      <div
+        class="module module-position-{{ section.settings.left_content_position | replace: 'flex-', '' | replace: 'start', 'top' | replace: 'end', 'bottom' }}"
+        style="
+          background-image: url({{ section.settings.left_image | img_url: '2048x2048' }});
+          background-size: {{ section.settings.left_bg_size }};
+          background-position: {{ section.settings.left_bg_position }};
+          background-color: {{ section.settings.left_background_color }};
+        "
+      >
+        <div class="module__inner">
+          <div class="module__content">
+            {% if left_tag != blank %}
+              <div class="module__tag">{{ left_tag }}</div>
+            {% endif %}
+            <h2 class="module__title" style="color: {{ section.settings.left_title_color }};">{{ left_title }}</h2>
+          </div>
+          <a
+            href="{{ section.settings.left_button_url }}"
+            class="module__button"
+            style="
+              background-color: {{ section.settings.left_button_color }};
+              color: {{ section.settings.left_button_text_color }};
+            "
+          >
+            {{ left_button }} &#8594;
           </a>
-        {%- endif -%}
+        </div>
       </div>
     </div>
 
-    <!-- Secondary promos (right) -->
-    <div class="promo-secondary">
-      {%- if section.settings.right_image_1 -%}
-        {{ section.settings.right_image_1 | image_url: width: 800 | image_tag:
-          loading: 'lazy',
-          sizes: '(min-width: 768px) 25vw, 100vw',
-          widths: '400, 600, 800',
-          class: 'promo-secondary-image',
-          alt: section.settings.right1_title | escape
-        }}
-      {%- endif -%}
-      
-      <div class="promo-secondary-content">
-        <h3 class="promo-secondary-heading">{{ section.settings.right1_title }}</h3>
-        
-        {%- if section.settings.right1_link != blank -%}
-          <a href="{{ section.settings.right1_link }}" class="promo-secondary-link">
-            {{ 'general.shop_now' | t }}
+    <div class="banner-right">
+      <div
+        class="module module-right-1 module-position-{{ section.settings.left_content_position | replace: 'flex-', '' | replace: 'start', 'top' | replace: 'end', 'bottom' }}"
+        style="
+          background-image: url({{ section.settings.right_image_1 | img_url: '2048x2048' }});
+          background-size: {{ section.settings.right1_bg_size }};
+          background-position: {{ section.settings.right1_bg_position }};
+          background-color: {{ section.settings.right1_background_color }};
+        "
+      >
+        <div class="module__inner">
+          <div class="module__content">
+            {% if right1_tag != blank %}
+              <div class="module__tag">{{ right1_tag }}</div>
+            {% endif %}
+            <div class="module__title--medium" style="color: {{ section.settings.right1_title_color }};">
+              {{ right1_title }}
+            </div>
+          </div>
+          <a
+            href="{{ section.settings.right1_button_url }}"
+            class="module__button"
+            style="
+              background-color: {{ section.settings.right1_button_color }};
+              color: {{ section.settings.right1_button_text_color }};
+            "
+          >
+            {{ right1_button }} &#8594;
           </a>
-        {%- endif -%}
-      </div>
-    </div>
-
-    <div class="promo-row">
-      <div class="promo-secondary">
-        {%- if section.settings.right_image_2 -%}
-          {{ section.settings.right_image_2 | image_url: width: 800 | image_tag:
-            loading: 'lazy',
-            sizes: '(min-width: 768px) 25vw, 50vw',
-            widths: '400, 600, 800',
-            class: 'promo-secondary-image',
-            alt: section.settings.right2_title | escape
-          }}
-        {%- endif -%}
-        
-        <div class="promo-secondary-content">
-          <h3 class="promo-secondary-heading">{{ section.settings.right2_title }}</h3>
-          
-          {%- if section.settings.right2_link != blank -%}
-            <a href="{{ section.settings.right2_link }}" class="promo-secondary-link">
-              {{ 'general.shop_now' | t }}
-            </a>
-          {%- endif -%}
         </div>
       </div>
 
-      <div class="promo-secondary">
-        {%- if section.settings.right_image_3 -%}
-          {{ section.settings.right_image_3 | image_url: width: 800 | image_tag:
-            loading: 'lazy',
-            sizes: '(min-width: 768px) 25vw, 50vw',
-            widths: '400, 600, 800',
-            class: 'promo-secondary-image',
-            alt: section.settings.right3_title | escape
-          }}
-        {%- endif -%}
-        
-        <div class="promo-secondary-content">
-          <h3 class="promo-secondary-heading">{{ section.settings.right3_title }}</h3>
-          
-          {%- if section.settings.right3_link != blank -%}
-            <a href="{{ section.settings.right3_link }}" class="promo-secondary-link">
-              {{ 'general.shop_now' | t }}
+      <div class="banner-right-row">
+        <div
+          class="module module-right-2 module-position-{{ section.settings.left_content_position | replace: 'flex-', '' | replace: 'start', 'top' | replace: 'end', 'bottom' }}"
+          style="
+            background-image: url({{ section.settings.right_image_2 | img_url: '2048x2048' }});
+            background-size: {{ section.settings.right2_bg_size }};
+            background-position: {{ section.settings.right2_bg_position }};
+            background-color: {{ section.settings.right2_background_color }};
+          "
+        >
+          <div class="module__inner">
+            <div class="module__content">
+              {% if right2_tag != blank %}
+                <div class="module__tag">{{ right2_tag }}</div>
+              {% endif %}
+              <div class="module__title--small" style="color: {{ section.settings.right2_title_color }};">
+                {{ right2_title }}
+              </div>
+            </div>
+            <a
+              href="{{ section.settings.right2_button_url }}"
+              class="module__button"
+              style="
+                background-color: {{ section.settings.right2_button_color }};
+                color: {{ section.settings.right2_button_text_color }};
+              "
+            >
+              {{ right2_button }} &#8594;
             </a>
-          {%- endif -%}
+          </div>
+        </div>
+
+        <div
+          class="module module-right-3 module-position-{{ section.settings.left_content_position | replace: 'flex-', '' | replace: 'start', 'top' | replace: 'end', 'bottom' }}"
+          style="
+            background-image: url({{ section.settings.right_image_3 | img_url: '2048x2048' }});
+            background-size: {{ section.settings.right3_bg_size }};
+            background-position: {{ section.settings.right3_bg_position }};
+            background-color: {{ section.settings.right3_background_color }};
+          "
+        >
+          <div class="module__inner">
+            <div class="module__content">
+              {% if right3_tag != blank %}
+                <div class="module__tag">{{ right3_tag }}</div>
+              {% endif %}
+              <div class="module__title--small" style="color: {{ section.settings.right3_title_color }};">
+                {{ right3_title }}
+              </div>
+            </div>
+            <a
+              href="{{ section.settings.right3_button_url }}"
+              class="module__button"
+              style="
+                background-color: {{ section.settings.right3_button_color }};
+                color: {{ section.settings.right3_button_text_color }};
+              "
+            >
+              {{ right3_button }} &#8594;
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="banner-mobile">
+    <div class="banner-mobile-left">
+      <div
+        class="module module-position-module module-position-{{ section.settings.left_content_position_mobile | replace: 'flex-', '' | replace: 'start', 'top' | replace: 'end', 'bottom' }}"
+        style="
+          background-image: url({{ section.settings.left_image | img_url: '2048x2048' }});
+          background-size: {{ section.settings.left_bg_size }};
+          background-position: {{ section.settings.left_bg_position }};
+          background-color: {{ section.settings.left_background_color }};
+        "
+      >
+        <div class="module__inner">
+          <div class="module__content">
+            {% if left_tag != blank %}
+              <div class="module__tag">{{ left_tag }}</div>
+            {% endif %}
+            <h2 class="module__title" style="color: {{ section.settings.left_title_color }};">{{ left_title }}</h2>
+          </div>
+          <a
+            href="{{ section.settings.left_button_url }}"
+            class="module__button"
+            style="
+              background-color: {{ section.settings.left_button_color }};
+              color: {{ section.settings.left_button_text_color }};
+            "
+          >
+            {{ left_button }} &#8594;
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="banner-mobile-right-row">
+      <div
+        class="module module-right-1 module-position-module module-position-{{ section.settings.left_content_position_mobile | replace: 'flex-', '' | replace: 'start', 'top' | replace: 'end', 'bottom' }}"
+        style="
+          background-image: url({{ section.settings.right_image_1 | img_url: '2048x2048' }});
+          background-size: {{ section.settings.right1_bg_size }};
+          background-position: {{ section.settings.right1_bg_position }};
+          background-color: {{ section.settings.right1_background_color }};
+        "
+      >
+        <div class="module__inner">
+          <div class="module__content">
+            {% if right1_tag != blank %}
+              <div class="module__tag">{{ right1_tag }}</div>
+            {% endif %}
+            <div class="module__title--medium" style="color: {{ section.settings.right1_title_color }};">
+              {{ right1_title }}
+            </div>
+          </div>
+          <a
+            href="{{ section.settings.right1_button_url }}"
+            class="module__button"
+            style="
+              background-color: {{ section.settings.right1_button_color }};
+              color: {{ section.settings.right1_button_text_color }};
+            "
+          >
+            {{ right1_button }} &#8594;
+          </a>
         </div>
       </div>
     </div>
