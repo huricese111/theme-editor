@@ -33,3 +33,22 @@
     {{ block_text }}
   </div>
 </div>
+
+{% style %}
+  @media (max-width: 767px) {
+    .text-block.absolute-position {
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      right: auto !important;
+      bottom: auto !important;
+      transform: none !important;
+      width: auto !important;
+      max-width: 100%;
+    }
+    
+    .text-block.position-custom {
+      transform: none !important;
+    }
+  }
+{% endstyle %}

@@ -1,0 +1,57 @@
+{% style %}
+  .discount-label-{{ block.id }} {
+    position: absolute;
+    top: {{ block.settings.position_top }}%;
+    left: {{ block.settings.position_left }}%;
+    transform: rotate({{ block.settings.rotation }}deg);
+    transform-origin: center;
+    z-index: 100;
+    pointer-events: none;
+  }
+  
+  .discount-label-{{ block.id }} .discount-tag {
+    background: {{ block.settings.bg_color }};
+    color: {{ block.settings.text_color }};
+    border-radius: 
+      {% if block.settings.shape == 'circle' %}
+        100px
+      {% elsif block.settings.shape == 'rounded' %}
+        8px
+      {% else %}
+        0
+      {% endif %};
+    padding: {{ block.settings.padding_vertical }}px {{ block.settings.padding_horizontal }}px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.2;
+    white-space: nowrap;
+    min-width: max-content;
+    box-sizing: border-box;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+    pointer-events: auto;
+  }
+  
+  .discount-label-{{ block.id }} .small-text {
+    font-size: {{ block.settings.small_size }}px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    line-height: 1;
+  }
+  
+  .discount-label-{{ block.id }} .large-text {
+    font-size: {{ block.settings.large_size }}px;
+    font-weight: 700;
+    margin-top: 2px;
+    line-height: 1;
+  }
+{% endstyle %}
+
+<div class="discount-label discount-label-{{ block.id }}">
+  <div class="discount-tag">
+    <span class="small-text">{{ block.settings.small_text }}</span>
+    <span class="large-text">{{ block.settings.large_text }}</span>
+  </div>
+</div>

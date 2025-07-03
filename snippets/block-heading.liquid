@@ -40,3 +40,22 @@
     </h2>
   {% endif %}
 </div>
+
+{% style %}
+  @media (max-width: 767px) {
+    .heading-block.absolute-position {
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      right: auto !important;
+      bottom: auto !important;
+      transform: none !important;
+      width: auto !important;
+      max-width: 100%;
+    }
+    
+    .heading-block.position-custom {
+      transform: none !important;
+    }
+  }
+{% endstyle %}

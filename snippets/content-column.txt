@@ -26,10 +26,10 @@
       <div class="block-{{ block.id }}" {{ block.shopify_attributes }}>
         {% case block.type %}
           {% when 'heading' %}
-            {% include 'block-heading', block: block %}
+            {% render 'block-heading', block: block %}
 
           {% when 'text' %}
-            {% include 'block-text', block: block %}
+            {% render 'block-text', block: block %}
 
           {% when 'liquid_content' %}
             <div class="custom-liquid-block">
@@ -37,25 +37,25 @@
             </div>
 
           {% when 'newsletter' %}
-            {% include 'block-newsletter', block: block %}
+            {% render 'block-newsletter', block: block %}
 
           {% when 'button' %}
-            {% include 'block-button', block: block %}
+            {% render 'block-button', block: block %}
 
           {% when 'bike_tab' %}
-            {% include 'block-bike-tab', block: block %}
+            {% render 'block-bike-tab', block: block %}
 
           {%- when 'feature_column' -%}
-            {% include 'block-feature-column', block: block %}
+            {% render 'block-feature-column', block: block %}
 
           {%- when 'slide_footer' -%}
-            {% include 'block-slide-footer', block: block %}
+            {% render 'block-slide-footer', block: block %}
 
           {% when 'countdown' %}
-            {% include 'block-countdown', block: block %}
+            {% render 'block-countdown', block: block %}
 
           {% when 'discount-label' %}
-          {% include 'discount-label', block: block %}
+          {% render 'discount-label', block: block %}
             
         {% endcase %}
       </div>
