@@ -1862,20 +1862,77 @@
         {
           "type": "text",
           "id": "small_text",
-          "label": "Small Text",
+          "label": "Small Text (Default)",
           "default": "Save up to"
         },
         {
           "type": "text",
+          "id": "small_text_de",
+          "label": "Small Text (German)"
+        },
+        {
+          "type": "text",
+          "id": "small_text_fr",
+          "label": "Small Text (French)"
+        },
+        {
+          "type": "text",
+          "id": "small_text_fi",
+          "label": "Small Text (Finnish)"
+        },
+        {
+          "type": "header",
+          "content": "Large Text (Middle)"
+        },
+        {
+          "type": "text",
           "id": "large_text",
-          "label": "Large Text",
+          "label": "Large Text (Default)",
           "default": "1000 EUR"
         },
         {
-          "type": "color",
-          "id": "text_color",
-          "label": "Text Color",
-          "default": "#FFFFFF"
+          "type": "text",
+          "id": "large_text_de",
+          "label": "Large Text (German)"
+        },
+        {
+          "type": "text",
+          "id": "large_text_fr",
+          "label": "Large Text (French)"
+        },
+        {
+          "type": "text",
+          "id": "large_text_fi",
+          "label": "Large Text (Finnish)"
+        },
+        {
+          "type": "header",
+          "content": "Extra Small Text (Bottom)"
+        },
+        {
+          "type": "text",
+          "id": "extra_small_text",
+          "label": "Extra Text (Default)",
+          "info": "Optional text below large text"
+        },
+        {
+          "type": "text",
+          "id": "extra_small_text_de",
+          "label": "Extra Text (German)"
+        },
+        {
+          "type": "text",
+          "id": "extra_small_text_fr",
+          "label": "Extra Text (French)"
+        },
+        {
+          "type": "text",
+          "id": "extra_small_text_fi",
+          "label": "Extra Text (Finnish)"
+        },
+        {
+          "type": "header",
+          "content": "Text Sizes"
         },
         {
           "type": "range",
@@ -1898,6 +1955,46 @@
           "default": 24
         },
         {
+          "type": "range",
+          "id": "extra_small_size",
+          "label": "Extra Text Size",
+          "min": 6,
+          "max": 24,
+          "step": 1,
+          "unit": "px",
+          "default": 10,
+          "info": "Font size for extra text"
+        },
+        {
+          "type": "header",
+          "content": "Text Colors"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Default Text Color",
+          "default": "#FFFFFF",
+          "info": "Fallback color if specific colors not set"
+        },
+        {
+          "type": "color",
+          "id": "small_text_color",
+          "label": "Small Text Color",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color",
+          "id": "large_text_color",
+          "label": "Large Text Color",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color",
+          "id": "extra_text_color",
+          "label": "Extra Text Color",
+          "default": "#FFFFFF"
+        },
+        {
           "type": "color",
           "id": "bg_color",
           "label": "Background Color",
@@ -1913,6 +2010,17 @@
             { "value": "rounded", "label": "Rounded" }
           ],
           "default": "circle"
+        },
+        {
+          "type": "range",
+          "id": "circle_size",
+          "label": "Circle Size",
+          "min": 40,
+          "max": 200,
+          "step": 5,
+          "unit": "px",
+          "default": 80,
+          "info": "Only applies when shape is set to circle"
         },
         {
           "type": "range",
