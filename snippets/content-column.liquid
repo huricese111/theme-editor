@@ -1,17 +1,16 @@
 <div class="column column--content align-{{ section.settings.content_alignment }}" data-cc-animate>
+  {% if section.settings.content_bg_video != blank %}
+    <video
+      class="background-video"
+      autoplay
+      muted
+      loop
+      playsinline
+    >
+      <source src="{{ section.settings.content_bg_video }}" type="video/mp4">
+    </video>
+  {% endif %}
   <div class="background-container">
-    {% if section.settings.content_bg_video != blank %}
-      <video
-        class="background-video"
-        autoplay
-        muted
-        loop
-        playsinline
-      >
-        <source src="{{ section.settings.content_bg_video }}" type="video/mp4">
-      </video>
-    {% endif %}
-
     {% if section.settings.content_bg_image != blank %}
       {{
         section.settings.content_bg_image
@@ -55,8 +54,7 @@
             {% include 'block-countdown', block: block %}
 
           {% when 'discount-label' %}
-          {% include 'discount-label', block: block %}
-            
+            {% include 'discount-label', block: block %}
         {% endcase %}
       </div>
     {% endfor %}

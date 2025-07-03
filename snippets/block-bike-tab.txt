@@ -1,8 +1,4 @@
 {% style %}
-  .column--content:has(.bike-tabs-block) .text-content-wrapper {
-    padding: 20px !important;
-  }
-
   .banner-header {
     display: flex;
     flex-direction: column;
@@ -134,119 +130,7 @@
   .sub-tabs-group.active {
     display: block;
   }
-.banner-header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    position: relative;
-    width: 100%;
-    padding: 15px;
-    z-index: 10;
-    flex-wrap: wrap;
-  }
-  
-  .banner-header-left {
-    flex: 1;
-    min-width: 200px;
-    max-width: 60%;
-    padding-right: 15px;
-    z-index: 11;
-  }
-  
-  .banner-title {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 5px;
-    line-height: 1.2;
-    color: #000000;
-  }
-  
-  .banner-description {
-    font-size: 16px;
-    line-height: 1.4;
-    color: #000000;
-  }
-  
-  .banner-header-right {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    flex-shrink: 0; 
-  }
 
-  @media (max-width: 980px) and (min-width: 781px) {
-    .banner-header-container {
-      flex-direction: row;
-      flex-wrap: nowrap;
-    }
-    
-    .banner-header-left {
-      max-width: 50%;
-    }
-    
-    .banner-header-right {
-      min-width: 45%;
-      flex-grow: 0;
-      max-width: 45%;
-    }
-    
-    .banner-tabs {
-      justify-content: flex-end;
-    }
-    
-    .sub-tabs-container {
-      justify-content: flex-end;
-    }
-  }
-
-  @media (max-width: 780px) {
-    .banner-header-container {
-      flex-direction: column;
-      align-items: center; 
-      text-align: center; 
-    }
-    
-    .banner-header-left {
-      max-width: 100%;
-      padding-right: 0;
-      margin-bottom: 25px; 
-      flex: 0 0 auto;
-      width: 90%; 
-    }
-    
-    .banner-header-right {
-      width: 90%; 
-      align-items: center; 
-      flex: 0 0 auto;
-    }
-    
-    .sub-tabs-container {
-      justify-content: center; 
-    }
-    
-    .banner-tabs {
-      justify-content: center; 
-    }
-    
-    .banner-title {
-      font-size: 22px; 
-    }
-    
-    .banner-description {
-      font-size: 16px;
-    }
-    
-    .banner-tab {
-      margin-left: 0;
-      margin-right: 5px;
-    }
-    
-    .sub-tab {
-      margin-left: 0;
-      margin-right: 5px;
-    }
-  }
-  
   .hidden {
     display: none !important;
   }
@@ -255,125 +139,108 @@
 {% assign show_main_tabs = block.settings.show_main_tabs | default: true %}
 {% assign show_sub_tabs = block.settings.show_sub_tabs | default: true %}
 {% assign global_link_url = block.settings.global_link_url %}
-{% assign title_key = 'title_' | append: request.locale.iso_code %}
-{% assign description_key = 'description_' | append: request.locale.iso_code %}
 
 <div class="bike-tabs-block" id="block-{{ block.id }}">
-  <div class="banner-header-container">
-    <div class="banner-header-left">
-      {% assign title_key = 'title_' | append: request.locale.iso_code %}
-      {% assign description_key = 'description_' | append: request.locale.iso_code %}
-
-      {% if block.settings[title_key] != blank %}
-        <h2 class="banner-title">{{ block.settings[title_key] }}</h2>
+  <div class="banner-header">
+    <div
+      class="banner-tabs"
+      {% if show_main_tabs == false %}
+        style="display: none;"
       {% endif %}
+    >
+      {% for i in (1..3) %}
+        {% assign tab_type_key = 'tab_' | append: i | append: '_type' %}
+        {% assign tab_type = block.settings[tab_type_key] %}
+        {% if tab_type != blank %}
+          {% assign has_sub_tabs = false %}
+          {% for j in (1..4) %}
+            {% assign image_key = 'tab_' | append: i | append: '_sub_tab_' | append: j | append: '_image' %}
+            {% assign image = block.settings[image_key] %}
+            {% if image != blank %}
+              {% assign has_sub_tabs = true %}
+            {% endif %}
+          {% endfor %}
 
-      {% if block.settings[description_key] != blank %}
-        <div class="banner-description">{{ block.settings[description_key] }}</div>
-      {% endif %}
+          {% if has_sub_tabs %}
+            <div
+              class="banner-tab {% if forloop.first %}active{% endif %}"
+              data-tab-id="tab-{{ block.id }}-{{ i }}"
+              data-block-id="block-{{ block.id }}"
+              data-tab-index="{{ i }}"
+            >
+              {% case tab_type %}
+                {% when 'step_through' %}
+                  {% render 'icon-stepthrough' %}
+                {% when 'high_step' %}
+                  {% render 'icon-highstep' %}
+                {% when 'low_step' %}
+                  {% render 'icon-lowstep' %}
+              {% endcase %}
+            </div>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
     </div>
 
-    <div class="banner-header-right">
-      <div
-        class="banner-tabs"
-        {% if show_main_tabs == false %}
-          style="display: none;"
-        {% endif %}
-      >
-        {% for i in (1..3) %}
-          {% assign tab_type_key = 'tab_' | append: i | append: '_type' %}
-          {% assign tab_type = block.settings[tab_type_key] %}
-          {% if tab_type != blank %}
-            {% assign has_sub_tabs = false %}
-            {% for j in (1..4) %}
-              {% assign image_key = 'tab_' | append: i | append: '_sub_tab_' | append: j | append: '_image' %}
-              {% assign image = block.settings[image_key] %}
-              {% if image != blank %}
-                {% assign has_sub_tabs = true %}
-              {% endif %}
-            {% endfor %}
-
-            {% if has_sub_tabs %}
-              <div
-                class="banner-tab {% if forloop.first %}active{% endif %}"
-                data-tab-id="tab-{{ block.id }}-{{ i }}"
-                data-block-id="block-{{ block.id }}"
-                data-tab-index="{{ i }}"
-              >
-                {% case tab_type %}
-                  {% when 'step_through' %}
-                    {% render 'icon-stepthrough' %}
-                  {% when 'high_step' %}
-                    {% render 'icon-highstep' %}
-                  {% when 'low_step' %}
-                    {% render 'icon-lowstep' %}
-                {% endcase %}
-              </div>
+    <div
+      class="sub-tabs-container"
+      {% if show_sub_tabs == false %}
+        style="display: none;"
+      {% endif %}
+    >
+      {% for i in (1..3) %}
+        {% assign tab_type_key = 'tab_' | append: i | append: '_type' %}
+        {% assign tab_type = block.settings[tab_type_key] %}
+        {% if tab_type != blank %}
+          {% assign has_sub_tabs = false %}
+          {% for j in (1..4) %}
+            {% assign image_key = 'tab_' | append: i | append: '_sub_tab_' | append: j | append: '_image' %}
+            {% assign image = block.settings[image_key] %}
+            {% if image != blank %}
+              {% assign has_sub_tabs = true %}
             {% endif %}
-          {% endif %}
-        {% endfor %}
-      </div>
+          {% endfor %}
 
-      <div
-        class="sub-tabs-container"
-        {% if show_sub_tabs == false %}
-          style="display: none;"
-        {% endif %}
-      >
-        {% for i in (1..3) %}
-          {% assign tab_type_key = 'tab_' | append: i | append: '_type' %}
-          {% assign tab_type = block.settings[tab_type_key] %}
-          {% if tab_type != blank %}
-            {% assign has_sub_tabs = false %}
-            {% for j in (1..4) %}
-              {% assign image_key = 'tab_' | append: i | append: '_sub_tab_' | append: j | append: '_image' %}
-              {% assign image = block.settings[image_key] %}
-              {% if image != blank %}
-                {% assign has_sub_tabs = true %}
-              {% endif %}
-            {% endfor %}
-
-            {% if has_sub_tabs %}
-              <div
-                class="sub-tabs-group {% if forloop.first %}active{% endif %}"
-                data-tab-group="tab-{{ block.id }}-{{ i }}"
-              >
-                <div class="sub-tabs">
-                  {% for j in (1..4) %}
-                    {% assign image_key = 'tab_' | append: i | append: '_sub_tab_' | append: j | append: '_image' %}
-                    {% assign image = block.settings[image_key] %}
-                    {% if image != blank %}
-                      {% assign bg_color_key = 'tab_'
-                        | append: i
-                        | append: '_sub_tab_'
-                        | append: j
-                        | append: '_bg_color'
-                      %}
-                      {% assign bg_color = block.settings[bg_color_key] | default: '#ffffff' %}
-                      <div
-                        class="sub-tab {% if forloop.first %}active{% endif %}"
-                        style="background-color: {{ bg_color }};"
-                        data-subtab-id="subtab-{{ block.id }}-{{ i }}-{{ j }}"
-                        data-parent-tab="tab-{{ block.id }}-{{ i }}"
-                        data-block-id="block-{{ block.id }}"
-                      >
-                        {% if global_link_url != blank %}
-                          <a
-                            target="_blank"
-                            href="{{ global_link_url }}"
-                            class="sub-content-link"
-                            aria-label="View product"
-                          ></a>
-                        {% endif %}
-                      </div>
-                    {% endif %}
-                  {% endfor %}
-                </div>
+          {% if has_sub_tabs %}
+            <div
+              class="sub-tabs-group {% if forloop.first %}active{% endif %}"
+              data-tab-group="tab-{{ block.id }}-{{ i }}"
+            >
+              <div class="sub-tabs">
+                {% for j in (1..4) %}
+                  {% assign image_key = 'tab_' | append: i | append: '_sub_tab_' | append: j | append: '_image' %}
+                  {% assign image = block.settings[image_key] %}
+                  {% if image != blank %}
+                    {% assign bg_color_key = 'tab_'
+                      | append: i
+                      | append: '_sub_tab_'
+                      | append: j
+                      | append: '_bg_color'
+                    %}
+                    {% assign bg_color = block.settings[bg_color_key] | default: '#ffffff' %}
+                    <div
+                      class="sub-tab {% if forloop.first %}active{% endif %}"
+                      style="background-color: {{ bg_color }};"
+                      data-subtab-id="subtab-{{ block.id }}-{{ i }}-{{ j }}"
+                      data-parent-tab="tab-{{ block.id }}-{{ i }}"
+                      data-block-id="block-{{ block.id }}"
+                    >
+                      {% if global_link_url != blank %}
+                        <a
+                          target="_blank"
+                          href="{{ global_link_url }}"
+                          class="sub-content-link"
+                          aria-label="View product"
+                        ></a>
+                      {% endif %}
+                    </div>
+                  {% endif %}
+                {% endfor %}
               </div>
-            {% endif %}
+            </div>
           {% endif %}
-        {% endfor %}
-      </div>
+        {% endif %}
+      {% endfor %}
     </div>
   </div>
 

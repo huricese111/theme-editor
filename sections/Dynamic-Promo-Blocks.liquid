@@ -1,0 +1,429 @@
+
+{% schema %}
+{
+  "name": "4-Column Promo Banner",
+  "class": "section-promo-banner",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_mobile_row",
+      "label": "Enable bottom row on mobile",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "desktop_height",
+      "min": 400,
+      "max": 1000,
+      "step": 50,
+      "unit": "px",
+      "label": "Desktop section height",
+      "default": 700
+    },
+    {
+      "type": "range",
+      "id": "mobile_height",
+      "min": 300,
+      "max": 800,
+      "step": 50,
+      "unit": "px",
+      "label": "Mobile section height",
+      "default": 500
+    },
+    {
+      "type": "header",
+      "content": "Left module"
+    },
+    {
+      "type": "image_picker",
+      "id": "left_image",
+      "label": "Background image"
+    },
+    {
+      "type": "select",
+      "id": "left_layout",
+      "label": "Content alignment",
+      "options": [
+        {"value": "left", "label": "Left"},
+        {"value": "center", "label": "Center"},
+        {"value": "right", "label": "Right"}
+      ],
+      "default": "left"
+    },
+    {
+      "type": "text",
+      "id": "left_eyebrow",
+      "label": "Eyebrow text",
+      "default": "Limited time"
+    },
+    {
+      "type": "text",
+      "id": "left_title",
+      "label": "Heading",
+      "default": "Main promotion"
+    },
+    {
+      "type": "url",
+      "id": "left_link",
+      "label": "Link"
+    },
+    {
+      "type": "text",
+      "id": "left_cta",
+      "label": "Button text",
+      "default": "Shop now"
+    },
+    {
+      "type": "color",
+      "id": "left_text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color_background",
+      "id": "left_overlay",
+      "label": "Image overlay",
+      "default": "linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3))"
+    },
+    {
+      "type": "header",
+      "content": "Right modules"
+    },
+    {
+      "type": "image_picker",
+      "id": "right_image_1",
+      "label": "Module 1 image"
+    },
+    {
+      "type": "text",
+      "id": "right1_title",
+      "label": "Module 1 heading",
+      "default": "Promo 1"
+    },
+    {
+      "type": "url",
+      "id": "right1_link",
+      "label": "Module 1 link"
+    },
+    {
+      "type": "image_picker",
+      "id": "right_image_2",
+      "label": "Module 2 image"
+    },
+    {
+      "type": "text",
+      "id": "right2_title",
+      "label": "Module 2 heading",
+      "default": "Promo 2"
+    },
+    {
+      "type": "url",
+      "id": "right2_link",
+      "label": "Module 2 link"
+    },
+    {
+      "type": "image_picker",
+      "id": "right_image_3",
+      "label": "Module 3 image"
+    },
+    {
+      "type": "text",
+      "id": "right3_title",
+      "label": "Module 3 heading",
+      "default": "Promo 3"
+    },
+    {
+      "type": "url",
+      "id": "right3_link",
+      "label": "Module 3 link"
+    },
+    {
+      "type": "color",
+      "id": "right_text_color",
+      "label": "Right text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color_background",
+      "id": "right_overlay",
+      "label": "Right overlay",
+      "default": "linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2))"
+    }
+  ],
+  "presets": [
+    {
+      "name": "4-Column promo banner",
+      "category": "Promotional"
+    }
+  ]
+}
+{% endschema %}
+
+{%- liquid
+  # Performance optimizations
+  assign left_image = section.settings.left_image | image_url: width: 1200
+  assign right1_image = section.settings.right_image_1 | image_url: width: 800
+  assign right2_image = section.settings.right_image_2 | image_url: width: 800
+  assign right3_image = section.settings.right_image_3 | image_url: width: 800
+
+  # CSS variables for dynamic control
+  capture style_vars
+    echo '--desktop-height:' | append: section.settings.desktop_height | append: 'px;'
+    echo '--mobile-height:' | append: section.settings.mobile_height | append: 'px;'
+    echo '--left-text:' | append: section.settings.left_text_color | append: ';'
+    echo '--right-text:' | append: section.settings.right_text_color | append: ';'
+    echo '--left-overlay:' | append: section.settings.left_overlay | append: ';'
+    echo '--right-overlay:' | append: section.settings.right_overlay | append: ';'
+  endcapture
+-%}
+
+<style>
+  .section-promo-banner {
+    --gap: 20px;
+    --radius: 12px;
+    --transition: all 0.3s ease;
+    
+    {% if section.settings.enable_mobile_row %}
+      --mobile-row-display: flex;
+    {% else %}
+      --mobile-row-display: none;
+    {% endif %}
+  }
+
+  .promo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: var(--gap);
+    min-height: var(--desktop-height);
+  }
+
+  .promo-main {
+    grid-row: span 2;
+    position: relative;
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .promo-main::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--left-overlay);
+    z-index: 1;
+  }
+
+  .promo-main-content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 2rem;
+    color: var(--left-text);
+    text-align: {{ section.settings.left_layout }};
+  }
+
+  .promo-main-eyebrow {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+  }
+
+  .promo-main-heading {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+  }
+
+  .promo-main-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--left-text);
+    color: {{ section.settings.left_text_color | color_contrast: section.settings.left_text_color }};
+    border-radius: 50px;
+    text-decoration: none;
+    transition: var(--transition);
+    align-self: flex-start;
+  }
+
+  .promo-main-link:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+
+  .promo-secondary {
+    position: relative;
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .promo-secondary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--right-overlay);
+    z-index: 1;
+  }
+
+  .promo-secondary-content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1.5rem;
+    color: var(--right-text);
+  }
+
+  .promo-secondary-heading {
+    font-size: clamp(1.25rem, 3vw, 2rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+  .promo-secondary-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: inherit;
+    text-decoration: none;
+    transition: var(--transition);
+  }
+
+  .promo-secondary-link:hover {
+    opacity: 0.8;
+  }
+
+  .promo-secondary-link::after {
+    content: '→';
+  }
+
+  @media (max-width: 767px) {
+    .promo-grid {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto auto;
+      min-height: var(--mobile-height);
+    }
+
+    .promo-main {
+      grid-row: auto;
+    }
+
+    .promo-row {
+      display: var(--mobile-row-display);
+      gap: var(--gap);
+    }
+
+    .promo-secondary {
+      flex: 1;
+    }
+  }
+</style>
+
+<div class="section-promo-banner" style="{{ style_vars }}">
+  <div class="promo-grid">
+    <!-- Main promo (left) -->
+    <div class="promo-main">
+      {%- if section.settings.left_image -%}
+        {{ section.settings.left_image | image_url: width: 1200 | image_tag:
+          loading: 'lazy',
+          sizes: '(min-width: 768px) 50vw, 100vw',
+          widths: '400, 600, 800, 1000, 1200',
+          class: 'promo-main-image',
+          alt: section.settings.left_title | escape
+        }}
+      {%- endif -%}
+      
+      <div class="promo-main-content">
+        {%- if section.settings.left_eyebrow != blank -%}
+          <p class="promo-main-eyebrow">{{ section.settings.left_eyebrow }}</p>
+        {%- endif -%}
+        
+        <h2 class="promo-main-heading">{{ section.settings.left_title }}</h2>
+        
+        {%- if section.settings.left_link != blank -%}
+          <a href="{{ section.settings.left_link }}" class="promo-main-link">
+            {{ section.settings.left_cta }}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <!-- Secondary promos (right) -->
+    <div class="promo-secondary">
+      {%- if section.settings.right_image_1 -%}
+        {{ section.settings.right_image_1 | image_url: width: 800 | image_tag:
+          loading: 'lazy',
+          sizes: '(min-width: 768px) 25vw, 100vw',
+          widths: '400, 600, 800',
+          class: 'promo-secondary-image',
+          alt: section.settings.right1_title | escape
+        }}
+      {%- endif -%}
+      
+      <div class="promo-secondary-content">
+        <h3 class="promo-secondary-heading">{{ section.settings.right1_title }}</h3>
+        
+        {%- if section.settings.right1_link != blank -%}
+          <a href="{{ section.settings.right1_link }}" class="promo-secondary-link">
+            {{ 'general.shop_now' | t }}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="promo-row">
+      <div class="promo-secondary">
+        {%- if section.settings.right_image_2 -%}
+          {{ section.settings.right_image_2 | image_url: width: 800 | image_tag:
+            loading: 'lazy',
+            sizes: '(min-width: 768px) 25vw, 50vw',
+            widths: '400, 600, 800',
+            class: 'promo-secondary-image',
+            alt: section.settings.right2_title | escape
+          }}
+        {%- endif -%}
+        
+        <div class="promo-secondary-content">
+          <h3 class="promo-secondary-heading">{{ section.settings.right2_title }}</h3>
+          
+          {%- if section.settings.right2_link != blank -%}
+            <a href="{{ section.settings.right2_link }}" class="promo-secondary-link">
+              {{ 'general.shop_now' | t }}
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="promo-secondary">
+        {%- if section.settings.right_image_3 -%}
+          {{ section.settings.right_image_3 | image_url: width: 800 | image_tag:
+            loading: 'lazy',
+            sizes: '(min-width: 768px) 25vw, 50vw',
+            widths: '400, 600, 800',
+            class: 'promo-secondary-image',
+            alt: section.settings.right3_title | escape
+          }}
+        {%- endif -%}
+        
+        <div class="promo-secondary-content">
+          <h3 class="promo-secondary-heading">{{ section.settings.right3_title }}</h3>
+          
+          {%- if section.settings.right3_link != blank -%}
+            <a href="{{ section.settings.right3_link }}" class="promo-secondary-link">
+              {{ 'general.shop_now' | t }}
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
