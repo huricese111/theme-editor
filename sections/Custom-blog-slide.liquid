@@ -1,3 +1,5 @@
+{% assign locale_prefix = request.locale.iso_code | slice: 0,2 | downcase %}
+
 {% capture section_title %}
   {% case locale_prefix %}
     {% when 'de' %}{{ section.settings.title_de | default: section.settings.title_de }}
@@ -9,9 +11,9 @@
 
 {% capture button_text %}
   {% case locale_prefix %}
-    {% when 'de' %}{{ section.settings.button_text_de | default: section.settings.button_text }}
-    {% when 'fr' %}{{ section.settings.button_text_fr | default: section.settings.button_text }}
-    {% when 'fi' %}{{ section.settings.button_text_fi | default: section.settings.button_text }}
+    {% when 'de' %}{{ section.settings.button_text_de | default: section.settings.button_text_de }}
+    {% when 'fr' %}{{ section.settings.button_text_fr | default: section.settings.button_text_fr }}
+    {% when 'fi' %}{{ section.settings.button_text_fi | default: section.settings.button_text_fi }}
     {% else %}{{ section.settings.button_text | default: 'Learn More' }}
   {% endcase %}
 {% endcapture %}
