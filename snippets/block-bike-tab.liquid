@@ -255,21 +255,23 @@
 {% assign show_main_tabs = block.settings.show_main_tabs | default: true %}
 {% assign show_sub_tabs = block.settings.show_sub_tabs | default: true %}
 {% assign global_link_url = block.settings.global_link_url %}
-{% assign title_key = 'title_' | append: request.locale.iso_code %}
-{% assign description_key = 'description_' | append: request.locale.iso_code %}
 
 <div class="bike-tabs-block" id="block-{{ block.id }}">
   <div class="banner-header-container">
     <div class="banner-header-left">
       {% assign title_key = 'title_' | append: request.locale.iso_code %}
+      {% assign default_title_key = 'title_en' %}
       {% assign description_key = 'description_' | append: request.locale.iso_code %}
+      {% assign default_description_key = 'description_en' %}
 
-      {% if block.settings[title_key] != blank %}
-        <h2 class="banner-title">{{ block.settings[title_key] }}</h2>
+      {% assign title_value = block.settings[title_key] | default: block.settings[default_title_key] %}
+      {% if title_value != blank %}
+        <h2 class="banner-title">{{ title_value }}</h2>
       {% endif %}
 
-      {% if block.settings[description_key] != blank %}
-        <div class="banner-description">{{ block.settings[description_key] }}</div>
+      {% assign description_value = block.settings[description_key] | default: block.settings[default_description_key] %}
+      {% if description_value != blank %}
+        <div class="banner-description">{{ description_value }}</div>
       {% endif %}
     </div>
 

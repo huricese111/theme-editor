@@ -1,13 +1,13 @@
 {% assign current_locale = request.locale.iso_code | default: 'en' %}
 {% assign locale_prefix = current_locale | slice: 0, 2 %}
 {% render 'number-format' %}
-{% include 'media-content-styles' %}
+{% render 'media-content-styles' %}
 
 <div class="full-width-section">
   <div class="container" style="max-width:none; padding:0">
     <div class="flexible-layout valign-middle">
-      {% include 'media-column', section: section %}
-      {% include 'content-column', section: section %}
+      {% render 'media-column', section: section %}
+      {% render 'content-column', section: section %}
     </div>
   </div>
 </div>
