@@ -1,4 +1,4 @@
-{% assign locale_prefix = request.locale.iso_code | slice: 0,2 | downcase %}
+{% assign locale_prefix = request.locale.iso_code | slice: 0, 2 | downcase %}
 
 {% capture section_title %}
   {% case locale_prefix %}
@@ -226,6 +226,25 @@
     padding: 0 50px;
   }
 
+   .carousel-track {
+    touch-action: pan-y;
+    overflow: hidden;
+  }
+
+  .carousel-slides {
+    will-change: transform;
+    display: flex;
+    min-width: 100%;
+  }
+
+  .blog-carousel-section {
+    touch-action: none;
+  }
+
+  .carousel-track {
+    touch-action: pan-x;
+  }
+
   .section-title {
     font-size: 32px;
     font-weight: 700;
@@ -263,6 +282,7 @@
     overflow: hidden;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+      flex-shrink: 0;
   }
 
   .carousel-slide:hover {
@@ -443,7 +463,7 @@
     }
 
     .carousel-slide {
-      width: calc(100% - 10px);
+      width: calc(100% - 50px);
       margin-right: 10px;
     }
 
@@ -490,12 +510,18 @@
       const slides = Array.from(slidesContainer.children);
       const prevArrow = section.querySelector('.prev-arrow');
       const nextArrow = section.querySelector('.next-arrow');
+      const carouselTrack = section.querySelector('.carousel-track');
 
       if (!slidesContainer || slides.length === 0) return;
 
       let currentIndex = 0;
       let slidesToShow = 3;
       let slideWidth = 0;
+      let touchStartX = 0;
+      let touchStartY = 0;
+      let touchEndX = 0;
+      let isDragging = false;
+      let isHorizontal = false;
 
       function initCarousel() {
         updateSlidesToShow();
@@ -516,7 +542,7 @@
 
       function updateSlideWidth() {
         if (slides.length > 0) {
-          slideWidth = slides[0].offsetWidth + 20;
+          slideWidth = slides[0].offsetWidth + parseFloat(window.getComputedStyle(slides[0]).marginRight);
         }
       }
 
@@ -553,6 +579,70 @@
           positionSlides();
         }
       }
+
+      function handleTouchStart(e) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        isDragging = true;
+        isHorizontal = false;
+        slidesContainer.style.transition = 'none';
+      }
+
+      function handleTouchMove(e) {
+        if (!isDragging) return;
+
+        const touchX = e.touches[0].clientX;
+        const touchY = e.touches[0].clientY;
+        const diffX = touchX - touchStartX;
+        const diffY = touchY - touchStartY;
+        touchEndX = touchX;
+
+        if (!isHorizontal) {
+          if (Math.abs(diffX) > Math.abs(diffY)) {
+            isHorizontal = true;
+          } else {
+            return;
+          }
+        }
+
+        if (isHorizontal) {
+          e.preventDefault();
+        }
+
+        const maxOffset = Math.max(0, (slides.length - slidesToShow) * slideWidth);
+        const minOffset = 0;
+
+        let tempOffset = currentIndex * slideWidth * -1 + diffX;
+
+        if (tempOffset > minOffset) tempOffset = minOffset;
+        if (tempOffset < -maxOffset) tempOffset = -maxOffset;
+
+        slidesContainer.style.transform = `translateX(${tempOffset}px)`;
+      }
+
+      function handleTouchEnd() {
+        if (!isDragging) return;
+
+        isDragging = false;
+        slidesContainer.style.transition = 'transform 0.5s ease';
+
+        const diff = touchEndX - touchStartX;
+        const threshold = 50;
+
+        if (isHorizontal) {
+          if (diff > threshold) {
+            movePrev();
+          } else if (diff < -threshold) {
+            moveNext();
+          } else {
+            positionSlides();
+          }
+        }
+      }
+
+      carouselTrack.addEventListener('touchstart', handleTouchStart);
+      carouselTrack.addEventListener('touchmove', handleTouchMove, { passive: false });
+      carouselTrack.addEventListener('touchend', handleTouchEnd);
 
       initCarousel();
 

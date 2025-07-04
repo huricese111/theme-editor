@@ -1,0 +1,118 @@
+{%- assign measurements = 'frame_height,seat_tube_angle,fork_offset,seat_angle,head_tube_length,head_tube_angle,top_tube_horizontal,chain_stay_length,bottom_bracket_drop,wheelbase,stack,reach,standover_height,seat_height_min,seat_height_max'
+  | split: ','
+-%}
+{%- assign letters = 'A,B,C,D,E,F,G,H,I,J,K,L,M' | split: ',' -%}
+
+{%- if block.type == 'step_through' -%}
+  {%- assign sizes = 'M,L' | split: ',' -%}
+  {%- if block.settings.show_size_s -%}
+    {%- assign sizes = sizes | push: 'S' -%}
+  {%- endif -%}
+{%- elsif block.type == 'low_step' -%}
+  {%- assign sizes = 'M,L' | split: ',' -%}
+{%- elsif block.type == 'high_step' -%}
+  {%- assign sizes = 'M,L' | split: ',' -%}
+  {%- if block.settings.show_size_xl -%}
+    {%- assign sizes = sizes | push: 'XL' -%}
+  {%- endif -%}
+{%- else -%}
+  {% comment %} mountain and carbon {% endcomment %}
+  {%- assign sizes = 'M,L' | split: ',' -%}
+{%- endif -%}
+
+<table class="pf-inner-table" style="width: 100%;">
+  <thead>
+    <tr>
+      <th>No.</th>
+      <th>Measurement</th>
+      {% for size in sizes %}
+        <th>{{ size }}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for measurement in measurements %}
+      {% assign letter_index = forloop.index0 %}
+      <tr>
+        <td>{{ letters[letter_index] }}</td>
+        <td>
+          {% case measurement %}
+            {% when 'frame_height' -%}
+              Frame Height
+            {% when 'seat_tube_angle' -%}
+              Seat Tube Angle
+            {% when 'fork_offset' -%}
+              Fork Offset
+            {% when 'seat_angle' -%}
+              Seat Angle
+            {% when 'head_tube_length' -%}
+              Head Tube Length
+            {% when 'head_tube_angle' -%}
+              Head Tube Angle
+            {% when 'top_tube_horizontal' -%}
+              Top Tube Horizontal
+            {% when 'chain_stay_length' -%}
+              Chain Stay Length
+            {% when 'bottom_bracket_drop' -%}
+              Bottom Bracket Drop
+            {% when 'wheelbase' -%}
+              Wheelbase
+            {% when 'stack' -%}
+              Stack
+            {% when 'reach' -%}
+              Reach
+            {% when 'standover_height' -%}
+              Standover Height
+            {% when 'seat_height_min' -%}
+              Seat Height Min
+            {% when 'seat_height_max' -%}
+              Seat Height Max
+            {% else -%}
+              {{- measurement | replace: '_', ' ' | capitalize }}
+          {% endcase %}
+        </td>
+
+        {% for size in sizes %}
+          {% assign field_name = '' %}
+
+          {% case block.type %}
+            {% when 'step_through' %}
+              {% if size == 'S' %}
+                {% assign field_name = measurement | append: '_low_S' %}
+              {% elsif size == 'M' %}
+                {% assign field_name = measurement | append: '_low' %}
+              {% elsif size == 'L' %}
+                {% assign field_name = measurement | append: '_low_L' %}
+              {% endif %}
+
+            {% when 'low_step' %}
+              {% if size == 'M' %}
+                {% assign field_name = measurement | append: '_low' %}
+              {% elsif size == 'L' %}
+                {% assign field_name = measurement | append: '_low_L' %}
+              {% endif %}
+
+            {% when 'high_step' %}
+              {% if size == 'M' %}
+                {% assign field_name = measurement | append: '_high' %}
+              {% elsif size == 'L' %}
+                {% assign field_name = measurement | append: '_high_L' %}
+              {% elsif size == 'XL' %}
+                {% assign field_name = measurement | append: '_high_XL' %}
+              {% endif %}
+
+            {% else %}
+              {% comment %} mountain and carbon {% endcomment %}
+              {% if size == 'M' %}
+                {% assign field_name = measurement | append: '_high' %}
+              {% elsif size == 'L' %}
+                {% assign field_name = measurement | append: '_high_L' %}
+              {% endif %}
+          {% endcase %}
+
+          <td>{{ block.settings[field_name] | default: '-' }}</td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
