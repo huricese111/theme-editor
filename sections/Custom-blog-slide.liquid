@@ -1,0 +1,569 @@
+{% capture section_title %}
+  {% case locale_prefix %}
+    {% when 'de' %}{{ section.settings.title_de | default: section.settings.title_de }}
+    {% when 'fr' %}{{ section.settings.title_fr | default: section.settings.title_fr }}
+    {% when 'fi' %}{{ section.settings.title_fi | default: section.settings.title_fi }}
+    {% else %}{{ section.settings.title }}
+  {% endcase %}
+{% endcapture %}
+
+{% capture button_text %}
+  {% case locale_prefix %}
+    {% when 'de' %}{{ section.settings.button_text_de | default: section.settings.button_text }}
+    {% when 'fr' %}{{ section.settings.button_text_fr | default: section.settings.button_text }}
+    {% when 'fi' %}{{ section.settings.button_text_fi | default: section.settings.button_text }}
+    {% else %}{{ section.settings.button_text | default: 'Learn More' }}
+  {% endcase %}
+{% endcapture %}
+
+<div
+  class="blog-carousel-section"
+  id="blog-carousel-{{ section.id }}"
+  style="
+    --button-bg: {{ section.settings.button_background_color | default: '#ffffff' }};
+    --button-text: {{ section.settings.button_text_color | default: '#222222' }};
+    --button-hover-bg: {{ section.settings.button_hover_background_color | default: '#222222' }};
+    --button-hover-text: {{ section.settings.button_hover_text_color | default: '#ffffff' }};
+  "
+>
+  <div class="carousel-header">
+    <h2 class="section-title">
+      {{ section_title | escape }}
+    </h2>
+  </div>
+
+  <div class="carousel-outer">
+    <div class="carousel-container">
+      <div class="carousel-track">
+        <div class="carousel-slides" id="carousel-slides-{{ section.id }}">
+          {% assign articles_count = section.blocks | size %}
+          {% for block in section.blocks %}
+            {% assign article = block.settings.selected_article %}
+            {% if article != blank %}
+              <div class="carousel-slide">
+                <div class="slide-image">
+                  <a href="{{ article.url }}">
+                    {%- liquid
+                      assign loading = 'lazy'
+                      if forloop.index < 4
+                        assign loading = 'eager'
+                      endif
+                      assign has_image = article.image | default: false
+                    -%}
+                    {%- if has_image -%}
+                      <img
+                        src="{{ article.image | img_url: '600x' }}"
+                        loading="{{ loading }}"
+                        alt="{{ article.image.alt | escape }}"
+                        class="article-image"
+                      >
+                    {%- else -%}
+                      <div class="image-placeholder">{{ 'image' | placeholder_svg_tag }}</div>
+                    {%- endif -%}
+                  </a>
+                </div>
+
+                <div class="slide-content">
+                  <div class="article-meta">
+                    <span class="article-date">{{ article.published_at | date: '%b %d, %Y' }}</span>
+                  </div>
+                  <a href="{{ article.url }}">
+                    <h3 class="article-title">{{ article.title }}</h3>
+                  </a>
+                  <p class="article-excerpt">
+                    {{ article.excerpt | default: article.content | strip_html | truncate: 120 }}
+                  </p>
+                  <a href="{{ article.url }}" class="article-button">{{ button_text | strip }}</a>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="carousel-arrows">
+        <div class="carousel-arrow prev-arrow">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="white" width="20px" height="auto">
+            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="48" d="M328 112L184 256l144 144"></path>
+          </svg>
+        </div>
+        <div class="carousel-arrow next-arrow">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="white" width="20px" height="auto">
+            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="48" d="M184 112l144 144-144 144"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Blog Carousel",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading (Default)",
+      "default": "News & Stories"
+    },
+    {
+      "type": "text",
+      "id": "title_de",
+      "label": "Heading (German)",
+      "default": "Neuigkeiten & Geschichten"
+    },
+    {
+      "type": "text",
+      "id": "title_fr",
+      "label": "Heading (French)",
+      "default": "Actualités & Histoires"
+    },
+    {
+      "type": "text",
+      "id": "title_fi",
+      "label": "Heading (Finnish)",
+      "default": "Uutiset & Tarinat"
+    },
+    {
+      "type": "select",
+      "id": "image_aspect_ratio",
+      "label": "Image Aspect Ratio",
+      "options": [
+        { "value": "16/9", "label": "16:9" },
+        { "value": "3/4", "label": "Portrait (3:4)" },
+        { "value": "1/1", "label": "Square (1:1)" },
+        { "value": "natural", "label": "Natural" }
+      ],
+      "default": "16/9"
+    },
+    {
+      "type": "header",
+      "content": "Button Settings"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text (Default)",
+      "default": "Learn More"
+    },
+    {
+      "type": "text",
+      "id": "button_text_de",
+      "label": "Button Text (German)",
+      "default": "Mehr erfahren"
+    },
+    {
+      "type": "text",
+      "id": "button_text_fr",
+      "label": "Button Text (French)",
+      "default": "En savoir plus"
+    },
+    {
+      "type": "text",
+      "id": "button_text_fi",
+      "label": "Button Text (Finnish)",
+      "default": "Lue lisää"
+    },
+    {
+      "type": "color",
+      "id": "button_background_color",
+      "label": "Button Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#222222"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_background_color",
+      "label": "Hover Background Color",
+      "default": "#222222"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text_color",
+      "label": "Hover Text Color",
+      "default": "#ffffff"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "article",
+      "name": "Article",
+      "settings": [
+        {
+          "type": "article",
+          "id": "selected_article",
+          "label": "Select Article"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Blog Carousel",
+      "category": "Content"
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  .blog-carousel-section {
+    margin: 80px auto;
+    max-width: 1400px;
+    position: relative;
+  }
+
+  .carousel-header {
+    margin-bottom: 30px;
+    padding: 0 50px;
+  }
+
+  .section-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #222;
+    text-align: left;
+    margin: 0 0 20px;
+  }
+
+  .carousel-outer {
+    position: relative;
+    padding: 0 50px;
+  }
+
+  .carousel-container {
+    position: relative;
+    border-radius: 12px;
+  }
+
+  .carousel-track {
+    overflow: hidden;
+  }
+
+  .carousel-slides {
+    display: flex;
+    transition: transform 0.5s ease;
+    padding: 5px 0;
+  }
+
+  .carousel-slide {
+    flex: 0 0 auto;
+    width: calc(33.333% - 20px);
+    margin-right: 20px;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .carousel-slide:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  }
+
+  .slide-image {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px 10px 0 0;
+  }
+
+  {% case section.settings.image_aspect_ratio %}
+    {% when '16/9' %}
+      .slide-image {
+        aspect-ratio: 16 / 9;
+      }
+    {% when '3/4' %}
+      .slide-image {
+        aspect-ratio: 3 / 4;
+      }
+    {% when '1/1' %}
+      .slide-image {
+        aspect-ratio: 1 / 1;
+      }
+    {% else %}
+      .slide-image {
+        height: 220px;
+      }
+  {% endcase %}
+
+  .slide-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .carousel-slide:hover .slide-image img {
+    transform: scale(1.05);
+  }
+
+  .image-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .image-placeholder svg {
+    width: 50%;
+    height: 50%;
+    opacity: 0.3;
+  }
+
+  .slide-content {
+    padding: 20px;
+  }
+
+  .article-meta {
+    margin-bottom: 8px;
+  }
+
+  .article-date {
+    font-size: 13px;
+    color: #777;
+    display: block;
+    font-weight: 500;
+  }
+
+  .article-title {
+    font-size: 20px;
+    line-height: 1.4;
+    color: #222;
+    margin: 0 0 15px;
+    transition: color 0.2s;
+    font-weight: 600;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 3em;
+  }
+
+  .article-title:hover {
+    color: #0066cc;
+  }
+
+  .article-excerpt {
+    color: #555;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .article-button {
+    display: inline-block;
+    padding: 10px 25px;
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    text-decoration: none;
+    border-radius: 30px;
+    border: 2px solid var(--button-text);
+    font-weight: 600;
+    transition: all 0.3s;
+    font-size: 14px;
+  }
+
+  .article-button:hover {
+    background-color: var(--button-hover-bg);
+    color: var(--button-hover-text);
+    border-color: var(--button-hover-bg);
+  }
+
+  .carousel-arrows {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .carousel-arrow {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    pointer-events: auto;
+    opacity: 0.8;
+    transition: all 0.3s;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+  }
+
+  .carousel-arrow:hover {
+    opacity: 1;
+    background: #000;
+    transform: scale(1.05);
+  }
+
+  .carousel-arrow.hidden {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  @media (max-width: 1200px) {
+    .carousel-slide {
+      width: calc(50% - 15px);
+    }
+
+    .blog-carousel-section {
+      max-width: 100%;
+      padding: 0 30px;
+    }
+
+    .carousel-header {
+      padding: 0 30px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .carousel-outer {
+      padding: 0 30px;
+    }
+
+    .carousel-slide {
+      width: calc(100% - 10px);
+      margin-right: 10px;
+    }
+
+    .carousel-arrow {
+      width: 40px;
+      height: 40px;
+    }
+
+    .blog-carousel-section {
+      padding: 0 15px;
+      margin: 50px 0;
+    }
+
+    .section-title {
+      font-size: 26px;
+    }
+
+    .carousel-header {
+      padding: 0 30px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .carousel-outer {
+      padding: 0;
+    }
+
+    .carousel-arrows {
+      display: none;
+    }
+
+    .carousel-header {
+      padding: 0;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const carousels = document.querySelectorAll('.blog-carousel-section');
+
+    carousels.forEach((section) => {
+      const slidesContainer = section.querySelector('.carousel-slides');
+      const slides = Array.from(slidesContainer.children);
+      const prevArrow = section.querySelector('.prev-arrow');
+      const nextArrow = section.querySelector('.next-arrow');
+
+      if (!slidesContainer || slides.length === 0) return;
+
+      let currentIndex = 0;
+      let slidesToShow = 3;
+      let slideWidth = 0;
+
+      function initCarousel() {
+        updateSlidesToShow();
+        updateSlideWidth();
+        updateArrows();
+        positionSlides();
+      }
+
+      function updateSlidesToShow() {
+        if (window.innerWidth < 769) {
+          slidesToShow = 1;
+        } else if (window.innerWidth < 1201) {
+          slidesToShow = 2;
+        } else {
+          slidesToShow = 3;
+        }
+      }
+
+      function updateSlideWidth() {
+        if (slides.length > 0) {
+          slideWidth = slides[0].offsetWidth + 20;
+        }
+      }
+
+      function updateArrows() {
+        if (slides.length <= slidesToShow) {
+          prevArrow.classList.add('hidden');
+          nextArrow.classList.add('hidden');
+          return;
+        }
+
+        prevArrow.classList.remove('hidden');
+        nextArrow.classList.remove('hidden');
+
+        prevArrow.style.opacity = currentIndex === 0 ? '0.3' : '0.8';
+        nextArrow.style.opacity = currentIndex >= slides.length - slidesToShow ? '0.3' : '0.8';
+      }
+
+      function positionSlides() {
+        slidesContainer.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+      }
+
+      function movePrev() {
+        if (currentIndex > 0) {
+          currentIndex--;
+          updateArrows();
+          positionSlides();
+        }
+      }
+
+      function moveNext() {
+        if (currentIndex < slides.length - slidesToShow) {
+          currentIndex++;
+          updateArrows();
+          positionSlides();
+        }
+      }
+
+      initCarousel();
+
+      prevArrow.addEventListener('click', movePrev);
+      nextArrow.addEventListener('click', moveNext);
+
+      window.addEventListener('resize', function () {
+        updateSlidesToShow();
+        updateSlideWidth();
+        currentIndex = Math.min(currentIndex, Math.max(0, slides.length - slidesToShow));
+        updateArrows();
+        positionSlides();
+      });
+    });
+  });
+</script>
