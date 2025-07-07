@@ -284,14 +284,12 @@
   >
     <h2 class="section-title">{{ section_title | escape }}</h2>
   </div>
-
   <div class="carousel-outer">
     <div class="carousel-container">
       <div class="carousel-track">
         <div class="carousel-slides" id="carousel-slides-{{ section.id }}">
           {% for block in section.blocks %}
             {% assign item_button_text = block.settings.button_text_override | default: default_button_text %}
-
             <div
               class="carousel-slide {% if all_content_hidden %}all-content-hidden{% endif %}"
               {{ block.shopify_attributes }}
@@ -327,29 +325,24 @@
                   <div class="image-placeholder">{{ 'image' | placeholder_svg_tag }}</div>
                 {%- endif -%}
               </div>
-
               {% unless all_content_hidden %}
                 <div class="slide-content">
                   {% if block.settings.title != blank and show_title_global %}
                     {% if block.settings.title_link != blank %}
                       <a href="{{ block.settings.title_link }}" style="display: block;">
                     {% endif %}
-
                     <h3 class="custom-title">
                       {{ block.settings.title }}
                     </h3>
-
                     {% if block.settings.title_link != blank %}
                       </a>
                     {% endif %}
                   {% endif %}
-
                   {% if block.settings.text != blank and show_text_global %}
                     <div class="custom-text">
                       {{ block.settings.text }}
                     </div>
                   {% endif %}
-
                   {% if block.settings.button_link != blank and show_button_global %}
                     <a href="{{ block.settings.button_link }}" class="custom-button">
                       {{- item_button_text | strip -}}
@@ -362,7 +355,6 @@
         </div>
       </div>
     </div>
-
     <div class="carousel-arrows">
       <div class="carousel-arrow prev-arrow">
         {% render 'icon-prev-arrow' %}
