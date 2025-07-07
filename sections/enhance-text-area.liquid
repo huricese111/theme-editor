@@ -1,0 +1,372 @@
+{% schema %}
+{
+  "name": "Enhanced Text Area",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title (Default)",
+      "default": "Your Section Title"
+    },
+    {
+      "type": "text",
+      "id": "section_title_de",
+      "label": "Section Title (German)",
+      "default": "Ihr Abschnittsüberschrift"
+    },
+    {
+      "type": "text",
+      "id": "section_title_fr",
+      "label": "Section Title (French)",
+      "default": "Votre titre de section"
+    },
+    {
+      "type": "text",
+      "id": "section_title_fi",
+      "label": "Section Title (Finland)"
+    },
+    {
+      "type": "richtext",
+      "id": "text_description",
+      "label": "Text Description (Default)",
+      "default": "<p>This is a description of the section.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "text_description_de",
+      "label": "Text Description (German)",
+      "default": "<p>Dies ist eine Beschreibung des Abschnitts.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "text_description_fr",
+      "label": "Text Description (French)",
+      "default": "<p>Ceci est une description de la section.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "text_description_fi",
+      "label": "Text Description (Finland)"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "label": "Title Font Size (px)",
+      "default": 24,
+      "min": 10,
+      "max": 100,
+      "step": 1
+    },
+    {
+      "type": "range",
+      "id": "text_font_size",
+      "label": "Text Font Size (px)",
+      "default": 16,
+      "min": 10,
+      "max": 100,
+      "step": 1
+    },
+    {
+      "type": "checkbox",
+      "id": "show_item_list",
+      "label": "Show List Items",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "title_left",
+          "label": "Title Left, Description Right, Items Below"
+        },
+        {
+          "value": "title_above",
+          "label": "Title Above, Description Below, Items Below"
+        }
+      ],
+      "default": "title_above"
+    },
+    {
+      "type": "range",
+      "id": "item_font_size",
+      "label": "Item Font Size (px)",
+      "default": 16,
+      "min": 10,
+      "max": 100,
+      "step": 1
+    },
+    {
+      "type": "select",
+      "id": "custom_icon",
+      "label": "Select list-item icon",
+      "options": [
+        {
+          "value": "arrow",
+          "label": "Arrow"
+        },
+        {
+          "value": "checkmark",
+          "label": "Checkmark"
+        },
+        {
+          "value": "star",
+          "label": "Star"
+        },
+        {
+          "value": "info",
+          "label": "Info"
+        },
+        {
+          "value": "solid_dot",
+          "label": "Solid Dot"
+        }
+      ],
+      "default": "solid_dot"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon Color",
+      "default": "#000000"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "list_item",
+      "name": "List Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "item_text",
+          "label": "Item Text (Default)"
+        },
+        {
+          "type": "text",
+          "id": "item_text_de",
+          "label": "Item Text (German)"
+        },
+        {
+          "type": "text",
+          "id": "item_text_fr",
+          "label": "Item Text (French)"
+        },
+        {
+          "type": "text",
+          "id": "item_text_fi",
+          "label": "Item Text (Finland)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Enhanced Text Area",
+      "category": "Content"
+    }
+  ]
+}
+{% endschema %}
+
+{%- liquid
+  # Language detection with fallback
+  assign lang = request.locale.iso_code
+  assign section_title = section.settings.section_title
+  assign section_description = section.settings.text_description
+
+  case lang
+    when 'de'
+      assign section_title = section.settings.section_title_de | default: section_title
+      assign section_description = section.settings.text_description_de | default: section_description
+    when 'fr'
+      assign section_title = section.settings.section_title_fr | default: section_title
+      assign section_description = section.settings.text_description_fr | default: section_description
+    when 'fi'
+      assign section_title = section.settings.section_title_fi | default: section_title
+      assign section_description = section.settings.text_description_fi | default: section_description
+  endcase
+
+  assign title_tag = 'h2'
+-%}
+
+<div class="enhanced-text-area" id="section-{{ section.id }}">
+  <div class="container">
+    {%- if section.settings.layout == 'title_above' -%}
+      <div class="title-above-layout">
+        <{{ title_tag }}
+          class="textarea-section-title"
+          style="font-size: {{ section.settings.title_font_size }}px; color: {{ section.settings.title_color }};"
+        >
+          {{ section_title }}
+        </{{ title_tag }}>
+        <div class="content-grid">
+          <div class="description-content">
+            <div
+              class="rich-text-content"
+              style="font-size: {{ section.settings.text_font_size }}px; color: {{ section.settings.text_color }};"
+            >
+              {{ section_description }}
+            </div>
+          </div>
+          {%- if section.settings.show_item_list and section.blocks.size > 0 -%}
+            <div class="item-list-container">
+              <ul class="icon-list">
+                {%- for block in section.blocks -%}
+                  {%- assign item_text = block.settings.item_text -%}
+                  {%- case lang -%}
+                    {%- when 'de' -%}
+                      {%- assign item_text = block.settings.item_text_de | default: item_text -%}
+                    {%- when 'fr' -%}
+                      {%- assign item_text = block.settings.item_text_fr | default: item_text -%}
+                    {%- when 'fi' -%}
+                      {%- assign item_text = block.settings.item_text_fi | default: item_text -%}
+                  {%- endcase -%}
+                  <li
+                    class="list-item"
+                    style="font-size: {{ section.settings.item_font_size }}px;"
+                    {{ block.shopify_attributes }}
+                  >
+                    <span
+                      class="icon"
+                      style="color: {{ section.settings.icon_color }}; width: {{ icon_size }}px; height: {{ icon_size }}px;"
+                    >
+                      {%- render 'list-icon', icon: section.settings.custom_icon, size: icon_size -%}
+                    </span>
+                    <span class="item-text">{{ item_text }}</span>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- elsif section.settings.layout == 'title_left' -%}
+      <div class="header-layout">
+        <{{ title_tag }}
+          class="textarea-section-title"
+          style="font-size: {{ section.settings.title_font_size }}px; color: {{ section.settings.title_color }};"
+        >
+          {{ section_title }}
+        </{{ title_tag }}>
+        <div class="content-container">
+          <div
+            class="rich-text-content"
+            style="font-size: {{ section.settings.text_font_size }}px; color: {{ section.settings.text_color }};"
+          >
+            {{ section_description }}
+          </div>
+          {%- if section.settings.show_item_list and section.blocks.size > 0 -%}
+            <div class="item-list-container">
+              <ul class="icon-list">
+                {%- for block in section.blocks -%}
+                  {%- assign item_text = block.settings.item_text -%}
+                  {%- case lang -%}
+                    {%- when 'de' -%}
+                      {%- assign item_text = block.settings.item_text_de | default: item_text -%}
+                    {%- when 'fr' -%}
+                      {%- assign item_text = block.settings.item_text_fr | default: item_text -%}
+                    {%- when 'fi' -%}
+                      {%- assign item_text = block.settings.item_text_fi | default: item_text -%}
+                  {%- endcase -%}
+                  <li
+                    class="list-item"
+                    style="font-size: {{ section.settings.item_font_size }}px;"
+                    {{ block.shopify_attributes }}
+                  >
+                    <span class="icon" style="color: {{ section.settings.icon_color }};">
+                      {%- render 'list-icon', icon: section.settings.custom_icon -%}
+                    </span>
+                    <span class="item-text">{{ item_text }}</span>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+<style>
+  #section-{{ section.id }} .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+
+  .textarea-section-title {
+    margin-bottom: 20px;
+    line-height: 1.3;
+    text-align: left;
+  }
+
+  .content-grid {
+    display: flex;
+    gap: 40px;
+  }
+
+  .description-content {
+    flex: 1;
+  }
+
+  .rich-text-content {
+    line-height: 1.6;
+    text-align: left;
+  }
+
+  .rich-text-content p {
+    margin-bottom: 15px;
+  }
+
+  .item-list-container {
+    flex: 1;
+    margin-top: 0;
+  }
+
+  .icon-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+  }
+
+  .list-item {
+    position: relative;
+    padding-left: 30px;
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .icon {
+    position: absolute;
+    left: 0;
+    top: 0.2em;
+    margin-right: 12px;
+    display: inline-flex;
+  }
+
+  @media (max-width: 768px) {
+    .content-grid {
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    #section-{{ section.id }} .container {
+      padding: 30px 15px;
+    }
+  }
+</style>

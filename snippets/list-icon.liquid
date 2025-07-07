@@ -1,0 +1,86 @@
+{% comment %} list-icon.liquid snippet {% endcomment %}
+{%- liquid
+  assign icon_color = 'currentColor'
+  assign icon_size = size | default: 16
+  assign icon_width = icon_size
+  assign icon_height = icon_size
+  assign viewbox_size = 16 | at_least: icon_size
+  assign stroke_width = 1.5 | times: 16 | divided_by: viewbox_size
+-%}
+
+{%- case icon -%}
+  {%- when 'arrow' -%}
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="{{ icon_width }}"
+      height="{{ icon_height }}"
+      viewBox="0 0 {{ viewbox_size }} {{ viewbox_size }}"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path d="M{{ viewbox_size | times: 0.625 | minus: 1 }} {{ viewbox_size | times: 0.5 }}H{{ viewbox_size | times: 0.375 | plus: 1 }}" stroke="{{ icon_color }}" stroke-width="{{ stroke_width }}" stroke-linecap="round"/>
+      <path d="M{{ viewbox_size | times: 0.625 | minus: 1 }} {{ viewbox_size | times: 0.5 }}L{{ viewbox_size | times: 0.375 | plus: 1 }} {{ viewbox_size | times: 0.375 | plus: 1 }}" stroke="{{ icon_color }}" stroke-width="{{ stroke_width }}" stroke-linecap="round"/>
+      <path d="M{{ viewbox_size | times: 0.625 | minus: 1 }} {{ viewbox_size | times: 0.5 }}L{{ viewbox_size | times: 0.375 | plus: 1 }} {{ viewbox_size | times: 0.625 | minus: 1 }}" stroke="{{ icon_color }}" stroke-width="{{ stroke_width }}" stroke-linecap="round"/>
+    </svg>
+
+  {%- when 'checkmark' -%}
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="{{ icon_width }}"
+      height="{{ icon_height }}"
+      viewBox="0 0 {{ viewbox_size }} {{ viewbox_size }}"
+      fill="none"
+      aria-hidden="true"
+    >
+      <circle cx="{{ viewbox_size | divided_by: 2 }}" cy="{{ viewbox_size | divided_by: 2 }}" r="{{ viewbox_size | divided_by: 2 | minus: stroke_width }}" stroke="{{ icon_color }}" stroke-width="{{ stroke_width }}"/>
+      <path d="M{{ viewbox_size | times: 0.3 }} {{ viewbox_size | times: 0.5 }} L{{ viewbox_size | times: 0.45 }} {{ viewbox_size | times: 0.65 }} L{{ viewbox_size | times: 0.7 }} {{ viewbox_size | times: 0.35 }}" stroke="{{ icon_color }}" stroke-width="{{ stroke_width }}" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </svg>
+
+  {%- when 'star' -%}
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="{{ icon_width }}"
+      height="{{ icon_height }}"
+      viewBox="0 0 {{ viewbox_size }} {{ viewbox_size }}"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path d="M{{ viewbox_size | times: 0.5 }} 1
+               L{{ viewbox_size | times: 0.62 }} {{ viewbox_size | times: 0.4 }}
+               L{{ viewbox_size | minus: 1 }} {{ viewbox_size | times: 0.35 }}
+               L{{ viewbox_size | times: 0.7 }} {{ viewbox_size | times: 0.6 }}
+               L{{ viewbox_size | times: 0.75 }} {{ viewbox_size | minus: 1 }}
+               L{{ viewbox_size | times: 0.5 }} {{ viewbox_size | times: 0.8 }}
+               L{{ viewbox_size | times: 0.25 }} {{ viewbox_size | minus: 1 }}
+               L{{ viewbox_size | times: 0.3 }} {{ viewbox_size | times: 0.6 }}
+               L1 {{ viewbox_size | times: 0.35 }}
+               L{{ viewbox_size | times: 0.38 }} {{ viewbox_size | times: 0.4 }} Z"
+            fill="{{ icon_color }}"/>
+    </svg>
+
+  {%- when 'info' -%}
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="{{ icon_width }}"
+      height="{{ icon_height }}"
+      viewBox="0 0 {{ viewbox_size }} {{ viewbox_size }}"
+      fill="none"
+      aria-hidden="true"
+    >
+      <circle cx="{{ viewbox_size | divided_by: 2 }}" cy="{{ viewbox_size | divided_by: 2 }}" r="{{ viewbox_size | divided_by: 2 | minus: stroke_width }}" stroke="{{ icon_color }}" stroke-width="{{ stroke_width }}"/>
+      <rect x="{{ viewbox_size | times: 0.45 }}" y="{{ viewbox_size | times: 0.3 }}" width="{{ viewbox_size | times: 0.1 }}" height="{{ viewbox_size | times: 0.1 }}" rx="1" fill="{{ icon_color }}"/>
+      <rect x="{{ viewbox_size | times: 0.45 }}" y="{{ viewbox_size | times: 0.45 }}" width="{{ viewbox_size | times: 0.1 }}" height="{{ viewbox_size | times: 0.25 }}" rx="1" fill="{{ icon_color }}"/>
+    </svg>
+
+  {%- else -%}
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="{{ icon_width }}"
+      height="{{ icon_height }}"
+      viewBox="0 0 {{ viewbox_size }} {{ viewbox_size }}"
+      fill="none"
+      aria-hidden="true"
+    >
+      <circle cx="{{ viewbox_size | divided_by: 2 }}" cy="{{ viewbox_size | divided_by: 2 }}" r="{{ viewbox_size | divided_by: 4 }}" fill="{{ icon_color }}"/>
+    </svg>
+{%- endcase -%}
