@@ -1,0 +1,1011 @@
+{% schema %}
+{
+  "name": "Custom Image with Text",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading (Default)",
+      "default": "Highlights"
+    },
+    {
+      "type": "text",
+      "id": "title_de",
+      "label": "Heading (German)",
+      "default": "Highlights"
+    },
+    {
+      "type": "text",
+      "id": "title_fr",
+      "label": "Heading (French)",
+      "default": "Highlights"
+    },
+    {
+      "type": "text",
+      "id": "title_fi",
+      "label": "Heading (Finnish)",
+      "default": "Highlights"
+    },
+    {
+      "type": "header",
+      "content": "Visibility Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_title",
+      "label": "Hide Section Title",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "image_aspect_ratio",
+      "label": "Image Aspect Ratio",
+      "options": [
+        {
+          "value": "16/9",
+          "label": "16:9"
+        },
+        {
+          "value": "3/4",
+          "label": "Portrait (3:4)"
+        },
+        {
+          "value": "1/1",
+          "label": "Square (1:1)"
+        },
+        {
+          "value": "natural",
+          "label": "Natural"
+        }
+      ],
+      "default": "16/9"
+    },
+    {
+      "type": "header",
+      "content": "Content Visibility"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_title_global",
+      "label": "Show Titles",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_text_global",
+      "label": "Show Descriptions",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button_global",
+      "label": "Show Buttons",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Button Settings"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text (Default)",
+      "default": "Learn More"
+    },
+    {
+      "type": "text",
+      "id": "button_text_de",
+      "label": "Button Text (German)",
+      "default": "Mehr erfahren"
+    },
+    {
+      "type": "text",
+      "id": "button_text_fr",
+      "label": "Button Text (French)",
+      "default": "En savoir plus"
+    },
+    {
+      "type": "text",
+      "id": "button_text_fi",
+      "label": "Button Text (Finnish)",
+      "default": "Lue lisää"
+    },
+    {
+      "type": "color",
+      "id": "button_background_color",
+      "label": "Button Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#222222"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Button Border Color",
+      "default": "#222222"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_background_color",
+      "label": "Hover Background Color",
+      "default": "#222222"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text_color",
+      "label": "Hover Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_border_color",
+      "label": "Hover Border Color",
+      "default": "#222222"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "custom_item",
+      "name": "Custom Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "image_link",
+          "label": "Image Link (Optional)"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Slide Title"
+        },
+        {
+          "type": "url",
+          "id": "title_link",
+          "label": "Title Link (Optional)"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Add your custom text here</p>"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link"
+        },
+        {
+          "type": "text",
+          "id": "button_text_override",
+          "label": "Custom Button Text (Optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Image with Text",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "custom_item",
+          "settings": {
+            "title": "First Item",
+            "text": "<p>Description for first item</p>"
+          }
+        },
+        {
+          "type": "custom_item",
+          "settings": {
+            "title": "Second Item",
+            "text": "<p>Description for second item</p>"
+          }
+        },
+        {
+          "type": "custom_item",
+          "settings": {
+            "title": "Third Item",
+            "text": "<p>Description for third item</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% assign locale_prefix = request.locale.iso_code | slice: 0, 2 | downcase %}
+
+{% capture section_title %}
+  {% case locale_prefix %}
+    {% when 'de' %}{{ section.settings.title_de | default: section.settings.title_de }}
+    {% when 'fr' %}{{ section.settings.title_fr | default: section.settings.title_fr }}
+    {% when 'fi' %}{{ section.settings.title_fi | default: section.settings.title_fi }}
+    {% else %}{{ section.settings.title }}
+  {% endcase %}
+{% endcapture %}
+
+{% capture default_button_text %}
+  {% case locale_prefix %}
+    {% when 'de' %}{{ section.settings.button_text_de | default: section.settings.button_text_de }}
+    {% when 'fr' %}{{ section.settings.button_text_fr | default: section.settings.button_text_fr }}
+    {% when 'fi' %}{{ section.settings.button_text_fi | default: section.settings.button_text_fi }}
+    {% else %}{{ section.settings.button_text | default: 'Learn More' }}
+  {% endcase %}
+{% endcapture %}
+
+{% assign show_title_global = section.settings.show_title_global %}
+{% assign show_text_global = section.settings.show_text_global %}
+{% assign show_button_global = section.settings.show_button_global %}
+{% assign all_content_hidden = true %}
+{% if show_title_global or show_text_global or show_button_global %}
+  {% assign all_content_hidden = false %}
+{% endif %}
+
+<div
+  class="custom-image-text-section"
+  id="custom-image-text-{{ section.id }}"
+  data-section-id="{{ section.id }}"
+  style="
+    --button-bg: {{ section.settings.button_background_color | default: '#ffffff' }};
+    --button-text: {{ section.settings.button_text_color | default: '#000000' }};
+    --button-border: {{ section.settings.button_border_color | default: '#000000' }};
+    --button-hover-bg: {{ section.settings.button_hover_background_color | default: '#222222' }};
+    --button-hover-text: {{ section.settings.button_hover_text_color | default: '#ffffff' }};
+    --button-hover-border: {{ section.settings.button_hover_border_color | default: '#222222' }};
+  "
+>
+  <div class="lightbox-container" id="lightbox-{{ section.id }}">
+    <div class="lightbox-content">
+      <button class="lightbox-close" aria-label="Close lightbox">×</button>
+      <img
+        class="lightbox-image"
+        src="{{ block.settings.image | img_url: '1200x' }}"
+        alt="Lightbox Image"
+      >
+    </div>
+  </div>
+
+  <div
+    class="section-header"
+    {% if section.settings.hide_title %}
+      style="display: none;"
+    {% endif %}
+  >
+    <h2 class="section-title">{{ section_title | escape }}</h2>
+  </div>
+
+  <div class="carousel-outer">
+    <div class="carousel-container">
+      <div class="carousel-track">
+        <div class="carousel-slides" id="carousel-slides-{{ section.id }}">
+          {% for block in section.blocks %}
+            {% assign item_button_text = block.settings.button_text_override | default: default_button_text %}
+
+            <div
+              class="carousel-slide {% if all_content_hidden %}all-content-hidden{% endif %}"
+              {{ block.shopify_attributes }}
+            >
+              <div class="slide-image">
+                {%- liquid
+                  assign loading = 'lazy'
+                  if forloop.index < 4
+                    assign loading = 'eager'
+                  endif
+                  assign has_image = block.settings.image | default: false
+                -%}
+                {%- if has_image -%}
+                  <div
+                    class="image-wrapper"
+                    data-lightbox="{{ section.id }}"
+                    data-image="{{ block.settings.image | img_url: '1200x' }}"
+                  >
+                    {% if block.settings.image_link != blank %}
+                      <a href="{{ block.settings.image_link }}" style="display: block; width: 100%;">
+                    {% endif %}
+                    <img
+                      src="{{ block.settings.image | img_url: '1200x' }}"
+                      loading="{{ loading }}"
+                      alt="{{ block.settings.image.alt | escape }}"
+                      class="carousel-image"
+                    >
+                    {% if block.settings.image_link != blank %}
+                      </a>
+                    {% endif %}
+                  </div>
+                {%- else -%}
+                  <div class="image-placeholder">{{ 'image' | placeholder_svg_tag }}</div>
+                {%- endif -%}
+              </div>
+
+              {% unless all_content_hidden %}
+                <div class="slide-content">
+                  {% if block.settings.title != blank and show_title_global %}
+                    {% if block.settings.title_link != blank %}
+                      <a href="{{ block.settings.title_link }}" style="display: block;">
+                    {% endif %}
+
+                    <h3 class="custom-title">
+                      {{ block.settings.title }}
+                    </h3>
+
+                    {% if block.settings.title_link != blank %}
+                      </a>
+                    {% endif %}
+                  {% endif %}
+
+                  {% if block.settings.text != blank and show_text_global %}
+                    <div class="custom-text">
+                      {{ block.settings.text }}
+                    </div>
+                  {% endif %}
+
+                  {% if block.settings.button_link != blank and show_button_global %}
+                    <a href="{{ block.settings.button_link }}" class="custom-button">
+                      {{- item_button_text | strip -}}
+                    </a>
+                  {% endif %}
+                </div>
+              {% endunless %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class="carousel-arrows">
+      <div class="carousel-arrow prev-arrow">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 512 512"
+          fill="white"
+          width="20px"
+          height="auto"
+        >
+          <path
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="48"
+            d="M328 112L184 256l144 144"></path>
+        </svg>
+      </div>
+      <div class="carousel-arrow next-arrow">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 512 512"
+          fill="white"
+          width="20px"
+          height="auto"
+        >
+          <path
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="48"
+            d="M184 112l144 144-144 144"></path>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+      .custom-image-text-section {
+        position: relative;
+        z-index: 1;
+        margin: 80px 0;
+        width: 100%;
+      }
+
+      .section-header {
+        margin-bottom: 30px;
+        padding-left: 50px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .carousel-outer {
+        position: relative;
+        padding-left: 50px;
+        width: 100%;
+        overflow: hidden;
+        box-sizing: border-box;
+      }
+
+      .carousel-track {
+        width: calc(100% + 50px);
+        margin-left: -50px;
+        padding-right: 50px;
+      }
+
+      .carousel-slides {
+        padding-right: 0;
+      }
+
+      .lightbox-container {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .lightbox-content {
+        position: relative;
+        max-width: 90%;
+        max-height: 90%;
+      }
+
+      .lightbox-image {
+        max-width: 90%;
+        max-height: 80vh;
+        display: block;
+        margin: 0 auto;
+        box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+      }
+
+      .lightbox-close {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 40px;
+        cursor: pointer;
+        z-index: 1001;
+        transition: all 0.3s;
+      }
+
+      .lightbox-close:hover {
+        color: #ccc;
+        transform: scale(1.1);
+      }
+
+      .carousel-track {
+        touch-action: pan-y;
+        overflow: hidden;
+      }
+
+      .carousel-slides {
+        will-change: transform;
+        display: flex;
+        min-width: 100%;
+        transition: transform 0.5s ease;
+      }
+
+      .section-title {
+        font-size: 32px;
+        font-weight: 700;
+        color: #222;
+        text-align: left;
+        margin: 0 0 20px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .carousel-container {
+        position: relative;
+        border-radius: 12px;
+        width: 100%;
+      }
+
+      .carousel-track {
+        overflow: visible;
+      }
+
+      .carousel-slides {
+        display: flex;
+        padding: 5px 50px;
+      }
+
+      .carousel-slide {
+        flex: 0 0 auto;
+        width: calc(30% - 20px);
+        margin-right: 20px;
+        background: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        transition: transform 0.3s ease
+        , box-shadow 0.3s ease;
+        flex-shrink: 0;
+      }
+
+      .carousel-slide.all-content-hidden .slide-image {
+        border-radius: 10px;
+      }
+
+      .carousel-slide:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+      }
+
+      .slide-image {
+        position: relative;
+        overflow: hidden;
+        border-radius: 10px 10px 0 0;
+        cursor: pointer;
+        display: block;
+        width: 100%;
+      }
+
+      .image-wrapper {
+        display: block;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      .image-wrapper img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+        transition: transform 0.4s ease;
+      }
+
+      .image-wrapper a {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+
+      {% case section.settings.image_aspect_ratio %}
+      {% when '1/1' %}
+      .slide-image {
+        aspect-ratio: 1 / 1;
+      }
+    {% when '16/9' %}
+    .slide-image {
+      aspect-ratio: 16 / 9;
+    }
+    {% when '3/4' %}
+    .slide-image {
+      aspect-ratio: 3 / 4;
+    }
+    {% else %}
+    .slide-image {
+      height: 220px;
+    }
+    {% endcase %}
+
+    .slide-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .carousel-slide:hover .slide-image img {
+      transform: scale(1.05);
+    }
+
+    .image-placeholder {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .image-placeholder svg {
+      width: 50%;
+      height: 50%;
+      opacity: 0.3;
+    }
+
+    .slide-content {
+      padding: 20px;
+    }
+
+    .custom-title {
+      font-size: 20px;
+      line-height: 1.4;
+      color: #222;
+      margin: 0 0 15px;
+      transition: color 0.2s;
+      font-weight: 600;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-height: 3em;
+    }
+
+    a:hover .custom-title {
+      color: #0066cc;
+    }
+
+    .custom-text {
+      color: #555;
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .custom-text p {
+      margin: 0 0 10px;
+    }
+
+    .custom-button {
+      display: inline-block;
+      padding: 10px 25px;
+      background-color: var(--button-bg);
+      color: var(--button-text);
+      text-decoration: none;
+      border-radius: 30px;
+      border: 2px solid var(--button-border);
+      font-weight: 600;
+      transition: all 0.3s;
+      font-size: 14px;
+    }
+
+    .custom-button:hover {
+      background-color: var(--button-hover-bg);
+      color: var(--button-hover-text);
+      border-color: var(--button-hover-border);
+    }
+
+    .carousel-image {
+    object-fit: cover;
+    object-position: center;
+  }
+
+    .carousel-arrows {
+      position: absolute;
+      top: 50%;
+      left: 50px;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+      pointer-events: none;
+      z-index: 10;
+      width: calc(100% - 50px);
+    }
+
+    .carousel-arrow {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      pointer-events: auto;
+      opacity: 0.8;
+      transition: all 0.3s;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+    }
+
+    .carousel-arrow:hover {
+      opacity: 1;
+      background: #000;
+      transform: scale(1.05);
+    }
+
+    .carousel-arrow.hidden {
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    @media (max-width: 1200px) {
+      .carousel-slide {
+        width: calc(50% - 15px);
+      }
+
+      .carousel-arrows {
+        width: calc(100% - 50px);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .carousel-slide {
+        width: calc(100% - 20px);
+        margin-right: 10px;
+      }
+
+      .carousel-arrow {
+        width: 40px;
+        height: 40px;
+      }
+
+      .custom-image-text-section {
+        margin: 50px 0;
+      }
+
+      .section-title {
+        font-size: 26px;
+      }
+
+      .section-header {
+        padding-left: 15px;
+      }
+
+      .carousel-outer {
+        padding-left: 15px;
+      }
+
+      .carousel-arrows {
+        left: 15px;
+        width: calc(100% - 15px);
+      }
+
+      .carousel-track {
+        width: calc(100% + 15px);
+        margin-left: -15px;
+        padding-right: 15px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .carousel-arrows {
+        display: none;
+      }
+
+      .section-header {
+        padding-left: 15px;
+      }
+
+      .carousel-outer {
+        padding-left: 15px;
+      }
+
+      .lightbox-close {
+        top: 10px;
+        right: 10px;
+        font-size: 30px;
+      }
+
+      .carousel-track {
+        width: calc(100% + 15px);
+        margin-left: -15px;
+        padding-right: 15px;
+      }
+    }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const carousels = document.querySelectorAll('.custom-image-text-section');
+
+    carousels.forEach((section) => {
+      section.addEventListener('click', function (e) {
+        if (e.target.closest('.slide-image')) {
+          const imgElement = e.target.closest('.slide-image img');
+          if (!imgElement) return;
+
+          if (imgElement.closest('a')) return;
+
+          const originalSrc = imgElement.src.replace(/\?.*/, '').replace(/_\d+x\./g, '.');
+          const imageUrl = originalSrc + '?width=1200';
+
+          const lightbox = section.querySelector('.lightbox-container');
+          if (!lightbox) return;
+
+          let lightboxImage = lightbox.querySelector('.lightbox-image');
+          if (!lightboxImage) {
+            lightboxImage = document.createElement('img');
+            lightboxImage.className = 'lightbox-image';
+            lightbox.querySelector('.lightbox-content').appendChild(lightboxImage);
+          }
+
+          lightboxImage.src = imageUrl;
+          lightboxImage.alt = imgElement.alt || 'Lightbox Image';
+          lightbox.style.display = 'flex';
+          document.body.style.overflow = 'hidden';
+        }
+      });
+
+      const lightboxClose = section.querySelector('.lightbox-close');
+      if (lightboxClose) {
+        lightboxClose.addEventListener('click', function () {
+          const lightbox = section.querySelector('.lightbox-container');
+          if (lightbox) {
+            lightbox.style.display = 'none';
+            document.body.style.overflow = 'auto';
+          }
+        });
+      }
+
+      const lightbox = section.querySelector('.lightbox-container');
+      if (lightbox) {
+        lightbox.addEventListener('click', function (e) {
+          if (e.target === lightbox) {
+            lightbox.style.display = 'none';
+            document.body.style.overflow = 'auto';
+          }
+        });
+      }
+
+      const slidesContainer = section.querySelector('.carousel-slides');
+      const slides = Array.from(slidesContainer.children);
+      const prevArrow = section.querySelector('.prev-arrow');
+      const nextArrow = section.querySelector('.next-arrow');
+      const carouselTrack = section.querySelector('.carousel-track');
+
+      if (!slidesContainer || slides.length === 0) return;
+
+      let currentIndex = 0;
+      let slidesToShow = 3;
+      let slideWidth = 0;
+      let touchStartX = 0;
+      let touchStartY = 0;
+      let touchEndX = 0;
+      let isDragging = false;
+      let isHorizontal = false;
+
+      function initCarousel() {
+        updateSlidesToShow();
+        updateSlideWidth();
+        updateArrows();
+        positionSlides();
+      }
+
+      function updateSlidesToShow() {
+        if (window.innerWidth < 769) {
+          slidesToShow = 1;
+        } else if (window.innerWidth < 1201) {
+          slidesToShow = 2;
+        } else {
+          slidesToShow = 3;
+        }
+      }
+
+      function updateSlideWidth() {
+        if (slides.length > 0) {
+          slideWidth = slides[0].offsetWidth + parseFloat(window.getComputedStyle(slides[0]).marginRight);
+        }
+      }
+
+      function updateArrows() {
+        if (slides.length <= slidesToShow) {
+          prevArrow.classList.add('hidden');
+          nextArrow.classList.add('hidden');
+          return;
+        }
+
+        prevArrow.classList.remove('hidden');
+        nextArrow.classList.remove('hidden');
+
+        prevArrow.style.opacity = currentIndex === 0 ? '0.3' : '0.8';
+        nextArrow.style.opacity = currentIndex >= slides.length - slidesToShow ? '0.3' : '0.8';
+      }
+
+      function positionSlides() {
+        slidesContainer.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+      }
+
+      function movePrev() {
+        if (currentIndex > 0) {
+          currentIndex--;
+          updateArrows();
+          positionSlides();
+        }
+      }
+
+      function moveNext() {
+        if (currentIndex < slides.length - slidesToShow) {
+          currentIndex++;
+          updateArrows();
+          positionSlides();
+        }
+      }
+
+      function handleTouchStart(e) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        isDragging = true;
+        isHorizontal = false;
+        slidesContainer.style.transition = 'none';
+      }
+
+      function handleTouchMove(e) {
+        if (!isDragging) return;
+
+        const touchX = e.t极速值ches[0].clientX;
+        const touchY = e.touches[0].clientY;
+        const diffX = touchX - touchStartX;
+        const diffY = touchY - touchStartY;
+        touchEndX = touchX;
+
+        if (!isHorizontal) {
+          if (Math.abs(diffX) > Math.abs(diffY)) {
+            isHorizontal = true;
+          } else {
+            return;
+          }
+        }
+
+        if (isHorizontal) {
+          e.preventDefault();
+        }
+
+        const maxOffset = Math.max(0, (slides.length - slidesToShow) * slideWidth);
+        const minOffset = 0;
+
+        let tempOffset = currentIndex * slideWidth * -1 + diffX;
+
+        if (tempOffset > minOffset) tempOffset = minOffset;
+        if (tempOffset < -maxOffset) tempOffset = -maxOffset;
+
+        slidesContainer.style.transform = `translateX(${tempOffset}px)`;
+      }
+
+      function handleTouchEnd() {
+        if (!isDragging) return;
+
+        isDragging = false;
+        slidesContainer.style.transition = 'transform 0.5s ease';
+
+        const diff = touchEndX - touchStartX;
+        const threshold = 50;
+
+        if (isHorizontal) {
+          if (diff > threshold) {
+            movePrev();
+          } else if (diff < -threshold) {
+            moveNext();
+          } else {
+            positionSlides();
+          }
+        }
+      }
+
+      carouselTrack.addEventListener('touchstart', handleTouchStart);
+      carouselTrack.addEventListener('touchmove', handleTouchMove, { passive: false });
+      carouselTrack.addEventListener('touchend', handleTouchEnd);
+
+      initCarousel();
+
+      prevArrow.addEventListener('click', movePrev);
+      nextArrow.addEventListener('click', moveNext);
+
+      window.addEventListener('resize', function () {
+        updateSlidesToShow();
+        updateSlideWidth();
+        currentIndex = Math.min(currentIndex, Math.max(0, slides.length - slidesToShow));
+        updateArrows();
+        positionSlides();
+      });
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.lightbox-container').forEach((lightbox) => {
+          lightbox.style.display = 'none';
+          document.body.style.overflow = 'auto';
+        });
+      }
+    });
+  });
+</script>

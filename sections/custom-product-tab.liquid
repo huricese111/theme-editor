@@ -1,3 +1,100 @@
+{% comment %}
+  SECTION: Custom Product Tabs
+  VERSION: 2.0
+  DESCRIPTION: Responsive product tabs with multi-language support, collection/product display options, and integrated advertisement block.
+  
+  FEATURES:
+  - Multi-language support for all text elements
+  - Tab-based navigation with customizable labels
+  - Two product sourcing options: entire collection or manual selection
+  - Responsive card layout (desktop: grid, mobile: horizontal slider)
+  - Integrated advertisement block with flexible styling options
+  - Interactive elements with hover animations
+  - Customizable pricing display with discount labels
+
+  STRUCTURE:
+  1. Section Title: Multi-language heading
+  2. Tab Navigation: Switchable tabs with translations
+  3. Content Area: 
+     - Left: Product display (grid or slider)
+     - Right: Advertisement block
+  4. Product Cards: 
+     - Image with discount labels
+     - Title and description
+     - Pricing (current & original)
+     - "Order" button with sold-out state
+
+  SETTINGS:
+  1. Global Section Title: 
+     - title: Default text
+     - title_[de/fr/fi]: Translated versions
+
+  BLOCKS:
+  1. Tab Block:
+     - title: Tab label (with translations)
+     - product_source: Collection or custom products
+     - collection: Source collection
+     - products: Manually selected products
+
+  2. Advertisement Block:
+     - ad_link: Target URL
+     - Image & background styling
+     - Title with translations and styling
+     - Button label with translations
+
+  FUNCTIONALITY:
+  1. Language Handling:
+     - Auto-detects store locale
+     - Falls back to default if translation missing
+  2. Responsive Behavior:
+     - Desktop: Tab navigation + grid layout
+     - Mobile: Tab navigation + horizontal slider
+  3. Interactive Elements:
+     - Tab switching
+     - Product card hover effects
+     - Button states (active/sold-out)
+  4. Product Display:
+     - Automatic excerpt generation
+     - Discount labeling
+     - Pricing comparison
+
+  USAGE INSTRUCTIONS:
+  1. Configure section title translations
+  2. Add tab blocks:
+     - Choose product source (collection or manual)
+     - Configure tab labels in all languages
+  3. Add advertisement block (optional)
+  4. Customize styling via CSS variables
+
+  OPTIMIZATION TIPS:
+  1. Use consistent image sizes for product cards
+  2. Limit to 3-5 tabs for best UX
+  3. Compress advertisement images
+  4. Test translations in all supported languages
+
+  BROWSER SUPPORT:
+  - Modern browsers (Chrome, Firefox, Safari, Edge)
+  - Mobile Safari and Chrome
+  - IE11: Limited support (no CSS variables)
+
+  DEPENDENCIES:
+  1. 'custom-product-card' snippet (product display)
+  2. 'custom-ads-block' snippet (advertisement)
+
+  STYLING NOTES:
+  1. Product Cards:
+     - Hover effects with elevation
+     - Responsive breakpoints at 768px
+     - Aspect ratio maintained at 16:9
+  2. Pricing:
+     - Current price bolded
+     - Original price struck-through
+  3. Advertisement:
+     - Fully configurable padding
+     - Background position/size options
+{% endcomment %}
+
+
 <style>
   .flex-container {
     display: flex;
