@@ -1389,86 +1389,54 @@
       "limit": 1,
       "settings": [
         {
-          "type": "header",
-          "content": "Basic Functionality"
-        },
-        {
           "type": "checkbox",
           "id": "show_quantity_selector",
           "label": "Show quantity selector",
-          "default": true,
-          "info": "Enable customers to change the quantity of products they wish to purchase"
+          "default": true
         },
         {
           "type": "checkbox",
-          "id": "show_pickup_availability",
-          "label": "Show pickup availability",
-          "default": true,
-          "info": "Display local pickup options for customers"
+          "id": "enable_payment_button",
+          "label": "Show dynamic checkout button",
+          "info": "Each customer will see their preferred payment method from those available on your store, such as PayPal or Apple Pay. [Learn more](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)",
+          "default": true
         },
         {
           "type": "checkbox",
           "id": "show_backorder_text",
           "label": "Show backorder text",
           "default": false,
-          "info": "Only visible for products using Shopify inventory tracking with backorder enabled"
-        },
-        {
-          "type": "header",
-          "content": "Checkout Options"
+          "info": "Only shows for products which use Shopify inventory tracking and are available to purchase when out of stock."
         },
         {
           "type": "checkbox",
-          "id": "enable_payment_button",
-          "label": "Show dynamic checkout button",
+          "id": "show_pickup_availability",
+          "label": "Show pickup availability",
           "default": true,
-          "info": "Display preferred payment methods (e.g., PayPal, Apple Pay)"
+          "info": "Show customers where they can pick up the product. [Learn more](https://help.shopify.com/en/manual/shipping/setting-up-and-managing-your-shipping/local-methods/local-pickup)"
         },
         {
           "type": "checkbox",
           "id": "show_gift_card_recipient",
           "default": false,
-          "label": "Show gift card recipient fields",
-          "info": "Allow customers to personalize gift cards"
+          "label": "Show recipient information form for gift cards",
+          "info": "Allow customers to send gift cards to a recipient along with a personal message. When enabled, the dynamic checkout button will be disabled for gift cards. [Learn more](https://help.shopify.com/manual/online-store/themes/customizing-themes/add-gift-card-recipient-fields)"
         },
         {
-          "type": "header",
-          "content": "Compatible Accessories"
+          "type": "checkbox",
+          "id": "enable_contact_notify",
+          "label": "Enable Contact Expert and Notify Me Buttons",
+          "default": false
         },
         {
-          "type": "text",
-          "id": "accessories_heading",
-          "label": "Section Heading",
-          "default": "Compatible accessories",
-          "info": "Main heading for the accessories section"
+          "type": "liquid",
+          "id": "contact_expert_content",
+          "label": "Contact Expert Modal Content"
         },
         {
-          "type": "text",
-          "id": "accessories_heading_de",
-          "label": "German Heading",
-          "default": "Kompatibles Zubehör",
-          "info": "Used when store language is German"
-        },
-        {
-          "type": "text",
-          "id": "accessories_heading_fr",
-          "label": "French Heading",
-          "default": "Accessoires compatibles",
-          "info": "Used when store language is French"
-        },
-        {
-          "type": "text",
-          "id": "accessories_heading_fi",
-          "label": "Finnish Heading",
-          "default": "Yhteensopivat lisävarusteet",
-          "info": "Used when store language is Finnish"
-        },
-        {
-          "type": "product_list",
-          "id": "accessory_products",
-          "label": "Select Accessories",
-          "limit": 5,
-          "info": "Choose up to 5 compatible accessories to display"
+          "type": "liquid",
+          "id": "notify_me_content",
+          "label": "Notify Me Modal Content"
         }
       ]
     },
