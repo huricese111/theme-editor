@@ -1,0 +1,43 @@
+{%- case request.locale.iso_code -%}
+  {% when 'de' %}
+    <p>
+      Wenn Sie ein Fahrrad bei
+      <a href="https://hepha.com/de" target="_blank" title="Hepha">hepha.com</a> bestellen, versenden wir
+      es kostenlos an einen Händler Ihrer Wahl über unseren Click &amp; Collect-Service. Sobald Ihr Fahrrad angekommen
+      ist, wird der Händler Sie kontaktieren, um einen Abholtermin zu vereinbaren. Genießen Sie mit diesem Service
+      persönliche Unterstützung, Testfahrten und Expertenrat.
+      <a
+        href="/de/pages/click-collect-at-your-local-dealer"
+        target="_blank"
+        title="Click &amp; Collect bei Ihrem lokalen Händler"
+        >Erfahren Sie mehr</a
+      >
+    </p>
+  {% when 'fr' %}
+    <p>
+      Vous commandez un vélo sur
+      <a href="https://hepha.com/fr-fr" target="_blank" title="Hepha">hepha.com</a>, nous
+      l'expédierons gratuitement à un revendeur de votre choix grâce à notre service Click &amp; Collect. Une fois votre
+      vélo arrivé, le revendeur vous contactera pour organiser un rendez-vous pour le récupérer. Profitez de
+      l'assistance personnalisée, des essais de conduite et des conseils d'experts avec ce service.
+      <a
+        href="/fr-fr/pages/click-collect-at-your-local-dealer"
+        target="_blank"
+        title="Click &amp; Collect chez votre revendeur local"
+        >En savoir plus</a
+      >
+    </p>
+  {% else %}
+    <p>
+      When you order a bike from <a href="https://hepha.com" target="_blank" title="Hepha">hepha.com</a>,
+      we'll ship it for free to a dealer of your choice through our Click &amp; Collect service. Once your bike arrives,
+      the dealer will reach out to arrange a pickup time. Enjoy personalized assistance, test rides, and expert advice
+      with this service.
+      <a
+        href="/pages/click-collect-at-your-local-dealer"
+        target="_blank"
+        title="Click &amp; Collect at your local dealer"
+        >Learn more</a
+      >
+    </p>
+{%- endcase -%}

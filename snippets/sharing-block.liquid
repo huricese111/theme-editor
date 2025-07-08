@@ -1,0 +1,29 @@
+<style>
+  .social-share--fr {
+    justify-content: space-between;
+    margin-bottom: 60px;
+  }
+  .social-share:not(.social-share--fr) {
+    justify-content: space-between;
+  }
+</style>
+
+<div class="input-row not-in-quickbuy" {{ block.shopify_attributes }}>
+  <div class="social-share flex items-center {% if localization.country.iso_code == 'FR' %}social-share--fr{% endif %}">
+    <p class="social-share__heading">{{ 'ebike.share' | t }}</p>
+    {% render 'social-share',
+      share_twitter: block.settings.show_twitter,
+      share_facebook: block.settings.show_facebook,
+      share_pinterest: block.settings.show_pinterest,
+      share_linkedin: block.settings.show_linkedin,
+      share_whatsapp: block.settings.show_whatsapp,
+      share_snapchat: block.settings.show_snapchat,
+      share_threads: block.settings.show_threads,
+      share_tumblr: block.settings.show_tumblr,
+      share_twitch: block.settings.show_twitch,
+      share_title: product.title,
+      share_url: product.url,
+      share_image: product
+    %}
+  </div>
+</div>

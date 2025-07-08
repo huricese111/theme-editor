@@ -1,0 +1,83 @@
+{%- assign locale = request.locale.iso_code -%}
+{%- assign country = localization.country.iso_code -%}
+
+{%- if country == 'DE' or country == 'AT' -%}
+  {%- case country -%}
+    {%- when 'DE' -%}
+      {%- assign partners = 'jobrad,bikeleasing,deutsche,businessbike' | split: ',' -%}
+    {%- when 'AT' -%}
+      {%- assign partners = 'jobrad' | split: ',' -%}
+  {%- endcase -%}
+
+  {%- for partner in partners -%}
+    <div class="leasingcontent">
+      <div class="leasing-icon-container">
+        {%- case partner -%}
+          {%- when 'jobrad' -%}
+            {% render 'icon-jobrad' %}
+          {%- when 'bikeleasing' -%}
+            {% render 'icon-bikeleasing' %}
+          {%- when 'deutsche' -%}
+            {% render 'icon-deutsche' %}
+          {%- when 'businessbike' -%}
+            {% render 'icon-businessbike' %}
+        {%- endcase -%}
+      </div>
+
+      <p>
+        {%- case partner -%}
+          {%- when 'jobrad' -%}
+            {%- if locale == 'de' -%}
+              Über JobRad kannst du dein Bike mit einem Steuervorteil leasen und bis zu 40 % sparen. Einfach Traumrad
+              aussuchen, Zubehör wählen und bestellen.
+            {%- else -%}
+              Lease your new Hepha with JobRad and save up to 40% with tax-free benefits. Just select your dream bike
+              and approved accessories, and place your order.
+            {%- endif -%}
+
+          {%- when 'bikeleasing' -%}
+            {%- if locale == 'de' -%}
+              Mit unserem Partner Bikeleasing-Service kannst du dein Bike mit steuerlichem Vorteil leasen. Ob dein
+              Arbeitgeber Bikeleasing-Service anbietet, erfährst du bei deiner Personalabteilung.
+            {%- else -%}
+              Bikeleasing-Service lets you lease your bike with a tax advantage. You can find out whether your employer
+              offers Bikeleasing-Service from your HR department.
+            {%- endif -%}
+
+          {%- when 'deutsche' -%}
+            {%- if locale == 'de' -%}
+              Mit unserem Partner Deutsche Dienstrad-Service kannst du dein Bike mit steuerlichem Vorteil leasen. Ob
+              dein Arbeitgeber Deutsche Dienstrad-Service anbietet, erfährst du bei deiner Personalabteilung.
+            {%- else -%}
+              Deutsche Dienstrad-Service lets you lease your bike with a tax advantage. You can find out whether your
+              employer offers Deutsche Dienstrad-Service from your HR department.
+            {%- endif -%}
+
+          {%- when 'businessbike' -%}
+            {%- if locale == 'de' -%}
+              Mit unserem Partner BusinessBike-Service kannst du dein Bike mit steuerlichem Vorteil leasen. Ob dein
+              Arbeitgeber BusinessBike-Service anbietet, erfährst du bei deiner Personalabteilung.
+            {%- else -%}
+              BusinessBike-Service lets you lease your bike with a tax advantage. You can find out whether your employer
+              offers BusinessBike-Service from your HR department.
+            {%- endif -%}
+        {%- endcase -%}
+      </p>
+
+      <a
+        href="
+          {% case partner %}
+            {% when 'jobrad' %}{{ jobrad_url }}
+            {% when 'bikeleasing' %}{{ bikeleasing_url }}
+            {% when 'deutsche' %}{{ deutsche_url }}
+            {% when 'businessbike' %}{{ businessbike_url }}
+          {% endcase %}
+        "
+        class="leasing-link"
+        target="_blank"
+      >
+        {%- if locale == 'de' -%}Mehr erfahren{%- else -%}Learn more{%- endif -%}
+      </a>
+    </div>
+  {%- endfor -%}
+{%- endif -%}

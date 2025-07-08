@@ -1,0 +1,77 @@
+<div class="price-container" {{ block.shopify_attributes }}>
+  <div>
+    <div class="price-area-new">
+      <div class="price h4-style {% if current_variant.compare_at_price > current_variant.price %}on-sale{% endif %}">
+        <span class="current-price theme-money">
+          {%- if settings.product_currency_code_enabled -%}
+            {{- current_variant.price | money_with_currency -}}
+          {%- else -%}
+            {{- current_variant.price | money -}}
+          {%- endif -%}
+        </span>
+        {% if current_variant.compare_at_price > current_variant.price %}
+          <span class="was-price theme-money">{{ current_variant.compare_at_price | money }}</span>
+        {% endif %}
+      </div>
+      {% render 'unit-price', variant: current_variant %}
+    </div>
+  </div>
+  <div class="price-descriptors">
+    {%- form 'product', product, id: product_form_installments_id -%}
+      <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+      {{ form | payment_terms }}
+    {%- endform -%}
+
+    {%- if block.settings.show_tax_and_shipping -%}
+      {%- if cart.taxes_included or shop.shipping_policy.body != blank -%}
+        <div class="product-policies">
+          {%- if cart.taxes_included -%}
+            {{ 'products.product.include_taxes' | t }}
+          {%- endif -%}
+          {%- if shop.shipping_policy.body != blank -%}
+            {{ 'products.product.shipping_policy_html' | t: link: shop.shipping_policy.url }}
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+
+    {% if section.settings.inventory_transfers_enable %}
+      <div class="product-inventory-transfer {% unless current_variant.incoming %}product-inventory-transfer--none{% endunless %}">
+        {%- if current_variant.incoming -%}
+          {%- if current_variant.next_incoming_date -%}
+            {%- assign date = current_variant.next_incoming_date | date: format: 'date' -%}
+            {%- if current_variant.available -%}
+              {{ 'products.transfers.will_not_ship_until' | t: date: date }}
+            {%- else -%}
+              {{ 'products.transfers.will_be_in_stock_after' | t: date: date }}
+            {%- endif -%}
+          {%- else -%}
+            {{ 'products.transfers.waiting_for_stock' | t }}
+          {%- endif -%}
+        {%- endif -%}
+      </div>
+    {% endif %}
+  </div>
+  {%- if block.settings.enable_product_reviews_by_price
+    and product.metafields.reviews.rating_count != blank
+    and product.metafields.reviews.rating_count > 0
+  -%}
+    <div class="theme-product-reviews not-in-quickbuy">
+      <a href="#shopify-product-reviews">
+        {% render 'rating', rating_value: product.metafields.reviews.rating.value %}
+        {% if product.metafields.reviews.rating_count != blank and product.metafields.reviews.rating_count > 0 %}
+          <span class="cc-rating-custom-caption">
+            {{ product.metafields.reviews.rating_count }}
+            {{ 'products.product.reviews_link' | t: count: product.metafields.reviews.rating_count | downcase }}
+          </span>
+        {% endif %}
+      </a>
+    </div>
+  {%- endif -%}
+</div>
+
+<style>
+  .theme-money {
+   font-size: 24px !important;
+  }
+</style>

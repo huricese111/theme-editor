@@ -1,0 +1,40 @@
+{% if block.settings.product_list != blank %}
+  <div class="lightly-spaced-row lightish-spaced-row-above not-in-quickbuy" {{ block.shopify_attributes }}>
+    <div class="label">{{ block.settings.title | escape }}</div>
+    <div class="fixed-layout">
+      {%- liquid
+        if settings.prod_thumb_shape == 'portrait-23'
+          assign chosen_aspect_ratio = 0.67
+        elsif settings.prod_thumb_shape == 'portrait-45'
+          assign chosen_aspect_ratio = 0.8
+        elsif settings.prod_thumb_shape == 'square'
+          assign chosen_aspect_ratio = 1.0
+        elsif settings.prod_thumb_shape == 'landscape-54'
+          assign chosen_aspect_ratio = 1.25
+        elsif settings.prod_thumb_shape == 'landscape-32'
+          assign chosen_aspect_ratio = 1.50
+        elsif settings.prod_thumb_shape == 'tallest'
+          assign chosen_aspect_ratio = 99
+          for product in block.settings.product_list
+            if product.featured_media.preview_image.aspect_ratio < chosen_aspect_ratio
+              assign chosen_aspect_ratio = product.featured_media.preview_image.aspect_ratio
+            endif
+          endfor
+        else
+          assign chosen_aspect_ratio = 0
+          for product in block.settings.product_list
+            if product.featured_media.preview_image.aspect_ratio > chosen_aspect_ratio
+              assign chosen_aspect_ratio = product.featured_media.preview_image.aspect_ratio
+            endif
+          endfor
+        endif
+
+        for related_product in block.settings.product_list
+          echo '<div class="column column--half">'
+          render 'product-block', product: related_product, no_quick_buy: true, custom_aspect_ratio: chosen_aspect_ratio, grid: 5
+          echo '</div>'
+        endfor
+      -%}
+    </div>
+  </div>
+{% endif %}

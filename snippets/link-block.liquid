@@ -1,0 +1,24 @@
+{%- if block.settings.text != blank -%}
+  {%- assign locale_iso = request.locale.iso_code | downcase -%}
+  {%- assign default_text = block.settings.text | escape -%}
+  
+  {%- if locale_iso == 'de' and block.settings.text_de != blank -%}
+    {%- assign display_text = block.settings.text_de | escape -%}
+  {%- elsif locale_iso == 'fr' and block.settings.text_fr != blank -%}
+    {%- assign display_text = block.settings.text_fr | escape -%}
+  {%- elsif locale_iso == 'fi' and block.settings.text_fi != blank -%}
+    {%- assign display_text = block.settings.text_fi | escape -%}
+  {%- else -%}
+    {%- assign display_text = default_text -%}  
+  {%- endif -%}
+
+  <div class="lightly-spaced-row{% unless block.settings.show_in_quickbuy %} not-in-quickbuy{% endunless %}" {{ block.shopify_attributes }}>
+    <a 
+      class="{% if block.settings.style != 'link' %}btn btn--{{ block.settings.style }}{% else %}small-feature-link{% endif %}" 
+      href="{{ block.settings.url }}"
+      {% if block.settings.open_in_new_tab %}target="_blank"{% endif %}
+    >
+      {{- display_text -}}
+    </a>
+  </div>
+{%- endif -%}

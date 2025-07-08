@@ -1,0 +1,78 @@
+{%- assign locale = request.locale.iso_code -%}
+{%- assign country = localization.country.iso_code -%}
+
+{%- if country == 'DE' or country == 'AT' or country == 'FR' -%}
+  {%- assign partners = '' | split: '' -%}
+  
+  {%- case country -%}
+    {%- when 'DE' -%}
+      {%- assign partners = 'paypal,zinia,klarna' | split: ',' -%}
+    {%- when 'AT' -%}
+      {%- assign partners = 'klarna' | split: ',' -%}
+    {%- when 'FR' -%}
+      {%- assign partners = 'klarna' | split: ',' -%}
+  {%- endcase -%}
+
+  {%- for partner in partners -%}
+    <div class="leasingcontent">
+      <div class="leasing-icon-container">
+        {%- case partner -%}
+          {%- when 'paypal' -%}
+            <img alt="Paypal" src="https://cdn.shopify.com/s/files/1/0560/0080/6985/files/PayPal.svg?v=1751531389" width="120px">
+          {%- when 'zinia' -%}
+            <img alt="Zinia" src="https://cdn.shopify.com/s/files/1/0560/0080/6985/files/20250214-163529.png?v=1739522191" width="100px">
+          {%- when 'klarna' -%}
+            <img alt="Klarna" src="https://cdn.shopify.com/s/files/1/0560/0080/6985/files/Klarna_Payment_Badge_svg.png?v=1739522386" width="100px">
+        {%- endcase -%}
+      </div>
+      
+      <p><strong>
+        {%- case partner -%}
+          {%- when 'paypal' -%}
+            {%- if locale == 'de' -%}Finanzierung mit PayPal
+            {%- elsif locale == 'fr' -%}Financement avec PayPal
+            {%- else -%}Financing with PayPal{%- endif -%}
+          {%- when 'zinia' -%}
+            {%- if locale == 'de' -%}Finanzierung mit Zinia
+            {%- elsif locale == 'fr' -%}Financement avec Zinia
+            {%- else -%}Financing with Zinia{%- endif -%}
+          {%- when 'klarna' -%}
+            {%- if locale == 'de' -%}Finanzierung mit Klarna
+            {%- elsif locale == 'fr' -%}Financement avec Klarna
+            {%- else -%}Financing with Klarna{%- endif -%}
+        {%- endcase -%}
+      </strong></p>
+      
+      <p>
+        {%- case partner -%}
+          {%- when 'paypal' -%}
+            {%- if locale == 'de' -%}
+              Bezahlen Sie in bis zu 24 monatlichen Raten mit PayPal.
+            {%- elsif locale == 'fr' -%}
+              Payez en jusqu'à 24 mensualités avec PayPal.
+            {%- else -%}
+              Pay in instalments of up to 24 months via PayPal.
+            {%- endif -%}
+          
+          {%- when 'zinia' -%}
+            {%- if locale == 'de' -%}
+              Finanzieren Sie Ihr E-Bike und Zubehör mit Zinia, das flexible Ratenpläne von 6 bis 48 Monaten anbietet.
+            {%- elsif locale == 'fr' -%}
+              Financez votre vélo et accessoires avec Zinia, proposant des plans de paiement flexibles de 6 à 48 mois.
+            {%- else -%}
+              Finance your bike and accessories with Zinia, offering flexible installment plans from 6 to 48 months.
+            {%- endif -%}
+          
+          {%- when 'klarna' -%}
+            {%- if locale == 'de' -%}
+              Klarna bietet direkte Zahlungen, Optionen zum späteren Bezahlen oder Ratenpläne von 6 bis 36 Monaten an.
+            {%- elsif locale == 'fr' -%}
+              Klarna propose des paiements directs, des options de paiement différé ou des plans de paiement échelonnés de 6 à 36 mois.
+            {%- else -%}
+              Klarna offers direct payments, pay later options, or installment plans ranging from 6 to 36 months.
+            {%- endif -%}
+        {%- endcase -%}
+      </p>
+    </div>
+  {%- endfor -%}
+{%- endif -%}
