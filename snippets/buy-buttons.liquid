@@ -40,6 +40,8 @@
         if accessories_heading == blank
           assign accessories_heading = default_accessories_heading
         endif
+        
+        assign show_accessory_description = block.settings.show_accessory_description
       -%}
 
       {% if gift_card_recipient_feature_active %}
@@ -90,18 +92,29 @@
                   <div class="accessory-item" style="display: flex; align-items: center; padding: 15px; background: #f9f9f9; border-radius: 8px; border: 1px solid #eee;">
                     <div class="accessory-image" style="width: 70px; margin-right: 15px; flex-shrink: 0;">
                       {%- if accessory_product.featured_media -%}
-                        {{ accessory_product.featured_media | image_url: width: 140 | image_tag: 
-                          loading: 'lazy', 
-                          alt: accessory_product.title,
-                          style: 'max-width: 70px; height: auto; object-fit: contain;'
-                        }}
+                        <a href="{{ accessory_product.url }}" aria-label="{{ accessory_product.title }}" target="_blank" alt="{{ accessory_product.title }}" >
+                          {{ accessory_product.featured_media | image_url: width: 140 | image_tag: 
+                            loading: 'lazy', 
+                            alt: accessory_product.title,
+                            style: 'max-width: 70px; height: auto; object-fit: contain;'
+                          }}
+                        </a>
                       {%- endif -%}
                     </div>
                     <div style="flex: 1; min-width: 0;">
-                      <div class="accessory-title" style="font-weight: 500; margin-bottom: 5px; font-size: 1rem;">{{ accessory_product.title }}</div>
+                      <div class="accessory-title" style="font-weight: 500; margin-bottom: 5px; font-size: 1rem;">
+                        <a href="{{ accessory_product.url }}" style="color: inherit; text-decoration: none; font-weight: 500;">
+                          {{ accessory_product.title }}
+                        </a>
+                      </div>
+                      {% if show_accessory_description %}
+                        <div class="accessory-description" style="font-size: 0.85rem; color: #666; margin: 5px 0; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                          {{ accessory_product.description | strip_html | truncate: 100 }}
+                        </div>
+                      {% endif %}
                       <div class="accessory-price" style="font-weight: 500; font-size: 0.95rem;">
                         {% if accessory_product.compare_at_price > accessory_product.price %}
-                          <span style="color: #d00;">{{ accessory_product.price | money }}</span>
+                          <span style="color: #bf3737;">{{ accessory_product.price | money }}</span>
                           <span style="text-decoration: line-through; font-size: 0.9em; color: #999; margin-left: 8px;">{{ accessory_product.compare_at_price | money }}</span>
                         {% else %}
                           {{ accessory_product.price | money }}

@@ -278,6 +278,9 @@
                     %}
                   </div>
 
+                {% when 'variant_metafield' %}
+                  {% render 'variant-metafield', block: block %}
+
                 {% when 'buy-buttons' %}
                   {% render 'buy-buttons',
                     product: product,
@@ -1384,6 +1387,36 @@
       "limit": 1
     },
     {
+      "type": "variant_metafield",
+      "name": "Variant Metafield",
+      "settings": [
+        {
+          "type": "text",
+          "id": "namespace",
+          "label": "Metafield Namespace",
+          "default": "custom"
+        },
+        {
+          "type": "text",
+          "id": "key",
+          "label": "Metafield Key",
+          "default": "size"
+        },
+        {
+          "type": "richtext",
+          "id": "fallback",
+          "label": "Fallback Content",
+          "default": "<p>Information not available for this variant</p>"
+        },
+        {
+          "type": "text",
+          "id": "custom_selector",
+          "label": "Custom Target Selector",
+          "info": "Optional CSS selector to output metafield value in a different element"
+        }
+      ]
+    },
+    {
       "type": "buy-buttons",
       "name": "Buy buttons",
       "limit": 1,
@@ -1469,6 +1502,13 @@
           "label": "Select Accessories",
           "limit": 5,
           "info": "Choose up to 5 compatible accessories to display"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_accessory_description",
+          "label": "Show accessory description",
+          "default": false,
+          "info": "Display a short description for each accessory product (max 2 lines)"
         }
       ]
     },
