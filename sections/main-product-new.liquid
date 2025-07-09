@@ -334,9 +334,6 @@
                     {{ block.shopify_attributes }}
                   >
 
-                {% when 'notifyme' %}
-                  {% render 'notify-me', product: product, block: block %}
-
                 {% when 'custom-option' %}
                   {% render 'block-custom-option-block', block: block, product_form_id: product_form_id %}
 
@@ -887,11 +884,6 @@
     {
       "name": "Specification Simple",
       "type": "specification_simple",
-      "limit": 1
-    },
-    {
-      "name": "Notify me",
-      "type": "notifyme",
       "limit": 1
     },
     {
