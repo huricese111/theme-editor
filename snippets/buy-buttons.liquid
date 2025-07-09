@@ -114,7 +114,7 @@
                       {% endif %}
                       <div class="accessory-price" style="font-weight: 500; font-size: 0.95rem;">
                         {% if accessory_product.compare_at_price > accessory_product.price %}
-                          <span style="color: #bf3737;">{{ accessory_product.price | money }}</span>
+                          <span style="color: #d00;">{{ accessory_product.price | money }}</span>
                           <span style="text-decoration: line-through; font-size: 0.9em; color: #999; margin-left: 8px;">{{ accessory_product.compare_at_price | money }}</span>
                         {% else %}
                           {{ accessory_product.price | money }}
@@ -277,7 +277,7 @@ document.addEventListener('DOMContentLoaded', function() {
               })
               .then(() => {
                 fetchCartAndUpdate();
-                showNotification('{{ "cart.general.removed" | t }}', 'success');
+                showNotification('{{ remove_text }}', 'success');
               })
               .catch(error => {
                 console.error('Error removing accessory:', error);
@@ -302,7 +302,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(() => {
           fetchCartAndUpdate();
-          showNotification('{{ "products.product.added_to_cart" | t }}', 'success');
+          showNotification('{{ add_to_cart_text | escape }}', 'success');
         })
         .catch(error => {
           console.error('Error adding accessory:', error);
@@ -341,7 +341,7 @@ document.addEventListener('DOMContentLoaded', function() {
     .then(() => {
       fetchCartAndUpdate();
       
-      showNotification('{{ "products.product.added_to_cart" | t }}', 'success');
+      showNotification('{{ add_to_cart_text | escape }}', 'success');
       
       document.dispatchEvent(new CustomEvent('cart:requestShow'));
     })
@@ -520,9 +520,11 @@ document.addEventListener('DOMContentLoaded', function() {
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   transition: opacity 0.5s;
   font-weight: 500;
+  display: flex; 
+  align-items: center; 
 }
 
-.cart-notification.error {
-  background: #bf3737;
+.cart-notification .notification-message {
+  white-space: nowrap;
 }
 </style>
