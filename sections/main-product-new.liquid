@@ -334,9 +334,6 @@
                     {{ block.shopify_attributes }}
                   >
 
-                {% when 'custom-option' %}
-                  {% render 'block-custom-option-block', block: block, product_form_id: product_form_id %}
-
                 {% when 'related-products' %}
                   {% render 'block-related-products', block: block %}
 
@@ -2179,97 +2176,6 @@
       ]
     },
     {
-      "type": "custom-option",
-      "name": "Custom option",
-      "settings": [
-        {
-          "type": "text",
-          "id": "label",
-          "label": "Label",
-          "info": "Required",
-          "default": "Custom option"
-        },
-        {
-          "type": "select",
-          "id": "type",
-          "label": "Type",
-          "default": "text",
-          "options": [
-            {
-              "label": "Text",
-              "value": "text"
-            },
-            {
-              "label": "Long text",
-              "value": "textarea"
-            },
-            {
-              "label": "Checkbox",
-              "value": "checkbox"
-            },
-            {
-              "label": "Multiple options",
-              "value": "multiple"
-            }
-          ]
-        },
-        {
-          "type": "header",
-          "content": "Text"
-        },
-        {
-          "type": "checkbox",
-          "id": "text_required",
-          "label": "Require text",
-          "info": "Only works with 'Add to cart' button",
-          "default": false
-        },
-        {
-          "type": "header",
-          "content": "Checkbox"
-        },
-        {
-          "type": "text",
-          "id": "checkbox_checked_value",
-          "label": "Checked value",
-          "default": "Yes"
-        },
-        {
-          "type": "text",
-          "id": "checkbox_unchecked_value",
-          "label": "Unchecked value",
-          "default": "No"
-        },
-        {
-          "type": "header",
-          "content": "Multiple options"
-        },
-        {
-          "type": "select",
-          "id": "multiple_style",
-          "label": "Style",
-          "default": "dropdown",
-          "options": [
-            {
-              "label": "Dropdown",
-              "value": "dropdown"
-            },
-            {
-              "label": "Radio",
-              "value": "radio"
-            }
-          ]
-        },
-        {
-          "type": "textarea",
-          "id": "multiple_options",
-          "label": "Options",
-          "default": "Option 1\nOption 2\nOption 3",
-          "info": "One option on each line"
-        }
-      ]
-    },
-    {
       "type": "custom-liquid",
       "name": "Custom Liquid",
       "settings": [
@@ -2283,28 +2189,6 @@
           "id": "show_in_quickbuy",
           "label": "Show in quick buy",
           "default": false
-        }
-      ]
-    },
-    {
-      "type": "related-products",
-      "name": "Product list",
-      "settings": [
-        {
-          "type": "paragraph",
-          "content": "To use a different list for each product, use a product reference list [metafield](https://help.shopify.com/en/manual/metafields) as a dynamic source."
-        },
-        {
-          "type": "text",
-          "id": "title",
-          "label": "Heading",
-          "info": "Only shows if products are present",
-          "default": "Product list"
-        },
-        {
-          "type": "product_list",
-          "id": "product_list",
-          "label": "Products"
         }
       ]
     },
@@ -2406,105 +2290,146 @@
       ]
     },
     {
-      "type": "countdown",
-      "name": "Countdown timer",
-      "settings": [
+  "type": "countdown",
+  "name": "Countdown timer",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Multilingual Settings"
+    },
+    {
+      "type": "text",
+      "id": "heading_en",
+      "label": "Heading (English)",
+      "default": "Countdown timer"
+    },
+    {
+      "type": "text",
+      "id": "heading_de",
+      "label": "Heading (German)",
+      "default": "Countdown"
+    },
+    {
+      "type": "text",
+      "id": "heading_fr",
+      "label": "Heading (French)",
+      "default": "Compte à rebours"
+    },
+    {
+      "type": "text",
+      "id": "heading_fi",
+      "label": "Heading (Finnish)",
+      "default": "Lähtölaskenta"
+    },
+    {
+      "type": "richtext",
+      "id": "end_text_en",
+      "label": "End text (English)",
+      "info": "This shows when the date and time elapses."
+    },
+    {
+      "type": "richtext",
+      "id": "end_text_de",
+      "label": "End text (German)"
+    },
+    {
+      "type": "richtext",
+      "id": "end_text_fr",
+      "label": "End text (French)"
+    },
+    {
+      "type": "richtext",
+      "id": "end_text_fi",
+      "label": "End text (Finnish)"
+    },
+    {
+      "type": "header",
+      "content": "Timer Configuration"
+    },
+    {
+      "type": "text",
+      "id": "end_date",
+      "label": "End date",
+      "info": "Required. Format: YYYY-MM-DD."
+    },
+    {
+      "type": "text",
+      "id": "end_time",
+      "label": "End time (optional)",
+      "info": "Format: 17:00 (24 hour clock). Uses the store's timezone."
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_on_end",
+      "label": "Hide the timer when the date and time elapses",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "box_color",
+      "label": "Box color",
+      "default": "#323232"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "select",
+      "id": "number_font",
+      "label": "Number font",
+      "options": [
         {
-          "type": "text",
-          "id": "heading",
-          "label": "Heading",
-          "default": "Countdown timer"
+          "label": "Text font",
+          "value": "base"
         },
         {
-          "type": "text",
-          "id": "end_date",
-          "label": "End date",
-          "info": "Required. Format: YYYY-MM-DD."
+          "label": "Heading font",
+          "value": "heading"
+        }
+      ],
+      "default": "base"
+    },
+    {
+      "type": "select",
+      "id": "divider_type",
+      "label": "Divider type",
+      "default": "colon",
+      "options": [
+        {
+          "value": "colon",
+          "label": "Colon"
         },
         {
-          "type": "text",
-          "id": "end_time",
-          "label": "End time (optional)",
-          "info": "Format: 17:00 (24 hour clock). Uses the store's timezone."
+          "value": "dot",
+          "label": "Dot"
         },
         {
-          "type": "richtext",
-          "id": "end_text",
-          "label": "End text",
-          "info": "This shows when the date and time elapses."
+          "value": "line",
+          "label": "Line"
         },
         {
-          "type": "checkbox",
-          "id": "hide_on_end",
-          "label": "Hide the timer when the date and time elapses",
-          "default": false
-        },
-        {
-          "type": "color",
-          "id": "box_color",
-          "label": "Box color",
-          "default": "#323232"
-        },
-        {
-          "type": "color",
-          "id": "text_color",
-          "label": "Text color",
-          "default": "#ffffff"
-        },
-        {
-          "type": "select",
-          "id": "number_font",
-          "label": "Number font",
-          "options": [
-            {
-              "label": "Text font",
-              "value": "base"
-            },
-            {
-              "label": "Heading font",
-              "value": "heading"
-            }
-          ],
-          "default": "base"
-        },
-        {
-          "type": "select",
-          "id": "divider_type",
-          "label": "Divider type",
-          "default": "colon",
-          "options": [
-            {
-              "value": "colon",
-              "label": "Colon"
-            },
-            {
-              "value": "dot",
-              "label": "Dot"
-            },
-            {
-              "value": "line",
-              "label": "Line"
-            },
-            {
-              "value": "none",
-              "label": "None"
-            }
-          ]
-        },
-        {
-          "type": "checkbox",
-          "id": "show_timer_labels",
-          "label": "Show labels",
-          "default": true
-        },
-        {
-          "type": "checkbox",
-          "id": "show_in_quickbuy",
-          "label": "Show in quick buy",
-          "default": false
+          "value": "none",
+          "label": "None"
         }
       ]
     },
+    {
+      "type": "checkbox",
+      "id": "show_timer_labels",
+      "label": "Show labels",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_in_quickbuy",
+      "label": "Show in quick buy",
+      "default": false
+    }
+  ]
+},
     {
       "type": "sharing",
       "name": "Sharing",
