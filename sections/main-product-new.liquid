@@ -28,10 +28,6 @@
 -%}
 
 <style>
-  .announcement-bar {
-    margin-top: -24px;
-  }
-
   .product-page-container {
     margin: 0;
     padding: 0;
@@ -380,6 +376,8 @@
 {%- if section.settings.enable_sticky_atc -%}
   {%- render 'sticky-atc', product: product, current_variant: current_variant -%}
 {%- endif -%}
+
+
 {% schema %}
 {
   "name": "Product pages",
