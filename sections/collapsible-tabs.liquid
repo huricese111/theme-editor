@@ -1,0 +1,344 @@
+<link rel="stylesheet" href="{{ 'collapsible-tabs.css' | asset_url }}" {%- render 'lazy-stylesheet-attrs' %}>
+<div class="container" {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
+  <div class="collapsible-tabs">
+    {% if section.settings.title != blank %}
+      <h3 class="collapsible-tabs__heading collapsible-tabs__content" id="faq-{{ section.settings.title | handle }}">
+        {% if request.locale.iso_code == 'de' %}
+          {{ section.settings.title_de | escape }}
+        {% elsif request.locale.iso_code == 'fr' %}
+          {{ section.settings.title_fr | escape }}
+        {% elsif request.locale.iso_code == 'fi' %}
+          {{ section.settings.title_fi | escape }}
+        {% else %}
+          {{ section.settings.title | escape }}
+        {% endif %}
+      </h3>
+    {% endif %}
+
+    {%- for block in section.blocks -%}
+      <div class="collapsible-tabs__block" {{ block.shopify_attributes }}>
+        {% if block.type == 'content' %}
+          <div class="collapsible-tabs__text collapsible-tabs__content rte">
+            {% if request.locale.iso_code == 'de' %}
+              {{ block.settings.content_de }}
+            {% elsif request.locale.iso_code == 'fr' %}
+              {{ block.settings.content_fr }}
+            {% elsif request.locale.iso_code == 'fi' %}
+              {{ block.settings.content_fi }}
+            {% else %}
+              {{ block.settings.content }}
+            {% endif %}
+
+            {% if request.locale.iso_code == 'de' %}
+              {{ block.settings.liquid_content_de }}
+            {% elsif request.locale.iso_code == 'fr' %}
+              {{ block.settings.liquid_content_fr }}
+            {% elsif request.locale.iso_code == 'fi' %}
+              {{ block.settings.liquid_content_fi }}
+            {% else %}
+              {{ block.settings.liquid_content }}
+            {% endif %}
+
+            {% if block.settings.image != blank %}
+              <img
+                src="{{ block.settings.image | img_url: 'original' }}"
+                alt="{{ block.settings.title | escape }}"
+                style="width: 100%;"
+              >
+            {% endif %}
+          </div>
+
+        {% elsif block.type == 'button' %}
+          <div class="collapsible-tabs__button collapsible-tabs__content">
+            <a class="btn btn--primary btn--link" href="{{ block.settings.link }}"
+              ><span class="btn__text">{{ block.settings.title | escape }}</span></a
+            >
+          </div>
+
+        {% elsif block.type == 'question' %}
+          <div class="collapsible-tabs__tab">
+            <details-disclosure>
+              <details class="disclosure">
+                <summary class="disclosure__title">
+                  {% if request.locale.iso_code == 'de' %}
+                    {{ block.settings.title_de }}
+                  {% elsif request.locale.iso_code == 'fr' %}
+                    {{ block.settings.title_fr }}
+                  {% elsif request.locale.iso_code == 'fi' %}
+                    {{ block.settings.title_fi }}
+                  {% else %}
+                    {{ block.settings.title }}
+                  {% endif %}
+                </summary>
+                <div class="disclosure__panel has-motion">
+                  <div class="disclosure__content rte">
+                    {% if request.locale.iso_code == 'de' %}
+                      {{ block.settings.answer_de }}
+                    {% elsif request.locale.iso_code == 'fr' %}
+                      {{ block.settings.answer_fr }}
+                    {% elsif request.locale.iso_code == 'fi' %}
+                      {{ block.settings.answer_fi }}
+                    {% else %}
+                      {{ block.settings.answer }}
+                    {% endif %}
+
+                    {{ block.settings.liquid_content }}
+                    {% if block.settings.image != blank %}
+                      <img
+                        src="{{ block.settings.image | img_url: 'original' }}"
+                        alt="{{ block.settings.title | escape }}"
+                      >
+                    {% endif %}
+
+                    {% if block.settings.answer_2 != blank %}
+                      <div style="margin-top: 40px;">
+                        {% if request.locale.iso_code == 'de' %}
+                          {{ block.settings.answer_2_de }}
+                        {% elsif request.locale.iso_code == 'fr' %}
+                          {{ block.settings.answer_2_fr }}
+                        {% elsif request.locale.iso_code == 'fi' %}
+                          {{ block.settings.answer_2_fi }}
+                        {% else %}
+                          {{ block.settings.answer_2 }}
+                        {% endif %}
+                      </div>
+                    {% endif %}
+
+                    {% if block.settings.image_2 != blank %}
+                      <img
+                        src="{{ block.settings.image_2 | img_url: 'original' }}"
+                        alt="{{ block.settings.title | escape }}"
+                      >
+                    {% endif %}
+                  </div>
+                </div>
+              </details>
+            </details-disclosure>
+          </div>
+        {% endif %}
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+<style>
+  .collapsible-tabs__tab .disclosure__title {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border: 0;
+    font-size: 1em;
+    font-weight: 700;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Collapsible tabs",
+  "class": "section-collapsible-tabs",
+  "disabled_on": {
+    "groups": ["aside"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "title_de",
+      "label": "Heading German"
+    },
+    {
+      "type": "text",
+      "id": "title_fr",
+      "label": "Heading France"
+    },
+    {
+      "type": "text",
+      "id": "title_fi",
+      "label": "Heading Finland"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Question"
+        },
+        {
+          "type": "text",
+          "id": "title_de",
+          "label": "Question German"
+        },
+        {
+          "type": "text",
+          "id": "title_fr",
+          "label": "Question France"
+        },
+        {
+          "type": "text",
+          "id": "title_fi",
+          "label": "Question Finland"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_de",
+          "label": "Answer German"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_fr",
+          "label": "Answer France"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_fi",
+          "label": "Answer Finland"
+        },
+        {
+          "type": "liquid",
+          "id": "liquid_content",
+          "label": "Custom Liquid Code"
+        },
+        {
+          "type": "liquid",
+          "id": "liquid_content_de",
+          "label": "Custom Liquid Code German"
+        },
+        {
+          "type": "liquid",
+          "id": "liquid_content_fr",
+          "label": "Custom Liquid Code France"
+        },
+        {
+          "type": "liquid",
+          "id": "liquid_content_fi",
+          "label": "Custom Liquid Code Finland"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Panel Image"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_2",
+          "label": "Answer"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_2_de",
+          "label": "Answer German"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_2_fr",
+          "label": "Answer France"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_2_fi",
+          "label": "Answer Finland"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_2",
+          "label": "Panel Image"
+        }
+      ]
+    },
+    {
+      "type": "content",
+      "name": "Paragraph",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content"
+        },
+        {
+          "type": "richtext",
+          "id": "content_de",
+          "label": "Content German"
+        },
+        {
+          "type": "richtext",
+          "id": "content_fr",
+          "label": "Content France"
+        },
+        {
+          "type": "richtext",
+          "id": "content_fi",
+          "label": "Content Finland"
+        },
+        {
+          "type": "liquid",
+          "id": "liquid_content",
+          "label": "Custom Liquid Code"
+        },
+        {
+          "type": "liquid",
+          "id": "liquid_content_de",
+          "label": "Custom Liquid Code German"
+        },
+        {
+          "type": "liquid",
+          "id": "liquid_content_fr",
+          "label": "Custom Liquid Code France"
+        },
+        {
+          "type": "liquid",
+          "id": "liquid_content_fi",
+          "label": "Custom Liquid Code Finland"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Panel Image"
+        }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "Button",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Label",
+          "default": "Button label"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collapsible tabs",
+      "settings": {},
+      "blocks": [
+        {
+          "type": "question"
+        },
+        {
+          "type": "question"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

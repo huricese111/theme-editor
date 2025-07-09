@@ -1,0 +1,66 @@
+{% schema %}
+{
+  "name": "Go to top",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Go to top",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  .scroll-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    display: none;
+    transition: opacity 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  .scroll-to-top svg {
+    width: 20px;
+    height: 20px;
+  }
+</style>
+
+<button class="scroll-to-top" id="scrollToTopBtn">
+  <svg width="800px" height="800px" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <polygon fill="white" points="390.624 150.625 256 16 121.376 150.625 144.004 173.252 240.001 77.254 240.001 495.236 272.001 495.236 272.001 77.257 367.996 173.252 390.624 150.625" class="ci-primary"/>
+  </svg>
+</button>
+
+<script>
+  function goBack() {
+    window.history.back();
+  }
+  const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+
+  window.onscroll = function () {
+    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+      scrollToTopBtn.style.display = 'block';
+    } else {
+      scrollToTopBtn.style.display = 'none';
+    }
+  };
+
+  scrollToTopBtn.onclick = function () {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+</script>

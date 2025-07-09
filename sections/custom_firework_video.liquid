@@ -1,0 +1,132 @@
+{% schema %}
+{
+  "name": "Custom Playlist",
+  "settings": [
+    {
+      "type": "select",
+      "id": "mode",
+      "label": "Select Mode",
+      "options": [
+        {
+          "value": "default",
+          "label": "Story Block"
+        },
+        {
+          "value": "pinned",
+          "label": "Floating Player"
+        },
+        {
+          "value": "grid",
+          "label": "Grid"
+        },
+        {
+          "value": "row",
+          "label": "Carousel"
+        },
+        {
+          "value": "hero",
+          "label": "Hero Unit"
+        }
+      ],
+      "default": "row"
+    },
+    {
+      "type": "radio",
+      "id": "source",
+      "label": "Select Playlist Source",
+      "options": [
+        {
+          "value": "metafield",
+          "label": "From Product Metafield"
+        },
+        {
+          "value": "manual",
+          "label": "Manually Enter Playlist ID"
+        }
+      ],
+      "default": "metafield"
+    },
+    {
+      "type": "text",
+      "id": "manual_playlist_id",
+      "label": "Manual Playlist ID",
+      "info": "Enter the playlist ID"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Playlist",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+
+{% if section.settings.source == 'manual' %}
+  {% assign playlist_id = section.settings.manual_playlist_id %}
+{% else %}
+  {% assign playlist_id = product.metafields.custom.firework_playlist_id %}
+{% endif %}
+{% assign mode = section.settings.mode %}
+
+<style>
+  .videoblock {
+    padding: 100px 60px;
+  }
+</style>
+
+<div class="videoblock">
+  <script async src="//asset.fwcdn3.com/js/storyblock.js"></script>
+
+  {% if mode == 'default' %}
+    <fw-storyblock
+      channel="hepha"
+      playlist="{{ playlist_id }}"
+      autoplay="true"
+    >
+    </fw-storyblock>
+
+  {% elsif mode == 'pinned' %}
+    <script async src="//asset.fwcdn3.com/js/storyblock.js"></script>
+    <fw-storyblock
+      channel="hepha"
+      playlist="{{ playlist_id }}"
+      mode="pinned"
+      autoplay="true"
+    ></fw-storyblock>
+
+  {% elsif mode == 'grid' %}
+    <script async type="text/javascript" src="//asset.fwcdn3.com/js/embed-feed.js"></script>
+    <fw-embed-feed
+      channel="hepha"
+      playlist="{{ playlist_id }}"
+      mode="grid"
+      open_in="default"
+      max_videos="0"
+      placement="middle"
+      player_placement="bottom-right"
+    >
+    </fw-embed-feed>
+
+  {% elsif mode == 'row' %}
+    <script async type="text/javascript" src="//asset.fwcdn3.com/js/embed-feed.js"></script>
+    <fw-embed-feed
+      channel="hepha"
+      playlist="{{ playlist_id }}"
+      mode="row"
+      open_in="default"
+      max_videos="0"
+      placement="middle"
+      player_placement="bottom-right"
+    >
+    </fw-embed-feed>
+
+  {% elsif mode == 'hero' %}
+    <script async src="//asset.fwcdn3.com/js/fwn.js"></script>
+    <fw-herounit
+      channel="hepha"
+      playlist="{{ playlist_id }}"
+    >
+    </fw-herounit>
+  {% endif %}
+</div>
