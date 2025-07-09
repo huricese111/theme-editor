@@ -4,45 +4,53 @@
 
     {% if product.available %}
       {%- liquid
-        assign gift_card_recipient_feature_active = false
-        if block.settings.show_gift_card_recipient and product.gift_card?
-          assign gift_card_recipient_feature_active = true
-        endif
+  assign gift_card_recipient_feature_active = false
+  if block.settings.show_gift_card_recipient and product.gift_card?
+    assign gift_card_recipient_feature_active = true
+  endif
 
-        assign enable_dynamic_payment_button = false
-        if block.settings.enable_payment_button and product.selling_plan_groups == empty and gift_card_recipient_feature_active == false
-          unless product.template_suffix contains 'preorder'
-            assign enable_dynamic_payment_button = true
-          endunless
-        endif
-        
-        assign current_locale = request.locale.iso_code
-        case current_locale
-          when 'de'
-            assign add_text = 'Hinzufügen'
-            assign remove_text = 'Entfernen'
-            assign default_accessories_heading = 'Kompatibles Zubehör'
-          when 'fr'
-            assign add_text = 'Ajouter'
-            assign remove_text = 'Retirer'
-            assign default_accessories_heading = 'Accessoires compatibles'
-          when 'fi'
-            assign add_text = 'Lisää'
-            assign remove_text = 'Poista'
-            assign default_accessories_heading = 'Yhteensopivat lisävarusteet'
-          else
-            assign add_text = 'Add'
-            assign remove_text = 'Remove'
-            assign default_accessories_heading = 'Compatible accessories'
-        endcase
-        
-        assign accessories_heading = block.settings.accessories_heading
-        if accessories_heading == blank
-          assign accessories_heading = default_accessories_heading
-        endif
-        
-        assign show_accessory_description = block.settings.show_accessory_description
-      -%}
+  assign enable_dynamic_payment_button = false
+  if block.settings.enable_payment_button and product.selling_plan_groups == empty and gift_card_recipient_feature_active == false
+    unless product.template_suffix contains 'preorder'
+      assign enable_dynamic_payment_button = true
+    endunless
+  endif
+  
+  assign current_locale = request.locale.iso_code
+  case current_locale
+    when 'de'
+      assign add_text = 'Hinzufügen'
+      assign remove_text = 'Entfernen'
+      assign accessories_heading = block.settings.accessories_heading
+    when 'fr'
+      assign add_text = 'Ajouter'
+      assign remove_text = 'Retirer'
+      assign accessories_heading = block.settings.accessories_heading_fr
+    when 'fi'
+      assign add_text = 'Lisää'
+      assign remove_text = 'Poista'
+      assign accessories_heading = block.settings.accessories_heading_fi
+    else
+      assign add_text = 'Add'
+      assign remove_text = 'Remove'
+      assign accessories_heading = block.settings.accessories_heading_en
+  endcase
+  
+  if accessories_heading == blank
+    case current_locale
+      when 'de'
+        assign accessories_heading = 'Kompatibles Zubehör'
+      when 'fr'
+        assign accessories_heading = 'Accessoires compatibles'
+      when 'fi'
+        assign accessories_heading = 'Yhteensopivat lisävarusteet'
+      else
+        assign accessories_heading = 'Compatible accessories'
+    endcase
+  endif
+  
+  assign show_accessory_description = block.settings.show_accessory_description
+-%}
 
       {% if gift_card_recipient_feature_active %}
         {% render 'gift-card-recipient', section: section %}

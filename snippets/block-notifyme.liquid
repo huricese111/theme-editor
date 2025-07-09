@@ -1,0 +1,463 @@
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+{%- assign variant_available = current_variant.available -%}
+
+<div class="notify-me-wrapper" data-notify-me-wrapper>
+  {% unless variant_available %}
+    <div
+      class="notify-me-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="notify-me-heading">
+      <div class="notify-me-content">
+        <button
+          type="button"
+          class="notify-me-close"
+          aria-label="{{ 'general.accessibility.close' | t }}">
+          &times;
+        </button>
+
+        <h3 id="notify-me-heading" class="h4">
+          {{ 'products.product.notify_me.title' | t }}
+        </h3>
+
+        <p class="notify-me-desc">
+          {{ 'products.product.notify_me.subtitle' | t: product: product.title }}
+        </p>
+
+        <div class="notify-me-variant">
+          <div class="variant-option">
+            <span class="option-name">{{ 'products.product.notify_me.color' | t }}:</span>
+            <span class="option-value" data-notify-color>{{ current_variant.option1 }}</span>
+          </div>
+          <div class="variant-option">
+            <span class="option-name">{{ 'products.product.notify_me.size' | t }}:</span>
+            <span class="option-value" data-notify-size>{{ current_variant.option2 }}</span>
+          </div>
+        </div>
+
+        <form class="notify-me-form" data-notify-form>
+          <input
+            type="hidden"
+            name="form_type"
+            value="contact">
+          <input
+            type="hidden"
+            name="contact[form_source]"
+            value="notify_me">
+          <input
+            type="hidden"
+            name="contact[product]"
+            value="{{ product.title | escape }}">
+          <input
+            type="hidden"
+            name="contact[product_id]"
+            value="{{ product.id }}">
+          <input
+            type="hidden"
+            name="contact[product_handle]"
+            value="{{ product.handle }}">
+          <input
+            type="hidden"
+            name="contact[product_url]"
+            value="{{ shop.url }}{{ product.url }}">
+          <input
+            type="hidden"
+            name="contact[variant_id]"
+            value="{{ current_variant.id }}"
+            data-notify-variant-id>
+          <input
+            type="hidden"
+            name="contact[color]"
+            value="{{ current_variant.option1 }}"
+            data-notify-color-input>
+          <input
+            type="hidden"
+            name="contact[size]"
+            value="{{ current_variant.option2 }}"
+            data-notify-size-input>
+
+          <div class="input-group">
+            <label for="notify-email" class="visually-hidden">
+              {{ 'general.newsletter_form.newsletter_email' | t }}
+            </label>
+            <input
+              type="email"
+              id="notify-email"
+              name="contact[email]"
+              class="input-group__field"
+              required
+              placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}"
+              autocorrect="off"
+              autocapitalize="off">
+
+            <button type="submit" class="btn btn--primary">
+              {{ 'products.product.notify_me.submit' | t }}
+            </button>
+          </div>
+
+          <div class="newsletter-agree">
+            <input
+              type="checkbox"
+              id="marketing-consent"
+              name="contact[marketing_consent]"
+              checked>
+            <label for="marketing-consent">{{ 'products.product.notify_me.marketing_consent' | t }}</label>
+          </div>
+        </form>
+
+        <div
+          class="notify-me-success"
+          hidden
+          data-notify-success>
+          <svg
+            class="success-icon"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none">
+            <path
+              d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+              stroke="#4CAF50"
+              stroke-width="2" />
+          </svg>
+          <p class="success-message">{{ 'products.product.notify_me.success_message' | t }}</p>
+        </div>
+      </div>
+    </div>
+  {% endunless %}
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const notifyMe = {
+      selectors: {
+        wrapper: '[data-notify-me-wrapper]',
+        modal: '.notify-me-modal',
+        form: '[data-notify-form]',
+        success: '[data-notify-success]',
+        variantId: '[data-notify-variant-id]',
+        color: '[data-notify-color]',
+        size: '[data-notify-size]',
+        colorInput: '[data-notify-color-input]',
+        sizeInput: '[data-notify-size-input]'
+      },
+      
+      init() {
+        this.cache = {
+          wrapper: document.querySelector(this.selectors.wrapper),
+          modal: document.querySelector(this.selectors.modal),
+          form: document.querySelector(this.selectors.form),
+          success: document.querySelector(this.selectors.success),
+          variantId: document.querySelector(this.selectors.variantId),
+          color: document.querySelector(this.selectors.color),
+          size: document.querySelector(this.selectors.size),
+          colorInput: document.querySelector(this.selectors.colorInput),
+          sizeInput: document.querySelector(this.selectors.sizeInput),
+          closeBtn: document.querySelector('.notify-me-close')
+        }
+        
+        if (!this.cache.wrapper || !this.cache.modal) return;
+        
+        this.setupEvents();
+        this.listenForVariantChanges();
+      },
+      
+      setupEvents() {
+        this.cache.form.addEventListener('submit', this.handleSubmit.bind(this));
+        
+        this.cache.closeBtn.addEventListener('click', () => {
+          this.cache.modal.hidden = true;
+        });
+        
+        this.cache.modal.addEventListener('click', (e) => {
+          if (e.target === this.cache.modal) {
+            this.cache.modal.hidden = true;
+          }
+        });
+      },
+      
+      listenForVariantChanges() {
+        document.addEventListener('on:variant:change', (event) => {
+          const { variant } = event.detail;
+          
+          if (variant) {
+            this.cache.variantId.value = variant.id;
+            
+            if (variant.options && variant.options.length >= 2) {
+              this.cache.color.textContent = variant.options[0];
+              this.cache.size.textContent = variant.options[1];
+              this.cache.colorInput.value = variant.options[0];
+              this.cache.sizeInput.value = variant.options[1];
+            }
+            
+            // Show modal only if variant is unavailable
+            this.cache.modal.hidden = variant.available;
+          }
+        });
+      },
+      
+      handleSubmit(e) {
+        e.preventDefault();
+        const form = e.target;
+        
+        // Show loading state
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.textContent;
+        submitBtn.textContent = '{{ "products.product.notify_me.sending" | t }}';
+        submitBtn.disabled = true;
+        
+        // Prepare form data
+        const formData = new FormData(form);
+        
+        // Submit to Shopify's contact form endpoint
+        fetch('/contact', {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'Accept': 'application/json'
+          }
+        })
+        .then(response => {
+          if (response.ok) {
+            // Show success message
+            form.hidden = true;
+            this.cache.success.hidden = false;
+            
+            // Track conversion
+            this.trackConversion();
+            
+            // Reset after 3 seconds
+            setTimeout(() => {
+              this.cache.modal.hidden = true;
+              form.reset();
+              form.hidden = false;
+              this.cache.success.hidden = true;
+              submitBtn.textContent = originalBtnText;
+              submitBtn.disabled = false;
+            }, 3000);
+          } else {
+            throw new Error('Network response was not ok');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          submitBtn.textContent = '{{ "products.product.notify_me.error" | t }}';
+          setTimeout(() => {
+            submitBtn.textContent = originalBtnText;
+            submitBtn.disabled = false;
+          }, 2000);
+        });
+      },
+      
+      trackConversion() {
+        // Google Analytics tracking
+        if (typeof gtag === 'function') {
+          gtag('event', 'notify_me', {
+            'event_category': 'Back in Stock',
+            'event_label': this.cache.variantId.value
+          });
+        }
+        
+        // Facebook Pixel tracking
+        if (typeof fbq === 'function') {
+          fbq('track', 'Subscribe', {
+            content_name: 'Back in Stock Notification',
+            content_category: 'Product',
+            content_ids: [this.cache.variantId.value],
+            value: 0.00,
+            currency: '{{ shop.currency }}'
+          });
+        }
+      }
+    }
+    
+    notifyMe.init();
+  });
+</script>
+
+<style>
+  .notify-me-wrapper {
+    position: fixed;
+    z-index: 10000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+  }
+
+  .notify-me-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 10000;
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .notify-me-content {
+    position: relative;
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .notify-me-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    font-weight: bold;
+    color: #666;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    transition: color 0.2s;
+  }
+
+  .notify-me-close:hover {
+    color: #333;
+  }
+
+  .notify-me-desc {
+    margin: 15px 0;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #444;
+  }
+
+  .notify-me-variant {
+    margin: 25px 0;
+    text-align: left;
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 4px solid{{ settings.color_primary | default: '#4CAF50' }};
+  }
+
+  .variant-option {
+    display: flex;
+    margin-bottom: 12px;
+    font-size: 16px;
+  }
+
+  .variant-option:last-child {
+    margin-bottom: 0;
+  }
+
+  .option-name {
+    font-weight: 600;
+    min-width: 120px;
+    color: #333;
+  }
+
+  .option-value {
+    color: #666;
+  }
+
+  .input-group {
+    display: flex;
+    margin: 25px 0 15px;
+    position: relative;
+  }
+
+  .input-group__field {
+    flex: 1;
+    min-height: 52px;
+    padding: 12px 20px;
+    border: 2px solid #ddd;
+    border-radius: 6px 0 0 6px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+  }
+
+  .input-group__field:focus {
+    outline: none;
+    border-color: {{ settings.color_primary | default: '#4CAF50' }};
+  }
+
+  .btn--primary {
+    min-height: 52px;
+    border-radius: 0 6px 6px 0;
+    padding: 12px 25px;
+    font-weight: 600;
+    background: {{ settings.color_primary | default: '#4CAF50' }};
+    border: 2px solid{{ settings.color_primary | default: '#4CAF50' }};
+    transition: all 0.3s;
+  }
+
+  .btn--primary:hover {
+    background: {{ settings.color_primary_dark | default: '#388E3C' }};
+    border-color: {{ settings.color_primary_dark | default: '#388E3C' }};
+    transform: translateY(-2px);
+  }
+
+  .newsletter-agree {
+    text-align: left;
+    margin-top: 15px;
+    font-size: 14px;
+    color: #555;
+  }
+
+  .newsletter-agree input {
+    margin-right: 8px;
+  }
+
+  .notify-me-success {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+    background: #f0fff0;
+    border: 2px solid #4CAF50;
+    border-radius: 8px;
+    margin-top: 20px;
+    animation: fadeIn 0.5s ease-out;
+  }
+
+  .success-icon {
+    width: 42px;
+    height: 42px;
+    margin-right: 15px;
+    stroke-width: 2;
+  }
+
+  .success-message {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #2E7D32;
+  }
+</style>

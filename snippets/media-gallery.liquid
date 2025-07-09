@@ -1,3 +1,15 @@
+<style>
+  .product-info .product-column-left {
+    background-color: #f9f9f9;
+}
+
+  @media (min-width: 1040px) {
+    .product-info .media-gallery-size-medium {
+      width: 100%;
+    }
+  }
+</style>
+
 <media-gallery
   class="media-gallery media-gallery--layout-{{ section.settings.gallery_layout }} media-gallery-size-{{ section.settings.gallery_size }} product-column-left {% if product.media.size > 1 %}has-thumbnails{% endif %}"
   {%- if enable_media_grouping %}

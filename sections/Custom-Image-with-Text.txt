@@ -161,26 +161,8 @@
         {
           "type": "text",
           "id": "title",
-          "label": "Title (Default)",
+          "label": "Title",
           "default": "Slide Title"
-        },
-        {
-          "type": "text",
-          "id": "title_de",
-          "label": "Title (German)",
-          "default": "Folientitel"
-        },
-        {
-          "type": "text",
-          "id": "title_fr",
-          "label": "Title (French)",
-          "default": "Titre de la diapositive"
-        },
-        {
-          "type": "text",
-          "id": "title_fi",
-          "label": "Title (Finnish)",
-          "default": "Dian otsikko"
         },
         {
           "type": "url",
@@ -190,26 +172,8 @@
         {
           "type": "richtext",
           "id": "text",
-          "label": "Text (Default)",
+          "label": "Text",
           "default": "<p>Add your custom text here</p>"
-        },
-        {
-          "type": "richtext",
-          "id": "text_de",
-          "label": "Text (German)",
-          "default": "<p>Fügen Sie hier Ihren benutzerdefinierten Text hinzu</p>"
-        },
-        {
-          "type": "richtext",
-          "id": "text_fr",
-          "label": "Text (French)",
-          "default": "<p>Ajoutez votre texte personnalisé ici</p>"
-        },
-        {
-          "type": "richtext",
-          "id": "text_fi",
-          "label": "Text (Finnish)",
-          "default": "<p>Lisää mukautettu teksti tähän</p>"
         },
         {
           "type": "url",
@@ -219,22 +183,7 @@
         {
           "type": "text",
           "id": "button_text_override",
-          "label": "Custom Button Text (Default)"
-        },
-        {
-          "type": "text",
-          "id": "button_text_override_de",
-          "label": "Custom Button Text (German)"
-        },
-        {
-          "type": "text",
-          "id": "button_text_override_fr",
-          "label": "Custom Button Text (French)"
-        },
-        {
-          "type": "text",
-          "id": "button_text_override_fi",
-          "label": "Custom Button Text (Finnish)"
+          "label": "Custom Button Text (Optional)"
         }
       ]
     }
@@ -248,39 +197,21 @@
           "type": "custom_item",
           "settings": {
             "title": "First Item",
-            "title_de": "Erster Punkt",
-            "title_fr": "Premier élément",
-            "title_fi": "Ensimmäinen kohde",
-            "text": "<p>Description for first item</p>",
-            "text_de": "<p>Beschreibung für den ersten Punkt</p>",
-            "text_fr": "<p>Description du premier élément</p>",
-            "text_fi": "<p>Ensimmäisen kohteen kuvaus</p>"
+            "text": "<p>Description for first item</p>"
           }
         },
         {
           "type": "custom_item",
           "settings": {
             "title": "Second Item",
-            "title_de": "Zweiter Punkt",
-            "title_fr": "Deuxième élément",
-            "title_fi": "Toinen kohde",
-            "text": "<p>Description for second item</p>",
-            "text_de": "<p>Beschreibung für den zweiten Punkt</p>",
-            "text_fr": "<p>Description du deuxième élément</p>",
-            "text_fi": "<p>Toisen kohteen kuvaus</p>"
+            "text": "<p>Description for second item</p>"
           }
         },
         {
           "type": "custom_item",
           "settings": {
             "title": "Third Item",
-            "title_de": "Dritter Punkt",
-            "title_fr": "Troisième élément",
-            "title_fi": "Kolmas kohde",
-            "text": "<p>Description for third item</p>",
-            "text_de": "<p>Beschreibung für den dritten Punkt</p>",
-            "text_fr": "<p>Description du troisième élément</p>",
-            "text_fi": "<p>Kolmannen kohteen kuvaus</p>"
+            "text": "<p>Description for third item</p>"
           }
         }
       ]
@@ -293,19 +224,19 @@
 
 {% capture section_title %}
   {% case locale_prefix %}
-    {% when 'de' %}{{ section.settings.title_de | default: section.settings.title }}
-    {% when 'fr' %}{{ section.settings.title_fr | default: section.settings.title }}
-    {% when 'fi' %}{{ section.settings.title_fi | default: section.settings.title }}
+    {% when 'de' %}{{ section.settings.title_de | default: section.settings.title_de }}
+    {% when 'fr' %}{{ section.settings.title_fr | default: section.settings.title_fr }}
+    {% when 'fi' %}{{ section.settings.title_fi | default: section.settings.title_fi }}
     {% else %}{{ section.settings.title }}
   {% endcase %}
 {% endcapture %}
 
 {% capture default_button_text %}
   {% case locale_prefix %}
-    {% when 'de' %}{{ section.settings.button_text_de | default: section.settings.button_text }}
-    {% when 'fr' %}{{ section.settings.button_text_fr | default: section.settings.button_text }}
-    {% when 'fi' %}{{ section.settings.button_text_fi | default: section.settings.button_text }}
-    {% else %}{{ section.settings.button_text }}
+    {% when 'de' %}{{ section.settings.button_text_de | default: section.settings.button_text_de }}
+    {% when 'fr' %}{{ section.settings.button_text_fr | default: section.settings.button_text_fr }}
+    {% when 'fi' %}{{ section.settings.button_text_fi | default: section.settings.button_text_fi }}
+    {% else %}{{ section.settings.button_text | default: 'Learn More' }}
   {% endcase %}
 {% endcapture %}
 
@@ -334,7 +265,11 @@
   <div class="lightbox-container" id="lightbox-{{ section.id }}">
     <div class="lightbox-content">
       <button class="lightbox-close" aria-label="Close lightbox">×</button>
-      
+      <img
+        class="lightbox-image"
+        src="{{ block.settings.image | img_url: '1200x' }}"
+        alt="Lightbox Image"
+      >
     </div>
   </div>
 
@@ -351,36 +286,7 @@
       <div class="carousel-track">
         <div class="carousel-slides" id="carousel-slides-{{ section.id }}">
           {% for block in section.blocks %}
-            {% comment %} 多语言内容处理 {% endcomment %}
-            {% capture block_title %}
-              {% case locale_prefix %}
-                {% when 'de' %}{{ block.settings.title_de | default: block.settings.title }}
-                {% when 'fr' %}{{ block.settings.title_fr | default: block.settings.title }}
-                {% when 'fi' %}{{ block.settings.title_fi | default: block.settings.title }}
-                {% else %}{{ block.settings.title }}
-              {% endcase %}
-            {% endcapture %}
-            
-            {% capture block_text %}
-              {% case locale_prefix %}
-                {% when 'de' %}{{ block.settings.text_de | default: block.settings.text }}
-                {% when 'fr' %}{{ block.settings.text_fr | default: block.settings.text }}
-                {% when 'fi' %}{{ block.settings.text_fi | default: block.settings.text }}
-                {% else %}{{ block.settings.text }}
-              {% endcase %}
-            {% endcapture %}
-            
-            {% capture override_button_text %}
-              {% case locale_prefix %}
-                {% when 'de' %}{{ block.settings.button_text_override_de | default: block.settings.button_text_override }}
-                {% when 'fr' %}{{ block.settings.button_text_override_fr | default: block.settings.button_text_override }}
-                {% when 'fi' %}{{ block.settings.button_text_override_fi | default: block.settings.button_text_override }}
-                {% else %}{{ block.settings.button_text_override }}
-              {% endcase %}
-            {% endcapture %}
-            
-            {% assign item_button_text = override_button_text | strip | default: default_button_text | strip %}
-            
+            {% assign item_button_text = block.settings.button_text_override | default: default_button_text %}
             <div
               class="carousel-slide {% if all_content_hidden %}all-content-hidden{% endif %}"
               {{ block.shopify_attributes }}
@@ -418,25 +324,25 @@
               </div>
               {% unless all_content_hidden %}
                 <div class="slide-content">
-                  {% if block_title != blank and show_title_global %}
+                  {% if block.settings.title != blank and show_title_global %}
                     {% if block.settings.title_link != blank %}
                       <a href="{{ block.settings.title_link }}" style="display: block;">
                     {% endif %}
                     <h3 class="custom-title">
-                      {{ block_title }}
+                      {{ block.settings.title }}
                     </h3>
                     {% if block.settings.title_link != blank %}
                       </a>
                     {% endif %}
                   {% endif %}
-                  {% if block_text != blank and show_text_global %}
+                  {% if block.settings.text != blank and show_text_global %}
                     <div class="custom-text">
-                      {{ block_text }}
+                      {{ block.settings.text }}
                     </div>
                   {% endif %}
                   {% if block.settings.button_link != blank and show_button_global %}
-                    <a href="{{ block.settings.button_link }}" class="customitem-ibutton">
-                      {{- item_button_text -}}
+                    <a href="{{ block.settings.button_link }}" class="custom-button">
+                      {{- item_button_text | strip -}}
                     </a>
                   {% endif %}
                 </div>
@@ -657,7 +563,7 @@
   }
 
   .slide-content {
-    padding: 20px 20px 40px 20px;
+    padding: 20px;
   }
 
   .custom-title {
@@ -690,19 +596,20 @@
     margin: 0 0 10px;
   }
 
-  .customitem-ibutton {
-    color: #000;
-    border: 2px solid #000000;
-    border-radius: 50px;
-    text-align: center;
-    font-weight: 400;
-    line-height: 1;
-    padding: 12px 20px;
-    outline: 0;
-    cursor: pointer;
+  .custom-button {
+    display: inline-block;
+    padding: 10px 25px;
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    text-decoration: none;
+    border-radius: 30px;
+    border: 2px solid var(--button-border);
+    font-weight: 600;
+    transition: all 0.3s;
+    font-size: 14px;
   }
 
-  .customitem-ibutton:hover {
+  .custom-button:hover {
     background-color: var(--button-hover-bg);
     color: var(--button-hover-text);
     border-color: var(--button-hover-border);
