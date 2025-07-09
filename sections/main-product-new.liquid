@@ -285,7 +285,7 @@
                     block: block
                   %}
 
-                 {% when 'bidex' %}
+                {% when 'bidex' %}
                   {% render 'custom-bidex-find-dealers' %}
 
                 {% when 'inventory-level' %}
@@ -378,7 +378,6 @@
 {%- if section.settings.enable_sticky_atc -%}
   {%- render 'sticky-atc', product: product, current_variant: current_variant -%}
 {%- endif -%}
-
 
 {% schema %}
 {
@@ -1593,8 +1592,23 @@
         {
           "type": "text",
           "id": "text",
-          "label": "Text",
+          "label": "Text (Default/English)",
           "default": "Text block"
+        },
+        {
+          "type": "text",
+          "id": "text_de",
+          "label": "Text (German)"
+        },
+        {
+          "type": "text",
+          "id": "text_fr",
+          "label": "Text (French)"
+        },
+        {
+          "type": "text",
+          "id": "text_fi",
+          "label": "Text (Finnish)"
         },
         {
           "type": "select",
@@ -1793,8 +1807,23 @@
         {
           "type": "richtext",
           "id": "richtext",
-          "label": "Rich text",
+          "label": "Rich text (Default/English)",
           "default": "<p>Rich text block</p>"
+        },
+        {
+          "type": "richtext",
+          "id": "richtext_de",
+          "label": "Rich text (German)",
+        },
+        {
+          "type": "richtext",
+          "id": "richtext_fr",
+          "label": "Rich text (French)",
+        },
+        {
+          "type": "richtext",
+          "id": "richtext_fi",
+          "label": "Rich text (Finnish)",
         },
         {
           "type": "select",

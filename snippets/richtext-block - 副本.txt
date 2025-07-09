@@ -1,22 +1,4 @@
-{% liquid
-  assign text_to_show = block.settings.text
-  case request.locale.iso_code
-    when 'de'
-      if block.settings.text_de != blank
-        assign text_to_show = block.settings.text_de
-      endif
-    when 'fr'
-      if block.settings.text_fr != blank
-        assign text_to_show = block.settings.text_fr
-      endif
-    when 'fi'
-      if block.settings.text_fi != blank
-        assign text_to_show = block.settings.text_fi
-      endif
-  endcase
-%}
-
-{% if text_to_show != blank %}
+{% if block.settings.richtext != blank %}
   <div
     class="lightly-spaced-row{% unless block.settings.show_in_quickbuy %} not-in-quickbuy{% endunless %}"
     {{ block.shopify_attributes }}
@@ -43,7 +25,7 @@
       {% endif %}
     >
       {%- if block.settings.icon == blank and block.settings.custom_icon == blank -%}
-        {{- text_to_show -}}
+        <div class="rte cf">{{ block.settings.richtext }}</div>
       {%- else -%}
         {% if block.settings.custom_icon == blank %}
           {% render 'icon', icon: block.settings.icon, size: block.settings.icon_size %}
@@ -61,7 +43,7 @@
             {%- render 'image' with block.settings.custom_icon, sizes: icon_sizes, widths: icon_widths -%}
           </span>
         {% endif %}
-        <span class="with-icon__beside">{{ text_to_show }}</span>
+        <div class="with-icon__beside rte cf">{{ block.settings.richtext }}</div>
       {%- endif -%}
     </div>
   </div>
