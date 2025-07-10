@@ -1,0 +1,31 @@
+{%- comment %} spec-module.liquid {% endcomment -%}
+{%- assign field_array = fields | split: "," -%}
+{%- assign label_array = labels | split: "," -%}
+
+{%- assign has_content = false -%}
+{%- for field in field_array -%}
+  {%- assign field_value = product.metafields.custom[field].value -%}
+  {%- if field_value -%}{%- assign has_content = true -%}{%- break -%}{%- endif -%}
+{%- endfor -%}
+
+{%- if has_content -%}
+  <div class="specification-module">
+    <div class="specification-header">
+      <h5>{{ title | t }}</h5>
+    </div>
+    <div class="specification-row">
+      {%- for field in field_array -%}
+        {%- assign field_value = product.metafields.custom[field].value -%}
+        {%- if field_value -%}
+          {%- assign label_index = forloop.index0 -%}
+          <div class="column">
+            <div class="label-column">
+              <strong>{{ label_array[label_index] | t }}</strong>
+            </div>
+            <div class="value-column">{{ field_value }}</div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endif -%}

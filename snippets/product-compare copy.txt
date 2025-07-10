@@ -1,0 +1,281 @@
+<style>
+.product-compare-widget {
+  margin: 15px 0;
+  padding: 15px;
+  background: #f9f9f9;
+  border-radius: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  align-items: center;
+}
+
+.compare-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.compare-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.compare-count {
+  background: #000;
+  color: #fff;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+.compare-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  
+  &.active {
+    display: block;
+  }
+}
+
+.compare-modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+}
+
+.compare-modal-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  width: 90%;
+  max-width: 1000px;
+  max-height: 90vh;
+  overflow: auto;
+  border-radius: 5px;
+  z-index: 2;
+}
+
+.compare-modal-header {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.compare-modal-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  
+  th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+  }
+  
+  th {
+    background: #f8f8f8;
+  }
+  
+  .compare-product-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .compare-product-image {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+  }
+}
+
+.compare-modal-footer {
+  padding: 15px;
+  border-top: 1px solid #eee;
+  text-align: right;
+}
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+  const MAX_COMPARE_ITEMS = 4;
+  const STORAGE_KEY = 'compareProducts';
+  
+  // 初始化本地存储
+  if (!localStorage.getItem(STORAGE_KEY)) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify([]));
+  }
+  
+  // 获取比较列表
+  function getCompareList() {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY));
+  }
+  
+  // 保存比较列表
+  function saveCompareList(list) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    updateCompareUI();
+  }
+  
+  // 更新UI状态
+  function updateCompareUI() {
+    const compareList = getCompareList();
+    const count = compareList.length;
+    const countElements = document.querySelectorAll('.compare-count');
+    const actionElements = document.querySelectorAll('.compare-actions');
+    const checkboxes = document.querySelectorAll('.compare-checkbox-input');
+    
+    countElements.forEach(el => {
+      el.textContent = count;
+    });
+    
+    actionElements.forEach(el => {
+      el.style.display = count > 0 ? 'flex' : 'none';
+    });
+    
+    checkboxes.forEach(checkbox => {
+      const handle = checkbox.dataset.productHandle;
+      const isInList = compareList.some(item => item.handle === handle);
+      
+      checkbox.checked = isInList;
+      
+      if (count >= MAX_COMPARE_ITEMS && !isInList) {
+        checkbox.disabled = true;
+      } else {
+        checkbox.disabled = false;
+      }
+    });
+  }
+  
+  function renderCompareTable() {
+    const compareList = getCompareList();
+    const table = document.querySelector('.compare-table');
+    
+    if (!table) return;
+    
+    table.innerHTML = '';
+    
+    let headerRow = '<tr><th>产品参数</th>';
+    compareList.forEach(product => {
+      headerRow += `
+        <th>
+          <div class="compare-product-header">
+            
+            <div>${product.title}</div>
+            <div>${product.price}</div>
+            <button class="remove-compare-item" data-handle="${product.handle}">移除</button>
+          </div>
+        </th>
+      `;
+    });
+    headerRow += '</tr>';
+    table.innerHTML = headerRow;
+    
+    let priceRow = '<tr><td>价格</td>';
+    compareList.forEach(product => {
+      priceRow += `<td>${product.price}</td>`;
+    });
+    priceRow += '</tr>';
+    table.innerHTML += priceRow;
+    
+    let vendorRow = '<tr><td>供应商</td>';
+    compareList.forEach(product => {
+      vendorRow += `<td>${product.vendor || 'N/A'}</td>`;
+    });
+    vendorRow += '</tr>';
+    table.innerHTML += vendorRow;
+    
+    document.querySelectorAll('.remove-compare-item').forEach(button => {
+      button.addEventListener('click', function() {
+        const handle = this.dataset.handle;
+        removeFromCompare(handle);
+      });
+    });
+  }
+  
+  // 添加产品到比较列表
+  function addToCompare(product) {
+    const compareList = getCompareList();
+    
+    // 检查是否已在列表中
+    if (!compareList.some(item => item.handle === product.handle)) {
+      if (compareList.length < MAX_COMPARE_ITEMS) {
+        compareList.push(product);
+        saveCompareList(compareList);
+      } else {
+        alert(`最多只能比较${MAX_COMPARE_ITEMS}款产品`);
+      }
+    }
+  }
+  
+  function removeFromCompare(handle) {
+    const compareList = getCompareList().filter(item => item.handle !== handle);
+    saveCompareList(compareList);
+    
+    if (document.querySelector('#compare-modal').classList.contains('active')) {
+      renderCompareTable();
+    }
+  }
+  
+  function clearCompare() {
+    saveCompareList([]);
+    document.querySelector('#compare-modal').classList.remove('active');
+  }
+  
+  document.querySelectorAll('.compare-checkbox-input').forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+      if (this.checked) {
+        addToCompare({
+          handle: this.dataset.productHandle,
+          title: this.dataset.productTitle,
+          price: this.dataset.productPrice,
+          image: this.dataset.productImage,
+          vendor: '' 
+        });
+      } else {
+        removeFromCompare(this.dataset.productHandle);
+      }
+    });
+  });
+  
+  document.querySelector('.compare-button').addEventListener('click', function() {
+    renderCompareTable();
+    document.querySelector('#compare-modal').classList.add('active');
+  });
+  
+  document.querySelector('.compare-modal-close').addEventListener('click', function() {
+    document.querySelector('#compare-modal').classList.remove('active');
+  });
+  
+  document.querySelector('.clear-compare').addEventListener('click', clearCompare);
+  
+  // 初始化UI
+  updateCompareUI();
+});
+</script>

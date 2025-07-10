@@ -10,10 +10,10 @@
 <!doctype html>
 <html class="no-js" lang="{{ request.locale.iso_code }}" dir="{{ lang_dir }}">
   <head>
-    {% render 'redirect-rules' %}
     {%- render 'doc-head-core' -%}
     {%- render 'doc-head-social' -%}
     {% render :"gtag-js' %}
+    {% render 'redirect-rules' %}
     {%- liquid
       assign base_font = settings.type_base_font
       assign base_font_bold = base_font | font_modify: 'weight', 'bolder'
@@ -228,8 +228,5 @@
         </added-notification>
       </template>
     {%- endif -%}
-
-{% render 'product-compare' %}
-
   </body>
 </html>

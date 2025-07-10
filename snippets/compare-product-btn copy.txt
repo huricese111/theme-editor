@@ -1,0 +1,16 @@
+<div class="product-compare-widget">
+  <label class="compare-checkbox">
+    <input type="checkbox" class="compare-checkbox-input" 
+           data-product-handle="{{ product.handle }}" 
+           data-product-title="{{ product.title | escape }}" 
+           data-product-price="{{ product.price | money }}" 
+           data-product-image="{{ product.featured_image | img_url: '200x' }}">
+    <span>Add to compare</span>
+  </label>
+  
+  <div class="compare-actions" style="display: none;">
+    <span class="compare-count">0</span> {{ 'products.product.items_selected' | t }}
+    <button class="button compare-button">{{ 'products.product.view_compare' | t }}</button>
+  </div>
+</div>
+

@@ -106,17 +106,6 @@
     }
   }
 
-  @media screen and (min-width: 2560px) {
-    .product-details-section {
-      padding: 30px 60px;
-    }
-
-    .product-info-content {
-      max-width: 80%;
-      margin: 0 auto;
-    }
-  }
-
   @media screen and (max-width: 1024px) {
     .product-page-container {
       flex-direction: column;
@@ -129,55 +118,14 @@
       height: auto;
     }
 
+    .product-media-section {
+      height: 60vh;
+    }
+
     .product-details-section {
+      height: auto;
       padding: 20px;
       overflow: visible;
-    }
-
-    .product-media-section {
-      height: 50vh;
-      max-height: 50vh;
-      min-height: 50vh;
-      aspect-ratio: 16/9;
-      padding-bottom: 0;
-    }
-
-    .media-gallery-container {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-    }
-
-    .media-gallery,
-    .main-image {
-      height: 100%;
-    }
-
-    .main-image .slider__item {
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .main-image .slider__item img,
-    .main-image .slider__item video,
-    .main-image .slider__item model-viewer {
-      max-width: 90%;
-      max-height: 90%;
-      object-fit: contain;
-    }
-
-    .thumbnails {
-      height: auto;
-      position: absolute;
-      bottom: 10px;
-      left: 0;
-      right: 0;
-      z-index: 10;
-      padding: 0 10px;
     }
   }
 
@@ -187,28 +135,17 @@
     }
 
     .product-media-section {
-      height: 40vh;
-      max-height: 40vh;
-      min-height: 40vh;
+      height: 50vh;
     }
   }
 
   @media screen and (max-width: 480px) {
     .product-media-section {
-      height: 35vh;
-      max-height: 35vh;
-      min-height: 35vh;
+      height: 40vh;
     }
 
     .product-details-section {
       padding: 15px;
-    }
-
-    .main-image .slider__item img,
-    .main-image .slider__item video,
-    .main-image .slider__item model-viewer {
-      max-height: 85%;
-      max-width: 85%;
     }
   }
 
@@ -218,9 +155,7 @@
     }
 
     .product-media-section {
-      height: 30vh;
-      max-height: 30vh;
-      min-height: 30vh;
+      height: 35vh;
     }
 
     .product-details-section {
@@ -229,6 +164,17 @@
 
     .product-info-content .title-row h1 {
       font-size: 1.5rem;
+    }
+  }
+
+  @media screen and (min-width: 2560px) {
+    .product-details-section {
+      padding: 30px 60px;
+    }
+
+    .product-info-content {
+      max-width: 80%;
+      margin: 0 auto;
     }
   }
 </style>

@@ -160,6 +160,13 @@
               {{- 'products.variant.no_stock' | t -}}
             {%- endif -%}
           </button>
+
+          <div class="product-stock-notification" style="display: none;">
+            <button type="button" class="button button--primary" id="notify-me-trigger">
+              Notify me
+              </button>
+              </div>
+          
         </div>
         {% if enable_dynamic_payment_button %}
           <div class="product-dynamic-payment-button">

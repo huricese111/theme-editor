@@ -51,12 +51,13 @@
     margin-left: auto;
 }
 
-.tab-content-area .product-block .block-inner-inner .innerer {
+  .innerer {
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
+  justify-content: space-between; 
   align-items: flex-start;
-  padding: 10px;
-  width: 100%;
+  padding: 10px; 
+  width: 100%; 
 }
 
 .productcard-left {
@@ -77,10 +78,6 @@
 .swatch-method-swatches .product-block-options--swatch .product-block-options__item {
     width: 20px;
     height: 20px;
-}
-
-.product-grid .product-block__detail {
-    margin-bottom: 0;
 }
 
   @media (max-width: 768px) {

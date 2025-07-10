@@ -425,9 +425,7 @@
                   {%- endif -%}
                 {%- endif -%}
               </div>
-              <div class="productcard-right">
-                {%  render 'compare-product-btn'  %}
-              </div>  
+              <div class="productcard-right"></div>  
             </a>
           </div>
         </div>
