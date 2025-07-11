@@ -1,6 +1,7 @@
-{%- comment %} spec-module.liquid {% endcomment -%}
+{%- comment %} spec-module.liquid - Multi-language support {% endcomment -%}
 {%- assign field_array = fields | split: "," -%}
 {%- assign label_array = labels | split: "," -%}
+{%- assign lang = lang | default: 'en' -%}
 
 {%- assign has_content = false -%}
 {%- for field in field_array -%}
@@ -11,7 +12,66 @@
 {%- if has_content -%}
   <div class="specification-module">
     <div class="specification-header">
-      <h5>{{ title | t }}</h5>
+      <h5>
+        {% case title %}
+          {% when 'e-bike-system' %}
+            {% case lang %}
+              {% when 'de' %}E-Bike System
+              {% when 'fr' %}E-bike Système
+              {% when 'fi' %}Järjestelmä
+              {% else %}E-Bike System
+            {% endcase %}
+          {% when 'suspension' %}
+            {% case lang %}
+              {% when 'de' %}Federgabel
+              {% when 'fr' %}Suspension
+              {% when 'fi' %}Jousitus
+              {% else %}Suspension
+            {% endcase %}
+          {% when 'shifting' %}
+            {% case lang %}
+              {% when 'de' %}Schaltung
+              {% when 'fr' %}Transmission
+              {% when 'fi' %}Vaihteisto
+              {% else %}Shifting
+            {% endcase %}
+          {% when 'brakes' %}
+            {% case lang %}
+              {% when 'de' %}Bremsen
+              {% when 'fr' %}Frein
+              {% when 'fi' %}Jarrut
+              {% else %}Brakes
+            {% endcase %}
+          {% when 'wheels' %}
+            {% case lang %}
+              {% when 'de' %}Laufräder
+              {% when 'fr' %}Roues
+              {% when 'fi' %}Kiekot
+              {% else %}Wheels
+            {% endcase %}
+          {% when 'steering_seating' %}
+            {% case lang %}
+              {% when 'de' %}Lenken & Sitzen
+              {% when 'fr' %}Direction et siège
+              {% when 'fi' %}Ohjaus & satula
+              {% else %}Steering & Seating
+            {% endcase %}
+          {% when 'components' %}
+            {% case lang %}
+              {% when 'de' %}Komponenten
+              {% when 'fr' %}Composants
+              {% when 'fi' %}Komponentit
+              {% else %}Components
+            {% endcase %}
+          {% when 'weight_class' %}
+            {% case lang %}
+              {% when 'de' %}Gewicht & Klasse
+              {% when 'fr' %}Poids et classe
+              {% when 'fi' %}Paino & Luokka
+              {% else %}Weight & Class
+            {% endcase %}
+        {% endcase %}
+      </h5>
     </div>
     <div class="specification-row">
       {%- for field in field_array -%}
@@ -20,7 +80,200 @@
           {%- assign label_index = forloop.index0 -%}
           <div class="column">
             <div class="label-column">
-              <strong>{{ label_array[label_index] | t }}</strong>
+              <strong>
+                {% assign label_key = label_array[label_index] %}
+                {% case label_key %}
+                  {% when 'frame' %}
+                    {% case lang %}
+                      {% when 'de' %}Rahmen
+                      {% when 'fr' %}Cadre
+                      {% when 'fi' %}Runko
+                      {% else %}Frame
+                    {% endcase %}
+                  {% when 'motor' %}
+                    {% case lang %}
+                      {% when 'de' %}Motor
+                      {% when 'fr' %}Moteur
+                      {% when 'fi' %}Moottori
+                      {% else %}Motor
+                    {% endcase %}
+                  {% when 'battery' %}
+                    {% case lang %}
+                      {% when 'de' %}Batterie
+                      {% when 'fr' %}Batterie
+                      {% when 'fi' %}Akku
+                      {% else %}Battery
+                    {% endcase %}
+                  {% when 'display' %}
+                    {% case lang %}
+                      {% when 'de' %}Display
+                      {% when 'fr' %}Affichage
+                      {% when 'fi' %}Näyttö
+                      {% else %}Display
+                    {% endcase %}
+                  {% when 'fork' %}
+                    {% case lang %}
+                      {% when 'de' %}Gabel
+                      {% when 'fr' %}Fourche
+                      {% when 'fi' %}Keula
+                      {% else %}Fork
+                    {% endcase %}
+                  {% when 'shock' %}
+                    {% case lang %}
+                      {% when 'de' %}Schock
+                      {% when 'fr' %}Choc
+                      {% when 'fi' %}Shock
+                      {% else %}Shock
+                    {% endcase %}
+                  {% when 'derailleur' %}
+                    {% case lang %}
+                      {% when 'de' %}Schaltung
+                      {% when 'fr' %}Derailleur
+                      {% when 'fi' %}Takavaihtaja
+                      {% else %}Derailleur
+                    {% endcase %}
+                  {% when 'shifters' %}
+                    {% case lang %}
+                      {% when 'de' %}Schalthebel
+                      {% when 'fr' %}Leviers de vitesse
+                      {% when 'fi' %}Vaihdevivut
+                      {% else %}Shifters
+                    {% endcase %}
+                  {% when 'sprocket' %}
+                    {% case lang %}
+                      {% when 'de' %}Kettenblatt
+                      {% when 'fr' %}Pignon
+                      {% when 'fi' %}Eturatas
+                      {% else %}Sprocket
+                    {% endcase %}
+                  {% when 'cassette' %}
+                    {% case lang %}
+                      {% when 'de' %}Zahnkranz
+                      {% when 'fr' %}Cassette
+                      {% when 'fi' %}Rataspakka
+                      {% else %}Cassette
+                    {% endcase %}
+                  {% when 'brake_f_r' %}
+                    {% case lang %}
+                      {% when 'de' %}Bremse (v / h)
+                      {% when 'fr' %}Disque de frein (droite / gauche)
+                      {% when 'fi' %}Jarru (etu / taka)
+                      {% else %}Brake (f / r)
+                    {% endcase %}
+                  {% when 'brake_disc_f_r' %}
+                    {% case lang %}
+                      {% when 'de' %}Bremsscheibe (v / h)
+                      {% when 'fr' %}Disque de frein (droite / gauche)
+                      {% when 'fi' %}Jarrulevy (etu / taka)
+                      {% else %}Brake disc (f / r)
+                    {% endcase %}
+                  {% when 'brake_levers' %}
+                    {% case lang %}
+                      {% when 'de' %}Bremshebel
+                      {% when 'fr' %}Leviers de frein
+                      {% when 'fi' %}Jarrukahvat
+                      {% else %}Brake levers
+                    {% endcase %}
+                  {% when 'tires' %}
+                    {% case lang %}
+                      {% when 'de' %}Reifen
+                      {% when 'fr' %}Pneus
+                      {% when 'fi' %}Renkaat
+                      {% else %}Tires
+                    {% endcase %}
+                  {% when 'rims' %}
+                    {% case lang %}
+                      {% when 'de' %}Felgen
+                      {% when 'fr' %}Jantes
+                      {% when 'fi' %}Vanteet
+                      {% else %}Rims
+                    {% endcase %}
+                  {% when 'hub_front_f_r' %}
+                    {% case lang %}
+                      {% when 'de' %}Naben vorne (v / h)
+                      {% when 'fr' %}Direction et siège
+                      {% when 'fi' %}Napa (etu / taka)
+                      {% else %}Hub front (f / r)
+                    {% endcase %}
+                  {% when 'handlebar' %}
+                    {% case lang %}
+                      {% when 'de' %}Lenker
+                      {% when 'fr' %}Guidon
+                      {% when 'fi' %}Ohjaustanko
+                      {% else %}Handlebar
+                    {% endcase %}
+                  {% when 'grips' %}
+                    {% case lang %}
+                      {% when 'de' %}Griffe
+                      {% when 'fr' %}Poignées
+                      {% when 'fi' %}Kädensijat
+                      {% else %}Grips
+                    {% endcase %}
+                  {% when 'stem' %}
+                    {% case lang %}
+                      {% when 'de' %}Vorbau
+                      {% when 'fr' %}Tige
+                      {% when 'fi' %}Ohjainkannatin
+                      {% else %}Stem
+                    {% endcase %}
+                  {% when 'seat_post' %}
+                    {% case lang %}
+                      {% when 'de' %}Sattelstütze
+                      {% when 'fr' %}Tige de selle
+                      {% when 'fi' %}Satulatolppa
+                      {% else %}Seat post
+                    {% endcase %}
+                  {% when 'saddle' %}
+                    {% case lang %}
+                      {% when 'de' %}Sattel
+                      {% when 'fr' %}Selle
+                      {% when 'fi' %}Satula
+                      {% else %}Saddle
+                    {% endcase %}
+                  {% when 'front_light' %}
+                    {% case lang %}
+                      {% when 'de' %}Vorderlicht
+                      {% when 'fr' %}Lumiere avt
+                      {% when 'fi' %}Etuvalo
+                      {% else %}Front light
+                    {% endcase %}
+                  {% when 'rear_light' %}
+                    {% case lang %}
+                      {% when 'de' %}Rücklicht
+                      {% when 'fr' %}Lumiere arr
+                      {% when 'fi' %}Takavalo
+                      {% else %}Rear light
+                    {% endcase %}
+                  {% when 'carrier' %}
+                    {% case lang %}
+                      {% when 'de' %}Gepäckträger
+                      {% when 'fr' %}Porte-bagages
+                      {% when 'fi' %}Tavarateline
+                      {% else %}Carrier
+                    {% endcase %}
+                  {% when 'perm_total_weight' %}
+                    {% case lang %}
+                      {% when 'de' %}Zulässiges Gesamtgewicht
+                      {% when 'fr' %}Poids total autorisé
+                      {% when 'fi' %}Sallittu kokonaispaino
+                      {% else %}Perm. total weight
+                    {% endcase %}
+                  {% when 'bike_weight' %}
+                    {% case lang %}
+                      {% when 'de' %}Gewicht
+                      {% when 'fr' %}Poids du vélo
+                      {% when 'fi' %}Pyörän paino
+                      {% else %}Bike weight
+                    {% endcase %}
+                  {% when 'category' %}
+                    {% case lang %}
+                      {% when 'de' %}Kategorie
+                      {% when 'fr' %}Catégorie
+                      {% when 'fi' %}Kategoria
+                      {% else %}Category
+                    {% endcase %}
+                {% endcase %}
+              </strong>
             </div>
             <div class="value-column">{{ field_value }}</div>
           </div>

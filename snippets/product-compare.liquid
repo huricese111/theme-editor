@@ -1,21 +1,15 @@
-{% comment %} product-compare.liquid - Unified Product Comparison System {% endcomment %}
-
 <style>
-  /* Comparison Component Styles */
   .product-compare-widget {
     margin: 15px 0;
-    z-index: 1;
-    position: relative;
   }
-  
+
   .compare-checkbox {
     display: flex;
     align-items: center;
     gap: 8px;
     cursor: pointer;
   }
-  
-  /* Bottom Comparison Bar */
+
   .compare-bar {
     position: fixed;
     bottom: 0;
@@ -23,88 +17,182 @@
     width: 100%;
     background: #000;
     color: white;
-    padding: 10px 20px;
-    display: none;
-    align-items: center;
-    justify-content: space-between;
+    padding: 15px 0;
+    display: flex;
+    justify-content: center;
     z-index: 1000;
-    box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+    box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.5);
   }
-  
+
+  .compare-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 20px;
+    justify-content: center;
+  }
+
+  .image-action-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
   .compare-thumbs {
     display: flex;
+    justify-content: center;
     gap: 10px;
-    overflow-x: auto;
-    padding: 5px 0;
-    flex-grow: 1;
+    padding: 0;
+    flex-grow: 0;
+    max-height: 70px;
   }
-  
+
   .compare-thumb {
     position: relative;
-    flex: 0 0 auto;
+    width: 70px;
+    height: 70px;
+    margin: 0;
   }
-  
+
   .compare-thumb img {
-    width: 50px;
-    height: 50px;
+    width: 100%;
+    height: 100%;
     border-radius: 4px;
     object-fit: cover;
     border: 2px solid white;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
   }
-  
+
   .remove-compare {
     position: absolute;
-    top: -8px;
-    right: -8px;
-    background: red;
+    top: -10px;
+    right: -10px;
+    background: #ff3b30;
     color: white;
     border: none;
     border-radius: 50%;
     width: 20px;
     height: 20px;
     font-size: 14px;
-    line-height: 1;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    z-index: 2;
   }
-  
+
   .compare-actions {
     display: flex;
     align-items: center;
-    gap: 15px;
-    margin-left: 20px;
+    gap: 8px;
+    padding: 8px 15px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 40px;
+    height: 50px;
   }
-  
+
   .compare-count {
-    background: #fff;
-    color: #000;
+    background: #ffffff;
+    color: #000000;
     border-radius: 50%;
     width: 24px;
     height: 24px;
-    display: inline-flex;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: bold;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  }
+
+  .compare-btn {
+    background: #ffffff;
+    color: #000000;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    font-size: 14px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .remove-compare {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #ff3b30;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    z-index: 2;
+  }
+
+  .compare-actions {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    padding: 8px 15px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 30px;
+    gap: 10px;
+  }
+
+  .compare-count {
+    background: #ffffff;
+    color: #000000;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    display: flex;
     align-items: center;
     justify-content: center;
     font-size: 12px;
     font-weight: bold;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   }
-  
+
   .compare-btn {
-    background: #fff;
-    color: #000;
+    background: #ffffff;
+    color: #000000;
     border: none;
-    padding: 8px 15px;
-    border-radius: 4px;
-    font-weight: bold;
+    padding: 6px 15px;
+    border-radius: 30px;
+    font-weight: 600;
     cursor: pointer;
+    white-space: nowrap;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   }
-  
-  /* Comparison Modal */
+
+  .compare-btn:hover {
+    background: #f0f0f0;
+    transform: translateY(-2px);
+  }
+
   .compare-modal {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.8);
+    background: rgba(0, 0, 0, 0.8);
     z-index: 1001;
     display: none;
     align-items: center;
@@ -112,20 +200,20 @@
     padding: 20px;
     box-sizing: border-box;
   }
-  
+
   .compare-modal.active {
     display: flex;
   }
-  
+
   .compare-modal-overlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0, 0, 0, 0.5);
   }
-  
+
   .compare-modal-container {
     position: relative;
     background: white;
@@ -134,12 +222,12 @@
     max-height: 90vh;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
     z-index: 2;
   }
-  
+
   .compare-modal-header {
     padding: 15px 20px;
     border-bottom: 1px solid #eee;
@@ -147,408 +235,696 @@
     justify-content: space-between;
     align-items: center;
   }
-  
+
   .compare-modal-close {
     background: none;
     border: none;
     font-size: 24px;
     cursor: pointer;
   }
-  
+
   .compare-table-container {
     overflow: auto;
     flex-grow: 1;
   }
-  
+
   .compare-table {
     width: 100%;
     border-collapse: collapse;
     min-width: 800px;
   }
-  
-  .compare-table th, .compare-table td {
+
+  .compare-table th,
+  .compare-table td {
     padding: 12px 15px;
     text-align: left;
     border-bottom: 1px solid #eee;
   }
-  
+
   .compare-table th {
     background: #f8f8f8;
     font-weight: bold;
     position: sticky;
     top: 0;
   }
-  
+
   .spec-group-header td {
     background-color: #f0f0f0;
     font-weight: bold;
     padding: 10px 15px;
   }
-  
+
   .compare-modal-footer {
     padding: 15px;
     text-align: right;
     border-top: 1px solid #eee;
   }
+
+  .loading-indicator {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 20px;
+    border-radius: 5px;
+    z-index: 1002;
+  }
+
+  .compare-product-image {
+    max-width: 200px;
+    max-height: 200px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .compare-modal-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    padding: 0;
+  }
   
-  /* Responsive Adjustments */
-  @media (max-width: 768px) {
-    .compare-bar {
-      flex-direction: column;
-      padding: 10px;
-    }
-    
-    .compare-actions {
-      margin-left: 0;
-      margin-top: 10px;
-      width: 100%;
-      justify-content: center;
-    }
-    
-    .compare-modal-container {
-      max-height: 80vh;
-    }
+  .compare-modal-close:hover {
+    background-color: rgba(0,0,0,0.05);
+  }
+  
+  .compare-modal-close svg {
+    width: 20px;
+    height: 20px;
+    stroke: #333;
+    stroke-width: 2;
+    stroke-linecap: round;
   }
 </style>
 
-<!-- Bottom Comparison Bar -->
+{% assign current_lang = request.locale.iso_code %}
+
+{% assign compare_title = "Product Comparison" %}
+{% assign compare_button = "Compare" %}
+{% assign clear_button = "Clear All" %}
+{% assign loading_text = "Loading comparison data..." %}
+
+{% case current_lang %}
+  {% when "de" %}
+    {% assign compare_title = "Produktvergleich" %}
+    {% assign compare_button = "Vergleichen" %}
+    {% assign clear_button = "Alle löschen" %}
+    {% assign loading_text = "Vergleichsdaten werden geladen..." %}
+  {% when "fr" %}
+    {% assign compare_title = "Comparaison de produits" %}
+    {% assign compare_button = "Comparer" %}
+    {% assign clear_button = "Tout effacer" %}
+    {% assign loading_text = "Chargement des données de comparaison..." %}
+  {% when "fi" %}
+    {% assign compare_title = "Tuotevertailu" %}
+    {% assign compare_button = "Vertaa" %}
+    {% assign clear_button = "Tyhjennä kaikki" %}
+    {% assign loading_text = "Ladataan vertailutietoja..." %}
+{% endcase %}
+
 <div class="compare-bar">
-  <div class="compare-thumbs"></div>
-  <div class="compare-actions">
-    <span class="compare-count">0</span>
-    <button class="compare-btn">Compare Products</button>
+  <div class="compare-content">
+    <div class="compare-thumbs"></div>
+    <div class="compare-actions">
+      <span class="compare-count">0</span>
+      <button class="compare-btn">{{ compare_button }}</button>
+    </div>
   </div>
 </div>
 
-<!-- Comparison Modal -->
 <div class="compare-modal">
   <div class="compare-modal-overlay"></div>
   <div class="compare-modal-container">
     <div class="compare-modal-header">
-      <h3>Product Comparison</h3>
-      <button class="compare-modal-close">×</button>
+      <h3>{{ compare_title }}</h3>
+      <button class="compare-modal-close">
+        <svg viewBox="0 0 24 24">
+          <line x1="5" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="2" />
+          <line x1="19" y1="5" x2="5" y2="19" stroke="currentColor" stroke-width="2" />
+        </svg>
+      </button>
     </div>
+    
     <div class="compare-table-container">
-      <table class="compare-table">
-        <!-- Table will be generated dynamically by JavaScript -->
-      </table>
+      <table class="compare-table"></table>
     </div>
+    
     <div class="compare-modal-footer">
-      <button class="button clear-compare">Clear All</button>
+      <button class="button clear-compare">
+        {{ clear_button }}
+      </button>
     </div>
   </div>
 </div>
 
+<div class="loading-indicator">
+  {{ loading_text }}
+</div>
+
 <script>
-(function() {
-  // Ensure this code only runs once
-  if (window.productCompareInitialized) return;
-  window.productCompareInitialized = true;
-  
-  // Wait for DOM to be fully ready
-  document.addEventListener('DOMContentLoaded', function() {
-    const MAX_COMPARE_ITEMS = 4;
-    const STORAGE_KEY = 'compareProducts';
-    
-    // Define specification modules
-    const SPEC_MODULES = [
-      { title: "E-Bike System", fields: ["frame", "motor", "battery", "display"] },
-      { title: "Suspension", fields: ["fork", "shock"] },
-      { title: "Shifting", fields: ["derailleur", "shifters", "sprocket", "cassette"] },
-      { title: "Brakes", fields: ["brake_f_r", "brake_disc_f_r", "brake_levers"] },
-      { title: "Wheels", fields: ["tires", "rims", "hub_front_f_r"] },
-      { title: "Steering & Seating", fields: ["handlebar", "grips", "stem", "seat_post", "saddle"] },
-      { title: "Components", fields: ["front_light", "rear_light", "carrier"] },
-      { title: "Weight & Class", fields: ["perm_total_weight", "bike_weight", "category"] }
-    ];
-    
-    // Friendly names for specification fields
-    const FIELD_NAMES = {
-      frame: "Frame",
-      motor: "Motor",
-      battery: "Battery",
-      display: "Display",
-      fork: "Fork",
-      shock: "Shock",
-      derailleur: "Derailleur",
-      shifters: "Shifters",
-      sprocket: "Sprocket",
-      cassette: "Cassette",
-      brake_f_r: "Brakes (F/R)",
-      brake_disc_f_r: "Brake Discs (F/R)",
-      brake_levers: "Brake Levers",
-      tires: "Tires",
-      rims: "Rims",
-      hub_front_f_r: "Hubs (F/R)",
-      handlebar: "Handlebar",
-      grips: "Grips",
-      stem: "Stem",
-      seat_post: "Seat Post",
-      saddle: "Saddle",
-      front_light: "Front Light",
-      rear_light: "Rear Light",
-      carrier: "Carrier",
-      perm_total_weight: "Perm. Total Weight",
-      bike_weight: "Bike Weight",
-      category: "Category"
-    };
-    
-    // Initialize local storage
-    function initStorage() {
-      if (!localStorage.getItem(STORAGE_KEY)) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify([]));
+  if (!window.productCompareInitialized) {
+    window.productCompareInitialized = true;
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+      let MAX_COMPARE_ITEMS = 4;
+      const STORAGE_KEY = 'compareProducts';
+
+      const currentLang = "{{ request.locale.iso_code }}";
+
+      const langAlerts = {
+        en: {
+          maxItems: `You can compare up to ${MAX_COMPARE_ITEMS} products at a time.`,
+          minItems: "Please select at least 2 products to compare.",
+          clearConfirm: "Are you sure you want to clear all comparison items?"
+        },
+        de: {
+          maxItems: `Sie können maximal ${MAX_COMPARE_ITEMS} Produkte gleichzeitig vergleichen.`,
+          minItems: "Bitte wählen Sie mindestens 2 Produkte zum Vergleichen aus.",
+          clearConfirm: "Möchten Sie wirklich alle Vergleichselemente löschen?"
+        },
+        fr: {
+          maxItems: `Vous pouvez comparer jusqu'à ${MAX_COMPARE_ITEMS} produits à la fois.`,
+          minItems: "Veuillez sélectionner au moins 2 produits à comparer.",
+          clearConfirm: "Êtes-vous sûr de vouloir effacer tous les éléments de comparaison ?"
+        },
+        fi: {
+          maxItems: `Voit verrata jopa ${MAX_COMPARE_ITEMS} tuotetta kerralla.`,
+          minItems: "Valitse vähintään 2 tuotetta vertailtavaksi.",
+          clearConfirm: "Haluatko varmasti poistaa kaikki vertailukohteet?"
+        }
+      };
+
+      function getAlert(key) {
+        return langAlerts[currentLang]?.[key] || langAlerts.en[key];
       }
-    }
-    
-    // Get comparison list
-    function getCompareList() {
-      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-    }
-    
-    // Save comparison list
-    function saveCompareList(list) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
-      updateCompareUI();
-    }
-    
-    // Update UI state
-    function updateCompareUI() {
-      const compareList = getCompareList();
-      const count = compareList.length;
-      const compareBar = document.querySelector('.compare-bar');
-      const compareThumbs = document.querySelector('.compare-thumbs');
-      const compareCount = document.querySelector('.compare-count');
-      
-      // Update bottom bar
-      if (compareCount) compareCount.textContent = count;
-      if (compareThumbs) {
-        compareThumbs.innerHTML = '';
-        
-        compareList.forEach(product => {
-          const thumb = document.createElement('div');
-          thumb.className = 'compare-thumb';
-          thumb.innerHTML = `
-            ${product.image ? `` : ''}
-            <button class="remove-compare" data-handle="${product.handle}">×</button>
-          `;
-          compareThumbs.appendChild(thumb);
-        });
+
+      const translations = {
+        en: {
+          modules: {
+            "E-Bike System": "E-Bike System",
+            "Suspension": "Suspension",
+            "Shifting": "Shifting",
+            "Brakes": "Brakes",
+            "Wheels": "Wheels",
+            "Steering & Seating": "Steering & Seating",
+            "Components": "Components",
+            "Weight & Class": "Weight & Class"
+          },
+          fields: {
+            "specification": "Specification",
+            "productImage": "Product Image",
+            "frame": "Frame",
+            "motorModel": "Motor Model",
+            "motorTorque": "Motor Torque",
+            "batteryModel": "Battery Model",
+            "batteryCapacity": "Battery Capacity",
+            "displayType": "Display Type",
+            "displaySize": "Display Size",
+            "fork": "Fork",
+            "shock": "Shock",
+            "derailleur": "Derailleur",
+            "shifters": "Shifters",
+            "sprocket": "Sprocket",
+            "cassette": "Cassette",
+            "brakes": "Brakes",
+            "brakeDiscs": "Brake Discs",
+            "brakeLevers": "Brake Levers",
+            "tires": "Tires",
+            "rims": "Rims",
+            "hubs": "Hubs",
+            "handlebar": "Handlebar",
+            "grips": "Grips",
+            "stem": "Stem",
+            "seatPost": "Seat Post",
+            "saddle": "Saddle",
+            "frontLight": "Front Light",
+            "rearLight": "Rear Light",
+            "carrier": "Carrier",
+            "bikeWeight": "Bike Weight",
+            "totalWeight": "Total Weight",
+            "bikeCategory": "Category"
+          }
+        },
+        de: {
+          modules: {
+            "E-Bike System": "E-Bike System",
+            "Suspension": "Federgabel",
+            "Shifting": "Schaltung",
+            "Brakes": "Bremsen",
+            "Wheels": "Laufräder",
+            "Steering & Seating": "Lenken & Sitzen",
+            "Components": "Komponenten",
+            "Weight & Class": "Gewicht & Klasse"
+          },
+          fields: {
+            "specification": "Spezifikation",
+            "productImage": "Produktbild",
+            "frame": "Rahmen",
+            "motorModel": "Motor Modell",
+            "motorTorque": "Motor Drehmoment",
+            "batteryModel": "Batterie Modell",
+            "batteryCapacity": "Batteriekapazität",
+            "displayType": "Display Typ",
+            "displaySize": "Display Größe",
+            "fork": "Gabel",
+            "shock": "Schock",
+            "derailleur": "Schaltung",
+            "shifters": "Schalthebel",
+            "sprocket": "Kettenblatt",
+            "cassette": "Zahnkranz",
+            "brakes": "Bremse",
+            "brakeDiscs": "Bremsscheibe",
+            "brakeLevers": "Bremshebel",
+            "tires": "Reifen",
+            "rims": "Felgen",
+            "hubs": "Naben",
+            "handlebar": "Lenker",
+            "grips": "Griffe",
+            "stem": "Vorbau",
+            "seatPost": "Sattelstütze",
+            "saddle": "Sattel",
+            "frontLight": "Vorderlicht",
+            "rearLight": "Rücklicht",
+            "carrier": "Gepäckträger",
+            "bikeWeight": "Gewicht",
+            "totalWeight": "Gesamtgewicht",
+            "bikeCategory": "Kategorie"
+          }
+        },
+        fr: {
+          modules: {
+            "E-Bike System": "E-bike Système",
+            "Suspension": "Suspension",
+            "Shifting": "Transmission",
+            "Brakes": "Frein",
+            "Wheels": "Roues",
+            "Steering & Seating": "Direction et siège",
+            "Components": "Composants",
+            "Weight & Class": "Poids et classe"
+          },
+          fields: {
+            "specification": "Spécifications",
+            "productImage": "Image du produit",
+            "frame": "Cadre",
+            "motorModel": "Modèle de moteur",
+            "motorTorque": "Couple moteur",
+            "batteryModel": "Modèle de batterie",
+            "batteryCapacity": "Capacité de la batterie",
+            "displayType": "Type d'affichage",
+            "displaySize": "Taille de l'écran",
+            "fork": "Fourche",
+            "shock": "Choc",
+            "derailleur": "Derailleur",
+            "shifters": "Leviers de vitesse",
+            "sprocket": "Pignon",
+            "cassette": "Cassette",
+            "brakes": "Frein",
+            "brakeDiscs": "Disque de frein",
+            "brakeLevers": "Leviers de frein",
+            "tires": "Pneus",
+            "rims": "Jantes",
+            "hubs": "Moyeu",
+            "handlebar": "Guidon",
+            "grips": "Poignées",
+            "stem": "Tige",
+            "seatPost": "Tige de selle",
+            "saddle": "Selle",
+            "frontLight": "Lumiere avt",
+            "rearLight": "Lumiere arr",
+            "carrier": "Porte-bagages",
+            "bikeWeight": "Poids du vélo",
+            "totalWeight": "Poids total",
+            "bikeCategory": "Catégorie"
+          }
+        },
+        fi: {
+          modules: {
+            "E-Bike System": "Järjestelmä",
+            "Suspension": "Jousitus",
+            "Shifting": "Vaihteisto",
+            "Brakes": "Jarrut",
+            "Wheels": "Kiekot",
+            "Steering & Seating": "Ohjaus & satula",
+            "Components": "Komponentit",
+            "Weight & Class": "Paino & Luokka"
+          },
+          fields: {
+            "specification": "Tekniset tiedot",
+            "productImage": "Tuotekuva",
+            "frame": "Runko",
+            "motorModel": "Moottorin malli",
+            "motorTorque": "Moottorin vääntö",
+            "batteryModel": "Akun malli",
+            "batteryCapacity": "Akun kapasiteetti",
+            "displayType": "Näytön tyyppi",
+            "displaySize": "Näytön koko",
+            "fork": "Keula",
+            "shock": "Shock",
+            "derailleur": "Takavaihtaja",
+            "shifters": "Vaihdevivut",
+            "sprocket": "Eturatas",
+            "cassette": "Rataspakka",
+            "brakes": "Jarru",
+            "brakeDiscs": "Jarrulevy",
+            "brakeLevers": "Jarrukahvat",
+            "tires": "Renkaat",
+            "rims": "Vanteet",
+            "hubs": "Napa",
+            "handlebar": "Ohjaustanko",
+            "grips": "Kädensijat",
+            "stem": "Ohjainkannatin",
+            "seatPost": "Satulatolppa",
+            "saddle": "Satula",
+            "frontLight": "Etuvalo",
+            "rearLight": "Takavalo",
+            "carrier": "Tavarateline",
+            "bikeWeight": "Pyörän paino",
+            "totalWeight": "Kokonaispaino",
+            "bikeCategory": "Kategoria"
+          }
+        }
+      };
+
+      const SPEC_MODULES = [
+        {
+          title: "E-Bike System",
+          fields: [
+            "frame", "motorModel", "motorTorque",
+            "batteryModel", "batteryCapacity",
+            "displayType", "displaySize"
+          ]
+        },
+        {
+          title: "Suspension",
+          fields: ["fork", "shock"]
+        },
+        {
+          title: "Shifting",
+          fields: ["derailleur", "shifters", "sprocket", "cassette"]
+        },
+        {
+          title: "Brakes",
+          fields: ["brakes", "brakeDiscs", "brakeLevers"]
+        },
+        {
+          title: "Wheels",
+          fields: ["tires", "rims", "hubs"]
+        },
+        {
+          title: "Steering & Seating",
+          fields: ["handlebar", "grips", "stem", "seatPost", "saddle"]
+        },
+        {
+          title: "Components",
+          fields: ["frontLight", "rearLight", "carrier"]
+        },
+        {
+          title: "Weight & Class",
+          fields: ["bikeWeight", "totalWeight", "bikeCategory"]
+        }
+      ];
+
+      function initStorage() {
+        if (!localStorage.getItem(STORAGE_KEY)) {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify([]));
+        }
       }
-      
-      // Show/hide bar
-      if (compareBar) {
-        compareBar.style.display = count > 0 ? 'flex' : 'none';
+
+      function getCompareList() {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
       }
-      
-      // Update checkbox states - FIXED: Only update specific checkboxes
-      document.querySelectorAll('.compare-checkbox-input').forEach(checkbox => {
-        const handle = checkbox.dataset.productHandle;
-        const isInList = compareList.some(item => item.handle === handle);
-        
-        // Only update the checkbox if it exists
-        if (checkbox) {
+
+      function saveCompareList(list) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+        updateUI();
+      }
+
+      function updateUI() {
+        const compareList = getCompareList();
+        const count = compareList.length;
+        const countElement = document.querySelector('.compare-count');
+        if (countElement) countElement.textContent = count;
+
+        const thumbsContainer = document.querySelector('.compare-thumbs');
+        if (thumbsContainer) {
+          thumbsContainer.innerHTML = '';
+          compareList.forEach(product => {
+            const thumb = document.createElement('div');
+            thumb.className = 'compare-thumb';
+
+            const img = document.createElement('img');
+            img.src = product.image;
+            img.alt = product.title;
+            thumb.appendChild(img);
+
+            const removeBtn = document.createElement('button');
+            removeBtn.className = 'remove-compare';
+            removeBtn.dataset.handle = product.handle;
+            removeBtn.textContent = '×';
+            thumb.appendChild(removeBtn);
+
+            thumbsContainer.appendChild(thumb);
+          });
+        }
+
+        const compareBar = document.querySelector('.compare-bar');
+        if (compareBar) {
+          compareBar.style.display = count > 0 ? 'flex' : 'none';
+        }
+
+        document.querySelectorAll('.compare-checkbox-input').forEach(checkbox => {
+          const handle = checkbox.dataset.productHandle;
+          const isInList = compareList.some(item => item.handle === handle);
           checkbox.checked = isInList;
           checkbox.disabled = !isInList && count >= MAX_COMPARE_ITEMS;
-        }
-      });
-    }
-    
-    // Render comparison table
-    function renderCompareTable() {
-      const compareList = getCompareList();
-      const table = document.querySelector('.compare-table');
-      
-      if (!table) return;
-      
-      // Clear table
-      table.innerHTML = '';
-      
-      // Add header row
-      let headerRow = '<tr><th>Specification</th>';
-      compareList.forEach(product => {
-        headerRow += `<th>${product.title}</th>`;
-      });
-      headerRow += '</tr>';
-      table.innerHTML = headerRow;
-      
-      // Add specification rows
-      SPEC_MODULES.forEach(module => {
-        // Add module title row
-        let groupRow = `<tr class="spec-group-header"><td colspan="${compareList.length + 1}">${module.title}</td></tr>`;
-        table.innerHTML += groupRow;
-        
-        // Add field rows
-        module.fields.forEach(field => {
-          let fieldRow = `<tr><td>${FIELD_NAMES[field] || field}</td>`;
-          
-          compareList.forEach(product => {
-            const value = product.specs && product.specs[field] ? product.specs[field] : 'N/A';
-            fieldRow += `<td>${value}</td>`;
-          });
-          
-          fieldRow += '</tr>';
-          table.innerHTML += fieldRow;
         });
-      });
-    }
-    
-    // Add product to comparison
-    function addToCompare(product) {
-      const compareList = getCompareList();
-      
-      // Check if already in list
-      if (!compareList.some(item => item.handle === product.handle)) {
-        if (compareList.length < MAX_COMPARE_ITEMS) {
-          // Collect product specifications
-          const specs = {};
-          
-          // Try to parse specs from data attribute
-          if (product.specsData) {
-            try {
-              const parsedSpecs = typeof product.specsData === 'string' 
-                ? JSON.parse(product.specsData) 
-                : product.specsData;
-              
-              // Map specification fields
-              SPEC_MODULES.forEach(module => {
-                module.fields.forEach(field => {
-                  if (parsedSpecs[field]) {
-                    specs[field] = parsedSpecs[field];
-                  } else {
-                    // Try to find matching field
-                    const fieldKeys = Object.keys(parsedSpecs);
-                    const matchedKey = fieldKeys.find(key => 
-                      key.toLowerCase() === field.toLowerCase() ||
-                      key.replace(/_/g, '').toLowerCase() === field.replace(/_/g, '').toLowerCase()
-                    );
-                    
-                    if (matchedKey) {
-                      specs[field] = parsedSpecs[matchedKey];
-                    } else {
-                      specs[field] = 'N/A';
-                    }
-                  }
-                });
-              });
-            } catch (e) {
-              console.error('Error parsing product specs:', e);
+      }
+
+      function getProductSpecs(handle) {
+        const productElement = document.querySelector(`[data-product-handle="${handle}"]`);
+        if (!productElement) return {};
+
+        return {
+          frame: productElement.dataset.frame || 'N/A',
+          motorModel: productElement.dataset.motorModel || 'N/A',
+          motorTorque: productElement.dataset.motorTorque || 'N/A',
+          batteryModel: productElement.dataset.batteryModel || 'N/A',
+          batteryCapacity: productElement.dataset.batteryCapacity || 'N/A',
+          displayType: productElement.dataset.displayType || 'N/A',
+          displaySize: productElement.dataset.displaySize || 'N/A',
+          fork: productElement.dataset.fork || 'N/A',
+          shock: productElement.dataset.shock || 'N/A',
+          derailleur: productElement.dataset.derailleur || 'N/A',
+          shifters: productElement.dataset.shifters || 'N/A',
+          sprocket: productElement.dataset.sprocket || 'N/A',
+          cassette: productElement.dataset.cassette || 'N/A',
+          brakes: productElement.dataset.brakes || 'N/A',
+          brakeDiscs: productElement.dataset.brakeDiscs || 'N/A',
+          brakeLevers: productElement.dataset.brakeLevers || 'N/A',
+          tires: productElement.dataset.tires || 'N/A',
+          rims: productElement.dataset.rims || 'N/A',
+          hubs: productElement.dataset.hubs || 'N/A',
+          handlebar: productElement.dataset.handlebar || 'N/A',
+          grips: productElement.dataset.grips || 'N/A',
+          stem: productElement.dataset.stem || 'N/A',
+          seatPost: productElement.dataset.seatPost || 'N/A',
+          saddle: productElement.dataset.saddle || 'N/A',
+          frontLight: productElement.dataset.frontLight || 'N/A',
+          rearLight: productElement.dataset.rearLight || 'N/A',
+          carrier: productElement.dataset.carrier || 'N/A',
+          bikeWeight: productElement.dataset.bikeWeight || 'N/A',
+          totalWeight: productElement.dataset.totalWeight || 'N/A',
+          bikeCategory: productElement.dataset.bikeCategory || 'N/A'
+        };
+      }
+
+      function renderComparisonTable() {
+        const compareList = getCompareList();
+        const tableContainer = document.querySelector('.compare-table');
+        const loadingIndicator = document.querySelector('.loading-indicator');
+
+        if (!tableContainer) return;
+        if (loadingIndicator) loadingIndicator.style.display = 'block';
+
+        tableContainer.innerHTML = '';
+        const specLabel = translations[currentLang]?.fields?.specification || "Specification";
+        let tableHTML = '<tr><th>' + specLabel + '</th>';
+
+        compareList.forEach(product => {
+          tableHTML += `<th>${product.title}</th>`;
+        });
+        tableHTML += '</tr>';
+
+        tableHTML += '<tr><td>' + (translations[currentLang]?.fields?.productImage || "Product Image") + '</td>';
+        compareList.forEach(product => {
+          tableHTML += `<td><img src="${product.image}" alt="${product.title}" class="compare-product-image"></td>`;
+        });
+        tableHTML += '</tr>';
+
+        const productsWithSpecs = compareList.map(product => {
+          return {
+            ...product,
+            specs: getProductSpecs(product.handle)
+          };
+        });
+
+        for (const module of SPEC_MODULES) {
+          const moduleTitle = translations[currentLang]?.modules?.[module.title] || module.title;
+          tableHTML += `<tr class="spec-group-header"><td colspan="${productsWithSpecs.length + 1}">${moduleTitle}</td></tr>`;
+
+          for (const field of module.fields) {
+            const fieldName = translations[currentLang]?.fields?.[field] || field;
+            tableHTML += `<tr><td>${fieldName}</td>`;
+
+            for (const product of productsWithSpecs) {
+              const value = product.specs[field] || 'N/A';
+              tableHTML += `<td>${value}</td>`;
+            }
+
+            tableHTML += '</tr>';
+          }
+        }
+
+        tableContainer.innerHTML = tableHTML;
+        if (loadingIndicator) loadingIndicator.style.display = 'none';
+      }
+
+      function addProductToCompare(product) {
+        const compareList = getCompareList();
+        if (!compareList.some(item => item.handle === product.handle)) {
+          if (compareList.length < MAX_COMPARE_ITEMS) {
+            compareList.push({
+              handle: product.handle,
+              title: product.title,
+              image: product.image
+            });
+            saveCompareList(compareList);
+            return true;
+          } else {
+            alert(getAlert('maxItems'));
+            return false;
+          }
+        }
+        return true;
+      }
+
+      function removeProductFromCompare(handle) {
+        const compareList = getCompareList().filter(item => item.handle !== handle);
+        saveCompareList(compareList);
+      }
+
+      function clearComparison() {
+        saveCompareList([]);
+        closeComparisonModal();
+      }
+
+      function openComparisonModal() {
+        const compareList = getCompareList();
+        if (compareList.length < 2) {
+          alert(getAlert('minItems'));
+          return;
+        }
+
+        renderComparisonTable();
+        document.querySelector('.compare-modal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeComparisonModal() {
+        document.querySelector('.compare-modal').classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      function setupEventListeners() {
+        document.addEventListener('change', function (e) {
+          if (e.target.classList.contains('compare-checkbox-input')) {
+            const checkbox = e.target;
+            const product = {
+              handle: checkbox.dataset.productHandle,
+              title: checkbox.dataset.productTitle,
+              image: checkbox.dataset.productImage
+            };
+
+            if (checkbox.checked) {
+              addProductToCompare(product);
+            } else {
+              removeProductFromCompare(product.handle);
             }
           }
-          
-          compareList.push({
-            handle: product.handle,
-            title: product.title,
-            image: product.image,
-            specs: specs
-          });
-          
-          saveCompareList(compareList);
-        } else {
-          alert(`You can compare up to ${MAX_COMPARE_ITEMS} products`);
-        }
-      }
-    }
-    
-    // Remove product from comparison
-    function removeFromCompare(handle) {
-      const compareList = getCompareList().filter(item => item.handle !== handle);
-      saveCompareList(compareList);
-      
-      // Refresh table if modal is open
-      if (document.querySelector('.compare-modal')?.classList.contains('active')) {
-        renderCompareTable();
-      }
-    }
-    
-    // Clear comparison list
-    function clearCompare() {
-      saveCompareList([]);
-      closeCompareModal();
-    }
-    
-    // Open comparison modal
-    function openCompareModal() {
-      const compareList = getCompareList();
-      
-      // Only show if at least 2 products are selected
-      if (compareList.length < 2) {
-        alert('Please select at least 2 products to compare');
-        return;
-      }
-      
-      renderCompareTable();
-      document.querySelector('.compare-modal').classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-    
-    // Close comparison modal
-    function closeCompareModal() {
-      document.querySelector('.compare-modal').classList.remove('active');
-      document.body.style.overflow = '';
-    }
-    
-    // Event binding with fixed isolation
-    function setupEventListeners() {
-      // Use precise event delegation for checkboxes
-      document.body.addEventListener('click', function(e) {
-        // Check if clicked element is a compare checkbox
-        if (e.target.classList.contains('compare-checkbox-input')) {
-          // Prevent default to avoid multiple triggers
-          e.preventDefault();
-          
-          // Get the specific checkbox element
-          const checkbox = e.target;
-          
-          // Get product data directly from the checkbox
-          const product = {
-            handle: checkbox.dataset.productHandle,
-            title: checkbox.dataset.productTitle,
-            image: checkbox.dataset.productImage,
-            specsData: checkbox.dataset.productSpecs ? 
-              JSON.parse(checkbox.dataset.productSpecs) : {}
-          };
-          
-          // Toggle based on current checked state
-          if (checkbox.checked) {
-            removeFromCompare(product.handle);
-          } else {
-            addToCompare(product);
+        });
+
+        document.addEventListener('click', function (e) {
+          const target = e.target;
+
+          if (target.classList.contains('remove-compare')) {
+            const handle = target.dataset.handle;
+            removeProductFromCompare(handle);
           }
+
+          if (target.classList.contains('compare-btn')) {
+            openComparisonModal();
+          }
+
+          if (target.classList.contains('compare-modal-close') ||
+            target.classList.contains('compare-modal-overlay')) {
+            closeComparisonModal();
+          }
+
+          if (target.classList.contains('clear-compare')) {
+            if (confirm(getAlert('clearConfirm'))) {
+              clearComparison();
+            }
+          }
+        });
+
+        window.addEventListener('resize', function () {
+          if (document.querySelector('.compare-modal.active')) {
+            renderComparisonTable();
+          }
+        });
+      }
+
+      function handleResponsiveFeatures() {
+        const screenWidth = window.innerWidth;
+        
+        if (screenWidth <= 768) {
+          MAX_COMPARE_ITEMS = 3;
+          document.querySelector('.compare-thumbs').style.maxWidth = 'calc(100vw - 150px)';
+        } else {
+          MAX_COMPARE_ITEMS = 4;
         }
         
-        // Remove single product from comparison bar
-        if (e.target.classList.contains('remove-compare')) {
-          const handle = e.target.dataset.handle;
-          removeFromCompare(handle);
-        }
+        langAlerts.en.maxItems = `You can compare up to ${MAX_COMPARE_ITEMS} products at a time.`;
+        langAlerts.de.maxItems = `Sie können maximal ${MAX_COMPARE_ITEMS} Produkte gleichzeitig vergleichen.`;
+        langAlerts.fr.maxItems = `Vous pouvez comparer jusqu'à ${MAX_COMPARE_ITEMS} produits à la fois.`;
+        langAlerts.fi.maxItems = `Voit verrata jopa ${MAX_COMPARE_ITEMS} tuotetta kerralla.`;
+      }
+
+      function init() {        
+        initStorage();
+        setupEventListeners();
+        handleResponsiveFeatures();
+        updateUI();
         
-        // Compare button in bottom bar
-        if (e.target.classList.contains('compare-btn')) {
-          openCompareModal();
-        }
-        
-        // Close modal
-        if (e.target.classList.contains('compare-modal-close') || 
-            e.target.classList.contains('compare-modal-overlay')) {
-          closeCompareModal();
-        }
-        
-        // Clear comparison
-        if (e.target.classList.contains('clear-compare')) {
-          clearCompare();
-        }
-      });
-    }
-    
-    // Initialize
-    function init() {
-      initStorage();
-      setupEventListeners();
-      updateCompareUI();
-    }
-    
-    // Start everything
-    init();
-  });
-})();
+        window.addEventListener('resize', function() {
+          handleResponsiveFeatures();
+          updateUI();
+        });
+      }
+
+      init();
+    });
+  }
 </script>

@@ -11,64 +11,80 @@
 }
 {% endschema %}
 
+{% assign lang = request.locale.iso_code %}
 <div class="tabs-content-section">
-  <h2 class="specification-title" id="specification">{{ 'ebike.specification' | t }}</h2>
+  <h2 class="specification-title" id="specification">
+    {% case lang %}
+      {% when 'de' %}Spezifikation
+      {% when 'fr' %}Spécifications
+      {% when 'fi' %}Tekniset tiedot
+      {% else %}Specification
+    {% endcase %}
+  </h2>
 
   <div class="specification-list">
     <!-- E-Bike System -->
     {% render 'spec-module',
       fields: "frame,motor2,battery,display",
-      labels: "ebike.frame,ebike.motor,ebike.battery,ebike.display",
-      title: "ebike.e-bike-system"
+      labels: "frame,motor,battery,display",
+      title: "e-bike-system",
+      lang: lang
     %}
     
     <!-- Suspension -->
     {% render 'spec-module',
       fields: "fork,shock",
-      labels: "ebike.fork,ebike.shock",
-      title: "ebike.suspension"
+      labels: "fork,shock",
+      title: "suspension",
+      lang: lang
     %}
     
     <!-- Shifting -->
     {% render 'spec-module',
       fields: "derailleur,shifters,sprocket,cassette",
-      labels: "ebike.derailleur,ebike.shifters,ebike.sprocket,ebike.cassette",
-      title: "ebike.shifting"
+      labels: "derailleur,shifters,sprocket,cassette",
+      title: "shifting",
+      lang: lang
     %}
     
     <!-- Brakes -->
     {% render 'spec-module',
       fields: "brake_f_r,brake_disc_f_r,brake_levers",
-      labels: "ebike.brake_f_r,ebike.brake_disc_f_r,ebike.brake_levers",
-      title: "ebike.brakes"
+      labels: "brake_f_r,brake_disc_f_r,brake_levers",
+      title: "brakes",
+      lang: lang
     %}
     
     <!-- Wheels -->
     {% render 'spec-module',
       fields: "tires,rims,hub_front_f_r",
-      labels: "ebike.tires,ebike.rims,ebike.hub_front_f_r",
-      title: "ebike.wheels"
+      labels: "tires,rims,hub_front_f_r",
+      title: "wheels",
+      lang: lang
     %}
     
     <!-- Steering & Seating -->
     {% render 'spec-module',
       fields: "handlebar,grips,stem,seat_post,saddle",
-      labels: "ebike.handlebar,ebike.grips,ebike.stem,ebike.seat_post,ebike.saddle",
-      title: "ebike.steering_seating"
+      labels: "handlebar,grips,stem,seat_post,saddle",
+      title: "steering_seating",
+      lang: lang
     %}
     
     <!-- Components -->
     {% render 'spec-module',
       fields: "front_light,rear_light,carrier",
-      labels: "ebike.front_light,ebike.rear_light,ebike.carrier",
-      title: "ebike.components"
+      labels: "front_light,rear_light,carrier",
+      title: "components",
+      lang: lang
     %}
     
     <!-- Weight & Class -->
     {% render 'spec-module',
       fields: "perm_total_weight,bike_weight,category",
-      labels: "ebike.perm_total_weight,ebike.bike_weight,ebike.category",
-      title: "ebike.weight_class"
+      labels: "perm_total_weight,bike_weight,category",
+      title: "weight_class",
+      lang: lang
     %}
   </div>
 </div>
@@ -91,7 +107,7 @@
     flex-direction: column;
   }
 
-  .specification-mod极ule {
+  .specification-module {
     margin-bottom: 20px;
   }
 

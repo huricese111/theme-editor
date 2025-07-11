@@ -2,157 +2,208 @@
   .description-box {
     padding: 0;
     box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative;
+  }
+
+  .product-card__content {
+    flex: 1;
+    padding-right: 20px;
   }
 
   .description-box .product-card__title {
-    margin: 0 0 5px; 
+    margin: 0 0 8px;
     font-size: 18px;
     font-weight: 700;
-    line-height: 1.2; 
+    line-height: 1.3;
   }
 
   .product-card__price-container {
     display: flex;
     align-items: center;
-    margin: 5px 0; 
-    padding: 0; 
+    margin: 8px 0;
+    padding: 0;
   }
-  
+
   .product-card__price-container .custom-current-price,
   .product-card__price-container .custom-was-price {
-    line-height: 1.2; 
+    line-height: 1.3;
   }
-  
+
   .product-card__price-container .custom-current-price {
     font-size: 16px;
     font-weight: 700;
-    color: #000; 
+    color: #000;
   }
-  
+
   .product-card__price-container .custom-was-price {
     font-size: 14px;
     margin-left: 8px;
     text-decoration: line-through;
-    color: #b72626; 
+    color: #b72626;
   }
-  
+
   .product-specs {
-    line-height: 1.2;
-    margin: 5px 0;
+    line-height: 1.3;
+    margin: 8px 0;
+    font-size: 14px;
+    color: #555;
   }
-  
+
   .specification_simple {
-    line-height: 1.2;
-    margin: 5px 0;
+    line-height: 1.3;
+    margin: 8px 0;
+    font-size: 14px;
+    color: #555;
+    display: flex;
+    align-items: center;
+    gap: 6px;
   }
 
-  .product-block .product-block__detail>.inner {
-    margin-right: auto;
-    margin-left: auto;
-}
+  .product-compare-widget {
+    margin: 0;
+    padding-top: 2px;
+  }
 
-.tab-content-area .product-block .block-inner-inner .innerer {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 10px;
-  width: 100%;
-}
-
-.productcard-left {
-  flex: 1; 
-  min-width: 0; 
-}
-
-.productcard-right {
-  flex-shrink: 0;
-    align-self: flex-start; 
-    margin-left: 15px;
+  .compare-checkbox {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start; 
-    justify-content: flex-start; 
-}
+    align-items: center;
+    cursor: pointer;
+    font-size: 14px;
+    user-select: none;
+    white-space: nowrap;
+  }
 
-.swatch-method-swatches .product-block-options--swatch .product-block-options__item {
-    width: 20px;
-    height: 20px;
-}
+  .compare-checkbox-input {
+    margin-right: 8px;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+  }
 
-.product-grid .product-block__detail {
-    margin-bottom: 0;
+  .product-columns > product-block .productcard-left .description-box {
+     padding: 0 20px;
+  }
+
+  product-block .product-block-options--swatch > .product-block-options__inner > .product-block-options__item {
+  width: 22px;
+    height: 22px;
 }
 
   @media (max-width: 768px) {
     .description-box {
-      padding: 8px; 
+      padding: 12px;
+      flex-direction: column;
     }
-    
+
+    .product-card__content {
+      padding-right: 0;
+      width: 100%;
+    }
+
+    .product-compare-widget {
+      align-self: flex-end;
+      margin-top: 12px;
+    }
+
     .product-card__price-container .custom-current-price {
       font-size: 15px;
     }
-    
+
     .product-card__price-container .custom-was-price {
+      font-size: 13px;
+    }
+
+    .compare-checkbox {
       font-size: 13px;
     }
   }
 </style>
 
 <div class="description-box product-card">
-  <h3 class="product-card__title">
-    <a href="{{ product.url }}" class="producttitle">{{ product.title | escape }}</a>
-  </h3>
+  <div class="product-card__content">
+    {% render 'product-swatches' with product: product %}
 
-  {% if section.settings.show_description %}
-    {%- assign motor_torque = product.metafields.custom.motor_torque_2.value | default: '' -%}
-    {%- assign battery_capacity = product.metafields.custom.battery_capacity.value | default: '' -%}
-    {%- assign display_size = product.metafields.custom.display_size.value | default: '' -%}
-    
-    <div class="product-specs">
-    {% case request.locale.iso_code %}
-      {% when 'de' %}
-        {{ motor_torque }}
-        {{ 'ebike.motor' | t }} / {{ battery_capacity }}
-        {{ 'ebike.battery' | t }} / {{ display_size }}
-        {{ 'ebike.display' | t }}
-      {% when 'fr' %}
-        {{ 'ebike.motor' | t }} de {{ motor_torque }} / {{ 'ebike.battery' | t }} de {{ battery_capacity }} /
-        {{ 'ebike.display' | t }} de{{ display_size }}
-      {% when 'fi' %}
-        {{ 'ebike.motor' | t }}
-        {{ motor_torque }} / {{ 'ebike.battery' | t }}
-        {{ battery_capacity }} / {{ 'ebike.display' | t }}
-        {{ display_size }}
-      {% else %}
-        {{ motor_torque }}
-        {{ 'ebike.motor' | t }} / {{ battery_capacity }}
-        {{ 'ebike.battery' | t }} / {{ display_size }}
-        {{ 'ebike.display' | t }}
-    {% endcase %}
-    </div>
-  {% endif %}
+    <h3 class="product-card__title">
+      <a href="{{ product.url }}" class="producttitle">{{ product.title | escape }}</a>
+    </h3>
 
-  <div class="product-card__price-container">
-    <div class="custom-price-section">
-      {% unless bss_check_variant %}
-        {% if product.compare_at_price > product.price %}
-          <span class="custom-current-price">{{ product.price | money }}</span>
-          <span class="custom-was-price">{{ product.compare_at_price | money }}</span>
+    {% if section.settings.show_description %}
+      {%- assign motor_torque = product.metafields.custom.motor_torque_2.value | default: '' -%}
+      {%- assign battery_capacity = product.metafields.custom.battery_capacity.value | default: '' -%}
+      {%- assign display_size = product.metafields.custom.display_size.value | default: '' -%}
+
+      <div class="product-specs">
+        {% case request.locale.iso_code %}
+          {% when 'de' %}
+            {{ motor_torque }} Motor / {{ battery_capacity }} Akku / {{ display_size }} Display
+          {% when 'fr' %}
+            Moteur {{ motor_torque }} / Batterie {{ battery_capacity }} / Écran {{ display_size }}
+          {% when 'fi' %}
+            {{ motor_torque }} Moottori / {{ battery_capacity }} Akku / {{ display_size }} Näyttö
+          {% else %}
+            {{ motor_torque }} Motor / {{ battery_capacity }} Battery / {{ display_size }} Display
+        {% endcase %}
+      </div>
+    {% endif %}
+
+    <div class="product-card__price-container">
+      <div class="custom-price-section">
+        {% unless bss_check_variant %}
+          {% if product.compare_at_price > product.price %}
+            <span class="custom-current-price">{{ product.price | money }}</span>
+            <span class="custom-was-price">{{ product.compare_at_price | money }}</span>
+          {% else %}
+            <span class="custom-current-price">{{ product.price | money }}</span>
+          {% endif %}
         {% else %}
-          <span class="custom-current-price">{{ product.price | money }}</span>
+          <span class="bsscommerce-hv-message">Lock</span>
+        {% endunless %}
+      </div>
+    </div>
+
+    <div class="specification_simple">
+      {% if localization.country.iso_code == 'DE' %}
+        {% if product.metafields.custom.zinia_financing.value %}
+          {% case request.locale.iso_code %}
+            {% when 'de' %}
+              Finanzierung ab €{{ product.metafields.custom.zinia_financing.value }}/Monat mit
+            {% when 'fr' %}
+              Financement à partir de €{{ product.metafields.custom.zinia_financing.value }}/mois avec
+            {% when 'fi' %}
+              Rahoitus alkaen €{{ product.metafields.custom.zinia_financing.value }}/kk
+            {% else %}
+              Financing from €{{ product.metafields.custom.zinia_financing.value }}/month with
+          {% endcase %}
+          {% render 'icon-zinia' %}
         {% endif %}
-      {% else %}
-        <span class="bsscommerce-hv-message">Lock</span>
-      {% endunless %}
+      {% endif %}
     </div>
   </div>
 
-  <div class="specification_simple">
-    {% if localization.country.iso_code == 'DE' %}
-      {% if product.metafields.custom.zinia_financing.value %}
-        Financing from €{{ product.metafields.custom.zinia_financing.value }}/month with
-        {% render 'icon-zinia' %}
-      {% endif %}
-    {% endif %}
+  <div class="product-compare-widget">
+    <label class="compare-checkbox">
+      <input
+        type="checkbox"
+        class="compare-checkbox-input"
+        data-product-handle="{{ product.handle }}"
+        data-product-title="{{ product.title | escape }}"
+        data-product-image="{{ product.featured_image | img_url: '200x' }}"
+      >
+      <span>
+        {% case request.locale.iso_code %}
+          {% when 'de' -%}
+            Zum Vergleich hinzufügen
+          {% when 'fr' -%}
+            Ajouter à comparer
+          {% when 'fi' -%}
+            Lisää vertailuun
+          {% else -%}
+            Add to compare
+        {% endcase %}
+      </span>
+    </label>
   </div>
 </div>
