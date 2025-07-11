@@ -289,6 +289,7 @@
 }
 {% endschema %}
 
+
 {% assign locale_prefix = request.locale.iso_code | slice: 0, 2 | downcase %}
 
 {% capture section_title %}
@@ -331,13 +332,6 @@
     --button-hover-border: {{ section.settings.button_hover_border_color | default: '#222222' }};
   "
 >
-  <div class="lightbox-container" id="lightbox-{{ section.id }}">
-    <div class="lightbox-content">
-      <button class="lightbox-close" aria-label="Close lightbox">×</button>
-      
-    </div>
-  </div>
-
   <div
     class="section-header"
     {% if section.settings.hide_title %}
@@ -395,8 +389,8 @@
                 {%- if has_image -%}
                   <div
                     class="image-wrapper"
-                    data-lightbox="{{ section.id }}"
-                    data-image="{{ block.settings.image | img_url: '1200x' }}"
+                    data-lightbox-image="{{ block.settings.image | img_url: 'master' }}"
+                    data-lightbox-caption="{{ block_title | strip_html }}"
                   >
                     {% if block.settings.image_link != blank %}
                       <a href="{{ block.settings.image_link }}" style="display: block; width: 100%;">
@@ -406,6 +400,8 @@
                       loading="{{ loading }}"
                       alt="{{ block.settings.image.alt | escape }}"
                       class="carousel-image"
+                      data-lightbox-image="{{ block.settings.image | img_url: 'master' }}"
+                      data-lightbox-caption="{{ block_title | strip_html | escape }}"
                     >
                     {% if block.settings.image_link != blank %}
                       </a>
@@ -454,6 +450,32 @@
       </div>
     </div>
   </div>
+  
+  <!-- Lightbox overlay -->
+  <div class="lightbox-overlay" id="lightbox-overlay-{{ section.id }}" style="display: none;">
+    <div class="lightbox-container">
+      <div class="lightbox-content">
+        
+        <div class="lightbox-caption"></div>
+      </div>
+      <button class="lightbox-close" aria-label="Close lightbox">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      <button class="lightbox-nav prev" aria-label="Previous image">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+      <button class="lightbox-nav next" aria-label="Next image">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+    </div>
+  </div>
 </div>
 
 <style>
@@ -487,51 +509,6 @@
 
   .carousel-slides {
     padding-right: 0;
-  }
-
-  .lightbox-container {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
-    z-index: 2000;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .lightbox-content {
-    position: relative;
-    max-width: 90%;
-    max-height: 90%;
-  }
-
-  .lightbox-image {
-    max-width: 90%;
-    max-height: 80vh;
-    display: block;
-    margin: 0 auto;
-    box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
-  }
-
-  .lightbox-close {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background: none;
-    border: none;
-    color: white;
-    font-size: 40px;
-    cursor: pointer;
-    z-index: 1001;
-    transition: all 0.3s;
-  }
-
-  .lightbox-close:hover {
-    color: #ccc;
-    transform: scale(1.1);
   }
 
   .carousel-track {
@@ -597,10 +574,10 @@
     position: relative;
     overflow: hidden;
     border-radius: 10px 10px 0 0;
-    cursor: pointer;
     display: block;
     width: 100%;
     transition: all 0.3s ease;
+    cursor: zoom-in;
   }
 
   .image-wrapper {
@@ -748,6 +725,130 @@
     pointer-events: none;
   }
 
+  /* Lightbox Styles */
+  .lightbox-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2147483647;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    backdrop-filter: blur(8px);
+    top: var(--sticky-bar-height, 0); 
+  }
+
+  .lightbox-overlay.active {
+    opacity: 1;
+  }
+
+  .lightbox-container {
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+    width: auto;
+    height: auto;
+    z-index: 2147483648;
+  }
+
+  .lightbox-content {
+    position: relative;
+  }
+
+  .lightbox-image {
+    max-width: 100%;
+    max-height: 80vh;
+    display: block;
+    margin: 0 auto;
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+    animation: lightboxFadeIn 0.4s ease;
+  }
+
+  .lightbox-caption {
+    color: #fff;
+    text-align: center;
+    margin-top: 15px;
+    font-size: 18px;
+    padding: 0 20px;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+    z-index: 10;
+    padding: 10px;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+  }
+
+  .lightbox-close:hover {
+    opacity: 1;
+  }
+
+  .lightbox-close svg {
+    width: 30px;
+    height: 30px;
+    stroke: white;
+  }
+
+  .lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    font-size: 24px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+    z-index: 10;
+  }
+
+  .lightbox-nav:hover {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.8);
+  }
+
+  .lightbox-nav.prev {
+    left: 20px;
+  }
+
+  .lightbox-nav.next {
+    right: 20px;
+  }
+
+  .lightbox-nav svg {
+    width: 24px;
+    height: 24px;
+    stroke: white;
+  }
+
+  @keyframes lightboxFadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
   @media (max-width: 1200px) {
     .carousel-slide {
       width: calc(50% - 15px);
@@ -795,6 +896,15 @@
       margin-left: -15px;
       padding-right: 15px;
     }
+    
+    .lightbox-caption {
+      font-size: 16px;
+    }
+    
+    .lightbox-nav {
+      width: 40px;
+      height: 40px;
+    }
   }
 
   @media (max-width: 480px) {
@@ -810,78 +920,36 @@
       padding-left: 15px;
     }
 
-    .lightbox-close {
-      top: 10px;
-      right: 10px;
-      font-size: 30px;
-    }
-
     .carousel-track {
       width: calc(100% + 15px);
       margin-left: -15px;
       padding-right: 15px;
     }
+    
+    .lightbox-image {
+      max-height: 70vh;
+    }
   }
 </style>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
+ document.addEventListener('DOMContentLoaded', function () {
   const carousels = document.querySelectorAll('.custom-image-text-section');
 
   carousels.forEach((section) => {
-    section.addEventListener('click', function(e) {
-      if (e.target.closest('.slide-image')) {
-        const imgElement = e.target.closest('.carousel-image');
-        if (!imgElement) return;
-        
-        if (imgElement.closest('a')) return;
-        
-        const originalSrc = imgElement.src.replace(/\?.*/, '').replace(/_\d+x\./g, '.');
-        const imageUrl = originalSrc + '?width=1200';
-        
-        const lightbox = section.querySelector('.lightbox-container');
-        if (!lightbox) return;
-        
-        let lightboxImage = lightbox.querySelector('.lightbox-image');
-        if (!lightboxImage) {
-          lightboxImage = document.createElement('img');
-          lightboxImage.className = 'lightbox-image';
-          lightbox.querySelector('.lightbox-content').appendChild(lightboxImage);
-        }
-        
-        lightboxImage.src = imageUrl;
-        lightboxImage.alt = imgElement.alt || 'Lightbox Image';
-        lightbox.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-      }
-    });
-    
-    const lightboxClose = section.querySelector('.lightbox-close');
-    if (lightboxClose) {
-      lightboxClose.addEventListener('click', function() {
-        const lightbox = section.querySelector('.lightbox-container');
-        if (lightbox) {
-          lightbox.style.display = 'none';
-          document.body.style.overflow = 'auto';
-        }
-      });
-    }
-    
-    const lightbox = section.querySelector('.lightbox-container');
-    if (lightbox) {
-      lightbox.addEventListener('click', function(e) {
-        if (e.target === lightbox) {
-          lightbox.style.display = 'none';
-          document.body.style.overflow = 'auto';
-        }
-      });
-    }
-    
     const slidesContainer = section.querySelector('.carousel-slides');
     const slides = Array.from(slidesContainer.children);
     const prevArrow = section.querySelector('.prev-arrow');
     const nextArrow = section.querySelector('.next-arrow');
     const carouselTrack = section.querySelector('.carousel-track');
+    
+    // Lightbox元素
+    const lightboxOverlay = section.querySelector('.lightbox-overlay');
+    const lightboxImageContainer = lightboxOverlay.querySelector('.lightbox-content');
+    const lightboxCaption = lightboxOverlay.querySelector('.lightbox-caption');
+    const lightboxClose = lightboxOverlay.querySelector('.lightbox-close');
+    const lightboxPrev = lightboxOverlay.querySelector('.lightbox-nav.prev');
+    const lightboxNext = lightboxOverlay.querySelector('.lightbox-nav.next');
 
     if (!slidesContainer || slides.length === 0) return;
 
@@ -893,6 +961,11 @@
     let touchEndX = 0;
     let isDragging = false;
     let isHorizontal = false;
+    
+    // Lightbox变量
+    let lightboxCurrentIndex = 0;
+    let lightboxImages = [];
+    let lightboxCaptions = [];
 
     function initCarousel() {
       updateSlidesToShow();
@@ -902,6 +975,9 @@
       
       const aspectRatio = section.dataset.aspectRatio;
       updateAspectRatio(aspectRatio);
+      
+      // 初始化lightbox
+      setupLightbox();
     }
     
     function updateAspectRatio(ratio) {
@@ -961,6 +1037,157 @@
       }
     }
 
+    // ======== LIGHTBOX核心功能 ======== [6,8](@ref)
+    function setupLightbox() {
+      // 收集所有lightbox图片和标题
+      const imageWrappers = section.querySelectorAll('.image-wrapper');
+      imageWrappers.forEach((wrapper, index) => {
+        const imgUrl = wrapper.dataset.lightboxImage;
+        const caption = wrapper.dataset.lightboxCaption || '';
+        
+        if (imgUrl) {
+          lightboxImages.push(imgUrl);
+          lightboxCaptions.push(caption);
+          
+          // 添加点击事件
+          wrapper.addEventListener('click', function(e) {
+            // 跳过链接点击
+            if (e.target.tagName === 'A') return;
+            
+            // 在Shopify编辑器中禁用lightbox
+            if (typeof Shopify !== 'undefined' && Shopify.designMode) return;
+            
+            e.preventDefault();
+            lightboxCurrentIndex = index;
+            openLightbox();
+          });
+        }
+      });
+      
+      // Lightbox导航事件
+      lightboxClose.addEventListener('click', closeLightbox);
+      lightboxOverlay.addEventListener('click', function(e) {
+        if (e.target === lightboxOverlay) closeLightbox();
+      });
+      
+      if (lightboxImages.length > 1) {
+        lightboxPrev.addEventListener('click', function() {
+          lightboxCurrentIndex = (lightboxCurrentIndex - 1 + lightboxImages.length) % lightboxImages.length;
+          updateLightboxContent();
+        });
+        
+        lightboxNext.addEventListener('click', function() {
+          lightboxCurrentIndex = (lightboxCurrentIndex + 1) % lightboxImages.length;
+          updateLightboxContent();
+        });
+      } else {
+        lightboxPrev.style.display = 'none';
+        lightboxNext.style.display = 'none';
+      }
+    }
+    
+    function openLightbox() {
+      // 创建图片元素
+      const img = new Image();
+      img.src = lightboxImages[lightboxCurrentIndex];
+      img.alt = lightboxCaptions[lightboxCurrentIndex];
+      img.classList.add('lightbox-image');
+      
+      // 更新内容
+      lightboxImageContainer.innerHTML = '';
+      lightboxImageContainer.appendChild(img);
+      lightboxCaption.textContent = lightboxCaptions[lightboxCurrentIndex];
+      
+      // 显示lightbox
+      lightboxOverlay.style.display = 'flex';
+      setTimeout(() => {
+        lightboxOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden'; // 防止背景滚动
+      }, 10);
+      
+      // 添加键盘事件[4](@ref)
+      document.addEventListener('keydown', handleKeyDown);
+      // 添加触摸事件
+      img.addEventListener('touchstart', handleTouchStart);
+      img.addEventListener('touchmove', handleTouchMove);
+    }
+    
+    function updateLightboxContent() {
+      const img = lightboxImageContainer.querySelector('.lightbox-image');
+      img.src = lightboxImages[lightboxCurrentIndex];
+      img.alt = lightboxCaptions[lightboxCurrentIndex];
+      lightboxCaption.textContent = lightboxCaptions[lightboxCurrentIndex];
+      
+      // 添加加载过渡
+      img.style.opacity = 0;
+      setTimeout(() => {
+        img.style.transition = 'opacity 0.3s ease';
+        img.style.opacity = 1;
+      }, 10);
+    }
+    
+    function closeLightbox() {
+      lightboxOverlay.classList.remove('active');
+      setTimeout(() => {
+        lightboxOverlay.style.display = 'none';
+        document.body.style.overflow = ''; // 恢复背景滚动
+      }, 300);
+      
+      // 移除事件监听
+      document.removeEventListener('keydown', handleKeyDown);
+    }
+    
+    function handleKeyDown(e) {
+      // ESC键关闭
+      if (e.key === 'Escape') closeLightbox();
+      // 左箭头：上一张
+      if (e.key === 'ArrowLeft' && lightboxImages.length > 1) {
+        lightboxCurrentIndex = (lightboxCurrentIndex - 1 + lightboxImages.length) % lightboxImages.length;
+        updateLightboxContent();
+      }
+      // 右箭头：下一张
+      if (e.key === 'ArrowRight' && lightboxImages.length > 1) {
+        lightboxCurrentIndex = (lightboxCurrentIndex + 1) % lightboxImages.length;
+        updateLightboxContent();
+      }
+    }
+    
+    // 触摸滑动切换[6](@ref)
+    let touchStartXLightbox = 0;
+    
+    function handleTouchStart(e) {
+      touchStartXLightbox = e.touches[0].clientX;
+    }
+    
+    function handleTouchMove(e) {
+      if (!touchStartXLightbox) return;
+      
+      const touchEndXLightbox = e.touches[0].clientX;
+      const diffX = touchEndXLightbox - touchStartXLightbox;
+      
+      // 水平滑动超过50px触发切换
+      if (Math.abs(diffX) > 50) {
+        if (diffX > 0) {
+          // 向右滑动：上一张
+          lightboxCurrentIndex = (lightboxCurrentIndex - 1 + lightboxImages.length) % lightboxImages.length;
+        } else {
+          // 向左滑动：下一张
+          lightboxCurrentIndex = (lightboxCurrentIndex + 1) % lightboxImages.length;
+        }
+        updateLightboxContent();
+        touchStartXLightbox = null; // 重置触摸起点
+      }
+    }
+
+    // ======== 轮播图事件 ========
+    prevArrow.addEventListener('click', movePrev);
+    nextArrow.addEventListener('click', moveNext);
+    
+    // 触摸事件处理
+    carouselTrack.addEventListener('touchstart', handleTouchStart);
+    carouselTrack.addEventListener('touchmove', handleTouchMove);
+    carouselTrack.addEventListener('touchend', handleTouchEnd);
+    
     function handleTouchStart(e) {
       touchStartX = e.touches[0].clientX;
       touchStartY = e.touches[0].clientY;
@@ -1021,64 +1248,16 @@
       }
     }
 
-    carouselTrack.addEventListener('touchstart', handleTouchStart);
-    carouselTrack.addEventListener('touchmove', handleTouchMove, { passive: false });
-    carouselTrack.addEventListener('touchend', handleTouchEnd);
-
+    // 初始化轮播
     initCarousel();
-
-    prevArrow.addEventListener('click', movePrev);
-    nextArrow.addEventListener('click', moveNext);
-
-    window.addEventListener('resize', function () {
+    
+    // 窗口大小调整
+    window.addEventListener('resize', function() {
       updateSlidesToShow();
       updateSlideWidth();
-      currentIndex = Math.min(currentIndex, Math.max(0, slides.length - slidesToShow));
       updateArrows();
       positionSlides();
     });
   });
-
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-      document.querySelectorAll('.lightbox-container').forEach(lightbox => {
-        lightbox.style.display = 'none';
-        document.body.style.overflow = 'auto';
-      });
-    }
-  });
-
-  if (typeof Shopify !== 'undefined' && Shopify.designMode) {
-    document.addEventListener('shopify:section:select', function(e) {
-      const section = e.target.querySelector('.custom-image-text-section');
-      if (section) {
-        const aspectRatio = section.dataset.aspectRatio;
-        
-        const slideImages = section.querySelectorAll('.slide-image');
-        slideImages.forEach(img => {
-          img.dataset.aspectRatio = aspectRatio;
-        });
-        
-        if (typeof initCarousel === 'function') {
-          initCarousel();
-        }
-      }
-    });
-    
-    document.addEventListener('shopify:section:load', function(e) {
-      const section = e.target.querySelector('.custom-image-text-section');
-      if (section) {
-        if (typeof initCarousel === 'function') {
-          initCarousel();
-        }
-      }
-    });
-  }
-  
-  if (!('aspectRatio' in document.documentElement.style)) {
-    document.querySelectorAll('.slide-image').forEach(el => {
-      const ratio = el.dataset.aspectRatio;
-    });
-  }
 });
 </script>

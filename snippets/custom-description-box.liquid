@@ -183,6 +183,19 @@
     </div>
   </div>
 
+{%- assign keywords = "Trekking,City,Urban,Mountain,Mountain Carbon" | split: ',' -%}
+{%- assign title_lower = product.title | downcase -%}
+{%- assign should_show_compare = false -%}
+
+{%- for keyword in keywords -%}
+  {%- assign keyword_lower = keyword | downcase -%}
+  {%- if title_lower contains keyword_lower -%}
+    {%- assign should_show_compare = true -%}
+    {%- break -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- if should_show_compare -%}
   <div class="product-compare-widget">
     <label class="compare-checkbox">
       <input
@@ -206,4 +219,5 @@
       </span>
     </label>
   </div>
+{%- endif -%}
 </div>
