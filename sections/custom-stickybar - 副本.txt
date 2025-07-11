@@ -1,0 +1,428 @@
+{% schema %}
+{
+  "name": "Custom Stickybar",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "nav_link",
+      "name": "Navigation Link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID",
+          "info": "Section ID to scroll to (without #)",
+          "default": "highlights"
+        },
+        {
+          "type": "text",
+          "id": "text_en",
+          "label": "Text (English)",
+          "default": "Highlights"
+        },
+        {
+          "type": "text",
+          "id": "text_de",
+          "label": "Text (German)",
+          "default": "Highlights"
+        },
+        {
+          "type": "text",
+          "id": "text_fr",
+          "label": "Text (French)",
+          "default": "Points forts"
+        },
+        {
+          "type": "text",
+          "id": "text_fi",
+          "label": "Text (Finnish)",
+          "default": "Kohokohdat"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Stickybar",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "nav_link",
+          "settings": {
+            "anchor_id": "highlights",
+            "text_en": "Highlights",
+            "text_de": "Highlights",
+            "text_fr": "Points forts",
+            "text_fi": "Kohokohdat"
+          }
+        },
+        {
+          "type": "nav_link",
+          "settings": {
+            "anchor_id": "specification",
+            "text_en": "Specification",
+            "text_de": "Spezifikation",
+            "text_fr": "Spécification",
+            "text_fi": "Tekniset tiedot"
+          }
+        },
+        {
+          "type": "nav_link",
+          "settings": {
+            "anchor_id": "frame_geometry",
+            "text_en": "Frame Geometry",
+            "text_de": "Rahmengröße",
+            "text_fr": "Géométrie du cadre",
+            "text_fi": "Rungon geometria"
+          }
+        },
+        {
+          "type": "nav_link",
+          "settings": {
+            "anchor_id": "appblock",
+            "text_en": "Review",
+            "text_de": "Bewertungen",
+            "text_fr": "Avis",
+            "text_fi": "Arvostelut"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  .sticky-nav {
+    --sticky-bar-z-index: 100;
+    --sticky-bar-min-height: 60px;
+    --sticky-bar-top-offset: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgb(255, 255, 255);
+    padding: 1em 2em;
+    width: 100%;
+    box-shadow: rgba(91, 104, 113, 0.1) 0px 6px 8px;
+    transform: translateY(0px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    z-index: var(--sticky-bar-z-index);
+    min-height: var(--sticky-bar-min-height);
+    top: var(--sticky-bar-top-offset);
+  }
+
+  .sticky-nav--fixed {
+    position: fixed;
+  }
+
+  .sticky-nav-left {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+  }
+
+  .sticky-nav-title {
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .sticky-nav-links {
+    display: flex;
+    gap: 20px;
+  }
+
+  .sticky-nav-link {
+    text-decoration: none;
+    color: #333;
+    transition: color 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .sticky-nav-highlight {
+    font-weight: bold;
+    color: #2b7dde !important;
+  }
+
+  .sticky-nav-button-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-width: 200px;
+  }
+
+  .sticky-cart-btn {
+    white-space: nowrap;
+    transition: all 0.3s ease;
+  }
+
+  @media (max-width: 768px) {
+    .sticky-nav {
+      display: none;
+    }
+  }
+</style>
+
+<div class="sticky-nav" id="stickyNavBar">
+  <div class="sticky-nav-left">
+    <div class="sticky-nav-title">{{ product.title }}</div>
+    <div class="sticky-nav-links">
+      {% for block in section.blocks %}
+        {% assign link_text = block.settings.text_en %}
+        {% case request.locale.iso_code %}
+          {% when 'de' %}
+            {% assign link_text = block.settings.text_de %}
+          {% when 'fr' %}
+            {% assign link_text = block.settings.text_fr %}
+          {% when 'fi' %}
+            {% assign link_text = block.settings.text_fi %}
+        {% endcase %}
+        
+        <a 
+          href="#{{ block.settings.anchor_id }}" 
+          class="sticky-nav-link" 
+          data-anchor="{{ block.settings.anchor_id }}"
+        >
+          {{ link_text }}
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="sticky-nav-button-container" id="stickyNavButtonContainer"></div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Enhanced configuration with debounce for performance
+    const config = {
+      headerSelector: 'header',
+      announcementSelector: 'announcement-bar',
+      minTopOffset: 20,
+      scrollOffset: 30,
+      scrollBehavior: 'smooth',
+      highlightClass: 'sticky-nav-highlight',
+      cartButtonSelector: '.btn.btn--large.add-to-cart',
+      cartButtonTextSelector: '[data-add-to-cart-text]',
+      debounceTime: 100
+    };
+    
+    // Elements cache
+    const stickyNav = document.getElementById('stickyNavBar');
+    const stickyButtonContainer = document.getElementById('stickyNavButtonContainer');
+    
+    if (!stickyNav) return;
+    
+    // Debounce function for performance optimization
+    function debounce(func, wait) {
+      let timeout;
+      return function executedFunction(...args) {
+        const later = () => {
+          clearTimeout(timeout);
+          func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+      };
+    }
+    
+    // Calculate top offset with fallbacks
+    function calculateTopOffset() {
+      try {
+        let offset = config.minTopOffset;
+        const header = document.querySelector(config.headerSelector);
+        const announcementBar = document.querySelector(config.announcementSelector);
+        
+        if (header) offset += header.offsetHeight;
+        if (announcementBar) offset += announcementBar.offsetHeight;
+        
+        document.documentElement.style.setProperty('--sticky-bar-top-offset', `${offset}px`);
+        return offset;
+      } catch (e) {
+        console.error('Error calculating top offset:', e);
+        return config.minTopOffset;
+      }
+    }
+    
+    // Enhanced sticky behavior with error handling
+    function setupStickyNav() {
+      try {
+        const topOffset = calculateTopOffset();
+        const stickyTop = stickyNav.offsetTop;
+        
+        function updateStickyState() {
+          try {
+            if (window.pageYOffset > stickyTop) {
+              stickyNav.classList.add('sticky-nav--fixed');
+              stickyNav.style.top = `${topOffset}px`;
+            } else {
+              stickyNav.classList.remove('sticky-nav--fixed');
+            }
+          } catch (e) {
+            console.error('Error updating sticky state:', e);
+          }
+        }
+        
+        const debouncedScrollHandler = debounce(updateStickyState, config.debounceTime);
+        const debouncedResizeHandler = debounce(() => {
+          calculateTopOffset();
+          updateStickyState();
+        }, config.debounceTime);
+        
+        window.addEventListener('scroll', debouncedScrollHandler);
+        window.addEventListener('resize', debouncedResizeHandler);
+        
+        updateStickyState();
+      } catch (e) {
+        console.error('Error setting up sticky nav:', e);
+      }
+    }
+    
+    // Robust button mirror with full synchronization
+    function createButtonMirror() {
+      try {
+        const originalButton = document.querySelector(config.cartButtonSelector);
+        if (!originalButton) {
+          console.warn('Add to cart button not found');
+          return;
+        }
+        
+        // Create mirror button
+        const newButton = document.createElement('button');
+        newButton.className = 'sticky-cart-btn btn btn--large add-to-cart-mirror-btn';
+        updateButtonAppearance(originalButton, newButton);
+        
+        // Add to container
+        stickyButtonContainer.appendChild(newButton);
+        
+        // Click handler
+        newButton.addEventListener('click', function(e) {
+          e.preventDefault();
+          if (!newButton.disabled) {
+            originalButton.click();
+          }
+        });
+        
+        // Setup mutation observers for full synchronization
+        setupButtonObservers(originalButton, newButton);
+      } catch (e) {
+        console.error('Error creating button mirror:', e);
+      }
+    }
+    
+    // Update button appearance from original
+    function updateButtonAppearance(original, mirror) {
+      try {
+        const styles = window.getComputedStyle(original);
+        
+        // Copy text content
+        const textElement = original.querySelector(config.cartButtonTextSelector) || original;
+        mirror.textContent = textElement.textContent;
+        
+        // Copy styles
+        mirror.style.backgroundColor = styles.backgroundColor;
+        mirror.style.color = styles.color;
+        mirror.style.border = styles.border;
+        mirror.style.borderRadius = styles.borderRadius;
+        mirror.style.padding = styles.padding;
+        mirror.style.fontSize = styles.fontSize;
+        mirror.style.fontWeight = styles.fontWeight;
+        mirror.style.textTransform = styles.textTransform;
+        
+        // Copy state
+        mirror.disabled = original.disabled;
+        mirror.classList = original.classList;
+      } catch (e) {
+        console.error('Error updating button appearance:', e);
+      }
+    }
+    
+    // Setup observers for all button changes
+    function setupButtonObservers(original, mirror) {
+      try {
+        // Observer for attributes and text changes
+        const observer = new MutationObserver(mutations => {
+          mutations.forEach(mutation => {
+            if (mutation.type === 'attributes') {
+              // Update appearance on any attribute change
+              updateButtonAppearance(original, mirror);
+            } else if (mutation.type === 'characterData' || mutation.type === 'childList') {
+              // Update text content
+              const textElement = original.querySelector(config.cartButtonTextSelector) || original;
+              mirror.textContent = textElement.textContent;
+            }
+          });
+        });
+        
+        // Observe all relevant changes
+        observer.observe(original, {
+          attributes: true,
+          childList: true,
+          subtree: true,
+          characterData: true,
+          attributeFilter: ['class', 'style', 'disabled']
+        });
+        
+        // Resize observer for layout changes
+        const resizeObserver = new ResizeObserver(debounce(() => {
+          updateButtonAppearance(original, mirror);
+        }, config.debounceTime));
+        
+        resizeObserver.observe(original);
+      } catch (e) {
+        console.error('Error setting up button observers:', e);
+      }
+    }
+    
+    // Enhanced scroll highlighting with intersection observer
+    function setupScrollHighlighting() {
+      try {
+        const navLinks = document.querySelectorAll('.sticky-nav-link');
+        if (!navLinks.length) return;
+        
+        const observer = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            const id = entry.target.id;
+            const link = document.querySelector(`.sticky-nav-link[data-anchor="${id}"]`);
+            
+            if (entry.isIntersecting) {
+              navLinks.forEach(link => link.classList.remove(config.highlightClass));
+              if (link) link.classList.add(config.highlightClass);
+            }
+          });
+        }, { threshold: 0.1 });
+        
+        // Setup anchors and click handlers
+        navLinks.forEach(link => {
+          const targetId = link.dataset.anchor;
+          if (!targetId) return;
+          
+          const targetElement = document.getElementById(targetId);
+          if (targetElement) {
+            observer.observe(targetElement);
+            
+            link.addEventListener('click', function(e) {
+              e.preventDefault();
+              const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+              const offsetPosition = elementPosition - config.scrollOffset;
+              
+              window.scrollTo({
+                top: offsetPosition,
+                behavior: config.scrollBehavior
+              });
+            });
+          }
+        });
+      } catch (e) {
+        console.error('Error setting up scroll highlighting:', e);
+      }
+    }
+    
+    // Initialize with fallbacks
+    try {
+      setupStickyNav();
+      createButtonMirror();
+      setupScrollHighlighting();
+    } catch (e) {
+      console.error('Error initializing sticky bar:', e);
+    }
+  });
+</script>

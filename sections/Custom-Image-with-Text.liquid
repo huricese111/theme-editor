@@ -344,14 +344,13 @@
       style="display: none;"
     {% endif %}
   >
-    <h2 class="section-title">{{ section_title | escape }}</h2>
+    <h2 class="section-title" id="highlights">{{ section_title | escape }}</h2>
   </div>
   <div class="carousel-outer">
     <div class="carousel-container">
       <div class="carousel-track">
         <div class="carousel-slides" id="carousel-slides-{{ section.id }}">
           {% for block in section.blocks %}
-            {% comment %} 多语言内容处理 {% endcomment %}
             {% capture block_title %}
               {% case locale_prefix %}
                 {% when 'de' %}{{ block.settings.title_de | default: block.settings.title }}
