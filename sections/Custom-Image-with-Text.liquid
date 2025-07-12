@@ -1,294 +1,259 @@
 {% schema %}
-{
-  "name": "Custom Image with Text",
-  "settings": [
-    {
-      "type": "text",
-      "id": "title",
-      "label": "Heading (Default)",
-      "default": "Highlights"
-    },
-    {
-      "type": "text",
-      "id": "title_de",
-      "label": "Heading (German)",
-      "default": "Highlights"
-    },
-    {
-      "type": "text",
-      "id": "title_fr",
-      "label": "Heading (French)",
-      "default": "Highlights"
-    },
-    {
-      "type": "text",
-      "id": "title_fi",
-      "label": "Heading (Finnish)",
-      "default": "Highlights"
-    },
-    {
-      "type": "header",
-      "content": "Visibility Settings"
-    },
-    {
-      "type": "checkbox",
-      "id": "hide_title",
-      "label": "Hide Section Title",
-      "default": false
-    },
-    {
-      "type": "select",
-      "id": "image_aspect_ratio",
-      "label": "Image Aspect Ratio",
-      "options": [
-        {
-          "value": "16/9",
-          "label": "16:9"
-        },
-        {
-          "value": "3/4",
-          "label": "Portrait (3:4)"
-        },
-        {
-          "value": "1/1",
-          "label": "Square (1:1)"
-        }
-      ],
-      "default": "16/9"
-    },
-    {
-      "type": "header",
-      "content": "Content Visibility"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_title_global",
-      "label": "Show Titles",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "show_text_global",
-      "label": "Show Descriptions",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "show_button_global",
-      "label": "Show Buttons",
-      "default": true
-    },
-    {
-      "type": "header",
-      "content": "Button Settings"
-    },
-    {
-      "type": "text",
-      "id": "button_text",
-      "label": "Button Text (Default)",
-      "default": "Learn More"
-    },
-    {
-      "type": "text",
-      "id": "button_text_de",
-      "label": "Button Text (German)",
-      "default": "Mehr erfahren"
-    },
-    {
-      "type": "text",
-      "id": "button_text_fr",
-      "label": "Button Text (French)",
-      "default": "En savoir plus"
-    },
-    {
-      "type": "text",
-      "id": "button_text_fi",
-      "label": "Button Text (Finnish)",
-      "default": "Lue lisää"
-    },
-    {
-      "type": "color",
-      "id": "button_background_color",
-      "label": "Button Background Color",
-      "default": "#ffffff"
-    },
-    {
-      "type": "color",
-      "id": "button_text_color",
-      "label": "Button Text Color",
-      "default": "#222222"
-    },
-    {
-      "type": "color",
-      "id": "button_border_color",
-      "label": "Button Border Color",
-      "default": "#222222"
-    },
-    {
-      "type": "color",
-      "id": "button_hover_background_color",
-      "label": "Hover Background Color",
-      "default": "#222222"
-    },
-    {
-      "type": "color",
-      "id": "button_hover_text_color",
-      "label": "Hover Text Color",
-      "default": "#ffffff"
-    },
-    {
-      "type": "color",
-      "id": "button_hover_border_color",
-      "label": "Hover Border Color",
-      "default": "#222222"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "custom_item",
-      "name": "Custom Item",
-      "settings": [
-        {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Image"
-        },
-        {
-          "type": "url",
-          "id": "image_link",
-          "label": "Image Link (Optional)"
-        },
-        {
-          "type": "text",
-          "id": "title",
-          "label": "Title (Default)",
-          "default": "Slide Title"
-        },
-        {
-          "type": "text",
-          "id": "title_de",
-          "label": "Title (German)",
-          "default": "Folientitel"
-        },
-        {
-          "type": "text",
-          "id": "title_fr",
-          "label": "Title (French)",
-          "default": "Titre de la diapositive"
-        },
-        {
-          "type": "text",
-          "id": "title_fi",
-          "label": "Title (Finnish)",
-          "default": "Dian otsikko"
-        },
-        {
-          "type": "url",
-          "id": "title_link",
-          "label": "Title Link (Optional)"
-        },
-        {
-          "type": "richtext",
-          "id": "text",
-          "label": "Text (Default)",
-          "default": "<p>Add your custom text here</p>"
-        },
-        {
-          "type": "richtext",
-          "id": "text_de",
-          "label": "Text (German)",
-          "default": "<p>Fügen Sie hier Ihren benutzerdefinierten Text hinzu</p>"
-        },
-        {
-          "type": "richtext",
-          "id": "text_fr",
-          "label": "Text (French)",
-          "default": "<p>Ajoutez votre texte personnalisé ici</p>"
-        },
-        {
-          "type": "richtext",
-          "id": "text_fi",
-          "label": "Text (Finnish)",
-          "default": "<p>Lisää mukautettu teksti tähän</p>"
-        },
-        {
-          "type": "url",
-          "id": "button_link",
-          "label": "Button Link"
-        },
-        {
-          "type": "text",
-          "id": "button_text_override",
-          "label": "Custom Button Text (Default)"
-        },
-        {
-          "type": "text",
-          "id": "button_text_override_de",
-          "label": "Custom Button Text (German)"
-        },
-        {
-          "type": "text",
-          "id": "button_text_override_fr",
-          "label": "Custom Button Text (French)"
-        },
-        {
-          "type": "text",
-          "id": "button_text_override_fi",
-          "label": "Custom Button Text (Finnish)"
-        }
-      ]
-    }
-  ],
-  "presets": [
-    {
-      "name": "Custom Image with Text",
-      "category": "Custom",
-      "blocks": [
-        {
-          "type": "custom_item",
-          "settings": {
-            "title": "First Item",
-            "title_de": "Erster Punkt",
-            "title_fr": "Premier élément",
-            "title_fi": "Ensimmäinen kohde",
-            "text": "<p>Description for first item</p>",
-            "text_de": "<p>Beschreibung für den ersten Punkt</p>",
-            "text_fr": "<p>Description du premier élément</p>",
-            "text_fi": "<p>Ensimmäisen kohteen kuvaus</p>"
+  {
+    "name": "Custom Image with Text",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading (Default)",
+        "default": "Highlights"
+      },
+      {
+        "type": "text",
+        "id": "title_de",
+        "label": "Heading (German)",
+        "default": "Highlights"
+      },
+      {
+        "type": "text",
+        "id": "title_fr",
+        "label": "Heading (French)",
+        "default": "Highlights"
+      },
+      {
+        "type": "text",
+        "id": "title_fi",
+        "label": "Heading (Finnish)",
+        "default": "Highlights"
+      }, {
+        "type": "header",
+        "content": "Visibility Settings"
+      }, {
+        "type": "checkbox",
+        "id": "hide_title",
+        "label": "Hide Section Title",
+        "default": false
+      }, {
+        "type": "select",
+        "id": "image_aspect_ratio",
+        "label": "Image Aspect Ratio",
+        "options": [
+          {
+            "value": "16/9",
+            "label": "16:9"
+          }, {
+            "value": "3/4",
+            "label": "Portrait (3:4)"
+          }, {
+            "value": "1/1",
+            "label": "Square (1:1)"
           }
-        },
-        {
-          "type": "custom_item",
-          "settings": {
-            "title": "Second Item",
-            "title_de": "Zweiter Punkt",
-            "title_fr": "Deuxième élément",
-            "title_fi": "Toinen kohde",
-            "text": "<p>Description for second item</p>",
-            "text_de": "<p>Beschreibung für den zweiten Punkt</p>",
-            "text_fr": "<p>Description du deuxième élément</p>",
-            "text_fi": "<p>Toisen kohteen kuvaus</p>"
+        ],
+        "default": "16/9"
+      }, {
+        "type": "header",
+        "content": "Content Visibility"
+      }, {
+        "type": "checkbox",
+        "id": "show_title_global",
+        "label": "Show Titles",
+        "default": true
+      }, {
+        "type": "checkbox",
+        "id": "show_text_global",
+        "label": "Show Descriptions",
+        "default": true
+      }, {
+        "type": "checkbox",
+        "id": "show_button_global",
+        "label": "Show Buttons",
+        "default": true
+      }, {
+        "type": "header",
+        "content": "Button Settings"
+      }, {
+        "type": "text",
+        "id": "button_text",
+        "label": "Button Text (Default)",
+        "default": "Learn More"
+      }, {
+        "type": "text",
+        "id": "button_text_de",
+        "label": "Button Text (German)",
+        "default": "Mehr erfahren"
+      }, {
+        "type": "text",
+        "id": "button_text_fr",
+        "label": "Button Text (French)",
+        "default": "En savoir plus"
+      }, {
+        "type": "text",
+        "id": "button_text_fi",
+        "label": "Button Text (Finnish)",
+        "default": "Lue lisää"
+      }, {
+        "type": "color",
+        "id": "button_background_color",
+        "label": "Button Background Color",
+        "default": "#ffffff"
+      }, {
+        "type": "color",
+        "id": "button_text_color",
+        "label": "Button Text Color",
+        "default": "#222222"
+      }, {
+        "type": "color",
+        "id": "button_border_color",
+        "label": "Button Border Color",
+        "default": "#222222"
+      }, {
+        "type": "color",
+        "id": "button_hover_background_color",
+        "label": "Hover Background Color",
+        "default": "#222222"
+      }, {
+        "type": "color",
+        "id": "button_hover_text_color",
+        "label": "Hover Text Color",
+        "default": "#ffffff"
+      }, {
+        "type": "color",
+        "id": "button_hover_border_color",
+        "label": "Hover Border Color",
+        "default": "#222222"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "custom_item",
+        "name": "Custom Item",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "url",
+            "id": "image_link",
+            "label": "Image Link (Optional)"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title (Default)",
+            "default": "Slide Title"
+          },
+          {
+            "type": "text",
+            "id": "title_de",
+            "label": "Title (German)",
+            "default": "Folientitel"
+          }, {
+            "type": "text",
+            "id": "title_fr",
+            "label": "Title (French)",
+            "default": "Titre de la diapositive"
+          }, {
+            "type": "text",
+            "id": "title_fi",
+            "label": "Title (Finnish)",
+            "default": "Dian otsikko"
+          }, {
+            "type": "url",
+            "id": "title_link",
+            "label": "Title Link (Optional)"
+          }, {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text (Default)",
+            "default": "<p>Add your custom text here</p>"
+          }, {
+            "type": "richtext",
+            "id": "text_de",
+            "label": "Text (German)",
+            "default": "<p>Fügen Sie hier Ihren benutzerdefinierten Text hinzu</p>"
+          }, {
+            "type": "richtext",
+            "id": "text_fr",
+            "label": "Text (French)",
+            "default": "<p>Ajoutez votre texte personnalisé ici</p>"
+          }, {
+            "type": "richtext",
+            "id": "text_fi",
+            "label": "Text (Finnish)",
+            "default": "<p>Lisää mukautettu teksti tähän</p>"
+          }, {
+            "type": "url",
+            "id": "button_link",
+            "label": "Button Link"
+          }, {
+            "type": "text",
+            "id": "button_text_override",
+            "label": "Custom Button Text (Default)"
+          }, {
+            "type": "text",
+            "id": "button_text_override_de",
+            "label": "Custom Button Text (German)"
+          }, {
+            "type": "text",
+            "id": "button_text_override_fr",
+            "label": "Custom Button Text (French)"
+          }, {
+            "type": "text",
+            "id": "button_text_override_fi",
+            "label": "Custom Button Text (Finnish)"
           }
-        },
-        {
-          "type": "custom_item",
-          "settings": {
-            "title": "Third Item",
-            "title_de": "Dritter Punkt",
-            "title_fr": "Troisième élément",
-            "title_fi": "Kolmas kohde",
-            "text": "<p>Description for third item</p>",
-            "text_de": "<p>Beschreibung für den dritten Punkt</p>",
-            "text_fr": "<p>Description du troisième élément</p>",
-            "text_fi": "<p>Kolmannen kohteen kuvaus</p>"
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Custom Image with Text",
+        "category": "Custom",
+        "blocks": [
+          {
+            "type": "custom_item",
+            "settings": {
+              "title": "First Item",
+              "title_de": "Erster Punkt",
+              "title_fr": "Premier élément",
+              "title_fi": "Ensimmäinen kohde",
+              "text": "<p>Description for first item</p>",
+              "text_de": "<p>Beschreibung für den ersten Punkt</p>",
+              "text_fr": "<p>Description du premier élément</p>",
+              "text_fi": "<p>Ensimmäisen kohteen kuvaus</p>"
+            }
+          }, {
+            "type": "custom_item",
+            "settings": {
+              "title": "Second Item",
+              "title_de": "Zweiter Punkt",
+              "title_fr": "Deuxième élément",
+              "title_fi": "Toinen kohde",
+              "text": "<p>Description for second item</p>",
+              "text_de": "<p>Beschreibung für den zweiten Punkt</p>",
+              "text_fr": "<p>Description du deuxième élément</p>",
+              "text_fi": "<p>Toisen kohteen kuvaus</p>"
+            }
+          }, {
+            "type": "custom_item",
+            "settings": {
+              "title": "Third Item",
+              "title_de": "Dritter Punkt",
+              "title_fr": "Troisième élément",
+              "title_fi": "Kolmas kohde",
+              "text": "<p>Description for third item</p>",
+              "text_de": "<p>Beschreibung für den dritten Punkt</p>",
+              "text_fr": "<p>Description du troisième élément</p>",
+              "text_fi": "<p>Kolmannen kohteen kuvaus</p>"
+            }
           }
-        }
-      ]
-    }
-  ]
-}
+        ]
+      }
+    ]
+  }
 {% endschema %}
-
 
 {% assign locale_prefix = request.locale.iso_code | slice: 0, 2 | downcase %}
 
@@ -321,7 +286,7 @@
 <div
   class="custom-image-text-section"
   id="custom-image-text-{{ section.id }}"
-   data-section-id="{{ section.id }}"
+  data-section-id="{{ section.id }}"
   data-aspect-ratio="{{ section.settings.image_aspect_ratio }}"
   style="
     --button-bg: {{ section.settings.button_background_color | default: '#ffffff' }};
@@ -330,14 +295,12 @@
     --button-hover-bg: {{ section.settings.button_hover_background_color | default: '#222222' }};
     --button-hover-text: {{ section.settings.button_hover_text_color | default: '#ffffff' }};
     --button-hover-border: {{ section.settings.button_hover_border_color | default: '#222222' }};
-  "
->
+  ">
   <div
     class="section-header"
     {% if section.settings.hide_title %}
-      style="display: none;"
-    {% endif %}
-  >
+    style="display: none;"
+    {% endif %}>
     <h2 class="section-title" id="highlights">{{ section_title | escape }}</h2>
   </div>
   <div class="carousel-outer">
@@ -353,7 +316,7 @@
                 {% else %}{{ block.settings.title }}
               {% endcase %}
             {% endcapture %}
-            
+
             {% capture block_text %}
               {% case locale_prefix %}
                 {% when 'de' %}{{ block.settings.text_de | default: block.settings.text }}
@@ -362,7 +325,7 @@
                 {% else %}{{ block.settings.text }}
               {% endcase %}
             {% endcapture %}
-            
+
             {% capture override_button_text %}
               {% case locale_prefix %}
                 {% when 'de' %}{{ block.settings.button_text_override_de | default: block.settings.button_text_override }}
@@ -371,13 +334,10 @@
                 {% else %}{{ block.settings.button_text_override }}
               {% endcase %}
             {% endcapture %}
-            
+
             {% assign item_button_text = override_button_text | strip | default: default_button_text | strip %}
-            
-            <div
-              class="carousel-slide {% if all_content_hidden %}all-content-hidden{% endif %}"
-              {{ block.shopify_attributes }}
-            >
+
+            <div class="carousel-slide {% if all_content_hidden %}all-content-hidden{% endif %}" {{ block.shopify_attributes }}>
               <div class="slide-image">
                 {%- liquid
                   assign loading = 'lazy'
@@ -390,19 +350,17 @@
                   <div
                     class="image-wrapper"
                     data-lightbox-image="{{ block.settings.image | img_url: 'master' }}"
-                    data-lightbox-caption="{{ block_title | strip_html }}"
-                  >
+                    data-lightbox-caption="{{ block_title | strip_html }}">
                     {% if block.settings.image_link != blank %}
                       <a href="{{ block.settings.image_link }}" style="display: block; width: 100%;">
                     {% endif %}
                     <img
-                      src="{{ block.settings.image | img_url: '1200x' }}"
-                      loading="{{ loading }}"
-                      alt="{{ block.settings.image.alt | escape }}"
-                      class="carousel-image"
+                       src="{{ block.settings.image | img_url: '1200x' }}"
+                      onclick="openLightbox('{{ block.settings.image | img_url: 'master' }}')"
                       data-lightbox-image="{{ block.settings.image | img_url: 'master' }}"
-                      data-lightbox-caption="{{ block_title | strip_html | escape }}"
-                    >
+                      data-lightbox-caption="{{ block_title | strip_html }}"
+                      loading="{{ loading }}"
+                      class="carousel-image">
                     {% if block.settings.image_link != blank %}
                       </a>
                     {% endif %}
@@ -450,32 +408,11 @@
       </div>
     </div>
   </div>
+</div>
+
+<div id="lightbox" class="lightbox" onclick="closeLightbox()">
+  <span class="close" onclick="closeLightbox(); event.stopPropagation();">&times;</span>
   
-  <!-- Lightbox overlay -->
-  <div class="lightbox-overlay" id="lightbox-overlay-{{ section.id }}" style="display: none;">
-    <div class="lightbox-container">
-      <div class="lightbox-content">
-        
-        <div class="lightbox-caption"></div>
-      </div>
-      <button class="lightbox-close" aria-label="Close lightbox">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      </button>
-      <button class="lightbox-nav prev" aria-label="Previous image">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="15 18 9 12 15 6"></polyline>
-        </svg>
-      </button>
-      <button class="lightbox-nav next" aria-label="Next image">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="9 18 15 12 9 6"></polyline>
-        </svg>
-      </button>
-    </div>
-  </div>
 </div>
 
 <style>
@@ -531,7 +468,6 @@
     margin: 0 20px 30px 0;
     position: relative;
     z-index: 1;
-
   }
 
   .carousel-container {
@@ -557,7 +493,8 @@
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease
+    , box-shadow 0.3s ease;
     flex-shrink: 0;
   }
 
@@ -602,17 +539,17 @@
   }
 
   [data-aspect-ratio="16/9"] .slide-image {
-    padding-bottom: 56.25%; 
+    padding-bottom: 56.25%;
   }
-  
+
   [data-aspect-ratio="3/4"] .slide-image {
-    padding-bottom: 133.33%; 
+    padding-bottom: 133.33%;
   }
-  
+
   [data-aspect-ratio="1/1"] .slide-image {
-    padding-bottom: 100%; 
+    padding-bottom: 100%;
   }
-  
+
   [data-aspect-ratio="natural"] .carousel-image {
     object-fit: contain;
   }
@@ -633,7 +570,7 @@
   }
 
   .slide-content {
-    padding: 20px 20px 40px 20px;
+    padding: 20px 20px 40px;
   }
 
   .custom-title {
@@ -667,8 +604,10 @@
   }
 
   .customitem-ibutton {
-    color: #000;
-    border: 2px solid #000000;
+    display: inline-block;
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    border: 2px solid var(--button-border);
     border-radius: 50px;
     text-align: center;
     font-weight: 400;
@@ -676,6 +615,7 @@
     padding: 12px 20px;
     outline: 0;
     cursor: pointer;
+    transition: all 0.3s ease;
   }
 
   .customitem-ibutton:hover {
@@ -725,128 +665,42 @@
     pointer-events: none;
   }
 
-  /* Lightbox Styles */
-  .lightbox-overlay {
+  /* ======== LIGHTBOX STYLES ======== */
+  .lightbox {
+    display: none;
     position: fixed;
-    top: 0;
+    z-index: 10000;
     left: 0;
+    top: 0;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.9);
-    display: flex;
-    align-items: center;
     justify-content: center;
-    z-index: 2147483647;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    backdrop-filter: blur(8px);
-    top: var(--sticky-bar-height, 0); 
-  }
-
-  .lightbox-overlay.active {
-    opacity: 1;
-  }
-
-  .lightbox-container {
-    position: relative;
-    max-width: 90%;
-    max-height: 90%;
-    width: auto;
-    height: auto;
-    z-index: 2147483648;
+    align-items: center;
   }
 
   .lightbox-content {
-    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 4px;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+    transition: transform 0.3s ease;
   }
 
-  .lightbox-image {
-    max-width: 100%;
-    max-height: 80vh;
-    display: block;
-    margin: 0 auto;
-    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
-    animation: lightboxFadeIn 0.4s ease;
-  }
-
-  .lightbox-caption {
-    color: #fff;
-    text-align: center;
-    margin-top: 15px;
-    font-size: 18px;
-    padding: 0 20px;
-    max-width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .lightbox-close {
+  .close {
     position: absolute;
-    top: 20px;
-    right: 20px;
-    background: none;
-    border: none;
+    top: 25px;
+    right: 35px;
     color: white;
-    font-size: 30px;
+    font-size: 50px;
+    font-weight: 300;
     cursor: pointer;
     z-index: 10;
-    padding: 10px;
+    transition: opacity 0.3s;
+  }
+
+  .close:hover {
     opacity: 0.8;
-    transition: opacity 0.3s;
-  }
-
-  .lightbox-close:hover {
-    opacity: 1;
-  }
-
-  .lightbox-close svg {
-    width: 30px;
-    height: 30px;
-    stroke: white;
-  }
-
-  .lightbox-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.5);
-    border: none;
-    color: white;
-    font-size: 24px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    opacity: 0.7;
-    transition: opacity 0.3s;
-    z-index: 10;
-  }
-
-  .lightbox-nav:hover {
-    opacity: 1;
-    background: rgba(0, 0, 0, 0.8);
-  }
-
-  .lightbox-nav.prev {
-    left: 20px;
-  }
-
-  .lightbox-nav.next {
-    right: 20px;
-  }
-
-  .lightbox-nav svg {
-    width: 24px;
-    height: 24px;
-    stroke: white;
-  }
-
-  @keyframes lightboxFadeIn {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
   }
 
   @media (max-width: 1200px) {
@@ -896,14 +750,17 @@
       margin-left: -15px;
       padding-right: 15px;
     }
-    
-    .lightbox-caption {
-      font-size: 16px;
+
+    /* Mobile lightbox adjustments */
+    .lightbox-content {
+      max-width: 95%;
+      max-height: 80%;
     }
-    
-    .lightbox-nav {
-      width: 40px;
-      height: 40px;
+
+    .close {
+      top: 15px;
+      right: 20px;
+      font-size: 40px;
     }
   }
 
@@ -925,31 +782,32 @@
       margin-left: -15px;
       padding-right: 15px;
     }
-    
-    .lightbox-image {
-      max-height: 70vh;
+
+    /* Mobile lightbox adjustments */
+    .lightbox-content {
+      max-width: 98%;
+      max-height: 70%;
+    }
+
+    .close {
+      top: 10px;
+      right: 15px;
+      font-size: 35px;
     }
   }
 </style>
 
 <script>
- document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function () {
+  // ======== CAROUSEL FUNCTIONALITY ========
   const carousels = document.querySelectorAll('.custom-image-text-section');
-
+  
   carousels.forEach((section) => {
     const slidesContainer = section.querySelector('.carousel-slides');
     const slides = Array.from(slidesContainer.children);
     const prevArrow = section.querySelector('.prev-arrow');
     const nextArrow = section.querySelector('.next-arrow');
     const carouselTrack = section.querySelector('.carousel-track');
-    
-    // Lightbox元素
-    const lightboxOverlay = section.querySelector('.lightbox-overlay');
-    const lightboxImageContainer = lightboxOverlay.querySelector('.lightbox-content');
-    const lightboxCaption = lightboxOverlay.querySelector('.lightbox-caption');
-    const lightboxClose = lightboxOverlay.querySelector('.lightbox-close');
-    const lightboxPrev = lightboxOverlay.querySelector('.lightbox-nav.prev');
-    const lightboxNext = lightboxOverlay.querySelector('.lightbox-nav.next');
 
     if (!slidesContainer || slides.length === 0) return;
 
@@ -961,11 +819,6 @@
     let touchEndX = 0;
     let isDragging = false;
     let isHorizontal = false;
-    
-    // Lightbox变量
-    let lightboxCurrentIndex = 0;
-    let lightboxImages = [];
-    let lightboxCaptions = [];
 
     function initCarousel() {
       updateSlidesToShow();
@@ -975,9 +828,6 @@
       
       const aspectRatio = section.dataset.aspectRatio;
       updateAspectRatio(aspectRatio);
-      
-      // 初始化lightbox
-      setupLightbox();
     }
     
     function updateAspectRatio(ratio) {
@@ -1037,156 +887,16 @@
       }
     }
 
-    // ======== LIGHTBOX核心功能 ======== [6,8](@ref)
-    function setupLightbox() {
-      // 收集所有lightbox图片和标题
-      const imageWrappers = section.querySelectorAll('.image-wrapper');
-      imageWrappers.forEach((wrapper, index) => {
-        const imgUrl = wrapper.dataset.lightboxImage;
-        const caption = wrapper.dataset.lightboxCaption || '';
-        
-        if (imgUrl) {
-          lightboxImages.push(imgUrl);
-          lightboxCaptions.push(caption);
-          
-          // 添加点击事件
-          wrapper.addEventListener('click', function(e) {
-            // 跳过链接点击
-            if (e.target.tagName === 'A') return;
-            
-            // 在Shopify编辑器中禁用lightbox
-            if (typeof Shopify !== 'undefined' && Shopify.designMode) return;
-            
-            e.preventDefault();
-            lightboxCurrentIndex = index;
-            openLightbox();
-          });
-        }
-      });
-      
-      // Lightbox导航事件
-      lightboxClose.addEventListener('click', closeLightbox);
-      lightboxOverlay.addEventListener('click', function(e) {
-        if (e.target === lightboxOverlay) closeLightbox();
-      });
-      
-      if (lightboxImages.length > 1) {
-        lightboxPrev.addEventListener('click', function() {
-          lightboxCurrentIndex = (lightboxCurrentIndex - 1 + lightboxImages.length) % lightboxImages.length;
-          updateLightboxContent();
-        });
-        
-        lightboxNext.addEventListener('click', function() {
-          lightboxCurrentIndex = (lightboxCurrentIndex + 1) % lightboxImages.length;
-          updateLightboxContent();
-        });
-      } else {
-        lightboxPrev.style.display = 'none';
-        lightboxNext.style.display = 'none';
-      }
+    // Carousel event handlers
+    if (prevArrow) prevArrow.addEventListener('click', movePrev);
+    if (nextArrow) nextArrow.addEventListener('click', moveNext);
+    
+    // Touch event handlers
+    if (carouselTrack) {
+      carouselTrack.addEventListener('touchstart', handleTouchStart);
+      carouselTrack.addEventListener('touchmove', handleTouchMove);
+      carouselTrack.addEventListener('touchend', handleTouchEnd);
     }
-    
-    function openLightbox() {
-      // 创建图片元素
-      const img = new Image();
-      img.src = lightboxImages[lightboxCurrentIndex];
-      img.alt = lightboxCaptions[lightboxCurrentIndex];
-      img.classList.add('lightbox-image');
-      
-      // 更新内容
-      lightboxImageContainer.innerHTML = '';
-      lightboxImageContainer.appendChild(img);
-      lightboxCaption.textContent = lightboxCaptions[lightboxCurrentIndex];
-      
-      // 显示lightbox
-      lightboxOverlay.style.display = 'flex';
-      setTimeout(() => {
-        lightboxOverlay.classList.add('active');
-        document.body.style.overflow = 'hidden'; // 防止背景滚动
-      }, 10);
-      
-      // 添加键盘事件[4](@ref)
-      document.addEventListener('keydown', handleKeyDown);
-      // 添加触摸事件
-      img.addEventListener('touchstart', handleTouchStart);
-      img.addEventListener('touchmove', handleTouchMove);
-    }
-    
-    function updateLightboxContent() {
-      const img = lightboxImageContainer.querySelector('.lightbox-image');
-      img.src = lightboxImages[lightboxCurrentIndex];
-      img.alt = lightboxCaptions[lightboxCurrentIndex];
-      lightboxCaption.textContent = lightboxCaptions[lightboxCurrentIndex];
-      
-      // 添加加载过渡
-      img.style.opacity = 0;
-      setTimeout(() => {
-        img.style.transition = 'opacity 0.3s ease';
-        img.style.opacity = 1;
-      }, 10);
-    }
-    
-    function closeLightbox() {
-      lightboxOverlay.classList.remove('active');
-      setTimeout(() => {
-        lightboxOverlay.style.display = 'none';
-        document.body.style.overflow = ''; // 恢复背景滚动
-      }, 300);
-      
-      // 移除事件监听
-      document.removeEventListener('keydown', handleKeyDown);
-    }
-    
-    function handleKeyDown(e) {
-      // ESC键关闭
-      if (e.key === 'Escape') closeLightbox();
-      // 左箭头：上一张
-      if (e.key === 'ArrowLeft' && lightboxImages.length > 1) {
-        lightboxCurrentIndex = (lightboxCurrentIndex - 1 + lightboxImages.length) % lightboxImages.length;
-        updateLightboxContent();
-      }
-      // 右箭头：下一张
-      if (e.key === 'ArrowRight' && lightboxImages.length > 1) {
-        lightboxCurrentIndex = (lightboxCurrentIndex + 1) % lightboxImages.length;
-        updateLightboxContent();
-      }
-    }
-    
-    // 触摸滑动切换[6](@ref)
-    let touchStartXLightbox = 0;
-    
-    function handleTouchStart(e) {
-      touchStartXLightbox = e.touches[0].clientX;
-    }
-    
-    function handleTouchMove(e) {
-      if (!touchStartXLightbox) return;
-      
-      const touchEndXLightbox = e.touches[0].clientX;
-      const diffX = touchEndXLightbox - touchStartXLightbox;
-      
-      // 水平滑动超过50px触发切换
-      if (Math.abs(diffX) > 50) {
-        if (diffX > 0) {
-          // 向右滑动：上一张
-          lightboxCurrentIndex = (lightboxCurrentIndex - 1 + lightboxImages.length) % lightboxImages.length;
-        } else {
-          // 向左滑动：下一张
-          lightboxCurrentIndex = (lightboxCurrentIndex + 1) % lightboxImages.length;
-        }
-        updateLightboxContent();
-        touchStartXLightbox = null; // 重置触摸起点
-      }
-    }
-
-    // ======== 轮播图事件 ========
-    prevArrow.addEventListener('click', movePrev);
-    nextArrow.addEventListener('click', moveNext);
-    
-    // 触摸事件处理
-    carouselTrack.addEventListener('touchstart', handleTouchStart);
-    carouselTrack.addEventListener('touchmove', handleTouchMove);
-    carouselTrack.addEventListener('touchend', handleTouchEnd);
     
     function handleTouchStart(e) {
       touchStartX = e.touches[0].clientX;
@@ -1248,16 +958,87 @@
       }
     }
 
-    // 初始化轮播
+    // Initialize carousel
     initCarousel();
     
-    // 窗口大小调整
+    // Window resize handler
     window.addEventListener('resize', function() {
       updateSlidesToShow();
       updateSlideWidth();
       updateArrows();
       positionSlides();
     });
+  });
+  
+  // ======== LIGHTBOX FUNCTIONALITY ========
+  // Create lightbox image element if not exists
+  let lightboxImg = document.getElementById('lightboxImg');
+  if (!lightboxImg) {
+    lightboxImg = document.createElement('img');
+    lightboxImg.id = 'lightboxImg';
+    lightboxImg.className = 'lightbox-content';
+    document.getElementById('lightbox').appendChild(lightboxImg);
+  }
+  
+  // Add click handlers to all carousel images
+  const carouselImages = document.querySelectorAll('.carousel-image');
+  carouselImages.forEach(image => {
+    image.addEventListener('click', function(e) {
+      e.preventDefault();
+      const imageSrc = this.dataset.lightboxImage || this.src;
+      openLightbox(imageSrc);
+    });
+  });
+
+  // Lightbox functions
+  function openLightbox(imageSrc) {
+    const lightbox = document.getElementById('lightbox');
+    
+    // Set loading state
+    lightboxImg.src = '';
+    lightboxImg.alt = 'Loading...';
+    
+    // Create a new image to preload
+    const preloadImg = new Image();
+    preloadImg.onload = function() {
+      lightboxImg.src = imageSrc;
+      lightboxImg.alt = 'Enlarged image';
+      lightbox.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    };
+    preloadImg.src = imageSrc;
+  }
+
+  function closeLightbox() {
+    const lightbox = document.getElementById('lightbox');
+    lightbox.style.display = 'none';
+    document.body.style.overflow = 'auto';
+  }
+  
+  // Close button handler
+  const closeBtn = document.querySelector('.lightbox .close');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      closeLightbox();
+    });
+  }
+  
+  // Lightbox background click handler
+  const lightbox = document.getElementById('lightbox');
+  if (lightbox) {
+    lightbox.addEventListener('click', function(e) {
+      if (e.target === lightbox) {
+        closeLightbox();
+      }
+    });
+  }
+  
+  // Escape key handler
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeLightbox();
+    }
   });
 });
 </script>
