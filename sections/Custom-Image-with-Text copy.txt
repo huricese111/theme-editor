@@ -521,6 +521,48 @@
             "text_fr": "<p>Tous les points de fixation pour les garde-boue, la béquille, le porte-bagages et même le verrou du cadre sont présents mais intégrés de manière si discrète qu'ils ne nuisent pas au caractère sportif.</p>",
             "text_fi": "<p>Pyörästä löytyy kiinnityspisteet kaikelle tarvittavalle; lokasuojille, seisontatuelle, tavaratelineelle ja jopa runkolukolle – mutta ne ovat integroitu niin huomaamattomasti, että pyörän urheilullinen ilme säilyy tarvittaessa täysin.</p>"
           }
+        },
+        {
+          "type": "customslide",
+          "settings": {
+            "image": "shopify://shop_images/Frame_396.jpg",
+            "title": "Carbon frame",
+            "title_de": "Carbonrahmen",
+            "title_fr": "Cadre en carbone",
+            "description": "Light, stiff and robust: these characteristics of the Ultra's carbon frame make it the perfect partner for the high-performance drive unit.",
+            "description_de": "Leicht, steif und robust: Diese Eigenschaften des Carbonrahmens des Ultra machen ihn zum perfekten Partner für die leistungsstarke Antriebseinheit.",
+            "description_fr": "Léger, rigide et robuste : ces caractéristiques du cadre en carbone de l'Ultra en font le partenaire idéal pour le groupe motopropulseur hautes performances.",
+            "title_fi": "Hiilikuiturunko",
+            "description_fi": "Kevyt, jäykkä ja kestävä – nämä hiilikuituisen rungon ominaisuudet tekevät pyörästä täydellisen ja suorituskykyisen kumppanin maastoseikkailuihin."
+          }
+        },
+        {
+          "type": "customslide",
+          "settings": {
+            "image": "shopify://shop_images/Frame_397.jpg",
+            "title": "4-Link virtual pivot suspension system",
+            "title_de": "4-Link virtual pivot-federungssystem",
+            "title_fr": "Système de suspension à pivot virtuel à 4 bras",
+            "description": "This special system offers an excellent balance between traction and sensitivity as well as independence from braking influences. This guarantees maximum control even on the roughest trails.",
+            "description_de": "Dieses spezielle System bietet eine hervorragende Balance zwischen Traktion und Sensibilität sowie Unabhängigkeit von Bremseinflüssen. Dies garantiert maximale Kontrolle auch auf den härtesten Trails.",
+            "description_fr": "Ce système spécial offre un excellent rapport entre traction et sensibilité ainsi qu'une indépendance vis-à-vis des influences de freinage. Cela garantit un contrôle maximal même sur les sentiers les plus accidentés.",
+            "title_fi": "4-Linkkuinen Virtual Pivot -jousitusjärjestelmä",
+            "description_fi": "Tämä innovatiivinen jousitusjärjestelmä tarjoaa erinomaisen tasapainon pidon ja herkkyyden välillä, ja toimii jarrutustilanteissa loogisesti. Tämä takaa maksimaalisen pyörän hallinnan haastavimmillakin metsäreiteillä."
+          }
+        },
+        {
+          "type": "customslide",
+          "settings": {
+            "image": "shopify://shop_images/RockShox-Recon-Silver.png",
+            "title": "Rock Shox Recon Silver with 150 mm",
+            "title_de": "Rock Shox Recon Silver mit 150 mm",
+            "title_fr": "Rock Shox Recon Silver avec 150 mm",
+            "description": "With a lightweight magnesium crown, precise Motion Control damper and adjustable settings for air pressure and damping, this suspension fork offers plenty of customization and control on any trail.",
+            "description_de": "Mit einer leichten Magnesiumkrone, einem präzisen Motion Control-Dämpfer und anpassbaren Einstellungen für Luftdruck und Dämpfung bietet diese Federgabel zahlreiche Anpassungsmöglichkeiten und Kontrolle auf jedem Trail.",
+            "description_fr": "Avec une couronne légère en magnésium, un amortisseur Motion Control précis et des réglages réglables pour la pression d'air et l'amortissement, cette fourche à suspension offre beaucoup de personnalisation et de contrôle sur n'importe quel sentier.",
+            "title_fi": "Rock Shox Recon Silver 150 mm",
+            "description_fi": "Kevyt magnesiumkruunu, herkkätoiminen Motion Control-vaimennin sekä vaimennuksen tarkat säätömahdollisuudet tekevät tästä ilmajousitetusta haarukasta erinomaisen ja helposti hallittavan kumppanin kaikille poluille, haastavuudesta riippumatta."
+          }
         }
       ]
     }
