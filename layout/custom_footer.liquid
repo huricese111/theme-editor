@@ -1,0 +1,218 @@
+    {% schema %}
+{
+  "name": "Custom footer",
+  "settings": [
+     {
+      "type": "url",
+      "id": "jobrad_url",
+      "label": "jobrad_url"
+    },
+    {
+      "type": "url",
+      "id": "contact_url",
+      "label": "contact_url"
+    },
+    {
+      "type": "url",
+      "id": "test_ride_url",
+      "label": "test_ride_url"
+    },
+    {
+      "type": "url",
+      "id": "find_dealer_url",
+      "label": "find_dealer_url"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image_1",
+      "label": "Background Image for Column 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image_2",
+      "label": "Background Image for Column 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image_3",
+      "label": "Background Image for Column 3"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom footer",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+<style>
+    .custom-top-banner {
+        height: 80px;
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        place-content: center;
+        gap: 10px;
+        background-color: #ecf0f1;
+    }
+
+    .custom-top-banner img {
+        max-height: 80%;
+    }
+
+    .custom-footer-banner {
+        flex-wrap: nowrap;
+        height: 500px;
+        width: 100%;
+        display: flex;
+    }
+
+    .footer-left-column {
+        width: 33.333%;
+    }
+
+    .footer-right-column {
+        display: flex;
+        align-items: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        place-content: center;
+        width: 66.666%;
+    }
+
+    .custom-footer-banner-column1 {
+        background-repeat: no-repeat;
+        background-size: cover;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        place-content: center;
+        background-position: center top;
+    }
+
+    .custom-footer-banner-column2,
+    .custom-footer-banner-column3 {
+        background-repeat: no-repeat;
+        background-size: cover;
+        width: 50%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        place-content: center;
+        background-position: center top;
+    }
+
+    .custom-button {
+        color: #fff;
+        border-radius: 50px;
+        border-style: none;
+        text-align: center;
+        font-weight: 400;
+        display: block;
+        line-height: 1;
+        padding: 12px 20px;
+        outline: 0;
+        cursor: pointer;
+    }
+
+    .custom-button.orange {
+        background-color: #f2a112;
+    }
+
+    .custom-button.blue {
+        background-color: #2b7dde;
+    }
+
+    .custom-button.red {
+        background-color: #fa6959;
+    }
+
+    .partnertext {
+        font-size: 20px;
+        line-height: 20px;
+        margin: 0;
+    }
+
+    .jobradimg {
+        width: 200px;
+        height: auto;
+    }
+
+    .strongly-spaced-row,
+    .fully-spaced-row--medium {
+        margin-bottom: 0;
+    }
+
+
+    @media (max-width: 768px) {
+        .custom-top-banner {
+            flex-direction: column;
+            padding: 0;
+            height: 120px;
+        }
+
+        .custom-footer-banner {
+            height: 100%;
+            display: block;
+        }
+
+        .footer-left-column,
+        .footer-right-column {
+            width: 100%;
+        }
+
+        .custom-footer-banner-column1 {
+            height: 400px;
+            background-position: center center;
+            padding: 60px;
+        }
+
+        .custom-button.orange {
+            background-color: #f2a112;
+            font-size: 16px;
+            padding: 10px;
+        }
+
+        .custom-footer-banner-column2,
+        .custom-footer-banner-column3 {
+            height: 200px;
+        }
+    }
+</style>
+{% if localization.country.iso_code == 'DE' or localization.country.iso_code == 'AT' %}
+    <div class="custom-top-banner">
+      <a href="{{ section.settings.jobrad_url }}" style="color:black;display: flex;align-items: center;gap: 10px;height:100%;">
+        <span class="partnertext">{{ 'ebike.partner_of' | t }}</span>
+        <img class="jobradimg"
+             src="https://cdn.shopify.com/s/files/1/0560/0080/6985/files/Jobrad_logo_anthrazit_3x_994a1a2b-7182-4120-b161-1019ea96654c.png?v=1721918799" 
+             alt="{{ 'ebike.jobrad_logo' | t }}">
+  </a>
+    </div>
+{% endif %}
+
+<div class="custom-footer-banner">
+    <div class="footer-left-column">
+        <div class="custom-footer-banner-column1" 
+             style="background-image: url({{ section.settings.background_image_1 | img_url: '2048x2048' }});">
+            <a class="custom-button orange" href="{{ section.settings.contact_url }}">
+                {{ 'ebike.need_help_choosing_your_bike' | t }}
+            </a>
+        </div>
+    </div>
+    <div class="footer-right-column">
+        <div class="custom-footer-banner-column2" 
+             style="background-image: url({{ section.settings.background_image_2 | img_url: '2048x2048' }});">
+            <a class="custom-button blue" href="{{ section.settings.test_ride_url }}">
+                {{ 'ebike.book_a_test_ride' | t }}
+            </a>
+        </div>
+        <div class="custom-footer-banner-column3" 
+             style="background-image: url({{ section.settings.background_image_3 | img_url: '2048x2048' }});">
+            <a class="custom-button red" href="{{ section.settings.find_dealer_url }}">
+                {{ 'ebike.find_a_dealer' | t }}
+            </a>
+        </div>
+    </div>
+</div>

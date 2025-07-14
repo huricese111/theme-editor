@@ -1,12 +1,15 @@
+{% comment %} 简化的语言映射系统 {% endcomment %}
 {% assign current_lang = request.locale.iso_code %}
 
 {% if section.blocks != blank %}
   <div class="container container--no-max section-footer__row-container">
     <div class="section-footer__row section-footer__row--blocks" data-num-blocks="{{ section.blocks.size }}">
       {% for block in section.blocks %}
+        {% comment %} 为每个区块设置语言特定的内容 {% endcomment %}
         {% assign block_title = block.settings.title %}
         {% assign block_text = block.settings.text %}
 
+        {% comment %} 为支持多语言的区块覆盖默认内容 {% endcomment %}
         {% case current_lang %}
           {% when 'de' %}
             {% if block.settings.title_de != blank %}{% assign block_title = block.settings.title_de %}{% endif %}
@@ -366,7 +369,7 @@
       "type": "checkbox",
       "id": "show_powered_by",
       "label": "Show 'Powered by Shopify'",
-      "default": false
+      "default": true
     },
     {
       "type": "header",
@@ -438,7 +441,8 @@
           "type": "link_list",
           "id": "menu",
           "label": "Menu",
-          "info": "This menu won't show dropdown items"
+          "info": "This menu won't show dropdown items",
+          "default": "footer"
         }
       ]
     },
@@ -449,12 +453,14 @@
         {
           "type": "text",
           "id": "title",
-          "label": "Heading"
+          "label": "Heading",
+          "default": "Talk about your store"
         },
         {
           "type": "richtext",
           "id": "text",
-          "label": "Text"
+          "label": "Text",
+          "default": "<p>Use this text area to tell your customers about your brand and vision. You can change it in the theme editor.</p>"
         },
         {
           "type": "image_picker",
@@ -508,42 +514,54 @@
         {
           "type": "text",
           "id": "title",
-          "label": "Heading"
+          "label": "Heading",
+          "default": "Newsletter"
         },
         {
           "type": "text",
           "id": "title_de",
-          "label": "Heading DE"
+          "label": "Heading DE",
+          "default": "Abonnieren"
         },
         {
           "type": "text",
           "id": "title_fr",
-          "label": "Heading FR"
+          "label": "Heading FR",
+          "default": "Abonnez-vous"
         },
         {
           "type": "text",
           "id": "title_fi",
-          "label": "Heading FI"
+          "label": "Heading FI",
+          "default": "Uutiskirje"
         },
         {
           "type": "richtext",
           "id": "text",
-          "label": "Text"
+          "label": "Text",
+          "default": "<p>Sign up for exclusive offers, original stories, events and more.</p>"
         },
         {
           "type": "richtext",
           "id": "text_de",
-          "label": "Text DE"
+          "label": "Text DE",
+          "default": "<p>Melden Sie sich für exklusive Angebote, originelle Geschichten, Veranstaltungen und mehr an.</p>"
         },
         {
           "type": "richtext",
           "id": "text_fr",
-          "label": "Text FR"
+          "label": "Text FR",
+          "default": "<p>Enregistrez-vous pour recevoir des offres exclusives, des histoires originales, des événements et bien plus encore.</p>"
         },
         {
           "type": "richtext",
           "id": "text_fi",
-          "label": "Text FI"
+          "label": "Text FI",
+          "default": "<p>Tilaa sähköpostiisi eksklusiivisia tarjouksia, uutisia ja tarinoita, tietoa tapahtumista lähelläsi, ynnä muuta.</p>"
+        },
+        {
+          "type": "paragraph",
+          "content": "Customers who subscribe will have their email address added to the “accepts marketing” [customer list](/admin/customers?query=&accepts_marketing=1)"
         },
         {
           "type": "select",
@@ -551,8 +569,14 @@
           "label": "Button style",
           "default": "primary",
           "options": [
-            {"label": "Primary", "value": "primary"},
-            {"label": "Secondary", "value": "secondary"}
+            {
+              "label": "Primary",
+              "value": "primary"
+            },
+            {
+              "label": "Secondary",
+              "value": "secondary"
+            }
           ]
         },
         {
@@ -565,7 +589,7 @@
           "type": "checkbox",
           "id": "soc_icons_large",
           "label": "Use large social media icons",
-          "default": true
+          "default": false
         },
         {
           "type": "checkbox",
@@ -582,74 +606,13 @@
         {
           "type": "text",
           "id": "title",
-          "label": "Heading"
+          "label": "Heading",
+          "default": "Custom Liquid"
         },
         {
           "type": "liquid",
           "id": "code",
           "label": "Liquid code"
-        }
-      ]
-    }
-  ],
-  "presets": [
-    {
-      "name": "Default footer",
-      "category": "Footer",
-      "settings": {
-        "lower_menu": "footer-menu",
-        "show_powered_by": false,
-        "show_payment_icons": true,
-        "enable_country_selector": true,
-        "enable_language_selector": true
-      },
-      "blocks": [
-        {
-          "type": "menu",
-          "settings": {
-            "title": "About us",
-            "title_de": "Über uns",
-            "title_fr": "À propos de nous",
-            "title_fi": "Tietoa meistä",
-            "menu": "main-menu"
-          }
-        },
-        {
-          "type": "menu",
-          "settings": {
-            "title": "Explore",
-            "title_de": "Entdecke",
-            "title_fr": "Découvrir",
-            "title_fi": "Tutustu",
-            "menu": "footer-products"
-          }
-        },
-        {
-          "type": "menu",
-          "settings": {
-            "title": "Support",
-            "title_de": "Support",
-            "title_fr": "Soutien",
-            "title_fi": "Tuki",
-            "menu": "footer-2"
-          }
-        },
-        {
-          "type": "newsletter",
-          "settings": {
-            "title": "Newsletter",
-            "title_de": "Abonnieren",
-            "title_fr": "Abonnez-vous",
-            "title_fi": "Uutiskirje",
-            "text": "<p>Sign up for exclusive offers, original stories, events and more.</p>",
-            "text_de": "<p>Melden Sie sich für exklusive Angebote, originelle Geschichten, Veranstaltungen und mehr an.</p>",
-            "text_fr": "<p>Enregistrez-vous pour recevoir des offres exclusives, des histoires originales, des événements et bien plus encore.</p>",
-            "text_fi": "<p>Tilaa sähköpostiisi eksklusiivisia tarjouksia, uutisia ja tarinoita, tietoa tapahtumista lähelläsi, ynnä muuta.</p>",
-            "button_style": "primary",
-            "show_social_icons": true,
-            "soc_icons_large": true,
-            "show_app_icons": true
-          }
         }
       ]
     }
