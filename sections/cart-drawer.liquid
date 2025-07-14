@@ -98,12 +98,6 @@
         {%- endif -%}
       </div>
 
-       {% if section.settings.liquid_content != blank %}
-         <div class="cart-drawer__content-item">
-            {{ section.settings.liquid_content }}
-           </div>
-        {% endif %}
-
       <div data-merge="cross-sells" data-merge-cache="{% if cart.items == blank %}blank{% else %}{{ cart.items.first.product.id }}{% endif %}">
         {%- liquid
           if section.settings.enable_cross_sells
@@ -247,16 +241,9 @@
       <div class="checkout-buttons{% if cart.items == empty %} hidden{% endif %}" data-merge-attributes="checkout-buttons">
         {% if section.settings.enable_direct_cart %}
           <a href="{{ routes.root_url | append: '/checkout' | replace: '//', '/' }}" class="btn btn--large btn--wide">{{ 'cart.summary.checkout' | t }}</a>
-          {% if section.settings.liquid_content2 != blank %}
-         <div class="cart-drawer__content-item">
-            {{ section.settings.liquid_content2 }}
-           </div>
         {% endif %}
         {% else %}
           <a href="{{ routes.cart_url }}" class="btn btn--large btn--wide">{{ 'cart.summary.checkout' | t }}</a>
-           {% if section.settings.liquid_content2 != blank %}
-         <div class="cart-drawer__content-item">
-            {{ section.settings.liquid_content2 }}
            </div>
         {% endif %}
         {% endif %}
@@ -700,11 +687,6 @@
       "default": false
     },
     {
-          "type": "liquid",
-          "id": "liquid_content",
-          "label": "Custom Liquid Code",
-        },
-    {
       "type": "color",
       "id": "empty_color_background",
       "label": "Background"
@@ -719,11 +701,6 @@
       "id": "empty_color_text",
       "label": "Text"
     },
-     {
-          "type": "liquid",
-          "id": "liquid_content2",
-          "label": "Custom Liquid Code 2",
-        },
     {
       "type": "header",
       "content": "Recommended products"
