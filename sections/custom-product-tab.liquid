@@ -153,11 +153,11 @@
     font-weight: 600;
   }
 
-  .product-block{
+  .product-block {
     border: 1px solid #e0e0e0;
     border-radius: 8px;
-}
-  
+  }
+
   @media (min-width: 769px) {
     .tab-item {
       margin-right: 12px;
@@ -166,8 +166,8 @@
 
     .product-columns {
       display: grid;
-      grid-template-columns: repeat(2, 1fr); 
-      gap: 20px; 
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
       padding: 20px 0 0;
       margin: 0;
       overflow-x: visible;
@@ -176,12 +176,12 @@
     }
 
     .product-column {
-      flex: none; 
-      width: 100%; 
+      flex: none;
+      width: 100%;
       min-width: auto;
       margin-right: 0;
       scroll-snap-align: none;
-      margin-bottom: 0; 
+      margin-bottom: 0;
     }
 
     .product-column:last-child {
@@ -191,7 +191,7 @@
 
     .product-columns .product-column:hover {
       transform: translateY(-5px) !important;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
     }
   }
 
@@ -267,7 +267,8 @@
                 class="tab-item{% if forloop.first %} active{% endif %}"
                 role="tab"
                 data-target="{{ tab_id }}"
-                data-block-id="{{ block.id }}">
+                data-block-id="{{ block.id }}"
+              >
                 {% if request.locale.iso_code == 'de' and block.settings.title_de != blank %}
                   {{ block.settings.title_de }}
                 {% elsif request.locale.iso_code == 'fr' and block.settings.title_fr != blank %}
@@ -290,7 +291,8 @@
                 id="{{ tab_id }}"
                 class="tab-panel{% if forloop.first %} active{% endif %}"
                 role="tabpanel"
-                {{ block.shopify_attributes }}>
+                {{ block.shopify_attributes }}
+              >
                 {% if block.settings.product_source == 'collection' %}
                   {% assign target_collection = collections[block.settings.collection] %}
                   {% if target_collection and target_collection.products.size > 0 %}
@@ -385,266 +387,394 @@
   });
 </script>
 
+{% comment %} REMOVE THIS ENTIRE BLOCK IF ANOTHER SCHEMA BLOCK EXISTS ABOVE IN THE FILE {% endcomment %}
+
 {% schema %}
-  {
-    "name": "Custom Product Tabs New",
-    "settings": [
-      {
-        "type": "text",
-        "id": "title",
-        "label": "Title",
-        "default": "Related Products"
-      }, {
-        "type": "text",
-       "id": "title_de",
-        "label": "Title in German",
-        "default": "Ähnliche Modelle"
-      }, {
-        "type": "text",
-        "id": "title_fr",
-        "label": "Title in French",
-        "default": "Modèles associés"
-      }, {
-        "type": "text",
-        "id": "title_fi",
-        "label": "Title in Finland",
-        "default": "Liittyvät tuotteet"
-      }
-    ],
-    "blocks": [
-      {
-        "type": "tab",
-        "name": "Product Tab",
-        "settings": [
-          {
-            "type": "text",
-            "id": "title",
-            "label": "Tab Title (Default)",
-            "default": "New Tab"
-          },
-          {
-            "type": "text",
-            "id": "title_de",
-            "label": "Tab Title (German)"
-          },
-          {
-            "type": "text",
-            "id": "title_fr",
-            "label": "Tab Title (French)"
-          },
-          {
-            "type": "text",
-            "id": "title_fi",
-            "label": "Tab Title (Finland)"
-          }, {
-            "type": "radio",
-            "id": "product_source",
-            "label": "Product Source",
-            "options": [
-              {
-                "value": "collection",
-                "label": "Collection"
-              }, {
-                "value": "custom",
-                "label": "Custom Products"
-              }
-            ],
-            "default": "collection"
-          }, {
-            "type": "collection",
-            "id": "collection",
-            "label": "Select Collection"
-          }, {
-            "type": "product_list",
-            "id": "products",
-            "label": "Products",
-            "info": "Select products for this tab"
+{
+  "name": "Custom Product Tabs New",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Related Products"
+    },
+    {
+      "type": "text",
+      "id": "title_de",
+      "label": "Title in German",
+      "default": "Ähnliche Modelle"
+    },
+    {
+      "type": "text",
+      "id": "title_fr",
+      "label": "Title in French",
+      "default": "Modèles associés"
+    },
+    {
+      "type": "text",
+      "id": "title_fi",
+      "label": "Title in Finland",
+      "default": "Liittyvät tuotteet"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Product Tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Tab Title (Default)",
+          "default": "New Tab"
+        },
+        {
+          "type": "text",
+          "id": "title_de",
+          "label": "Tab Title (German)"
+        },
+        {
+          "type": "text",
+          "id": "title_fr",
+          "label": "Tab Title (French)"
+        },
+        {
+          "type": "text",
+          "id": "title_fi",
+          "label": "Tab Title (Finland)"
+        },
+        {
+          "type": "radio",
+          "id": "product_source",
+          "label": "Product Source",
+          "options": [
+            {
+              "value": "collection",
+              "label": "Collection"
+            },
+            {
+              "value": "custom",
+              "label": "Custom Products"
+            }
+          ],
+          "default": "collection"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Select Collection"
+        },
+        {
+          "type": "product_list",
+          "id": "products",
+          "label": "Products",
+          "info": "Select products for this tab"
+        }
+      ]
+    },
+    {
+      "type": "advertisement",
+      "name": "Advertisement",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "url",
+          "id": "ad_link",
+          "label": "Ad Link"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Background Image"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "Background Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "select",
+          "id": "background_position",
+          "label": "Background Position",
+          "options": [
+            {
+              "value": "top left",
+              "label": "Top Left"
+            },
+            {
+              "value": "top center",
+              "label": "Top Center"
+            },
+            {
+              "value": "top right",
+              "label": "Top Right"
+            },
+            {
+              "value": "center left",
+              "label": "Center Left"
+            },
+            {
+              "value": "center center",
+              "label": "Center"
+            },
+            {
+              "value": "center right",
+              "label": "Center Right"
+            },
+            {
+              "value": "bottom left",
+              "label": "Bottom Left"
+            },
+            {
+              "value": "bottom center",
+              "label": "Bottom Center"
+            },
+            {
+              "value": "bottom right",
+              "label": "Bottom Right"
+            }
+          ],
+          "default": "center center"
+        },
+        {
+          "type": "select",
+          "id": "background_size",
+          "label": "Background Size",
+          "options": [
+            {
+              "value": "cover",
+              "label": "Cover"
+            },
+            {
+              "value": "contain",
+              "label": "Contain"
+            },
+            {
+              "value": "auto",
+              "label": "Auto"
+            }
+          ],
+          "default": "cover"
+        },
+        {
+          "type": "select",
+          "id": "background_align_items",
+          "label": "Vertical Alignment",
+          "options": [
+            {
+              "value": "flex-start",
+              "label": "Top"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "flex-end",
+              "label": "Bottom"
+            }
+          ],
+          "default": "center"
+        },
+        {
+          "type": "range",
+          "id": "background_padding_top",
+          "label": "Top Padding",
+          "unit": "px",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "background_padding_left",
+          "label": "Left Padding",
+          "unit": "px",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "background_padding_right",
+          "label": "Right Padding",
+          "unit": "px",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "background_padding_bottom",
+          "label": "Bottom Padding",
+          "unit": "px",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "default": 20
+        },
+        {
+          "type": "richtext",
+          "id": "title_1",
+          "label": "Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "title_1_de",
+          "label": "Heading (DE)"
+        },
+        {
+          "type": "richtext",
+          "id": "title_1_fr",
+          "label": "Heading (FR)"
+        },
+        {
+          "type": "richtext",
+          "id": "title_1_fi",
+          "label": "Heading (FI)"
+        },
+        {
+          "type": "color",
+          "id": "heading_color_1",
+          "label": "Heading Color",
+          "default": "#000000"
+        },
+        {
+          "type": "range",
+          "id": "heading_size_1",
+          "label": "Heading Size",
+          "unit": "px",
+          "min": 12,
+          "max": 50,
+          "step": 1,
+          "default": 24
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button Label"
+        },
+        {
+          "type": "text",
+          "id": "button_label_de",
+          "label": "Button Label (DE)"
+        },
+        {
+          "type": "text",
+          "id": "button_label_fr",
+          "label": "Button Label (FR)"
+        },
+        {
+          "type": "text",
+          "id": "button_label_fi",
+          "label": "Button Label (FI)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Product Tabs New",
+      "category": "Custom",
+      "settings": {
+        "title": "Explore more HEPHA E-Bikes",
+        "title_de": "Entdecken Sie mehr HEPHA E-Bikes",
+        "title_fr": "Découvrez d'autres vélos électriques HEPHA",
+        "title_fi": "Tutustu lisää HEPHA E-Bike-malleihin"
+      },
+      "blocks": [
+        {
+          "type": "tab",
+          "settings": {
+            "title": "Sale",
+            "title_de": "Sale",
+            "title_fr": "Sale",
+            "title_fi": "Sale",
+            "product_source": "collection",
+            "collection": "trekking-7-my23",
+            "products": []
           }
-        ]
-      }, {
-        "type": "advertisement",
-        "name": "Advertisement",
-        "limit": 1,
-        "settings": [
-          {
-            "type": "url",
-            "id": "ad_link",
-            "label": "Ad Link"
-          },
-          {
-            "type": "image_picker",
-            "id": "image",
-            "label": "Background Image"
-          },
-          {
-            "type": "color",
-            "id": "background_color",
-            "label": "Background Color",
-            "default": "#ffffff"
-          },
-          {
-            "type": "select",
-            "id": "background_position",
-            "label": "Background Position",
-            "options": [
-              {
-                "value": "top left",
-                "label": "Top Left"
-              },
-              {
-                "value": "top center",
-                "label": "Top Center"
-              },
-              {
-                "value": "top right",
-                "label": "Top Right"
-              },
-              {
-                "value": "center left",
-                "label": "Center Left"
-              }, {
-                "value": "center center",
-                "label": "Center"
-              }, {
-                "value": "center right",
-                "label": "Center Right"
-              }, {
-                "value": "bottom left",
-                "label": "Bottom Left"
-              }, {
-                "value": "bottom center",
-                "label": "极Bottom Center"
-              }, {
-                "value": "bottom right",
-                "label": "Bottom Right"
-              }
-            ],
-            "default": "center center"
-          }, {
-            "type": "select",
-            "id": "background_size",
-            "label": "Background Size",
-            "options": [
-              {
-                "value": "cover",
-                "label": "Cover"
-              }, {
-                "value": "contain",
-                "label": "Contain"
-              }, {
-                "value": "auto",
-                "label": "Auto"
-              }
-            ],
-            "default": "cover"
-          }, {
-            "type": "select",
-            "id": "background_align_items",
-            "label": "Vertical Alignment",
-            "options": [
-              {
-                "value": "flex-start",
-                "label": "Top"
-              }, {
-                "value": "center",
-                "label": "Center"
-              }, {
-                "value": "flex-end",
-                "label": "Bottom"
-              }
-            ],
-            "default": "center"
-          }, {
-            "type": "range",
-            "id": "background_padding_top",
-            "label": "Top Padding",
-            "unit": "px",
-            "min": 0,
-            "max": 100,
-            "step": 5,
-            "default": 20
-          }, {
-            "type": "range",
-            "id": "background_padding_left",
-            "label": "Left Padding",
-            "unit": "px",
-            "min": 0,
-            "max": 100,
-            "step": 5,
-            "default": 20
-          }, {
-            "type": "range",
-            "id": "background_padding_right",
-            "label": "Right Padding",
-            "unit": "px",
-            "min": 0,
-            "max": 100,
-            "step": 5,
-            "default": 20
-          }, {
-            "type": "range",
-            "id": "background_padding_bottom",
-            "label": "Bottom Padding",
-            "unit": "px",
-            "min": 0,
-            "max": 100,
-            "step": 5,
-            "default": 20
-          }, {
-            "type": "richtext",
-            "id": "title_1",
-            "label": "Heading"
-          }, {
-            "type": "richtext",
-            "id": "title_1_de",
-            "label": "Heading (DE)"
-          }, {
-            "type": "richtext",
-            "id": "title_1_fr",
-            "label": "Heading (FR)"
-          }, {
-            "type": "richtext",
-            "id": "title_1_fi",
-            "label": "Heading (FI)"
-          }, {
-            "type": "color",
-            "id": "heading_color_1",
-            "label": "Heading Color",
-            "default": "#000000"
-          }, {
-            "type": "range",
-            "id": "heading_size_1",
-            "label": "Heading Size",
-            "unit": "px",
-            "min": 12,
-            "max": 50,
-            "step": 1,
-            "default": 24
-          }, {
-            "type": "text",
-            "id": "button_label",
-            "label": "Button Label"
-          }, {
-            "type": "text",
-            "id": "button_label_de",
-            "label": "Button Label (DE)"
-          }, {
-            "type": "text",
-            "id": "button_label_fr",
-            "label": "Button Label (FR)"
-          }, {
-            "type": "text",
-            "id": "button_label_fi",
-            "label": "Button Label (FI)"
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "title": "City",
+            "title_de": "City",
+            "title_fr": "City",
+            "title_fi": "City",
+            "product_source": "collection",
+            "collection": "city-e-bike",
+            "products": []
           }
-        ]
-      }
-    ],
-    "presets": [
-      {
-        "name": "Custom Product Tabs New",
-        "category": "Custom"
-      }
-    ]
-  }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "title": "Trekking",
+            "title_de": "Trekking",
+            "title_fr": "Trekking",
+            "title_fi": "Trekking",
+            "product_source": "collection",
+            "collection": "new-bike-2024",
+            "products": []
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "title": "Mountain",
+            "title_de": "Mountain",
+            "title_fr": "Mountain",
+            "title_fi": "Mountain",
+            "product_source": "collection",
+            "collection": "mountain-7-2024",
+            "products": []
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "title": "Mountain Carbon",
+            "title_de": "Mountain Carbon",
+            "title_fr": "Mountain Carbon",
+            "title_fi": "Mountain Carbon",
+            "product_source": "collection",
+            "collection": "mountain-7-carbon",
+            "products": []
+          }
+        },
+        {
+          "type": "advertisement",
+          "settings": {
+            "ad_link": "shopify://collections/hepha-ebikes",
+            "image": "shopify://shop_images/HEPHA-Trekking7_01_grey_7ff138ad-9f41-4981-b752-1bd80fee72c0.jpg",
+            "background_color": "#ffffff",
+            "background_position": "center center",
+            "background_size": "cover",
+            "background_align_items": "center",
+            "background_padding_top": 20,
+            "background_padding_left": 20,
+            "background_padding_right": 20,
+            "background_padding_bottom": 20,
+            "title_1": "<p>Not sure which E-Bike is right for you? Discover and compare our full range of E-Bikes to find the perfect model for your adventures.</p>",
+            "title_1_de": "<p>Nicht sicher, welches E-Bike das richtige für Sie ist? Entdecken und vergleichen Sie unser gesamtes Sortiment an E-Bikes, um das perfekte Modell für Ihre Abenteuer zu finden.</p>",
+            "title_1_fr": "<p>Vous n’êtes pas sûr de quel vélo électrique est fait pour vous ? Découvrez et comparez notre gamme complète de vélos électriques pour trouver le modèle parfait pour vos aventures.</p>",
+            "title_1_fi": "<p>Etkö ole varma, mikä sähköpyörämalli sopii sinulle? Tutustu ja vertaa koko valikoimaamme löytääksesi täydellisen pyörän omaan käyttötarkoitukseesi.</p>",
+            "heading_color_1": "#ffffff",
+            "heading_size_1": 18,
+            "button_label": "Explore all E-Bikes!",
+            "button_label_de": "Entdecke alle E-Bikes!",
+            "button_label_fr": "Découvrez tous modèles !",
+            "button_label_fi": "Tutki koko mallistoa!"
+          }
+        }
+      ]
+    }
+  ]
+}
 {% endschema %}
