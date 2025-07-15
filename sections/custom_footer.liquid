@@ -1,228 +1,361 @@
 {% schema %}
 {
-  "name": "Custom footer",
+  "name": "Custom footer block",
+  "max_blocks": 3,
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_jobrad_banner",
+      "label": "Show JobRad Banner",
+      "default": true
+    },
     {
       "type": "url",
       "id": "jobrad_url",
-      "label": "jobrad_url"
+      "label": "JobRad URL",
+      "default": "/pages/jobrad"
     },
     {
-      "type": "url",
-      "id": "contact_url",
-      "label": "contact_url"
+      "type": "text",
+      "id": "partner_text_en",
+      "label": "Partner Text (English)",
+      "default": "Partner of"
     },
     {
-      "type": "url",
-      "id": "test_ride_url",
-      "label": "test_ride_url"
+      "type": "text",
+      "id": "partner_text_de",
+      "label": "Partner Text (German)",
+      "default": "Partner von"
     },
     {
-      "type": "url",
-      "id": "find_dealer_url",
-      "label": "find_dealer_url"
+      "type": "text",
+      "id": "partner_text_fr",
+      "label": "Partner Text (French)",
+      "default": "Partenaire de"
     },
     {
-      "type": "image_picker",
-      "id": "background_image_1",
-      "label": "Background Image for Column 1"
-    },
+      "type": "text",
+      "id": "partner_text_fi",
+      "label": "Partner Text (Finnish)",
+      "default": "Kumppani"
+    }
+  ],
+  "blocks": [
     {
-      "type": "image_picker",
-      "id": "background_image_2",
-      "label": "Background Image for Column 2"
-    },
-    {
-      "type": "image_picker",
-      "id": "background_image_3",
-      "label": "Background Image for Column 3"
+      "type": "footer_block",
+      "name": "Footer Block",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "background_image",
+          "label": "Background Image",
+          "info": "Default: HEPHA-contact-form.jpg"
+        },
+        {
+          "type": "text",
+          "id": "button_text_en",
+          "label": "Button Text (English)",
+          "default": "Button text"
+        },
+        {
+          "type": "text",
+          "id": "button_text_de",
+          "label": "Button Text (German)",
+          "default": "Schaltflächentext"
+        },
+        {
+          "type": "text",
+          "id": "button_text_fr",
+          "label": "Button Text (French)",
+          "default": "Texte du bouton"
+        },
+        {
+          "type": "text",
+          "id": "button_text_fi",
+          "label": "Button Text (Finnish)",
+          "default": "Painiketeksti"
+        },
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "Button URL"
+        },
+        {
+          "type": "color",
+          "id": "button_color",
+          "label": "Button Color",
+          "default": "#f2a112"
+        }
+      ]
     }
   ],
   "presets": [
     {
-      "name": "Custom footer",
-      "category": "Custom"
+      "name": "Default Footer",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "footer_block",
+          "settings": {
+            "button_text_en": "Need help choosing?",
+            "button_text_de": "Brauchen Sie Hilfe?",
+            "button_text_fr": "Besoin d'aide?",
+            "button_text_fi": "Tarvitsetko apua?",
+            "button_color": "#f2a112",
+            "background_image": "shopify:\/\/shop_images\/HEPHA-contact-form.jpg"
+          }
+        },
+        {
+          "type": "footer_block",
+          "ettings": {
+            "button_text_en": "Book a test ride",
+            "button_text_de": "Testfahrt buchen",
+            "button_text_fr": "Réserver un essai",
+            "button_text_fi": "Varaa koeajo",
+            "button_color": "#2b7dde",
+            "background_image": "shopify:\/\/shop_images\/HEPHA_Test_Ride.jpg"
+          }
+        },
+        {
+          "type": "footer_block",
+          "settings": {
+            "button_text_en": "Find a dealer",
+            "button_text_de": "Händler finden",
+            "button_text_fr": "Trouver un revendeur",
+            "button_text_fi": "Etsi lähin jälleenmyyjäsi",
+            "button_color": "#fa6959",
+            "background_image": "shopify:\/\/shop_images\/RUD0599_1.jpg"
+          }
+        }
+      ],
+      "settings": {
+        "partner_text_en": "Partner of",
+        "partner_text_de": "Partner von",
+        "partner_text_fr": "Partenaire de",
+        "partner_text_fi": "Kumppani",
+        "jobrad_url": "shopify:\/\/pages\/jobrad"
+      }
     }
   ]
 }
 {% endschema %}
+
 <style>
+  :root {
+    --banner-height: 500px;
+    --mobile-banner-height: 400px; /* 增加高度 */
+  }
+  
+  .custom-footer-container {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+  }
+
   .custom-top-banner {
     height: 80px;
     display: flex;
     align-items: center;
-    flex-direction: row;
-    place-content: center;
+    justify-content: center;
     gap: 10px;
     background-color: #ecf0f1;
+    padding: 0 20px;
+    width: 100%;
   }
 
-  .custom-top-banner img {
-    max-height: 80%;
+  .jobrad-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: inherit;
   }
 
-  .custom-footer-banner {
+  .partnertext {
+    font-size: clamp(16px, 2vw, 20px);
+    margin: 0;
+    font-weight: 500;
+    color: #333;
+  }
+
+  .jobradimg {
+    width: min(200px, 100%);
+    height: auto;
+    transition: transform 0.3s ease;
+  }
+
+  .jobradimg:hover {
+    transform: scale(1.05);
+  }
+
+  .footer-blocks-wrapper {
+    display: flex;
     flex-wrap: nowrap;
-    height: 500px;
+    height: var(--banner-height);
     width: 100%;
-    display: flex;
   }
 
-  .footer-left-column {
-    width: 33.333%;
-  }
-
-  .footer-right-column {
+  .footer-block {
+    flex: 1;
     display: flex;
     align-items: center;
+    justify-content: center;
     background-repeat: no-repeat;
     background-size: cover;
-    place-content: center;
-    width: 66.666%;
+    background-position: center;
+    background-color: #f5f5f5;
+    position: relative;
+    overflow: hidden;
   }
 
-  .custom-footer-banner-column1 {
-    background-repeat: no-repeat;
-    background-size: cover;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    place-content: center;
-    background-position: center top;
+  .footer-block::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 1;
   }
 
-  .custom-footer-banner-column2,
-  .custom-footer-banner-column3 {
-    background-repeat: no-repeat;
-    background-size: cover;
-    width: 50%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    place-content: center;
-    background-position: center top;
+  .block-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 20px;
   }
 
   .custom-button {
     color: #fff;
     border-radius: 50px;
-    border-style: none;
+    border: none;
     text-align: center;
-    font-weight: 400;
-    display: block;
-    line-height: 1;
-    padding: 12px 20px;
-    outline: 0;
+    font-weight: 500;
+    display: inline-block;
+    line-height: 1.2;
+    padding: 15px 30px;
     cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    position: relative;
+    z-index: 3;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-size: 18px;
+    white-space: nowrap;
+    min-width: 200px;
   }
 
-  .custom-button.orange {
-    background-color: #f2a112;
-  }
-
-  .custom-button.blue {
-    background-color: #2b7dde;
-  }
-
-  .custom-button.red {
-    background-color: #fa6959;
-  }
-
-  .partnertext {
-    font-size: 20px;
-    line-height: 20px;
-    margin: 0;
-  }
-
-  .jobradimg {
-    width: 200px;
-    height: auto;
-  }
-
-  .strongly-spaced-row,
-  .fully-spaced-row--medium {
-    margin-bottom: 0;
+  .custom-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+    opacity: 0.95;
   }
 
   @media (max-width: 768px) {
     .custom-top-banner {
+      flex-direction: row;
+      height: auto;
+      padding: 15px;
+    }
+
+    .footer-blocks-wrapper {
+      display: flex;
       flex-direction: column;
-      padding: 0;
-      height: 120px;
+      height: auto;
     }
 
-    .custom-footer-banner {
-      height: 100%;
-      display: block;
-    }
-
-    .footer-left-column,
-    .footer-right-column {
+    .footer-block {
       width: 100%;
+      height: var(--mobile-banner-height);
     }
 
-    .custom-footer-banner-column1 {
-      height: 400px;
-      background-position: center center;
-      padding: 60px;
+    .footer-blocks-wrapper.has-3-blocks {
+      display: grid;
+      grid-template-areas: 
+        "first first"
+        "second third";
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: var(--mobile-banner-height) var(--mobile-banner-height);
     }
-
-    .custom-button.orange {
-      background-color: #f2a112;
-      font-size: 16px;
-      padding: 10px;
+    
+    .footer-blocks-wrapper.has-3-blocks > .footer-block:nth-child(1) {
+      grid-area: first;
+      height: var(--mobile-banner-height);
     }
-
-    .custom-footer-banner-column2,
-    .custom-footer-banner-column3 {
-      height: 200px;
+    
+    .footer-blocks-wrapper.has-3-blocks > .footer-block:nth-child(2) {
+      grid-area: second;
+      height: var(--mobile-banner-height);
+    }
+    
+    .footer-blocks-wrapper.has-3-blocks > .footer-block:nth-child(3) {
+      grid-area: third;
+      height: var(--mobile-banner-height);
+    }
+    
+    .custom-button {
+      font-size: clamp(16px, 4vw, 18px);
+      padding: 15px 25px;
+      min-width: 180px;
     }
   }
 </style>
-{% if localization.country.iso_code == 'DE' or localization.country.iso_code == 'AT' %}
-  <div class="custom-top-banner">
-    <a
-      href="{{ section.settings.jobrad_url }}"
-      style="color:black;display: flex;align-items: center;gap: 10px;height:100%;"
-    >
-      <span class="partnertext">{{ 'ebike.partner_of' | t }}</span>
-      <img
-        class="jobradimg"
-        src="https://cdn.shopify.com/s/files/1/0560/0080/6985/files/Jobrad_logo_anthrazit_3x_994a1a2b-7182-4120-b161-1019ea96654c.png?v=1721918799"
-        alt="{{ 'ebike.jobrad_logo' | t }}"
-      >
-    </a>
-  </div>
-{% endif %}
 
-<div class="custom-footer-banner">
-  <div class="footer-left-column">
-    <div
-      class="custom-footer-banner-column1"
-      style="background-image: url({{ section.settings.background_image_1 | img_url: '2048x2048' }});"
-    >
-      <a class="custom-button orange" href="{{ section.settings.contact_url }}">
-        {{ 'ebike.need_help_choosing_your_bike' | t }}
+<div class="custom-footer-container">
+  {% if section.settings.show_jobrad_banner and localization.country.iso_code == 'DE' or localization.country.iso_code == 'AT' %}
+    <div class="custom-top-banner">
+      <a href="{{ section.settings.jobrad_url }}" class="jobrad-link">
+        <span class="partnertext">
+          {% case request.locale.iso_code %}
+            {% when 'de' %}{{ section.settings.partner_text_de | default: "Partner von" }}
+            {% when 'fr' %}{{ section.settings.partner_text_fr | default: "Partenaire de" }}
+            {% when 'fi' %}{{ section.settings.partner_text_fi | default: "Kumppani" }}
+            {% else %}{{ section.settings.partner_text_en | default: "Partner of" }}
+          {% endcase %}
+        </span>
       </a>
     </div>
-  </div>
-  <div class="footer-right-column">
-    <div
-      class="custom-footer-banner-column2"
-      style="background-image: url({{ section.settings.background_image_2 | img_url: '2048x2048' }});"
-    >
-      <a class="custom-button blue" href="{{ section.settings.test_ride_url }}">
-        {{ 'ebike.book_a_test_ride' | t }}
-      </a>
-    </div>
-    <div
-      class="custom-footer-banner-column3"
-      style="background-image: url({{ section.settings.background_image_3 | img_url: '2048x2048' }});"
-    >
-      <a class="custom-button red" href="{{ section.settings.find_dealer_url }}">
-        {{ 'ebike.find_a_dealer' | t }}
-      </a>
-    </div>
+  {% endif %}
+
+  <div class="footer-blocks-wrapper {% if section.blocks.size == 3 %}has-3-blocks{% endif %}">
+    {% for block in section.blocks %}
+      <div class="footer-block" 
+           {% if block.settings.background_image %}
+             style="background-image: url({{ block.settings.background_image | img_url: '800x' }});"
+           {% else %}
+             {% comment %} 默认图片设置 {% endcomment %}
+             {% if forloop.index == 1 %}
+               style="background-image: url({{ 'HEPHA-contact-form.jpg' | asset_url }});"
+             {% elsif forloop.index == 2 %}
+               style="background-image: url({{ 'HEPHA_Test_Ride.jpg' | asset_url }});"
+             {% elsif forloop.index == 3 %}
+               style="background-image: url({{ 'RUD0599_1.jpg' | asset_url }});"
+             {% endif %}
+           {% endif %}>
+        <div class="block-content">
+          <a class="custom-button" 
+             href="{{ block.settings.button_url }}"
+             style="background-color: {{ block.settings.button_color }};"
+             aria-label="
+               {% case request.locale.iso_code %}
+                 {% when 'de' %}{{ block.settings.button_text_de }}
+                 {% when 'fr' %}{{ block.settings.button_text_fr }}
+                 {% when 'fi' %}{{ block.settings.button_text_fi }}
+                 {% else %}{{ block.settings.button_text_en }}
+               {% endcase %}
+             ">
+            {% case request.locale.iso_code %}
+              {% when 'de' %}{{ block.settings.button_text_de }}
+              {% when 'fr' %}{{ block.settings.button_text_fr }}
+              {% when 'fi' %}{{ block.settings.button_text_fi }}
+              {% else %}{{ block.settings.button_text_en }}
+            {% endcase %}
+          </a>
+        </div>
+      </div>
+    {% endfor %}
   </div>
 </div>

@@ -1,4 +1,14 @@
 <style>
+  .specification_simple_text {
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    text-align: left;
+    line-height: 1.3;
+    margin: 8px 0;
+    font-size: 14px;
+    color: #555;
+}
   .spec-row {
     display: flex;
     gap: 10px;
@@ -14,6 +24,7 @@
   dl {
     margin-inline-start: 0;
   }
+  
 </style>
 
 {%- liquid
@@ -41,7 +52,7 @@
 -%}
 
 {%- if motor_value or battery_value -%}
-  <dl class="specification_simple mt-30 mb-30">
+  <dl class="specification_simple_text mt-30 mb-30">
     {%- if motor_value -%}
       <div class="spec-row">
         <dt>{{ motor_label }}:</dt>

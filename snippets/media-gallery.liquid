@@ -1,9 +1,9 @@
 <style>
   .product-info .product-column-left {
     background-color: #f9f9f9;
-}
+  }
 
-.media-gallery__inner {
+  .media-gallery__inner {
     height: 100%;
   }
 
@@ -14,7 +14,7 @@
   .slider__item {
     transform: none !important;
   }
-  
+
   .thumbnails {
     position: absolute;
     bottom: 10px;
@@ -23,7 +23,7 @@
     z-index: 10;
     padding: 0 10px;
   }
-  
+
   .thumbnails .slider {
     max-width: 100%;
     overflow-x: auto;
@@ -34,6 +34,12 @@
       width: 100%;
     }
   }
+
+  @media (max-width: 767.98px) {
+    .media-gallery .main-image {
+        margin: 0;
+    }
+}
 </style>
 
 <media-gallery
