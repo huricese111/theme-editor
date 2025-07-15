@@ -31,26 +31,10 @@
       "default": "row"
     },
     {
-      "type": "radio",
-      "id": "source",
-      "label": "Select Playlist Source",
-      "options": [
-        {
-          "value": "metafield",
-          "label": "From Product Metafield"
-        },
-        {
-          "value": "manual",
-          "label": "Manually Enter Playlist ID"
-        }
-      ],
-      "default": "metafield"
-    },
-    {
       "type": "text",
-      "id": "manual_playlist_id",
-      "label": "Manual Playlist ID",
-      "info": "Enter the playlist ID"
+      "id": "playlist_id",
+      "label": "Playlist ID",
+      "info": "Enter the Firework playlist ID"
     }
   ],
   "presets": [
@@ -62,20 +46,32 @@
 }
 {% endschema %}
 
-{% if section.settings.source == 'manual' %}
-  {% assign playlist_id = section.settings.manual_playlist_id %}
-{% else %}
-  {% assign playlist_id = product.metafields.custom.firework_playlist_id %}
-{% endif %}
+{% assign playlist_id = section.settings.playlist_id %}
 {% assign mode = section.settings.mode %}
 
 <style>
   .videoblock {
     padding: 100px 60px;
+    transition: height 0.3s ease, padding 0.3s ease;
+  }
+  
+  .mode-pinned {
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  fw-storyblock[mode="pinned"] {
+    position: fixed;
+    z-index: 1000;
+    bottom: 20px;
+    right: 20px;
+    width: 300px;
+    height: 200px;
   }
 </style>
 
-<div class="videoblock">
+<div class="videoblock {% if mode == 'pinned' %}mode-pinned{% endif %}">
   <script async src="//asset.fwcdn3.com/js/storyblock.js"></script>
 
   {% if mode == 'default' %}
@@ -87,7 +83,6 @@
     </fw-storyblock>
 
   {% elsif mode == 'pinned' %}
-    <script async src="//asset.fwcdn3.com/js/storyblock.js"></script>
     <fw-storyblock
       channel="hepha"
       playlist="{{ playlist_id }}"
