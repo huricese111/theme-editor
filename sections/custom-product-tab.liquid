@@ -5,6 +5,10 @@
     align-items: flex-start;
   }
 
+  .custom-tabs{
+     display: flex;
+  }
+
   .ads-block {
     flex: 0 0 auto;
     width: 300px;
@@ -158,6 +162,7 @@
     border-radius: 8px;
   }
 
+
   @media (min-width: 769px) {
     .tab-item {
       margin-right: 12px;
@@ -196,6 +201,15 @@
   }
 
   @media (max-width: 768px) {
+    .tab-content-area {
+      width: 100vw;
+    }
+
+    .custom-tabs{
+      flex-wrap: wrap;
+    padding: 20px;
+    }
+
     .explore-title {
       font-size: 24px;
       margin-bottom: 30px;
@@ -208,9 +222,10 @@
 
     .tab-item {
       display: inline-block;
-      margin-bottom: 0;
-      font-size: 16px;
-      padding: 8px 20px;
+        margin-bottom: 0;
+        font-size: 16px;
+        padding: 14px 20px;
+        line-height: 1;
     }
 
     .product-slider {
@@ -221,6 +236,22 @@
       overflow-x: auto;
       scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch;
+      gap: 10px;
+    }
+
+    .scrolling-hint {
+      opacity: 1;
+      animation: fadeHint 1.5s ease infinite;
+    }
+
+    @keyframes fadeHint {
+      0,
+      100% {
+        opacity: 0.6;
+      }
+      50% {
+        opacity: 0.9;
+      }
     }
 
     .ads-block {
@@ -237,6 +268,10 @@
     .orderbutton {
       padding: 8px 15px;
       font-size: 14px;
+    }
+
+    .product-block{
+      min-width: 300px;
     }
   }
 </style>
@@ -259,7 +294,7 @@
   <div class="flex-container">
     <div class="tab-content-section">
       <div class="tab-area">
-        <div class="custom-taps" role="tablist">
+        <div class="custom-tabs" role="tablist">
           {% for block in section.blocks %}
             {% if block.type == 'tab' %}
               {% assign tab_id = 'tab-' | append: block.id %}
@@ -267,8 +302,7 @@
                 class="tab-item{% if forloop.first %} active{% endif %}"
                 role="tab"
                 data-target="{{ tab_id }}"
-                data-block-id="{{ block.id }}"
-              >
+                data-block-id="{{ block.id }}">
                 {% if request.locale.iso_code == 'de' and block.settings.title_de != blank %}
                   {{ block.settings.title_de }}
                 {% elsif request.locale.iso_code == 'fr' and block.settings.title_fr != blank %}
@@ -291,8 +325,7 @@
                 id="{{ tab_id }}"
                 class="tab-panel{% if forloop.first %} active{% endif %}"
                 role="tabpanel"
-                {{ block.shopify_attributes }}
-              >
+                {{ block.shopify_attributes }}>
                 {% if block.settings.product_source == 'collection' %}
                   {% assign target_collection = collections[block.settings.collection] %}
                   {% if target_collection and target_collection.products.size > 0 %}
@@ -334,7 +367,7 @@
             , background_padding_left: block.settings.background_padding_left
             , background_padding_right: block.settings.background_padding_right
             , background_padding_bottom: block.settings.background_padding_bottom
-            , title_1: block.settings.title_极
+            , title_1: block.settings.title_1
             , heading_color_1: block.settings.heading_color_1
             , heading_size_1: block.settings.heading_size_1
             , title_1_de: block.settings.title_1_de
@@ -354,7 +387,7 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    const tabContainer = document.querySelector('.custom-taps');
+    const tabContainer = document.querySelector('.custom-tabs');
     if (tabContainer) {
       tabContainer.addEventListener('click', function (event) {
         const tabItem = event.target.closest('.tab-item');
@@ -372,6 +405,21 @@
       });
     }
 
+    if ('ontouchstart' in window) {
+      const sliders = document.querySelectorAll('.product-columns');
+
+      sliders.forEach((slider) => {
+        const scrollHint = slider.previousElementSibling;
+
+        slider.addEventListener('scroll', () => {
+          if (slider.scrollLeft > 20) {
+            if (scrollHint) scrollHint.style.opacity = 0;
+          } else {
+            if (scrollHint) scrollHint.style.opacity = 1;
+          }
+        });
+      });
+    }
     const productColumns = document.querySelectorAll('.product-column');
     productColumns.forEach((column) => {
       column.addEventListener('mouseenter', function () {
@@ -386,8 +434,6 @@
     });
   });
 </script>
-
-{% comment %} REMOVE THIS ENTIRE BLOCK IF ANOTHER SCHEMA BLOCK EXISTS ABOVE IN THE FILE {% endcomment %}
 
 {% schema %}
 {
