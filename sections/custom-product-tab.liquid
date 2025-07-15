@@ -5,8 +5,8 @@
     align-items: flex-start;
   }
 
-  .custom-tabs{
-     display: flex;
+  .custom-tabs {
+    display: flex;
   }
 
   .ads-block {
@@ -165,7 +165,7 @@
   .product-block__image .theme-img {
     object-position: var(--product-block-crop-align) center;
     padding: 10px;
-}
+  }
 
   @media (min-width: 769px) {
     .tab-item {
@@ -209,9 +209,9 @@
       width: 100vw;
     }
 
-    .custom-tabs{
+    .custom-tabs {
       flex-wrap: wrap;
-    padding: 20px;
+      padding: 20px;
     }
 
     .explore-title {
@@ -226,10 +226,10 @@
 
     .tab-item {
       display: inline-block;
-        margin-bottom: 0;
-        font-size: 16px;
-        padding: 14px 20px;
-        line-height: 1;
+      margin-bottom: 0;
+      font-size: 16px;
+      padding: 14px 20px;
+      line-height: 1;
     }
 
     .product-slider {
@@ -274,7 +274,7 @@
       font-size: 14px;
     }
 
-    .product-block{
+    .product-block {
       min-width: 300px;
     }
   }
@@ -306,7 +306,8 @@
                 class="tab-item{% if forloop.first %} active{% endif %}"
                 role="tab"
                 data-target="{{ tab_id }}"
-                data-block-id="{{ block.id }}">
+                data-block-id="{{ block.id }}"
+              >
                 {% if request.locale.iso_code == 'de' and block.settings.title_de != blank %}
                   {{ block.settings.title_de }}
                 {% elsif request.locale.iso_code == 'fr' and block.settings.title_fr != blank %}
@@ -329,14 +330,15 @@
                 id="{{ tab_id }}"
                 class="tab-panel{% if forloop.first %} active{% endif %}"
                 role="tabpanel"
-                {{ block.shopify_attributes }}>
+                {{ block.shopify_attributes }}
+              >
                 {% if block.settings.product_source == 'collection' %}
                   {% assign target_collection = collections[block.settings.collection] %}
                   {% if target_collection and target_collection.products.size > 0 %}
                     <div class="product-slider">
                       <div class="product-columns">
                         {% for product in target_collection.products %}
-                          {% include 'product-block' with product: product %}
+                          {% render 'product-block' with product: product %}
                         {% endfor %}
                       </div>
                     </div>
@@ -345,7 +347,7 @@
                   <div class="product-slider">
                     <div class="product-columns">
                       {% for product in block.settings.products %}
-                        {% include 'product-block' with product: product %}
+                        {% render 'product-block' with product: product %}
                       {% endfor %}
                     </div>
                   </div>

@@ -134,7 +134,7 @@
   .sub-tabs-group.active {
     display: block;
   }
-.banner-header-container {
+  .banner-header-container {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -144,7 +144,7 @@
     z-index: 10;
     flex-wrap: wrap;
   }
-  
+
   .banner-header-left {
     flex: 1;
     min-width: 200px;
@@ -152,7 +152,7 @@
     padding-right: 15px;
     z-index: 11;
   }
-  
+
   .banner-title {
     font-size: 24px;
     font-weight: bold;
@@ -160,18 +160,18 @@
     line-height: 1.2;
     color: #000000;
   }
-  
+
   .banner-description {
     font-size: 16px;
     line-height: 1.4;
     color: #000000;
   }
-  
+
   .banner-header-right {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    flex-shrink: 0; 
+    flex-shrink: 0;
   }
 
   @media (max-width: 980px) and (min-width: 781px) {
@@ -179,21 +179,21 @@
       flex-direction: row;
       flex-wrap: nowrap;
     }
-    
+
     .banner-header-left {
       max-width: 50%;
     }
-    
+
     .banner-header-right {
       min-width: 45%;
       flex-grow: 0;
       max-width: 45%;
     }
-    
+
     .banner-tabs {
       justify-content: flex-end;
     }
-    
+
     .sub-tabs-container {
       justify-content: flex-end;
     }
@@ -202,51 +202,51 @@
   @media (max-width: 780px) {
     .banner-header-container {
       flex-direction: column;
-      align-items: center; 
-      text-align: center; 
+      align-items: center;
+      text-align: center;
     }
-    
+
     .banner-header-left {
       max-width: 100%;
       padding-right: 0;
-      margin-bottom: 25px; 
+      margin-bottom: 25px;
       flex: 0 0 auto;
-      width: 90%; 
+      width: 90%;
     }
-    
+
     .banner-header-right {
-      width: 90%; 
-      align-items: center; 
+      width: 90%;
+      align-items: center;
       flex: 0 0 auto;
     }
-    
+
     .sub-tabs-container {
-      justify-content: center; 
+      justify-content: center;
     }
-    
+
     .banner-tabs {
-      justify-content: center; 
+      justify-content: center;
     }
-    
+
     .banner-title {
-      font-size: 22px; 
+      font-size: 22px;
     }
-    
+
     .banner-description {
       font-size: 16px;
     }
-    
+
     .banner-tab {
       margin-left: 0;
       margin-right: 5px;
     }
-    
+
     .sub-tab {
       margin-left: 0;
       margin-right: 5px;
     }
   }
-  
+
   .hidden {
     display: none !important;
   }
@@ -269,7 +269,9 @@
         <h2 class="banner-title">{{ title_value }}</h2>
       {% endif %}
 
-      {% assign description_value = block.settings[description_key] | default: block.settings[default_description_key] %}
+      {% assign description_value = block.settings[description_key]
+        | default: block.settings[default_description_key]
+      %}
       {% if description_value != blank %}
         <div class="banner-description">{{ description_value }}</div>
       {% endif %}

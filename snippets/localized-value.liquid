@@ -1,0 +1,9 @@
+{%- assign localized_field = field | append: '_' | append: locale_code -%}
+{%- assign base_field_value = block.settings[field] -%}
+{%- assign localized_value = block.settings[localized_field] -%}
+
+{%- if localized_value != blank -%}
+  {{ localized_value }}
+{%- else -%}
+  {{ base_field_value }}
+{%- endif -%}

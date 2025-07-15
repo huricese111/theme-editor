@@ -13,16 +13,16 @@
     assign text_setting = text_setting | append: '_fr'
     assign currentprice_setting = currentprice_setting | append: '_fr'
     assign wasprice_setting = wasprice_setting | append: '_fr'
-    assign learn_more_text = 'En savoir plus' 
+    assign learn_more_text = 'En savoir plus'
   elsif lang_map == 'fi'
     assign text_setting = text_setting | append: '_fi'
     assign currentprice_setting = currentprice_setting | append: '_fi'
     assign wasprice_setting = wasprice_setting | append: '_fi'
-    assign learn_more_text = 'Lue lisää' 
+    assign learn_more_text = 'Lue lisää'
   else
-    assign learn_more_text = 'Learn more' 
+    assign learn_more_text = 'Learn more'
   endif
-  
+
   assign text_content = block.settings[text_setting] | escape
   assign text_length = text_content | size
 %}
@@ -62,12 +62,12 @@
     align-items: center;
     gap: 20px;
   }
-  
+
   .product-promo-left {
     flex: 1;
     min-width: 0;
   }
-  
+
   .product-promo-left.long-text {
     font-size: 0.9em;
     line-height: 1.35;
@@ -88,13 +88,13 @@
     align-items: center;
     flex-wrap: wrap;
   }
-  
+
   .product-current-price {
     font-weight: bold;
     font-size: 1.25em;
     color: #d32f2f;
   }
-  
+
   .product-original-price {
     font-size: 1em;
     text-decoration: line-through;
@@ -117,43 +117,43 @@
     min-height: 40px;
     flex-shrink: 0;
   }
-  
+
   .product-promo-button:hover {
     background-color: #0056b3;
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
-  
+
   @media (max-width: 768px) {
     .product-promo-container {
       flex-direction: column;
       align-items: stretch;
       gap: 15px;
     }
-    
+
     .product-promo-right {
       width: 100%;
       text-align: center;
     }
-    
+
     .product-promo-button {
       width: 100%;
       margin-top: 0;
       padding: 10px;
     }
-    
+
     .product-promo-left.long-text {
       font-size: 0.95em;
     }
   }
-  
+
   @media (max-width: 480px) {
     .product-price-container {
       flex-direction: column;
       align-items: flex-start;
       gap: 5px;
     }
-    
+
     .product-promo-text {
       font-size: 0.95em;
     }

@@ -8,28 +8,29 @@
 {% endcapture %}
 
 {% assign is_absolute = false %}
-{% if block.settings.position_mode == "absolute" %}
+{% if block.settings.position_mode == 'absolute' %}
   {% assign is_absolute = true %}
 {% endif %}
 
 {% assign is_custom = false %}
-{% if is_absolute and block.settings.position == "custom" %}
+{% if is_absolute and block.settings.position == 'custom' %}
   {% assign is_custom = true %}
 {% endif %}
 
-{% assign position_class = "" %}
+{% assign position_class = '' %}
 {% if is_absolute %}
-  {% assign position_class = "position-" | append: block.settings.position %}
+  {% assign position_class = 'position-' | append: block.settings.position %}
 {% endif %}
 
-{% assign text_align_class = "text-align-" | append: block.settings.text_align %}
+{% assign text_align_class = 'text-align-' | append: block.settings.text_align %}
 
-<div class="heading-block {{ position_class }} {{ text_align_class }} {% if is_absolute %}absolute-position{% else %}relative-position{% endif %}" 
-     style="
-       {% if is_custom %}transform: translate({{ block.settings.offset_x }}%, {{ block.settings.offset_y }}%);{% endif %}
-       margin: {{ block.settings.margin_top }}px {{ block.settings.margin_right }}px {{ block.settings.margin_bottom }}px {{ block.settings.margin_left }}px;
-     ">
-
+<div
+  class="heading-block {{ position_class }} {{ text_align_class }} {% if is_absolute %}absolute-position{% else %}relative-position{% endif %}"
+  style="
+    {% if is_custom %}transform: translate({{ block.settings.offset_x }}%, {{ block.settings.offset_y }}%);{% endif %}
+    margin: {{ block.settings.margin_top }}px {{ block.settings.margin_right }}px {{ block.settings.margin_bottom }}px {{ block.settings.margin_left }}px;
+  "
+>
   {% if block.settings.use_h1 %}
     <h1 class="majortitle in-content" data-format-number>
       {{ block_title | escape }}

@@ -10,21 +10,21 @@
           {%- endif -%}
         </span>
         {% if current_variant.compare_at_price > current_variant.price %}
-          <span class="was-price compare-price-red-line theme-money">{{ current_variant.compare_at_price | money }}</span>
+          <span class="was-price compare-price-red-line theme-money">
+            {{- current_variant.compare_at_price | money -}}
+          </span>
         {% endif %}
       </div>
-      {% render 'unit-price'
-        , variant: current_variant %}
+      {% render 'unit-price', variant: current_variant %}
     </div>
   </div>
   <div class="price-descriptors">
-    {%- form 'product'
-      , product
-      , id: product_form_installments_id -%}
+    {%- form 'product', product, id: product_form_installments_id -%}
       <input
         type="hidden"
         name="id"
-        value="{{ product.selected_or_first_available_variant.id }}">
+        value="{{ product.selected_or_first_available_variant.id }}"
+      >
       {{ form | payment_terms }}
     {%- endform -%}
 
@@ -59,13 +59,12 @@
     {% endif %}
   </div>
   {%- if block.settings.enable_product_reviews_by_price
- and product.metafields.reviews.rating_count != blank
- and product.metafields.reviews.rating_count > 0
+    and product.metafields.reviews.rating_count != blank
+    and product.metafields.reviews.rating_count > 0
   -%}
     <div class="theme-product-reviews not-in-quickbuy">
       <a href="#shopify-product-reviews">
-        {% render 'rating'
-          , rating_value: product.metafields.reviews.rating.value %}
+        {% render 'rating', rating_value: product.metafields.reviews.rating.value %}
         {% if product.metafields.reviews.rating_count != blank and product.metafields.reviews.rating_count > 0 %}
           <span class="cc-rating-custom-caption">
             {{ product.metafields.reviews.rating_count }}

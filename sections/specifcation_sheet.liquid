@@ -15,75 +15,74 @@
 <div class="tabs-content-section">
   <h2 class="specification-title" id="specification">
     {% case lang %}
-      {% when 'de' %}Spezifikation
-      {% when 'fr' %}Spécifications
-      {% when 'fi' %}Tekniset tiedot
-      {% else %}Specification
+      {% when 'de' -%}
+        Spezifikation
+      {% when 'fr' -%}
+        Spécifications
+      {% when 'fi' -%}
+        Tekniset tiedot
+      {% else -%}
+        Specification
     {% endcase %}
   </h2>
 
   <div class="specification-list">
     <!-- E-Bike System -->
     {% render 'spec-module',
-      fields: "frame,motor2,battery,display",
-      labels: "frame,motor,battery,display",
-      title: "e-bike-system",
+      fields: 'frame,motor2,battery,display',
+      labels: 'frame,motor,battery,display',
+      title: 'e-bike-system',
       lang: lang
     %}
-    
+
     <!-- Suspension -->
-    {% render 'spec-module',
-      fields: "fork,shock",
-      labels: "fork,shock",
-      title: "suspension",
-      lang: lang
-    %}
-    
+    {% render 'spec-module', fields: 'fork,shock', labels: 'fork,shock', title: 'suspension', lang: lang %}
+
     <!-- Shifting -->
     {% render 'spec-module',
-      fields: "derailleur,shifters,sprocket,cassette",
-      labels: "derailleur,shifters,sprocket,cassette",
-      title: "shifting",
+      fields: 'derailleur,shifters,sprocket,cassette',
+      labels: 'derailleur,shifters,sprocket,cassette',
+      title: 'shifting',
       lang: lang
     %}
-    
+
     <!-- Brakes -->
     {% render 'spec-module',
-      fields: "brake_f_r,brake_disc_f_r,brake_levers",
-      labels: "brake_f_r,brake_disc_f_r,brake_levers",
-      title: "brakes",
+      fields: 'brake_f_r,brake_disc_f_r,brake_levers',
+      labels: 'brake_f_r,brake_disc_f_r,brake_levers',
+      title: 'brakes',
       lang: lang
     %}
-    
+
     <!-- Wheels -->
     {% render 'spec-module',
-      fields: "tires,rims,hub_front_f_r",
-      labels: "tires,rims,hub_front_f_r",
-      title: "wheels",
+      fields: 'tires,rims,hub_front_f_r',
+      labels: 'tires,rims,hub_front_f_r',
+      title: 'wheels',
       lang: lang
     %}
-    
+
     <!-- Steering & Seating -->
     {% render 'spec-module',
-      fields: "handlebar,grips,stem,seat_post,saddle",
-      labels: "handlebar,grips,stem,seat_post,saddle",
-      title: "steering_seating",
+      fields: 'handlebar,grips,stem,seat_post,saddle',
+      labels: 'handlebar,grips,stem,seat_post,saddle',
+      title: 'steering_seating',
       lang: lang
     %}
-    
+
     <!-- Components -->
     {% render 'spec-module',
-      fields: "front_light,rear_light,carrier",
-      labels: "front_light,rear_light,carrier",
-      title: "components",
+      fields: 'front_light,rear_light,carrier',
+      labels: 'front_light,rear_light,carrier',
+      title: 'components',
       lang: lang
     %}
-    
+
     <!-- Weight & Class -->
     {% render 'spec-module',
-      fields: "perm_total_weight,bike_weight,category",
-      labels: "perm_total_weight,bike_weight,category",
-      title: "weight_class",
+      fields: 'perm_total_weight,bike_weight,category',
+      labels: 'perm_total_weight,bike_weight,category',
+      title: 'weight_class',
       lang: lang
     %}
   </div>

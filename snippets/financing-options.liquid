@@ -3,7 +3,7 @@
 
 {%- if country == 'DE' or country == 'AT' or country == 'FR' -%}
   {%- assign partners = '' | split: '' -%}
-  
+
   {%- case country -%}
     {%- when 'DE' -%}
       {%- assign partners = 'paypal,zinia,klarna' | split: ',' -%}
@@ -18,31 +18,57 @@
       <div class="leasing-icon-container">
         {%- case partner -%}
           {%- when 'paypal' -%}
-            <img alt="Paypal" src="https://cdn.shopify.com/s/files/1/0560/0080/6985/files/PayPal.svg?v=1751531389" width="120px">
+            <img
+              alt="Paypal"
+              src="https://cdn.shopify.com/s/files/1/0560/0080/6985/files/PayPal.svg?v=1751531389"
+              width="120px"
+            >
           {%- when 'zinia' -%}
-            <img alt="Zinia" src="https://cdn.shopify.com/s/files/1/0560/0080/6985/files/20250214-163529.png?v=1739522191" width="100px">
+            <img
+              alt="Zinia"
+              src="https://cdn.shopify.com/s/files/1/0560/0080/6985/files/20250214-163529.png?v=1739522191"
+              width="100px"
+            >
           {%- when 'klarna' -%}
-            <img alt="Klarna" src="https://cdn.shopify.com/s/files/1/0560/0080/6985/files/Klarna_Payment_Badge_svg.png?v=1739522386" width="100px">
+            <img
+              alt="Klarna"
+              src="https://cdn.shopify.com/s/files/1/0560/0080/6985/files/Klarna_Payment_Badge_svg.png?v=1739522386"
+              width="100px"
+            >
         {%- endcase -%}
       </div>
-      
-      <p><strong>
-        {%- case partner -%}
-          {%- when 'paypal' -%}
-            {%- if locale == 'de' -%}Finanzierung mit PayPal
-            {%- elsif locale == 'fr' -%}Financement avec PayPal
-            {%- else -%}Financing with PayPal{%- endif -%}
-          {%- when 'zinia' -%}
-            {%- if locale == 'de' -%}Finanzierung mit Zinia
-            {%- elsif locale == 'fr' -%}Financement avec Zinia
-            {%- else -%}Financing with Zinia{%- endif -%}
-          {%- when 'klarna' -%}
-            {%- if locale == 'de' -%}Finanzierung mit Klarna
-            {%- elsif locale == 'fr' -%}Financement avec Klarna
-            {%- else -%}Financing with Klarna{%- endif -%}
-        {%- endcase -%}
-      </strong></p>
-      
+
+      <p>
+        <strong>
+          {%- case partner -%}
+            {%- when 'paypal' -%}
+              {%- if locale == 'de' -%}
+                Finanzierung mit PayPal
+              {%- elsif locale == 'fr' -%}
+                Financement avec PayPal
+              {%- else -%}
+                Financing with PayPal
+              {%- endif -%}
+            {%- when 'zinia' -%}
+              {%- if locale == 'de' -%}
+                Finanzierung mit Zinia
+              {%- elsif locale == 'fr' -%}
+                Financement avec Zinia
+              {%- else -%}
+                Financing with Zinia
+              {%- endif -%}
+            {%- when 'klarna' -%}
+              {%- if locale == 'de' -%}
+                Finanzierung mit Klarna
+              {%- elsif locale == 'fr' -%}
+                Financement avec Klarna
+              {%- else -%}
+                Financing with Klarna
+              {%- endif -%}
+          {%- endcase -%}
+        </strong>
+      </p>
+
       <p>
         {%- case partner -%}
           {%- when 'paypal' -%}
@@ -53,7 +79,7 @@
             {%- else -%}
               Pay in instalments of up to 24 months via PayPal.
             {%- endif -%}
-          
+
           {%- when 'zinia' -%}
             {%- if locale == 'de' -%}
               Finanzieren Sie Ihr E-Bike und Zubehör mit Zinia, das flexible Ratenpläne von 6 bis 48 Monaten anbietet.
@@ -62,12 +88,13 @@
             {%- else -%}
               Finance your bike and accessories with Zinia, offering flexible installment plans from 6 to 48 months.
             {%- endif -%}
-          
+
           {%- when 'klarna' -%}
             {%- if locale == 'de' -%}
               Klarna bietet direkte Zahlungen, Optionen zum späteren Bezahlen oder Ratenpläne von 6 bis 36 Monaten an.
             {%- elsif locale == 'fr' -%}
-              Klarna propose des paiements directs, des options de paiement différé ou des plans de paiement échelonnés de 6 à 36 mois.
+              Klarna propose des paiements directs, des options de paiement différé ou des plans de paiement échelonnés
+              de 6 à 36 mois.
             {%- else -%}
               Klarna offers direct payments, pay later options, or installment plans ranging from 6 to 36 months.
             {%- endif -%}

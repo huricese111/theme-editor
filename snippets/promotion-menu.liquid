@@ -1,20 +1,214 @@
+<style>
+  .navigation__tier-2,
+  .navigation__columns {
+    padding: 8px; /* 添加内边距 */
+  }
+
+  .mp-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .mp-header-spacer {
+    min-height: 1px;
+    width: 100%;
+  }
+
+  .mp-discount-image {
+    position: relative;
+    max-width: 70px;
+    max-height: 30px;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .mp-discount-label {
+    position: relative !important;
+    font-size: 12px;
+    background-color: #ffd200;
+    color: black;
+    padding: 5px 10px;
+    font-weight: bold;
+    z-index: 2;
+    white-space: nowrap;
+  }
+
+  .mp-discount-label-spacer {
+    min-height: 28px;
+  }
+
+  .mp-promotion-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .mp-title-big {
+    margin-bottom: 6px;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .mp-promotion-image-container {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .mp-promotion-image-container img {
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s ease;
+  }
+
+  .mp-promotion-link:hover .mp-promotion-image-container img {
+    transform: scale(1.03);
+  }
+
+  .mp-promotion-text {
+    font-weight: bold;
+    margin-top: 4px;
+    font-size: 1rem;
+    color: #000000;
+  }
+
+  .mp-promotion-description {
+    margin-top: 2px;
+    font-size: 0.9rem;
+    color: #666;
+  }
+
+  .mp-navigation-link {
+    text-decoration: underline;
+    font-size: 18px;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .mp-mobile .mp-title-big {
+    font-size: 20px;
+  }
+
+  .mp-mobile .mp-header {
+    padding: 0 8px;
+  }
+
+  .mp-image-section {
+    background-color: #eee;
+    aspect-ratio: 1/1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .mp-image-section .mp-header {
+    margin-bottom: 2px;
+  }
+
+  .mp-image-section .mp-promotion-image-container {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mp-image-section .mp-promotion-image-container img {
+    max-height: 100%;
+    width: auto;
+  }
+
+  .navigation__column {
+    margin-bottom: 8px !important;
+    padding: 4px !important;
+  }
+
+  .navigation__column--promotion {
+    margin-bottom: 10px !important;
+  }
+</style>
+
 {%- if small_promo_count > 0 -%}
   {%- assign suffixes = '|1b|2|3|4' | split: '|' -%}
+  {%- assign locale_code = request.locale.iso_code -%}
 
   {%- if mobile == false -%}
     {%- for block in section.blocks -%}
       {%- assign dropdown_link_title_sanitised = block.settings.dropdown_link_title | downcase | strip -%}
       {%- if dropdown_link_title_sanitised == link_title_sanitised and block.type == 'menu-promotion-small' -%}
         <li class="desktop-only navigation__column navigation__column--promotion" {{ block.shopify_attributes }}>
-          {%- render 'promotion-header', block: block -%}
+          <div class="mp-promotion-container">
+            <div class="mp-title-big">
+              {%- render 'localized-value', field: 'title_big', block: block, locale_code: locale_code -%}
+            </div>
 
-          <div class="menu-promotion">
-            <div class="menu-promotion__text" style="margin-bottom: 10px;font-size: 18px;">
-              {{ block.settings | get_localized_value: 'title_big' }}
+            <div class="mp-image-section">
+              <div class="mp-header">
+                {% if localization.country.iso_code == 'DE' and block.settings.discount_image != blank %}
+                  <div class="mp-discount-image"></div>
+                {% else %}
+                  <div class="mp-header-spacer"></div>
+                {% endif %}
+
+                {%- if block.settings.discount_label != blank -%}
+                  <div class="mp-discount-label">
+                    {%- render 'localized-value', field: 'discount_label', block: block, locale_code: locale_code -%}
+                  </div>
+                {%- elsif block.settings.discount_label_showblank -%}
+                  <div class="mp-discount-label-spacer"></div>
+                {%- endif -%}
+              </div>
+
+              {%- for suffix in suffixes -%}
+                {%- assign field_prefix = suffix | default: '' -%}
+                {%- if suffix != '' -%}{%- assign field_prefix = suffix | prepend: '_' -%}{%- endif -%}
+
+                {%- assign image_field = 'image' | append: field_prefix -%}
+                {%- assign link_url_field = 'link_url' | append: field_prefix -%}
+
+                {%- if block.settings[link_url_field] != blank -%}
+                  <a class="mp-promotion-link" href="{{ block.settings[link_url_field] }}">
+                {%- endif -%}
+
+                <div class="mp-promotion-image-container">
+                  {%- render 'image' with block.settings[image_field], class: 'mp-promotion-image', loading: 'lazy' -%}
+                </div>
+
+                {%- if block.settings[link_url_field] != blank -%}
+                  </a>
+                {%- endif -%}
+              {%- endfor -%}
             </div>
 
             {%- for suffix in suffixes -%}
-              {%- render 'promotion-item', block: block, suffix: suffix, size_cols_desktop: 4 -%}
+              {%- assign field_prefix = suffix | default: '' -%}
+              {%- if suffix != '' -%}{%- assign field_prefix = suffix | prepend: '_' -%}{%- endif -%}
+
+              {%- assign link_url_field = 'link_url' | append: field_prefix -%}
+              {%- assign title_field = 'title' | append: field_prefix -%}
+              {%- assign description_field = 'description' | append: field_prefix -%}
+
+              {%- if block.settings[link_url_field] != blank -%}
+                <a class="mp-promotion-link" href="{{ block.settings[link_url_field] }}">
+              {%- endif -%}
+
+              {%- if block.settings[title_field] != blank -%}
+                <div class="mp-promotion-text">
+                  {%- render 'localized-value', field: title_field, block: block, locale_code: locale_code -%}
+                </div>
+              {%- endif -%}
+
+              {%- if block.settings[description_field] != blank -%}
+                <div class="mp-promotion-description">
+                  {%- render 'localized-value', field: description_field, block: block, locale_code: locale_code -%}
+                </div>
+              {%- endif -%}
+
+              {%- if block.settings[link_url_field] != blank -%}
+                </a>
+              {%- endif -%}
             {%- endfor -%}
           </div>
         </li>
@@ -23,22 +217,83 @@
 
   {%- else -%}
     <li class="navigation__column navigation__column--promotion{% if section.settings.enable_mobile_promo_carousel and link.links.size > 0 %} navigation__column--promotion-carousel{% endif %}">
-      <a href="{{ link.url }}" class="navigation__link" style="text-decoration: underline; font-size: 20px;">
+      <a href="{{ link.url }}" class="mp-navigation-link">
         {{- link.title | escape -}}
       </a>
 
       {%- for block in section.blocks -%}
         {%- assign dropdown_link_title_sanitised = block.settings.dropdown_link_title | downcase | strip -%}
         {%- if dropdown_link_title_sanitised == link_title_sanitised and block.type == 'menu-promotion-small' -%}
-          <div class="menu-promotion">
-            <div class="menu-promotion__text" style="margin-bottom: 10px;font-size: 22px;">
-              {{ block.settings | get_localized_value: 'title_big' }}
+          <div class="mp-promotion-container mp-mobile">
+            <div class="mp-title-big">
+              {%- render 'localized-value', field: 'title_big', block: block, locale_code: locale_code -%}
             </div>
 
-            {%- render 'promotion-header', block: block -%}
+            <div class="mp-image-section">
+              <div class="mp-header">
+                {% if localization.country.iso_code == 'DE' and block.settings.discount_image != blank %}
+                  <div class="mp-discount-image"></div>
+                {% else %}
+                  <div class="mp-header-spacer"></div>
+                {% endif %}
+
+                {%- if block.settings.discount_label != blank -%}
+                  <div class="mp-discount-label">
+                    {%- render 'localized-value', field: 'discount_label', block: block, locale_code: locale_code -%}
+                  </div>
+                {%- elsif block.settings.discount_label_showblank -%}
+                  <div class="mp-discount-label-spacer"></div>
+                {%- endif -%}
+              </div>
+
+              {%- for suffix in suffixes -%}
+                {%- assign field_prefix = suffix | default: '' -%}
+                {%- if suffix != '' -%}{%- assign field_prefix = suffix | prepend: '_' -%}{%- endif -%}
+
+                {%- assign image_field = 'image' | append: field_prefix -%}
+                {%- assign link_url_field = 'link_url' | append: field_prefix -%}
+
+                {%- if block.settings[link_url_field] != blank -%}
+                  <a class="mp-promotion-link" href="{{ block.settings[link_url_field] }}">
+                {%- endif -%}
+
+                <div class="mp-promotion-image-container">
+                  {%- render 'image' with block.settings[image_field], class: 'mp-promotion-image', loading: 'lazy' -%}
+                </div>
+
+                {%- if block.settings[link_url_field] != blank -%}
+                  </a>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
 
             {%- for suffix in suffixes -%}
-              {%- render 'promotion-item', block: block, suffix: suffix, size_cols_desktop: 4 -%}
+              {%- assign field_prefix = suffix | default: '' -%}
+              {%- if suffix != '' -%}{%- assign field_prefix = suffix | prepend: '_' -%}{%- endif -%}
+
+              {%- assign link_url_field = 'link_url' | append: field_prefix -%}
+              {%- assign title_field = 'title' | append: field_prefix -%}
+              {%- assign description_field = 'description' | append: field_prefix -%}
+
+              {%- if block.settings[link_url_field] != blank -%}
+                <a class="mp-promotion-link" href="{{ block.settings[link_url_field] }}">
+              {%- endif -%}
+
+              {%- if block.settings[title_field] != blank -%}
+                <div class="mp-promotion-text">
+                  {%- render 'localized-value', field: title_field, block: block, locale_code: locale_code -%}
+                </div>
+              {%- endif -%}
+
+              {%- if block.settings[description_field] != blank -%}
+                <div class="mp-promotion-description">
+                  {%- render 'localized-value', field: description_field, block: block, locale_code: locale_code -%}
+                </div>
+              {%- endif -%}
+
+              {%- if block.settings[link_url_field] != blank -%}
+                </a>
+              {%- endif -%}
             {%- endfor -%}
           </div>
         {%- endif -%}

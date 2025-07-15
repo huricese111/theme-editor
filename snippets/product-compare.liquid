@@ -314,11 +314,11 @@
     transition: all 0.3s ease;
     padding: 0;
   }
-  
+
   .compare-modal-close:hover {
-    background-color: rgba(0,0,0,0.05);
+    background-color: rgba(0, 0, 0, 0.05);
   }
-  
+
   .compare-modal-close svg {
     width: 20px;
     height: 20px;
@@ -330,27 +330,27 @@
 
 {% assign current_lang = request.locale.iso_code %}
 
-{% assign compare_title = "Product Comparison" %}
-{% assign compare_button = "Compare" %}
-{% assign clear_button = "Clear All" %}
-{% assign loading_text = "Loading comparison data..." %}
+{% assign compare_title = 'Product Comparison' %}
+{% assign compare_button = 'Compare' %}
+{% assign clear_button = 'Clear All' %}
+{% assign loading_text = 'Loading comparison data...' %}
 
 {% case current_lang %}
-  {% when "de" %}
-    {% assign compare_title = "Produktvergleich" %}
-    {% assign compare_button = "Vergleichen" %}
-    {% assign clear_button = "Alle löschen" %}
-    {% assign loading_text = "Vergleichsdaten werden geladen..." %}
-  {% when "fr" %}
-    {% assign compare_title = "Comparaison de produits" %}
-    {% assign compare_button = "Comparer" %}
-    {% assign clear_button = "Tout effacer" %}
-    {% assign loading_text = "Chargement des données de comparaison..." %}
-  {% when "fi" %}
-    {% assign compare_title = "Tuotevertailu" %}
-    {% assign compare_button = "Vertaa" %}
-    {% assign clear_button = "Tyhjennä kaikki" %}
-    {% assign loading_text = "Ladataan vertailutietoja..." %}
+  {% when 'de' %}
+    {% assign compare_title = 'Produktvergleich' %}
+    {% assign compare_button = 'Vergleichen' %}
+    {% assign clear_button = 'Alle löschen' %}
+    {% assign loading_text = 'Vergleichsdaten werden geladen...' %}
+  {% when 'fr' %}
+    {% assign compare_title = 'Comparaison de produits' %}
+    {% assign compare_button = 'Comparer' %}
+    {% assign clear_button = 'Tout effacer' %}
+    {% assign loading_text = 'Chargement des données de comparaison...' %}
+  {% when 'fi' %}
+    {% assign compare_title = 'Tuotevertailu' %}
+    {% assign compare_button = 'Vertaa' %}
+    {% assign clear_button = 'Tyhjennä kaikki' %}
+    {% assign loading_text = 'Ladataan vertailutietoja...' %}
 {% endcase %}
 
 <div class="compare-bar">
@@ -375,11 +375,11 @@
         </svg>
       </button>
     </div>
-    
+
     <div class="compare-table-container">
       <table class="compare-table"></table>
     </div>
-    
+
     <div class="compare-modal-footer">
       <button class="button clear-compare">
         {{ clear_button }}
@@ -396,34 +396,33 @@
   if (!window.productCompareInitialized) {
     window.productCompareInitialized = true;
 
-
     document.addEventListener('DOMContentLoaded', function () {
       let MAX_COMPARE_ITEMS = 4;
       const STORAGE_KEY = 'compareProducts';
 
-      const currentLang = "{{ request.locale.iso_code }}";
+      const currentLang = '{{ request.locale.iso_code }}';
 
       const langAlerts = {
         en: {
           maxItems: `You can compare up to ${MAX_COMPARE_ITEMS} products at a time.`,
-          minItems: "Please select at least 2 products to compare.",
-          clearConfirm: "Are you sure you want to clear all comparison items?"
+          minItems: 'Please select at least 2 products to compare.',
+          clearConfirm: 'Are you sure you want to clear all comparison items?',
         },
         de: {
           maxItems: `Sie können maximal ${MAX_COMPARE_ITEMS} Produkte gleichzeitig vergleichen.`,
-          minItems: "Bitte wählen Sie mindestens 2 Produkte zum Vergleichen aus.",
-          clearConfirm: "Möchten Sie wirklich alle Vergleichselemente löschen?"
+          minItems: 'Bitte wählen Sie mindestens 2 Produkte zum Vergleichen aus.',
+          clearConfirm: 'Möchten Sie wirklich alle Vergleichselemente löschen?',
         },
         fr: {
           maxItems: `Vous pouvez comparer jusqu'à ${MAX_COMPARE_ITEMS} produits à la fois.`,
-          minItems: "Veuillez sélectionner au moins 2 produits à comparer.",
-          clearConfirm: "Êtes-vous sûr de vouloir effacer tous les éléments de comparaison ?"
+          minItems: 'Veuillez sélectionner au moins 2 produits à comparer.',
+          clearConfirm: 'Êtes-vous sûr de vouloir effacer tous les éléments de comparaison ?',
         },
         fi: {
           maxItems: `Voit verrata jopa ${MAX_COMPARE_ITEMS} tuotetta kerralla.`,
-          minItems: "Valitse vähintään 2 tuotetta vertailtavaksi.",
-          clearConfirm: "Haluatko varmasti poistaa kaikki vertailukohteet?"
-        }
+          minItems: 'Valitse vähintään 2 tuotetta vertailtavaksi.',
+          clearConfirm: 'Haluatko varmasti poistaa kaikki vertailukohteet?',
+        },
       };
 
       function getAlert(key) {
@@ -433,227 +432,231 @@
       const translations = {
         en: {
           modules: {
-            "E-Bike System": "E-Bike System",
-            "Suspension": "Suspension",
-            "Shifting": "Shifting",
-            "Brakes": "Brakes",
-            "Wheels": "Wheels",
-            "Steering & Seating": "Steering & Seating",
-            "Components": "Components",
-            "Weight & Class": "Weight & Class"
+            'E-Bike System': 'E-Bike System',
+            Suspension: 'Suspension',
+            Shifting: 'Shifting',
+            Brakes: 'Brakes',
+            Wheels: 'Wheels',
+            'Steering & Seating': 'Steering & Seating',
+            Components: 'Components',
+            'Weight & Class': 'Weight & Class',
           },
           fields: {
-            "specification": "Specification",
-            "productImage": "Product Image",
-            "frame": "Frame",
-            "motorModel": "Motor Model",
-            "motorTorque": "Motor Torque",
-            "batteryModel": "Battery Model",
-            "batteryCapacity": "Battery Capacity",
-            "displayType": "Display Type",
-            "displaySize": "Display Size",
-            "fork": "Fork",
-            "shock": "Shock",
-            "derailleur": "Derailleur",
-            "shifters": "Shifters",
-            "sprocket": "Sprocket",
-            "cassette": "Cassette",
-            "brakes": "Brakes",
-            "brakeDiscs": "Brake Discs",
-            "brakeLevers": "Brake Levers",
-            "tires": "Tires",
-            "rims": "Rims",
-            "hubs": "Hubs",
-            "handlebar": "Handlebar",
-            "grips": "Grips",
-            "stem": "Stem",
-            "seatPost": "Seat Post",
-            "saddle": "Saddle",
-            "frontLight": "Front Light",
-            "rearLight": "Rear Light",
-            "carrier": "Carrier",
-            "bikeWeight": "Bike Weight",
-            "totalWeight": "Total Weight",
-            "bikeCategory": "Category"
-          }
+            specification: 'Specification',
+            productImage: 'Product Image',
+            frame: 'Frame',
+            motorModel: 'Motor Model',
+            motorTorque: 'Motor Torque',
+            batteryModel: 'Battery Model',
+            batteryCapacity: 'Battery Capacity',
+            displayType: 'Display Type',
+            displaySize: 'Display Size',
+            fork: 'Fork',
+            shock: 'Shock',
+            derailleur: 'Derailleur',
+            shifters: 'Shifters',
+            sprocket: 'Sprocket',
+            cassette: 'Cassette',
+            brakes: 'Brakes',
+            brakeDiscs: 'Brake Discs',
+            brakeLevers: 'Brake Levers',
+            tires: 'Tires',
+            rims: 'Rims',
+            hubs: 'Hubs',
+            handlebar: 'Handlebar',
+            grips: 'Grips',
+            stem: 'Stem',
+            seatPost: 'Seat Post',
+            saddle: 'Saddle',
+            frontLight: 'Front Light',
+            rearLight: 'Rear Light',
+            carrier: 'Carrier',
+            bikeWeight: 'Bike Weight',
+            totalWeight: 'Total Weight',
+            bikeCategory: 'Category',
+          },
         },
         de: {
           modules: {
-            "E-Bike System": "E-Bike System",
-            "Suspension": "Federgabel",
-            "Shifting": "Schaltung",
-            "Brakes": "Bremsen",
-            "Wheels": "Laufräder",
-            "Steering & Seating": "Lenken & Sitzen",
-            "Components": "Komponenten",
-            "Weight & Class": "Gewicht & Klasse"
+            'E-Bike System': 'E-Bike System',
+            Suspension: 'Federgabel',
+            Shifting: 'Schaltung',
+            Brakes: 'Bremsen',
+            Wheels: 'Laufräder',
+            'Steering & Seating': 'Lenken & Sitzen',
+            Components: 'Komponenten',
+            'Weight & Class': 'Gewicht & Klasse',
           },
           fields: {
-            "specification": "Spezifikation",
-            "productImage": "Produktbild",
-            "frame": "Rahmen",
-            "motorModel": "Motor Modell",
-            "motorTorque": "Motor Drehmoment",
-            "batteryModel": "Batterie Modell",
-            "batteryCapacity": "Batteriekapazität",
-            "displayType": "Display Typ",
-            "displaySize": "Display Größe",
-            "fork": "Gabel",
-            "shock": "Schock",
-            "derailleur": "Schaltung",
-            "shifters": "Schalthebel",
-            "sprocket": "Kettenblatt",
-            "cassette": "Zahnkranz",
-            "brakes": "Bremse",
-            "brakeDiscs": "Bremsscheibe",
-            "brakeLevers": "Bremshebel",
-            "tires": "Reifen",
-            "rims": "Felgen",
-            "hubs": "Naben",
-            "handlebar": "Lenker",
-            "grips": "Griffe",
-            "stem": "Vorbau",
-            "seatPost": "Sattelstütze",
-            "saddle": "Sattel",
-            "frontLight": "Vorderlicht",
-            "rearLight": "Rücklicht",
-            "carrier": "Gepäckträger",
-            "bikeWeight": "Gewicht",
-            "totalWeight": "Gesamtgewicht",
-            "bikeCategory": "Kategorie"
-          }
+            specification: 'Spezifikation',
+            productImage: 'Produktbild',
+            frame: 'Rahmen',
+            motorModel: 'Motor Modell',
+            motorTorque: 'Motor Drehmoment',
+            batteryModel: 'Batterie Modell',
+            batteryCapacity: 'Batteriekapazität',
+            displayType: 'Display Typ',
+            displaySize: 'Display Größe',
+            fork: 'Gabel',
+            shock: 'Schock',
+            derailleur: 'Schaltung',
+            shifters: 'Schalthebel',
+            sprocket: 'Kettenblatt',
+            cassette: 'Zahnkranz',
+            brakes: 'Bremse',
+            brakeDiscs: 'Bremsscheibe',
+            brakeLevers: 'Bremshebel',
+            tires: 'Reifen',
+            rims: 'Felgen',
+            hubs: 'Naben',
+            handlebar: 'Lenker',
+            grips: 'Griffe',
+            stem: 'Vorbau',
+            seatPost: 'Sattelstütze',
+            saddle: 'Sattel',
+            frontLight: 'Vorderlicht',
+            rearLight: 'Rücklicht',
+            carrier: 'Gepäckträger',
+            bikeWeight: 'Gewicht',
+            totalWeight: 'Gesamtgewicht',
+            bikeCategory: 'Kategorie',
+          },
         },
         fr: {
           modules: {
-            "E-Bike System": "E-bike Système",
-            "Suspension": "Suspension",
-            "Shifting": "Transmission",
-            "Brakes": "Frein",
-            "Wheels": "Roues",
-            "Steering & Seating": "Direction et siège",
-            "Components": "Composants",
-            "Weight & Class": "Poids et classe"
+            'E-Bike System': 'E-bike Système',
+            Suspension: 'Suspension',
+            Shifting: 'Transmission',
+            Brakes: 'Frein',
+            Wheels: 'Roues',
+            'Steering & Seating': 'Direction et siège',
+            Components: 'Composants',
+            'Weight & Class': 'Poids et classe',
           },
           fields: {
-            "specification": "Spécifications",
-            "productImage": "Image du produit",
-            "frame": "Cadre",
-            "motorModel": "Modèle de moteur",
-            "motorTorque": "Couple moteur",
-            "batteryModel": "Modèle de batterie",
-            "batteryCapacity": "Capacité de la batterie",
-            "displayType": "Type d'affichage",
-            "displaySize": "Taille de l'écran",
-            "fork": "Fourche",
-            "shock": "Choc",
-            "derailleur": "Derailleur",
-            "shifters": "Leviers de vitesse",
-            "sprocket": "Pignon",
-            "cassette": "Cassette",
-            "brakes": "Frein",
-            "brakeDiscs": "Disque de frein",
-            "brakeLevers": "Leviers de frein",
-            "tires": "Pneus",
-            "rims": "Jantes",
-            "hubs": "Moyeu",
-            "handlebar": "Guidon",
-            "grips": "Poignées",
-            "stem": "Tige",
-            "seatPost": "Tige de selle",
-            "saddle": "Selle",
-            "frontLight": "Lumiere avt",
-            "rearLight": "Lumiere arr",
-            "carrier": "Porte-bagages",
-            "bikeWeight": "Poids du vélo",
-            "totalWeight": "Poids total",
-            "bikeCategory": "Catégorie"
-          }
+            specification: 'Spécifications',
+            productImage: 'Image du produit',
+            frame: 'Cadre',
+            motorModel: 'Modèle de moteur',
+            motorTorque: 'Couple moteur',
+            batteryModel: 'Modèle de batterie',
+            batteryCapacity: 'Capacité de la batterie',
+            displayType: "Type d'affichage",
+            displaySize: "Taille de l'écran",
+            fork: 'Fourche',
+            shock: 'Choc',
+            derailleur: 'Derailleur',
+            shifters: 'Leviers de vitesse',
+            sprocket: 'Pignon',
+            cassette: 'Cassette',
+            brakes: 'Frein',
+            brakeDiscs: 'Disque de frein',
+            brakeLevers: 'Leviers de frein',
+            tires: 'Pneus',
+            rims: 'Jantes',
+            hubs: 'Moyeu',
+            handlebar: 'Guidon',
+            grips: 'Poignées',
+            stem: 'Tige',
+            seatPost: 'Tige de selle',
+            saddle: 'Selle',
+            frontLight: 'Lumiere avt',
+            rearLight: 'Lumiere arr',
+            carrier: 'Porte-bagages',
+            bikeWeight: 'Poids du vélo',
+            totalWeight: 'Poids total',
+            bikeCategory: 'Catégorie',
+          },
         },
         fi: {
           modules: {
-            "E-Bike System": "Järjestelmä",
-            "Suspension": "Jousitus",
-            "Shifting": "Vaihteisto",
-            "Brakes": "Jarrut",
-            "Wheels": "Kiekot",
-            "Steering & Seating": "Ohjaus & satula",
-            "Components": "Komponentit",
-            "Weight & Class": "Paino & Luokka"
+            'E-Bike System': 'Järjestelmä',
+            Suspension: 'Jousitus',
+            Shifting: 'Vaihteisto',
+            Brakes: 'Jarrut',
+            Wheels: 'Kiekot',
+            'Steering & Seating': 'Ohjaus & satula',
+            Components: 'Komponentit',
+            'Weight & Class': 'Paino & Luokka',
           },
           fields: {
-            "specification": "Tekniset tiedot",
-            "productImage": "Tuotekuva",
-            "frame": "Runko",
-            "motorModel": "Moottorin malli",
-            "motorTorque": "Moottorin vääntö",
-            "batteryModel": "Akun malli",
-            "batteryCapacity": "Akun kapasiteetti",
-            "displayType": "Näytön tyyppi",
-            "displaySize": "Näytön koko",
-            "fork": "Keula",
-            "shock": "Shock",
-            "derailleur": "Takavaihtaja",
-            "shifters": "Vaihdevivut",
-            "sprocket": "Eturatas",
-            "cassette": "Rataspakka",
-            "brakes": "Jarru",
-            "brakeDiscs": "Jarrulevy",
-            "brakeLevers": "Jarrukahvat",
-            "tires": "Renkaat",
-            "rims": "Vanteet",
-            "hubs": "Napa",
-            "handlebar": "Ohjaustanko",
-            "grips": "Kädensijat",
-            "stem": "Ohjainkannatin",
-            "seatPost": "Satulatolppa",
-            "saddle": "Satula",
-            "frontLight": "Etuvalo",
-            "rearLight": "Takavalo",
-            "carrier": "Tavarateline",
-            "bikeWeight": "Pyörän paino",
-            "totalWeight": "Kokonaispaino",
-            "bikeCategory": "Kategoria"
-          }
-        }
+            specification: 'Tekniset tiedot',
+            productImage: 'Tuotekuva',
+            frame: 'Runko',
+            motorModel: 'Moottorin malli',
+            motorTorque: 'Moottorin vääntö',
+            batteryModel: 'Akun malli',
+            batteryCapacity: 'Akun kapasiteetti',
+            displayType: 'Näytön tyyppi',
+            displaySize: 'Näytön koko',
+            fork: 'Keula',
+            shock: 'Shock',
+            derailleur: 'Takavaihtaja',
+            shifters: 'Vaihdevivut',
+            sprocket: 'Eturatas',
+            cassette: 'Rataspakka',
+            brakes: 'Jarru',
+            brakeDiscs: 'Jarrulevy',
+            brakeLevers: 'Jarrukahvat',
+            tires: 'Renkaat',
+            rims: 'Vanteet',
+            hubs: 'Napa',
+            handlebar: 'Ohjaustanko',
+            grips: 'Kädensijat',
+            stem: 'Ohjainkannatin',
+            seatPost: 'Satulatolppa',
+            saddle: 'Satula',
+            frontLight: 'Etuvalo',
+            rearLight: 'Takavalo',
+            carrier: 'Tavarateline',
+            bikeWeight: 'Pyörän paino',
+            totalWeight: 'Kokonaispaino',
+            bikeCategory: 'Kategoria',
+          },
+        },
       };
 
       const SPEC_MODULES = [
         {
-          title: "E-Bike System",
+          title: 'E-Bike System',
           fields: [
-            "frame", "motorModel", "motorTorque",
-            "batteryModel", "batteryCapacity",
-            "displayType", "displaySize"
-          ]
+            'frame',
+            'motorModel',
+            'motorTorque',
+            'batteryModel',
+            'batteryCapacity',
+            'displayType',
+            'displaySize',
+          ],
         },
         {
-          title: "Suspension",
-          fields: ["fork", "shock"]
+          title: 'Suspension',
+          fields: ['fork', 'shock'],
         },
         {
-          title: "Shifting",
-          fields: ["derailleur", "shifters", "sprocket", "cassette"]
+          title: 'Shifting',
+          fields: ['derailleur', 'shifters', 'sprocket', 'cassette'],
         },
         {
-          title: "Brakes",
-          fields: ["brakes", "brakeDiscs", "brakeLevers"]
+          title: 'Brakes',
+          fields: ['brakes', 'brakeDiscs', 'brakeLevers'],
         },
         {
-          title: "Wheels",
-          fields: ["tires", "rims", "hubs"]
+          title: 'Wheels',
+          fields: ['tires', 'rims', 'hubs'],
         },
         {
-          title: "Steering & Seating",
-          fields: ["handlebar", "grips", "stem", "seatPost", "saddle"]
+          title: 'Steering & Seating',
+          fields: ['handlebar', 'grips', 'stem', 'seatPost', 'saddle'],
         },
         {
-          title: "Components",
-          fields: ["frontLight", "rearLight", "carrier"]
+          title: 'Components',
+          fields: ['frontLight', 'rearLight', 'carrier'],
         },
         {
-          title: "Weight & Class",
-          fields: ["bikeWeight", "totalWeight", "bikeCategory"]
-        }
+          title: 'Weight & Class',
+          fields: ['bikeWeight', 'totalWeight', 'bikeCategory'],
+        },
       ];
 
       function initStorage() {
@@ -680,7 +683,7 @@
         const thumbsContainer = document.querySelector('.compare-thumbs');
         if (thumbsContainer) {
           thumbsContainer.innerHTML = '';
-          compareList.forEach(product => {
+          compareList.forEach((product) => {
             const thumb = document.createElement('div');
             thumb.className = 'compare-thumb';
 
@@ -704,9 +707,9 @@
           compareBar.style.display = count > 0 ? 'flex' : 'none';
         }
 
-        document.querySelectorAll('.compare-checkbox-input').forEach(checkbox => {
+        document.querySelectorAll('.compare-checkbox-input').forEach((checkbox) => {
           const handle = checkbox.dataset.productHandle;
-          const isInList = compareList.some(item => item.handle === handle);
+          const isInList = compareList.some((item) => item.handle === handle);
           checkbox.checked = isInList;
           checkbox.disabled = !isInList && count >= MAX_COMPARE_ITEMS;
         });
@@ -746,7 +749,7 @@
           carrier: productElement.dataset.carrier || 'N/A',
           bikeWeight: productElement.dataset.bikeWeight || 'N/A',
           totalWeight: productElement.dataset.totalWeight || 'N/A',
-          bikeCategory: productElement.dataset.bikeCategory || 'N/A'
+          bikeCategory: productElement.dataset.bikeCategory || 'N/A',
         };
       }
 
@@ -759,30 +762,32 @@
         if (loadingIndicator) loadingIndicator.style.display = 'block';
 
         tableContainer.innerHTML = '';
-        const specLabel = translations[currentLang]?.fields?.specification || "Specification";
+        const specLabel = translations[currentLang]?.fields?.specification || 'Specification';
         let tableHTML = '<tr><th>' + specLabel + '</th>';
 
-        compareList.forEach(product => {
+        compareList.forEach((product) => {
           tableHTML += `<th>${product.title}</th>`;
         });
         tableHTML += '</tr>';
 
-        tableHTML += '<tr><td>' + (translations[currentLang]?.fields?.productImage || "Product Image") + '</td>';
-        compareList.forEach(product => {
+        tableHTML += '<tr><td>' + (translations[currentLang]?.fields?.productImage || 'Product Image') + '</td>';
+        compareList.forEach((product) => {
           tableHTML += `<td><img src="${product.image}" alt="${product.title}" class="compare-product-image"></td>`;
         });
         tableHTML += '</tr>';
 
-        const productsWithSpecs = compareList.map(product => {
+        const productsWithSpecs = compareList.map((product) => {
           return {
             ...product,
-            specs: getProductSpecs(product.handle)
+            specs: getProductSpecs(product.handle),
           };
         });
 
         for (const module of SPEC_MODULES) {
           const moduleTitle = translations[currentLang]?.modules?.[module.title] || module.title;
-          tableHTML += `<tr class="spec-group-header"><td colspan="${productsWithSpecs.length + 1}">${moduleTitle}</td></tr>`;
+          tableHTML += `<tr class="spec-group-header"><td colspan="${
+            productsWithSpecs.length + 1
+          }">${moduleTitle}</td></tr>`;
 
           for (const field of module.fields) {
             const fieldName = translations[currentLang]?.fields?.[field] || field;
@@ -803,12 +808,12 @@
 
       function addProductToCompare(product) {
         const compareList = getCompareList();
-        if (!compareList.some(item => item.handle === product.handle)) {
+        if (!compareList.some((item) => item.handle === product.handle)) {
           if (compareList.length < MAX_COMPARE_ITEMS) {
             compareList.push({
               handle: product.handle,
               title: product.title,
-              image: product.image
+              image: product.image,
             });
             saveCompareList(compareList);
             return true;
@@ -821,7 +826,7 @@
       }
 
       function removeProductFromCompare(handle) {
-        const compareList = getCompareList().filter(item => item.handle !== handle);
+        const compareList = getCompareList().filter((item) => item.handle !== handle);
         saveCompareList(compareList);
       }
 
@@ -854,7 +859,7 @@
             const product = {
               handle: checkbox.dataset.productHandle,
               title: checkbox.dataset.productTitle,
-              image: checkbox.dataset.productImage
+              image: checkbox.dataset.productImage,
             };
 
             if (checkbox.checked) {
@@ -877,8 +882,7 @@
             openComparisonModal();
           }
 
-          if (target.classList.contains('compare-modal-close') ||
-            target.classList.contains('compare-modal-overlay')) {
+          if (target.classList.contains('compare-modal-close') || target.classList.contains('compare-modal-overlay')) {
             closeComparisonModal();
           }
 
@@ -898,27 +902,27 @@
 
       function handleResponsiveFeatures() {
         const screenWidth = window.innerWidth;
-        
+
         if (screenWidth <= 768) {
           MAX_COMPARE_ITEMS = 3;
           document.querySelector('.compare-thumbs').style.maxWidth = 'calc(100vw - 150px)';
         } else {
           MAX_COMPARE_ITEMS = 4;
         }
-        
+
         langAlerts.en.maxItems = `You can compare up to ${MAX_COMPARE_ITEMS} products at a time.`;
         langAlerts.de.maxItems = `Sie können maximal ${MAX_COMPARE_ITEMS} Produkte gleichzeitig vergleichen.`;
         langAlerts.fr.maxItems = `Vous pouvez comparer jusqu'à ${MAX_COMPARE_ITEMS} produits à la fois.`;
         langAlerts.fi.maxItems = `Voit verrata jopa ${MAX_COMPARE_ITEMS} tuotetta kerralla.`;
       }
 
-      function init() {        
+      function init() {
         initStorage();
         setupEventListeners();
         handleResponsiveFeatures();
         updateUI();
-        
-        window.addEventListener('resize', function() {
+
+        window.addEventListener('resize', function () {
           handleResponsiveFeatures();
           updateUI();
         });

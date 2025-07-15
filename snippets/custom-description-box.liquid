@@ -84,13 +84,13 @@
   }
 
   .product-columns > product-block .productcard-left .description-box {
-     padding: 0 20px;
+    padding: 0 20px;
   }
 
   product-block .product-block-options--swatch > .product-block-options__inner > .product-block-options__item {
-  width: 22px;
+    width: 22px;
     height: 22px;
-}
+  }
 
   @media (max-width: 768px) {
     .description-box {
@@ -183,41 +183,41 @@
     </div>
   </div>
 
-{%- assign keywords = "Trekking,City,Urban,Mountain,Mountain Carbon" | split: ',' -%}
-{%- assign title_lower = product.title | downcase -%}
-{%- assign should_show_compare = false -%}
+  {%- assign keywords = 'Trekking,City,Urban,Mountain,Mountain Carbon' | split: ',' -%}
+  {%- assign title_lower = product.title | downcase -%}
+  {%- assign should_show_compare = false -%}
 
-{%- for keyword in keywords -%}
-  {%- assign keyword_lower = keyword | downcase -%}
-  {%- if title_lower contains keyword_lower -%}
-    {%- assign should_show_compare = true -%}
-    {%- break -%}
+  {%- for keyword in keywords -%}
+    {%- assign keyword_lower = keyword | downcase -%}
+    {%- if title_lower contains keyword_lower -%}
+      {%- assign should_show_compare = true -%}
+      {%- break -%}
+    {%- endif -%}
+  {%- endfor -%}
+
+  {%- if should_show_compare -%}
+    <div class="product-compare-widget">
+      <label class="compare-checkbox">
+        <input
+          type="checkbox"
+          class="compare-checkbox-input"
+          data-product-handle="{{ product.handle }}"
+          data-product-title="{{ product.title | escape }}"
+          data-product-image="{{ product.featured_image | img_url: '200x' }}"
+        >
+        <span>
+          {% case request.locale.iso_code %}
+            {% when 'de' -%}
+              Zum Vergleich hinzufügen
+            {% when 'fr' -%}
+              Ajouter à comparer
+            {% when 'fi' -%}
+              Lisää vertailuun
+            {% else -%}
+              Add to compare
+          {% endcase %}
+        </span>
+      </label>
+    </div>
   {%- endif -%}
-{%- endfor -%}
-
-{%- if should_show_compare -%}
-  <div class="product-compare-widget">
-    <label class="compare-checkbox">
-      <input
-        type="checkbox"
-        class="compare-checkbox-input"
-        data-product-handle="{{ product.handle }}"
-        data-product-title="{{ product.title | escape }}"
-        data-product-image="{{ product.featured_image | img_url: '200x' }}"
-      >
-      <span>
-        {% case request.locale.iso_code %}
-          {% when 'de' -%}
-            Zum Vergleich hinzufügen
-          {% when 'fr' -%}
-            Ajouter à comparer
-          {% when 'fi' -%}
-            Lisää vertailuun
-          {% else -%}
-            Add to compare
-        {% endcase %}
-      </span>
-    </label>
-  </div>
-{%- endif -%}
 </div>

@@ -1,7 +1,7 @@
 {%- liquid
   assign locale_iso = request.locale.iso_code | downcase
   assign default_text = block.settings.text | escape
-  
+
   case locale_iso
     when 'de'
       assign display_text = block.settings.text_de | default: default_text | escape
@@ -15,10 +15,17 @@
 -%}
 
 {%- if display_text != blank -%}
-  <div class="lightly-spaced-row{% unless block.settings.show_in_quickbuy %} not-in-quickbuy{% endunless %}" {{ block.shopify_attributes }}>
-    <a class="{% if block.settings.style != 'link' %}btn btn--{{ block.settings.style }}{% else %}small-feature-link{% endif %}" 
-       href="{{ block.settings.url }}"
-       {% if block.settings.open_in_new_tab %}target="_blank"{% endif %}>
+  <div
+    class="lightly-spaced-row{% unless block.settings.show_in_quickbuy %} not-in-quickbuy{% endunless %}"
+    {{ block.shopify_attributes }}
+  >
+    <a
+      class="{% if block.settings.style != 'link' %}btn btn--{{ block.settings.style }}{% else %}small-feature-link{% endif %}"
+      href="{{ block.settings.url }}"
+      {% if block.settings.open_in_new_tab %}
+        target="_blank"
+      {% endif %}
+    >
       {{ display_text }}
     </a>
   </div>

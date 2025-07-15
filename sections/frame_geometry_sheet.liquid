@@ -1417,343 +1417,350 @@
   </div>
 
   {% if request.locale.iso_code == 'en' %}
-    <p class="infotext"> The e-bikes illustrated may differ in individual details from the standard model and may show
-      special equipment
-      at an extra charge. All information on the scope of delivery, appearance, performance, dimensions and weights of
-      the bikes is non-binding and subject to component availability, errors, printing, typesetting and typing errors;
-      we reserve the right to make changes at any time. No rights can be derived from incorrect information. Please
-      note that model specifications may vary from country to country; for more information, please contact your
-      authorized dealer. *All prices are recommended retail prices including the applicable statutory VAT.
+    <p class="infotext">
+      The e-bikes illustrated may differ in individual details from the standard model and may show special equipment at
+      an extra charge. All information on the scope of delivery, appearance, performance, dimensions and weights of the
+      bikes is non-binding and subject to component availability, errors, printing, typesetting and typing errors; we
+      reserve the right to make changes at any time. No rights can be derived from incorrect information. Please note
+      that model specifications may vary from country to country; for more information, please contact your authorized
+      dealer. *All prices are recommended retail prices including the applicable statutory VAT.
     </p>
-{% elsif request.locale.iso_code == 'de' %}
-    <p class="infotext"> Die abgebildeten E-Bikes können in einzelnen Details vom Serienmodell abweichen und teilweise
-      Sonderausstattung gegen Mehrpreis zeigen. Alle Angaben über Lieferumfang, Aussehen, Leistungen, Maße und
-      Gewichte der Fahrräder werden unverbindlich und unter dem Vorbehalt von Komponentenverfügbarkeit, Irrtümern,
-      Druck-, Satz- und "Tippfehlern gemacht; diesbezügliche Änderungen bleiben jederzeit vorbehalten. Aus
-      unzutreffenden Angaben können keine Rechte abgeleitet werden. Bitte beachten Sie, dass die Modellspezifikationen
-      von Land zu Land variieren können; nähere Informationen hat Ihr autorisierter Vertragshändler. *Alle Preise sind
-      unverbindliche Preisempfehlungen inklusive der gültigen gesetzlichen MWST.
+  {% elsif request.locale.iso_code == 'de' %}
+    <p class="infotext">
+      Die abgebildeten E-Bikes können in einzelnen Details vom Serienmodell abweichen und teilweise Sonderausstattung
+      gegen Mehrpreis zeigen. Alle Angaben über Lieferumfang, Aussehen, Leistungen, Maße und Gewichte der Fahrräder
+      werden unverbindlich und unter dem Vorbehalt von Komponentenverfügbarkeit, Irrtümern, Druck-, Satz- und
+      "Tippfehlern gemacht; diesbezügliche Änderungen bleiben jederzeit vorbehalten. Aus unzutreffenden Angaben können
+      keine Rechte abgeleitet werden. Bitte beachten Sie, dass die Modellspezifikationen von Land zu Land variieren
+      können; nähere Informationen hat Ihr autorisierter Vertragshändler. *Alle Preise sind unverbindliche
+      Preisempfehlungen inklusive der gültigen gesetzlichen MWST.
     </p>
-{% elsif request.locale.iso_code == 'fr' %}
-    <p class="infotext"> Les vélos électriques illustrés peuvent différer du modèle standard dans certains détails et
-      présenter des équipements spéciaux moyennant un supplément de prix. Toutes les informations relatives à
-      l'étendue de la livraison, à l'aspect, aux performances, aux dimensions et au poids des vélos sont sans
-      engagement et sous réserve de la disponibilité des composants, d'erreurs, de fautes d'impression, de composition
-      et de frappe ; nous nous réservons le droit de procéder à des modifications à tout moment. Aucun droit ne peut
-      être tiré d'informations incorrectes. Veuillez noter que les spécifications des modèles peuvent varier d'un pays
-      à l'autre. Pour plus d'informations, veuillez contacter votre revendeur agréé. *Tous les prix sont des prix de
-      vente recommandés incluant la TVA légale applicable.
+  {% elsif request.locale.iso_code == 'fr' %}
+    <p class="infotext">
+      Les vélos électriques illustrés peuvent différer du modèle standard dans certains détails et présenter des
+      équipements spéciaux moyennant un supplément de prix. Toutes les informations relatives à l'étendue de la
+      livraison, à l'aspect, aux performances, aux dimensions et au poids des vélos sont sans engagement et sous réserve
+      de la disponibilité des composants, d'erreurs, de fautes d'impression, de composition et de frappe ; nous nous
+      réservons le droit de procéder à des modifications à tout moment. Aucun droit ne peut être tiré d'informations
+      incorrectes. Veuillez noter que les spécifications des modèles peuvent varier d'un pays à l'autre. Pour plus
+      d'informations, veuillez contacter votre revendeur agréé. *Tous les prix sont des prix de vente recommandés
+      incluant la TVA légale applicable.
     </p>
-{% elsif request.locale.iso_code == 'fi' %}
-    <p class="infotext"> Kuvatut sähköpyörät saattavat poiketa yksityiskohdissaan vakiomallista ja niissä voi olla
-      erikoisvarusteita lisämaksusta. Kaikki tiedot toimitussisällöstä, ulkonäöstä, suorituskyvystä, mitoista ja
-      pyörien painoista ovat sitoumuksettomia ja riippuvat komponenttien saatavuudesta, virheistä, paino-, asettelu- ja
-      kirjoitusvirheistä; pidätämme oikeuden tehdä muutoksia milloin tahansa. Virheellisistä tiedoista ei voi
-      johtaa oikeuksia. Huomioithan, että mallikohtaiset tiedot voivat vaihdella maittain; lisätietoja saat
-      valtuutetulta jälleenmyyjältäsi. *Kaikki hinnat ovat suositushintoja, jotka sisältävät voimassa olevan
-      lakisääteisen arvonlisäveron.
+  {% elsif request.locale.iso_code == 'fi' %}
+    <p class="infotext">
+      Kuvatut sähköpyörät saattavat poiketa yksityiskohdissaan vakiomallista ja niissä voi olla erikoisvarusteita
+      lisämaksusta. Kaikki tiedot toimitussisällöstä, ulkonäöstä, suorituskyvystä, mitoista ja pyörien painoista ovat
+      sitoumuksettomia ja riippuvat komponenttien saatavuudesta, virheistä, paino-, asettelu- ja kirjoitusvirheistä;
+      pidätämme oikeuden tehdä muutoksia milloin tahansa. Virheellisistä tiedoista ei voi johtaa oikeuksia. Huomioithan,
+      että mallikohtaiset tiedot voivat vaihdella maittain; lisätietoja saat valtuutetulta jälleenmyyjältäsi. *Kaikki
+      hinnat ovat suositushintoja, jotka sisältävät voimassa olevan lakisääteisen arvonlisäveron.
     </p>
-{% else %}
-    <p class="infotext"> Les vélos électriques illustrés peuvent différer du modèle standard dans certains détails et
-      présenter des équipements spéciaux moyennant un supplément de prix. Toutes les informations relatives à
-      l'étendue de la livraison, à l'aspect, aux performances, aux dimensions et au poids des vélos sont sans
-      engagement et sous réserve de la disponibilité des composants, d'erreurs, de fautes d'impression, de composition
-      et de frappe ; nous nous réservons le droit de procéder à des modifications à tout moment. Aucun droit ne peut
-      être tiré d'informations incorrectes. Veuillez noter que les spécifications des modèles peuvent varier d'un pays
-      à l'autre. Pour plus d'informations, veuillez contacter votre revendeur agréé. *Tous les prix sont des prix de
-      vente recommandés incluant la TVA légale applicable.
+  {% else %}
+    <p class="infotext">
+      Les vélos électriques illustrés peuvent différer du modèle standard dans certains détails et présenter des
+      équipements spéciaux moyennant un supplément de prix. Toutes les informations relatives à l'étendue de la
+      livraison, à l'aspect, aux performances, aux dimensions et au poids des vélos sont sans engagement et sous réserve
+      de la disponibilité des composants, d'erreurs, de fautes d'impression, de composition et de frappe ; nous nous
+      réservons le droit de procéder à des modifications à tout moment. Aucun droit ne peut être tiré d'informations
+      incorrectes. Veuillez noter que les spécifications des modèles peuvent varier d'un pays à l'autre. Pour plus
+      d'informations, veuillez contacter votre revendeur agréé. *Tous les prix sont des prix de vente recommandés
+      incluant la TVA légale applicable.
     </p>
-{% endif %}
-
+  {% endif %}
 </div>
 
 <script>
   const frameSizeViewer = document.querySelector('#framesize .geometry-viewer');
-  if(frameSizeViewer) {
+  if (frameSizeViewer) {
     const swipeHint = document.createElement('div');
     swipeHint.className = 'swipe-hint';
     swipeHint.textContent = '← Swipe →';
     frameSizeViewer.appendChild(swipeHint);
   }
 
-document.addEventListener('DOMContentLoaded', function() {
-  function initTabs() {
-    document.querySelectorAll('.sizetab-panel').forEach((panel, index) => {
-      panel.style.display = index === 0 ? 'block' : 'none';
-    });
-
-    const initialTab = document.querySelector('.tab-item-size[data-target="framesize"]');
-    if(initialTab) initialTab.classList.add('active');
-
-    document.querySelector('.custom-size-tabs')?.addEventListener('click', (event) => {
-      const targetTab = event.target.closest('.tab-item-size');
-      if(!targetTab) return;
-
-      document.querySelectorAll('.tab-item-size').forEach(tab => tab.classList.remove('active'));
-      targetTab.classList.add('active');
-
-      const targetId = targetTab.dataset.target;
-      document.querySelectorAll('.sizetab-panel').forEach(panel => {
-        panel.style.display = panel.id === targetId ? 'block' : 'none';
+  document.addEventListener('DOMContentLoaded', function () {
+    function initTabs() {
+      document.querySelectorAll('.sizetab-panel').forEach((panel, index) => {
+        panel.style.display = index === 0 ? 'block' : 'none';
       });
-    });
-  }
 
-  function adjustMobileFrameSize() {
-    if(window.innerWidth > 768) return;
-    
-    const frameViewer = document.querySelector('#framesize .geometry-viewer');
-    if(frameViewer) {
-      frameViewer.style.height = '300px';
+      const initialTab = document.querySelector('.tab-item-size[data-target="framesize"]');
+      if (initialTab) initialTab.classList.add('active');
+
+      document.querySelector('.custom-size-tabs')?.addEventListener('click', (event) => {
+        const targetTab = event.target.closest('.tab-item-size');
+        if (!targetTab) return;
+
+        document.querySelectorAll('.tab-item-size').forEach((tab) => tab.classList.remove('active'));
+        targetTab.classList.add('active');
+
+        const targetId = targetTab.dataset.target;
+        document.querySelectorAll('.sizetab-panel').forEach((panel) => {
+          panel.style.display = panel.id === targetId ? 'block' : 'none';
+        });
+      });
     }
-  }
 
-  initTabs();
-  
-  adjustMobileFrameSize();
-  
-  window.addEventListener('resize', adjustMobileFrameSize);
-});
+    function adjustMobileFrameSize() {
+      if (window.innerWidth > 768) return;
 
- setTimeout(() => {
+      const frameViewer = document.querySelector('#framesize .geometry-viewer');
+      if (frameViewer) {
+        frameViewer.style.height = '300px';
+      }
+    }
+
+    initTabs();
+
+    adjustMobileFrameSize();
+
+    window.addEventListener('resize', adjustMobileFrameSize);
+  });
+
+  setTimeout(() => {
     const hint = document.querySelector('.swipe-hint');
-    if(hint) {
+    if (hint) {
       hint.style.display = 'none';
     }
   }, 5000);
-
 </script>
 
 <style>
-.geometry-viewer {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  margin: 0 auto;
-  padding: 0 0 20px;
-  width: 100%;
-  text-align: center;
-  position: relative;
-}
-
-.geometry-image {
-  width: 100%;
-  max-width: 100%;
-  height: auto;
-  display: block;
-  margin: 0 auto;
-  object-fit: contain;
-}
-
-.swipe-hint {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: rgba(0,0,0,0.7);
-  color: white;
-  padding: 5px 10px;
-  border-radius: 12px;
-  font-size: 12px;
-  z-index: 10;
-  display: none;
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0% { opacity: 0.7; }
-  50% { opacity: 1; }
-  100% { opacity: 0.7; }
-}
-
-.explore-title {
-  font-size: 30px;
-  margin-bottom: 20px;
-  text-align: left;
-}
-
-.product-content-section {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-.custom-size-tabs {
-  display: flex;
-  margin-bottom: 10px;
-  flex-wrap: wrap;
-  gap: 5px;
-}
-
-.tab-item-size {
-  padding: 10px 20px;
-  background: #f5f5f5;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.3s;
-  border: 1px solid #ddd;
-}
-
-.tab-item-size.active {
-  background: black;
-  font-weight: bold;
-  color: white;
-  border-color: black;
-}
-
-.sizetab-panel {
-  display: none;
-  background-color: #ecf0f1;
-  padding: 20px;
-  border-radius: 5px;
-  overflow: hidden;
-}
-
-.sizetab-panel.active {
-  display: block;
-}
-
-.sizechart-two-column-layout {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-}
-
-.sizechart-column {
-  width: 50%;
-  box-sizing: border-box;
-}
-
-table.pf-inner-table {
-  width: 100%;
-  border-collapse: collapse;
-  border: 1px solid #ddd;
-}
-
-table.pf-inner-table th,
-table.pf-inner-table td {
-  border: 1px solid #ddd;
-  padding: 10px;
-  text-align: left;
-}
-
-table.pf-inner-table th {
-  background-color: #f5f5f5;
-  font-weight: bold;
-}
-
-.infotext {
-  font-weight: 400;
-  font-size: 12px;
-  color: #666;
-  margin: 0;
-  margin-top: 20px;
-  line-height: 1.6;
-}
-
-#framesize {
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  min-height: 400px;
-}
-
-.table-container {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-.pf-inner-table {
-  min-width: 600px;
-}
-
-@media (min-width: 769px) {
   .geometry-viewer {
-    overflow-x: hidden;
-  }
-}
-
-@media (max-width: 768px) {
-  .geometry-viewer {
-    padding: 0;
-    width: calc(100% + 30px);
-    margin-left: -15px;
-  }
-  
-  .geometry-image {
-    height: auto;
-    max-height: 280px;
-    min-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 0 auto;
+    padding: 0 0 20px;
     width: 100%;
+    text-align: center;
+    position: relative;
+  }
+
+  .geometry-image {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    object-fit: contain;
+  }
+
+  .swipe-hint {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    z-index: 10;
+    display: none;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0% {
+      opacity: 0.7;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0.7;
+    }
+  }
+
+  .explore-title {
+    font-size: 30px;
+    margin-bottom: 20px;
+    text-align: left;
+  }
+
+  .product-content-section {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
   }
 
   .custom-size-tabs {
-    flex-direction: row;
-    overflow-x: auto;
-    padding-bottom: 10px;
-    -webkit-overflow-scrolling: touch;
+    display: flex;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .tab-item-size {
+    padding: 10px 20px;
+    background: #f5f5f5;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: 1px solid #ddd;
+  }
+
+  .tab-item-size.active {
+    background: black;
+    font-weight: bold;
+    color: white;
+    border-color: black;
+  }
+
+  .sizetab-panel {
+    display: none;
+    background-color: #ecf0f1;
+    padding: 20px;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .sizetab-panel.active {
+    display: block;
   }
 
   .sizechart-two-column-layout {
-    flex-direction: column;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
   }
 
   .sizechart-column {
+    width: 50%;
+    box-sizing: border-box;
+  }
+
+  table.pf-inner-table {
     width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+  }
+
+  table.pf-inner-table th,
+  table.pf-inner-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+  }
+
+  table.pf-inner-table th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+  }
+
+  .infotext {
+    font-weight: 400;
+    font-size: 12px;
+    color: #666;
+    margin: 0;
+    margin-top: 20px;
+    line-height: 1.6;
+  }
+
+  #framesize {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    min-height: 400px;
   }
 
   .table-container {
-    width: 100%;
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
-  
+
   .pf-inner-table {
-    min-width: 100%;
-    width: 100%;
+    min-width: 600px;
   }
-  
-  table.pf-inner-table {
-    font-size: 12px;
+
+  @media (min-width: 769px) {
+    .geometry-viewer {
+      overflow-x: hidden;
+    }
   }
-  
-  table.pf-inner-table th,
-  table.pf-inner-table td {
-    padding: 6px 8px;
-    white-space: nowrap;
+
+  @media (max-width: 768px) {
+    .geometry-viewer {
+      padding: 0;
+      width: calc(100% + 30px);
+      margin-left: -15px;
+    }
+
+    .geometry-image {
+      height: auto;
+      max-height: 280px;
+      min-width: 100%;
+      width: 100%;
+    }
+
+    .custom-size-tabs {
+      flex-direction: row;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .sizechart-two-column-layout {
+      flex-direction: column;
+    }
+
+    .sizechart-column {
+      width: 100%;
+    }
+
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    .pf-inner-table {
+      min-width: 100%;
+      width: 100%;
+    }
+
+    table.pf-inner-table {
+      font-size: 12px;
+    }
+
+    table.pf-inner-table th,
+    table.pf-inner-table td {
+      padding: 6px 8px;
+      white-space: nowrap;
+    }
+
+    #framesize .geometry-viewer {
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    #framesize .geometry-image {
+      height: 100%;
+      width: auto;
+      min-width: auto;
+      max-width: none;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    /* 滑动提示显示在Frame Size页卡 */
+    #framesize .swipe-hint {
+      display: block;
+    }
+
+    /* 其他页卡保持图片在上、表格在下 */
+    .sizetab-panel:not(#framesize) .sizechart-two-column-layout {
+      flex-direction: column;
+    }
+
+    .sizetab-panel:not(#framesize) .sizechart-column:first-child {
+      order: 1;
+      margin-bottom: 20px;
+    }
+
+    .sizetab-panel:not(#framesize) .sizechart-column:last-child {
+      order: 2;
+    }
   }
-  
-  #framesize .geometry-viewer {
-    height: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-  }
-  
-  #framesize .geometry-image {
-    height: 100%;
-    width: auto;
-    min-width: auto;
-    max-width: none;
-    max-height: 100%;
-    object-fit: contain;
-  }
-  
-  /* 滑动提示显示在Frame Size页卡 */
-  #framesize .swipe-hint {
-    display: block;
-  }
-  
-  /* 其他页卡保持图片在上、表格在下 */
-  .sizetab-panel:not(#framesize) .sizechart-two-column-layout {
-    flex-direction: column;
-  }
-  
-  .sizetab-panel:not(#framesize) .sizechart-column:first-child {
-    order: 1;
-    margin-bottom: 20px;
-  }
-  
-  .sizetab-panel:not(#framesize) .sizechart-column:last-child {
-    order: 2;
-  }
-}
 </style>

@@ -8,27 +8,29 @@
 {% endcapture %}
 
 {% assign is_absolute_mode = false %}
-{% if block.settings.position_mode == "absolute" %}
+{% if block.settings.position_mode == 'absolute' %}
   {% assign is_absolute_mode = true %}
 {% endif %}
 
 {% assign is_custom_position = false %}
-{% if is_absolute_mode and block.settings.position == "custom" %}
+{% if is_absolute_mode and block.settings.position == 'custom' %}
   {% assign is_custom_position = true %}
 {% endif %}
 
-{% assign position_class = "" %}
+{% assign position_class = '' %}
 {% if is_absolute_mode %}
-  {% assign position_class = "position-" | append: block.settings.position %}
+  {% assign position_class = 'position-' | append: block.settings.position %}
 {% endif %}
 
-{% assign text_align_class = "text-align-" | append: block.settings.text_align | default: "left" %}
+{% assign text_align_class = 'text-align-' | append: block.settings.text_align | default: 'left' %}
 
-<div class="text-block {{ position_class }} {{ text_align_class }} {% if is_absolute_mode %}absolute-position{% else %}relative-position{% endif %}" 
-     style="
-       {% if is_custom_position %}transform: translate({{ block.settings.offset_x }}%, {{ block.settings.offset_y }}%);{% endif %}
-       margin: {{ block.settings.margin_top }}px {{ block.settings.margin_right }}px {{ block.settings.margin_bottom }}px {{ block.settings.margin_left }}px;
-     ">
+<div
+  class="text-block {{ position_class }} {{ text_align_class }} {% if is_absolute_mode %}absolute-position{% else %}relative-position{% endif %}"
+  style="
+    {% if is_custom_position %}transform: translate({{ block.settings.offset_x }}%, {{ block.settings.offset_y }}%);{% endif %}
+    margin: {{ block.settings.margin_top }}px {{ block.settings.margin_right }}px {{ block.settings.margin_bottom }}px {{ block.settings.margin_left }}px;
+  "
+>
   <div class="rte {% if block.settings.enlarge_text %}large-text{% endif %}" data-format-number>
     {{ block_text }}
   </div>

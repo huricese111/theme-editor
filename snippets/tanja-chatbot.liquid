@@ -1,40 +1,40 @@
 <style>
-#chatButton {
-  position: fixed;
-  z-index: 9999;
-  text-align: center;
-  bottom: 300px;
-  left: 0px;
-}
-.chatimage {
-  cursor: pointer;
-  height: 70px;
-  border: none;
-}
-#chatIframe {
-  display: none;
-  position: fixed;
-  bottom: 70px;
-  right: 10px;
-  z-index: 1000;
-}
-#closeButton {
-  position: absolute;
-  top: 0;
-  right: 0;
-  cursor: pointer;
-  font-size: 24px;
-  background-color: #f2f2f2;
-  padding: 5px;
-  border-radius: 50%;
-}
-#chatHeading {
-  position: absolute;
-  top: 1rem;
-  left: 5rem;
-  cursor: pointer;
-}
-#closeChatButton {
+  #chatButton {
+    position: fixed;
+    z-index: 9999;
+    text-align: center;
+    bottom: 300px;
+    left: 0px;
+  }
+  .chatimage {
+    cursor: pointer;
+    height: 70px;
+    border: none;
+  }
+  #chatIframe {
+    display: none;
+    position: fixed;
+    bottom: 70px;
+    right: 10px;
+    z-index: 1000;
+  }
+  #closeButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    font-size: 24px;
+    background-color: #f2f2f2;
+    padding: 5px;
+    border-radius: 50%;
+  }
+  #chatHeading {
+    position: absolute;
+    top: 1rem;
+    left: 5rem;
+    cursor: pointer;
+  }
+  #closeChatButton {
     position: absolute;
     top: -20px;
     right: -12px;
@@ -43,31 +43,31 @@
     background-color: #f2f2f2;
     padding: 5px;
     border-radius: 50%;
-}
-@media only screen and (max-width: 768px) {
-  #chatButton {
-    bottom: 180px;
   }
-  #chatButton img {
-    height: 60px;
+  @media only screen and (max-width: 768px) {
+    #chatButton {
+      bottom: 180px;
+    }
+    #chatButton img {
+      height: 60px;
+    }
+    #chatIframe {
+      bottom: 60px;
+      right: 10px;
+    }
+    #chatIframe iframe {
+      width: 90vw;
+      height: 60vh;
+      max-width: 400px;
+      max-height: 500px;
+    }
   }
-  #chatIframe {
-    bottom: 60px;
-    right: 10px;
-  }
-  #chatIframe iframe {
-    width: 90vw;
-    height: 60vh;
-    max-width: 400px;
-    max-height: 500px;
-  }
-}
 </style>
 
 <link
   rel="stylesheet"
   href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
-/>
+>
 
 <div id="chatButton">
   <img
@@ -84,90 +84,85 @@
 </div>
 
 <script>
-const chatButton = document.getElementById('chatButton');
-const chatIframe = document.getElementById('chatIframe');
-const closeButton = document.getElementById('closeButton');
-const closeChatButton = document.getElementById('closeChatButton');
+  const chatButton = document.getElementById('chatButton');
+  const chatIframe = document.getElementById('chatIframe');
+  const closeButton = document.getElementById('closeButton');
+  const closeChatButton = document.getElementById('closeChatButton');
 
-const iframeSourceUrl = 'https://ai.squaretime.de/chat/?client_id=81a89725611412923a644a4047f079899673ecefecc1c4a8b991cb98962fc228';
-let iframeLoaded = false;
+  const iframeSourceUrl =
+    'https://ai.squaretime.de/chat/?client_id=81a89725611412923a644a4047f079899673ecefecc1c4a8b991cb98962fc228';
+  let iframeLoaded = false;
 
-chatButton.addEventListener('click', function() {
-  if (chatIframe.style.display === 'none') {
-    chatIframe.style.display = 'block';
-    if (!iframeLoaded) {
-      const iframe = document.createElement('iframe');
-      iframe.src = iframeSourceUrl;
-      iframe.frameBorder = 0;
-      iframe.style.width = '90vw';
-      iframe.style.height = '70vh';
-      iframe.style.maxWidth = '500px';
-      chatIframe.appendChild(iframe);
-      iframeLoaded = true;
+  chatButton.addEventListener('click', function () {
+    if (chatIframe.style.display === 'none') {
+      chatIframe.style.display = 'block';
+      if (!iframeLoaded) {
+        const iframe = document.createElement('iframe');
+        iframe.src = iframeSourceUrl;
+        iframe.frameBorder = 0;
+        iframe.style.width = '90vw';
+        iframe.style.height = '70vh';
+        iframe.style.maxWidth = '500px';
+        chatIframe.appendChild(iframe);
+        iframeLoaded = true;
+      }
+    } else {
+      chatIframe.style.display = 'none';
     }
-  } else {
+  });
+
+  closeButton.addEventListener('click', function () {
     chatIframe.style.display = 'none';
+  });
+
+  closeChatButton.addEventListener('click', function () {
+    chatButton.style.display = 'none'; 
+  });
+
+  closeChatButton.addEventListener('touchstart', function (e) {
+    e.preventDefault(); 
+    chatButton.style.display = 'none'; 
+  });
+
+  dragElement(chatButton);
+
+  function dragElement(elmnt) {
+    let pos1 = 0,
+      pos2 = 0,
+      pos3 = 0,
+      pos4 = 0;
+
+    elmnt.onmousedown = dragMouseDown;
+
+    elmnt.ontouchstart = dragMouseDown;
+
+    function dragMouseDown(e) {
+      e = e || window.event;
+      e.preventDefault();
+      pos3 = e.clientX || e.touches[0].clientX;
+      pos4 = e.clientY || e.touches[0].clientY;
+      document.onmouseup = closeDragElement;
+      document.onmousemove = elementDrag;
+      document.ontouchend = closeDragElement;
+      document.ontouchmove = elementDrag;
+    }
+
+    function elementDrag(e) {
+      e = e || window.event;
+      e.preventDefault();
+      pos1 = pos3 - (e.clientX || e.touches[0].clientX);
+      pos2 = pos4 - (e.clientY || e.touches[0].clientY);
+      pos3 = e.clientX || e.touches[0].clientX;
+      pos4 = e.clientY || e.touches[0].clientY;
+      elmnt.style.top = elmnt.offsetTop - pos2 + 'px';
+      elmnt.style.left = elmnt.offsetLeft - pos1 + 'px';
+    }
+
+    function closeDragElement() {
+      document.onmouseup = null;
+      document.onmousemove = null;
+      document.ontouchend = null;
+      document.ontouchmove = null;
+    }
   }
-});
-
-closeButton.addEventListener('click', function() {
-  chatIframe.style.display = 'none';
-});
-
-// 关闭聊天按钮事件
-closeChatButton.addEventListener('click', function() {
-  chatButton.style.display = 'none'; // 隐藏整个 chatButton
-});
-
-// 处理触摸事件
-closeChatButton.addEventListener('touchstart', function(e) {
-  e.preventDefault(); // 阻止默认事件
-  chatButton.style.display = 'none'; // 隐藏整个 chatButton
-});
-
-// Make the DIV element draggable
-dragElement(chatButton);
-
-function dragElement(elmnt) {
-  let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-
-  // Mouse events
-  elmnt.onmousedown = dragMouseDown;
-
-  // Touch events for mobile
-  elmnt.ontouchstart = dragMouseDown;
-
-  function dragMouseDown(e) {
-    e = e || window.event;
-    e.preventDefault();
-    // Get the mouse/touch cursor position at startup
-    pos3 = e.clientX || e.touches[0].clientX;
-    pos4 = e.clientY || e.touches[0].clientY;
-    document.onmouseup = closeDragElement;
-    document.onmousemove = elementDrag;
-    document.ontouchend = closeDragElement;
-    document.ontouchmove = elementDrag;
-  }
-
-  function elementDrag(e) {
-    e = e || window.event;
-    e.preventDefault();
-    // Calculate the new cursor position
-    pos1 = pos3 - (e.clientX || e.touches[0].clientX);
-    pos2 = pos4 - (e.clientY || e.touches[0].clientY);
-    pos3 = e.clientX || e.touches[0].clientX;
-    pos4 = e.clientY || e.touches[0].clientY;
-    // Set the element's new position
-    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-  }
-
-  function closeDragElement() {
-    // Stop moving when mouse/touch button is released
-    document.onmouseup = null;
-    document.onmousemove = null;
-    document.ontouchend = null;
-    document.ontouchmove = null;
-  }
-}
 </script>

@@ -8,7 +8,7 @@
     z-index: 100;
     pointer-events: none;
   }
-  
+
   .custom-discount-label-{{ block.id }} .discount-tag {
     background: {{ block.settings.bg_color }};
     padding: {{ block.settings.padding_vertical }}px;
@@ -20,7 +20,7 @@
     box-sizing: border-box;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
     pointer-events: auto;
-    
+
     {% if block.settings.shape == 'circle' %}
       border-radius: 50%;
       width: {{ block.settings.circle_size }}px;
@@ -36,7 +36,7 @@
       padding: {{ block.settings.padding_vertical }}px {{ block.settings.padding_horizontal }}px;
     {% endif %}
   }
-  
+
   .custom-discount-label-{{ block.id }} .small-text {
     font-size: {{ block.settings.small_size }}px;
     font-weight: 600;
@@ -46,7 +46,7 @@
     {% if block.settings.shape == 'circle' %}margin-top: -2px;{% endif %}
     color: {{ block.settings.small_text_color | default: block.settings.text_color | default: '#FFFFFF' }};
   }
-  
+
   .custom-discount-label-{{ block.id }} .large-text {
     font-size: {{ block.settings.large_size }}px;
     font-weight: 700;
@@ -54,7 +54,7 @@
     {% if block.settings.shape == 'circle' %}margin-top: 0;{% endif %}
     color: {{ block.settings.large_text_color | default: block.settings.text_color | default: '#FFFFFF' }};
   }
-  
+
   .custom-discount-label-{{ block.id }} .extra-small-text {
     font-size: {{ block.settings.extra_small_size }}px;
     font-weight: 500;

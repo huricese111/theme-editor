@@ -238,8 +238,6 @@
         </terms-agreement>
       {% endif %}
 
-      
-
       <div class="checkout-buttons{% if cart.items == empty %} hidden{% endif %}" data-merge-attributes="checkout-buttons">
         {% if section.settings.enable_direct_cart %}
           <a href="{{ routes.root_url | append: '/checkout' | replace: '//', '/' }}" class="btn btn--large btn--wide">{{ 'cart.summary.checkout' | t }}</a>
@@ -289,8 +287,6 @@
             <a class="{% if section.settings.empty_button_style != 'link' %}btn btn--{{ section.settings.empty_button_style }}{% else %}small-feature-link{% endif %} button-row__btn" href="{{ section.settings.empty_button_link }}">{{ section.settings.empty_button_text | escape }}</a>
           </div>
         {%- endif -%}
-
-       
       </div>
     </div>
   </cart-form>

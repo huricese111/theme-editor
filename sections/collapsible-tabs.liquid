@@ -1,13 +1,13 @@
-{%- assign lang_map = "de,fr,fi" | split: ',' -%}
-{%- assign lang_suffix = "" -%}
+{%- assign lang_map = 'de,fr,fi' | split: ',' -%}
+{%- assign lang_suffix = '' -%}
 {%- if lang_map contains request.locale.iso_code -%}
-  {%- assign lang_suffix = "_" | append: request.locale.iso_code -%}
+  {%- assign lang_suffix = '_' | append: request.locale.iso_code -%}
 {%- endif -%}
 
 <div class="container" {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
   <div class="collapsible-tabs">
     {% if section.settings.title != blank %}
-      {%- assign title_key = "title" | append: lang_suffix -%}
+      {%- assign title_key = 'title' | append: lang_suffix -%}
       <h3 class="collapsible-tabs__heading collapsible-tabs__content" id="faq-{{ section.settings.title | handle }}">
         {{ section.settings[title_key] | default: section.settings.title | escape }}
       </h3>
@@ -17,17 +17,18 @@
       <div class="collapsible-tabs__block" {{ block.shopify_attributes }}>
         {% if block.type == 'content' %}
           <div class="collapsible-tabs__text collapsible-tabs__content rte">
-            {%- assign content_key = "content" | append: lang_suffix -%}
+            {%- assign content_key = 'content' | append: lang_suffix -%}
             {{ block.settings[content_key] | default: block.settings.content }}
-            
+
             {{ block.settings.liquid_content }}
-            
+
             {% if block.settings.image != blank %}
-              {% render 'responsive-image',
-                 image: block.settings.image,
-                 alt: block.settings.title | escape,
-                 sizes: "100vw",
-                 class: "collapsible-tabs__image"
+              {%
+                render 'responsive-image',
+                image: block.settings.image,
+                alt: block.settings.title | escape,
+                sizes: "100vw",
+                class: "collapsible-tabs__image"
               %}
             {% endif %}
           </div>
@@ -40,35 +41,43 @@
           </div>
 
         {% elsif block.type == 'question' %}
-          {%- assign title_key = "title" | append: lang_suffix -%}
-          {%- assign answer_key = "answer" | append: lang_suffix -%}
-          {%- assign answer_2_key = "answer_2" | append: lang_suffix -%}
-          
+          {%- assign title_key = 'title' | append: lang_suffix -%}
+          {%- assign answer_key = 'answer' | append: lang_suffix -%}
+          {%- assign answer_2_key = 'answer_2' | append: lang_suffix -%}
+
           <div class="collapsible-tabs__tab">
             <details-disclosure>
-              <details class="disclosure" id="detail-{{ block.id }}" 
-                       aria-expanded="false" 
-                       data-accordion>
-                <summary class="disclosure__title" 
-                         role="button" 
-                         aria-controls="content-{{ block.id }}"
-                         aria-expanded="false">
+              <details
+                class="disclosure"
+                id="detail-{{ block.id }}"
+                aria-expanded="false"
+                data-accordion
+              >
+                <summary
+                  class="disclosure__title"
+                  role="button"
+                  aria-controls="content-{{ block.id }}"
+                  aria-expanded="false"
+                >
                   {{ block.settings[title_key] | default: block.settings.title }}
                 </summary>
-                <div id="content-{{ block.id }}" 
-                     class="disclosure__panel has-motion" 
-                     aria-labelledby="detail-{{ block.id }}">
+                <div
+                  id="content-{{ block.id }}"
+                  class="disclosure__panel has-motion"
+                  aria-labelledby="detail-{{ block.id }}"
+                >
                   <div class="disclosure__content rte">
                     {{ block.settings[answer_key] | default: block.settings.answer }}
-                    
+
                     {{ block.settings.liquid_content }}
-                    
+
                     {% if block.settings.image != blank %}
-                      {% render 'responsive-image',
-                         image: block.settings.image,
-                         alt: block.settings.title | escape,
-                         sizes: "100vw",
-                         class: "collapsible-tabs__image"
+                      {%
+                        render 'responsive-image',
+                        image: block.settings.image,
+                        alt: block.settings.title | escape,
+                        sizes: "100vw",
+                        class: "collapsible-tabs__image"
                       %}
                     {% endif %}
 
@@ -79,11 +88,12 @@
                     {% endif %}
 
                     {% if block.settings.image_2 != blank %}
-                      {% render 'responsive-image',
-                         image: block.settings.image_2,
-                         alt: block.settings.title | escape,
-                         sizes: "100vw",
-                         class: "collapsible-tabs__image"
+                      {%
+                        render 'responsive-image',
+                        image: block.settings.image_2,
+                        alt: block.settings.title | escape,
+                        sizes: "100vw",
+                        class: "collapsible-tabs__image"
                       %}
                     {% endif %}
                   </div>
@@ -108,11 +118,11 @@
     padding-right: 40px;
     cursor: pointer;
   }
-  
+
   details[open] .disclosure__title:after {
     transform: translateY(-50%) rotate(45deg);
   }
-  
+
   .collapsible-tabs__image {
     width: 100%;
     height: auto;
@@ -120,211 +130,231 @@
     border-radius: 4px;
     display: block;
   }
-  
+
   .disclosure__title:focus-visible {
     outline: 2px solid currentColor;
     outline-offset: 2px;
   }
 
   .collapsible-tabs {
-  max-width: var(--reading-container-width, 800px);
-  margin: var(--section-padding) auto;
-}
-.collapsible-tabs .disclosure {
-  margin: 0;
-  border: 0;
-}
+    max-width: var(--reading-container-width, 800px);
+    margin: var(--section-padding) auto;
+  }
+  .collapsible-tabs .disclosure {
+    margin: 0;
+    border: 0;
+  }
 
-.collapsible-tabs__tab {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-.collapsible-tabs__tab .disclosure__title {
-  padding-top: 20px;
-  padding-bottom: 20px;
-  border: 0;
-  font-size: 1.3em;
-}
-.collapsible-tabs__tab p:first-child {
-  margin-top: 0;
-}
-.collapsible-tabs__tab p:last-child {
-  margin-bottom: 0;
-}
+  .collapsible-tabs__tab {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  .collapsible-tabs__tab .disclosure__title {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border: 0;
+    font-size: 1.3em;
+  }
+  .collapsible-tabs__tab p:first-child {
+    margin-top: 0;
+  }
+  .collapsible-tabs__tab p:last-child {
+    margin-bottom: 0;
+  }
 
-.collapsible-tabs__heading {
-  margin-top: 40px;
-  margin-bottom: 20px;
-}
+  .collapsible-tabs__heading {
+    margin-top: 40px;
+    margin-bottom: 20px;
+  }
 
-.collapsible-tabs__text {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
+  .collapsible-tabs__text {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
 
-.collapsible-tabs__button {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
+  .collapsible-tabs__button {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
 </style>
 
 {% schema %}
-  {
-    "name": "Enhanced Collapsible tabs",
-    "class": "section-collapsible-tabs",
-    "disabled_on": {
-      "groups": ["aside"]
+{
+  "name": "Enhanced Collapsible tabs",
+  "class": "section-collapsible-tabs",
+  "disabled_on": {
+    "groups": ["aside"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading (Default)"
     },
-    "settings": [
-      {
-        "type": "text",
-        "id": "title",
-        "label": "Heading (Default)"
-      }, {
-        "type": "text",
-        "id": "title_de",
-        "label": "Heading German"
-      }, {
-        "type": "text",
-        "id": "title_fr",
-        "label": "Heading French"
-      }, {
-        "type": "text",
-        "id": "title_fi",
-        "label": "Heading Finnish"
-      }
-    ],
-    "blocks": [
-      {
-        "type": "question",
-        "name": "Question",
-        "settings": [
-          {
-            "type": "text",
-            "id": "title",
-            "label": "Question (Default)"
-          },
-          {
-            "type": "text",
-            "id": "title_de",
-            "label": "Question German"
-          },
-          {
-            "type": "text",
-            "id": "title_fr",
-            "label": "Question French"
-          },
-          {
-            "type": "text",
-            "id": "title_fi",
-            "label": "Question Finnish"
-          }, {
-            "type": "richtext",
-            "id": "answer",
-            "label": "Answer (Default)"
-          }, {
-            "type": "richtext",
-            "id": "answer_de",
-            "label": "Answer German"
-          }, {
-            "type": "richtext",
-            "id": "answer_fr",
-            "label": "Answer French"
-          }, {
-            "type": "richtext",
-            "id": "answer_fi",
-            "label": "Answer Finnish"
-          }, {
-            "type": "liquid",
-            "id": "liquid_content",
-            "label": "Custom Liquid Code"
-          }, {
-            "type": "image_picker",
-            "id": "image",
-            "label": "Panel Image"
-          }, {
-            "type": "richtext",
-            "id": "answer_2",
-            "label": "Additional Answer (Default)"
-          }, {
-            "type": "richtext",
-            "id": "answer_2_de",
-            "label": "Additional Answer German"
-          }, {
-            "type": "richtext",
-            "id": "answer_2_fr",
-            "label": "Additional Answer French"
-          }, {
-            "type": "richtext",
-            "id": "answer_2_fi",
-            "label": "Additional Answer Finnish"
-          }, {
-            "type": "image_picker",
-            "id": "image_2",
-            "label": "Additional Panel Image"
-          }
-        ]
-      }, {
-        "type": "content",
-        "name": "Paragraph",
-        "settings": [
-          {
-            "type": "richtext",
-            "id": "content",
-            "label": "Content (Default)"
-          },
-          {
-            "type": "richtext",
-            "id": "content_de",
-            "label": "Content German"
-          },
-          {
-            "type": "richtext",
-            "id": "content_fr",
-            "label": "Content French"
-          },
-          {
-            "type": "richtext",
-            "id": "content_fi",
-            "label": "Content Finnish"
-          }, {
-            "type": "liquid",
-            "id": "liquid_content",
-            "label": "Custom Liquid Code"
-          }, {
-            "type": "image_picker",
-            "id": "image",
-            "label": "Panel Image"
-          }
-        ]
-      }, {
-        "type": "button",
-        "name": "Button",
-        "settings": [
-          {
-            "type": "text",
-            "id": "title",
-            "label": "Label",
-            "default": "Button label"
-          }, {
-            "type": "url",
-            "id": "link",
-            "label": "Link"
-          }
-        ]
-      }
-    ],
-    "presets": [
-      {
-        "name": "Enhanced Collapsible tabs",
-        "settings": {},
-        "blocks": [
-          {
-            "type": "question"
-          }, {
-            "type": "question"
-          }
-        ]
-      }
-    ]
-  }
+    {
+      "type": "text",
+      "id": "title_de",
+      "label": "Heading German"
+    },
+    {
+      "type": "text",
+      "id": "title_fr",
+      "label": "Heading French"
+    },
+    {
+      "type": "text",
+      "id": "title_fi",
+      "label": "Heading Finnish"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Question (Default)"
+        },
+        {
+          "type": "text",
+          "id": "title_de",
+          "label": "Question German"
+        },
+        {
+          "type": "text",
+          "id": "title_fr",
+          "label": "Question French"
+        },
+        {
+          "type": "text",
+          "id": "title_fi",
+          "label": "Question Finnish"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer (Default)"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_de",
+          "label": "Answer German"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_fr",
+          "label": "Answer French"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_fi",
+          "label": "Answer Finnish"
+        },
+        {
+          "type": "liquid",
+          "id": "liquid_content",
+          "label": "Custom Liquid Code"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Panel Image"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_2",
+          "label": "Additional Answer (Default)"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_2_de",
+          "label": "Additional Answer German"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_2_fr",
+          "label": "Additional Answer French"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_2_fi",
+          "label": "Additional Answer Finnish"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_2",
+          "label": "Additional Panel Image"
+        }
+      ]
+    },
+    {
+      "type": "content",
+      "name": "Paragraph",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content (Default)"
+        },
+        {
+          "type": "richtext",
+          "id": "content_de",
+          "label": "Content German"
+        },
+        {
+          "type": "richtext",
+          "id": "content_fr",
+          "label": "Content French"
+        },
+        {
+          "type": "richtext",
+          "id": "content_fi",
+          "label": "Content Finnish"
+        },
+        {
+          "type": "liquid",
+          "id": "liquid_content",
+          "label": "Custom Liquid Code"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Panel Image"
+        }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "Button",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Label",
+          "default": "Button label"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Enhanced Collapsible tabs",
+      "settings": {},
+      "blocks": [
+        {
+          "type": "question"
+        },
+        {
+          "type": "question"
+        }
+      ]
+    }
+  ]
+}
 {% endschema %}

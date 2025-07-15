@@ -1,7 +1,7 @@
 {%- if block.settings.page != blank -%}
   {%- assign locale_iso = request.locale.iso_code | downcase -%}
   {%- assign default_text = block.settings.text | escape -%}
-  
+
   {%- if locale_iso == 'de' and block.settings.text_de != blank -%}
     {%- assign button_text = block.settings.text_de | escape -%}
   {%- elsif locale_iso == 'fr' and block.settings.text_fr != blank -%}
@@ -9,12 +9,19 @@
   {%- elsif locale_iso == 'fi' and block.settings.text_fi != blank -%}
     {%- assign button_text = block.settings.text_fi | escape -%}
   {%- else -%}
-    {%- assign button_text = default_text -%} 
+    {%- assign button_text = default_text -%}
   {%- endif -%}
 
-  <div class="lightly-spaced-row{% unless block.settings.show_in_quickbuy %} not-in-quickbuy{% endunless %}" {{ block.shopify_attributes }}>
+  <div
+    class="lightly-spaced-row{% unless block.settings.show_in_quickbuy %} not-in-quickbuy{% endunless %}"
+    {{ block.shopify_attributes }}
+  >
     <modal-opener class="no-js-hidden" data-modal="modal-{{ block.id }}">
-      <button type="button" class="{% if block.settings.style != 'link' %}btn btn--{{ block.settings.style }}{% else %}small-feature-link{% endif %}" aria-haspopup="dialog">
+      <button
+        type="button"
+        class="{% if block.settings.style != 'link' %}btn btn--{{ block.settings.style }}{% else %}small-feature-link{% endif %}"
+        aria-haspopup="dialog"
+      >
         {{ button_text }}
       </button>
     </modal-opener>
@@ -22,8 +29,8 @@
   </div>
 {%- endif -%}
 
-<style >
+<style>
   .modal__content {
     height: auto !important;
-}
+  }
 </style>

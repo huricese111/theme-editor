@@ -142,10 +142,10 @@
 <style>
   :root {
     --banner-height: 500px;
-    --mobile-banner-height: 400px; 
-    --jobrad-icon-width: 120px; 
+    --mobile-banner-height: 400px;
+    --jobrad-icon-width: 120px;
   }
-  
+
   .custom-footer-container {
     width: 100%;
     max-width: 100%;
@@ -159,32 +159,32 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 15px; 
+    gap: 15px;
     background-color: #ecf0f1;
     padding: 0 20px;
     width: 100%;
-    white-space: nowrap; 
+    white-space: nowrap;
   }
 
   .jobrad-link {
     display: flex;
     align-items: center;
-    gap: 15px; 
+    gap: 15px;
     text-decoration: none;
     color: inherit;
-    white-space: nowrap; 
+    white-space: nowrap;
   }
 
   .partnertext {
     font-size: clamp(16px, 2.5vw, 22px);
     margin: 0;
-    font-weight: 600; 
+    font-weight: 600;
     color: #333;
-    white-space: nowrap; 
+    white-space: nowrap;
   }
 
   .jobrad-icon {
-    min-width: var(--jobrad-icon-width); 
+    min-width: var(--jobrad-icon-width);
     width: 120px;
     max-height: auto;
     transition: transform 0.3s ease;
@@ -215,7 +215,7 @@
   }
 
   .footer-block::before {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
@@ -263,13 +263,13 @@
       flex-direction: row;
       height: auto;
       padding: 15px;
-      justify-content: center; 
-      overflow-x: auto; 
+      justify-content: center;
+      overflow-x: auto;
       overflow-y: hidden;
     }
-    
+
     .jobrad-link {
-      min-width: max-content; 
+      min-width: max-content;
     }
 
     .footer-blocks-wrapper {
@@ -285,50 +285,57 @@
 
     .footer-blocks-wrapper.has-3-blocks {
       display: grid;
-      grid-template-areas: 
-        "first first"
-        "second third";
+      grid-template-areas:
+        'first first'
+        'second third';
       grid-template-columns: 1fr 1fr;
       grid-template-rows: var(--mobile-banner-height) var(--mobile-banner-height);
     }
-    
+
     .footer-blocks-wrapper.has-3-blocks > .footer-block:nth-child(1) {
       grid-area: first;
       height: var(--mobile-banner-height);
     }
-    
+
     .footer-blocks-wrapper.has-3-blocks > .footer-block:nth-child(2) {
       grid-area: second;
       height: var(--mobile-banner-height);
     }
-    
+
     .footer-blocks-wrapper.has-3-blocks > .footer-block:nth-child(3) {
       grid-area: third;
       height: var(--mobile-banner-height);
     }
-    
+
     .custom-button {
       font-size: clamp(16px, 4vw, 18px);
       padding: 15px 25px;
       min-width: 180px;
     }
-    
+
     .jobrad-icon {
-      min-height: 50px; 
+      min-height: 50px;
     }
   }
 </style>
 
 <div class="custom-footer-container">
-  {% if section.settings.show_jobrad_banner and localization.country.iso_code == 'DE' or localization.country.iso_code == 'AT' %}
+  {% if section.settings.show_jobrad_banner
+    and localization.country.iso_code == 'DE'
+    or localization.country.iso_code == 'AT'
+  %}
     <div class="custom-top-banner">
       <a href="{{ section.settings.jobrad_url }}" class="jobrad-link">
         <span class="partnertext">
           {% case request.locale.iso_code %}
-            {% when 'de' %}{{ section.settings.partner_text_de | default: "Partner von" }}
-            {% when 'fr' %}{{ section.settings.partner_text_fr | default: "Partenaire de" }}
-            {% when 'fi' %}{{ section.settings.partner_text_fi | default: "Kumppani" }}
-            {% else %}{{ section.settings.partner_text_en | default: "Partner of" }}
+            {% when 'de' -%}
+              {{- section.settings.partner_text_de | default: 'Partner von' }}
+            {% when 'fr' -%}
+              {{- section.settings.partner_text_fr | default: 'Partenaire de' }}
+            {% when 'fi' -%}
+              {{- section.settings.partner_text_fi | default: 'Kumppani' }}
+            {% else -%}
+              {{- section.settings.partner_text_en | default: 'Partner of' }}
           {% endcase %}
         </span>
         <div class="jobrad-icon">
@@ -340,35 +347,43 @@
 
   <div class="footer-blocks-wrapper {% if section.blocks.size == 3 %}has-3-blocks{% endif %}">
     {% for block in section.blocks %}
-      <div class="footer-block" 
-           {% if block.settings.background_image %}
-             style="background-image: url({{ block.settings.background_image | img_url: '800x' }});"
-           {% else %}
-             {% if forloop.index == 1 %}
-               style="background-image: url({{ 'HEPHA-contact-form.jpg' | asset_url }});"
-             {% elsif forloop.index == 2 %}
-               style="background-image: url({{ 'HEPHA_Test_Ride.jpg' | asset_url }});"
-             {% elsif forloop.index == 3 %}
-               style="background-image: url({{ 'RUD0599_1.jpg' | asset_url }});"
-             {% endif %}
-           {% endif %}>
+      <div
+        class="footer-block"
+        {% if block.settings.background_image %}
+          style="background-image: url({{ block.settings.background_image | img_url: '800x' }});"
+        {% else %}
+          {% if forloop.index == 1 %}
+            style="background-image: url({{ 'HEPHA-contact-form.jpg' | asset_url }});"
+          {% elsif forloop.index == 2 %}
+            style="background-image: url({{ 'HEPHA_Test_Ride.jpg' | asset_url }});"
+          {% elsif forloop.index == 3 %}
+            style="background-image: url({{ 'RUD0599_1.jpg' | asset_url }});"
+          {% endif %}
+        {% endif %}
+      >
         <div class="block-content">
-          <a class="custom-button" 
-             href="{{ block.settings.button_url }}"
-             style="background-color: {{ block.settings.button_color }};"
-             aria-label="
-               {% case request.locale.iso_code %}
-                 {% when 'de' %}{{ block.settings.button_text_de }}
-                 {% when 'fr' %}{{ block.settings.button_text_fr }}
-                 {% when 'fi' %}{{ block.settings.button_text_fi }}
-                 {% else %}{{ block.settings.button_text_en }}
-               {% endcase %}
-             ">
+          <a
+            class="custom-button"
+            href="{{ block.settings.button_url }}"
+            style="background-color: {{ block.settings.button_color }};"
+            aria-label="
+              {% case request.locale.iso_code %}
+                {% when 'de' %}{{ block.settings.button_text_de }}
+                {% when 'fr' %}{{ block.settings.button_text_fr }}
+                {% when 'fi' %}{{ block.settings.button_text_fi }}
+                {% else %}{{ block.settings.button_text_en }}
+              {% endcase %}
+            "
+          >
             {% case request.locale.iso_code %}
-              {% when 'de' %}{{ block.settings.button_text_de }}
-              {% when 'fr' %}{{ block.settings.button_text_fr }}
-              {% when 'fi' %}{{ block.settings.button_text_fi }}
-              {% else %}{{ block.settings.button_text_en }}
+              {% when 'de' -%}
+                {{- block.settings.button_text_de }}
+              {% when 'fr' -%}
+                {{- block.settings.button_text_fr }}
+              {% when 'fi' -%}
+                {{- block.settings.button_text_fi }}
+              {% else -%}
+                {{- block.settings.button_text_en }}
             {% endcase %}
           </a>
         </div>

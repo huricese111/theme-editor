@@ -17,7 +17,6 @@
   }
 
   @media (max-width: 768px) {
-
     .custom-announcement-button,
     .custom-close {
       display: none;
@@ -27,11 +26,13 @@
       font-size: 14px;
     }
   }
-
 </style>
 
-
-{% if section.blocks.size > 0 or section.settings.enable_language_selector or section.settings.enable_country_selector or section.settings.menu != blank %}
+{% if section.blocks.size > 0
+  or section.settings.enable_language_selector
+  or section.settings.enable_country_selector
+  or section.settings.menu != blank
+%}
   {%- liquid
     assign longest_announcement = 0
     assign number_of_blocks = 0
@@ -45,43 +46,44 @@
   -%}
   <announcement-bar
     id="section-id-{{ section.id }}"
-    class="announcement-bar
+    class="
+      announcement-bar
       {%- if section.blocks.size > 0 %} announcement-bar--with-announcement{% endif -%}
       {%- if longest_announcement > 45 and section.settings.menu != blank %} announcement-bar--tablet-wrap{% endif -%}
-      "
-    {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
+    "
+    {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}
+  >
     {% style %}
-      {%- liquid
-        assign bg_color = section.settings.announcement_bar_col
-        assign bg_gradient = section.settings.announcement_bar_gradient
-        assign text_color = section.settings.announcement_text_col
-        if section.blocks.size > 0 and section.blocks.first.settings.use_custom_colors
-          assign bg_color = section.blocks.first.settings.bg_color
-          assign bg_gradient = section.blocks.first.settings.bg_gradient
-          assign text_color = section.blocks.first.settings.text_color
-        endif
--%}
-      #section-id-{{ section.id }} {
-        --bg-color: {{ bg_color }};
-        --bg-gradient: {{ bg_gradient }};
-        --heading-color: {{ text_color.rgb }};
-        --text-color: {{ text_color.rgb }};
-        --link-color: {{ text_color.rgb }};
-        --announcement-font-size: {{ section.settings.message_font_size }}px;
-      }
+            {%- liquid
+              assign bg_color = section.settings.announcement_bar_col
+              assign bg_gradient = section.settings.announcement_bar_gradient
+              assign text_color = section.settings.announcement_text_col
+              if section.blocks.size > 0 and section.blocks.first.settings.use_custom_colors
+                assign bg_color = section.blocks.first.settings.bg_color
+                assign bg_gradient = section.blocks.first.settings.bg_gradient
+                assign text_color = section.blocks.first.settings.text_color
+              endif
+      -%}
+            #section-id-{{ section.id }} {
+              --bg-color: {{ bg_color }};
+              --bg-gradient: {{ bg_gradient }};
+              --heading-color: {{ text_color.rgb }};
+              --text-color: {{ text_color.rgb }};
+              --link-color: {{ text_color.rgb }};
+              --announcement-font-size: {{ section.settings.message_font_size }}px;
+            }
     {% endstyle %}
     {%- for block in section.blocks offset: 1 -%}
       <div
         class="announcement-bg announcement-bg--inactive absolute inset-0"
         data-index="{{ forloop.index }}"
-        style="background:{% if block.settings.use_custom_colors %}{{- block.settings.bg_gradient | default: block.settings.bg_color }}{% else %}{{- section.settings.announcement_bar_gradient | default: section.settings.announcement_bar_col }}{% endif %}"></div>
+        style="background:{% if block.settings.use_custom_colors %}{{- block.settings.bg_gradient | default: block.settings.bg_color }}{% else %}{{- section.settings.announcement_bar_gradient | default: section.settings.announcement_bar_col }}{% endif %}"
+      ></div>
     {%- endfor -%}
     <div class="container container--no-max relative">
       <div class="announcement-bar__left desktop-only">
         {% if section.settings.show_social_icons %}
-          {%- render 'social-media'
-            , icon: settings.social_custom_icon
-            , icon_height: 20 -%}
+          {%- render 'social-media', icon: settings.social_custom_icon, icon_height: 20 -%}
         {% endif %}
       </div>
       <div class="announcement-bar__middle">
@@ -90,7 +92,7 @@
             {%- for block in section.blocks -%}
               {%- liquid
                 if block.settings.show_countdown
-                  assign now = "now" | date: '%Y-%m-%dT%H:%M'
+                  assign now = 'now' | date: '%Y-%m-%dT%H:%M'
                   if block.settings.end_date != blank
                     assign end_date = block.settings.end_date
                     if block.settings.end_time != blank
@@ -98,50 +100,66 @@
                     endif
                     assign end_date = end_date | date: '%Y-%m-%dT%H:%M'
                   else
-                    assign now_split = now | split: "T"
-                    assign end_date = now_split.first | append: "T23:59" | date: '%Y-%m-%dT%H:%M'
+                    assign now_split = now | split: 'T'
+                    assign end_date = now_split.first | append: 'T23:59' | date: '%Y-%m-%dT%H:%M'
                   endif
                   if block.settings.hide_on_end and end_date < now
                     continue
                   endif
                 endif
                 assign lang = request.locale.iso_code
-                assign text_key = "text_" | append: lang
-                assign btn_key = "unique_button_text_" | append: lang
+                assign text_key = 'text_' | append: lang
+                assign btn_key = 'unique_button_text_' | append: lang
                 assign announcement_text = block.settings[text_key] | default: block.settings.text
                 assign button_text = block.settings[btn_key] | default: block.settings.unique_button_text
               -%}
               <div
                 class="announcement{% if first_announcement_found %} announcement--inactive{% endif %}"
                 style="{% if block.settings.use_custom_colors %}--heading-color:{{ block.settings.text_color.rgb }};--text-color:{{ block.settings.text_color.rgb }};--link-color:{{ block.settings.text_color.rgb }};{% else %}--heading-color:{{ section.settings.announcement_text_col.rgb }};--text-color:{{ section.settings.announcement_text_col.rgb }};--link-color:{{ section.settings.announcement_text_col.rgb }};{% endif %}"
-                {{ block.shopify_attributes }}>
+                {{ block.shopify_attributes }}
+              >
                 {%- assign first_announcement_found = true -%}
                 <div class="announcement__text">
                   {% if block.settings.show_countdown and end_date > now %}
                     <script src="{{ 'countdown-timer.js' | asset_url }}" defer></script>
                     <span class="countdown-font-{{ block.settings.number_font }} announcement-text-separation-{{ block.settings.countdown_separator }}">
-                      {% render 'countdown-timer'
-                        , end_date: block.settings.end_date
-                        , end_time: block.settings.end_time
-                        , end_midnight: true
-                        , hide_on_end: true
-                        , show_labels: true
+                      {% render 'countdown-timer',
+                        end_date: block.settings.end_date,
+                        end_time: block.settings.end_time,
+                        end_midnight: true,
+                        hide_on_end: true,
+                        show_labels: true
                       %}
                     </span>
                   {% endif %}
-                  <a href="{{ block.settings.unique_button_link }}" style="text-decoration: none; margin-left:8px;">{{ announcement_text }}</a>
+                  <a href="{{ block.settings.unique_button_link }}" style="text-decoration: none; margin-left:8px;">
+                    {{- announcement_text -}}
+                  </a>
                   <a
                     href="{{ block.settings.unique_button_link }}"
                     class="custom-announcement-button"
                     style="background-color:{{ block.settings.unique_button_color }};color:white;margin-left:20px;text-decoration:none;padding:6px 10px;font-size:12px;"
-                    data-localize="{{ block.settings.unique_button_text }}">{{ button_text }} &#8594;</a>
+                    data-localize="{{ block.settings.unique_button_text }}"
+                  >
+                    {{- button_text }} &#8594;</a
+                  >
                 </div>
               </div>
             {%- endfor -%}
           </div>
           <div class="announcement-bar__announcement-controller">
-            <button class="announcement-button announcement-button--previous" aria-label="{{ 'general.slider.previous' | t | escape }}">{% render 'icon-chevron-left' %}</button>
-            <button class="announcement-button announcement-button--next" aria-label="{{ 'general.slider.next' | t | escape }}">{% render 'icon-chevron-right' %}</button>
+            <button
+              class="announcement-button announcement-button--previous"
+              aria-label="{{ 'general.slider.previous' | t | escape }}"
+            >
+              {% render 'icon-chevron-left' %}
+            </button>
+            <button
+              class="announcement-button announcement-button--next"
+              aria-label="{{ 'general.slider.next' | t | escape }}"
+            >
+              {% render 'icon-chevron-right' %}
+            </button>
           </div>
         {%- endif -%}
       </div>
@@ -155,10 +173,7 @@
         {% endif %}
         {% if section.settings.enable_language_selector or section.settings.enable_country_selector %}
           <div class="header-localization">
-            {% render 'localization-form'
-              , id: 'annbar-localization'
-              , hide_labels: true
-              , promote_popular: true %}
+            {% render 'localization-form', id: 'annbar-localization', hide_labels: true, promote_popular: true %}
           </div>
         {% endif %}
       </div>
@@ -167,202 +182,232 @@
 {%- endif -%}
 
 {% schema %}
-  {
-    "name": "Announcement bar",
-    "class": "section-announcement-bar",
-    "settings": [
-      {
-        "type": "range",
-        "id": "message_font_size",
-        "min": 11,
-        "max": 18,
-        "step": 1,
-        "unit": "px",
-        "label": "Announcement font size",
-        "default": 14
-      },
-      {
-        "type": "color",
-        "id": "announcement_bar_col",
-        "label": "Background color",
-        "default": "#4a4a4a"
-      },
-      {
-        "type": "color_background",
-        "id": "announcement_bar_gradient",
-        "label": "Background gradient (optional)"
-      },
-      {
-        "type": "color",
-        "id": "announcement_text_col",
-        "label": "Text color",
-        "default": "#ffffff"
-      }, {
-        "type": "header",
-        "content": "Links"
-      }, {
-        "type": "paragraph",
-        "content": "Links, social media icons, and localization options will show in the menu on mobile"
-      }, {
-        "type": "checkbox",
-        "id": "show_social_icons",
-        "label": "Show social media links",
-        "default": true
-      }, {
-        "type": "link_list",
-        "id": "menu",
-        "label": "Menu",
-        "info": "This menu won't show dropdown items"
-      }, {
-        "type": "header",
-        "content": "Country/Region Selector",
-        "info": "To add a country/region, go to your [payment settings.](/admin/settings/payments)"
-      }, {
-        "type": "checkbox",
-        "id": "enable_country_selector",
-        "label": "Enable country/region selector",
-        "default": true
-      }, {
-        "type": "header",
-        "content": "Language Selector",
-        "info": "To add a language, go to your [language settings.](/admin/settings/languages)"
-      }, {
-        "type": "checkbox",
-        "id": "enable_language_selector",
-        "label": "Enable language selector",
-        "default": true
-      }
-    ],
-    "blocks": [
-      {
-        "type": "announcement",
-        "name": "Announcement",
-        "settings": [
-          {
-            "type": "inline_richtext",
-            "id": "text",
-            "label": "Text"
-          },
-          {
-            "type": "inline_richtext",
-            "id": "text_de",
-            "label": "Text DE"
-          },
-          {
-            "type": "inline_richtext",
-            "id": "text_fr",
-            "label": "Text FR"
-          },
-          {
-            "type": "inline_richtext",
-            "id": "text_fi",
-            "label": "Text FI"
-          }, {
-            "type": "url",
-            "id": "unique_button_link",
-            "label": "Unique Button Link"
-          }, {
-            "type": "text",
-            "id": "unique_button_text",
-            "label": "Unique Button Text"
-          }, {
-            "type": "text",
-            "id": "unique_button_text_de",
-            "label": "Unique Button Text DE"
-          }, {
-            "type": "text",
-            "id": "unique_button_text_fr",
-            "label": "Unique Button Text FR"
-          }, {
-            "type": "text",
-            "id": "unique_button_text_fi",
-            "label": "Unique Button Text FI"
-          }, {
-            "type": "color",
-            "id": "unique_button_color",
-            "label": "Unique Button Color"
-          }, {
-            "type": "header",
-            "content": "Countdown timer"
-          }, {
-            "type": "checkbox",
-            "id": "show_countdown",
-            "label": "Show countdown timer",
-            "default": false
-          }, {
-            "type": "checkbox",
-            "id": "hide_on_end",
-            "label": "Hide the announcement when the date and time elapses",
-            "default": false
-          }, {
-            "type": "text",
-            "id": "end_date",
-            "label": "End date",
-            "info": "Required. Format: YYYY-MM-DD."
-          }, {
-            "type": "text",
-            "id": "end_time",
-            "label": "End time (optional)",
-            "info": "Format: 17:00 (24 hour clock). Uses the store's timezone."
-          }, {
-            "type": "select",
-            "id": "number_font",
-            "label": "Number font",
-            "options": [
-              {
-                "label": "Text font",
-                "value": "base"
-              }, {
-                "label": "Heading font",
-                "value": "heading"
-              }
-            ],
-            "default": "base"
-          }, {
-            "type": "select",
-            "id": "countdown_separator",
-            "label": "Separation style",
-            "options": [
-              {
-                "label": "Box",
-                "value": "box"
-              }, {
-                "label": "Dash",
-                "value": "dash"
-              }, {
-                "label": "Dot",
-                "value": "dot"
-              }, {
-                "label": "Space",
-                "value": "space"
-              }
-            ],
-            "default": "box"
-          }, {
-            "type": "header",
-            "content": "Style"
-          }, {
-            "type": "checkbox",
-            "id": "use_custom_colors",
-            "label": "Use custom colors",
-            "default": false
-          }, {
-            "type": "color",
-            "id": "bg_color",
-            "label": "Background color",
-            "default": "#4a4a4a"
-          }, {
-            "type": "color_background",
-            "id": "bg_gradient",
-            "label": "Background gradient (optional)"
-          }, {
-            "type": "color",
-            "id": "text_color",
-            "label": "Text color",
-            "default": "#ffffff"
-          }
-        ]
-      }
-    ]
-  }
+{
+  "name": "Announcement bar",
+  "class": "section-announcement-bar",
+  "settings": [
+    {
+      "type": "range",
+      "id": "message_font_size",
+      "min": 11,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Announcement font size",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "announcement_bar_col",
+      "label": "Background color",
+      "default": "#4a4a4a"
+    },
+    {
+      "type": "color_background",
+      "id": "announcement_bar_gradient",
+      "label": "Background gradient (optional)"
+    },
+    {
+      "type": "color",
+      "id": "announcement_text_col",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Links"
+    },
+    {
+      "type": "paragraph",
+      "content": "Links, social media icons, and localization options will show in the menu on mobile"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social_icons",
+      "label": "Show social media links",
+      "default": true
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "info": "This menu won't show dropdown items"
+    },
+    {
+      "type": "header",
+      "content": "Country/Region Selector",
+      "info": "To add a country/region, go to your [payment settings.](/admin/settings/payments)"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_country_selector",
+      "label": "Enable country/region selector",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Language Selector",
+      "info": "To add a language, go to your [language settings.](/admin/settings/languages)"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_language_selector",
+      "label": "Enable language selector",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "announcement",
+      "name": "Announcement",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text_de",
+          "label": "Text DE"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text_fr",
+          "label": "Text FR"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text_fi",
+          "label": "Text FI"
+        },
+        {
+          "type": "url",
+          "id": "unique_button_link",
+          "label": "Unique Button Link"
+        },
+        {
+          "type": "text",
+          "id": "unique_button_text",
+          "label": "Unique Button Text"
+        },
+        {
+          "type": "text",
+          "id": "unique_button_text_de",
+          "label": "Unique Button Text DE"
+        },
+        {
+          "type": "text",
+          "id": "unique_button_text_fr",
+          "label": "Unique Button Text FR"
+        },
+        {
+          "type": "text",
+          "id": "unique_button_text_fi",
+          "label": "Unique Button Text FI"
+        },
+        {
+          "type": "color",
+          "id": "unique_button_color",
+          "label": "Unique Button Color"
+        },
+        {
+          "type": "header",
+          "content": "Countdown timer"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_countdown",
+          "label": "Show countdown timer",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hide_on_end",
+          "label": "Hide the announcement when the date and time elapses",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "end_date",
+          "label": "End date",
+          "info": "Required. Format: YYYY-MM-DD."
+        },
+        {
+          "type": "text",
+          "id": "end_time",
+          "label": "End time (optional)",
+          "info": "Format: 17:00 (24 hour clock). Uses the store's timezone."
+        },
+        {
+          "type": "select",
+          "id": "number_font",
+          "label": "Number font",
+          "options": [
+            {
+              "label": "Text font",
+              "value": "base"
+            },
+            {
+              "label": "Heading font",
+              "value": "heading"
+            }
+          ],
+          "default": "base"
+        },
+        {
+          "type": "select",
+          "id": "countdown_separator",
+          "label": "Separation style",
+          "options": [
+            {
+              "label": "Box",
+              "value": "box"
+            },
+            {
+              "label": "Dash",
+              "value": "dash"
+            },
+            {
+              "label": "Dot",
+              "value": "dot"
+            },
+            {
+              "label": "Space",
+              "value": "space"
+            }
+          ],
+          "default": "box"
+        },
+        {
+          "type": "header",
+          "content": "Style"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_custom_colors",
+          "label": "Use custom colors",
+          "default": false
+        },
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Background color",
+          "default": "#4a4a4a"
+        },
+        {
+          "type": "color_background",
+          "id": "bg_gradient",
+          "label": "Background gradient (optional)"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text color",
+          "default": "#ffffff"
+        }
+      ]
+    }
+  ]
+}
 {% endschema %}

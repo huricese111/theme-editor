@@ -12,15 +12,11 @@
     </div>
     <div class="accordion-content">
       <div class="accordion-body">
-        {% render 'leasing-partner'
-          ,
- jobrad_url: block.settings.jobrad_url
-          ,
- bikeleasing_url: block.settings.bikeleasing_url
-          ,
- deutsche_url: block.settings.deutsche_url
-          ,
- businessbike_url: block.settings.businessbike_url
+        {% render 'leasing-partner',
+          jobrad_url: block.settings.jobrad_url,
+          bikeleasing_url: block.settings.bikeleasing_url,
+          deutsche_url: block.settings.deutsche_url,
+          businessbike_url: block.settings.businessbike_url
         %}
       </div>
     </div>
@@ -240,52 +236,52 @@
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     const accordions = document.querySelectorAll('.accordion-container');
-  
+
     accordions.forEach((accordion) => {
       const header = accordion.querySelector('.accordion-header');
-  
+
       header.addEventListener('click', function () {
         const wasActive = accordion.classList.contains('active');
         accordion.classList.toggle('active');
-  
+
         if (window.innerWidth > 1024 && !wasActive) {
           setTimeout(() => {
             const rightColumn = document.querySelector('.product-details-section');
-  
+
             const accordionRect = accordion.getBoundingClientRect();
             const columnRect = rightColumn.getBoundingClientRect();
-  
+
             const panelBottomRelativeToColumn = accordionRect.bottom - columnRect.top;
-  
+
             if (panelBottomRelativeToColumn > rightColumn.clientHeight) {
               const scrollDistance = panelBottomRelativeToColumn - rightColumn.clientHeight + 20;
-  
+
               smoothScroll(rightColumn, scrollDistance, 300);
             }
           }, 300);
         }
       });
     });
-  
+
     function smoothScroll(element, distance, duration) {
       const start = element.scrollTop;
       const startTime = performance.now();
-  
+
       function scrollStep(timestamp) {
         const elapsed = timestamp - startTime;
         const progress = Math.min(elapsed / duration, 1);
         const easeProgress = easeOutQuad(progress);
-  
+
         element.scrollTop = start + distance * easeProgress;
-  
+
         if (progress < 1) {
           requestAnimationFrame(scrollStep);
         }
       }
-  
+
       requestAnimationFrame(scrollStep);
     }
-  
+
     function easeOutQuad(t) {
       return t * (2 - t);
     }

@@ -4,29 +4,37 @@
   {% if localization.country.iso_code == 'DE' and discounts.discount_2 %}
     <div class="discount-label">{{ discounts.discount_2 }}</div>
   {% endif %}
-  
+
   {% if discounts.discount %}
     <div class="discount-label">{{ discounts.discount }}</div>
   {% endif %}
 </div>
 
 {% if product.metafields.custom.discount_image %}
-<div class="discount-badge discount-badge-left"> 
-     <img src="{{ product.metafields.custom.discount_image | file_url }}" alt="{{ product.title }}" style=" aspect-ratio: auto; height: 50px; padding: 0; border-radius: 10px; " > 
-</div>
+  <div class="discount-badge discount-badge-left">
+    <img
+      src="{{ product.metafields.custom.discount_image | file_url }}"
+      alt="{{ product.title }}"
+      style=" aspect-ratio: auto; height: 50px; padding: 0; border-radius: 10px; "
+    >
+  </div>
 {% endif %}
 
 {% if product.metafields.custom.discount_image2 %}
-<div class="discount-badge discount-badge-right"> 
-     <img src="{{ product.metafields.custom.discount_image2 | file_url }}" alt="{{ product.title }}" style="aspect-ratio: auto; height: 120px" >
-</div> 
+  <div class="discount-badge discount-badge-right">
+    <img
+      src="{{ product.metafields.custom.discount_image2 | file_url }}"
+      alt="{{ product.title }}"
+      style="aspect-ratio: auto; height: 120px"
+    >
+  </div>
 {% endif %}
 
 <style>
   .discount-labels-container {
     display: flex;
-    flex-direction: row; 
-    align-items: flex-start; 
+    flex-direction: row;
+    align-items: flex-start;
     gap: 8px;
     position: absolute;
     top: 10px;
@@ -41,7 +49,7 @@
     padding: 5px 10px;
     font-weight: bold;
     display: inline-block;
-    white-space: nowrap; 
+    white-space: nowrap;
     border-radius: 5px;
   }
 
@@ -49,21 +57,21 @@
     position: absolute;
     z-index: 2;
   }
-  
+
   .discount-badge-left {
     top: 10px;
     left: 10px;
     max-width: 120px;
     max-height: 60px;
   }
-  
+
   .discount-badge-right {
     top: 0;
     right: 0;
     max-width: 120px;
     max-height: 140px;
   }
-  
+
   .discount-badge img {
     display: block;
     width: 100%;

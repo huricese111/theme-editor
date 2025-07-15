@@ -5,23 +5,7 @@
   .menu-promotion__description {
     font-size: 12px;
   }
-  .discount-label {
-    position: relative !important;
-    font-size: 12px;
-    background-color: #ffd200;
-    color: black;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-weight: bold;
-    z-index: 2;
-  }
-  .discount_image {
-    position: relative;
-    max-width: 70px;
-    max-height: 30px;
-    height: 100%;
-    object-fit: contain;
-  }
+
   @media (min-width: 1000px) {
     .navigation .navigation__column {
       flex: 1 0 20%;
@@ -257,7 +241,6 @@
                     request_locale: request.locale.iso_code,
                     country_iso: localization.country.iso_code
                   %}
-                  liquid
                 {%- endif -%}
               </ul>
             </div>
