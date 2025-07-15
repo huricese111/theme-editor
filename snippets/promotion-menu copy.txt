@@ -1,0 +1,489 @@
+{%- if small_promo_count > 0 -%}
+  {%- if mobile == false -%}
+    {%- for block in section.blocks -%}
+      {%- assign dropdown_link_title_sanitised = block.settings.dropdown_link_title | downcase | strip -%}
+      {%- if dropdown_link_title_sanitised == link_title_sanitised and block.type == 'menu-promotion-small' -%}
+        <li
+          class="desktop-only navigation__column navigation__column--promotion"
+          {{ block.shopify_attributes }}
+        >
+          <div
+            style="gap: 8px;position: relative;z-index: 1;display: flex;justify-content: space-between;"
+          >
+            {% if localization.country.iso_code == 'DE' %}
+              {%- if block.settings.discount_image != blank -%}
+                <div class="discount_image">
+                  <img
+                    src="{{ block.settings.discount_image | img_url: 'original' }}"
+                    style="
+                      aspect-ratio: auto;
+                      height: 30px;
+                      padding: 0;
+                      aspect-ratio: auto !important;
+                      border-radius: 10px !important;
+                    "
+                  >
+                </div>
+              {% else %}
+                <div style="height:1px;"></div>
+              {% endif %}
+            {% else %}
+              <div style="height:1px;"></div>
+            {% endif %}
+
+            {%- if block.settings.discount_label != blank -%}
+              <div class="discount-label">
+                {% if request.locale.iso_code == 'de' %}
+                  {{ block.settings.discount_label_de }}
+                {% elsif request.locale.iso_code == 'fr' %}
+                  {{ block.settings.discount_label_fr }}
+                {% elsif request.locale.iso_code == 'fi' %}
+                  {{ block.settings.discount_label_fi }}
+                {% else %}
+                  {{ block.settings.discount_label }}
+                {% endif %}
+              </div>
+            {% endif %}
+
+            {% if block.settings.discount_label_showblank %}
+              <div style="height:28px;"></div>
+            {% endif %}
+          </div>
+
+          <div class="menu-promotion">
+            <div class="menu-promotion__text" style="margin-bottom: 10px;font-size: 18px;">
+              {% if request.locale.iso_code == 'de' %}
+                {{ block.settings.title_big_de }}
+              {% elsif request.locale.iso_code == 'fr' %}
+                {{ block.settings.title_big_fr }}
+              {% elsif request.locale.iso_code == 'fi' %}
+                {{ block.settings.title_big_fi }}
+              {% else %}
+                {{ block.settings.title_big }}
+              {% endif %}
+            </div>
+            {%- if block.settings.link_url != blank -%}
+              <a class="menu-promotion__link" href="{{ block.settings.link_url }}">
+            {%- endif -%}
+            <div class="menu-promotion__image">
+              {%- render 'image' with block.settings.image, size_cols_desktop: 4, loading: 'manual' -%}
+            </div>
+            {%- if block.settings.title != blank -%}
+              <div class="menu-promotion__text">
+                {% if request.locale.iso_code == 'de' %}
+                  {{ block.settings.title_de }}
+                {% elsif request.locale.iso_code == 'fr' %}
+                  {{ block.settings.title_fr }}
+                {% elsif request.locale.iso_code == 'fi' %}
+                  {{ block.settings.title_fi }}
+                {% else %}
+                  {{ block.settings.title }}
+                {% endif %}
+              </div>
+            {%- endif -%}
+            {%- if block.settings.description != blank -%}
+              <div class="menu-promotion__description">
+                {% if request.locale.iso_code == 'de' %}
+                  {{ block.settings.description_de }}
+                {% elsif request.locale.iso_code == 'fr' %}
+                  {{ block.settings.description_fr }}
+                {% elsif request.locale.iso_code == 'fi' %}
+                  {{ block.settings.description_fi }}
+                {% else %}
+                  {{ block.settings.description }}
+                {% endif %}
+              </div>
+            {%- endif -%}
+            {%- if block.settings.link_url != blank -%}
+              </a>
+            {%- endif -%}
+
+            {%- if block.settings.link_url_1b != blank -%}
+              <a class="menu-promotion__link" href="{{ block.settings.link_url_1b }}">
+            {%- endif -%}
+            <div class="menu-promotion__image">
+              {%- render 'image' with block.settings.image_1b, size_cols_desktop: 4, loading: 'manual' -%}
+            </div>
+            {%- if block.settings.title_1b != blank -%}
+              <div class="menu-promotion__text">
+                {% if request.locale.iso_code == 'de' %}
+                  {{ block.settings.title_de_1b }}
+                {% elsif request.locale.iso_code == 'fr' %}
+                  {{ block.settings.title_fr_1b }}
+                {% elsif request.locale.iso_code == 'fi' %}
+                  {{ block.settings.title_fi_1b }}
+                {% else %}
+                  {{ block.settings.title_1b }}
+                {% endif %}
+              </div>
+            {%- endif -%}
+            {%- if block.settings.description_1b != blank -%}
+              <div class="menu-promotion__description">
+                {% if request.locale.iso_code == 'de' %}
+                  {{ block.settings.description_de_1b }}
+                {% elsif request.locale.iso_code == 'fr' %}
+                  {{ block.settings.description_fr_1b }}
+                {% elsif request.locale.iso_code == 'fi' %}
+                  {{ block.settings.description_fi_1b }}
+                {% else %}
+                  {{ block.settings.description_1b }}
+                {% endif %}
+              </div>
+            {%- endif -%}
+            {%- if block.settings.link_url_1b != blank -%}
+              </a>
+            {%- endif -%}
+
+            {%- if block.settings.link_url_2 != blank -%}
+              <a class="menu-promotion__link" href="{{ block.settings.link_url_2 }}">
+            {%- endif -%}
+            <div class="menu-promotion__image">
+              {%- render 'image' with block.settings.image_2, size_cols_desktop: 4, loading: 'manual' -%}
+            </div>
+
+            {%- if block.settings.title_2 != blank -%}
+              <div class="menu-promotion__text">
+                {% if request.locale.iso_code == 'de' %}
+                  {{ block.settings.title_2_de }}
+                {% elsif request.locale.iso_code == 'fr' %}
+                  {{ block.settings.title_2_fr }}
+                {% elsif request.locale.iso_code == 'fi' %}
+                  {{ block.settings.title_2_fi }}
+                {% else %}
+                  {{ block.settings.title_2 }}
+                {% endif %}
+              </div>
+            {%- endif -%}
+            {%- if block.settings.description_2 != blank -%}
+              <div class="menu-promotion__description">
+                {% if request.locale.iso_code == 'de' %}
+                  {{ block.settings.description_2_de }}
+                {% elsif request.locale.iso_code == 'fr' %}
+                  {{ block.settings.description_2_fr }}
+                {% elsif request.locale.iso_code == 'fi' %}
+                  {{ block.settings.description_2_fi }}
+                {% else %}
+                  {{ block.settings.description_2 }}
+                {% endif %}
+              </div>
+            {%- endif -%}
+            {%- if block.settings.link_url_2 != blank -%}
+              </a>
+            {%- endif -%}
+
+            {%- if block.settings.link_url_3 != blank -%}
+              <a class="menu-promotion__link" href="{{ block.settings.link_url_3 }}">
+            {%- endif -%}
+            <div class="menu-promotion__image">
+              {%- render 'image' with block.settings.image_3, size_cols_desktop: 4, loading: 'manual' -%}
+            </div>
+            {%- if block.settings.title_3 != blank -%}
+              <div class="menu-promotion__text">
+                {% if request.locale.iso_code == 'de' %}
+                  {{ block.settings.title_3_de }}
+                {% elsif request.locale.iso_code == 'fr' %}
+                  {{ block.settings.title_3_fr }}
+                {% elsif request.locale.iso_code == 'fi' %}
+                  {{ block.settings.title_3_fi }}
+                {% else %}
+                  {{ block.settings.title_3 }}
+                {% endif %}
+              </div>
+            {%- endif -%}
+            {%- if block.settings.description_3 != blank -%}
+              <div class="menu-promotion__description">
+                {% if request.locale.iso_code == 'de' %}
+                  {{ block.settings.description_3_de }}
+                {% elsif request.locale.iso_code == 'fr' %}
+                  {{ block.settings.description_3_fr }}
+                {% elsif request.locale.iso_code == 'fi' %}
+                  {{ block.settings.description_3_fi }}
+                {% else %}
+                  {{ block.settings.description_3 }}
+                {% endif %}
+              </div>
+            {%- endif -%}
+            {%- if block.settings.link_url_3 != blank -%}
+              </a>
+            {%- endif -%}
+
+            {%- if block.settings.link_url_4 != blank -%}
+              <a class="menu-promotion__link" href="{{ block.settings.link_url_3 }}">
+            {%- endif -%}
+            <div class="menu-promotion__image">
+              {%- render 'image' with block.settings.image_4, size_cols_desktop: 4, loading: 'manual' -%}
+            </div>
+            {%- if block.settings.title_4 != blank -%}
+              <div class="menu-promotion__text">
+                {% if request.locale.iso_code == 'de' %}
+                  {{ block.settings.title_4_de }}
+                {% elsif request.locale.iso_code == 'fr' %}
+                  {{ block.settings.title_4_fr }}
+                {% elsif request.locale.iso_code == 'fi' %}
+                  {{ block.settings.title_4_fi }}
+                {% else %}
+                  {{ block.settings.title_4 }}
+                {% endif %}
+              </div>
+            {%- endif -%}
+            {%- if block.settings.description_4 != blank -%}
+              <div class="menu-promotion__description">
+                {% if request.locale.iso_code == 'de' %}
+                  {{ block.settings.description_4_de }}
+                {% elsif request.locale.iso_code == 'fr' %}
+                  {{ block.settings.description_4_fr }}
+                {% elsif request.locale.iso_code == 'fi' %}
+                  {{ block.settings.description_4_fi }}
+                {% else %}
+                  {{ block.settings.description_4 }}
+                {% endif %}
+              </div>
+            {%- endif -%}
+            {%- if block.settings.link_url_4 != blank -%}
+              </a>
+            {%- endif -%}
+          </div>
+        </li>
+      {%- endif -%}
+    {%- endfor -%}
+  {%- else -%}
+    <li class="navigation__column navigation__column--promotion{% if section.settings.enable_mobile_promo_carousel and link.links.size > 0 %} navigation__column--promotion-carousel{% endif %}">
+      <a
+        href="{{ link.url }}"
+        class="navigation__link"
+        style="text-decoration: underline; font-size: 20px;"
+      >
+        {{- link.title | escape -}}
+      </a>
+      {%- for block in section.blocks -%}
+        {%- assign dropdown_link_title_sanitised = block.settings.dropdown_link_title | downcase | strip -%}
+        {%- if dropdown_link_title_sanitised == link_title_sanitised and block.type == 'menu-promotion-small' -%}
+          <div class="menu-promotion">
+            <div class="menu-promotion__text" style="margin-bottom: 10px;font-size: 22px;">
+              {% if request.locale.iso_code == 'de' %}
+                {{ block.settings.title_big_de }}
+              {% elsif request.locale.iso_code == 'fr' %}
+                {{ block.settings.title_big_fr }}
+              {% elsif request.locale.iso_code == 'fi' %}
+                {{ block.settings.title_big_fi }}
+              {% else %}
+                {{ block.settings.title_big }}
+              {% endif %}
+            </div>
+            {%- if block.settings.link_url != blank -%}
+              <a class="menu-promotion__link" href="{{ block.settings.link_url }}">
+            {%- endif -%}
+            <div style="gap: 8px; position: relative;z-index: 1; display: flex;justify-content: space-between;">
+              {% if localization.country.iso_code == 'DE' %}
+                {%- if block.settings.discount_image != blank -%}
+                  <div class="discount_image">
+                    <img
+                      src="{{ block.settings.discount_image | img_url: 'original' }}"
+                      style="aspect-ratio: auto;height: 30px; padding: 0;aspect-ratio: auto !important;border-radius: 10px !important;"
+                    >
+                  </div>
+                {% else %}
+                  <div style="height: 1px"></div>
+                {% endif %}
+              {% else %}
+                <div style="height: 1px"></div>
+              {% endif %}
+              {%- if block.settings.discount_label != blank -%}
+                <div class="discount-label">
+                  {% if request.locale.iso_code == 'de' %}
+                    {{ block.settings.discount_label_de }}
+                  {% elsif request.locale.iso_code == 'fr' %}
+                    {{ block.settings.discount_label_fr }}
+                  {% elsif request.locale.iso_code == 'fi' %}
+                    {{ block.settings.discount_label_fi }}
+                  {% else %}
+                    {{ block.settings.discount_label }}
+                  {% endif %}
+                </div>
+              {% endif %}
+              {% if block.settings.discount_label_showblank %}
+                <div style="height: 28px"></div>
+              {% endif %}
+            </div>
+            <div class="menu-promotion__image">
+              {%- render 'image' with block.settings.image, size_cols_desktop: 4, loading: 'manual' -%}
+            </div>
+            {%- if block.settings.title != blank -%}
+              <div class="menu-promotion__text">
+                {% if request.locale.iso_code == 'de' %}
+                  {{ block.settings.title_de }}
+                {% elsif request.locale.iso_code == 'fr' %}
+                  {{ block.settings.title_fr }}
+                {% elsif request.locale.iso_code == 'fi' %}
+                  {{ block.settings.title_fi }}
+                {% else %}
+                  {{ block.settings.title }}
+                {% endif %}
+              </div>
+            {%- endif -%}
+            {%- if block.settings.description != blank -%}
+              <div class="menu-promotion__description">
+                {% if request.locale.iso_code == 'de' %}
+                  {{ block.settings.description_de }}
+                {% elsif request.locale.iso_code == 'fr' %}
+                  {{ block.settings.description_fr }}
+                {% elsif request.locale.iso_code == 'fi' %}
+                  {{ block.settings.description_fi }}
+                {% else %}
+                  {{ block.settings.description }}
+                {% endif %}
+              </div>
+            {%- endif -%}
+            {%- if block.settings.link_url != blank -%}
+              </a>
+            {%- endif -%}
+
+            {%- if block.settings.link_url_1b != blank -%}
+              <a class="menu-promotion__link" href="{{ block.settings.link_url_1b }}">
+            {%- endif -%}
+            <div class="menu-promotion__image">
+              {%- render 'image' with block.settings.image_1b, size_cols_desktop: 4, loading: 'manual' -%}
+            </div>
+            {%- if block.settings.title_1b != blank -%}
+              <div class="menu-promotion__text">
+                {% if request.locale.iso_code == 'de' %}
+                  {{ block.settings.title_de_1b }}
+                {% elsif request.locale.iso_code == 'fr' %}
+                  {{ block.settings.title_fr_1b }}
+                {% elsif request.locale.iso_code == 'fi' %}
+                  {{ block.settings.title_fi_1b }}
+                {% else %}
+                  {{ block.settings.title_1b }}
+                {% endif %}
+              </div>
+            {%- endif -%}
+            {%- if block.settings.description_1b != blank -%}
+              <div class="menu-promotion__description">
+                {% if request.locale.iso_code == 'de' %}
+                  {{ block.settings.description_de_1b }}
+                {% elsif request.locale.iso_code == 'fr' %}
+                  {{ block.settings.description_fr_1b }}
+                {% elsif request.locale.iso_code == 'fi' %}
+                  {{ block.settings.description_fi_1b }}
+                {% else %}
+                  {{ block.settings.description_1b }}
+                {% endif %}
+              </div>
+            {%- endif -%}
+            {%- if block.settings.link_url_1b != blank -%}
+              </a>
+            {%- endif -%}
+
+            {%- if block.settings.link_url_2 != blank -%}
+              <a class="menu-promotion__link" href="{{ block.settings.link_url_2 }}">
+            {%- endif -%}
+            <div class="menu-promotion__image">
+              {%- render 'image' with block.settings.image_2, size_cols_desktop: 4, loading: 'manual' -%}
+            </div>
+            {%- if block.settings.title_2 != blank -%}
+              <div class="menu-promotion__text">
+                {% if request.locale.iso_code == 'de' %}
+                  {{ block.settings.title_2_de }}
+                {% elsif request.locale.iso_code == 'fr' %}
+                  {{ block.settings.title_2_fr }}
+                {% elsif request.locale.iso_code == 'fi' %}
+                  {{ block.settings.title_2_fi }}
+                {% else %}
+                  {{ block.settings.title_2 }}
+                {% endif %}
+              </div>
+            {%- endif -%}
+            {%- if block.settings.description_2 != blank -%}
+              <div class="menu-promotion__description">
+                {% if request.locale.iso_code == 'de' %}
+                  {{ block.settings.description_2_de }}
+                {% elsif request.locale.iso_code == 'fr' %}
+                  {{ block.settings.description_2_fr }}
+                {% elsif request.locale.iso_code == 'fi' %}
+                  {{ block.settings.description_2_fi }}
+                {% else %}
+                  {{ block.settings.description_2 }}
+                {% endif %}
+              </div>
+            {%- endif -%}
+            {%- if block.settings.link_url_2 != blank -%}
+              </a>
+            {%- endif -%}
+
+            {%- if block.settings.link_url_3 != blank -%}
+              <a class="menu-promotion__link" href="{{ block.settings.link_url_3 }}">
+            {%- endif -%}
+            <div class="menu-promotion__image">
+              {%- render 'image' with block.settings.image_3, size_cols_desktop: 4, loading: 'manual' -%}
+            </div>
+            {%- if block.settings.title_3 != blank -%}
+              <div class="menu-promotion__text">
+                {% if request.locale.iso_code == 'de' %}
+                  {{ block.settings.title_3_de }}
+                {% elsif request.locale.iso_code == 'fr' %}
+                  {{ block.settings.title_3_fr }}
+                {% elsif request.locale.iso_code == 'fi' %}
+                  {{ block.settings.title_3_fi }}
+                {% else %}
+                  {{ block.settings.title_3 }}
+                {% endif %}
+              </div>
+            {%- endif -%}
+            {%- if block.settings.description_3 != blank -%}
+              <div class="menu-promotion__description">
+                {% if request.locale.iso_code == 'de' %}
+                  {{ block.settings.description_3_de }}
+                {% elsif request.locale.iso_code == 'fr' %}
+                  {{ block.settings.description_3_fr }}
+                {% elsif request.locale.iso_code == 'fi' %}
+                  {{ block.settings.description_3_fi }}
+                {% else %}
+                  {{ block.settings.description_3 }}
+                {% endif %}
+              </div>
+            {%- endif -%}
+            {%- if block.settings.link_url_3 != blank -%}
+              </a>
+            {%- endif -%}
+
+            {%- if block.settings.link_url_4 != blank -%}
+              <a class="menu-promotion__link" href="{{ block.settings.link_url_3 }}">
+            {%- endif -%}
+            <div class="menu-promotion__image">
+              {%- render 'image' with block.settings.image_4, size_cols_desktop: 4, loading: 'manual' -%}
+            </div>
+            {%- if block.settings.title_4 != blank -%}
+              <div class="menu-promotion__text">
+                {% if request.locale.iso_code == 'de' %}
+                  {{ block.settings.title_4_de }}
+                {% elsif request.locale.iso_code == 'fr' %}
+                  {{ block.settings.title_4_fr }}
+                {% elsif request.locale.iso_code == 'fi' %}
+                  {{ block.settings.title_4_fi }}
+                {% else %}
+                  {{ block.settings.title_4 }}
+                {% endif %}
+              </div>
+            {%- endif -%}
+            {%- if block.settings.description_4 != blank -%}
+              <div class="menu-promotion__description">
+                {% if request.locale.iso_code == 'de' %}
+                  {{ block.settings.description_4_de }}
+                {% elsif request.locale.iso_code == 'fr' %}
+                  {{ block.settings.description_4_fr }}
+                {% elsif request.locale.iso_code == 'fi' %}
+                  {{ block.settings.description_4_fi }}
+                {% else %}
+                  {{ block.settings.description_4 }}
+                {% endif %}
+              </div>
+            {%- endif -%}
+            {%- if block.settings.link_url_4 != blank -%}
+              </a>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </li>
+  {%- endif -%}
+{%- endif -%}

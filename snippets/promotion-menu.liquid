@@ -1,0 +1,48 @@
+{%- if small_promo_count > 0 -%}
+  {%- assign suffixes = '|1b|2|3|4' | split: '|' -%}
+
+  {%- if mobile == false -%}
+    {%- for block in section.blocks -%}
+      {%- assign dropdown_link_title_sanitised = block.settings.dropdown_link_title | downcase | strip -%}
+      {%- if dropdown_link_title_sanitised == link_title_sanitised and block.type == 'menu-promotion-small' -%}
+        <li class="desktop-only navigation__column navigation__column--promotion" {{ block.shopify_attributes }}>
+          {%- render 'promotion-header', block: block -%}
+
+          <div class="menu-promotion">
+            <div class="menu-promotion__text" style="margin-bottom: 10px;font-size: 18px;">
+              {{ block.settings | get_localized_value: 'title_big' }}
+            </div>
+
+            {%- for suffix in suffixes -%}
+              {%- render 'promotion-item', block: block, suffix: suffix, size_cols_desktop: 4 -%}
+            {%- endfor -%}
+          </div>
+        </li>
+      {%- endif -%}
+    {%- endfor -%}
+
+  {%- else -%}
+    <li class="navigation__column navigation__column--promotion{% if section.settings.enable_mobile_promo_carousel and link.links.size > 0 %} navigation__column--promotion-carousel{% endif %}">
+      <a href="{{ link.url }}" class="navigation__link" style="text-decoration: underline; font-size: 20px;">
+        {{- link.title | escape -}}
+      </a>
+
+      {%- for block in section.blocks -%}
+        {%- assign dropdown_link_title_sanitised = block.settings.dropdown_link_title | downcase | strip -%}
+        {%- if dropdown_link_title_sanitised == link_title_sanitised and block.type == 'menu-promotion-small' -%}
+          <div class="menu-promotion">
+            <div class="menu-promotion__text" style="margin-bottom: 10px;font-size: 22px;">
+              {{ block.settings | get_localized_value: 'title_big' }}
+            </div>
+
+            {%- render 'promotion-header', block: block -%}
+
+            {%- for suffix in suffixes -%}
+              {%- render 'promotion-item', block: block, suffix: suffix, size_cols_desktop: 4 -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </li>
+  {%- endif -%}
+{%- endif -%}
