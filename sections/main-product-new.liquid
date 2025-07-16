@@ -93,6 +93,12 @@
     max-width: 100%;
   }
 
+  .product-form .quantity-submit-row .quantity-submit-row__submit {
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+
   @media (min-width: 768px) {
     .product-info .product-column-right {
       width: 100%;
@@ -339,7 +345,6 @@
                     block: block
                   %}
 
-                {% when 'bidex' %}
                   {% render 'custom-bidex-find-dealers' %}
 
                 {% when 'inventory-level' %}
@@ -934,11 +939,6 @@
     {
       "name": "Specification Simple",
       "type": "specification_simple",
-      "limit": 1
-    },
-    {
-      "name": "Bidex",
-      "type": "bidex",
       "limit": 1
     },
     {
@@ -2555,6 +2555,22 @@
           "label": "Show in quick buy",
           "default": false
         }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product pages",
+      "blocks": [  
+        { "type": "title" },
+        { "type": "price" },
+        { "type": "description" },
+        { "type": "specification_simple" },
+        { "type": "variant-picker" },
+        { "type": "pop-up" },  
+        { "type": "buy-buttons" },
+        { "type": "sharing" },
+        { "type": "finance-leasing-accordion" }  
       ]
     }
   ]
