@@ -151,15 +151,15 @@
   }
 </style>
 
-{% assign recommend_products = product.metafields.custom.recommend_product_modal.value %}
-{% if recommend_products and recommend_products.size > 0 %}
-  <div id="myModal" class="myModal">
-    <div class="popup">
-      <div class="myModaltitle">
-        <h5>{{ 'ebike.model_sold_out' | t }}</h5>
-        <a class="myModalclose" href="#">&times;</a>
-      </div>
-      <div class="myModalproduct-columns">
+<div id="myModal" class="myModal">
+  <div class="popup">
+    <div class="myModaltitle">
+      <h5>{{ 'ebike.model_sold_out' | t }}</h5>
+      <a class="myModalclose" href="#">&times;</a>
+    </div>
+    <div class="myModalproduct-columns">
+      {% assign recommend_products = product.metafields.custom.recommend_product_modal.value %}
+      {% if recommend_products %}
         {% for recommend_product in recommend_products %}
           <div class="myModalproduct-column">
             <a href="{{ shop.url | append: '/products/' | append: recommend_product.handle }}">
@@ -167,7 +167,7 @@
                 | default: recommend_product.featured_image
                 | img_url: 'original'
               %}
-
+              <img src="{{ featured_image }}" alt="{{ recommend_product.title }}">
               {% if recommend_product.metafields.custom.discount %}
                 <div class="discount-labels">{{ recommend_product.metafields.custom.discount }}</div>
               {% endif %}
@@ -183,41 +183,43 @@
             </a>
           </div>
         {% endfor %}
-      </div>
+      {% else %}
+        <p>No recommended products found.</p>
+      {% endif %}
     </div>
   </div>
+</div>
 
-  <script>
-    const button = document.querySelector('.btn.btn--large.add-to-cart');
-    const modal = document.getElementById('myModal');
-    const closeBtn = document.querySelector('.myModalclose');
+<script>
+  const button = document.querySelector('.btn.btn--large.add-to-cart');
+  const modal = document.getElementById('myModal');
+  const closeBtn = document.querySelector('.myModalclose');
 
-    function showModal() {
-      modal.style.display = 'block';
-    }
+  function showModal() {
+    modal.style.display = 'block';
+  }
 
-    function closeModal() {
-      modal.style.display = 'none';
-    }
+  function closeModal() {
+    modal.style.display = 'none';
+  }
 
-    const observer = new MutationObserver((mutationsList) => {
-      mutationsList.forEach((mutation) => {
-        const buttonText = mutation.target.innerText.trim().toLowerCase();
-        if (
-          mutation.type === 'childList' &&
-          (buttonText === 'unavailable' || buttonText === 'nicht verfügbar' || buttonText === 'pas disponible')
-        ) {
-          showModal();
-        }
-      });
-    });
-
-    observer.observe(button, { childList: true });
-
-    document.addEventListener('click', function (e) {
-      if (e.target.classList.contains('myModalclose')) {
-        closeModal();
+  const observer = new MutationObserver((mutationsList) => {
+    mutationsList.forEach((mutation) => {
+      const buttonText = mutation.target.innerText.trim().toLowerCase();
+      if (
+        mutation.type === 'childList' &&
+        (buttonText === 'unavailable' || buttonText === 'nicht verfügbar' || buttonText === 'pas disponible')
+      ) {
+        showModal();
       }
     });
-  </script>
-{% endif %}
+  });
+
+  observer.observe(button, { childList: true });
+
+  document.addEventListener('click', function (e) {
+    if (e.target.classList.contains('myModalclose')) {
+      closeModal();
+    }
+  });
+</script>
