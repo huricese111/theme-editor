@@ -182,7 +182,6 @@
     white-space: nowrap;
     font-size: 14px;
     letter-spacing: 0.5px;
-    text-transform: uppercase;
     font-weight: 500;
     padding: 4px 0;
     flex-shrink: 0;
@@ -308,271 +307,258 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    const config = {
-      headerSelector: 'header, .header, .announcement-bar, .announcement',
-      scrollOffset: 30,
-      scrollBehavior: 'smooth',
-      highlightClass: 'sticky-nav-highlight',
-      cartButtonSelector: '.btn.btn--large.add-to-cart',
-      cartButtonTextSelector: '[data-add-to-cart-text]',
-      debounceTime: 50,
-    };
+  const config = {
+    headerSelector: 'header, .header, .announcement-bar, .announcement',
+    scrollOffset: 30,
+    scrollBehavior: 'smooth',
+    highlightClass: 'sticky-nav-highlight',
+    cartButtonSelector: '.btn.btn--large.add-to-cart',
+    cartButtonTextSelector: '[data-add-to-cart-text]',
+    debounceTime: 50,
+  };
 
-    const stickyNav = document.getElementById('stickyNavBar');
-    const stickyButtonContainer = document.getElementById('stickyNavButtonContainer');
-    const stickyNavLinks = document.querySelector('.sticky-nav-links');
+  const stickyNav = document.getElementById('stickyNavBar');
+  const stickyButtonContainer = document.getElementById('stickyNavButtonContainer');
+  const stickyNavLinks = document.querySelector('.sticky-nav-links');
+  
+  let buttonMirrorObserver = null;
+  let buttonTextObserver = null;
+  let buttonUpdateInterval = null;
 
-    if (!stickyNav) return;
+  if (!stickyNav) return;
 
-    function fixLightboxZIndex() {
-      try {
-        const lightboxes = document.querySelectorAll('.lightbox-container');
-        lightboxes.forEach((lightbox) => {
-          const currentZIndex = parseInt(getComputedStyle(lightbox).zIndex);
-          if (currentZIndex <= 950) {
-            lightbox.style.zIndex = '1000000';
-          }
-        });
-      } catch (e) {
-        console.log('Lightbox z-index adjustment completed');
-      }
-    }
-
-    function setupZIndexManagement() {
-      fixLightboxZIndex();
-
-      document.querySelectorAll('.slide-image').forEach((image) => {
-        image.addEventListener('click', function () {
-          setTimeout(fixLightboxZIndex, 50);
-        });
+  function fixLightboxZIndex() {
+    try {
+      const lightboxes = document.querySelectorAll('.lightbox-container');
+      lightboxes.forEach((lightbox) => {
+        const currentZIndex = parseInt(getComputedStyle(lightbox).zIndex);
+        if (currentZIndex <= 950) lightbox.style.zIndex = '1000000';
       });
+    } catch {}
+  }
 
-      const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-          if (mutation.addedNodes) {
-            mutation.addedNodes.forEach((node) => {
-              if (node.classList && node.classList.contains('lightbox-container')) {
-                fixLightboxZIndex();
-              }
-            });
-          }
-        });
-      });
-
-      observer.observe(document.body, {
-        childList: true,
-        subtree: true,
-      });
-    }
-
-    // 3. Debounce函数
-    function debounce(func, wait) {
-      let timeout;
-      return function executedFunction(...args) {
-        const later = () => {
-          clearTimeout(timeout);
-          func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-      };
-    }
-
-    // 4. 计算头部高度
-    function calculateHeaderHeight() {
-      try {
-        let totalHeight = 0;
-        const headers = document.querySelectorAll(config.headerSelector);
-
-        headers.forEach((header) => {
-          if (header) {
-            const styles = window.getComputedStyle(header);
-            const margin = parseFloat(styles.marginTop) + parseFloat(styles.marginBottom);
-            totalHeight += header.offsetHeight + margin;
-          }
-        });
-
-        return Math.max(totalHeight, 0);
-      } catch (e) {
-        return 0;
-      }
-    }
-
-    function setupStickyNav() {
-      let lastScrollPosition = 0;
-      let headerHeight = calculateHeaderHeight();
-
-      function updateStickyState() {
-        try {
-          headerHeight = calculateHeaderHeight();
-          const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-
-          if (scrollY > headerHeight) {
-            stickyNav.classList.add('sticky-nav--fixed');
-          } else {
-            stickyNav.classList.remove('sticky-nav--fixed');
-          }
-
-          lastScrollPosition = scrollY;
-        } catch (e) {
-          console.error('Sticky bar error:', e);
-        }
-      }
-
-      const debouncedScrollHandler = debounce(updateStickyState, config.debounceTime);
-      const debouncedResizeHandler = debounce(updateStickyState, config.debounceTime);
-
-      window.addEventListener('scroll', debouncedScrollHandler);
-      window.addEventListener('resize', debouncedResizeHandler);
-
-      updateStickyState();
-    }
-
-    function createButtonMirror() {
-      try {
-        const originalButton = document.querySelector(config.cartButtonSelector);
-        if (!originalButton) {
-          stickyButtonContainer.innerHTML = `
-          <button class="sticky-cart-btn">Add to cart</button>
-        `;
-          return;
-        }
-
-        const newButton = document.createElement('button');
-        newButton.className = 'sticky-cart-btn';
-        updateButtonAppearance(originalButton, newButton);
-
-        stickyButtonContainer.appendChild(newButton);
-
-        newButton.addEventListener('click', function (e) {
-          e.preventDefault();
-          if (!newButton.disabled) {
-            originalButton.click();
-          }
-        });
-
-        setupButtonObservers(originalButton, newButton);
-      } catch (e) {
-        console.error('Button mirror error:', e);
-      }
-    }
-
-    function updateButtonAppearance(original, mirror) {
-      try {
-        const styles = window.getComputedStyle(original);
-        const textElement = original.querySelector(config.cartButtonTextSelector) || original;
-
-        mirror.textContent = textElement.textContent || 'Add to cart';
-        mirror.style.backgroundColor = styles.backgroundColor;
-        mirror.style.color = styles.color;
-        mirror.style.fontWeight = styles.fontWeight;
-        mirror.disabled = original.disabled;
-      } catch (e) {
-        console.error('Button update error:', e);
-      }
-    }
-
-    function setupButtonObservers(original, mirror) {
-      try {
-        const observer = new MutationObserver((mutations) => {
-          mutations.forEach((mutation) => {
-            updateButtonAppearance(original, mirror);
+  function setupZIndexManagement() {
+    fixLightboxZIndex();
+    document.querySelectorAll('.slide-image').forEach((image) => {
+      image.addEventListener('click', () => setTimeout(fixLightboxZIndex, 50));
+    });
+    
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.addedNodes) {
+          mutation.addedNodes.forEach((node) => {
+            if (node.classList && node.classList.contains('lightbox-container')) {
+              fixLightboxZIndex();
+            }
           });
-        });
+        }
+      });
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
 
-        observer.observe(original, {
-          attributes: true,
-          childList: true,
-          subtree: true,
-          attributeFilter: ['class', 'style', 'disabled'],
-        });
-      } catch (e) {
-        console.error('Button observer error:', e);
-      }
+  function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+      const later = () => {
+        clearTimeout(timeout);
+        func(...args);
+      };
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
+  }
+
+  function calculateHeaderHeight() {
+    try {
+      let totalHeight = 0;
+      const headers = document.querySelectorAll(config.headerSelector);
+      headers.forEach((header) => {
+        if (header) {
+          const styles = window.getComputedStyle(header);
+          const margin = parseFloat(styles.marginTop) + parseFloat(styles.marginBottom);
+          totalHeight += header.offsetHeight + margin;
+        }
+      });
+      return Math.max(totalHeight, 0);
+    } catch {
+      return 0;
+    }
+  }
+
+  function setupStickyNav() {
+    let lastScrollPosition = 0;
+    let headerHeight = calculateHeaderHeight();
+
+    function updateStickyState() {
+      try {
+        headerHeight = calculateHeaderHeight();
+        const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+        if (scrollY > headerHeight) stickyNav.classList.add('sticky-nav--fixed');
+        else stickyNav.classList.remove('sticky-nav--fixed');
+        lastScrollPosition = scrollY;
+      } catch {}
     }
 
-    function setupScrollHighlighting() {
-      try {
-        const navLinks = document.querySelectorAll('.sticky-nav-link');
-        if (!navLinks.length) return;
+    const debouncedScrollHandler = debounce(updateStickyState, config.debounceTime);
+    const debouncedResizeHandler = debounce(updateStickyState, config.debounceTime);
+    window.addEventListener('scroll', debouncedScrollHandler);
+    window.addEventListener('resize', debouncedResizeHandler);
+    updateStickyState();
+  }
 
-        const observerOptions = {
-          root: null,
-          rootMargin: '0px',
-          threshold: 0.1,
-        };
+  function createButtonTextObserver(original, mirror) {
+    if (buttonTextObserver) buttonTextObserver.disconnect();
+    const textElement = original.querySelector(config.cartButtonTextSelector) || original;
+    buttonTextObserver = new MutationObserver(() => updateButtonAppearance(original, mirror));
+    buttonTextObserver.observe(textElement, { characterData: true, childList: true, subtree: true });
+  }
 
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              const id = entry.target.id;
-              const link = document.querySelector(`.sticky-nav-link[data-anchor="${id}"]`);
+  function createButtonMirror() {
+    try {
+      stickyButtonContainer.innerHTML = '';
+      if (buttonMirrorObserver) buttonMirrorObserver.disconnect();
+      if (buttonTextObserver) buttonTextObserver.disconnect();
+      if (buttonUpdateInterval) clearInterval(buttonUpdateInterval);
 
-              if (link) {
-                navLinks.forEach((l) => l.classList.remove(config.highlightClass));
-                link.classList.add(config.highlightClass);
+      const originalButton = document.querySelector(config.cartButtonSelector);
+      if (!originalButton) {
+        stickyButtonContainer.innerHTML = `<button class="sticky-cart-btn">Add to cart</button>`;
+        return;
+      }
 
-                if (stickyNavLinks) {
-                  const linkLeft = link.getBoundingClientRect().left;
-                  const containerLeft = stickyNavLinks.getBoundingClientRect().left;
-                  const containerWidth = stickyNavLinks.offsetWidth;
+      const newButton = document.createElement('button');
+      newButton.className = 'sticky-cart-btn';
+      updateButtonAppearance(originalButton, newButton);
+      stickyButtonContainer.appendChild(newButton);
 
-                  if (linkLeft < containerLeft || linkLeft > containerLeft + containerWidth) {
-                    stickyNavLinks.scrollTo({
-                      left: link.offsetLeft - containerWidth / 2 + link.offsetWidth / 2,
-                      behavior: 'smooth',
-                    });
-                  }
+      newButton.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (!newButton.disabled) {
+          originalButton.click();
+          startButtonUpdateLoop(originalButton, newButton);
+        }
+      });
+
+      const containerObserver = new MutationObserver((mutations) => {
+        mutations.forEach(mutation => {
+          if (mutation.removedNodes) {
+            const removed = Array.from(mutation.removedNodes);
+            if (removed.includes(originalButton)) {
+              containerObserver.disconnect();
+              createButtonMirror();
+            }
+          }
+        });
+      });
+      containerObserver.observe(originalButton.parentElement, { childList: true });
+
+      buttonMirrorObserver = new MutationObserver(() => updateButtonAppearance(originalButton, newButton));
+      buttonMirrorObserver.observe(originalButton, { attributes: true, childList: true, subtree: true });
+      createButtonTextObserver(originalButton, newButton);
+    } catch {}
+  }
+
+  function startButtonUpdateLoop(original, mirror) {
+    if (buttonUpdateInterval) clearInterval(buttonUpdateInterval);
+    
+    let updateCount = 0;
+    buttonUpdateInterval = setInterval(() => {
+      if (!document.body.contains(original)) {
+        clearInterval(buttonUpdateInterval);
+        return;
+      }
+      
+      updateButtonAppearance(original, mirror);
+      updateCount++;
+      
+      if (updateCount > 50) clearInterval(buttonUpdateInterval);
+    }, 100);
+  }
+
+  function updateButtonAppearance(original, mirror) {
+    try {
+      const styles = window.getComputedStyle(original);
+      const textElement = original.querySelector(config.cartButtonTextSelector) || original;
+      
+      mirror.textContent = textElement.textContent || 'Add to cart';
+      mirror.style.backgroundColor = styles.backgroundColor;
+      mirror.style.color = styles.color;
+      mirror.style.borderColor = styles.borderColor;
+      mirror.style.opacity = styles.opacity;
+      mirror.style.fontWeight = styles.fontWeight;
+      mirror.style.borderWidth = styles.borderWidth;
+      mirror.disabled = original.disabled;
+      
+      mirror.style.display = original.offsetParent ? '' : 'none';
+    } catch {}
+  }
+
+  function setupScrollHighlighting() {
+    try {
+      const navLinks = document.querySelectorAll('.sticky-nav-link');
+      if (!navLinks.length) return;
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            const link = document.querySelector(`.sticky-nav-link[data-anchor="${id}"]`);
+            if (link) {
+              navLinks.forEach(l => l.classList.remove(config.highlightClass));
+              link.classList.add(config.highlightClass);
+              if (stickyNavLinks) {
+                const linkLeft = link.getBoundingClientRect().left;
+                const containerLeft = stickyNavLinks.getBoundingClientRect().left;
+                const containerWidth = stickyNavLinks.offsetWidth;
+                if (linkLeft < containerLeft || linkLeft > containerLeft + containerWidth) {
+                  stickyNavLinks.scrollTo({
+                    left: link.offsetLeft - containerWidth/2 + link.offsetWidth/2,
+                    behavior: 'smooth'
+                  });
                 }
               }
             }
-          });
-        }, observerOptions);
-
-        navLinks.forEach((link) => {
-          const targetId = link.dataset.anchor;
-          if (!targetId) return;
-
-          const targetElement = document.getElementById(targetId);
-          if (targetElement) {
-            observer.observe(targetElement);
-
-            link.addEventListener('click', function (e) {
-              e.preventDefault();
-              const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
-              const offsetPosition = elementPosition - config.scrollOffset;
-
-              window.scrollTo({
-                top: offsetPosition,
-                behavior: config.scrollBehavior,
-              });
-            });
           }
         });
+      }, { root: null, rootMargin: '0px', threshold: 0.1 });
 
-        const firstSection = document.querySelector('[id]');
-        if (firstSection) {
-          navLinks.forEach((link) => link.classList.remove(config.highlightClass));
-          const activeLink = document.querySelector(`.sticky-nav-link[data-anchor="${firstSection.id}"]`);
-          if (activeLink) activeLink.classList.add(config.highlightClass);
+      navLinks.forEach((link) => {
+        const targetId = link.dataset.anchor;
+        if (!targetId) return;
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+          observer.observe(targetElement);
+          link.addEventListener('click', function (e) {
+            e.preventDefault();
+            const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+            const offsetPosition = elementPosition - config.scrollOffset;
+            window.scrollTo({ top: offsetPosition, behavior: config.scrollBehavior });
+          });
         }
-      } catch (e) {
-        console.error('Highlighting error:', e);
+      });
+
+      const firstSection = document.querySelector('[id]');
+      if (firstSection) {
+        navLinks.forEach(link => link.classList.remove(config.highlightClass));
+        const activeLink = document.querySelector(`.sticky-nav-link[data-anchor="${firstSection.id}"]`);
+        if (activeLink) activeLink.classList.add(config.highlightClass);
       }
+    } catch {}
+  }
+
+  setupZIndexManagement();
+  setupStickyNav();
+  createButtonMirror();
+  setupScrollHighlighting();
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.lightbox-container').forEach(lightbox => {
+        lightbox.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      });
     }
-
-    setupZIndexManagement();
-    setupStickyNav();
-    createButtonMirror();
-    setupScrollHighlighting();
-
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') {
-        document.querySelectorAll('.lightbox-container').forEach((lightbox) => {
-          lightbox.style.display = 'none';
-          document.body.style.overflow = 'auto';
-        });
-      }
-    });
   });
+});
 </script>
