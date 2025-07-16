@@ -2561,16 +2561,39 @@
   "presets": [
     {
       "name": "Product pages",
-      "blocks": [  
+      "blocks": [
         { "type": "title" },
         { "type": "price" },
         { "type": "description" },
         { "type": "specification_simple" },
         { "type": "variant-picker" },
-        { "type": "pop-up" },  
-        { "type": "buy-buttons" },
-        { "type": "sharing" },
-        { "type": "finance-leasing-accordion" }  
+        { "type": "pop-up" },
+        { "type": "usedbike" },
+        {
+          "type": "buy-buttons",
+          "settings": {
+            "show_quantity_selector": false,
+            "show_pickup_availability": true,
+            "show_backorder_text": true,
+            "show_dynamic_checkout": true,
+            "show_gift_card_fields": false
+          }
+        },
+        {
+          "type": "sharing",
+          "settings": {
+            "show_twitter": false,
+            "show_facebook": true,
+            "show_pinterest": true,
+            "show_linkedin": true,
+            "show_whatsapp": true,
+            "show_snapchat": false,
+            "show_threads": false,
+            "show_tumblr": false,
+            "show_twitch": false
+          }
+        },
+        { "type": "finance-leasing-accordion" }
       ]
     }
   ]
