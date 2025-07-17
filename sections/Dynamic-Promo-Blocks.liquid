@@ -1,3 +1,92 @@
+{%- comment -%}
+/**
+ * Dynamic Promo Blocks Section
+ * 
+ * A flexible promotional banner system featuring asymmetric grid layout
+ * with one large left module and three smaller right modules for showcasing
+ * products, offers, and promotional content with rich customization options.
+ * 
+ * FEATURES:
+ * - Asymmetric grid layout (1 large + 3 small modules)
+ * - Responsive design with separate desktop/mobile layouts
+ * - Multi-language support (English, German, French, Finnish)
+ * - Individual background images for desktop and mobile
+ * - Customizable content positioning within each module
+ * - Tag/badge system for promotional labels
+ * - Call-to-action buttons with custom styling
+ * - Background image controls (size, position)
+ * - Typography customization (size, color)
+ * 
+ * LAYOUT STRUCTURE:
+ * Desktop: 
+ * - Left: 1 large promotional module (50% width)
+ * - Right: 3 smaller modules in 2x2 grid (50% width)
+ *   - Top: 1 medium module (full width)
+ *   - Bottom: 2 small modules (side by side)
+ * 
+ * Mobile:
+ * - Stacked vertical layout
+ * - Left module displayed first
+ * - Only first right module shown (modules 2&3 hidden)
+ * 
+ * RESPONSIVE BEHAVIOR:
+ * - Desktop: CSS Grid layout with asymmetric columns
+ * - Mobile: Vertical stacking with simplified content
+ * - Adaptive font sizes and spacing
+ * - Separate mobile background images
+ * - Content repositioning for mobile optimization
+ * 
+ * LOCALIZATION:
+ * - Multi-language text support for all content elements
+ * - Automatic language detection based on request locale
+ * - Fallback to default language when translations unavailable
+ * - Supported languages: EN, DE, FR, FI
+ * 
+ * CUSTOMIZATION OPTIONS:
+ * - Section height control (desktop/mobile)
+ * - Background images (desktop/mobile variants)
+ * - Background size and positioning
+ * - Content vertical positioning (top/center/bottom)
+ * - Tag/badge text and styling
+ * - Title text with custom typography
+ * - Button text, URLs, and color schemes
+ * - Background colors for each module
+ * 
+ * MODULE CONFIGURATION:
+ * - Left Module: Large promotional space with prominent title
+ * - Right Module 1: Medium-sized featured content
+ * - Right Module 2: Small promotional block
+ * - Right Module 3: Small promotional block
+ * 
+ * CONTENT ELEMENTS:
+ * - Promotional tags/badges with custom styling
+ * - Multi-language titles with responsive typography
+ * - Call-to-action buttons with hover effects
+ * - Background overlays for text readability
+ * 
+ * TECHNICAL FEATURES:
+ * - CSS custom properties for dynamic styling
+ * - Liquid template variables for localization
+ * - Responsive image handling with multiple sizes
+ * - CSS Grid and Flexbox for layout control
+ * - Hover effects and transitions
+ * 
+ * DEFAULT PRESET:
+ * - "Dynamic Promo Blocks" with sample content
+ * - Pre-configured layout and styling
+ * 
+ * DEPENDENCIES:
+ * - Shopify Liquid template engine
+ * - Modern CSS (Grid, Flexbox, Custom Properties)
+ * - Responsive image processing
+ * 
+ * BROWSER SUPPORT:
+ * - Modern browsers with CSS Grid support
+ * - Progressive enhancement for older browsers
+ * - Mobile-first responsive design
+ */
+{%- endcomment -%}
+
 {% schema %}
 {
   "name": "Dynamic Promo Blocks",

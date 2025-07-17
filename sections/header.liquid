@@ -1,3 +1,68 @@
+{%- comment -%}
+/**
+ * Header Section - Main Site Navigation and Branding Component
+ * 
+ * This section provides the primary site header with comprehensive navigation,
+ * branding, and user interaction features for Shopify themes.
+ * 
+ * FEATURES:
+ * - Logo display with customizable sizing (desktop and mobile)
+ * - Multi-level navigation menu with dropdown support
+ * - Transparent header option for homepage
+ * - Sticky header functionality
+ * - Integrated search functionality with recommendations
+ * - Shopping cart link with item count
+ * - Customer account access
+ * - Mobile-responsive navigation drawer
+ * - Menu promotions (small and wide layouts)
+ * - Featured products in mobile navigation
+ * - Countdown timer support in promotions
+ * 
+ * LAYOUT OPTIONS:
+ * - Inline menu (left/center alignment)
+ * - Underneath menu layout
+ * - Mobile-specific menu configuration
+ * 
+ * SEARCH FEATURES:
+ * - Quick header search
+ * - Search recommendations with collections/products
+ * - Autocomplete suggestions
+ * 
+ * CUSTOMIZATION:
+ * - Logo image and sizing controls
+ * - Transparent header with custom text color
+ * - Multiple cart icon styles (bag, basket, cart)
+ * - Icon display strategies
+ * - Featured link highlighting
+ * - Mobile navigation behavior
+ * 
+ * TECHNICAL FEATURES:
+ * - Structured data integration
+ * - SEO-optimized H1 logo option
+ * - Lazy loading for images
+ * - Responsive image handling
+ * - JavaScript-enhanced interactions
+ * - CSS custom properties for theming
+ * 
+ * MULTILINGUAL SUPPORT:
+ * - Localized navigation labels
+ * - Multi-language promotion content
+ * - Region-specific menu configurations
+ * 
+ * DEPENDENCIES:
+ * - main-search.js for search functionality
+ * - countdown-timer.js for promotion timers
+ * - search-suggestions.js for autocomplete
+ * - Various icon snippets
+ * - Product and collection block snippets
+ * 
+ * BROWSER SUPPORT:
+ * - Modern browsers with CSS Grid and Flexbox
+ * - Progressive enhancement for older browsers
+ * - Mobile-first responsive design
+ */
+{%- endcomment -%}
+
 {% style %}
   .logo img {
     width: {{ section.settings.logo_img_width_int }}px;

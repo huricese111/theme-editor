@@ -1,3 +1,78 @@
+{%- comment -%}
+/**
+ * Main Blog Section - Blog Listing and Article Display Component
+ * 
+ * This section provides a comprehensive blog listing page with customizable
+ * layout options, article previews, and social sharing functionality.
+ * 
+ * FEATURES:
+ * - Paginated article listing (12 articles per page)
+ * - Multiple layout options (list and grid/columns)
+ * - Article image display with customizable aspect ratios
+ * - Article excerpts with automatic truncation
+ * - Author and publication date display
+ * - Article tags with filtering links
+ * - Social sharing integration (Twitter, Facebook)
+ * - RSS feed link support
+ * - Responsive design with mobile optimization
+ * 
+ * LAYOUT OPTIONS:
+ * - List layout: Full-width articles in vertical stack
+ * - Grid layout: Multi-column card-based display
+ * - Customizable image aspect ratios (natural, portrait, square, landscape, wide)
+ * 
+ * ARTICLE METADATA:
+ * - Publication date with time tag formatting
+ * - Author information display
+ * - Tag-based categorization and filtering
+ * - Excerpt display with fallback to content truncation
+ * 
+ * SOCIAL FEATURES:
+ * - Twitter (X) sharing integration
+ * - Facebook sharing functionality
+ * - RSS feed subscription link
+ * - Social share heading customization
+ * 
+ * CUSTOMIZATION OPTIONS:
+ * - Toggle page title display
+ * - Show/hide author information
+ * - Show/hide publication dates
+ * - Show/hide article excerpts
+ * - Show/hide article tags
+ * - Enable/disable social sharing options
+ * 
+ * RESPONSIVE BEHAVIOR:
+ * - Mobile-first design approach
+ * - Adaptive image sizing with srcset
+ * - Progressive loading for performance
+ * - Touch-friendly navigation
+ * 
+ * TECHNICAL FEATURES:
+ * - Liquid pagination with 12 articles per page
+ * - Lazy loading for images (except first few)
+ * - CSS Grid and Flexbox layouts
+ * - Animation attributes integration
+ * - SEO-optimized markup
+ * 
+ * STYLING:
+ * - Custom CSS for card-based grid layout
+ * - Rounded corners and borders
+ * - Text truncation with ellipsis
+ * - Consistent spacing and typography
+ * 
+ * DEPENDENCIES:
+ * - pagination-control snippet
+ * - social-share snippet
+ * - image snippet for responsive images
+ * - animation-attrs snippet
+ * 
+ * BROWSER SUPPORT:
+ * - Modern browsers with CSS Grid support
+ * - Progressive enhancement for older browsers
+ * - Mobile-responsive design
+ */
+{%- endcomment -%}
+
 {% paginate blog.articles by 12 %}
   <div class="container">
     {% if section.settings.show_page_title %}

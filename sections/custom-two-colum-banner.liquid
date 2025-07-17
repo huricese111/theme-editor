@@ -1,3 +1,82 @@
+{%- comment -%}
+/**
+ * Custom Two Column Banner Section
+ * 
+ * A versatile two-column layout component that supports media and content display
+ * with extensive customization options for backgrounds, text, buttons, and interactive elements.
+ * 
+ * FEATURES:
+ * - Dual column layout (media column + content column)
+ * - Multiple background options (color, image, video) for both columns
+ * - Responsive design with separate mobile/desktop layouts
+ * - Multi-language support (English, German, French, Finnish)
+ * - Rich content blocks: headings, text, buttons, newsletter, countdown, bike tabs
+ * - Flexible positioning and styling controls
+ * - Custom Liquid content support
+ * - Discount label with customizable shapes and positioning
+ * 
+ * RESPONSIVE BEHAVIOR:
+ * - Desktop: Side-by-side column layout
+ * - Mobile: Configurable stacking (media above/below content)
+ * - Adaptive font sizes and spacing
+ * - Touch-friendly interactive elements
+ * 
+ * LOCALIZATION:
+ * - Multi-language text support for all content blocks
+ * - Automatic language detection and content switching
+ * - Fallback to default language when translations unavailable
+ * 
+ * CUSTOMIZATION OPTIONS:
+ * - Section height control
+ * - Column visibility toggles
+ * - Background media (images, videos) with position/scale controls
+ * - Text alignment and typography settings
+ * - Color schemes for all elements
+ * - Button styling and positioning
+ * - Newsletter subscription integration
+ * - Countdown timer functionality
+ * - Product showcase tabs (bike-specific)
+ * - Feature columns with custom content
+ * - Slide footer with pricing display
+ * - Discount labels with shape options
+ * 
+ * CONTENT BLOCKS:
+ * - Heading: Multi-language titles with H1 option
+ * - Text: Rich text content with positioning controls
+ * - Custom Liquid: Advanced content integration
+ * - Newsletter: Subscription form with styling
+ * - Button: Dual button support with custom styling
+ * - Countdown: Timer with completion handling
+ * - Bike Tabs: Product showcase with sub-tabs
+ * - Feature Columns: Multi-column feature display
+ * - Slide Footer: Footer content with pricing
+ * - Discount Label: Promotional badges with positioning
+ * 
+ * TECHNICAL FEATURES:
+ * - Liquid template engine integration
+ * - CSS custom properties for dynamic styling
+ * - Responsive image handling
+ * - Video background support
+ * - Form validation and submission
+ * - Timer functionality with completion callbacks
+ * - Tab navigation and content switching
+ * 
+ * DEFAULT PRESET:
+ * - Media & Content Section with heading, text, and button blocks
+ * - Pre-configured with sample content and styling
+ * 
+ * DEPENDENCIES:
+ * - Shopify Liquid template engine
+ * - Modern CSS (custom properties, flexbox, grid)
+ * - JavaScript for interactive elements
+ * 
+ * BROWSER SUPPORT:
+ * - Modern browsers with CSS Grid and Flexbox support
+ * - Progressive enhancement for older browsers
+ * - Mobile-first responsive design
+ */
+{%- endcomment -%}
+
 {% assign current_locale = request.locale.iso_code | default: 'en' %}
 {% assign locale_prefix = current_locale | slice: 0, 2 %}
 

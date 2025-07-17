@@ -1,3 +1,77 @@
+{% comment %}
+  ============================================================================
+  Custom Blog Carousel Section
+  ============================================================================
+  
+  Description: A responsive blog article carousel component for Shopify themes
+  with multi-language support and touch-friendly navigation. This section
+  displays selected blog articles in an interactive sliding carousel format
+  with customizable styling and localized content.
+  
+  Features:
+  - Multi-language support (English, German, French, Finnish)
+  - Responsive carousel with adaptive slide counts
+  - Touch/swipe navigation for mobile devices
+  - Customizable image aspect ratios
+  - Hover effects and smooth animations
+  - Article selection via blocks
+  - Customizable button styling with hover states
+  - Automatic image optimization and lazy loading
+  - Fallback placeholder for articles without images
+  
+  Responsive Behavior:
+  - Desktop (>1200px): 3 slides visible
+  - Tablet (769-1200px): 2 slides visible
+  - Mobile (<769px): 1 slide visible
+  - Touch navigation enabled on all devices
+  
+  Localization:
+  - Section titles localized for each supported language
+  - Button text localized with fallback to default
+  - Automatic locale detection via request.locale.iso_code
+  
+  Customization Options:
+  - Section title (multi-language)
+  - Image aspect ratio (16:9, 3:4, 1:1, Natural)
+  - Button text (multi-language)
+  - Button colors (background, text, hover states)
+  - Article selection via blocks
+  
+  Article Display:
+  - Article featured image with hover zoom effect
+  - Publication date formatting
+  - Article title with truncation (2 lines max)
+  - Article excerpt with 120 character limit
+  - Call-to-action button linking to full article
+  
+  Navigation Controls:
+  - Previous/Next arrow buttons with SVG icons
+  - Touch/swipe gestures for mobile navigation
+  - Automatic arrow visibility based on content
+  - Smooth transitions and animations
+  
+  Technical Features:
+  - CSS custom properties for dynamic styling
+  - JavaScript carousel functionality with touch support
+  - Responsive image loading with proper alt attributes
+  - Accessibility-friendly navigation controls
+  - Performance optimized with will-change and transform
+  
+  Dependencies:
+  - Shopify's img_url filter for image optimization
+  - Shopify's placeholder_svg_tag for fallback images
+  - CSS Grid and Flexbox for responsive layouts
+  - Touch event handling for mobile interaction
+  
+  Browser Support:
+  - Modern browsers with CSS Grid and Flexbox support
+  - Touch event support for mobile devices
+  - CSS custom properties (CSS variables)
+  - ES6 JavaScript features
+  
+  ============================================================================
+{% endcomment %}
+
 {% assign locale_prefix = request.locale.iso_code | slice: 0, 2 | downcase %}
 
 {% capture section_title %}

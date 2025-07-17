@@ -1,3 +1,47 @@
+{% comment %}
+  ============================================================================
+  Enhanced Collapsible Tabs Section
+  ============================================================================
+  
+  Description: An enhanced collapsible tabs/accordion component for Shopify themes
+  with multi-language support. This section creates expandable content areas
+  perfect for FAQs, product information, or any content that benefits from
+  organized, space-saving presentation.
+  
+  Features:
+  - Multi-language support (German, French, Finnish)
+  - Dynamic language suffix detection based on locale
+  - Multiple block types: content, button, and question/answer
+  - Responsive accordion-style interface
+  - Image support within content blocks
+  - Custom liquid content integration
+  - Smooth animations and transitions
+  - Accessibility-compliant with ARIA attributes
+  - Customizable styling with CSS variables
+  
+  Block Types:
+  - Content: Static text/HTML content with optional images
+  - Button: Call-to-action buttons with custom links
+  - Question: Expandable Q&A sections with dual answer support
+  
+  Language Support:
+  - Automatically detects current locale (de, fr, fi)
+  - Falls back to default content if localized version unavailable
+  - Supports localized titles, content, and answers
+  
+  Dependencies:
+  - details-disclosure custom element
+  - responsive-image snippet
+  - animation-attrs snippet
+  
+  Author: [Your Name]
+  Created: [Date]
+  Last Modified: [Date]
+  Version: 1.0
+  
+  ============================================================================
+{% endcomment %}
+
 {%- assign lang_map = 'de,fr,fi' | split: ',' -%}
 {%- assign lang_suffix = '' -%}
 {%- if lang_map contains request.locale.iso_code -%}

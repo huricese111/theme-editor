@@ -1,3 +1,65 @@
+{%- comment -%}
+/**
+ * Go to Top Button Component
+ * 
+ * A floating scroll-to-top button that appears when users scroll down the page,
+ * providing a convenient way to quickly return to the top of the page with smooth
+ * scrolling animation and responsive design.
+ * 
+ * FEATURES:
+ * - Auto-show/hide based on scroll position
+ * - Smooth scroll animation to top
+ * - Responsive design with hover effects
+ * - Accessible with ARIA labels
+ * - Performance-optimized scroll detection
+ * - CSS custom properties for easy customization
+ * - Fixed positioning with high z-index
+ * 
+ * BEHAVIOR:
+ * - Hidden by default when page loads
+ * - Appears when user scrolls down 100px or more
+ * - Disappears when user scrolls back to top
+ * - Smooth fade-in/fade-out transitions
+ * - Scale animation on hover and click
+ * 
+ * VISUAL DESIGN:
+ * - Circular button with arrow icon
+ * - Fixed position at bottom-right corner
+ * - Black background with white icon (customizable)
+ * - Subtle shadow for depth
+ * - Smooth transform animations
+ * 
+ * ACCESSIBILITY:
+ * - Proper ARIA label for screen readers
+ * - Keyboard accessible button element
+ * - High contrast color scheme
+ * - Focus-friendly design
+ * 
+ * PERFORMANCE:
+ * - Throttled scroll event handling (50ms delay)
+ * - Efficient DOM manipulation
+ * - CSS transitions for smooth animations
+ * - Minimal JavaScript footprint
+ * 
+ * CUSTOMIZATION:
+ * - CSS custom properties for colors and size
+ * - Configurable scroll threshold
+ * - Adjustable positioning
+ * - Scalable SVG icon
+ * 
+ * TECHNICAL FEATURES:
+ * - Cross-browser compatible scroll detection
+ * - Debounced scroll event for performance
+ * - Smooth scrolling with native browser API
+ * - Self-contained with no external dependencies
+ * 
+ * BROWSER SUPPORT:
+ * - Modern browsers with CSS custom properties
+ * - Fallback for older browsers
+ * - Touch device optimization
+ */
+{%- endcomment -%}
+
 {% schema %}
 {
   "name": "Go to top",

@@ -1,3 +1,80 @@
+{%- comment -%}
+/**
+ * Frame Geometry Sheet Component
+ * 
+ * A comprehensive bicycle frame geometry visualization and specification component
+ * that displays detailed technical measurements and diagrams for different bike types
+ * and frame configurations with multi-language support.
+ * 
+ * FEATURES:
+ * - Multi-language support (English, German, French, Finnish)
+ * - Interactive tabbed interface for different frame types
+ * - Responsive geometry image viewer with touch/swipe support
+ * - Detailed specification tables with customizable measurements
+ * - Multiple frame type configurations (Step Through, Low Step, High Step, Mountain, Carbon)
+ * - Custom image upload support for geometry diagrams
+ * - Mobile-optimized layout with horizontal scrolling
+ * - Size variant support (S, M, L, XL) with conditional display
+ * 
+ * FRAME TYPES:
+ * - Step Through: Low-entry frame design with optional S size column
+ * - Low Step: Standard low-step frame configuration (M, L sizes)
+ * - High Step: Traditional high-step frame with optional XL size
+ * - Mountain: Mountain bike specific geometry measurements
+ * - Carbon: Carbon frame variant with specialized specifications
+ * 
+ * GEOMETRY MEASUREMENTS:
+ * - Frame Height, Seat Tube Angle, Fork Offset
+ * - Head Tube Length/Angle, Top Tube Horizontal
+ * - Chain Stay Length, Bottom Bracket Drop
+ * - Wheelbase, Stack, Reach
+ * - Standover Height, Seat Height (Min/Max)
+ * 
+ * RESPONSIVE BEHAVIOR:
+ * - Desktop: Side-by-side layout with geometry image and specification table
+ * - Mobile: Stacked layout with horizontally scrollable geometry images
+ * - Touch-friendly tab navigation with swipe hints
+ * - Adaptive table sizing for mobile devices
+ * 
+ * LOCALIZATION:
+ * - Dynamic title switching based on current locale
+ * - Localized disclaimer text for legal compliance
+ * - Fallback to default language when translations unavailable
+ * 
+ * CUSTOMIZATION OPTIONS:
+ * - Selectable frame image types (Trekking, Mountain, City, Custom)
+ * - Custom geometry image upload capability
+ * - Mobile-specific image optimization
+ * - Conditional size column display (S, XL)
+ * - Configurable measurement values for each frame type
+ * 
+ * TECHNICAL FEATURES:
+ * - Accessible tab interface with ARIA roles
+ * - Performance-optimized image loading with lazy loading
+ * - Touch-enabled horizontal scrolling for mobile
+ * - Responsive CSS Grid and Flexbox layouts
+ * - JavaScript-powered tab switching functionality
+ * 
+ * IMAGE ASSETS:
+ * - Default geometry images for different bike types
+ * - Support for custom uploaded geometry diagrams
+ * - Mobile-optimized image variants
+ * - Asset URL generation for theme compatibility
+ * 
+ * DEPENDENCIES:
+ * - frame-size-table snippet for specification rendering
+ * - Asset pipeline for default geometry images
+ * - Shopify image transformation filters
+ * 
+ * BROWSER SUPPORT:
+ * - Modern browsers with CSS Grid and Flexbox support
+ * - Touch device optimization for mobile/tablet
+ * - Progressive enhancement for older browsers
+ */
+{%- endcomment -%}
+
+// ... existing code ...
+
 {% schema %}
 {
   "name": "Frame geometry sheet",

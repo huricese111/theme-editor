@@ -1,3 +1,58 @@
+{% comment %}
+  ============================================================================
+  Custom Footer Block Section
+  ============================================================================
+  
+  Description: A comprehensive custom footer section for Shopify themes with
+  multi-language support and JobRad partnership integration. This component
+  provides flexible footer blocks with customizable call-to-action buttons
+  and localized content.
+  
+  Features:
+  - Multi-language support (English, German, French, Finnish)
+  - JobRad partnership banner with geo-targeting (DE/AT)
+  - Up to 3 customizable footer blocks
+  - Responsive design with mobile-optimized layouts
+  - Background image support for each block
+  - Customizable button colors and text
+  - Hover effects and smooth transitions
+  - Grid layout adaptation for mobile devices
+  
+  Block Configuration:
+  - Background Image: Custom or default fallback images
+  - Button Text: Localized text for each supported language
+  - Button URL: Custom link destination
+  - Button Color: Customizable background color
+  
+  JobRad Integration:
+  - Conditional display based on country (Germany/Austria)
+  - Localized partner text
+  - Custom JobRad icon rendering
+  - Configurable JobRad URL
+  
+  Responsive Behavior:
+  - Desktop: Horizontal layout with equal-width blocks
+  - Mobile: Adaptive grid layout for 3 blocks (first block full width, others split)
+  - Flexible button sizing with clamp() for optimal readability
+  
+  Default Presets:
+  - "Need help choosing?" - Contact form block
+  - "Book a test ride" - Test ride booking block
+  - "Find a dealer" - Dealer locator block
+  
+  Dependencies:
+  - icon-jobrad snippet for JobRad logo rendering
+  - Default background images (HEPHA-contact-form.jpg, etc.)
+  
+  Technical Notes:
+  - Uses CSS custom properties for maintainable styling
+  - Implements conditional rendering based on locale
+  - Supports country-based content filtering
+  - Optimized image loading with Shopify's img_url filter
+  
+  ============================================================================
+{% endcomment %}
+
 {% schema %}
 {
   "name": "Custom footer block",

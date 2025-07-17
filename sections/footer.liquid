@@ -1,3 +1,76 @@
+{%- comment -%}
+/**
+ * Footer Section Component
+ * 
+ * A comprehensive footer section that provides site navigation, content blocks,
+ * and essential site information with multi-language support and responsive design.
+ * 
+ * FEATURES:
+ * - Multi-language content support (English, German, French, Finnish)
+ * - Flexible block-based content system
+ * - Responsive navigation with collapsible menus on mobile
+ * - Social media integration
+ * - Newsletter signup functionality
+ * - Payment method icons display
+ * - Country/region and language selectors
+ * - Custom liquid code support
+ * - App store download links
+ * - Follow on Shop integration
+ * 
+ * BLOCK TYPES:
+ * - Menu blocks: Navigation links with collapsible mobile interface
+ * - Text blocks: Rich text content with optional images and social media
+ * - Newsletter blocks: Email signup with social media and app links
+ * - Custom liquid blocks: Custom code injection
+ * - App blocks: Third-party app integration
+ * 
+ * RESPONSIVE BEHAVIOR:
+ * - Desktop: Multi-column layout with expanded menus
+ * - Mobile: Single column with collapsible menu sections
+ * - Touch-friendly toggle buttons for menu expansion
+ * 
+ * LOCALIZATION:
+ * - Dynamic content switching based on current locale
+ * - Fallback to default language when translations unavailable
+ * - Integrated country/region and language selectors
+ * - Localized copyright and powered-by text
+ * 
+ * CUSTOMIZATION OPTIONS:
+ * - Configurable payment icons display
+ * - Social media icon size options (standard/large)
+ * - Newsletter button styling (primary/secondary)
+ * - Lower footer menu configuration
+ * - Powered by Shopify toggle
+ * - Follow on Shop feature toggle
+ * 
+ * TECHNICAL FEATURES:
+ * - Accessible navigation with ARIA labels
+ * - Smooth CSS transitions for mobile menu toggles
+ * - Flexible grid system for responsive layout
+ * - SEO-friendly semantic HTML structure
+ * - Performance-optimized image loading
+ * 
+ * DEFAULT PRESET:
+ * - "Default footer" with navigation, newsletter, and localization
+ * - Pre-configured menu blocks for About, Explore, Support
+ * - Newsletter block with social media and app links
+ * - Multi-language headings and descriptions
+ * 
+ * DEPENDENCIES:
+ * - localization-form snippet for language/country selectors
+ * - newsletter-signup snippet for email collection
+ * - social-media snippet for social icons
+ * - image snippet for optimized image rendering
+ * 
+ * BROWSER SUPPORT:
+ * - Modern browsers with CSS Grid and Flexbox support
+ * - Progressive enhancement for older browsers
+ * - Touch device optimization
+ */
+{%- endcomment -%}
+
+// ... existing code ...
+
 {% assign current_lang = request.locale.iso_code %}
 
 {% if section.blocks != blank %}

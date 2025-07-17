@@ -1,3 +1,89 @@
+{%- comment -%}
+/**
+ * Custom Image with Text Section
+ * 
+ * A sophisticated carousel component that displays image-text pairs with comprehensive
+ * multilingual support and interactive features. This section creates a responsive
+ * carousel showcasing products, features, or content with rich customization options.
+ * 
+ * Key Features:
+ * - Responsive carousel with touch/swipe support
+ * - Multilingual content support (English, German, French, Finnish)
+ * - Lightbox functionality for image viewing
+ * - Customizable aspect ratios (16:9, 3:4, 1:1, natural)
+ * - Interactive navigation arrows
+ * - Flexible content visibility controls
+ * - Custom button styling with hover effects
+ * 
+ * Carousel Behavior:
+ * - Desktop: Shows 3 slides per view
+ * - Tablet (≤1200px): Shows 2 slides per view
+ * - Mobile (≤768px): Shows 1 slide per view
+ * - Touch gestures enabled for mobile navigation
+ * - Smooth transitions and animations
+ * 
+ * Localization:
+ * - Automatic language detection based on request.locale
+ * - Fallback to default language if translation unavailable
+ * - Supports title, text content, and button text translations
+ * - Language-specific rich text content support
+ * 
+ * Customization Options:
+ * - Section title with visibility toggle
+ * - Image aspect ratio selection
+ * - Content visibility controls (title, text, button)
+ * - Custom button colors and hover states
+ * - Individual item customization per block
+ * 
+ * Block Configuration:
+ * - Image upload with optional linking
+ * - Multilingual titles with optional linking
+ * - Rich text content in multiple languages
+ * - Custom button text overrides per language
+ * - Button link configuration
+ * 
+ * Interactive Features:
+ * - Click-to-zoom lightbox for images
+ * - Keyboard navigation (ESC to close lightbox)
+ * - Touch/swipe navigation on mobile
+ * - Hover effects on slides and buttons
+ * - Preloading of lightbox images for performance
+ * 
+ * Technical Features:
+ * - CSS custom properties for dynamic styling
+ * - Responsive design with mobile-first approach
+ * - Performance optimized with lazy loading
+ * - Accessibility considerations with proper alt texts
+ * - Modern CSS Grid and Flexbox layouts
+ * 
+ * Default Presets:
+ * - Includes comprehensive product showcase examples
+ * - Pre-configured with HEPHA e-bike product data
+ * - Demonstrates multilingual content structure
+ * - Shows various product features and specifications
+ * 
+ * Dependencies:
+ * - Requires 'icon-prev-arrow' and 'icon-next-arrow' snippets
+ * - Uses Shopify's image transformation API
+ * - Relies on Liquid templating engine
+ * - Requires modern browser support for CSS Grid/Flexbox
+ * 
+ * Browser Support:
+ * - Modern browsers with CSS Grid support
+ * - Touch events for mobile devices
+ * - CSS custom properties support required
+ * 
+ * @author [Your Name]
+ * @created [Creation Date]
+ * @modified [Last Modified Date]
+ * @version 1.0.0
+ * 
+ * Note: This comment block provides comprehensive documentation for the
+ * Custom Image with Text carousel section. Customize the author, dates,
+ * and version information as needed for your project.
+ */
+{%- endcomment -%}
+
 {% schema %}
 {
   "name": "Custom Image with Text",
@@ -953,7 +1039,7 @@
     pointer-events: none;
   }
 
-  /* 修复灯箱样式 */
+  /* Lightbox Styles */
   .lightbox {
     position: fixed;
     top: 0;

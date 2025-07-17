@@ -1,3 +1,76 @@
+{%- comment -%}
+/**
+ * Custom Slideshow Component
+ * 
+ * A responsive slideshow/carousel component for showcasing bike products with
+ * multi-language support, sales tags, and customizable styling.
+ * 
+ * FEATURES:
+ * - Responsive design with different behaviors for desktop and mobile
+ * - Multi-language content support (English, German, French, Finnish)
+ * - Customizable sales tags (up to 3 per slide)
+ * - Auto-play functionality with manual navigation controls
+ * - Fade transition effects between slides
+ * - Pagination dots and arrow navigation
+ * - Customizable button styling and colors
+ * - Background color customization per slide
+ * - Optimized image loading with srcset and lazy loading
+ * 
+ * RESPONSIVE BEHAVIOR:
+ * - Desktop: Traditional slideshow with navigation controls and auto-play
+ * - Mobile: Stacked slides display without navigation controls
+ * - Adaptive image sizing and positioning
+ * - Mobile-optimized text sizing and layout
+ * 
+ * LOCALIZATION:
+ * - Supports 4 languages: English (default), German (de), French (fr), Finnish (fi)
+ * - Automatic language detection based on request.locale.iso_code
+ * - Fallback to default language if localized content is not available
+ * - Localized content includes: titles, descriptions, button text, and sales tags
+ * 
+ * CUSTOMIZATION OPTIONS:
+ * - Slide background colors
+ * - Button text and background colors
+ * - Sales tag content and styling
+ * - Image selection with alt text support
+ * - URL linking for call-to-action buttons
+ * 
+ * SLIDE CONFIGURATION:
+ * - Image picker with responsive image optimization
+ * - Multi-language title and rich text description fields
+ * - Up to 3 customizable sales tags per slide
+ * - Button configuration with URL, text, and styling options
+ * - Background color selection
+ * 
+ * NAVIGATION FEATURES:
+ * - Previous/Next arrow buttons (desktop only)
+ * - Pagination dots with click navigation
+ * - Auto-play with 5-second intervals
+ * - Auto-play reset on manual navigation
+ * - Keyboard and touch-friendly interactions
+ * 
+ * TECHNICAL FEATURES:
+ * - CSS-only fade transitions
+ * - JavaScript-powered navigation and auto-play
+ * - Responsive image optimization with WebP format
+ * - Lazy loading for performance optimization
+ * - Event-driven architecture with resize handling
+ * - Mobile-first responsive design approach
+ * 
+ * DEPENDENCIES:
+ * - No external libraries required
+ * - Uses vanilla JavaScript for functionality
+ * - Relies on Shopify Liquid templating engine
+ * - CSS3 transitions and transforms
+ * 
+ * BROWSER SUPPORT:
+ * - Modern browsers with CSS3 and ES6 support
+ * - Graceful degradation for older browsers
+ * - Mobile Safari and Chrome optimization
+ * 
+ */
+{%- endcomment -%}
+
 <div class="slideshow-container">
   {% for slide in section.blocks %}
     <div

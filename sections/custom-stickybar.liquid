@@ -1,3 +1,74 @@
+{%- comment -%}
+/**
+ * Custom Sticky Navigation Bar Component
+ * 
+ * A responsive sticky navigation bar that provides smooth scrolling navigation
+ * to different sections of a product page with multi-language support and
+ * integrated cart functionality.
+ * 
+ * FEATURES:
+ * - Sticky navigation bar that appears when scrolling past header
+ * - Multi-language navigation links (English, German, French, Finnish)
+ * - Smooth scrolling to anchor sections with offset calculation
+ * - Active section highlighting with visual indicators
+ * - Integrated cart button mirroring from main product form
+ * - Responsive design with mobile-first approach
+ * - Z-index management for lightbox compatibility
+ * - Horizontal scrolling for navigation links on smaller screens
+ * 
+ * RESPONSIVE BEHAVIOR:
+ * - Desktop: Full navigation with all links and cart button visible
+ * - Tablet: Horizontal scrolling for navigation links when needed
+ * - Mobile (≤768px): Hidden on mobile devices for optimal UX
+ * - Adaptive title truncation based on screen size
+ * 
+ * LOCALIZATION:
+ * - Supports 4 languages: English (en), German (de), French (fr), Finnish (fi)
+ * - Automatic language detection based on request.locale.iso_code
+ * - Fallback to English if localized content is not available
+ * - Configurable anchor text for each supported language
+ * 
+ * NAVIGATION FEATURES:
+ * - Smooth scrolling to target sections with header offset
+ * - Active section highlighting with blue underline indicator
+ * - Intersection Observer for automatic active state management
+ * - Horizontal scroll for navigation links on overflow
+ * - Keyboard accessibility with Escape key support
+ * 
+ * CART INTEGRATION:
+ * - Real-time cart button mirroring from main product form
+ * - Synchronized button state (enabled/disabled)
+ * - Automatic style inheritance from original button
+ * - Click event forwarding to original cart button
+ * - Dynamic button text updates and state monitoring
+ * 
+ * TECHNICAL FEATURES:
+ * - Intersection Observer API for section detection
+ * - MutationObserver for dynamic content monitoring
+ * - Debounced scroll and resize handlers for performance
+ * - CSS animations with fadeInDown effect
+ * - Z-index management for modal/lightbox compatibility
+ * - Event delegation and cleanup for memory efficiency
+ * 
+ * DEFAULT PRESET:
+ * - Highlights section navigation
+ * - Specification section navigation
+ * - Frame Geometry section navigation
+ * - Review section navigation
+ * 
+ * DEPENDENCIES:
+ * - Modern browser with Intersection Observer support
+ * - CSS3 animations and transforms
+ * - ES6+ JavaScript features
+ * - Shopify Liquid templating engine
+ * 
+ * BROWSER SUPPORT:
+ * - Chrome 58+, Firefox 55+, Safari 12.1+, Edge 79+
+ * - Graceful degradation for older browsers
+ * - Mobile Safari and Chrome optimization
+ * 
+{%- endcomment -%}
+
 {% schema %}
 {
   "name": "Custom Stickybar",

@@ -1,3 +1,72 @@
+{% comment %}
+  ============================================================================
+  Custom Product Recommendation Modal Section
+  ============================================================================
+  
+  Description: A dynamic modal component that displays alternative product
+  recommendations when the current product becomes unavailable. This section
+  enhances user experience by providing immediate alternatives when products
+  are sold out or unavailable.
+  
+  Features:
+  - Automatic modal trigger when product becomes unavailable
+  - Multi-language support for "unavailable" detection
+  - Responsive grid layout for recommended products
+  - Product pricing with compare-at-price support
+  - Custom discount label display
+  - Smooth modal animations and transitions
+  - Mobile-optimized responsive design
+  - Sticky modal header with close functionality
+  
+  Trigger Conditions:
+  - Monitors add-to-cart button text changes
+  - Activates when button text shows "unavailable", "nicht verfügbar", or "pas disponible"
+  - Uses MutationObserver for real-time button state monitoring
+  
+  Product Data Source:
+  - Retrieves recommendations from product.metafields.custom.recommend_product_modal
+  - Supports custom featured images via metafields
+  - Displays custom discount information if available
+  
+  Modal Components:
+  - Sticky header with localized title and close button
+  - Product grid with up to 3 columns (desktop) / 1 column (mobile)
+  - Product cards with image, title, and pricing information
+  - Discount labels for promotional products
+  
+  Responsive Behavior:
+  - Desktop: 3-column grid layout (32% width each)
+  - Mobile: Single column layout (100% width)
+  - Adaptive modal sizing (70% desktop, 90% mobile)
+  - Scrollable content area with sticky header
+  
+  JavaScript Functionality:
+  - Real-time button text monitoring
+  - Modal show/hide controls
+  - Click-outside-to-close functionality
+  - Multi-language unavailable text detection
+  
+  Styling Features:
+  - High z-index overlay (99999999) for proper layering
+  - Semi-transparent backdrop (rgba(0,0,0,0.4))
+  - Centered modal positioning with transform
+  - Smooth transitions and hover effects
+  - Custom discount label styling
+  
+  Dependencies:
+  - Requires product metafields for recommendation data
+  - Uses Shopify's money filter for price formatting
+  - Relies on translation keys for localized content
+  
+  Technical Notes:
+  - Conditional rendering based on metafield availability
+  - Uses MutationObserver API for DOM change detection
+  - Implements event delegation for modal controls
+  - Supports both regular and sale pricing display
+  
+  ============================================================================
+{% endcomment %}
+
 {% schema %}
 {
   "name": "Custom recommend modal",

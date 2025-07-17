@@ -1,3 +1,42 @@
+{% comment %}
+  ============================================================================
+  Cart Drawer Section
+  ============================================================================
+  
+  Description: A slide-out shopping cart drawer component for Shopify themes.
+  This section provides a comprehensive cart experience with item management,
+  cross-selling functionality, and customizable announcements. Only renders
+  when cart type is set to drawer (not page or when on cart template).
+  
+  Features:
+  - Slide-out drawer interface with smooth animations
+  - Real-time cart item management (add, remove, update quantities)
+  - Cross-sell product recommendations (manual or automatic)
+  - Customizable announcement messages with positioning options
+  - Free shipping progress bar integration
+  - Order notes functionality
+  - Discount code display and management
+  - Responsive design optimized for mobile and desktop
+  - AJAX-powered updates without page refresh
+  
+  Components:
+  - Cart header with item count and close button
+  - Cart item list with quantity controls
+  - Cross-sell product carousel
+  - Subtotal and checkout section
+  - Announcement blocks (configurable positioning)
+  - Custom liquid content area
+  
+  Dependencies:
+  - cart-drawer.js (main functionality)
+  - cart-note.js (order notes, conditional)
+  - Various icon snippets
+  - Cart item snippet
+  - Product block snippet for cross-sells
+  
+  ============================================================================
+{% endcomment %}
+
 {%- unless template.name == 'cart' or settings.cart_type == 'page' -%}
 {%- capture announcement -%}
   {% if section.settings.show_announcement %}
@@ -85,9 +124,7 @@
                   {%- if item.line_level_discount_allocations == empty -%}
                   data-merge-cache="{{ item.key }}|{{ item.quantity }}|{{ item.final_line_price }}|{% if item.selling_plan_allocation %}{{ item.selling_plan_allocation.selling_plan.id }}{% endif %}"
                   {%- endif -%}>
-                <div class="property-hide">
-                  {%- render 'cart-item', item: item, forloop: forloop, drawer: true -%}
-                </div>
+                {%- render 'cart-item', item: item, forloop: forloop, drawer: true -%}
               </div>
             {% endfor %}
           </div>
@@ -99,6 +136,12 @@
           </div>
         {%- endif -%}
       </div>
+
+       {% if section.settings.liquid_content != blank %}
+         <div class="cart-drawer__content-item">
+            {{ section.settings.liquid_content }}
+           </div>
+        {% endif %}
 
       <div data-merge="cross-sells" data-merge-cache="{% if cart.items == blank %}blank{% else %}{{ cart.items.first.product.id }}{% endif %}">
         {%- liquid
@@ -167,7 +210,7 @@
                   </ul>
                 </div>
               </carousel-slider>
-            </cc-cart-cross-sell>
+            </cross-sell-products>
           </div>
         {%- endif -%}
       </div>
@@ -238,13 +281,23 @@
         </terms-agreement>
       {% endif %}
 
+      
+
       <div class="checkout-buttons{% if cart.items == empty %} hidden{% endif %}" data-merge-attributes="checkout-buttons">
         {% if section.settings.enable_direct_cart %}
           <a href="{{ routes.root_url | append: '/checkout' | replace: '//', '/' }}" class="btn btn--large btn--wide">{{ 'cart.summary.checkout' | t }}</a>
+          {% if section.settings.liquid_content2 != blank %}
+         <div class="cart-drawer__content-item">
+            {{ section.settings.liquid_content2 }}
+           </div>
         {% endif %}
         {% else %}
           <a href="{{ routes.cart_url }}" class="btn btn--large btn--wide">{{ 'cart.summary.checkout' | t }}</a>
+           {% if section.settings.liquid_content2 != blank %}
+         <div class="cart-drawer__content-item">
+            {{ section.settings.liquid_content2 }}
            </div>
+        {% endif %}
         {% endif %}
       </div>
 
@@ -287,18 +340,14 @@
             <a class="{% if section.settings.empty_button_style != 'link' %}btn btn--{{ section.settings.empty_button_style }}{% else %}small-feature-link{% endif %} button-row__btn" href="{{ section.settings.empty_button_link }}">{{ section.settings.empty_button_text | escape }}</a>
           </div>
         {%- endif -%}
+
+       
       </div>
     </div>
   </cart-form>
-</cart-drawer>
+</side-drawer>
 {%- endunless -%}
 
-<style>
-  .property-hide [class*="Main_Product"],
-  .property-hide [class*="Accessory"] {
-    display: none;
-  }
-</style>
 
 {% schema %}
 {

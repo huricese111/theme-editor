@@ -1,3 +1,44 @@
+{% comment %}
+  ============================================================================
+  Custom Firework Video Playlist Section
+  ============================================================================
+  
+  Description: A versatile Shopify section for integrating Firework video
+  playlists with multiple display modes. This component allows merchants to
+  showcase video content in various formats to enhance user engagement.
+  
+  Features:
+  - Multiple display modes: Story Block, Floating Player, Grid, Carousel, Hero Unit
+  - Dynamic playlist integration via Firework CDN
+  - Responsive design with adaptive styling
+  - Autoplay functionality for enhanced user experience
+  - Customizable player placement and video limits
+  - Seamless integration with Firework's embed system
+  
+  Display Modes:
+  - Story Block (default): Standard story-style video presentation
+  - Floating Player (pinned): Minimized floating video player
+  - Grid: Grid layout for multiple video thumbnails
+  - Carousel (row): Horizontal scrolling video carousel
+  - Hero Unit: Large featured video display
+  
+  Configuration:
+  - Playlist ID: Firework playlist identifier
+  - Mode Selection: Choose from 5 different display formats
+  - Channel: Set to 'hepha' for brand consistency
+  
+  Dependencies:
+  - Firework CDN scripts (storyblock.js, embed-feed.js, fwn.js)
+  - Custom CSS for mode-specific styling
+  
+  Technical Notes:
+  - Uses conditional Liquid logic for mode-specific rendering
+  - Implements smooth transitions for pinned mode
+  - Supports both embed-feed and storyblock components
+  
+  ============================================================================
+{% endcomment %}
+
 {% schema %}
 {
   "name": "Custom Playlist",

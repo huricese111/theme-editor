@@ -1,3 +1,100 @@
+{%- comment -%}
+/**
+ * Custom Product Tabs Section
+ * 
+ * An interactive tabbed interface for displaying product collections with an integrated
+ * advertisement block. This section creates a sophisticated product showcase with
+ * multilingual support and responsive design optimized for e-commerce stores.
+ * 
+ * Key Features:
+ * - Dynamic tab-based product display system
+ * - Multilingual content support (English, German, French, Finnish)
+ * - Flexible product source options (collections or custom product lists)
+ * - Integrated advertisement block with customizable styling
+ * - Responsive grid layout with mobile-optimized horizontal scrolling
+ * - Interactive hover effects and smooth transitions
+ * 
+ * Tab System:
+ * - Multiple product tabs with custom titles per language
+ * - Active tab highlighting with smooth transitions
+ * - Click-based tab switching functionality
+ * - Support for both collection-based and custom product selection
+ * 
+ * Product Display:
+ * - Desktop: 2-column grid layout with hover effects
+ * - Mobile: Horizontal scrolling carousel with snap-to-grid
+ * - Product blocks rendered via 'product-block' snippet
+ * - Automatic product loading from collections or custom lists
+ * 
+ * Advertisement Integration:
+ * - Dedicated advertisement block (limit: 1 per section)
+ * - Customizable background image, color, and positioning
+ * - Multilingual heading and button text support
+ * - Flexible padding and alignment controls
+ * - Rendered via 'custom-ads-block' snippet
+ * 
+ * Responsive Behavior:
+ * - Desktop (≥769px): Side-by-side layout with grid product display
+ * - Mobile (≤768px): Stacked layout with horizontal product scrolling
+ * - Touch-optimized scrolling with visual scroll hints
+ * - Adaptive tab sizing and spacing
+ * 
+ * Localization:
+ * - Automatic language detection via request.locale.iso_code
+ * - Fallback to default language if translation unavailable
+ * - Supports section title, tab titles, and advertisement content
+ * - Language-specific rich text content for advertisements
+ * 
+ * Interactive Features:
+ * - Tab switching with active state management
+ * - Product hover effects (desktop only)
+ * - Touch-friendly mobile navigation
+ * - Scroll hint animations for mobile users
+ * - Smooth CSS transitions throughout
+ * 
+ * Customization Options:
+ * - Section title with multilingual variants
+ * - Unlimited product tabs with custom titles
+ * - Product source selection (collection vs. custom)
+ * - Advertisement styling and content customization
+ * - Background positioning and sizing controls
+ * 
+ * Default Presets:
+ * - Pre-configured with HEPHA e-bike product categories
+ * - Sample advertisement promoting full product range
+ * - Multilingual content examples for all supported languages
+ * - Optimized for bicycle/e-bike product showcases
+ * 
+ * Technical Features:
+ * - CSS Grid and Flexbox for modern layouts
+ * - Touch event handling for mobile interactions
+ * - Scroll behavior optimization for performance
+ * - CSS custom properties for dynamic styling
+ * - Semantic HTML structure with proper ARIA roles
+ * 
+ * Dependencies:
+ * - Requires 'product-block' snippet for product rendering
+ * - Requires 'custom-ads-block' snippet for advertisement display
+ * - Uses Shopify's collection and product APIs
+ * - Relies on Liquid templating engine
+ * 
+ * Browser Support:
+ * - Modern browsers with CSS Grid support
+ * - Touch events for mobile devices
+ * - CSS scroll-snap for enhanced mobile experience
+ * - Flexbox support required
+ * 
+ * @author [Your Name]
+ * @created [Creation Date]
+ * @modified [Last Modified Date]
+ * @version 1.0.0
+ * 
+ * Note: This comment block provides comprehensive documentation for the
+ * Custom Product Tabs section. Customize the author, dates, and version
+ * information as needed for your project.
+ */
+{%- endcomment -%}
+
 <style>
   .flex-container {
     display: flex;
