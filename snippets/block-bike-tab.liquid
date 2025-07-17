@@ -1,260 +1,368 @@
 {% style %}
-  .column--content:has(.bike-tabs-block) .text-content-wrapper {
-    padding: 20px !important;
-  }
-
-  .banner-header {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 10;
-    padding: 15px;
-  }
-
-  .sub-tabs-container {
-    display: flex;
-    justify-content: flex-end;
-    width: 100%;
-  }
-  .banner-tab-content {
-    position: relative;
-    min-height: 300px;
-  }
-
-  .sub-content {
-    position: relative;
-    height: 300px;
-  }
-
-  .sub-content-item {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-    display: none;
-  }
-
-  .sub-content-item.active {
-    display: block;
-  }
-
-  .banner-tabs {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 5px;
-  }
-
-  .banner-tab {
-    align-items: center;
-    justify-content: center;
-    padding: 6px 10px;
-    background-color: white;
-    margin-left: 5px;
-    border-radius: 50px;
-    transition: background-color 0.3s;
-    white-space: nowrap;
-    cursor: pointer;
-    color: black;
-    min-width: 60px;
-    max-height: 40px;
-    display: flex;
-    background-color: #d5d5d5;
-  }
-
-  .banner-tab.active,
-  .banner-tab:hover {
-    background-color: #ffffff;
-  }
-
-  .sub-tabs-container {
-    display: flex;
-    justify-content: flex-end;
-    width: 100%;
-  }
-
-  .sub-tabs {
-    display: flex;
-    gap: 6px;
-    justify-content: flex-end;
-    margin-top: 5px;
-  }
-
-  .sub-tab {
-    padding: 10px;
-    margin-left: 5px;
-    border-radius: 24px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    min-width: 40px;
-    height: 40px;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-  }
-
-  .sub-tab.active::before {
-    content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' d='M5 12l5 5L20 7'/%3E%3C/svg%3E");
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 1em;
-    height: 1em;
-    color: inherit;
-  }
-  .sub-content-link {
-    position: absolute;
-    top: 50px;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 5;
-    cursor: pointer;
-  }
-
-  .banner-content {
-    display: none;
-  }
-
-  .banner-content.active {
-    display: block;
-  }
-
-  .sub-tabs-group {
-    display: none;
-  }
-
-  .sub-tabs-group.active {
-    display: block;
-  }
-  .banner-header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    position: relative;
-    width: 100%;
-    padding: 15px;
-    z-index: 10;
-    flex-wrap: wrap;
-  }
-
-  .banner-header-left {
-    flex: 1;
-    min-width: 200px;
-    max-width: 60%;
-    padding-right: 15px;
-    z-index: 11;
-  }
-
-  .banner-title {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 5px;
-    line-height: 1.2;
-    color: #000000;
-  }
-
-  .banner-description {
-    font-size: 16px;
-    line-height: 1.4;
-    color: #000000;
-  }
-
-  .banner-header-right {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    flex-shrink: 0;
-  }
-
-  @media (max-width: 980px) and (min-width: 781px) {
-    .banner-header-container {
-      flex-direction: row;
-      flex-wrap: nowrap;
+    .column--content:has(.bike-tabs-block) .text-content-wrapper {
+      padding: 20px !important;
     }
 
-    .banner-header-left {
-      max-width: 50%;
-    }
-
-    .banner-header-right {
-      min-width: 45%;
-      flex-grow: 0;
-      max-width: 45%;
-    }
-
-    .banner-tabs {
-      justify-content: flex-end;
-    }
-
-    .sub-tabs-container {
-      justify-content: flex-end;
-    }
-  }
-
-  @media (max-width: 780px) {
-    .banner-header-container {
+    .banner-header {
+      display: flex;
       flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-
-    .banner-header-left {
-      max-width: 100%;
-      padding-right: 0;
-      margin-bottom: 25px;
-      flex: 0 0 auto;
-      width: 90%;
-    }
-
-    .banner-header-right {
-      width: 90%;
-      align-items: center;
-      flex: 0 0 auto;
+      align-items: flex-end;
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 10;
+      padding: 15px;
     }
 
     .sub-tabs-container {
-      justify-content: center;
+      display: flex;
+      justify-content: flex-end;
+      width: 100%;
+    }
+    .banner-tab-content {
+      position: relative;
+      min-height: 300px;
+    }
+
+    .sub-content {
+      position: relative;
+      height: 300px;
+    }
+
+    .sub-content-item {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: none;
+    }
+
+    .sub-content-item.active {
+      display: block;
     }
 
     .banner-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 5px;
+    }
+
+    .banner-tab {
+      align-items: center;
       justify-content: center;
+      padding: 6px 10px;
+      background-color: white;
+      margin-left: 5px;
+      border-radius: 50px;
+      transition: background-color 0.3s;
+      white-space: nowrap;
+      cursor: pointer;
+      color: black;
+      min-width: 60px;
+      max-height: 40px;
+      display: flex;
+      background-color: #d5d5d5;
+    }
+
+    .banner-tab.active,
+    .banner-tab:hover {
+      background-color: #ffffff;
+    }
+
+    .sub-tabs-container {
+      display: flex;
+      justify-content: flex-end;
+      width: 100%;
+    }
+
+    .sub-tabs {
+      display: flex;
+      gap: 6px;
+      justify-content: flex-end;
+      margin-top: 5px;
+    }
+
+    .sub-tab {
+      padding: 10px;
+      margin-left: 5px;
+      border-radius: 24px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      min-width: 40px;
+      height: 40px;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .sub-tab.active::before {
+      content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' d='M5 12l5 5L20 7'/%3E%3C/svg%3E");
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 1em;
+      height: 1em;
+      color: inherit;
+    }
+    .sub-content-link {
+      position: absolute;
+      top: 50px;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 5;
+      cursor: pointer;
+    }
+
+    .banner-content {
+      display: none;
+    }
+
+    .banner-content.active {
+      display: block;
+    }
+
+    .sub-tabs-group {
+      display: none;
+    }
+
+    .sub-tabs-group.active {
+      display: block;
+    }
+    .banner-header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      position: relative;
+      width: 100%;
+      padding: 15px;
+      z-index: 10;
+      flex-wrap: wrap;
+    }
+
+    .banner-header-left {
+      flex: 1;
+      min-width: 200px;
+      max-width: 60%;
+      padding-right: 15px;
+      z-index: 11;
     }
 
     .banner-title {
-      font-size: 22px;
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 5px;
+      line-height: 1.2;
+      color: #000000;
     }
 
     .banner-description {
       font-size: 16px;
+      line-height: 1.4;
+      color: #000000;
     }
 
-    .banner-tab {
-      margin-left: 0;
-      margin-right: 5px;
+    .banner-header-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      flex-shrink: 0;
     }
 
-    .sub-tab {
-      margin-left: 0;
-      margin-right: 5px;
+    .slide-footer-{{ block.id }} .custom-current-price {
+      color: #000;
     }
+
+    .slide-footer-{{ block.id }} .custom-was-price {
+      text-decoration: line-through;
+      color: #b72626;
+    }
+
+    @media (max-width: 980px) and (min-width: 781px) {
+      .banner-header-container {
+        flex-direction: row;
+        flex-wrap: nowrap;
+      }
+
+      .banner-header-left {
+        max-width: 50%;
+      }
+
+      .banner-header-right {
+        min-width: 45%;
+        flex-grow: 0;
+        max-width: 45%;
+      }
+
+      .banner-tabs {
+        justify-content: flex-end;
+      }
+
+      .sub-tabs-container {
+        justify-content: flex-end;
+      }
+    }
+
+    @media (max-width: 780px) {
+      .banner-header-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .banner-header-left {
+        max-width: 100%;
+        padding-right: 0;
+        margin-bottom: 25px;
+        flex: 0 0 auto;
+        width: 90%;
+      }
+
+      .banner-header-right {
+        width: 90%;
+        align-items: center;
+        flex: 0 0 auto;
+      }
+
+      .sub-tabs-container {
+        justify-content: center;
+      }
+
+      .banner-tabs {
+        justify-content: center;
+      }
+
+      .banner-title {
+        font-size: 22px;
+      }
+
+      .banner-description {
+        font-size: 16px;
+      }
+
+      .banner-tab {
+        margin-left: 0;
+        margin-right: 5px;
+      }
+
+      .sub-tab {
+        margin-left: 0;
+        margin-right: 5px;
+      }
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+     .slide-footer-{{ block.id }} {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      margin-top: 15px;
+    }
+
+    .footer-title {
+      font-size: 30px;
+      margin-bottom: 3px;
+      font-weight: bold;
+    }
+
+    .footer-description {
+      color:#000000;
+      font-size: 16px;
+      line-height: 1;
+    }
+
+    .footer-button-{{ block.id }} {
+      padding: 8px 16px;
+      border-radius: 20px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      background-color: #000000;
+      color: #ffffff !important;
+      font-size: 16px;
+      white-space: nowrap;
+    }
+
+    .footer-button-{{ block.id }}:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 768px) {
+      .slide-footer-{{ block.id }} {
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+      }
+
+      .footer-title {
+        font-size: 24px;
+      }
+
+      .footer-description {
+        font-size: 14px;
+      }
+
+      .footer-button-{{ block.id }} {
+        font-size: 14px;
+        text-align: center;
+        width: 100%;
+      }
+    }
+
+    .columns-container-{{ block.id }} {
+      display: flex;
+      flex-direction: row;
+      gap: 20px;
+      margin-top: 0;
+      text-align: left;
+      justify-content: center;
+      align-items: flex-start;
   }
 
-  .hidden {
-    display: none !important;
-  }
+    .column-item {
+      text-align: center;
+      padding: 10px;
+    }
+
+    .columns-container-{{ block.id }} .column-title {
+      color: #000000;
+      font-size: 16px;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    .columns-container-{{ block.id }} .column-description {
+      color: #000000;
+      font-size: 16px;
+      line-height: 1;
+    }
+
+    @media (max-width: 768px) {
+
+      .columns-container-{{ block.id }} .column-title {
+        font-size: 16px;
+      }
+
+      .columns-container-{{ block.id }} .column-description {
+        font-size: 16px;
+      }
+    }
 {% endstyle %}
-
+ {% assign current_locale = request.locale.iso_code | default: 'en' %}
+  {% assign locale_prefix = current_locale | slice: 0, 2 %}
 {% assign show_main_tabs = block.settings.show_main_tabs | default: true %}
 {% assign show_sub_tabs = block.settings.show_sub_tabs | default: true %}
-{% assign global_link_url = block.settings.global_link_url %}
+{% assign selected_product = all_products[block.settings.selected_product] %}
+{% assign product_url = selected_product.url %}
 
 <div class="bike-tabs-block" id="block-{{ block.id }}">
   <div class="banner-header-container">
@@ -264,16 +372,16 @@
       {% assign description_key = 'description_' | append: request.locale.iso_code %}
       {% assign default_description_key = 'description_en' %}
 
-      {% assign title_value = block.settings[title_key] | default: block.settings[default_title_key] %}
-      {% if title_value != blank %}
-        <h2 class="banner-title">{{ title_value }}</h2>
-      {% endif %}
+      <h2 class="banner-title">{{ selected_product.title | escape }}</h2>
 
-      {% assign description_value = block.settings[description_key]
-        | default: block.settings[default_description_key]
-      %}
-      {% if description_value != blank %}
-        <div class="banner-description">{{ description_value }}</div>
+      {% if locale_prefix == 'de' %}
+        {{ block.settings.description_de }}
+      {% elsif locale_prefix == 'fr' %}
+        {{ block.settings.description_fr }}
+      {% elsif locale_prefix == 'fi' %}
+        {{ block.settings.description_fi }}
+      {% else %}
+        {{ block.settings.description_en }}
       {% endif %}
     </div>
 
@@ -411,7 +519,7 @@
                     style="background-image: url('{{ image | img_url: '800x' }}');"
                   >
                     <a
-                      href="{{ block.settings.global_link_url }}"
+                      href="{{ product_url }}"
                       class="sub-content-link"
                       aria-label="{{ 'View product' | t }}"
                     ></a>
@@ -423,6 +531,121 @@
         {% endif %}
       {% endif %}
     {% endfor %}
+  </div>
+</div>
+
+<div class="columns-container-{{ block.id }}">
+  <div class="column-item">
+    <h3 class="column-title">
+      {% if request.locale.iso_code == 'de' %}
+        Motor
+      {% elsif request.locale.iso_code == 'fr' %}
+        Moteur
+      {% elsif request.locale.iso_code == 'fi' %}
+        Moottori
+      {% else %}
+        Motor
+      {% endif %}
+    </h3>
+    <div class="column-description">{{ selected_product.metafields.custom.motor_torque_2.value | default: 'N/A' }}</div>
+  </div>
+
+  <div class="column-item">
+    <h3 class="column-title">
+      {% if request.locale.iso_code == 'de' %}
+        Batterie
+      {% elsif request.locale.iso_code == 'fr' %}
+        Batterie
+      {% elsif request.locale.iso_code == 'fi' %}
+        Paristo
+      {% else %}
+        Battery
+      {% endif %}
+    </h3>
+    <div class="column-description">
+      {{ selected_product.metafields.custom.battery_capacity.value | default: 'N/A' }}
+    </div>
+  </div>
+
+  <div class="column-item">
+    <h3 class="column-title">
+      {% if request.locale.iso_code == 'de' %}
+        Gänge
+      {% elsif request.locale.iso_code == 'fr' %}
+        Transmission
+      {% elsif request.locale.iso_code == 'fi' %}
+        Vaihteet
+      {% else %}
+        Gears
+      {% endif %}
+    </h3>
+    <div class="column-description">{{ selected_product.metafields.custom.gears.value | default: 'N/A' }}</div>
+  </div>
+
+  <div class="column-item">
+    <h3 class="column-title">
+      {% if request.locale.iso_code == 'de' %}
+        Rahmen
+      {% elsif request.locale.iso_code == 'fr' %}
+        Cadre
+      {% elsif request.locale.iso_code == 'fi' %}
+        Runko
+      {% else %}
+        Frame
+      {% endif %}
+    </h3>
+    <div class="column-description">{{ selected_product.metafields.custom.frame.value | default: 'N/A' }}</div>
+  </div>
+</div>
+
+<div class="slide-footer-{{ block.id }}">
+  <div class="footer-left">
+    <h3 class="footer-title">
+      {% unless bss_check_variant %}
+        {% if selected_product.compare_at_price > selected_product.price %}
+          <span class="custom-current-price">{{ selected_product.price | money }}</span>
+          <span class="custom-was-price">{{ selected_product.compare_at_price | money }}</span>
+        {% else %}
+          <span class="custom-current-price">{{ selected_product.price | money }}</span>
+        {% endif %}
+      {% else %}
+        <span class="bsscommerce-hv-message">Lock</span>
+      {% endunless %}
+    </h3>
+
+    {% if localization.country.iso_code == 'DE' %}
+      {% if selected_product.metafields.custom.zinia_financing.value %}
+        {% case request.locale.iso_code %}
+          {% when 'de' %}
+            Finanzierung ab €{{ selected_product.metafields.custom.zinia_financing.value }}/Monat mit
+          {% when 'fr' %}
+            Financement à partir de €{{ selected_product.metafields.custom.zinia_financing.value }}/mois avec
+          {% when 'fi' %}
+            Rahoitus alkaen €{{ selected_product.metafields.custom.zinia_financing.value }}/kk
+          {% else %}
+            Financing from €{{ selected_product.metafields.custom.zinia_financing.value }}/month with
+        {% endcase %}
+        {% render 'icon-zinia' %}
+      {% endif %}
+    {% endif %}
+  </div>
+
+  <div class="footer-right">
+    <a
+      class="footer-button-{{ block.id }}"
+      href="{{ product_url }}"
+    >
+      {% if request.locale.iso_code == 'de' %}
+        Jetzt entdecken
+      {% elsif request.locale.iso_code == 'fr' %}
+        Découvrir maintenant
+      {% elsif request.locale.iso_code == 'fi' %}
+        Tutustu nyt
+      {%- else -%}
+        Discover now
+      {% endif %}
+      &rarr;
+    </a>
   </div>
 </div>
 

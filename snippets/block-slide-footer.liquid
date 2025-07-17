@@ -7,14 +7,14 @@
     margin-top: 15px;
   }
 
-  .footer-title {
+  .slide-footer__title {
     color: {{ block.settings.footer_title_color }};
     font-size: {{ block.settings.footer_title_size_desktop }}px;
     margin-bottom: 3px;
     font-weight: bold;
   }
 
-  .footer-description {
+  .slide-footer__description {
     color: {{ block.settings.footer_description_color }};
     font-size: {{ block.settings.footer_description_size_desktop }}px;
     line-height: 1.3;
@@ -44,11 +44,11 @@
       align-items: stretch;
     }
 
-    .footer-title {
+    .slide-footer__title {
       font-size: {{ block.settings.footer_title_size_mobile }}px;
     }
 
-    .footer-description {
+    .slide-footer__description {
       font-size: {{ block.settings.footer_description_size_mobile }}px;
     }
 
@@ -60,10 +60,13 @@
   }
 </style>
 
+ {% assign current_locale = request.locale.iso_code | default: 'en' %}
+{% assign locale_prefix = current_locale | slice: 0, 2 %}
+
 <div class="slide-footer-{{ block.id }}">
-  <div class="footer-left">
+  <div class="slide-footer__left">
     {%- if block.settings.footer_title != blank or block.settings.rrp_price != blank -%}
-      <h3 class="footer-title">
+      <h3 class="slide-footer__title">
         {%- if block.settings.rrp_price != blank -%}
           {%- assign price_value = block.settings.rrp_price | times: 100 | money -%}
           {%- case locale_prefix -%}
@@ -92,7 +95,7 @@
     {%- endif -%}
 
     {%- if block.settings.footer_description != blank -%}
-      <div class="footer-description">
+      <div class="slide-footer__description">
         {%- case locale_prefix -%}
           {%- when 'de' -%}
             {{ block.settings.footer_description_de | default: block.settings.footer_description }}
@@ -108,7 +111,7 @@
   </div>
 
   {%- if block.settings.footer_button_url != blank and block.settings.footer_button_text != blank -%}
-    <div class="footer-right">
+    <div class="slide-footer__right">
       <a
         class="footer-button-{{ block.id }}"
         href="{{ block.settings.footer_button_url }}"

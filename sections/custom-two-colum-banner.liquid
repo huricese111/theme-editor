@@ -1,5 +1,6 @@
 {% assign current_locale = request.locale.iso_code | default: 'en' %}
 {% assign locale_prefix = current_locale | slice: 0, 2 %}
+
 {% render 'number-format' %}
 {% render 'media-content-styles' %}
 
@@ -7,7 +8,7 @@
   <div class="container" style="max-width:none; padding:0">
     <div class="flexible-layout valign-middle">
       {% render 'media-column', section: section %}
-      {% render 'block-content-column', section: section %}
+      {% render 'content-column', section: section %}
     </div>
   </div>
 </div>
@@ -1257,14 +1258,9 @@
       "limit": 3,
       "settings": [
         {
-          "type": "header",
-          "content": "Title"
-        },
-        {
-          "type": "text",
-          "id": "title_en",
-          "label": "Title (English)",
-          "default": "Premium Bikes"
+          "type": "product",
+          "id": "selected_product",
+          "label": "Assign product"
         },
         {
           "type": "textarea",
@@ -1274,28 +1270,13 @@
         },
         {
           "type": "text",
-          "id": "title_de",
-          "label": "Title (German)"
-        },
-        {
-          "type": "text",
           "id": "description_de",
           "label": "Description (German)"
         },
         {
           "type": "text",
-          "id": "title_fr",
-          "label": "Title (French)"
-        },
-        {
-          "type": "text",
           "id": "description_fr",
           "label": "Description (French)"
-        },
-        {
-          "type": "text",
-          "id": "title_fi",
-          "label": "Title (Finnish)"
         },
         {
           "type": "text",
@@ -1479,12 +1460,6 @@
           "type": "image_picker",
           "id": "tab_3_sub_tab_4_image",
           "label": "Sub tab 4 image"
-        },
-        {
-          "type": "url",
-          "id": "global_link_url",
-          "label": "Global Image Link URL",
-          "info": "URL to open when clicking on any image"
         }
       ]
     },

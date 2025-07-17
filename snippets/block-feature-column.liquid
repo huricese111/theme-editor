@@ -39,6 +39,9 @@
     }
   }
 </style>
+ 
+{% assign current_locale = request.locale.iso_code | default: 'en' %}
+{% assign locale_prefix = current_locale | slice: 0, 2 %}
 
 <div class="columns-container-{{ block.id }}">
   {%- for i in (1..4) -%}

@@ -1,3 +1,5 @@
+{% assign current_locale = request.locale.iso_code | default: 'en' %}
+{% assign locale_prefix = current_locale | slice: 0, 2 %}
 {% capture block_text %}
   {% case locale_prefix %}
     {% when 'de' %}{{ block.settings.text_de | default: block.settings.text }}

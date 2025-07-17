@@ -1,3 +1,5 @@
+{% assign current_locale = request.locale.iso_code | default: 'en' %}
+{% assign locale_prefix = current_locale | slice: 0, 2 %}
 <div class="signup-form signup-form--{{ block.settings.alignment }}">
   {% form 'customer', id: 'home_newsletter_signup' %}
     {% if form.posted_successfully? %}
