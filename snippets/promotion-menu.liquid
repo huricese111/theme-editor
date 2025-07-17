@@ -1,7 +1,7 @@
 <style>
   .navigation__tier-2,
   .navigation__columns {
-    padding: 8px; /* 添加内边距 */
+    padding: 8px;
   }
 
   .mp-header {
@@ -57,16 +57,6 @@
     overflow: hidden;
   }
 
-  .mp-promotion-image-container img {
-    width: 100%;
-    height: auto;
-    transition: transform 0.3s ease;
-  }
-
-  .mp-promotion-link:hover .mp-promotion-image-container img {
-    transform: scale(1.03);
-  }
-
   .mp-promotion-text {
     font-weight: bold;
     margin-top: 4px;
@@ -97,27 +87,32 @@
   }
 
   .mp-image-section {
-    background-color: #eee;
-    aspect-ratio: 1/1;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    position: relative;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    /* 默认值 */
+    aspect-ratio: 1/1;
+    background-color: #eee;
+  }
+
+  .mp-image-section.cover {
+    background-size: cover;
+  }
+
+  .mp-image-section:hover {
+    transform: scale(1.03);
   }
 
   .mp-image-section .mp-header {
     margin-bottom: 2px;
-  }
-
-  .mp-image-section .mp-promotion-image-container {
-    flex-grow: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .mp-image-section .mp-promotion-image-container img {
-    max-height: 100%;
-    width: auto;
+    position: relative;
+    z-index: 2;
   }
 
   .navigation__column {
@@ -131,7 +126,6 @@
 </style>
 
 {%- if small_promo_count > 0 -%}
-  {%- assign suffixes = '|1b|2|3|4' | split: '|' -%}
   {%- assign locale_code = request.locale.iso_code -%}
 
   {%- if mobile == false -%}
@@ -144,7 +138,53 @@
               {%- render 'localized-value', field: 'title_big', block: block, locale_code: locale_code -%}
             </div>
 
-            <div class="mp-image-section">
+            {%- if block.settings.image != blank -%}
+              {%- assign aspect_ratio_field = 'aspect_ratio' -%}
+              {%- assign background_color_field = 'background_color' -%}
+              {%- assign image_field = 'image' -%}
+              {%- assign image_fit_field = 'image_fit' -%}
+
+              {%- if block.settings.image_2 != blank -%}
+                {%- assign aspect_ratio_field = 'aspect_ratio_2' -%}
+                {%- assign background_color_field = 'background_color_2' -%}
+                {%- assign image_field = 'image_2' -%}
+                {%- assign image_fit_field = 'image_fit_2' -%}
+              {%- elsif block.settings.image_3 != blank -%}
+                {%- assign aspect_ratio_field = 'aspect_ratio_3' -%}
+                {%- assign background_color_field = 'background_color_3' -%}
+                {%- assign image_field = 'image_3' -%}
+                {%- assign image_fit_field = 'image_fit_3' -%}
+              {%- elsif block.settings.image_4 != blank -%}
+                {%- assign aspect_ratio_field = 'aspect_ratio_4' -%}
+                {%- assign background_color_field = 'background_color_4' -%}
+                {%- assign image_field = 'image_4' -%}
+                {%- assign image_fit_field = 'image_fit_4' -%}
+              {%- elsif block.settings.image_5 != blank -%}
+                {%- assign aspect_ratio_field = 'aspect_ratio_5' -%}
+                {%- assign background_color_field = 'background_color_5' -%}
+                {%- assign image_field = 'image_5' -%}
+                {%- assign image_fit_field = 'image_fit_5' -%}
+              {%- endif -%}
+
+              {%- assign image_url = block.settings[image_field] | image_url: width: 800 -%}
+              {%- assign image_fit_value = block.settings[image_fit_field] | default: 'contain' -%}
+              {%- assign inline_style = 'background-image: url('
+                | append: image_url
+                | append: '); aspect-ratio: '
+                | append: block.settings[aspect_ratio_field]
+                | append: '; background-color: '
+                | append: block.settings[background_color_field]
+                | append: '; background-size: '
+                | append: image_fit_value
+                | append: '; background-position: center; background-repeat: no-repeat;'
+              -%}
+
+              {%- if block.settings.link_url != blank -%}
+                <a href="{{ block.settings.link_url }}" class="mp-image-section" style="{{ inline_style }}">
+              {%- else -%}
+                <div class="mp-image-section" style="{{ inline_style }}">
+              {%- endif -%}
+
               <div class="mp-header">
                 {% if localization.country.iso_code == 'DE' and block.settings.discount_image != blank %}
                   <div class="mp-discount-image"></div>
@@ -161,55 +201,24 @@
                 {%- endif -%}
               </div>
 
-              {%- for suffix in suffixes -%}
-                {%- assign field_prefix = suffix | default: '' -%}
-                {%- if suffix != '' -%}{%- assign field_prefix = suffix | prepend: '_' -%}{%- endif -%}
-
-                {%- assign image_field = 'image' | append: field_prefix -%}
-                {%- assign link_url_field = 'link_url' | append: field_prefix -%}
-
-                {%- if block.settings[link_url_field] != blank -%}
-                  <a class="mp-promotion-link" href="{{ block.settings[link_url_field] }}">
-                {%- endif -%}
-
-                <div class="mp-promotion-image-container">
-                  {%- render 'image' with block.settings[image_field], class: 'mp-promotion-image', loading: 'lazy' -%}
-                </div>
-
-                {%- if block.settings[link_url_field] != blank -%}
-                  </a>
-                {%- endif -%}
-              {%- endfor -%}
-            </div>
-
-            {%- for suffix in suffixes -%}
-              {%- assign field_prefix = suffix | default: '' -%}
-              {%- if suffix != '' -%}{%- assign field_prefix = suffix | prepend: '_' -%}{%- endif -%}
-
-              {%- assign link_url_field = 'link_url' | append: field_prefix -%}
-              {%- assign title_field = 'title' | append: field_prefix -%}
-              {%- assign description_field = 'description' | append: field_prefix -%}
-
-              {%- if block.settings[link_url_field] != blank -%}
-                <a class="mp-promotion-link" href="{{ block.settings[link_url_field] }}">
-              {%- endif -%}
-
-              {%- if block.settings[title_field] != blank -%}
-                <div class="mp-promotion-text">
-                  {%- render 'localized-value', field: title_field, block: block, locale_code: locale_code -%}
-                </div>
-              {%- endif -%}
-
-              {%- if block.settings[description_field] != blank -%}
-                <div class="mp-promotion-description">
-                  {%- render 'localized-value', field: description_field, block: block, locale_code: locale_code -%}
-                </div>
-              {%- endif -%}
-
-              {%- if block.settings[link_url_field] != blank -%}
+              {%- if block.settings.link_url != blank -%}
                 </a>
+              {%- else -%}
+                </div>
               {%- endif -%}
-            {%- endfor -%}
+
+              {%- if block.settings.title != blank -%}
+                <div class="mp-promotion-text">
+                  {%- render 'localized-value', field: 'title', block: block, locale_code: locale_code -%}
+                </div>
+              {%- endif -%}
+
+              {%- if block.settings.description != blank -%}
+                <div class="mp-promotion-description">
+                  {%- render 'localized-value', field: 'description', block: block, locale_code: locale_code -%}
+                </div>
+              {%- endif -%}
+            {%- endif -%}
           </div>
         </li>
       {%- endif -%}
@@ -229,7 +238,53 @@
               {%- render 'localized-value', field: 'title_big', block: block, locale_code: locale_code -%}
             </div>
 
-            <div class="mp-image-section">
+            {%- if block.settings.image != blank -%}
+              {%- assign aspect_ratio_field = 'aspect_ratio' -%}
+              {%- assign background_color_field = 'background_color' -%}
+              {%- assign image_field = 'image' -%}
+              {%- assign image_fit_field = 'image_fit' -%}
+
+              {%- if block.settings.image_2 != blank -%}
+                {%- assign aspect_ratio_field = 'aspect_ratio_2' -%}
+                {%- assign background_color_field = 'background_color_2' -%}
+                {%- assign image_field = 'image_2' -%}
+                {%- assign image_fit_field = 'image_fit_2' -%}
+              {%- elsif block.settings.image_3 != blank -%}
+                {%- assign aspect_ratio_field = 'aspect_ratio_3' -%}
+                {%- assign background_color_field = 'background_color_3' -%}
+                {%- assign image_field = 'image_3' -%}
+                {%- assign image_fit_field = 'image_fit_3' -%}
+              {%- elsif block.settings.image_4 != blank -%}
+                {%- assign aspect_ratio_field = 'aspect_ratio_4' -%}
+                {%- assign background_color_field = 'background_color_4' -%}
+                {%- assign image_field = 'image_4' -%}
+                {%- assign image_fit_field = 'image_fit_4' -%}
+              {%- elsif block.settings.image_5 != blank -%}
+                {%- assign aspect_ratio_field = 'aspect_ratio_5' -%}
+                {%- assign background_color_field = 'background_color_5' -%}
+                {%- assign image_field = 'image_5' -%}
+                {%- assign image_fit_field = 'image_fit_5' -%}
+              {%- endif -%}
+
+              {%- assign image_url = block.settings[image_field] | image_url: width: 800 -%}
+              {%- assign image_fit_value = block.settings[image_fit_field] | default: 'contain' -%}
+              {%- assign inline_style = 'background-image: url('
+                | append: image_url
+                | append: '); aspect-ratio: '
+                | append: block.settings[aspect_ratio_field]
+                | append: '; background-color: '
+                | append: block.settings[background_color_field]
+                | append: '; background-size: '
+                | append: image_fit_value
+                | append: '; background-position: center; background-repeat: no-repeat;'
+              -%}
+
+              {%- if block.settings.link_url != blank -%}
+                <a href="{{ block.settings.link_url }}" class="mp-image-section" style="{{ inline_style }}">
+              {%- else -%}
+                <div class="mp-image-section" style="{{ inline_style }}">
+              {%- endif -%}
+
               <div class="mp-header">
                 {% if localization.country.iso_code == 'DE' and block.settings.discount_image != blank %}
                   <div class="mp-discount-image"></div>
@@ -246,55 +301,24 @@
                 {%- endif -%}
               </div>
 
-              {%- for suffix in suffixes -%}
-                {%- assign field_prefix = suffix | default: '' -%}
-                {%- if suffix != '' -%}{%- assign field_prefix = suffix | prepend: '_' -%}{%- endif -%}
-
-                {%- assign image_field = 'image' | append: field_prefix -%}
-                {%- assign link_url_field = 'link_url' | append: field_prefix -%}
-
-                {%- if block.settings[link_url_field] != blank -%}
-                  <a class="mp-promotion-link" href="{{ block.settings[link_url_field] }}">
-                {%- endif -%}
-
-                <div class="mp-promotion-image-container">
-                  {%- render 'image' with block.settings[image_field], class: 'mp-promotion-image', loading: 'lazy' -%}
-                </div>
-
-                {%- if block.settings[link_url_field] != blank -%}
-                  </a>
-                {%- endif -%}
-              {%- endfor -%}
-            </div>
-
-            {%- for suffix in suffixes -%}
-              {%- assign field_prefix = suffix | default: '' -%}
-              {%- if suffix != '' -%}{%- assign field_prefix = suffix | prepend: '_' -%}{%- endif -%}
-
-              {%- assign link_url_field = 'link_url' | append: field_prefix -%}
-              {%- assign title_field = 'title' | append: field_prefix -%}
-              {%- assign description_field = 'description' | append: field_prefix -%}
-
-              {%- if block.settings[link_url_field] != blank -%}
-                <a class="mp-promotion-link" href="{{ block.settings[link_url_field] }}">
-              {%- endif -%}
-
-              {%- if block.settings[title_field] != blank -%}
-                <div class="mp-promotion-text">
-                  {%- render 'localized-value', field: title_field, block: block, locale_code: locale_code -%}
-                </div>
-              {%- endif -%}
-
-              {%- if block.settings[description_field] != blank -%}
-                <div class="mp-promotion-description">
-                  {%- render 'localized-value', field: description_field, block: block, locale_code: locale_code -%}
-                </div>
-              {%- endif -%}
-
-              {%- if block.settings[link_url_field] != blank -%}
+              {%- if block.settings.link_url != blank -%}
                 </a>
+              {%- else -%}
+                </div>
               {%- endif -%}
-            {%- endfor -%}
+
+              {%- if block.settings.title != blank -%}
+                <div class="mp-promotion-text">
+                  {%- render 'localized-value', field: 'title', block: block, locale_code: locale_code -%}
+                </div>
+              {%- endif -%}
+
+              {%- if block.settings.description != blank -%}
+                <div class="mp-promotion-description">
+                  {%- render 'localized-value', field: 'description', block: block, locale_code: locale_code -%}
+                </div>
+              {%- endif -%}
+            {%- endif -%}
           </div>
         {%- endif -%}
       {%- endfor -%}

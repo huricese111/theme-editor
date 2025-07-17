@@ -889,6 +889,68 @@
           "label": "Image"
         },
         {
+          "type": "select",
+          "id": "aspect_ratio",
+          "label": "Container Aspect Ratio",
+          "options": [
+            {
+              "value": "1/1",
+              "label": "Square (1:1)"
+            },
+            {
+              "value": "4/3",
+              "label": "Standard (4:3)"
+            },
+            {
+              "value": "3/2",
+              "label": "Classic (3:2)"
+            },
+            {
+              "value": "16/9",
+              "label": "Widescreen (16:9)"
+            },
+            {
+              "value": "21/9",
+              "label": "Ultra-wide (21:9)"
+            },
+            {
+              "value": "2/1",
+              "label": "Banner (2:1)"
+            },
+            {
+              "value": "3/4",
+              "label": "Portrait (3:4)"
+            },
+            {
+              "value": "9/16",
+              "label": "Vertical (9:16)"
+            }
+          ],
+          "default": "1/1"
+        },
+        {
+          "type": "select",
+          "id": "image_fit",
+          "label": "Image fit",
+          "options": [
+            {
+              "value": "contain",
+              "label": "Contain"
+            },
+            {
+              "value": "cover",
+              "label": "Cover"
+            }
+          ],
+          "default": "contain"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "Background Color",
+          "default": "#eee"
+        },
+        {
           "type": "text",
           "id": "title",
           "label": "Title"
@@ -959,6 +1021,22 @@
           "label": "Image"
         },
         {
+          "type": "select",
+          "id": "image_fit_1b",
+          "label": "Image fit",
+          "options": [
+            {
+              "value": "contain",
+              "label": "Contain"
+            },
+            {
+              "value": "cover",
+              "label": "Cover"
+            }
+          ],
+          "default": "contain"
+        },
+        {
           "type": "text",
           "id": "title_1b",
           "label": "Title"
@@ -1004,9 +1082,117 @@
           "label": "Link URL"
         },
         {
+          "type": "select",
+          "id": "aspect_ratio_1b",
+          "label": "Container Aspect Ratio",
+          "options": [
+            {
+              "value": "1/1",
+              "label": "Square (1:1)"
+            },
+            {
+              "value": "4/3",
+              "label": "Standard (4:3)"
+            },
+            {
+              "value": "3/2",
+              "label": "Classic (3:2)"
+            },
+            {
+              "value": "16/9",
+              "label": "Widescreen (16:9)"
+            },
+            {
+              "value": "21/9",
+              "label": "Ultra-wide (21:9)"
+            },
+            {
+              "value": "2/1",
+              "label": "Banner (2:1)"
+            },
+            {
+              "value": "3/4",
+              "label": "Portrait (3:4)"
+            },
+            {
+              "value": "9/16",
+              "label": "Vertical (9:16)"
+            }
+          ],
+          "default": "1/1"
+        },
+        {
+          "type": "color",
+          "id": "background_color_1b",
+          "label": "Background Color",
+          "default": "#eee"
+        },
+        {
           "type": "image_picker",
           "id": "image_2",
           "label": "Image_2"
+        },
+        {
+          "type": "select",
+          "id": "aspect_ratio_2",
+          "label": "Container Aspect Ratio",
+          "options": [
+            {
+              "value": "1/1",
+              "label": "Square (1:1)"
+            },
+            {
+              "value": "4/3",
+              "label": "Standard (4:3)"
+            },
+            {
+              "value": "3/2",
+              "label": "Classic (3:2)"
+            },
+            {
+              "value": "16/9",
+              "label": "Widescreen (16:9)"
+            },
+            {
+              "value": "21/9",
+              "label": "Ultra-wide (21:9)"
+            },
+            {
+              "value": "2/1",
+              "label": "Banner (2:1)"
+            },
+            {
+              "value": "3/4",
+              "label": "Portrait (3:4)"
+            },
+            {
+              "value": "9/16",
+              "label": "Vertical (9:16)"
+            }
+          ],
+          "default": "1/1"
+        },
+        {
+          "type": "select",
+          "id": "image_fit_2",
+          "label": "Image fit",
+          "options": [
+            {
+              "value": "contain",
+              "label": "Contain"
+            },
+            {
+              "value": "cover",
+              "label": "Cover"
+            }
+          ],
+          "default": "contain"
+        },
+        {
+          "type": "color",
+          "id": "background_color_2",
+          "label": "Background Color",
+          "default": "#eee"
         },
         {
           "type": "text",
@@ -1059,6 +1245,52 @@
           "label": "Image_3"
         },
         {
+          "type": "select",
+          "id": "aspect_ratio_3",
+          "label": "Container Aspect Ratio",
+          "options": [
+            {
+              "value": "1/1",
+              "label": "Square (1:1)"
+            },
+            {
+              "value": "4/3",
+              "label": "Standard (4:3)"
+            },
+            {
+              "value": "3/2",
+              "label": "Classic (3:2)"
+            },
+            {
+              "value": "16/9",
+              "label": "Widescreen (16:9)"
+            },
+            {
+              "value": "21/9",
+              "label": "Ultra-wide (21:9)"
+            },
+            {
+              "value": "2/1",
+              "label": "Banner (2:1)"
+            },
+            {
+              "value": "3/4",
+              "label": "Portrait (3:4)"
+            },
+            {
+              "value": "9/16",
+              "label": "Vertical (9:16)"
+            }
+          ],
+          "default": "1/1"
+        },
+        {
+          "type": "color",
+          "id": "background_color_3",
+          "label": "Background Color",
+          "default": "#eee"
+        },
+        {
           "type": "text",
           "id": "title_3",
           "label": "Title_3"
@@ -1107,6 +1339,52 @@
           "type": "image_picker",
           "id": "image_4",
           "label": "Image_4"
+        },
+        {
+          "type": "select",
+          "id": "aspect_ratio_4",
+          "label": "Container Aspect Ratio",
+          "options": [
+            {
+              "value": "1/1",
+              "label": "Square (1:1)"
+            },
+            {
+              "value": "4/3",
+              "label": "Standard (4:3)"
+            },
+            {
+              "value": "3/2",
+              "label": "Classic (3:2)"
+            },
+            {
+              "value": "16/9",
+              "label": "Widescreen (16:9)"
+            },
+            {
+              "value": "21/9",
+              "label": "Ultra-wide (21:9)"
+            },
+            {
+              "value": "2/1",
+              "label": "Banner (2:1)"
+            },
+            {
+              "value": "3/4",
+              "label": "Portrait (3:4)"
+            },
+            {
+              "value": "9/16",
+              "label": "Vertical (9:16)"
+            }
+          ],
+          "default": "1/1"
+        },
+        {
+          "type": "color",
+          "id": "background_color_4",
+          "label": "Background Color",
+          "default": "#eee"
         },
         {
           "type": "text",
