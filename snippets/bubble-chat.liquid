@@ -1,0 +1,501 @@
+<style>
+  .feedback-button-black {
+    position: fixed;
+    left: 20px;
+    bottom: 20px;
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 4px 13px;
+    cursor: pointer;
+    border-radius: 60px;
+    z-index: 100;
+    width: 50px;
+    height: 50px;
+  }
+
+  .modal-feedback {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .modal-content-feedback {
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    width: 540px;
+    text-align: left;
+    height: 400px;
+    position: relative;
+  }
+
+  .modal-content-feedback p {
+    font-weight: bold;
+    font-size: 18px;
+  }
+
+  .modal-content-feedback .selecting {
+    font-size: 30px;
+  }
+
+  .modal-content-feedback button[type='submit'] {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto 0;
+    width: fit-content;
+  }
+
+  .close-button {
+    cursor: pointer;
+    color: black;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    padding: 5px;
+  }
+
+  .feedback-icon {
+    fill: white;
+    width: 40px;
+    height: 60px;
+  }
+
+  .success-message {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    z-index: 200;
+  }
+
+  .success-message button {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  @media (max-width: 768px) {
+    .feedback-button-black {
+      bottom: 10px;
+    }
+  }
+</style>
+
+<button class="feedback-button-black" onclick="openFeedbackModal()">
+  <svg
+    t="1750229384481"
+    class="icon"
+    viewBox="0 0 1024 1024"
+    version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+    p-id="26690"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    width="200"
+    height="200"
+  >
+     <path d="M512 42.666667C252.8 42.666667 42.666667 252.8 42.666667 512c0 113.578667 40.362667 217.770667 107.52 298.922667L55.466667 981.333333H512c259.2 0 469.333333-210.133333 469.333333-469.333333S771.2 42.666667 512 42.666667zM355.541333 580.266667a170.709333 170.709333 0 0 0 312.96 0l17.066667-39.125334 78.208 34.176-17.066667 39.082667a256.042667 256.042667 0 0 1-469.376 0l-17.066666-39.082667 78.165333-34.133333 17.066667 39.082667z" p-id="26691" fill="#ffffff"></path>
+    <circle cx="400" cy="400" r="40" fill="#000000" />
+     <circle cx="624" cy="400" r="40" fill="#000000" />
+  </svg>
+</button>
+
+<div class="modal-feedback" id="feedbackModal">
+  <div class="modal-content-feedback">
+    <span class="close-button" onclick="closeFeedbackModal()">&times;</span>
+
+    {% if request.locale.iso_code == 'de' %}
+      <style>
+        .pifyform.formloading iframe {
+          visibility: hidden !important;
+        }
+        .pifyform.formloading {
+          background-image: url(https://form-builder.pifyapp.com/assets/images/loading.gif?v=4.6);
+          background-position: center 30px;
+          background-size: 30px 30px;
+          background-repeat: no-repeat;
+        }
+      </style>
+      <div id="pifyform-11904" class="pifyform" style="margin:10px 0;">
+        <script charset="UTF-8" defer>
+          document.getElementById('pifyform-11904').classList.add('formloading');
+          (function (h) {
+            function n(a) {
+              return null === a ? null : a.scrollHeight > a.clientHeight ? a : n(a.parentNode);
+            }
+            function t(b) {
+              if (b.data && typeof b.data == 'string') {
+                var f = null;
+                try {
+                  f = JSON.parse(b.data);
+                } catch (e) {}
+                if (f != null && f.height != undefined) {
+                  if (f.formId == undefined) {
+                    d.style.height = f.height + 'px';
+                  } else if ('pifyform-' + f.formId == d.id) {
+                    d.style.height = f.height + 'px';
+                  }
+                }
+                if (f != null && f.redirect != undefined && f.redirect != '') {
+                  window.location.href = f.redirect;
+                }
+                if (f != null && f.retsetHeight != undefined && f.retsetHeight) {
+                  d.style.height = '520px';
+                  window.location.href = '#pifyform-11904';
+                }
+                if (document.getElementsByClassName('lazyframe').length > 0) {
+                  var lazyframe = document.getElementsByClassName('lazyframe')[0];
+                  lazyframe.style.height = '100%';
+                  lazyframe.removeAttribute('data-ratio');
+                  lazyframe.parentNode.style.overflow = 'hidden';
+                }
+                if (f != null && f.getter) {
+                  b = {};
+                  var f = [].concat(f.getter),
+                    k,
+                    h = f.length,
+                    m,
+                    c,
+                    g,
+                    e;
+                  for (k = 0; k < h; k++) {
+                    m = k;
+                    c = f[k] || {};
+                    c.n && (m = c.n);
+                    g = null;
+                    try {
+                      switch (c.t) {
+                        case 'window':
+                          e = window;
+                          break;
+                        case 'scrollParent':
+                          e = n(a) || window;
+                          break;
+                        default:
+                          e = a;
+                      }
+                      if (c.e)
+                        if ('rect' === c.v) {
+                          g = {};
+                          var l = e.getBoundingClientRect();
+                          g = { top: l.top, left: l.left, width: l.width, height: l.height };
+                        } else g = e[c.v].apply(e, [].concat(c.e)) || !0;
+                      else c.s ? ((e[c.v] = c.s), (g = !0)) : (g = e[c.v] || !1);
+                    } catch (u) {}
+                    b[m] = g;
+                  }
+                  b.innerState = !p && !q;
+                  a.contentWindow.postMessage(JSON.stringify({ queryRes: b }), '*');
+                }
+              }
+            }
+            var d = document.getElementById('pifyform-11904');
+            var a = document.createElement('iframe');
+            d.style.overflowY = 'auto';
+            d.style.overflowX = 'hidden';
+            var p = d.style.height && 'auto' !== d.style.height,
+              q =
+                'absolute' === d.style.position ||
+                (window.getComputedStyle &&
+                  'absolute' === window.getComputedStyle(d, null).getPropertyValue('position')) ||
+                (d.currentStyle && 'absolute' === d.currentStyle.position);
+            h.addEventListener && h.addEventListener('message', t, !1);
+            a.src = 'https://form-builder-an.pifyapp.com/form/s/11904';
+            a.id = 'form-iframe-11904';
+            a.onload = function () {
+              document.getElementById('pifyform-11904').classList.remove('formloading');
+              a.contentWindow.postMessage(JSON.stringify({ parentUrl: window.location.href }), '*');
+            };
+            a.frameBorder = 0;
+            a.scrolling = 'no';
+            a.style.display = 'block';
+            a.style.minWidth = '100%';
+            a.style.width = '100px';
+            a.style.height = '100%';
+            a.style.border = 'none';
+            a.style.overflow = 'auto';
+            setTimeout(function () {
+              if (!document.getElementById('form-iframe-11904')) {
+                d.appendChild(a);
+              }
+            }, 50);
+          })(window);
+        </script>
+      </div>
+
+    {% elsif request.locale.iso_code == 'fr' %}
+      <style>
+        .pifyform.formloading iframe {
+          visibility: hidden !important;
+        }
+        .pifyform.formloading {
+          background-image: url(https://form-builder.pifyapp.com/assets/images/loading.gif?v=4.6);
+          background-position: center 30px;
+          background-size: 30px 30px;
+          background-repeat: no-repeat;
+        }
+      </style>
+      <div id="pifyform-11905" class="pifyform" style="margin:10px 0;">
+        <script charset="UTF-8" defer>
+          document.getElementById('pifyform-11905').classList.add('formloading');
+          (function (h) {
+            function n(a) {
+              return null === a ? null : a.scrollHeight > a.clientHeight ? a : n(a.parentNode);
+            }
+            function t(b) {
+              if (b.data && typeof b.data == 'string') {
+                var f = null;
+                try {
+                  f = JSON.parse(b.data);
+                } catch (e) {}
+                if (f != null && f.height != undefined) {
+                  if (f.formId == undefined) {
+                    d.style.height = f.height + 'px';
+                  } else if ('pifyform-' + f.formId == d.id) {
+                    d.style.height = f.height + 'px';
+                  }
+                }
+                if (f != null && f.redirect != undefined && f.redirect != '') {
+                  window.location.href = f.redirect;
+                }
+                if (f != null && f.retsetHeight != undefined && f.retsetHeight) {
+                  d.style.height = '520px';
+                  window.location.href = '#pifyform-11905';
+                }
+                if (document.getElementsByClassName('lazyframe').length > 0) {
+                  var lazyframe = document.getElementsByClassName('lazyframe')[0];
+                  lazyframe.style.height = '100%';
+                  lazyframe.removeAttribute('data-ratio');
+                  lazyframe.parentNode.style.overflow = 'hidden';
+                }
+                if (f != null && f.getter) {
+                  b = {};
+                  var f = [].concat(f.getter),
+                    k,
+                    h = f.length,
+                    m,
+                    c,
+                    g,
+                    e;
+                  for (k = 0; k < h; k++) {
+                    m = k;
+                    c = f[k] || {};
+                    c.n && (m = c.n);
+                    g = null;
+                    try {
+                      switch (c.t) {
+                        case 'window':
+                          e = window;
+                          break;
+                        case 'scrollParent':
+                          e = n(a) || window;
+                          break;
+                        default:
+                          e = a;
+                      }
+                      if (c.e)
+                        if ('rect' === c.v) {
+                          g = {};
+                          var l = e.getBoundingClientRect();
+                          g = { top: l.top, left: l.left, width: l.width, height: l.height };
+                        } else g = e[c.v].apply(e, [].concat(c.e)) || !0;
+                      else c.s ? ((e[c.v] = c.s), (g = !0)) : (g = e[c.v] || !1);
+                    } catch (u) {}
+                    b[m] = g;
+                  }
+                  b.innerState = !p && !q;
+                  a.contentWindow.postMessage(JSON.stringify({ queryRes: b }), '*');
+                }
+              }
+            }
+            var d = document.getElementById('pifyform-11905');
+            var a = document.createElement('iframe');
+            d.style.overflowY = 'auto';
+            d.style.overflowX = 'hidden';
+            var p = d.style.height && 'auto' !== d.style.height,
+              q =
+                'absolute' === d.style.position ||
+                (window.getComputedStyle &&
+                  'absolute' === window.getComputedStyle(d, null).getPropertyValue('position')) ||
+                (d.currentStyle && 'absolute' === d.currentStyle.position);
+            h.addEventListener && h.addEventListener('message', t, !1);
+            a.src = 'https://form-builder-an.pifyapp.com/form/s/11905';
+            a.id = 'form-iframe-11905';
+            a.onload = function () {
+              document.getElementById('pifyform-11905').classList.remove('formloading');
+              a.contentWindow.postMessage(JSON.stringify({ parentUrl: window.location.href }), '*');
+            };
+            a.frameBorder = 0;
+            a.scrolling = 'no';
+            a.style.display = 'block';
+            a.style.minWidth = '100%';
+            a.style.width = '100px';
+            a.style.height = '100%';
+            a.style.border = 'none';
+            a.style.overflow = 'auto';
+            setTimeout(function () {
+              if (!document.getElementById('form-iframe-11905')) {
+                d.appendChild(a);
+              }
+            }, 50);
+          })(window);
+        </script>
+      </div>
+
+    {% else %}
+      <style>
+        .pifyform.formloading iframe {
+          visibility: hidden !important;
+        }
+        .pifyform.formloading {
+          background-image: url(https://form-builder.pifyapp.com/assets/images/loading.gif?v=4.6);
+          background-position: center 30px;
+          background-size: 30px 30px;
+          background-repeat: no-repeat;
+        }
+      </style>
+      <div id="pifyform-11903" class="pifyform" style="margin:10px 0;">
+        <script charset="UTF-8" defer>
+          document.getElementById('pifyform-11903').classList.add('formloading');
+          (function (h) {
+            function n(a) {
+              return null === a ? null : a.scrollHeight > a.clientHeight ? a : n(a.parentNode);
+            }
+            function t(b) {
+              if (b.data && typeof b.data == 'string') {
+                var f = null;
+                try {
+                  f = JSON.parse(b.data);
+                } catch (e) {}
+                if (f != null && f.height != undefined) {
+                  if (f.formId == undefined) {
+                    d.style.height = f.height + 'px';
+                  } else if ('pifyform-' + f.formId == d.id) {
+                    d.style.height = f.height + 'px';
+                  }
+                }
+                if (f != null && f.redirect != undefined && f.redirect != '') {
+                  window.location.href = f.redirect;
+                }
+                if (f != null && f.retsetHeight != undefined && f.retsetHeight) {
+                  d.style.height = '520px';
+                  window.location.href = '#pifyform-11903';
+                }
+                if (document.getElementsByClassName('lazyframe').length > 0) {
+                  var lazyframe = document.getElementsByClassName('lazyframe')[0];
+                  lazyframe.style.height = '100%';
+                  lazyframe.removeAttribute('data-ratio');
+                  lazyframe.parentNode.style.overflow = 'hidden';
+                }
+                if (f != null && f.getter) {
+                  b = {};
+                  var f = [].concat(f.getter),
+                    k,
+                    h = f.length,
+                    m,
+                    c,
+                    g,
+                    e;
+                  for (k = 0; k < h; k++) {
+                    m = k;
+                    c = f[k] || {};
+                    c.n && (m = c.n);
+                    g = null;
+                    try {
+                      switch (c.t) {
+                        case 'window':
+                          e = window;
+                          break;
+                        case 'scrollParent':
+                          e = n(a) || window;
+                          break;
+                        default:
+                          e = a;
+                      }
+                      if (c.e)
+                        if ('rect' === c.v) {
+                          g = {};
+                          var l = e.getBoundingClientRect();
+                          g = { top: l.top, left: l.left, width: l.width, height: l.height };
+                        } else g = e[c.v].apply(e, [].concat(c.e)) || !0;
+                      else c.s ? ((e[c.v] = c.s), (g = !0)) : (g = e[c.v] || !1);
+                    } catch (u) {}
+                    b[m] = g;
+                  }
+                  b.innerState = !p && !q;
+                  a.contentWindow.postMessage(JSON.stringify({ queryRes: b }), '*');
+                }
+              }
+            }
+            var d = document.getElementById('pifyform-11903');
+            var a = document.createElement('iframe');
+            d.style.overflowY = 'auto';
+            d.style.overflowX = 'hidden';
+            var p = d.style.height && 'auto' !== d.style.height,
+              q =
+                'absolute' === d.style.position ||
+                (window.getComputedStyle &&
+                  'absolute' === window.getComputedStyle(d, null).getPropertyValue('position')) ||
+                (d.currentStyle && 'absolute' === d.currentStyle.position);
+            h.addEventListener && h.addEventListener('message', t, !1);
+            a.src = 'https://form-builder-an.pifyapp.com/form/s/11903';
+            a.id = 'form-iframe-11903';
+            a.onload = function () {
+              document.getElementById('pifyform-11903').classList.remove('formloading');
+              a.contentWindow.postMessage(JSON.stringify({ parentUrl: window.location.href }), '*');
+            };
+            a.frameBorder = 0;
+            a.scrolling = 'no';
+            a.style.display = 'block';
+            a.style.minWidth = '100%';
+            a.style.width = '100px';
+            a.style.height = '100%';
+            a.style.border = 'none';
+            a.style.overflow = 'auto';
+            setTimeout(function () {
+              if (!document.getElementById('form-iframe-11903')) {
+                d.appendChild(a);
+              }
+            }, 50);
+          })(window);
+        </script>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<div class="success-message" id="successMessage">
+  <p>Thank you for your feedback!</p>
+  <button onclick="closeSuccessMessage()">Close</button>
+</div>
+
+<script>
+  function openFeedbackModal() {
+    document.getElementById('feedbackModal').style.display = 'flex';
+  }
+
+  function closeFeedbackModal() {
+    document.getElementById('feedbackModal').style.display = 'none';
+  }
+</script>

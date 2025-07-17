@@ -1,143 +1,293 @@
-{%- comment -%}
-/**
- * Custom Slideshow Component
- * 
- * A responsive slideshow/carousel component for showcasing bike products with
- * multi-language support, sales tags, and customizable styling.
- * 
- * FEATURES:
- * - Responsive design with different behaviors for desktop and mobile
- * - Multi-language content support (English, German, French, Finnish)
- * - Customizable sales tags (up to 3 per slide)
- * - Auto-play functionality with manual navigation controls
- * - Fade transition effects between slides
- * - Pagination dots and arrow navigation
- * - Customizable button styling and colors
- * - Background color customization per slide
- * - Optimized image loading with srcset and lazy loading
- * 
- * RESPONSIVE BEHAVIOR:
- * - Desktop: Traditional slideshow with navigation controls and auto-play
- * - Mobile: Stacked slides display without navigation controls
- * - Adaptive image sizing and positioning
- * - Mobile-optimized text sizing and layout
- * 
- * LOCALIZATION:
- * - Supports 4 languages: English (default), German (de), French (fr), Finnish (fi)
- * - Automatic language detection based on request.locale.iso_code
- * - Fallback to default language if localized content is not available
- * - Localized content includes: titles, descriptions, button text, and sales tags
- * 
- * CUSTOMIZATION OPTIONS:
- * - Slide background colors
- * - Button text and background colors
- * - Sales tag content and styling
- * - Image selection with alt text support
- * - URL linking for call-to-action buttons
- * 
- * SLIDE CONFIGURATION:
- * - Image picker with responsive image optimization
- * - Multi-language title and rich text description fields
- * - Up to 3 customizable sales tags per slide
- * - Button configuration with URL, text, and styling options
- * - Background color selection
- * 
- * NAVIGATION FEATURES:
- * - Previous/Next arrow buttons (desktop only)
- * - Pagination dots with click navigation
- * - Auto-play with 5-second intervals
- * - Auto-play reset on manual navigation
- * - Keyboard and touch-friendly interactions
- * 
- * TECHNICAL FEATURES:
- * - CSS-only fade transitions
- * - JavaScript-powered navigation and auto-play
- * - Responsive image optimization with WebP format
- * - Lazy loading for performance optimization
- * - Event-driven architecture with resize handling
- * - Mobile-first responsive design approach
- * 
- * DEPENDENCIES:
- * - No external libraries required
- * - Uses vanilla JavaScript for functionality
- * - Relies on Shopify Liquid templating engine
- * - CSS3 transitions and transforms
- * 
- * BROWSER SUPPORT:
- * - Modern browsers with CSS3 and ES6 support
- * - Graceful degradation for older browsers
- * - Mobile Safari and Chrome optimization
- * 
- */
-{%- endcomment -%}
-
+<!-- 
+  Custom Slideshow Component
+  
+  Features:
+  - Responsive multi-layout slideshow with 4 positioning options (image-top, image-bottom, image-left, image-right)
+  - Multi-language support for 4 locales (English, German, French, Finnish) with dynamic content switching
+  - Customizable sales tags system (up to 3 tags per slide) with localized text
+  - Interactive navigation controls: previous/next buttons, dot pagination, and auto-play functionality
+  - Fully responsive design with mobile-optimized layouts and touch-friendly controls
+  - Configurable styling options: background colors, button colors, and text colors
+  - WebP image optimization with responsive srcset for performance
+  - Accessibility features with proper alt text and keyboard navigation
+  - Auto-play with 5-second intervals and user interaction pause/resume
+  - Mobile-first approach with stacked layouts and hidden navigation on small screens
+  
+  Technical Implementation:
+  - Liquid templating with dynamic schema configuration
+  - CSS Grid and Flexbox for responsive layouts
+  - Vanilla JavaScript for slideshow functionality
+  - CSS transitions and transforms for smooth animations
+  - Media queries for mobile responsiveness (768px breakpoint)
+-->
 <div class="slideshow-container">
   {% for slide in section.blocks %}
     <div
-      class="Bikebanner fade slide-{{ forloop.index }}"
+      class="Bikebanner fade slide-{{ forloop.index }} layout-{{ slide.settings.slide_layout | default: 'image-right' }}"
       style="background-color: {{ slide.settings.background_color }};"
     >
-      <div class="Bikebanner-content">
-        <div class="text-container">
-          <div class="salestagrow">
-            {% for i in (1..3) %}
-              {% capture salestag_key %}salestag_{{ i }}{% endcapture %}
-              {% assign localized_key = salestag_key | append: '_' | append: request.locale.iso_code %}
-              {% assign default_tag = slide.settings[salestag_key] %}
+      {% case slide.settings.slide_layout %}
+        {% when 'image-top' %}
+          <!-- 图片在上，文字在下 -->
+          <div class="Bikebanner-image">
+            {% if slide.settings.image != blank %}
+              <img
+                src="{{ slide.settings.image | img_url: '1800x', format: 'webp' }}"
+                srcset="
+                  {{ slide.settings.image | img_url: '600x' }} 600w,
+                  {{ slide.settings.image | img_url: '1200x' }} 1200w,
+                  {{ slide.settings.image | img_url: '1800x' }} 1800w
+                "
+                sizes="(max-width: 768px) 100vw, 80vw"
+                alt="{{ slide.settings.image.alt | escape }}"
+                loading="lazy"
+                width="1800"
+                height="{{ 1800 | divided_by: slide.settings.image.aspect_ratio | round }}"
+                class="slider-image"
+              >
+            {% else %}
+              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+            {% endif %}
+          </div>
+          
+          <div class="Bikebanner-content">
+            <div class="text-container">
+              <div class="content-left">
+                <div class="salestagrow">
+                  {% for i in (1..3) %}
+                    {% capture salestag_key %}salestag_{{ i }}{% endcapture %}
+                    {% assign localized_key = salestag_key | append: '_' | append: request.locale.iso_code %}
+                    {% assign default_tag = slide.settings[salestag_key] %}
 
-              {% if default_tag != blank %}
-                <span class="salestag" data-localize="{{ default_tag }}">
-                  {{ slide.settings[localized_key] | default: default_tag }}
-                </span>
-              {% endif %}
-            {% endfor %}
+                    {% if default_tag != blank %}
+                      <span class="salestag" data-localize="{{ default_tag }}">
+                        {{ slide.settings[localized_key] | default: default_tag }}
+                      </span>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+
+                {% assign title_key = 'title_' | append: request.locale.iso_code %}
+                <h3 data-localize="{{ slide.settings.title }}">
+                  {{ slide.settings[title_key] | default: slide.settings.title }}
+                </h3>
+
+                {% assign desc_key = 'description_' | append: request.locale.iso_code %}
+                <p data-localize="{{ slide.settings.description }}">
+                  {{ slide.settings[desc_key] | default: slide.settings.description }}
+                </p>
+              </div>
+              
+              <div class="content-right">
+                {% assign btn_key = 'btntext_' | append: request.locale.iso_code %}
+                <a
+                  href="{{ slide.settings.link }}"
+                  target="_self"
+                  class="bikebutton"
+                  style="
+                    background-color: {{ slide.settings.btn_background_color }};
+                    color: {{ slide.settings.btn_text_color }};
+                  "
+                >
+                  {{ slide.settings[btn_key] | default: slide.settings.btntext }} &rarr;
+                </a>
+              </div>
+            </div>
           </div>
 
-          {% assign title_key = 'title_' | append: request.locale.iso_code %}
-          <h3 data-localize="{{ slide.settings.title }}">
-            {{ slide.settings[title_key] | default: slide.settings.title }}
-          </h3>
+        {% when 'image-bottom' %}
+          <div class="Bikebanner-content">
+            <div class="text-container">
+              <div class="content-left">
+                <div class="salestagrow">
+                  {% for i in (1..3) %}
+                    {% capture salestag_key %}salestag_{{ i }}{% endcapture %}
+                    {% assign localized_key = salestag_key | append: '_' | append: request.locale.iso_code %}
+                    {% assign default_tag = slide.settings[salestag_key] %}
 
-          {% assign desc_key = 'description_' | append: request.locale.iso_code %}
-          <p data-localize="{{ slide.settings.description }}">
-            {{ slide.settings[desc_key] | default: slide.settings.description }}
-          </p>
+                    {% if default_tag != blank %}
+                      <span class="salestag" data-localize="{{ default_tag }}">
+                        {{ slide.settings[localized_key] | default: default_tag }}
+                      </span>
+                    {% endif %}
+                  {% endfor %}
+                </div>
 
-          {% assign btn_key = 'btntext_' | append: request.locale.iso_code %}
-          <a
-            href="{{ slide.settings.link }}"
-            target="_self"
-            class="bikebutton"
-            style="
-              background-color: {{ slide.settings.btn_background_color }};
-              color: {{ slide.settings.btn_text_color }};
-            "
-          >
-            {{ slide.settings[btn_key] | default: slide.settings.btntext }} &rarr;
-          </a>
-        </div>
-      </div>
+                {% assign title_key = 'title_' | append: request.locale.iso_code %}
+                <h3 data-localize="{{ slide.settings.title }}">
+                  {{ slide.settings[title_key] | default: slide.settings.title }}
+                </h3>
 
-      <div class="Bikebanner-image">
-        {% if slide.settings.image != blank %}
-          <img
-            src="{{ slide.settings.image | img_url: '1800x', format: 'webp' }}"
-            srcset="
-              {{ slide.settings.image | img_url: '600x' }} 600w,
-              {{ slide.settings.image | img_url: '1200x' }} 1200w,
-              {{ slide.settings.image | img_url: '1800x' }} 1800w
-            "
-            sizes="(max-width: 768px) 100vw, 80vw"
-            alt="{{ slide.settings.image.alt | escape }}"
-            loading="lazy"
-            width="1800"
-            height="{{ 1800 | divided_by: slide.settings.image.aspect_ratio | round }}"
-            class="slider-image"
-          >
+                {% assign desc_key = 'description_' | append: request.locale.iso_code %}
+                <p data-localize="{{ slide.settings.description }}">
+                  {{ slide.settings[desc_key] | default: slide.settings.description }}
+                </p>
+              </div>
+              
+              <div class="content-right">
+                {% assign btn_key = 'btntext_' | append: request.locale.iso_code %}
+                <a
+                  href="{{ slide.settings.link }}"
+                  target="_self"
+                  class="bikebutton"
+                  style="
+                    background-color: {{ slide.settings.btn_background_color }};
+                    color: {{ slide.settings.btn_text_color }};
+                  "
+                >
+                  {{ slide.settings[btn_key] | default: slide.settings.btntext }} &rarr;
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="Bikebanner-image">
+            {% if slide.settings.image != blank %}
+              <img
+                src="{{ slide.settings.image | img_url: '1800x', format: 'webp' }}"
+                srcset="
+                  {{ slide.settings.image | img_url: '600x' }} 600w,
+                  {{ slide.settings.image | img_url: '1200x' }} 1200w,
+                  {{ slide.settings.image | img_url: '1800x' }} 1800w
+                "
+                sizes="(max-width: 768px) 100vw, 80vw"
+                alt="{{ slide.settings.image.alt | escape }}"
+                loading="lazy"
+                width="1800"
+                height="{{ 1800 | divided_by: slide.settings.image.aspect_ratio | round }}"
+                class="slider-image"
+              >
+            {% else %}
+              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+            {% endif %}
+          </div>
+
+        {% when 'image-left' %}
+          <div class="Bikebanner-image">
+            {% if slide.settings.image != blank %}
+              <img
+                src="{{ slide.settings.image | img_url: '1800x', format: 'webp' }}"
+                srcset="
+                  {{ slide.settings.image | img_url: '600x' }} 600w,
+                  {{ slide.settings.image | img_url: '1200x' }} 1200w,
+                  {{ slide.settings.image | img_url: '1800x' }} 1800w
+                "
+                sizes="(max-width: 768px) 100vw, 80vw"
+                alt="{{ slide.settings.image.alt | escape }}"
+                loading="lazy"
+                width="1800"
+                height="{{ 1800 | divided_by: slide.settings.image.aspect_ratio | round }}"
+                class="slider-image"
+              >
+            {% else %}
+              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+            {% endif %}
+          </div>
+
+          <div class="Bikebanner-content">
+            <div class="text-container">
+              <div class="salestagrow">
+                {% for i in (1..3) %}
+                  {% capture salestag_key %}salestag_{{ i }}{% endcapture %}
+                  {% assign localized_key = salestag_key | append: '_' | append: request.locale.iso_code %}
+                  {% assign default_tag = slide.settings[salestag_key] %}
+
+                  {% if default_tag != blank %}
+                    <span class="salestag" data-localize="{{ default_tag }}">
+                      {{ slide.settings[localized_key] | default: default_tag }}
+                    </span>
+                  {% endif %}
+                {% endfor %}
+              </div>
+
+              {% assign title_key = 'title_' | append: request.locale.iso_code %}
+              <h3 data-localize="{{ slide.settings.title }}">
+                {{ slide.settings[title_key] | default: slide.settings.title }}
+              </h3>
+
+              {% assign desc_key = 'description_' | append: request.locale.iso_code %}
+              <p data-localize="{{ slide.settings.description }}">
+                {{ slide.settings[desc_key] | default: slide.settings.description }}
+              </p>
+
+              {% assign btn_key = 'btntext_' | append: request.locale.iso_code %}
+              <a
+                href="{{ slide.settings.link }}"
+                target="_self"
+                class="bikebutton"
+                style="
+                  background-color: {{ slide.settings.btn_background_color }};
+                  color: {{ slide.settings.btn_text_color }};
+                "
+              >
+                {{ slide.settings[btn_key] | default: slide.settings.btntext }} &rarr;
+              </a>
+            </div>
+          </div>
+
         {% else %}
-          {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-        {% endif %}
-      </div>
+          <div class="Bikebanner-content">
+            <div class="text-container">
+              <div class="salestagrow">
+                {% for i in (1..3) %}
+                  {% capture salestag_key %}salestag_{{ i }}{% endcapture %}
+                  {% assign localized_key = salestag_key | append: '_' | append: request.locale.iso_code %}
+                  {% assign default_tag = slide.settings[salestag_key] %}
+
+                  {% if default_tag != blank %}
+                    <span class="salestag" data-localize="{{ default_tag }}">
+                      {{ slide.settings[localized_key] | default: default_tag }}
+                    </span>
+                  {% endif %}
+                {% endfor %}
+              </div>
+
+              {% assign title_key = 'title_' | append: request.locale.iso_code %}
+              <h3 data-localize="{{ slide.settings.title }}">
+                {{ slide.settings[title_key] | default: slide.settings.title }}
+              </h3>
+
+              {% assign desc_key = 'description_' | append: request.locale.iso_code %}
+              <p data-localize="{{ slide.settings.description }}">
+                {{ slide.settings[desc_key] | default: slide.settings.description }}
+              </p>
+
+              {% assign btn_key = 'btntext_' | append: request.locale.iso_code %}
+              <a
+                href="{{ slide.settings.link }}"
+                target="_self"
+                class="bikebutton"
+                style="
+                  background-color: {{ slide.settings.btn_background_color }};
+                  color: {{ slide.settings.btn_text_color }};
+                "
+              >
+                {{ slide.settings[btn_key] | default: slide.settings.btntext }} &rarr;
+              </a>
+            </div>
+          </div>
+
+          <div class="Bikebanner-image">
+            {% if slide.settings.image != blank %}
+              <img
+                src="{{ slide.settings.image | img_url: '1800x', format: 'webp' }}"
+                srcset="
+                  {{ slide.settings.image | img_url: '600x' }} 600w,
+                  {{ slide.settings.image | img_url: '1200x' }} 1200w,
+                  {{ slide.settings.image | img_url: '1800x' }} 1800w
+                "
+                sizes="(max-width: 768px) 100vw, 80vw"
+                alt="{{ slide.settings.image.alt | escape }}"
+                loading="lazy"
+                width="1800"
+                height="{{ 1800 | divided_by: slide.settings.image.aspect_ratio | round }}"
+                class="slider-image"
+              >
+            {% else %}
+              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+            {% endif %}
+          </div>
+      {% endcase %}
     </div>
   {% endfor %}
 
@@ -162,6 +312,34 @@
       "type": "bikeslide",
       "name": "Slide",
       "settings": [
+        {
+          "type": "header",
+          "content": "Layout Settings"
+        },
+        {
+          "type": "select",
+          "id": "slide_layout",
+          "label": "Layout Style",
+          "options": [
+            {
+              "value": "image-right",
+              "label": "Image Right, Text Left"
+            },
+            {
+              "value": "image-left",
+              "label": "Image Left, Text Right"
+            },
+            {
+              "value": "image-top",
+              "label": "Image Top, Text Bottom"
+            },
+            {
+              "value": "image-bottom",
+              "label": "Image Bottom, Text Top"
+            }
+          ],
+          "default": "image-right"
+        },
         {
           "type": "header",
           "content": "Image Settings"
@@ -382,6 +560,120 @@
     height: 100%;
   }
 
+  .Bikebanner.layout-image-top,
+  .Bikebanner.layout-image-bottom {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px; 
+  }
+
+  .Bikebanner.layout-image-top .Bikebanner-image,
+  .Bikebanner.layout-image-bottom .Bikebanner-image {
+    width: 100%;
+    max-width: 800px;
+    height: 55%; 
+    margin: 0;
+  }
+
+  .Bikebanner.layout-image-top .Bikebanner-content,
+  .Bikebanner.layout-image-bottom .Bikebanner-content {
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+    padding: 0;
+    flex-shrink: 0; 
+  }
+
+  .Bikebanner.layout-image-top .text-container,
+  .Bikebanner.layout-image-bottom .text-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    width: 100%;
+    margin-bottom: 0;
+    flex-direction: row;
+  }
+
+  .Bikebanner.layout-image-top .content-left,
+  .Bikebanner.layout-image-bottom .content-left {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .Bikebanner.layout-image-top .content-right,
+  .Bikebanner.layout-image-bottom .content-right {
+    flex-shrink: 0;
+    display: flex;
+    align-items: flex-start;
+    height: auto;
+  }
+
+  .Bikebanner.layout-image-top .content-left .salestagrow,
+  .Bikebanner.layout-image-bottom .content-left .salestagrow {
+    justify-content: flex-start;
+    margin-bottom: 0;
+  }
+
+  .Bikebanner.layout-image-top .content-left h3,
+  .Bikebanner.layout-image-bottom .content-left h3 {
+    text-align: left;
+    font-size: 48px;
+    line-height: 1;
+    margin: 0;
+  }
+
+  .Bikebanner.layout-image-top .content-left p,
+  .Bikebanner.layout-image-bottom .content-left p {
+    text-align: left;
+    margin: 0;
+    font-size: 18px;
+    line-height: 24px;
+  }
+
+  .Bikebanner.layout-image-top .content-right .bikebutton,
+  .Bikebanner.layout-image-bottom .content-right .bikebutton {
+    margin: 0;
+    white-space: nowrap;
+  }
+
+  .Bikebanner.layout-image-top .salestagrow,
+  .Bikebanner.layout-image-bottom .salestagrow {
+    justify-content: flex-start;
+    margin-bottom: 0;
+  }
+
+  .Bikebanner.layout-image-top .Bikebanner-content h3,
+  .Bikebanner.layout-image-bottom .Bikebanner-content h3 {
+    text-align: left;
+    font-size: 48px;
+    line-height: 52px;
+    margin: 0;
+  }
+
+  .Bikebanner.layout-image-top .Bikebanner-content p,
+  .Bikebanner.layout-image-bottom .Bikebanner-content p {
+    text-align: left;
+    margin: 0;
+  }
+
+  .Bikebanner.layout-image-left {
+    flex-direction: row;
+  }
+
+  .Bikebanner.layout-image-left .Bikebanner-image {
+    order: 1;
+  }
+
+  .Bikebanner.layout-image-left .Bikebanner-content {
+    order: 2;
+  }
+
   .Bikebanner.active {
     opacity: 1;
     position: relative;
@@ -397,6 +689,7 @@
     cursor: pointer;
     outline: 0;
     text-decoration: none;
+    white-space: nowrap;
   }
 
   .bikebutton:hover {
@@ -455,9 +748,10 @@
   .pagination {
     text-align: center;
     position: absolute;
-    bottom: 10px;
+    bottom: 20px; 
     left: 50%;
     transform: translateX(-50%);
+    z-index: 10;
   }
 
   .dot {
@@ -544,6 +838,50 @@
       margin-bottom: 0;
     }
 
+    .Bikebanner.layout-image-top,
+    .Bikebanner.layout-image-bottom {
+      display: flex;
+      flex-direction: column;
+      height: auto;
+      min-height: 80vh;
+      padding: 0;
+    }
+
+    .Bikebanner.layout-image-top .text-container,
+    .Bikebanner.layout-image-bottom .text-container {
+      flex-direction: column;
+      gap: 20px;
+      padding: 20px;
+      border-radius: 12px;
+    }
+
+    .Bikebanner.layout-image-top .content-right,
+    .Bikebanner.layout-image-bottom .content-right {
+      align-items: flex-start;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .Bikebanner.layout-image-top .Bikebanner-image,
+    .Bikebanner.layout-image-bottom .Bikebanner-image {
+      width: 100%;
+      height: 50vh;
+      margin: 0;
+      position: relative;
+    }
+
+    .Bikebanner.layout-image-top .Bikebanner-content,
+    .Bikebanner.layout-image-bottom .Bikebanner-content {
+      width: 100%;
+      padding: 0;
+      position: relative;
+    }
+
+    .Bikebanner.layout-image-left,
+    .Bikebanner.layout-image-right {
+      display: block;
+    }
+
     .Bikebanner-image {
       order: 1;
       width: 140%;
@@ -599,7 +937,10 @@
       margin-top: 10px;
     }
 
-    .pagination,
+    .pagination {
+      bottom: 30px; 
+    }
+
     .pagbutton {
       display: none !important;
     }
