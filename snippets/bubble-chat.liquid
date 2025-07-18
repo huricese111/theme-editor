@@ -1,17 +1,45 @@
 <style>
+  :root {
+    --feedback-primary-color: #000;
+    --feedback-text-color: #fff;
+    --feedback-modal-bg: rgba(0, 0, 0, 0.5);
+    --feedback-border-radius: 5px;
+    --feedback-z-index-button: 100;
+    --feedback-z-index-modal: 9999;
+    --feedback-z-index-success: 10000;
+    --feedback-transition: all 0.3s ease;
+  }
+
   .feedback-button-black {
     position: fixed;
     left: 20px;
     bottom: 20px;
-    background-color: black;
-    color: white;
+    background-color: var(--feedback-primary-color);
+    color: var(--feedback-text-color);
     border: none;
     padding: 4px 13px;
     cursor: pointer;
     border-radius: 60px;
-    z-index: 100;
+    z-index: var(--feedback-z-index-button);
     width: 50px;
     height: 50px;
+    min-width: 44px;
+    min-height: 44px;
+    touch-action: manipulation;
+    transition: var(--feedback-transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .feedback-button-black:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .feedback-button-black:focus {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
   }
 
   .modal-feedback {
@@ -21,20 +49,131 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: var(--feedback-modal-bg);
     justify-content: center;
-    align-items: center;
-    z-index: 1000;
+    align-items: center; 
+    z-index: var(--feedback-z-index-modal);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    padding: 20px; 
+    box-sizing: border-box;
   }
 
   .modal-content-feedback {
     background-color: white;
-    padding: 10px;
-    border-radius: 5px;
+    padding: 20px;
+    border-radius: var(--feedback-border-radius);
     width: 540px;
     text-align: left;
-    height: 400px;
+    height: auto;
+    min-height: 450px; 
+    max-height: 85vh; 
     position: relative;
+    transform: translateY(-20px);
+    transition: transform 0.3s ease;
+    max-width: 90vw;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+
+  @media (max-width: 768px) {
+    .feedback-button-black {
+      bottom: 10px;
+      left: 10px;
+      width: 45px;
+      height: 45px;
+    }
+    
+    .modal-feedback {
+      padding: 15px; 
+      align-items: center; 
+    }
+    
+    .modal-content-feedback {
+      width: calc(100vw - 30px);
+      height: auto;
+      min-height: 400px; 
+      max-height: 80vh; 
+      margin: 0;
+      padding: 15px;
+      overflow-y: auto;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .modal-feedback {
+      padding: 10px;
+    }
+    
+    .modal-content-feedback {
+      width: calc(100vw - 20px);
+      max-height: 75vh;
+      padding: 12px;
+      min-height: 350px; 
+    }
+    
+    .close-button {
+      top: 5px;
+      right: 5px;
+      font-size: 20px;
+    }
+  }
+
+  .pifyform {
+    margin: 10px 0 !important;
+    height: auto !important;
+    min-height: 320px; 
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pifyform iframe {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 320px !important; 
+    border: none !important;
+    flex: 1;
+  }
+
+  @media (max-width: 768px) {
+    .pifyform {
+      margin: 8px 0 !important;
+      min-height: 320px;
+    }
+    
+    .pifyform iframe {
+      min-height: 320px !important;
+    }
+    
+    .modal-content-feedback p {
+      font-size: 16px;
+      margin: 8px 0;
+    }
+    
+    .modal-content-feedback .selecting {
+      font-size: 24px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .pifyform {
+      min-height: 320px;
+    }
+    
+    .pifyform iframe {
+      min-height: 320px !important;
+    }
+  }
+
+  .modal-feedback.show {
+    opacity: 1;
+  }
+
+  .modal-feedback.show .modal-content-feedback {
+    transform: translateY(0);
   }
 
   .modal-content-feedback p {
@@ -47,29 +186,50 @@
   }
 
   .modal-content-feedback button[type='submit'] {
-    background-color: black;
-    color: white;
+    background-color: var(--feedback-primary-color);
+    color: var(--feedback-text-color);
     border: none;
     padding: 10px 20px;
-    border-radius: 5px;
+    border-radius: var(--feedback-border-radius);
     cursor: pointer;
     display: block;
     margin: 20px auto 0;
     width: fit-content;
+    transition: var(--feedback-transition);
+  }
+
+  .modal-content-feedback button[type='submit']:hover {
+    background-color: #333;
   }
 
   .close-button {
     cursor: pointer;
-    color: black;
+    color: var(--feedback-primary-color);
     position: absolute;
     top: 10px;
     right: 10px;
     font-size: 24px;
     padding: 5px;
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: var(--feedback-transition);
+  }
+
+  .close-button:hover {
+    background-color: #f0f0f0;
+  }
+
+  .close-button:focus {
+    outline: 2px solid var(--feedback-primary-color);
+    outline-offset: 2px;
   }
 
   .feedback-icon {
-    fill: white;
+    fill: var(--feedback-text-color);
     width: 40px;
     height: 60px;
   }
@@ -82,28 +242,83 @@
     transform: translate(-50%, -50%);
     background-color: white;
     padding: 20px;
-    border-radius: 5px;
+    border-radius: var(--feedback-border-radius);
     text-align: center;
-    z-index: 200;
+    z-index: var(--feedback-z-index-success);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   }
 
   .success-message button {
-    background-color: black;
-    color: white;
+    background-color: var(--feedback-primary-color);
+    color: var(--feedback-text-color);
     border: none;
     padding: 10px 20px;
-    border-radius: 5px;
+    border-radius: var(--feedback-border-radius);
     cursor: pointer;
+    transition: var(--feedback-transition);
   }
 
-  @media (max-width: 768px) {
-    .feedback-button-black {
-      bottom: 10px;
+  .success-message button:hover {
+    background-color: #333;
+  }
+
+  .feedback-error {
+    background-color: #fee;
+    color: #c33;
+    padding: 10px;
+    border-radius: var(--feedback-border-radius);
+    margin: 10px 0;
+    border: 1px solid #fcc;
+  }
+
+  .feedback-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    font-size: 16px;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .pifyform.formloading iframe {
+    visibility: hidden !important;
+  }
+  
+  .pifyform.formloading {
+    background-image: url(https://form-builder.pifyapp.com/assets/images/loading.gif?v=4.6);
+    background-position: center 30px;
+    background-size: 30px 30px;
+    background-repeat: no-repeat;
+    min-height: 100px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .feedback-button-black,
+    .modal-feedback,
+    .modal-content-feedback,
+    .close-button,
+    .success-message button {
+      transition: none;
     }
   }
 </style>
 
-<button class="feedback-button-black" onclick="openFeedbackModal()">
+<button class="feedback-button-black" 
+        onclick="FeedbackModal.open()" 
+        aria-label="Open feedback form"
+        role="button"
+        tabindex="0">
   <svg
     t="1750229384481"
     class="icon"
@@ -114,388 +329,464 @@
     xmlns:xlink="http://www.w3.org/1999/xlink"
     width="200"
     height="200"
-  >
+    aria-hidden="true">
      <path d="M512 42.666667C252.8 42.666667 42.666667 252.8 42.666667 512c0 113.578667 40.362667 217.770667 107.52 298.922667L55.466667 981.333333H512c259.2 0 469.333333-210.133333 469.333333-469.333333S771.2 42.666667 512 42.666667zM355.541333 580.266667a170.709333 170.709333 0 0 0 312.96 0l17.066667-39.125334 78.208 34.176-17.066667 39.082667a256.042667 256.042667 0 0 1-469.376 0l-17.066666-39.082667 78.165333-34.133333 17.066667 39.082667z" p-id="26691" fill="#ffffff"></path>
     <circle cx="400" cy="400" r="40" fill="#000000" />
      <circle cx="624" cy="400" r="40" fill="#000000" />
   </svg>
 </button>
 
-<div class="modal-feedback" id="feedbackModal">
+<div class="modal-feedback" 
+     id="feedbackModal" 
+     role="dialog" 
+     aria-modal="true" 
+     aria-labelledby="feedback-title">
   <div class="modal-content-feedback">
-    <span class="close-button" onclick="closeFeedbackModal()">&times;</span>
+    <h2 id="feedback-title" class="sr-only">User Feedback Form</h2>
+    <span class="close-button" 
+          onclick="FeedbackModal.close()" 
+          aria-label="Close feedback form"
+          role="button"
+          tabindex="0">&times;</span>
 
-    {% if request.locale.iso_code == 'de' %}
-      <style>
-        .pifyform.formloading iframe {
-          visibility: hidden !important;
-        }
-        .pifyform.formloading {
-          background-image: url(https://form-builder.pifyapp.com/assets/images/loading.gif?v=4.6);
-          background-position: center 30px;
-          background-size: 30px 30px;
-          background-repeat: no-repeat;
-        }
-      </style>
-      <div id="pifyform-11904" class="pifyform" style="margin:10px 0;">
-        <script charset="UTF-8" defer>
-          document.getElementById('pifyform-11904').classList.add('formloading');
-          (function (h) {
-            function n(a) {
-              return null === a ? null : a.scrollHeight > a.clientHeight ? a : n(a.parentNode);
-            }
-            function t(b) {
-              if (b.data && typeof b.data == 'string') {
-                var f = null;
-                try {
-                  f = JSON.parse(b.data);
-                } catch (e) {}
-                if (f != null && f.height != undefined) {
-                  if (f.formId == undefined) {
-                    d.style.height = f.height + 'px';
-                  } else if ('pifyform-' + f.formId == d.id) {
-                    d.style.height = f.height + 'px';
-                  }
-                }
-                if (f != null && f.redirect != undefined && f.redirect != '') {
-                  window.location.href = f.redirect;
-                }
-                if (f != null && f.retsetHeight != undefined && f.retsetHeight) {
-                  d.style.height = '520px';
-                  window.location.href = '#pifyform-11904';
-                }
-                if (document.getElementsByClassName('lazyframe').length > 0) {
-                  var lazyframe = document.getElementsByClassName('lazyframe')[0];
-                  lazyframe.style.height = '100%';
-                  lazyframe.removeAttribute('data-ratio');
-                  lazyframe.parentNode.style.overflow = 'hidden';
-                }
-                if (f != null && f.getter) {
-                  b = {};
-                  var f = [].concat(f.getter),
-                    k,
-                    h = f.length,
-                    m,
-                    c,
-                    g,
-                    e;
-                  for (k = 0; k < h; k++) {
-                    m = k;
-                    c = f[k] || {};
-                    c.n && (m = c.n);
-                    g = null;
-                    try {
-                      switch (c.t) {
-                        case 'window':
-                          e = window;
-                          break;
-                        case 'scrollParent':
-                          e = n(a) || window;
-                          break;
-                        default:
-                          e = a;
-                      }
-                      if (c.e)
-                        if ('rect' === c.v) {
-                          g = {};
-                          var l = e.getBoundingClientRect();
-                          g = { top: l.top, left: l.left, width: l.width, height: l.height };
-                        } else g = e[c.v].apply(e, [].concat(c.e)) || !0;
-                      else c.s ? ((e[c.v] = c.s), (g = !0)) : (g = e[c.v] || !1);
-                    } catch (u) {}
-                    b[m] = g;
-                  }
-                  b.innerState = !p && !q;
-                  a.contentWindow.postMessage(JSON.stringify({ queryRes: b }), '*');
-                }
-              }
-            }
-            var d = document.getElementById('pifyform-11904');
-            var a = document.createElement('iframe');
-            d.style.overflowY = 'auto';
-            d.style.overflowX = 'hidden';
-            var p = d.style.height && 'auto' !== d.style.height,
-              q =
-                'absolute' === d.style.position ||
-                (window.getComputedStyle &&
-                  'absolute' === window.getComputedStyle(d, null).getPropertyValue('position')) ||
-                (d.currentStyle && 'absolute' === d.currentStyle.position);
-            h.addEventListener && h.addEventListener('message', t, !1);
-            a.src = 'https://form-builder-an.pifyapp.com/form/s/11904';
-            a.id = 'form-iframe-11904';
-            a.onload = function () {
-              document.getElementById('pifyform-11904').classList.remove('formloading');
-              a.contentWindow.postMessage(JSON.stringify({ parentUrl: window.location.href }), '*');
-            };
-            a.frameBorder = 0;
-            a.scrolling = 'no';
-            a.style.display = 'block';
-            a.style.minWidth = '100%';
-            a.style.width = '100px';
-            a.style.height = '100%';
-            a.style.border = 'none';
-            a.style.overflow = 'auto';
-            setTimeout(function () {
-              if (!document.getElementById('form-iframe-11904')) {
-                d.appendChild(a);
-              }
-            }, 50);
-          })(window);
-        </script>
-      </div>
-
-    {% elsif request.locale.iso_code == 'fr' %}
-      <style>
-        .pifyform.formloading iframe {
-          visibility: hidden !important;
-        }
-        .pifyform.formloading {
-          background-image: url(https://form-builder.pifyapp.com/assets/images/loading.gif?v=4.6);
-          background-position: center 30px;
-          background-size: 30px 30px;
-          background-repeat: no-repeat;
-        }
-      </style>
-      <div id="pifyform-11905" class="pifyform" style="margin:10px 0;">
-        <script charset="UTF-8" defer>
-          document.getElementById('pifyform-11905').classList.add('formloading');
-          (function (h) {
-            function n(a) {
-              return null === a ? null : a.scrollHeight > a.clientHeight ? a : n(a.parentNode);
-            }
-            function t(b) {
-              if (b.data && typeof b.data == 'string') {
-                var f = null;
-                try {
-                  f = JSON.parse(b.data);
-                } catch (e) {}
-                if (f != null && f.height != undefined) {
-                  if (f.formId == undefined) {
-                    d.style.height = f.height + 'px';
-                  } else if ('pifyform-' + f.formId == d.id) {
-                    d.style.height = f.height + 'px';
-                  }
-                }
-                if (f != null && f.redirect != undefined && f.redirect != '') {
-                  window.location.href = f.redirect;
-                }
-                if (f != null && f.retsetHeight != undefined && f.retsetHeight) {
-                  d.style.height = '520px';
-                  window.location.href = '#pifyform-11905';
-                }
-                if (document.getElementsByClassName('lazyframe').length > 0) {
-                  var lazyframe = document.getElementsByClassName('lazyframe')[0];
-                  lazyframe.style.height = '100%';
-                  lazyframe.removeAttribute('data-ratio');
-                  lazyframe.parentNode.style.overflow = 'hidden';
-                }
-                if (f != null && f.getter) {
-                  b = {};
-                  var f = [].concat(f.getter),
-                    k,
-                    h = f.length,
-                    m,
-                    c,
-                    g,
-                    e;
-                  for (k = 0; k < h; k++) {
-                    m = k;
-                    c = f[k] || {};
-                    c.n && (m = c.n);
-                    g = null;
-                    try {
-                      switch (c.t) {
-                        case 'window':
-                          e = window;
-                          break;
-                        case 'scrollParent':
-                          e = n(a) || window;
-                          break;
-                        default:
-                          e = a;
-                      }
-                      if (c.e)
-                        if ('rect' === c.v) {
-                          g = {};
-                          var l = e.getBoundingClientRect();
-                          g = { top: l.top, left: l.left, width: l.width, height: l.height };
-                        } else g = e[c.v].apply(e, [].concat(c.e)) || !0;
-                      else c.s ? ((e[c.v] = c.s), (g = !0)) : (g = e[c.v] || !1);
-                    } catch (u) {}
-                    b[m] = g;
-                  }
-                  b.innerState = !p && !q;
-                  a.contentWindow.postMessage(JSON.stringify({ queryRes: b }), '*');
-                }
-              }
-            }
-            var d = document.getElementById('pifyform-11905');
-            var a = document.createElement('iframe');
-            d.style.overflowY = 'auto';
-            d.style.overflowX = 'hidden';
-            var p = d.style.height && 'auto' !== d.style.height,
-              q =
-                'absolute' === d.style.position ||
-                (window.getComputedStyle &&
-                  'absolute' === window.getComputedStyle(d, null).getPropertyValue('position')) ||
-                (d.currentStyle && 'absolute' === d.currentStyle.position);
-            h.addEventListener && h.addEventListener('message', t, !1);
-            a.src = 'https://form-builder-an.pifyapp.com/form/s/11905';
-            a.id = 'form-iframe-11905';
-            a.onload = function () {
-              document.getElementById('pifyform-11905').classList.remove('formloading');
-              a.contentWindow.postMessage(JSON.stringify({ parentUrl: window.location.href }), '*');
-            };
-            a.frameBorder = 0;
-            a.scrolling = 'no';
-            a.style.display = 'block';
-            a.style.minWidth = '100%';
-            a.style.width = '100px';
-            a.style.height = '100%';
-            a.style.border = 'none';
-            a.style.overflow = 'auto';
-            setTimeout(function () {
-              if (!document.getElementById('form-iframe-11905')) {
-                d.appendChild(a);
-              }
-            }, 50);
-          })(window);
-        </script>
-      </div>
-
-    {% else %}
-      <style>
-        .pifyform.formloading iframe {
-          visibility: hidden !important;
-        }
-        .pifyform.formloading {
-          background-image: url(https://form-builder.pifyapp.com/assets/images/loading.gif?v=4.6);
-          background-position: center 30px;
-          background-size: 30px 30px;
-          background-repeat: no-repeat;
-        }
-      </style>
-      <div id="pifyform-11903" class="pifyform" style="margin:10px 0;">
-        <script charset="UTF-8" defer>
-          document.getElementById('pifyform-11903').classList.add('formloading');
-          (function (h) {
-            function n(a) {
-              return null === a ? null : a.scrollHeight > a.clientHeight ? a : n(a.parentNode);
-            }
-            function t(b) {
-              if (b.data && typeof b.data == 'string') {
-                var f = null;
-                try {
-                  f = JSON.parse(b.data);
-                } catch (e) {}
-                if (f != null && f.height != undefined) {
-                  if (f.formId == undefined) {
-                    d.style.height = f.height + 'px';
-                  } else if ('pifyform-' + f.formId == d.id) {
-                    d.style.height = f.height + 'px';
-                  }
-                }
-                if (f != null && f.redirect != undefined && f.redirect != '') {
-                  window.location.href = f.redirect;
-                }
-                if (f != null && f.retsetHeight != undefined && f.retsetHeight) {
-                  d.style.height = '520px';
-                  window.location.href = '#pifyform-11903';
-                }
-                if (document.getElementsByClassName('lazyframe').length > 0) {
-                  var lazyframe = document.getElementsByClassName('lazyframe')[0];
-                  lazyframe.style.height = '100%';
-                  lazyframe.removeAttribute('data-ratio');
-                  lazyframe.parentNode.style.overflow = 'hidden';
-                }
-                if (f != null && f.getter) {
-                  b = {};
-                  var f = [].concat(f.getter),
-                    k,
-                    h = f.length,
-                    m,
-                    c,
-                    g,
-                    e;
-                  for (k = 0; k < h; k++) {
-                    m = k;
-                    c = f[k] || {};
-                    c.n && (m = c.n);
-                    g = null;
-                    try {
-                      switch (c.t) {
-                        case 'window':
-                          e = window;
-                          break;
-                        case 'scrollParent':
-                          e = n(a) || window;
-                          break;
-                        default:
-                          e = a;
-                      }
-                      if (c.e)
-                        if ('rect' === c.v) {
-                          g = {};
-                          var l = e.getBoundingClientRect();
-                          g = { top: l.top, left: l.left, width: l.width, height: l.height };
-                        } else g = e[c.v].apply(e, [].concat(c.e)) || !0;
-                      else c.s ? ((e[c.v] = c.s), (g = !0)) : (g = e[c.v] || !1);
-                    } catch (u) {}
-                    b[m] = g;
-                  }
-                  b.innerState = !p && !q;
-                  a.contentWindow.postMessage(JSON.stringify({ queryRes: b }), '*');
-                }
-              }
-            }
-            var d = document.getElementById('pifyform-11903');
-            var a = document.createElement('iframe');
-            d.style.overflowY = 'auto';
-            d.style.overflowX = 'hidden';
-            var p = d.style.height && 'auto' !== d.style.height,
-              q =
-                'absolute' === d.style.position ||
-                (window.getComputedStyle &&
-                  'absolute' === window.getComputedStyle(d, null).getPropertyValue('position')) ||
-                (d.currentStyle && 'absolute' === d.currentStyle.position);
-            h.addEventListener && h.addEventListener('message', t, !1);
-            a.src = 'https://form-builder-an.pifyapp.com/form/s/11903';
-            a.id = 'form-iframe-11903';
-            a.onload = function () {
-              document.getElementById('pifyform-11903').classList.remove('formloading');
-              a.contentWindow.postMessage(JSON.stringify({ parentUrl: window.location.href }), '*');
-            };
-            a.frameBorder = 0;
-            a.scrolling = 'no';
-            a.style.display = 'block';
-            a.style.minWidth = '100%';
-            a.style.width = '100px';
-            a.style.height = '100%';
-            a.style.border = 'none';
-            a.style.overflow = 'auto';
-            setTimeout(function () {
-              if (!document.getElementById('form-iframe-11903')) {
-                d.appendChild(a);
-              }
-            }, 50);
-          })(window);
-        </script>
-      </div>
-    {% endif %}
+    <div id="feedback-form-container">
+      {% if request.locale.iso_code == 'de' %}
+        <div id="pifyform-11904" class="pifyform" style="margin:10px 0;"></div>
+      {% elsif request.locale.iso_code == 'fr' %}
+        <div id="pifyform-11905" class="pifyform" style="margin:10px 0;"></div>
+      {% elsif request.locale.iso_code == 'fi' %}
+        <div id="pifyform-11906" class="pifyform" style="margin:10px 0;"></div>
+      {% else %}
+        <div id="pifyform-11903" class="pifyform" style="margin:10px 0;"></div>
+      {% endif %}
+    </div>
   </div>
 </div>
 
 <div class="success-message" id="successMessage">
   <p>Thank you for your feedback!</p>
-  <button onclick="closeSuccessMessage()">Close</button>
+  <button onclick="FeedbackModal.closeSuccess()">Close</button>
 </div>
 
 <script>
-  function openFeedbackModal() {
-    document.getElementById('feedbackModal').style.display = 'flex';
+  const FeedbackModal = {
+    config: {
+      formIds: {
+        'de': '11904',
+        'fr': '11905',
+        'fi': '11906',
+        'default': '11903'
+      },
+      selectors: {
+        modal: '#feedbackModal',
+        button: '.feedback-button-black',
+        closeBtn: '.close-button',
+        successMsg: '#successMessage',
+        formContainer: '#feedback-form-container'
+      },
+      loadTimeout: 10000
+    },
+    
+    formLoaded: false,
+    currentLocale: '{{ request.locale.iso_code }}',
+    resizeObserver: null,
+    
+    init() {
+      this.bindEvents();
+      this.setupKeyboardNavigation();
+      this.setupResizeObserver();
+    },
+    
+    setupResizeObserver() {
+      if ('ResizeObserver' in window) {
+        this.resizeObserver = new ResizeObserver((entries) => {
+          this.debounce(() => {
+            this.adjustModalHeight();
+          }, 100)();
+        });
+      }
+    },
+    
+    // 优化的高度调整函数
+    adjustModalHeight() {
+      const modalContent = document.querySelector('.modal-content-feedback');
+      const pifyform = document.querySelector('.pifyform');
+      const iframe = pifyform ? pifyform.querySelector('iframe') : null;
+      
+      if (!modalContent || !pifyform) return;
+      
+      // 获取视口高度
+      const viewportHeight = window.innerHeight;
+      const isMobile = window.innerWidth <= 768;
+      
+      // 计算基础高度需求
+      let baseHeight = isMobile ? 350 : 450; // 增加基础高度
+      
+      // 获取表单内容的实际高度
+      let formHeight = baseHeight - 100; // 减去padding和其他元素的空间
+      
+      if (iframe && iframe.offsetHeight > 0) {
+        formHeight = Math.max(formHeight, iframe.offsetHeight);
+      }
+      
+      // 计算模态框需要的总高度
+      const additionalHeight = isMobile ? 80 : 100; // 内边距和其他元素的高度
+      const totalNeededHeight = formHeight + additionalHeight;
+      
+      // 计算最大可用高度（保留更多空间给内容）
+      const maxAvailableHeight = viewportHeight * (isMobile ? 0.8 : 0.85);
+      
+      // 设置最终高度，确保不小于最小高度
+      const finalHeight = Math.max(baseHeight, Math.min(totalNeededHeight, maxAvailableHeight));
+      
+      // 应用高度
+      modalContent.style.height = finalHeight + 'px';
+      
+      // 如果内容超出，启用滚动
+      if (totalNeededHeight > maxAvailableHeight) {
+        modalContent.style.overflowY = 'auto';
+      } else {
+        modalContent.style.overflowY = 'hidden';
+      }
+      
+      // 确保iframe有足够的高度
+      if (iframe) {
+        const availableFormHeight = finalHeight - additionalHeight;
+        iframe.style.minHeight = Math.max(200, availableFormHeight) + 'px';
+      }
+    },
+    
+    bindEvents() {
+      const modal = document.querySelector(this.config.selectors.modal);
+      if (modal) {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) {
+            this.close();
+          }
+        });
+      }
+      
+      this.setupTouchEvents();
+      
+      window.addEventListener('resize', this.debounce(() => {
+        this.adjustModalHeight();
+      }, 250));
+    },
+    
+    setupKeyboardNavigation() {
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          const modal = document.querySelector(this.config.selectors.modal);
+          if (modal && modal.style.display === 'flex') {
+            this.close();
+          }
+        }
+      });
+    },
+    
+    setupTouchEvents() {
+      let startY = 0;
+      const modalContent = document.querySelector('.modal-content-feedback');
+      
+      if (modalContent) {
+        modalContent.addEventListener('touchstart', (e) => {
+          startY = e.touches[0].clientY;
+        }, { passive: true });
+        
+        modalContent.addEventListener('touchmove', (e) => {
+          const currentY = e.touches[0].clientY;
+          const diff = startY - currentY;
+          
+          if (diff > 100) {
+            this.close();
+          }
+        }, { passive: true });
+      }
+    },
+    
+    debounce(func, wait) {
+      let timeout;
+      return function executedFunction(...args) {
+        const later = () => {
+          clearTimeout(timeout);
+          func.apply(this, args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+      };
+    },
+    
+    open() {
+      const modal = document.querySelector(this.config.selectors.modal);
+      if (!modal) return;
+      
+      modal.style.display = 'flex';
+      
+      setTimeout(() => {
+        modal.classList.add('show');
+      }, 10);
+      
+      const closeBtn = document.querySelector(this.config.selectors.closeBtn);
+      if (closeBtn) {
+        closeBtn.focus();
+      }
+      
+      if (!this.formLoaded) {
+        this.loadFeedbackForm();
+        this.formLoaded = true;
+      }
+      
+      // 延迟调整高度，确保内容加载完成
+      setTimeout(() => {
+        this.adjustModalHeight();
+      }, 300);
+      
+      this.trackEvent('modal_opened');
+    },
+    
+    close() {
+      const modal = document.querySelector(this.config.selectors.modal);
+      if (!modal) return;
+      
+      modal.classList.remove('show');
+      
+      setTimeout(() => {
+        modal.style.display = 'none';
+      }, 300);
+      
+      this.trackEvent('modal_closed');
+    },
+    
+    closeSuccess() {
+      const successMsg = document.querySelector(this.config.selectors.successMsg);
+      if (successMsg) {
+        successMsg.style.display = 'none';
+      }
+    },
+    
+    getFormId() {
+      return this.config.formIds[this.currentLocale] || this.config.formIds.default;
+    },
+    
+    loadFeedbackForm() {
+      try {
+        const formId = this.getFormId();
+        const containerId = `pifyform-${formId}`;
+        const container = document.getElementById(containerId);
+        
+        if (!container) {
+          this.showError('Form container not found');
+          return;
+        }
+        
+        container.classList.add('formloading');
+        
+        this.createFormIframe(formId, container);
+        
+        setTimeout(() => {
+          if (!document.getElementById(`form-iframe-${formId}`)) {
+            this.showError('Form loading timeout. Please try again.');
+          }
+        }, this.config.loadTimeout);
+        
+      } catch (error) {
+        console.error('Form loading error:', error);
+        this.showError('Form loading error occurred');
+      }
+    },
+    
+    createFormIframe(formId, container) {
+      const iframe = document.createElement('iframe');
+      const iframeId = `form-iframe-${formId}`;
+      
+      iframe.src = `https://form-builder-an.pifyapp.com/form/s/${formId}`;
+      iframe.id = iframeId;
+      iframe.frameBorder = 0;
+      iframe.scrolling = 'no';
+      iframe.style.cssText = `
+        display: block;
+        min-width: 100%;
+        width: 100%;
+        height: 100%;
+        border: none;
+        overflow: hidden;
+      `;
+      
+      iframe.onload = () => {
+        container.classList.remove('formloading');
+        iframe.contentWindow.postMessage(
+          JSON.stringify({ parentUrl: window.location.href }), 
+          '*'
+        );
+        
+        // 表单加载完成后调整高度
+        setTimeout(() => {
+          this.adjustModalHeight();
+          
+          if (this.resizeObserver) {
+            this.resizeObserver.observe(iframe);
+          }
+        }, 500); // 增加延迟确保内容完全加载
+      };
+      
+      this.setupMessageListener(container, iframe, formId);
+      
+      setTimeout(() => {
+        if (!document.getElementById(iframeId)) {
+          container.appendChild(iframe);
+        }
+      }, 50);
+    },
+    
+    setupMessageListener(container, iframe, formId) {
+      const messageHandler = (event) => {
+        if (event.data && typeof event.data === 'string') {
+          let data = null;
+          try {
+            data = JSON.parse(event.data);
+          } catch (e) {
+            return;
+          }
+          
+          if (data && data.height !== undefined) {
+            if (data.formId === undefined || `pifyform-${data.formId}` === container.id) {
+              iframe.style.height = data.height + 'px';
+              
+              setTimeout(() => {
+                this.adjustModalHeight();
+              }, 200);
+            }
+          }
+          
+          if (data && data.redirect && data.redirect !== '') {
+            window.location.href = data.redirect;
+          }
+          
+          if (data && data.retsetHeight) {
+            container.style.height = '520px';
+            window.location.href = `#pifyform-${formId}`;
+            
+            setTimeout(() => {
+              this.adjustModalHeight();
+            }, 200);
+          }
+          
+          const lazyframes = document.getElementsByClassName('lazyframe');
+          if (lazyframes.length > 0) {
+            const lazyframe = lazyframes[0];
+            lazyframe.style.height = '100%';
+            lazyframe.removeAttribute('data-ratio');
+            lazyframe.parentNode.style.overflow = 'hidden';
+          }
+          
+          if (data && data.getter) {
+            this.handleGetterRequest(data, iframe);
+          }
+        }
+      };
+      
+      window.addEventListener('message', messageHandler, false);
+    },
+    
+    handleGetterRequest(data, iframe) {
+      const response = {};
+      const getters = [].concat(data.getter);
+      
+      getters.forEach((getter, index) => {
+        const key = getter.n || index;
+        let value = null;
+        
+        try {
+          let target;
+          switch (getter.t) {
+            case 'window':
+              target = window;
+              break;
+            case 'scrollParent':
+              target = this.getScrollParent(iframe) || window;
+              break;
+            default:
+              target = iframe;
+          }
+          
+          if (getter.e) {
+            if (getter.v === 'rect') {
+              const rect = target.getBoundingClientRect();
+              value = {
+                top: rect.top,
+                left: rect.left,
+                width: rect.width,
+                height: rect.height
+              };
+            } else {
+              value = target[getter.v].apply(target, [].concat(getter.e)) || true;
+            }
+          } else if (getter.s) {
+            target[getter.v] = getter.s;
+            value = true;
+          } else {
+            value = target[getter.v] || false;
+          }
+        } catch (error) {
+          console.warn('Getter error:', error);
+        }
+        
+        response[key] = value;
+      });
+      
+      response.innerState = true;
+      iframe.contentWindow.postMessage(
+        JSON.stringify({ queryRes: response }), 
+        '*'
+      );
+    },
+    
+    getScrollParent(element) {
+      if (!element) return null;
+      return element.scrollHeight > element.clientHeight ? 
+        element : this.getScrollParent(element.parentNode);
+    },
+    
+    showError(message) {
+      const container = document.querySelector(this.config.selectors.formContainer);
+      if (!container) return;
+      
+      const errorDiv = document.createElement('div');
+      errorDiv.className = 'feedback-error';
+      errorDiv.textContent = message;
+      errorDiv.setAttribute('role', 'alert');
+      
+      const existingErrors = container.querySelectorAll('.feedback-error');
+      existingErrors.forEach(error => error.remove());
+      
+      container.appendChild(errorDiv);
+    },
+    
+    trackEvent(action) {
+      if (typeof gtag !== 'undefined') {
+        gtag('event', action, {
+          'event_category': 'feedback_modal',
+          'event_label': window.location.pathname
+        });
+      }
+    }
+  };
+  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => FeedbackModal.init());
+  } else {
+    FeedbackModal.init();
   }
-
+  
+  function openFeedbackModal() {
+    FeedbackModal.open();
+  }
+  
   function closeFeedbackModal() {
-    document.getElementById('feedbackModal').style.display = 'none';
+    FeedbackModal.close();
+  }
+  
+  function closeSuccessMessage() {
+    FeedbackModal.closeSuccess();
   }
 </script>
