@@ -137,11 +137,16 @@
                     continue
                   endif
                 endif
-                assign lang = request.locale.iso_code
-                assign text_key = 'text_' | append: lang
-                assign btn_key = 'unique_button_text_' | append: lang
-                assign announcement_text = block.settings[text_key] | default: block.settings.text
-                assign button_text = block.settings[btn_key] | default: block.settings.unique_button_text
+                assign current_locale = request.locale.iso_code
+                if current_locale == 'en'
+                  assign text_field = 'text'
+                  assign button_field = 'unique_button_text'
+                else
+                  assign text_field = 'text_' | append: current_locale
+                  assign button_field = 'unique_button_text_' | append: current_locale
+                endif
+                assign announcement_text = block.settings[text_field] | default: block.settings.text
+                assign button_text = block.settings[button_field] | default: block.settings.unique_button_text
               -%}
               <div
                 class="announcement{% if first_announcement_found %} announcement--inactive{% endif %}"

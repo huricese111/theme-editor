@@ -127,6 +127,11 @@
 
 {%- if small_promo_count > 0 -%}
   {%- assign locale_code = request.locale.iso_code -%}
+  {%- assign lang_map = 'de,fr,fi' | split: ',' -%}
+  {%- assign lang_suffix = '' -%}
+  {%- if lang_map contains locale_code -%}
+    {%- assign lang_suffix = '_' | append: locale_code -%}
+  {%- endif -%}
 
   {%- if mobile == false -%}
     {%- for block in section.blocks -%}
@@ -135,7 +140,13 @@
         <li class="desktop-only navigation__column navigation__column--promotion" {{ block.shopify_attributes }}>
           <div class="mp-promotion-container">
             <div class="mp-title-big">
-              {%- render 'localized-value', field: 'title_big', block: block, locale_code: locale_code -%}
+              {%- assign title_big_field = 'title_big' | append: lang_suffix -%}
+              {%- assign title_big_value = block.settings[title_big_field] -%}
+              {%- if title_big_value != blank -%}
+                {{ title_big_value }}
+              {%- else -%}
+                {{ block.settings.title_big }}
+              {%- endif -%}
             </div>
 
             {%- if block.settings.image != blank -%}
@@ -194,7 +205,13 @@
 
                 {%- if block.settings.discount_label != blank -%}
                   <div class="mp-discount-label">
-                    {%- render 'localized-value', field: 'discount_label', block: block, locale_code: locale_code -%}
+                    {%- assign discount_label_field = 'discount_label' | append: lang_suffix -%}
+                    {%- assign discount_label_value = block.settings[discount_label_field] -%}
+                    {%- if discount_label_value != blank -%}
+                      {{ discount_label_value }}
+                    {%- else -%}
+                      {{ block.settings.discount_label }}
+                    {%- endif -%}
                   </div>
                 {%- elsif block.settings.discount_label_showblank -%}
                   <div class="mp-discount-label-spacer"></div>
@@ -209,13 +226,25 @@
 
               {%- if block.settings.title != blank -%}
                 <div class="mp-promotion-text">
-                  {%- render 'localized-value', field: 'title', block: block, locale_code: locale_code -%}
+                  {%- assign title_field = 'title' | append: lang_suffix -%}
+                  {%- assign title_value = block.settings[title_field] -%}
+                  {%- if title_value != blank -%}
+                    {{ title_value }}
+                  {%- else -%}
+                    {{ block.settings.title }}
+                  {%- endif -%}
                 </div>
               {%- endif -%}
 
               {%- if block.settings.description != blank -%}
                 <div class="mp-promotion-description">
-                  {%- render 'localized-value', field: 'description', block: block, locale_code: locale_code -%}
+                  {%- assign description_field = 'description' | append: lang_suffix -%}
+                  {%- assign description_value = block.settings[description_field] -%}
+                  {%- if description_value != blank -%}
+                    {{ description_value }}
+                  {%- else -%}
+                    {{ block.settings.description }}
+                  {%- endif -%}
                 </div>
               {%- endif -%}
             {%- endif -%}
@@ -235,7 +264,13 @@
         {%- if dropdown_link_title_sanitised == link_title_sanitised and block.type == 'menu-promotion-small' -%}
           <div class="mp-promotion-container mp-mobile">
             <div class="mp-title-big">
-              {%- render 'localized-value', field: 'title_big', block: block, locale_code: locale_code -%}
+              {%- assign title_big_field = 'title_big' | append: lang_suffix -%}
+              {%- assign title_big_value = block.settings[title_big_field] -%}
+              {%- if title_big_value != blank -%}
+                {{ title_big_value }}
+              {%- else -%}
+                {{ block.settings.title_big }}
+              {%- endif -%}
             </div>
 
             {%- if block.settings.image != blank -%}
@@ -294,7 +329,13 @@
 
                 {%- if block.settings.discount_label != blank -%}
                   <div class="mp-discount-label">
-                    {%- render 'localized-value', field: 'discount_label', block: block, locale_code: locale_code -%}
+                    {%- assign discount_label_field = 'discount_label' | append: lang_suffix -%}
+                    {%- assign discount_label_value = block.settings[discount_label_field] -%}
+                    {%- if discount_label_value != blank -%}
+                      {{ discount_label_value }}
+                    {%- else -%}
+                      {{ block.settings.discount_label }}
+                    {%- endif -%}
                   </div>
                 {%- elsif block.settings.discount_label_showblank -%}
                   <div class="mp-discount-label-spacer"></div>
@@ -309,13 +350,25 @@
 
               {%- if block.settings.title != blank -%}
                 <div class="mp-promotion-text">
-                  {%- render 'localized-value', field: 'title', block: block, locale_code: locale_code -%}
+                  {%- assign title_field = 'title' | append: lang_suffix -%}
+                  {%- assign title_value = block.settings[title_field] -%}
+                  {%- if title_value != blank -%}
+                    {{ title_value }}
+                  {%- else -%}
+                    {{ block.settings.title }}
+                  {%- endif -%}
                 </div>
               {%- endif -%}
 
               {%- if block.settings.description != blank -%}
                 <div class="mp-promotion-description">
-                  {%- render 'localized-value', field: 'description', block: block, locale_code: locale_code -%}
+                  {%- assign description_field = 'description' | append: lang_suffix -%}
+                  {%- assign description_value = block.settings[description_field] -%}
+                  {%- if description_value != blank -%}
+                    {{ description_value }}
+                  {%- else -%}
+                    {{ block.settings.description }}
+                  {%- endif -%}
                 </div>
               {%- endif -%}
             {%- endif -%}

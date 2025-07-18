@@ -59,8 +59,6 @@
  */
 {%- endcomment -%}
 
-// ... existing code ...
-
 {% schema %}
 {
   "name": " Specification sheet",
@@ -90,11 +88,20 @@
   </h2>
 
   <div class="specification-list">
+
     <!-- E-Bike System -->
     {% render 'spec-module',
-      fields: 'frame,motor2,battery,display',
-      labels: 'frame,motor,battery,display',
+      fields: 'motor2,battery,display',
+      labels: 'motor,battery,display',
       title: 'e-bike-system',
+      lang: lang
+    %}
+
+    <!-- Frame -->
+    {% render 'spec-module',
+      fields: 'frame',
+      labels: 'frame',
+      title: 'frame',
       lang: lang
     %}
 

@@ -17,6 +17,17 @@
     <div class="specification-header">
       <h5>
         {% case title %}
+          {% when 'frame' %}
+            {% case lang %}
+              {% when 'de' -%}
+                Rahmen
+              {% when 'fr' -%}
+                Cadre
+              {% when 'fi' -%}
+                Runko
+              {% else -%}
+                Frame
+            {% endcase %}
           {% when 'e-bike-system' %}
             {% case lang %}
               {% when 'de' -%}

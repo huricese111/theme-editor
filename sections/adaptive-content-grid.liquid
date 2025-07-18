@@ -463,6 +463,7 @@
   assign show_buy_button = section.settings.show_buy_button
 
   assign current_lang = request.locale.iso_code
+  assign locale_code = current_lang
 
   assign buy_button_text = 'Buy now'
   case current_lang
@@ -807,77 +808,32 @@
               <div class="custom-content-text {{ text_alignment_class }}">
                 {% if settings.big_title != blank %}
                   <h2 class="custom-big-title">
-                    {% case current_lang %}
-                      {% when 'de' %}
-                        {{ settings.big_title_de | default: settings.big_title }}
-                      {% when 'fr' %}
-                        {{ settings.big_title_fr | default: settings.big_title }}
-                      {% when 'fi' %}
-                        {{ settings.big_title_fi | default: settings.big_title }}
-                      {% else %}
-                        {{ settings.big_title }}
-                    {% endcase %}
+                    {% render 'localized-value', field: 'big_title', locale_code: locale_code, settings: settings %}
                   </h2>
                 {% endif %}
 
                 {% if settings.title != blank %}
                   <h3 class="custom-title">
-                    {% case current_lang %}
-                      {% when 'de' %}
-                        {{ settings.title_de | default: settings.title }}
-                      {% when 'fr' %}
-                        {{ settings.title_fr | default: settings.title }}
-                      {% when 'fi' %}
-                        {{ settings.title_fi | default: settings.title }}
-                      {% else %}
-                        {{ settings.title }}
-                    {% endcase %}
+                    {% render 'localized-value', field: 'title', locale_code: locale_code, settings: settings %}
                   </h3>
                 {% endif %}
 
                 {% if settings.description != blank %}
                   <div class="custom-description">
-                    {% case current_lang %}
-                      {% when 'de' %}
-                        {{ settings.description_de | default: settings.description }}
-                      {% when 'fr' %}
-                        {{ settings.description_fr | default: settings.description }}
-                      {% when 'fi' %}
-                        {{ settings.description_fi | default: settings.description }}
-                      {% else %}
-                        {{ settings.description }}
-                    {% endcase %}
+                    {% render 'localized-value', field: 'description', locale_code: locale_code, settings: settings %}
                   </div>
                 {% endif %}
 
                 <div class="custom-button-container">
                   {% if settings.button1_text != blank and settings.button1_url != blank %}
                     <a href="{{ settings.button1_url }}" class="custom-grid-button">
-                      {% case current_lang %}
-                        {% when 'de' %}
-                          {{ settings.button1_text_de | default: settings.button1_text }}
-                        {% when 'fr' %}
-                          {{ settings.button1_text_fr | default: settings.button1_text }}
-                        {% when 'fi' %}
-                          {{ settings.button1_text_fi | default: settings.button1_text }}
-                        {% else %}
-                          {{ settings.button1_text }}
-                      {% endcase %}
+                      {% render 'localized-value', field: 'button1_text', locale_code: locale_code, settings: settings %}
                     </a>
                   {% endif %}
 
                   {% if settings.button2_text != blank and settings.button2_url != blank %}
                     <a href="{{ settings.button2_url }}" class="custom-grid-button">
-                      {% case current_lang %}
-                        {% when 'de' %}
-                          {{ settings.button2_text_de | default: settings.button2_text }}
-                        {% when 'fr' %}
-                          {{ settings.button2_text_fr | default: settings.button2_text }}
-                        {% when 'fi' %}
-                          {{ settings.button2_text_fi | default: settings.button2_text }}
-                        {% else %}
-                          {{ settings.button2_text }}
-                      {% endcase %}
+                      {% render 'localized-value', field: 'button2_text', locale_code: locale_code, settings: settings %}
                     </a>
                   {% endif %}
                 </div>

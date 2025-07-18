@@ -33,27 +33,29 @@
   - details-disclosure custom element
   - responsive-image snippet
   - animation-attrs snippet
-  
-  Author: [Your Name]
-  Created: [Date]
-  Last Modified: [Date]
-  Version: 1.0
+  - localized-value snippet
   
   ============================================================================
 {% endcomment %}
 
+{%- assign locale_code = request.locale.iso_code -%}
 {%- assign lang_map = 'de,fr,fi' | split: ',' -%}
 {%- assign lang_suffix = '' -%}
-{%- if lang_map contains request.locale.iso_code -%}
-  {%- assign lang_suffix = '_' | append: request.locale.iso_code -%}
+{%- if lang_map contains locale_code -%}
+  {%- assign lang_suffix = '_' | append: locale_code -%}
 {%- endif -%}
 
 <div class="container" {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
   <div class="collapsible-tabs">
     {% if section.settings.title != blank %}
-      {%- assign title_key = 'title' | append: lang_suffix -%}
       <h3 class="collapsible-tabs__heading collapsible-tabs__content" id="faq-{{ section.settings.title | handle }}">
-        {{ section.settings[title_key] | default: section.settings.title | escape }}
+        {%- assign title_field = 'title' | append: lang_suffix -%}
+        {%- assign title_value = section.settings[title_field] -%}
+        {%- if title_value != blank -%}
+          {{ title_value }}
+        {%- else -%}
+          {{ section.settings.title }}
+        {%- endif -%}
       </h3>
     {% endif %}
 
@@ -61,8 +63,13 @@
       <div class="collapsible-tabs__block" {{ block.shopify_attributes }}>
         {% if block.type == 'content' %}
           <div class="collapsible-tabs__text collapsible-tabs__content rte">
-            {%- assign content_key = 'content' | append: lang_suffix -%}
-            {{ block.settings[content_key] | default: block.settings.content }}
+            {%- assign content_field = 'content' | append: lang_suffix -%}
+            {%- assign content_value = block.settings[content_field] -%}
+            {%- if content_value != blank -%}
+              {{ content_value }}
+            {%- else -%}
+              {{ block.settings.content }}
+            {%- endif -%}
 
             {{ block.settings.liquid_content }}
 
@@ -85,10 +92,6 @@
           </div>
 
         {% elsif block.type == 'question' %}
-          {%- assign title_key = 'title' | append: lang_suffix -%}
-          {%- assign answer_key = 'answer' | append: lang_suffix -%}
-          {%- assign answer_2_key = 'answer_2' | append: lang_suffix -%}
-
           <div class="collapsible-tabs__tab">
             <details-disclosure>
               <details
@@ -103,7 +106,13 @@
                   aria-controls="content-{{ block.id }}"
                   aria-expanded="false"
                 >
-                  {{ block.settings[title_key] | default: block.settings.title }}
+                  {%- assign title_field = 'title' | append: lang_suffix -%}
+                  {%- assign title_value = block.settings[title_field] -%}
+                  {%- if title_value != blank -%}
+                    {{ title_value }}
+                  {%- else -%}
+                    {{ block.settings.title }}
+                  {%- endif -%}
                 </summary>
                 <div
                   id="content-{{ block.id }}"
@@ -111,7 +120,13 @@
                   aria-labelledby="detail-{{ block.id }}"
                 >
                   <div class="disclosure__content rte">
-                    {{ block.settings[answer_key] | default: block.settings.answer }}
+                    {%- assign answer_field = 'answer' | append: lang_suffix -%}
+                    {%- assign answer_value = block.settings[answer_field] -%}
+                    {%- if answer_value != blank -%}
+                      {{ answer_value }}
+                    {%- else -%}
+                      {{ block.settings.answer }}
+                    {%- endif -%}
 
                     {{ block.settings.liquid_content }}
 
@@ -125,11 +140,17 @@
                       %}
                     {% endif %}
 
-                    {% if block.settings.answer_2 != blank or block.settings[answer_2_key] != blank %}
+                    {%- assign answer_2_field = 'answer_2' | append: lang_suffix -%}
+                    {%- assign answer_2_value = block.settings[answer_2_field] -%}
+                    {%- if answer_2_value != blank -%}
                       <div style="margin-top: 40px;">
-                        {{ block.settings[answer_2_key] | default: block.settings.answer_2 }}
+                        {{ answer_2_value }}
                       </div>
-                    {% endif %}
+                    {%- elsif block.settings.answer_2 != blank -%}
+                      <div style="margin-top: 40px;">
+                        {{ block.settings.answer_2 }}
+                      </div>
+                    {%- endif -%}
 
                     {% if block.settings.image_2 != blank %}
                       {%
