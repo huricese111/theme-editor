@@ -68,12 +68,20 @@
                 </div>
 
                 {% assign title_key = 'title_' | append: request.locale.iso_code %}
-                <h3 data-localize="{{ slide.settings.title }}">
+                <h3 data-localize="{{ slide.settings.title }}" style="
+                  font-size: {{ slide.settings.title_font_size | default: 70 }}px;
+                  font-weight: {{ slide.settings.title_font_weight | default: 700 }};
+                  color: {{ slide.settings.title_color | default: '#000' }};
+                ">
                   {{ slide.settings[title_key] | default: slide.settings.title }}
                 </h3>
 
                 {% assign desc_key = 'description_' | append: request.locale.iso_code %}
-                <p data-localize="{{ slide.settings.description }}">
+                <p data-localize="{{ slide.settings.description }}" style="
+                  font-size: {{ slide.settings.description_font_size | default: 18 }}px;
+                  font-weight: {{ slide.settings.description_font_weight | default: 400 }};
+                  color: {{ slide.settings.description_color | default: '#000' }};
+                ">
                   {{ slide.settings[desc_key] | default: slide.settings.description }}
                 </p>
               </div>
@@ -114,12 +122,20 @@
                 </div>
 
                 {% assign title_key = 'title_' | append: request.locale.iso_code %}
-                <h3 data-localize="{{ slide.settings.title }}">
+                <h3 data-localize="{{ slide.settings.title }}" style="
+                  font-size: {{ slide.settings.title_font_size | default: 70 }}px;
+                  font-weight: {{ slide.settings.title_font_weight | default: 700 }};
+                  color: {{ slide.settings.title_color | default: '#000' }};
+                ">
                   {{ slide.settings[title_key] | default: slide.settings.title }}
                 </h3>
 
                 {% assign desc_key = 'description_' | append: request.locale.iso_code %}
-                <p data-localize="{{ slide.settings.description }}">
+                <p data-localize="{{ slide.settings.description }}" style="
+                  font-size: {{ slide.settings.description_font_size | default: 18 }}px;
+                  font-weight: {{ slide.settings.description_font_weight | default: 400 }};
+                  color: {{ slide.settings.description_color | default: '#000' }};
+                ">
                   {{ slide.settings[desc_key] | default: slide.settings.description }}
                 </p>
               </div>
@@ -201,12 +217,20 @@
               </div>
 
               {% assign title_key = 'title_' | append: request.locale.iso_code %}
-              <h3 data-localize="{{ slide.settings.title }}">
+              <h3 data-localize="{{ slide.settings.title }}" style="
+                font-size: {{ slide.settings.title_font_size | default: 70 }}px;
+                font-weight: {{ slide.settings.title_font_weight | default: 700 }};
+                color: {{ slide.settings.title_color | default: '#000' }};
+              ">
                 {{ slide.settings[title_key] | default: slide.settings.title }}
               </h3>
 
               {% assign desc_key = 'description_' | append: request.locale.iso_code %}
-              <p data-localize="{{ slide.settings.description }}">
+              <p data-localize="{{ slide.settings.description }}" style="
+                font-size: {{ slide.settings.description_font_size | default: 18 }}px;
+                font-weight: {{ slide.settings.description_font_weight | default: 400 }};
+                color: {{ slide.settings.description_color | default: '#000' }};
+              ">
                 {{ slide.settings[desc_key] | default: slide.settings.description }}
               </p>
 
@@ -243,12 +267,20 @@
               </div>
 
               {% assign title_key = 'title_' | append: request.locale.iso_code %}
-              <h3 data-localize="{{ slide.settings.title }}">
+              <h3 data-localize="{{ slide.settings.title }}" style="
+                font-size: {{ slide.settings.title_font_size | default: 70 }}px;
+                font-weight: {{ slide.settings.title_font_weight | default: 700 }};
+                color: {{ slide.settings.title_color | default: '#000' }};
+              ">
                 {{ slide.settings[title_key] | default: slide.settings.title }}
               </h3>
 
               {% assign desc_key = 'description_' | append: request.locale.iso_code %}
-              <p data-localize="{{ slide.settings.description }}">
+              <p data-localize="{{ slide.settings.description }}" style="
+                font-size: {{ slide.settings.description_font_size | default: 18 }}px;
+                font-weight: {{ slide.settings.description_font_weight | default: 400 }};
+                color: {{ slide.settings.description_color | default: '#000' }};
+              ">
                 {{ slide.settings[desc_key] | default: slide.settings.description }}
               </p>
 
@@ -523,6 +555,102 @@
           "type": "color",
           "id": "btn_background_color",
           "label": "Button Background Color",
+          "default": "#000000"
+        },
+        {
+          "type": "header",
+          "content": "Typography Settings"
+        },
+        {
+          "type": "range",
+          "id": "title_font_size",
+          "label": "Title Font Size",
+          "min": 20,
+          "max": 120,
+          "step": 2,
+          "default": 70,
+          "unit": "px"
+        },
+        {
+          "type": "select",
+          "id": "title_font_weight",
+          "label": "Title Font Weight",
+          "options": [
+            {
+              "value": "300",
+              "label": "Light"
+            },
+            {
+              "value": "400",
+              "label": "Normal"
+            },
+            {
+              "value": "500",
+              "label": "Medium"
+            },
+            {
+              "value": "600",
+              "label": "Semi Bold"
+            },
+            {
+              "value": "700",
+              "label": "Bold"
+            },
+            {
+              "value": "800",
+              "label": "Extra Bold"
+            }
+          ],
+          "default": "700"
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Title Color",
+          "default": "#000000"
+        },
+        {
+          "type": "range",
+          "id": "description_font_size",
+          "label": "Description Font Size",
+          "min": 12,
+          "max": 32,
+          "step": 1,
+          "default": 18,
+          "unit": "px"
+        },
+        {
+          "type": "select",
+          "id": "description_font_weight",
+          "label": "Description Font Weight",
+          "options": [
+            {
+              "value": "300",
+              "label": "Light"
+            },
+            {
+              "value": "400",
+              "label": "Normal"
+            },
+            {
+              "value": "500",
+              "label": "Medium"
+            },
+            {
+              "value": "600",
+              "label": "Semi Bold"
+            },
+            {
+              "value": "700",
+              "label": "Bold"
+            }
+          ],
+          "default": "400"
+        },
+        {
+          "type": "color",
+          "id": "description_color",
+          "label": "Description Color",
           "default": "#000000"
         }
       ]
