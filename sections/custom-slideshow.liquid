@@ -373,6 +373,12 @@
           "default": "image-right"
         },
         {
+          "type": "color",
+          "id": "background_color",
+          "label": "Background Color",
+          "default": "#ffffff"
+        },
+        {
           "type": "header",
           "content": "Image Settings"
         },
@@ -382,14 +388,8 @@
           "label": "Slide Image"
         },
         {
-          "type": "color",
-          "id": "background_color",
-          "label": "Background Color",
-          "default": "#ffffff"
-        },
-        {
           "type": "header",
-          "content": "Text Content"
+          "content": "Title Settings"
         },
         {
           "type": "text",
@@ -410,7 +410,41 @@
         {
           "type": "text",
           "id": "title_fi",
-          "label": "Title (Finland)"
+          "label": "Title (Finnish)"
+        },
+        {
+          "type": "range",
+          "id": "title_font_size",
+          "label": "Title Font Size",
+          "min": 20,
+          "max": 120,
+          "step": 2,
+          "default": 70,
+          "unit": "px"
+        },
+        {
+          "type": "select",
+          "id": "title_font_weight",
+          "label": "Title Font Weight",
+          "options": [
+            {"value": "300", "label": "Light"},
+            {"value": "400", "label": "Normal"},
+            {"value": "500", "label": "Medium"},
+            {"value": "600", "label": "Semi Bold"},
+            {"value": "700", "label": "Bold"},
+            {"value": "800", "label": "Extra Bold"}
+          ],
+          "default": "700"
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Title Color",
+          "default": "#000000"
+        },
+        {
+          "type": "header",
+          "content": "Description Settings"
         },
         {
           "type": "richtext",
@@ -431,7 +465,36 @@
         {
           "type": "richtext",
           "id": "description_fi",
-          "label": "Description (Finland)"
+          "label": "Description (Finnish)"
+        },
+        {
+          "type": "range",
+          "id": "description_font_size",
+          "label": "Description Font Size",
+          "min": 12,
+          "max": 32,
+          "step": 1,
+          "default": 18,
+          "unit": "px"
+        },
+        {
+          "type": "select",
+          "id": "description_font_weight",
+          "label": "Description Font Weight",
+          "options": [
+            {"value": "300", "label": "Light"},
+            {"value": "400", "label": "Normal"},
+            {"value": "500", "label": "Medium"},
+            {"value": "600", "label": "Semi Bold"},
+            {"value": "700", "label": "Bold"}
+          ],
+          "default": "400"
+        },
+        {
+          "type": "color",
+          "id": "description_color",
+          "label": "Description Color",
+          "default": "#000000"
         },
         {
           "type": "header",
@@ -462,7 +525,7 @@
         {
           "type": "text",
           "id": "salestag_1_fi",
-          "label": "Text (Finland)"
+          "label": "Text (Finnish)"
         },
         {
           "type": "paragraph",
@@ -486,7 +549,7 @@
         {
           "type": "text",
           "id": "salestag_2_fi",
-          "label": "Text (Finland)"
+          "label": "Text (Finnish)"
         },
         {
           "type": "paragraph",
@@ -510,7 +573,7 @@
         {
           "type": "text",
           "id": "salestag_3_fi",
-          "label": "Text (Finland)"
+          "label": "Text (Finnish)"
         },
         {
           "type": "header",
@@ -519,7 +582,7 @@
         {
           "type": "url",
           "id": "link",
-          "label": "Button URL"
+          "label": "Button Link"
         },
         {
           "type": "text",
@@ -542,7 +605,7 @@
         {
           "type": "text",
           "id": "btntext_fi",
-          "label": "Button Text (Finland)",
+          "label": "Button Text (Finnish)",
           "default": "Osta nyt"
         },
         {
@@ -556,102 +619,6 @@
           "id": "btn_background_color",
           "label": "Button Background Color",
           "default": "#000000"
-        },
-        {
-          "type": "header",
-          "content": "Typography Settings"
-        },
-        {
-          "type": "range",
-          "id": "title_font_size",
-          "label": "Title Font Size",
-          "min": 20,
-          "max": 120,
-          "step": 2,
-          "default": 70,
-          "unit": "px"
-        },
-        {
-          "type": "select",
-          "id": "title_font_weight",
-          "label": "Title Font Weight",
-          "options": [
-            {
-              "value": "300",
-              "label": "Light"
-            },
-            {
-              "value": "400",
-              "label": "Normal"
-            },
-            {
-              "value": "500",
-              "label": "Medium"
-            },
-            {
-              "value": "600",
-              "label": "Semi Bold"
-            },
-            {
-              "value": "700",
-              "label": "Bold"
-            },
-            {
-              "value": "800",
-              "label": "Extra Bold"
-            }
-          ],
-          "default": "700"
-        },
-        {
-          "type": "color",
-          "id": "title_color",
-          "label": "Title Color",
-          "default": "#000000"
-        },
-        {
-          "type": "range",
-          "id": "description_font_size",
-          "label": "Description Font Size",
-          "min": 12,
-          "max": 32,
-          "step": 1,
-          "default": 18,
-          "unit": "px"
-        },
-        {
-          "type": "select",
-          "id": "description_font_weight",
-          "label": "Description Font Weight",
-          "options": [
-            {
-              "value": "300",
-              "label": "Light"
-            },
-            {
-              "value": "400",
-              "label": "Normal"
-            },
-            {
-              "value": "500",
-              "label": "Medium"
-            },
-            {
-              "value": "600",
-              "label": "Semi Bold"
-            },
-            {
-              "value": "700",
-              "label": "Bold"
-            }
-          ],
-          "default": "400"
-        },
-        {
-          "type": "color",
-          "id": "description_color",
-          "label": "Description Color",
-          "default": "#000000"
         }
       ]
     }
@@ -659,7 +626,75 @@
   "presets": [
     {
       "name": "Custom Slideshow",
-      "category": "Custom"
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "bikeslide",
+          "settings": {
+            "slide_layout": "image-right",
+            "background_color": "#e8e1d1",
+            "title": "Trekking 7",
+            "title_de": "Trekking 7",
+            "title_fr": "Trekking 7",
+            "title_fi": "Trekking 7",
+            "description": "<p>When design conquers the city.</p>",
+            "description_de": "<p>Wenn das Design die Stadt erobert.</p>",
+            "description_fr": "<p>Quand le design conquiert la ville.</p>",
+            "description_fi": "<p>Kun tyyli valloittaa kaupungin.</p>",
+            "link": "shopify://pages/trekking-7-new",
+            "btntext": "Discover the Trekking 7",
+            "btntext_de": "Entdecken Sie das Trekking 7",
+            "btntext_fr": "Découvrez le Trekking 7",
+            "btntext_fi": "Tutustu Trekking 7-malliin",
+            "btn_text_color": "#ffffff",
+            "btn_background_color": "#f2a112"
+          }
+        },
+        {
+          "type": "bikeslide",
+          "settings": {
+            "slide_layout": "image-right",
+            "background_color": "#c4dae3",
+            "title": "Mountain 7",
+            "title_de": "Mountain 7",
+            "title_fr": "Mountain 7",
+            "title_fi": "Mountain 7",
+            "description": "<p>The sporty hardtail to reconnect with nature.</p>",
+            "description_de": "<p>Das sportliche Hardtail, um mit der Natur in Kontakt zu kommen.</p>",
+            "description_fr": "<p>Le hardtail sportif pour renouer avec la nature.</p>",
+            "description_fi": "<p>Urheilullinen hardtail-pyörä, joka johdattaa sinut takaisin luonnon ääreen.</p>",
+            "link": "shopify://pages/mountain-7",
+            "btntext": "Discover the Mountain 7",
+            "btntext_de": "Entdecken Sie das Mountain 7",
+            "btntext_fr": "Découvrez le Mountain 7",
+            "btntext_fi": "Tutustu Mountain 7-malliin",
+            "btn_text_color": "#ffffff",
+            "btn_background_color": "#f2a112"
+          }
+        },
+        {
+          "type": "bikeslide",
+          "settings": {
+            "slide_layout": "image-right",
+            "background_color": "#c2d0e3",
+            "title": "Mountain 7 Carbon",
+            "title_de": "Mountain 7 Carbon",
+            "title_fr": "Mountain 7 Carbon",
+            "title_fi": "Mountain 7 Carbon",
+            "description": "<p>Pure dynamics for touring, trail & co. Up to 100 Nm and 804 Wh at just 22.4 kg - and at a price where others are just starting out.</p>",
+            "description_de": "<p>Pure Dynamik für Touring, Trail & Co. Bis zu 100 Nm und 804 Wh bei nur 22,4 kg - und das zu einem Preis, bei dem andere gerade erst anfangen.</p>",
+            "description_fr": "<p>La dynamique à l'état pur pour le touring, le trail & co. Jusqu'à 100 Nm et 804 Wh pour seulement 22,4 kg - et à un prix où d'autres commencent à peine.</p>",
+            "description_fi": "<p>Puhdasta dynamiikkaa ja keveyttä metsäpolkujen valloitukseen sekä muuhun. Vain 22,4 kg painoa, jopa 100 Nm vääntöä ja 804 Wh akkukapasitettia - ja hintaan, josta muut vasta lähtevät liikkeelle.</p>",
+            "link": "shopify://pages/mountain-7-carbon",
+            "btntext": "Discover the Mountain 7 Carbon",
+            "btntext_de": "Entdecken Sie das Mountain 7 Carbon",
+            "btntext_fr": "Découvrez le Mountain 7 Carbon",
+            "btntext_fi": "Tutustu Mountain 7 Carbon-malliin",
+            "btn_text_color": "#ffffff",
+            "btn_background_color": "#698aa8"
+          }
+        }
+      ]
     }
   ]
 }
