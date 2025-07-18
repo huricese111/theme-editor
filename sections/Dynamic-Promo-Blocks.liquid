@@ -1,90 +1,90 @@
 {%- comment -%}
-/**
- * Dynamic Promo Blocks Section
- * 
- * A flexible promotional banner system featuring asymmetric grid layout
- * with one large left module and three smaller right modules for showcasing
- * products, offers, and promotional content with rich customization options.
- * 
- * FEATURES:
- * - Asymmetric grid layout (1 large + 3 small modules)
- * - Responsive design with separate desktop/mobile layouts
- * - Multi-language support (English, German, French, Finnish)
- * - Individual background images for desktop and mobile
- * - Customizable content positioning within each module
- * - Tag/badge system for promotional labels
- * - Call-to-action buttons with custom styling
- * - Background image controls (size, position)
- * - Typography customization (size, color)
- * 
- * LAYOUT STRUCTURE:
- * Desktop: 
- * - Left: 1 large promotional module (50% width)
- * - Right: 3 smaller modules in 2x2 grid (50% width)
- *   - Top: 1 medium module (full width)
- *   - Bottom: 2 small modules (side by side)
- * 
- * Mobile:
- * - Stacked vertical layout
- * - Left module displayed first
- * - Only first right module shown (modules 2&3 hidden)
- * 
- * RESPONSIVE BEHAVIOR:
- * - Desktop: CSS Grid layout with asymmetric columns
- * - Mobile: Vertical stacking with simplified content
- * - Adaptive font sizes and spacing
- * - Separate mobile background images
- * - Content repositioning for mobile optimization
- * 
- * LOCALIZATION:
- * - Multi-language text support for all content elements
- * - Automatic language detection based on request locale
- * - Fallback to default language when translations unavailable
- * - Supported languages: EN, DE, FR, FI
- * 
- * CUSTOMIZATION OPTIONS:
- * - Section height control (desktop/mobile)
- * - Background images (desktop/mobile variants)
- * - Background size and positioning
- * - Content vertical positioning (top/center/bottom)
- * - Tag/badge text and styling
- * - Title text with custom typography
- * - Button text, URLs, and color schemes
- * - Background colors for each module
- * 
- * MODULE CONFIGURATION:
- * - Left Module: Large promotional space with prominent title
- * - Right Module 1: Medium-sized featured content
- * - Right Module 2: Small promotional block
- * - Right Module 3: Small promotional block
- * 
- * CONTENT ELEMENTS:
- * - Promotional tags/badges with custom styling
- * - Multi-language titles with responsive typography
- * - Call-to-action buttons with hover effects
- * - Background overlays for text readability
- * 
- * TECHNICAL FEATURES:
- * - CSS custom properties for dynamic styling
- * - Liquid template variables for localization
- * - Responsive image handling with multiple sizes
- * - CSS Grid and Flexbox for layout control
- * - Hover effects and transitions
- * 
- * DEFAULT PRESET:
- * - "Dynamic Promo Blocks" with sample content
- * - Pre-configured layout and styling
- * 
- * DEPENDENCIES:
- * - Shopify Liquid template engine
- * - Modern CSS (Grid, Flexbox, Custom Properties)
- * - Responsive image processing
- * 
- * BROWSER SUPPORT:
- * - Modern browsers with CSS Grid support
- * - Progressive enhancement for older browsers
- * - Mobile-first responsive design
- */
+  /**
+   * Dynamic Promo Blocks Section
+   *
+   * A flexible promotional banner system featuring asymmetric grid layout
+   * with one large left module and three smaller right modules for showcasing
+   * products, offers, and promotional content with rich customization options.
+   *
+   * FEATURES:
+   * - Asymmetric grid layout (1 large + 3 small modules)
+   * - Responsive design with separate desktop/mobile layouts
+   * - Multi-language support (English, German, French, Finnish)
+   * - Individual background images for desktop and mobile
+   * - Customizable content positioning within each module
+   * - Tag/badge system for promotional labels
+   * - Call-to-action buttons with custom styling
+   * - Background image controls (size, position)
+   * - Typography customization (size, color)
+   *
+   * LAYOUT STRUCTURE:
+   * Desktop:
+   * - Left: 1 large promotional module (50% width)
+   * - Right: 3 smaller modules in 2x2 grid (50% width)
+   *   - Top: 1 medium module (full width)
+   *   - Bottom: 2 small modules (side by side)
+   *
+   * Mobile:
+   * - Stacked vertical layout
+   * - Left module displayed first
+   * - Only first right module shown (modules 2&3 hidden)
+   *
+   * RESPONSIVE BEHAVIOR:
+   * - Desktop: CSS Grid layout with asymmetric columns
+   * - Mobile: Vertical stacking with simplified content
+   * - Adaptive font sizes and spacing
+   * - Separate mobile background images
+   * - Content repositioning for mobile optimization
+   *
+   * LOCALIZATION:
+   * - Multi-language text support for all content elements
+   * - Automatic language detection based on request locale
+   * - Fallback to default language when translations unavailable
+   * - Supported languages: EN, DE, FR, FI
+   *
+   * CUSTOMIZATION OPTIONS:
+   * - Section height control (desktop/mobile)
+   * - Background images (desktop/mobile variants)
+   * - Background size and positioning
+   * - Content vertical positioning (top/center/bottom)
+   * - Tag/badge text and styling
+   * - Title text with custom typography
+   * - Button text, URLs, and color schemes
+   * - Background colors for each module
+   *
+   * MODULE CONFIGURATION:
+   * - Left Module: Large promotional space with prominent title
+   * - Right Module 1: Medium-sized featured content
+   * - Right Module 2: Small promotional block
+   * - Right Module 3: Small promotional block
+   *
+   * CONTENT ELEMENTS:
+   * - Promotional tags/badges with custom styling
+   * - Multi-language titles with responsive typography
+   * - Call-to-action buttons with hover effects
+   * - Background overlays for text readability
+   *
+   * TECHNICAL FEATURES:
+   * - CSS custom properties for dynamic styling
+   * - Liquid template variables for localization
+   * - Responsive image handling with multiple sizes
+   * - CSS Grid and Flexbox for layout control
+   * - Hover effects and transitions
+   *
+   * DEFAULT PRESET:
+   * - "Dynamic Promo Blocks" with sample content
+   * - Pre-configured layout and styling
+   *
+   * DEPENDENCIES:
+   * - Shopify Liquid template engine
+   * - Modern CSS (Grid, Flexbox, Custom Properties)
+   * - Responsive image processing
+   *
+   * BROWSER SUPPORT:
+   * - Modern browsers with CSS Grid support
+   * - Progressive enhancement for older browsers
+   * - Mobile-first responsive design
+   */
 {%- endcomment -%}
 
 {% schema %}
@@ -785,7 +785,83 @@
   "presets": [
     {
       "name": "Dynamic Promo Blocks",
-      "category": "Custom"
+      "category": "Custom",
+      "settings": {
+        "desktop_height": 700,
+        "mobile_height": 650,
+        "left_image": "shopify://shop_images/trekking_7_se_2.jpg",
+        "left_mobile_image": "shopify://shop_images/20250613-095356_6b280023-d77a-4285-a80d-4781d1a6ab48.jpg",
+        "left_bg_size": "cover",
+        "left_bg_position": "center",
+        "left_content_position": "flex-start",
+        "left_content_position_mobile": "flex-end",
+        "left_tag": "Summer Special",
+        "left_tag_de": "Summer Special",
+        "left_tag_fr": "Summer Special",
+        "left_tag_fi": "Summer Special",
+        "left_title": "Save up to €1,000",
+        "left_title_de": "Sparen Sie bis zu €1.000",
+        "left_title_fr": "Économisez jusqu'à €1 000",
+        "left_title_fi": "Säästä jopa €500",
+        "left_button": "Learn more",
+        "left_button_de": "Mehr erfahren",
+        "left_button_fr": "En savoir plus",
+        "left_button_fi": "Lue lisää",
+        "left_button_url": "shopify://pages/promotion",
+        "left_button_color": "#e34a38",
+        "left_button_text_color": "#ffffff",
+        "left_background_color": "#ffffff",
+        "right_image_1": "shopify://shop_images/20250612-155546_3ec7b967-3c3f-4095-b317-b4dffe75d772.jpg",
+        "right_mobile_image_1": "shopify://shop_images/20250612-155546_a0e66c3e-216e-4e8a-8e36-f95bbcb6883b.jpg",
+        "right1_bg_size": "cover",
+        "right1_bg_position": "center",
+        "right1_tag": "New",
+        "right1_tag_de": "Neu",
+        "right1_tag_fr": "Nouveau",
+        "right1_tag_fi": "Uutuus",
+        "right1_title": "City 7",
+        "right1_title_de": "City 7",
+        "right1_title_fr": "City 7",
+        "right1_title_fi": "City 7",
+        "right1_button": "Discover the City 7",
+        "right1_button_de": "Entdecken Sie das City 7",
+        "right1_button_fr": "Découvrez la City 7",
+        "right1_button_fi": "Tutustu City 7:ään",
+        "right1_button_url": "shopify://pages/city-collection",
+        "right1_button_color": "#2b7dde",
+        "right1_button_text_color": "#ffffff",
+        "right1_background_color": "#ffffff",
+        "right_image_2": "shopify://shop_images/Icon_d1466828-3948-4fdf-a8c2-41c2b141f3a2.png",
+        "right2_bg_size": "60%",
+        "right2_bg_position": "center",
+        "right2_title": "Discover Hepha's motor technology",
+        "right2_title_de": "Entdecken Sie Hephas Motorentechnologie",
+        "right2_title_fr": "Découvrez la technologie des moteurs Hepha",
+        "right2_title_fi": "Tutustu Hepha'n moottoriteknologiaan",
+        "right2_button": "Learn more",
+        "right2_button_de": "Mehr erfahren",
+        "right2_button_fr": "En savoir plus",
+        "right2_button_fi": "Lue lisää",
+        "right2_button_url": "shopify://pages/a-motor-to-overtake-the-bike-market",
+        "right2_button_color": "#8cbff0",
+        "right2_button_text_color": "#3077c9",
+        "right2_background_color": "#2b7dde",
+        "right_image_3": "shopify://shop_images/Icon_acfc53b2-7046-4b91-ba8d-0122d0a03745.png",
+        "right3_bg_size": "60%",
+        "right3_bg_position": "center",
+        "right3_title": "Get all the latest information",
+        "right3_title_de": "Erfahren Sie was es Neues gibt",
+        "right3_title_fr": "Obtenir toutes les informations les plus récentes",
+        "right3_title_fi": "Viimeisimmät uutiset ja tarinat",
+        "right3_button": "News",
+        "right3_button_de": "Neuigkeiten",
+        "right3_button_fr": "Actualités",
+        "right3_button_fi": "Uutiset",
+        "right3_button_url": "shopify://blogs/news",
+        "right3_button_color": "#8ce09d",
+        "right3_button_text_color": "#66ad78",
+        "right3_background_color": "#66ad78"
+      }
     }
   ]
 }
