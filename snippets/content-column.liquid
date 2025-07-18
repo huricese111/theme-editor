@@ -20,7 +20,10 @@
     {% endif %}
   </div>
 
-  <div class="text-content-wrapper" style="position: relative;">
+  <div 
+    class="text-content-wrapper" 
+    style="position: relative;{% if section.settings.content_text_bg_color != blank %}background-color: {{ section.settings.content_text_bg_color }};{% endif %}{% if section.settings.content_text_bg_opacity != blank %}opacity: {{ section.settings.content_text_bg_opacity | divided_by: 100.0 }};{% endif %}"
+  >
     {% for block in section.blocks %}
       <div class="block-{{ block.id }}" {{ block.shopify_attributes }}>
         {% case block.type %}
