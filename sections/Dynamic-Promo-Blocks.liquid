@@ -947,7 +947,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background-color: rgba(0, 0, 0, 0.2);
+      background-color: rgba(0, 0, 0, 0.1);
       z-index: 1;
     }
 
@@ -1277,7 +1277,7 @@
 
     <div class="banner-right">
       <div
-        class="module module-right-1 module-position-{{ section.settings.left_content_position | replace: 'flex-', '' | replace: 'start', 'top' | replace: 'end', 'bottom' }}"
+        class="module module-right-1 module-position-{{ section.settings.right1_content_position | replace: 'flex-', '' | replace: 'start', 'top' | replace: 'end', 'bottom' }}"
         style="
           background-image: url({{ section.settings.right_image_1 | img_url: '2048x2048' }});
           background-size: {{ section.settings.right1_bg_size }};
@@ -1309,7 +1309,7 @@
 
       <div class="banner-right-row">
         <div
-          class="module module-right-2 module-position-{{ section.settings.left_content_position | replace: 'flex-', '' | replace: 'start', 'top' | replace: 'end', 'bottom' }}"
+          class="module module-right-2 module-position-{{ section.settings.right2_content_position | replace: 'flex-', '' | replace: 'start', 'top' | replace: 'end', 'bottom' }}"
           style="
             background-image: url({{ section.settings.right_image_2 | img_url: '2048x2048' }});
             background-size: {{ section.settings.right2_bg_size }};
@@ -1340,7 +1340,7 @@
         </div>
 
         <div
-          class="module module-right-3 module-position-{{ section.settings.left_content_position | replace: 'flex-', '' | replace: 'start', 'top' | replace: 'end', 'bottom' }}"
+          class="module module-right-3 module-position-{{ section.settings.right3_content_position | replace: 'flex-', '' | replace: 'start', 'top' | replace: 'end', 'bottom' }}"
           style="
             background-image: url({{ section.settings.right_image_3 | img_url: '2048x2048' }});
             background-size: {{ section.settings.right3_bg_size }};
@@ -1407,7 +1407,7 @@
 
     <div class="banner-mobile-right-row">
       <div
-        class="module module-right-1 module-position-module module-position-{{ section.settings.left_content_position_mobile | replace: 'flex-', '' | replace: 'start', 'top' | replace: 'end', 'bottom' }}"
+        class="module module-right-1 module-position-module module-position-{{ section.settings.right1_content_position_mobile | replace: 'flex-', '' | replace: 'start', 'top' | replace: 'end', 'bottom' }}"
         style="
           background-image: url({{ section.settings.right_image_1 | img_url: '2048x2048' }});
           background-size: {{ section.settings.right1_bg_size }};
