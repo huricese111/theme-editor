@@ -62,9 +62,23 @@
     gap: 6px;
   }
 
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .description-box {
+      flex-wrap: wrap;
+    }
+    
+    .product-compare-widget {
+      width: 100%;
+      margin-top: 8px;
+      order: 3;
+    }
+  }
+
   .product-compare-widget {
     margin: 0;
     padding-top: 2px;
+    flex-shrink: 0;
+    max-width: 100%;
   }
 
   .compare-checkbox {
@@ -106,6 +120,9 @@
     .product-compare-widget {
       align-self: flex-end;
       margin-top: 12px;
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;
     }
 
     .product-card__price-container .custom-current-price {
@@ -116,6 +133,55 @@
       font-size: 13px;
     }
 
+    .compare-checkbox {
+      font-size: 13px;
+    }
+  }
+
+  @media (max-width: 1199px) {
+    .description-box {
+      flex-direction: column;
+    }
+    
+    .product-card__content {
+      padding-right: 0;
+      width: 100%;
+    }
+    
+    .product-compare-widget {
+      width: 100%;
+      margin-top: 8px;
+      order: 4; 
+    }
+  }
+
+  @media (max-width: 768px) {
+    .description-box {
+      padding: 12px;
+      flex-direction: column;
+    }
+  
+    .product-card__content {
+      padding-right: 0;
+      width: 100%;
+    }
+  
+    .product-compare-widget {
+      width: 100%;
+      margin-top: 12px;
+      display: flex;
+      justify-content: flex-start;
+      order: 4;
+    }
+  
+    .product-card__price-container .custom-current-price {
+      font-size: 15px;
+    }
+  
+    .product-card__price-container .custom-was-price {
+      font-size: 13px;
+    }
+  
     .compare-checkbox {
       font-size: 13px;
     }
