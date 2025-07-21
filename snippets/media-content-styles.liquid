@@ -24,6 +24,23 @@
   min-height: {{ section.settings.min_section_height }}px;
   }
 
+  .flexible-layout.valign-top {
+    align-items: flex-start;
+  }
+
+  .flexible-layout.valign-center {
+    align-items: center;
+  }
+
+  .flexible-layout.valign-bottom {
+    align-items: flex-end;
+  }
+
+  .flexible-layout.valign-top .column--media,
+  .flexible-layout.valign-center .column--media,
+  .flexible-layout.valign-bottom .column--media {
+    align-self: stretch;
+  }
   .column--media {
   height: auto !important;
   position: relative;
@@ -91,11 +108,22 @@
   .column--content .text-content-wrapper {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   height: 100%;
   padding: 80px;
   position: relative;
   z-index: 2;
+  }
+
+  .column--content.valign-top .text-content-wrapper {
+    justify-content: flex-start;
+  }
+
+  .column--content.valign-center .text-content-wrapper {
+    justify-content: center;
+  }
+
+  .column--content.valign-bottom .text-content-wrapper {
+    justify-content: flex-end;
   }
 
   .signup-form {
@@ -485,6 +513,8 @@
   .flexible-layout .column,
   .fixed-layout .column {
   padding-left: 0;
+  display: flex;
+  align-items: {% case section.settings.content_vertical_alignment %}{% when 'top' %}flex-start{% when 'bottom' %}flex-end{% else %}center{% endcase %};
   }
 
   .signup-form__inline-container {

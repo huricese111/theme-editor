@@ -1,6 +1,6 @@
 {% assign current_locale = request.locale.iso_code | default: 'en' %}
 {% assign locale_prefix = current_locale | slice: 0, 2 %}
-<div class="button-container lightly-spaced-row">
+<div class="button-container lightly-spaced-row" style="justify-content: {{ block.settings.button_alignment | default: 'center' }};">
   {% for i in (1..2) %}
     {% assign button_label_key = 'button_label' %}
     {% assign button_link_key = 'button_link' %}
@@ -22,9 +22,9 @@
       <a
         class="btn btn--{{ block.settings.button_style }} button-row__btn {% if i == 1 %}btn-1{% else %}btn-2{% endif %}"
         href="{{ block.settings[button_link_key] }}"
-        style="color: {% if i == 1 %}{{ block.settings.button_text_color1 }}{% else %}{{ block.settings.button_text_color2 }}{% endif %}; background: {% if i == 1 %}{{ block.settings.button_bg_color1 }}{% else %}{{ block.settings.button_bg_color2 }}{% endif %}; border-color: {% if i == 1 %}{{ block.settings.button_border_color1 }}{% else %}{{ block.settings.button_border_color2 }}{% endif %};"
+        style="color: {% if i == 1 %}{{ block.settings.button_text_color1 }}{% else %}{{ block.settings.button_text_color2 }}{% endif %}; background: {% if i == 1 %}{{ block.settings.button_bg_color1 }}{% else %}{{ block.settings.button_bg_color2 }}{% endif %}; border-color: {% if i == 1 %}{{ block.settings.button_border_color1 }}{% else %}{{ block.settings.button_border_color2 }}{% endif %}; border-radius: {{ block.settings.button_border_radius | default: 4 }}px; height: {{ block.settings.button_height | default: 44 }}px; margin: {{ block.settings.button_margin_top | default: 10 }}px {{ block.settings.button_margin_right | default: 10 }}px {{ block.settings.button_margin_bottom | default: 10 }}px {{ block.settings.button_margin_left | default: 0 }}px; display: inline-flex; align-items: center; justify-content: center; text-decoration: none;"
       >
-        {{- translated_label | escape -}}
+        {{- translated_label | escape -}}&nbsp;&#8594;
       </a>
     {% endif %}
   {% endfor %}

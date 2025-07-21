@@ -1,4 +1,4 @@
-<div class="column column--content align-{{ section.settings.content_alignment }}" data-cc-animate>
+<div class="column column--content align-{{ section.settings.content_alignment }} valign-{{ section.settings.content_vertical_alignment | default: 'center' }}" data-cc-animate>
   {% if section.settings.content_bg_video != blank %}
     <video
       class="background-video"
@@ -22,7 +22,7 @@
 
   <div 
     class="text-content-wrapper" 
-    style="position: relative;{% if section.settings.content_text_bg_color != blank %}background-color: {{ section.settings.content_text_bg_color }};{% endif %}{% if section.settings.content_text_bg_opacity != blank %}opacity: {{ section.settings.content_text_bg_opacity | divided_by: 100.0 }};{% endif %}"
+    style="position: relative; display: flex; flex-direction: column; height: 100%;{% if section.settings.content_text_bg_color != blank %}background-color: {{ section.settings.content_text_bg_color }};{% endif %}{% if section.settings.content_text_bg_opacity != blank %}opacity: {{ section.settings.content_text_bg_opacity | divided_by: 100.0 }};{% endif %}"
   >
     {% for block in section.blocks %}
       <div class="block-{{ block.id }}" {{ block.shopify_attributes }}>
