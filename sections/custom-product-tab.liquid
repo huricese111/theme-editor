@@ -371,7 +371,7 @@
     }
 
     .product-block {
-      min-width: 300px;
+      min-width: 320px;
     }
   }
 </style>
@@ -434,7 +434,7 @@
                     <div class="product-slider">
                       <div class="product-columns">
                         {% for product in target_collection.products %}
-                          {% render 'product-block' with product: product %}
+                          {% render 'product-block', product: product, animate: true, force_hover_image: true %}
                         {% endfor %}
                       </div>
                     </div>
@@ -443,7 +443,7 @@
                   <div class="product-slider">
                     <div class="product-columns">
                       {% for product in block.settings.products %}
-                        {% render 'product-block' with product: product %}
+                        {% render 'product-block', product: product, animate: true, force_hover_image: true %}
                       {% endfor %}
                     </div>
                   </div>

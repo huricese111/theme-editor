@@ -1070,16 +1070,19 @@
       .banner-mobile-left .module__title {
         font-size: {{ section.settings.left_title_size_mobile }}px;
         line-height: {{ section.settings.left_title_size_mobile | times: 1.14 }}px;
+        white-space: nowrap;
       }
 
       .module__title--medium {
         font-size: {{ section.settings.right1_title_size_mobile }}px;
         line-height: {{ section.settings.right1_title_size_mobile | times: 1.28 }}px;
+        white-space: nowrap;
       }
 
       .module__title--small {
         font-size: {{ section.settings.right2_title_size_mobile }}px;
         line-height: {{ section.settings.right2_title_size_mobile | times: 1.3 }}px;
+        white-space: nowrap;
       }
 
       .module__tag {

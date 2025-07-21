@@ -6,7 +6,9 @@
   endif
 
   assign product_images = product.media | where: 'media_type', 'image'
-  if settings.prod_thumb_hover_image and product_images.size > 1
+  if force_hover_image
+    assign show_hover_image = true
+  elsif settings.prod_thumb_hover_image and product_images.size > 1
     assign show_hover_image = true
   else
     assign show_hover_image = false
