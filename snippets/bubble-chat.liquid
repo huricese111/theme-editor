@@ -51,11 +51,11 @@
     height: 100%;
     background-color: var(--feedback-modal-bg);
     justify-content: center;
-    align-items: center; 
+    align-items: center;
     z-index: var(--feedback-z-index-modal);
     opacity: 0;
     transition: opacity 0.3s ease;
-    padding: 20px; 
+    padding: 20px;
     box-sizing: border-box;
   }
 
@@ -64,20 +64,37 @@
     padding: 20px;
     border-radius: var(--feedback-border-radius);
     width: 540px;
+    max-width: 90vw;
     text-align: left;
-    height: auto;
-    min-height: 450px; 
-    max-height: 85vh; 
     position: relative;
     transform: translateY(-20px);
     transition: transform 0.3s ease;
-    max-width: 90vw;
-    overflow: hidden;
     display: flex;
     flex-direction: column;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    height: auto;
+    min-height: 200px;
+    max-height: 90vh;
+    overflow: hidden;
   }
 
+  .pifyform {
+    margin: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 300px;
+  }
+
+  .pifyform iframe {
+    width: 100% !important;
+    border: none !important;
+    display: block;
+    height: 400px;
+    min-height: 300px;
+  }
+
+  /* 移动端适配 */
   @media (max-width: 768px) {
     .feedback-button-black {
       bottom: 10px;
@@ -87,84 +104,31 @@
     }
     
     .modal-feedback {
-      padding: 15px; 
-      align-items: center; 
-    }
-    
-    .modal-content-feedback {
-      width: calc(100vw - 30px);
-      height: auto;
-      min-height: 400px; 
-      max-height: 80vh; 
-      margin: 0;
-      padding: 15px;
-      overflow-y: auto;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .modal-feedback {
       padding: 10px;
     }
     
     .modal-content-feedback {
       width: calc(100vw - 20px);
-      max-height: 75vh;
-      padding: 12px;
-      min-height: 350px; 
+      padding: 0;
+      max-height: 85vh;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .modal-feedback {
+      padding: 5px;
+    }
+    
+    .modal-content-feedback {
+      width: calc(100vw - 10px);
+      padding: 0;
+      max-height: 80vh;
     }
     
     .close-button {
       top: 5px;
       right: 5px;
       font-size: 20px;
-    }
-  }
-
-  .pifyform {
-    margin: 10px 0 !important;
-    height: auto !important;
-    min-height: 320px; 
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .pifyform iframe {
-    width: 100% !important;
-    height: auto !important;
-    min-height: 320px !important; 
-    border: none !important;
-    flex: 1;
-  }
-
-  @media (max-width: 768px) {
-    .pifyform {
-      margin: 8px 0 !important;
-      min-height: 320px;
-    }
-    
-    .pifyform iframe {
-      min-height: 320px !important;
-    }
-    
-    .modal-content-feedback p {
-      font-size: 16px;
-      margin: 8px 0;
-    }
-    
-    .modal-content-feedback .selecting {
-      font-size: 24px;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .pifyform {
-      min-height: 320px;
-    }
-    
-    .pifyform iframe {
-      min-height: 320px !important;
     }
   }
 
@@ -179,27 +143,11 @@
   .modal-content-feedback p {
     font-weight: bold;
     font-size: 18px;
+    margin: 0 0 10px 0;
   }
 
   .modal-content-feedback .selecting {
     font-size: 30px;
-  }
-
-  .modal-content-feedback button[type='submit'] {
-    background-color: var(--feedback-primary-color);
-    color: var(--feedback-text-color);
-    border: none;
-    padding: 10px 20px;
-    border-radius: var(--feedback-border-radius);
-    cursor: pointer;
-    display: block;
-    margin: 20px auto 0;
-    width: fit-content;
-    transition: var(--feedback-transition);
-  }
-
-  .modal-content-feedback button[type='submit']:hover {
-    background-color: #333;
   }
 
   .close-button {
@@ -217,6 +165,7 @@
     justify-content: center;
     border-radius: 50%;
     transition: var(--feedback-transition);
+    z-index: 1;
   }
 
   .close-button:hover {
@@ -226,12 +175,6 @@
   .close-button:focus {
     outline: 2px solid var(--feedback-primary-color);
     outline-offset: 2px;
-  }
-
-  .feedback-icon {
-    fill: var(--feedback-text-color);
-    width: 40px;
-    height: 60px;
   }
 
   .success-message {
@@ -269,14 +212,6 @@
     border-radius: var(--feedback-border-radius);
     margin: 10px 0;
     border: 1px solid #fcc;
-  }
-
-  .feedback-loading {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    font-size: 16px;
   }
 
   .sr-only {
@@ -351,13 +286,13 @@
 
     <div id="feedback-form-container">
       {% if request.locale.iso_code == 'de' %}
-        <div id="pifyform-11904" class="pifyform" style="margin:10px 0;"></div>
+        <div id="pifyform-11904" class="pifyform"></div>
       {% elsif request.locale.iso_code == 'fr' %}
-        <div id="pifyform-11905" class="pifyform" style="margin:10px 0;"></div>
+        <div id="pifyform-11905" class="pifyform"></div>
       {% elsif request.locale.iso_code == 'fi' %}
-        <div id="pifyform-11906" class="pifyform" style="margin:10px 0;"></div>
+        <div id="pifyform-11906" class="pifyform"></div>
       {% else %}
-        <div id="pifyform-11903" class="pifyform" style="margin:10px 0;"></div>
+        <div id="pifyform-11903" class="pifyform"></div>
       {% endif %}
     </div>
   </div>
@@ -379,12 +314,14 @@
       },
       selectors: {
         modal: '#feedbackModal',
+        modalContent: '.modal-content-feedback',
         button: '.feedback-button-black',
         closeBtn: '.close-button',
         successMsg: '#successMessage',
         formContainer: '#feedback-form-container'
       },
-      loadTimeout: 10000
+      loadTimeout: 10000,
+      modalPadding: 40 // modal高度 = iframe高度 + 40px
     },
     
     formLoaded: false,
@@ -407,52 +344,55 @@
       }
     },
     
-    // 优化的高度调整函数
     adjustModalHeight() {
-      const modalContent = document.querySelector('.modal-content-feedback');
+      const modalContent = document.querySelector(this.config.selectors.modalContent);
       const pifyform = document.querySelector('.pifyform');
       const iframe = pifyform ? pifyform.querySelector('iframe') : null;
       
-      if (!modalContent || !pifyform) return;
+      if (!modalContent || !iframe) return;
       
-      // 获取视口高度
-      const viewportHeight = window.innerHeight;
-      const isMobile = window.innerWidth <= 768;
-      
-      // 计算基础高度需求
-      let baseHeight = isMobile ? 350 : 450; // 增加基础高度
-      
-      // 获取表单内容的实际高度
-      let formHeight = baseHeight - 100; // 减去padding和其他元素的空间
-      
-      if (iframe && iframe.offsetHeight > 0) {
-        formHeight = Math.max(formHeight, iframe.offsetHeight);
-      }
-      
-      // 计算模态框需要的总高度
-      const additionalHeight = isMobile ? 80 : 100; // 内边距和其他元素的高度
-      const totalNeededHeight = formHeight + additionalHeight;
-      
-      // 计算最大可用高度（保留更多空间给内容）
-      const maxAvailableHeight = viewportHeight * (isMobile ? 0.8 : 0.85);
-      
-      // 设置最终高度，确保不小于最小高度
-      const finalHeight = Math.max(baseHeight, Math.min(totalNeededHeight, maxAvailableHeight));
-      
-      // 应用高度
-      modalContent.style.height = finalHeight + 'px';
-      
-      // 如果内容超出，启用滚动
-      if (totalNeededHeight > maxAvailableHeight) {
-        modalContent.style.overflowY = 'auto';
-      } else {
-        modalContent.style.overflowY = 'hidden';
-      }
-      
-      // 确保iframe有足够的高度
-      if (iframe) {
-        const availableFormHeight = finalHeight - additionalHeight;
-        iframe.style.minHeight = Math.max(200, availableFormHeight) + 'px';
+      try {
+        const isMobile = window.innerWidth <= 768;
+        const viewportHeight = window.innerHeight;
+        
+        // 移动端使用更小的padding
+        const modalPadding = isMobile ? 20 : 40; // 移动端减少padding
+        
+        let iframeContentHeight = 400;
+        
+        try {
+          const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+          if (iframeDoc && iframeDoc.body) {
+            const bodyHeight = iframeDoc.body.scrollHeight;
+            const htmlHeight = iframeDoc.documentElement.scrollHeight;
+            iframeContentHeight = Math.max(bodyHeight, htmlHeight, isMobile ? 280 : 300);
+          }
+        } catch (e) {
+          iframeContentHeight = iframe.offsetHeight || (isMobile ? 350 : 400);
+        }
+        
+        iframe.style.height = iframeContentHeight + 'px';
+        
+        const finalModalHeight = iframeContentHeight + modalPadding;
+        const maxHeight = viewportHeight * (isMobile ? 0.8 : 0.9); // 移动端降低最大高度比例
+        
+        if (finalModalHeight <= maxHeight) {
+          modalContent.style.height = finalModalHeight + 'px';
+          modalContent.style.overflowY = 'hidden';
+        } else {
+          modalContent.style.height = maxHeight + 'px';
+          modalContent.style.overflowY = 'auto';
+          
+          const availableHeight = maxHeight - modalPadding;
+          iframe.style.height = Math.max(isMobile ? 250 : 300, availableHeight) + 'px';
+        }
+        
+      } catch (error) {
+        console.error('Error adjusting modal height:', error);
+        modalContent.style.height = isMobile ? '400px' : '500px';
+        if (iframe) {
+          iframe.style.height = isMobile ? '360px' : '460px';
+        }
       }
     },
     
@@ -465,8 +405,6 @@
           }
         });
       }
-      
-      this.setupTouchEvents();
       
       window.addEventListener('resize', this.debounce(() => {
         this.adjustModalHeight();
@@ -482,26 +420,6 @@
           }
         }
       });
-    },
-    
-    setupTouchEvents() {
-      let startY = 0;
-      const modalContent = document.querySelector('.modal-content-feedback');
-      
-      if (modalContent) {
-        modalContent.addEventListener('touchstart', (e) => {
-          startY = e.touches[0].clientY;
-        }, { passive: true });
-        
-        modalContent.addEventListener('touchmove', (e) => {
-          const currentY = e.touches[0].clientY;
-          const diff = startY - currentY;
-          
-          if (diff > 100) {
-            this.close();
-          }
-        }, { passive: true });
-      }
     },
     
     debounce(func, wait) {
@@ -534,14 +452,12 @@
       if (!this.formLoaded) {
         this.loadFeedbackForm();
         this.formLoaded = true;
+      } else {
+        // 如果表单已加载，直接调整高度
+        setTimeout(() => {
+          this.adjustModalHeight();
+        }, 100);
       }
-      
-      // 延迟调整高度，确保内容加载完成
-      setTimeout(() => {
-        this.adjustModalHeight();
-      }, 300);
-      
-      this.trackEvent('modal_opened');
     },
     
     close() {
@@ -553,8 +469,6 @@
       setTimeout(() => {
         modal.style.display = 'none';
       }, 300);
-      
-      this.trackEvent('modal_closed');
     },
     
     closeSuccess() {
@@ -575,7 +489,7 @@
         const container = document.getElementById(containerId);
         
         if (!container) {
-          this.showError('Form container not found');
+          console.error('Form container not found');
           return;
         }
         
@@ -583,15 +497,8 @@
         
         this.createFormIframe(formId, container);
         
-        setTimeout(() => {
-          if (!document.getElementById(`form-iframe-${formId}`)) {
-            this.showError('Form loading timeout. Please try again.');
-          }
-        }, this.config.loadTimeout);
-        
       } catch (error) {
         console.error('Form loading error:', error);
-        this.showError('Form loading error occurred');
       }
     },
     
@@ -605,37 +512,29 @@
       iframe.scrolling = 'no';
       iframe.style.cssText = `
         display: block;
-        min-width: 100%;
         width: 100%;
-        height: 100%;
         border: none;
         overflow: hidden;
+        height: 400px;
       `;
       
       iframe.onload = () => {
         container.classList.remove('formloading');
-        iframe.contentWindow.postMessage(
-          JSON.stringify({ parentUrl: window.location.href }), 
-          '*'
-        );
         
         // 表单加载完成后调整高度
         setTimeout(() => {
           this.adjustModalHeight();
           
+          // 开始监听iframe尺寸变化
           if (this.resizeObserver) {
             this.resizeObserver.observe(iframe);
           }
-        }, 500); // 增加延迟确保内容完全加载
+        }, 500);
       };
       
       this.setupMessageListener(container, iframe, formId);
       
-      setTimeout(() => {
-        if (!document.getElementById(iframeId)) {
-          container.appendChild(iframe);
-        }
-      }, 50);
+      container.appendChild(iframe);
     },
     
     setupMessageListener(container, iframe, formId) {
@@ -648,145 +547,34 @@
             return;
           }
           
+          // 处理来自iframe的高度信息
           if (data && data.height !== undefined) {
             if (data.formId === undefined || `pifyform-${data.formId}` === container.id) {
               iframe.style.height = data.height + 'px';
-              
+              // 收到高度信息后立即调整modal高度
               setTimeout(() => {
                 this.adjustModalHeight();
-              }, 200);
+              }, 50);
             }
-          }
-          
-          if (data && data.redirect && data.redirect !== '') {
-            window.location.href = data.redirect;
-          }
-          
-          if (data && data.retsetHeight) {
-            container.style.height = '520px';
-            window.location.href = `#pifyform-${formId}`;
-            
-            setTimeout(() => {
-              this.adjustModalHeight();
-            }, 200);
-          }
-          
-          const lazyframes = document.getElementsByClassName('lazyframe');
-          if (lazyframes.length > 0) {
-            const lazyframe = lazyframes[0];
-            lazyframe.style.height = '100%';
-            lazyframe.removeAttribute('data-ratio');
-            lazyframe.parentNode.style.overflow = 'hidden';
-          }
-          
-          if (data && data.getter) {
-            this.handleGetterRequest(data, iframe);
           }
         }
       };
       
-      window.addEventListener('message', messageHandler, false);
-    },
-    
-    handleGetterRequest(data, iframe) {
-      const response = {};
-      const getters = [].concat(data.getter);
-      
-      getters.forEach((getter, index) => {
-        const key = getter.n || index;
-        let value = null;
-        
-        try {
-          let target;
-          switch (getter.t) {
-            case 'window':
-              target = window;
-              break;
-            case 'scrollParent':
-              target = this.getScrollParent(iframe) || window;
-              break;
-            default:
-              target = iframe;
-          }
-          
-          if (getter.e) {
-            if (getter.v === 'rect') {
-              const rect = target.getBoundingClientRect();
-              value = {
-                top: rect.top,
-                left: rect.left,
-                width: rect.width,
-                height: rect.height
-              };
-            } else {
-              value = target[getter.v].apply(target, [].concat(getter.e)) || true;
-            }
-          } else if (getter.s) {
-            target[getter.v] = getter.s;
-            value = true;
-          } else {
-            value = target[getter.v] || false;
-          }
-        } catch (error) {
-          console.warn('Getter error:', error);
-        }
-        
-        response[key] = value;
-      });
-      
-      response.innerState = true;
-      iframe.contentWindow.postMessage(
-        JSON.stringify({ queryRes: response }), 
-        '*'
-      );
-    },
-    
-    getScrollParent(element) {
-      if (!element) return null;
-      return element.scrollHeight > element.clientHeight ? 
-        element : this.getScrollParent(element.parentNode);
-    },
-    
-    showError(message) {
-      const container = document.querySelector(this.config.selectors.formContainer);
-      if (!container) return;
-      
-      const errorDiv = document.createElement('div');
-      errorDiv.className = 'feedback-error';
-      errorDiv.textContent = message;
-      errorDiv.setAttribute('role', 'alert');
-      
-      const existingErrors = container.querySelectorAll('.feedback-error');
-      existingErrors.forEach(error => error.remove());
-      
-      container.appendChild(errorDiv);
-    },
-    
-    trackEvent(action) {
-      if (typeof gtag !== 'undefined') {
-        gtag('event', action, {
-          'event_category': 'feedback_modal',
-          'event_label': window.location.pathname
-        });
-      }
+      window.addEventListener('message', messageHandler);
     }
   };
   
+  // 初始化
+  document.addEventListener('DOMContentLoaded', () => {
+    FeedbackModal.init();
+  });
+  
+  // 如果DOM已经加载完成
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => FeedbackModal.init());
+    document.addEventListener('DOMContentLoaded', () => {
+      FeedbackModal.init();
+    });
   } else {
     FeedbackModal.init();
-  }
-  
-  function openFeedbackModal() {
-    FeedbackModal.open();
-  }
-  
-  function closeFeedbackModal() {
-    FeedbackModal.close();
-  }
-  
-  function closeSuccessMessage() {
-    FeedbackModal.closeSuccess();
   }
 </script>

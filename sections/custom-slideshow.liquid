@@ -72,7 +72,7 @@
                   font-size: {{ slide.settings.title_font_size | default: 70 }}px;
                   font-weight: {{ slide.settings.title_font_weight | default: 700 }};
                   color: {{ slide.settings.title_color | default: '#000' }};
-                ">
+                " data-mobile-font-size="{{ slide.settings.title_mobile_font_size | default: 40 }}">
                   {{ slide.settings[title_key] | default: slide.settings.title }}
                 </h3>
 
@@ -221,7 +221,7 @@
                 font-size: {{ slide.settings.title_font_size | default: 70 }}px;
                 font-weight: {{ slide.settings.title_font_weight | default: 700 }};
                 color: {{ slide.settings.title_color | default: '#000' }};
-              ">
+              " data-mobile-font-size="{{ slide.settings.title_mobile_font_size | default: 40 }}">
                 {{ slide.settings[title_key] | default: slide.settings.title }}
               </h3>
 
@@ -271,7 +271,7 @@
                 font-size: {{ slide.settings.title_font_size | default: 70 }}px;
                 font-weight: {{ slide.settings.title_font_weight | default: 700 }};
                 color: {{ slide.settings.title_color | default: '#000' }};
-              ">
+              " data-mobile-font-size="{{ slide.settings.title_mobile_font_size | default: 40 }}">
                 {{ slide.settings[title_key] | default: slide.settings.title }}
               </h3>
 
@@ -420,6 +420,16 @@
           "max": 120,
           "step": 2,
           "default": 70,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "title_mobile_font_size",
+          "label": "Title Mobile Font Size",
+          "min": 16,
+          "max": 60,
+          "step": 2,
+          "default": 40,
           "unit": "px"
         },
         {
@@ -1091,8 +1101,8 @@
     }
 
     .Bikebanner-content h3 {
-      font-size: 36px;
-      line-height: 40px;
+      font-size: var(--mobile-font-size, 40px) !important;
+      line-height: calc(var(--mobile-font-size, 40px) + 10px) !important;
     }
 
     .Bikebanner-content p {
@@ -1105,6 +1115,10 @@
 
     .pagination {
       bottom: 30px; 
+    }
+
+    .pagination {
+      display: none !important;
     }
 
     .pagbutton {
@@ -1121,6 +1135,13 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
+    // Set mobile font sizes
+    const titles = document.querySelectorAll('.Bikebanner-content h3[data-mobile-font-size]');
+    titles.forEach(title => {
+      const mobileFontSize = title.getAttribute('data-mobile-font-size');
+      title.style.setProperty('--mobile-font-size', mobileFontSize + 'px');
+    });
+    
     const slideshow = document.querySelector('.slideshow-container');
     if (!slideshow) return;
 
