@@ -26,6 +26,13 @@
 
 {% assign text_align_class = 'text-align-' | append: block.settings.text_align | default: 'left' %}
 
+{% assign font_family_style = '' %}
+{% if block.settings.font_family == 'sans-serif' %}
+  {% assign font_family_style = 'font-family: Helvetica, "Helvetica Neue", Arial, "Lucida Grande", sans-serif;' %}
+{% else %}
+  {% assign font_family_style = 'font-family: "SF Mono", Menlo, Consolas, Monaco, "Liberation Mono", "Lucida Console", monospace, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";' %}
+{% endif %}
+
 <div
   class="text-block {{ position_class }} {{ text_align_class }} {% if is_absolute_mode %}absolute-position{% else %}relative-position{% endif %}"
   style="
@@ -33,7 +40,7 @@
     margin: {{ block.settings.margin_top }}px {{ block.settings.margin_right }}px {{ block.settings.margin_bottom }}px {{ block.settings.margin_left }}px;
   "
 >
-  <div class="rte {% if block.settings.enlarge_text %}large-text{% endif %}" data-format-number>
+  <div class="rte {% if block.settings.enlarge_text %}large-text{% endif %}" data-format-number style="{{ font_family_style }}">
     {{ block_text }}
   </div>
 </div>

@@ -47,9 +47,18 @@
             {% else %}{{ section.settings.media_text }}
           {% endcase %}
         {% endcapture %}
+        
+        {% assign media_font_family_style = '' %}
+        {% if section.settings.media_text_font_family == 'sans-serif' %}
+          {% assign media_font_family_style = 'font-family: Helvetica, "Helvetica Neue", Arial, "Lucida Grande", sans-serif;' %}
+        {% else %}
+          {% assign media_font_family_style = 'font-family: "SF Mono", Menlo, Consolas, Monaco, "Liberation Mono", "Lucida Console", monospace, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";' %}
+        {% endif %}
+        
         <div
           class="rte lightly-spaced-row {% if section.settings.media_enlarge_text %}large-text{% endif %}"
           data-format-number
+          style="{{ media_font_family_style }}"
         >
           {{ media_text }}
         </div>

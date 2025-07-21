@@ -87,6 +87,11 @@
   .media-column .rte {
   color: {{ section.settings.media_text_color }};
   font-size: {{ section.settings.media_desktop_text_size }}px;
+  {% if section.settings.media_text_font_family == 'sans-serif' %}
+    font-family: Helvetica, "Helvetica Neue", Arial, "Lucida Grande", sans-serif;
+  {% else %}
+    font-family: "SF Mono", Menlo, Consolas, Monaco, "Liberation Mono", "Lucida Console", monospace, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  {% endif %}
   }
 
   .media-column .btn-1 {
@@ -109,7 +114,7 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 80px;
+  padding: 60px;
   position: relative;
   z-index: 2;
   }
@@ -341,6 +346,11 @@
   .rte {
   color: {{ block.settings.text_color }};
   font-size: {{ block.settings.desktop_font_size }}px;
+  {% if block.settings.font_family == 'sans-serif' %}
+    font-family: Helvetica, "Helvetica Neue", Arial, "Lucida Grande", sans-serif;
+  {% else %}
+    font-family: "SF Mono", Menlo, Consolas, Monaco, "Liberation Mono", "Lucida Console", monospace, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  {% endif %}
   }
   {% when 'button' %}
   .block-{{ block.id }}
@@ -468,7 +478,13 @@
   {% when 'text' %}
   .block-{{ block.id }}
   .rte {
+  color: {{ block.settings.text_color }};
   font-size: {{ block.settings.mobile_font_size }}px;
+  {% if block.settings.font_family == 'sans-serif' %}
+    font-family: Helvetica, "Helvetica Neue", Arial, "Lucida Grande", sans-serif;
+  {% else %}
+    font-family: "SF Mono", Menlo, Consolas, Monaco, "Liberation Mono", "Lucida Console", monospace, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  {% endif %}
   }
   {% when 'button' %}
   .block-{{ block.id }}
@@ -512,7 +528,6 @@
 
   .flexible-layout .column,
   .fixed-layout .column {
-  padding-left: 0;
   display: flex;
   align-items: {% case section.settings.content_vertical_alignment %}{% when 'top' %}flex-start{% when 'bottom' %}flex-end{% else %}center{% endcase %};
   }
