@@ -73,29 +73,28 @@ Hepha Theme Editor is a sophisticated Shopify theme tailored for bicycle retaile
 </table>
 
 ## 📁 Project Structure
-Hepha theme editor/
-├── Readme.md                 # Project documentation
-├── assets/                   # Static assets and JavaScript files
-│   ├── .png                 # Frame geometry images
-│   ├── cart-drawer.js        # Shopping cart functionality
-│   ├── countdown-timer.js    # Timer components
-│   └── custom.js             # Custom theme JavaScript
-├── layout/
-│   └── theme.liquid          # Main theme layout template
-├── sections/                 # Shopify sections for page building
-│   ├── header.liquid         # Site header and navigation
-│   ├── footer.liquid         # Site footer
-│   ├── main-product-new.liquid    # Product page layout
-│   ├── frame_geometry_sheet.liquid # Bike geometry visualization
-│   ├── custom-product-tab.liquid   # Product collection tabs
-│   ├── custom_firework_video.liquid # Video integration
-│   └── [other sections]      # Additional page sections
-└── snippets/                 # Reusable template components
-├── product- .liquid      # Product-related components
-├── financing-options.liquid # Payment options
-├── product-compare.liquid  # Product comparison
-├── icon-*.liquid         # Brand and UI icons
-└── [other snippets]      # Utility components
+  - Readme.md                 # Project documentation
+  - assets/                   # Static assets and JavaScript files
+    - .png                    # Frame geometry images
+    - cart-drawer.js          # Shopping cart functionality
+    - countdown-timer.js      # Timer components
+    - custom.js               # Custom theme JavaScript
+  - layout/
+    - theme.liquid            # Main theme layout template
+  - sections/                 # Shopify sections for page building
+    - header.liquid           # Site header and navigation
+    - footer.liquid           # Site footer
+    - main-product-new.liquid # Product page layout
+    - frame_geometry_sheet.liquid # Bike geometry visualization
+    - custom-product-tab.liquid   # Product collection tabs
+    - custom_firework_video.liquid # Video integration
+    - [other sections]        # Additional page sections
+  - snippets/                 # Reusable template components
+    - product-*.liquid        # Product-related components
+    - financing-options.liquid # Payment options
+    - product-compare.liquid  # Product comparison
+    - icon-*.liquid           # Brand and UI icons
+    - [other snippets]        # Utility components
 
 
 ## 📂 Sections Documentation
