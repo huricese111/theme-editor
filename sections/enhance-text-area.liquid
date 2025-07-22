@@ -82,8 +82,6 @@
  */
 {%- endcomment -%}
 
-// ... existing code ...
-
 {% schema %}
 {
   "name": "Enhanced Text Area",
@@ -327,9 +325,9 @@
                   >
                     <span
                       class="icon"
-                      style="color: {{ section.settings.customicon_color }}; width: {{ icon_size }}px; height: {{ icon_size }}px;"
+                      style="color: {{ section.settings.icon_color }}; width: {{ section.settings.item_font_size }}px; height: {{ section.settings.item_font_size }}px;"
                     >
-                      {%- render 'list-icon', icon: section.settings.custom_icon, size: icon_size -%}
+                      {%- render 'list-icon', icon: section.settings.custom_icon, size: section.settings.item_font_size -%}
                     </span>
                     <span class="item-text">{{ item_text }}</span>
                   </li>
@@ -372,8 +370,8 @@
                     style="font-size: {{ section.settings.item_font_size }}px;"
                     {{ block.shopify_attributes }}
                   >
-                    <span class="icon" style="color: {{ section.settings.customicon_color }};">
-                      {%- render 'list-icon', icon: section.settings.custom_icon -%}
+                    <span class="icon" style="color: {{ section.settings.icon_color }}; width: {{ section.settings.item_font_size }}px; height: {{ section.settings.item_font_size }}px;">
+                      {%- render 'list-icon', icon: section.settings.custom_icon, size: section.settings.item_font_size -%}
                     </span>
                     <span class="item-text">{{ item_text }}</span>
                   </li>
@@ -394,61 +392,84 @@
     padding: 40px 20px;
   }
 
-  .textarea-section-title {
+  #section-{{ section.id }} .textarea-section-title {
     margin-bottom: 20px;
     line-height: 1.3;
     text-align: left;
   }
 
-  .content-grid {
+  #section-{{ section.id }} .content-grid {
     display: flex;
     gap: 40px;
   }
 
-  .description-content {
+  #section-{{ section.id }} .description-content {
     flex: 1;
   }
 
-  .rich-text-content {
+  #section-{{ section.id }} .rich-text-content {
     line-height: 1.6;
     text-align: left;
   }
 
-  .rich-text-content p {
+  #section-{{ section.id }} .rich-text-content p {
     margin-bottom: 15px;
   }
 
-  .item-list-container {
+  #section-{{ section.id }} .item-list-container {
     flex: 1;
     margin-top: 0;
   }
 
-  .customicon-list {
+  #section-{{ section.id }} .icon-list {
     list-style: none;
     padding: 0;
     margin: 0;
     text-align: left;
   }
 
-  .list-item {
+  #section-{{ section.id }} .list-item {
     position: relative;
     padding-left: 30px;
     display: flex;
     align-items: flex-start;
+    margin-bottom: 10px;
   }
 
-  .customicon {
+  #section-{{ section.id }} .icon {
     position: absolute;
     left: 0;
     top: 0.2em;
     margin-right: 12px;
     display: inline-flex;
   }
+  
+  #section-{{ section.id }} .header-layout {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 30px;
+    align-items: center; 
+  }
+  
+  #section-{{ section.id }} .header-layout .content-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  #section-{{ section.id }} .header-layout .textarea-section-title {
+    margin-bottom: 0; 
+  }
 
   @media (max-width: 768px) {
-    .content-grid {
+    #section-{{ section.id }} .content-grid {
       flex-direction: column;
       gap: 30px;
+    }
+    
+    #section-{{ section.id }} .header-layout {
+      grid-template-columns: 1fr;
+      gap: 20px;
     }
 
     #section-{{ section.id }} .container {

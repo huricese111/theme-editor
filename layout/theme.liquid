@@ -13,7 +13,7 @@
     {% render 'redirect-rules' %}
     {%- render 'doc-head-core' -%}
     {%- render 'doc-head-social' -%}
-    {% render :"gtag-js' %}
+    {% render 'gtag-js' %}
     {%- liquid
       assign base_font = settings.type_base_font
       assign base_font_bold = base_font | font_modify: 'weight', 'bolder'
