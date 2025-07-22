@@ -116,7 +116,7 @@
                       <svg
                         class="custom-arrow"
                         fill="currentColor"
-                        xmlns="http://www.w3.org/2000/ssvg"
+                        xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 330 330"
                         width="16"
                         height="16"
@@ -402,7 +402,7 @@
   
   @media (max-width: 768px) {
     .section-footer__row--blocks .section-footer__row__col:not(:last-child) {
-      margin-bottom: 10px;
+      margin-bottom: 0;
     }
 
     .section-footer__row__col {
@@ -445,6 +445,7 @@
       justify-content: space-between;
       display: flex;
       width: 100%;
+      padding: 10px;
     }
     .section-footer__newsletter-block {
       padding: 4px 0;
@@ -478,6 +479,24 @@
         const toggle = e.target.closest('.footer-menu-toggle');
         const expanded = toggle.getAttribute('aria-expanded') === 'true';
         toggle.setAttribute('aria-expanded', String(!expanded));
+        
+        const menuId = toggle.getAttribute('aria-controls');
+        const menu = document.getElementById(menuId);
+        
+        const arrow = toggle.querySelector('.custom-arrow');
+        
+        if (menu) {
+          if (!expanded) {
+            menu.style.maxHeight = menu.scrollHeight + 'px';
+            menu.style.opacity = '1';
+            if (arrow) arrow.style.transform = 'rotate(90deg)';
+          } else {
+            menu.style.maxHeight = '0';
+            menu.style.opacity = '0';
+            // 恢复箭头
+            if (arrow) arrow.style.transform = 'rotate(0deg)';
+          }
+        }
       }
     });
   });
@@ -763,7 +782,7 @@
         {
           "type": "menu",
           "settings": {
-            "title": "Explore",
+            "title": "Entdecke",
             "title_de": "Entdecke",
             "title_fr": "Découvrir",
             "title_fi": "Tutustu",
