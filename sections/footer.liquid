@@ -367,6 +367,12 @@
     object-fit: contain;
   }
   
+  @media screen and (min-width: 750px) {
+    .section-footer__title.heading-font.h6.no-wrap .custom-arrow {
+      display: none;
+    }
+  }
+  
   @media screen and (max-width: 749px) {
     .app-block {
       flex-direction: row;
@@ -487,6 +493,12 @@
     }
     .signup-form__button {
       padding: 8px 10px;
+    }
+
+    .localization__grid {
+        display: flex;
+        flex-direction: row !important;
+        align-items: flex-start;
     }
   }
 </style>
