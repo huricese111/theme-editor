@@ -1502,15 +1502,10 @@
         },
         {
           "type": "checkbox",
-          "id": "show_main_tabs",
-          "label": "Show main tabs",
-          "default": true
-        },
-        {
-          "type": "checkbox",
-          "id": "show_sub_tabs",
-          "label": "Show sub tabs",
-          "default": true
+          "id": "hide_banner_header_right",
+          "label": "Hide banner header right section",
+          "default": false,
+          "info": "When enabled, the right section with tabs will be hidden regardless of other settings"
         },
         {
           "type": "header",
@@ -1521,30 +1516,36 @@
           "id": "tab_1_type",
           "label": "Tab 1 type",
           "options": [
+            { "value": "none", "label": "None" },
             { "value": "step_through", "label": "Step Through" },
             { "value": "high_step", "label": "High Step" },
             { "value": "low_step", "label": "Low Step" }
-          ]
+          ],
+          "default": "none"
         },
         {
           "type": "select",
           "id": "tab_2_type",
           "label": "Tab 2 type",
           "options": [
+            { "value": "none", "label": "None" },
             { "value": "step_through", "label": "Step Through" },
             { "value": "high_step", "label": "High Step" },
             { "value": "low_step", "label": "Low Step" }
-          ]
+          ],
+          "default": "none"
         },
         {
           "type": "select",
           "id": "tab_3_type",
           "label": "Tab 3 type",
           "options": [
+            { "value": "none", "label": "None" },
             { "value": "step_through", "label": "Step Through" },
             { "value": "high_step", "label": "High Step" },
             { "value": "low_step", "label": "Low Step" }
-          ]
+          ],
+          "default": "none"
         },
         {
           "type": "header",
