@@ -1,4 +1,4 @@
-# Hepha Theme Editor
+# Custom Theme Editor
 
 ![Shopify](https://img.shields.io/badge/Shopify-Theme-green?style=flat-square&logo=shopify)
 ![Liquid](https://img.shields.io/badge/Liquid-Template-blue?style=flat-square)
