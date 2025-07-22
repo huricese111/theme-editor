@@ -1,72 +1,72 @@
 {%- comment -%}
-/**
- * Footer Section Component
- * 
- * A comprehensive footer section that provides site navigation, content blocks,
- * and essential site information with multi-language support and responsive design.
- * 
- * FEATURES:
- * - Multi-language content support (English, German, French, Finnish)
- * - Flexible block-based content system
- * - Responsive navigation with collapsible menus on mobile
- * - Social media integration
- * - Newsletter signup functionality
- * - Payment method icons display
- * - Country/region and language selectors
- * - Custom liquid code support
- * - App store download links
- * - Follow on Shop integration
- * 
- * BLOCK TYPES:
- * - Menu blocks: Navigation links with collapsible mobile interface
- * - Text blocks: Rich text content with optional images and social media
- * - Newsletter blocks: Email signup with social media and app links
- * - Custom liquid blocks: Custom code injection
- * - App blocks: Third-party app integration
- * 
- * RESPONSIVE BEHAVIOR:
- * - Desktop: Multi-column layout with expanded menus
- * - Mobile: Single column with collapsible menu sections
- * - Touch-friendly toggle buttons for menu expansion
- * 
- * LOCALIZATION:
- * - Dynamic content switching based on current locale
- * - Fallback to default language when translations unavailable
- * - Integrated country/region and language selectors
- * - Localized copyright and powered-by text
- * 
- * CUSTOMIZATION OPTIONS:
- * - Configurable payment icons display
- * - Social media icon size options (standard/large)
- * - Newsletter button styling (primary/secondary)
- * - Lower footer menu configuration
- * - Powered by Shopify toggle
- * - Follow on Shop feature toggle
- * 
- * TECHNICAL FEATURES:
- * - Accessible navigation with ARIA labels
- * - Smooth CSS transitions for mobile menu toggles
- * - Flexible grid system for responsive layout
- * - SEO-friendly semantic HTML structure
- * - Performance-optimized image loading
- * 
- * DEFAULT PRESET:
- * - "Default footer" with navigation, newsletter, and localization
- * - Pre-configured menu blocks for About, Explore, Support
- * - Newsletter block with social media and app links
- * - Multi-language headings and descriptions
- * 
- * DEPENDENCIES:
- * - localization-form snippet for language/country selectors
- * - newsletter-signup snippet for email collection
- * - social-media snippet for social icons
- * - image snippet for optimized image rendering
- * 
- * BROWSER SUPPORT:
- * - Modern browsers with CSS Grid and Flexbox support
- * - Progressive enhancement for older browsers
- * - Touch device optimization
- */
+  /**
+   * Footer Section Component
+   *
+   * A comprehensive footer section that provides site navigation, content blocks,
+   * and essential site information with multi-language support and responsive design.
+   *
+   * FEATURES:
+   * - Multi-language content support (English, German, French, Finnish)
+   * - Flexible block-based content system
+   * - Responsive navigation with collapsible menus on mobile
+   * - Social media integration
+   * - Newsletter signup functionality
+   * - Payment method icons display
+   * - Country/region and language selectors
+   * - Custom liquid code support
+   * - App store download links
+   * - Follow on Shop integration
+   *
+   * BLOCK TYPES:
+   * - Menu blocks: Navigation links with collapsible mobile interface
+   * - Text blocks: Rich text content with optional images and social media
+   * - Newsletter blocks: Email signup with social media and app links
+   * - Custom liquid blocks: Custom code injection
+   * - App blocks: Third-party app integration
+   *
+   * RESPONSIVE BEHAVIOR:
+   * - Desktop: Multi-column layout with expanded menus
+   * - Mobile: Single column with collapsible menu sections
+   * - Touch-friendly toggle buttons for menu expansion
+   *
+   * LOCALIZATION:
+   * - Dynamic content switching based on current locale
+   * - Fallback to default language when translations unavailable
+   * - Integrated country/region and language selectors
+   * - Localized copyright and powered-by text
+   *
+   * CUSTOMIZATION OPTIONS:
+   * - Configurable payment icons display
+   * - Social media icon size options (standard/large)
+   * - Newsletter button styling (primary/secondary)
+   * - Lower footer menu configuration
+   * - Powered by Shopify toggle
+   * - Follow on Shop feature toggle
+   *
+   * TECHNICAL FEATURES:
+   * - Accessible navigation with ARIA labels
+   * - Smooth CSS transitions for mobile menu toggles
+   * - Flexible grid system for responsive layout
+   * - SEO-friendly semantic HTML structure
+   * - Performance-optimized image loading
+   *
+   * DEFAULT PRESET:
+   * - "Default footer" with navigation, newsletter, and localization
+   * - Pre-configured menu blocks for About, Explore, Support
+   * - Newsletter block with social media and app links
+   * - Multi-language headings and descriptions
+   *
+   * DEPENDENCIES:
+   * - localization-form snippet for language/country selectors
+   * - newsletter-signup snippet for email collection
+   * - social-media snippet for social icons
+   * - image snippet for optimized image rendering
+   *
+   * BROWSER SUPPORT:
+   * - Modern browsers with CSS Grid and Flexbox support
+   * - Progressive enhancement for older browsers
+   * - Touch device optimization
+   */
 {%- endcomment -%}
 
 {% assign current_lang = request.locale.iso_code %}
@@ -369,15 +369,68 @@
     transform: rotate(90deg);
   }
 
+  .signup-form__inline-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+  }
+  
+  .signup-form__email {
+    flex: 1;
+    height: 40px;
+    padding: 8px 12px;
+    border-radius: 4px 0 0 4px;
+    border: 1px solid #ccc;
+    border-right: none;
+    font-size: 14px;
+    width: auto;
+    margin: 0;
+  }
+  
+  .signup-form__button {
+    height: 40px;
+    padding: 8px 15px;
+    border-radius: 4px;
+    margin: 0;
+    font-size: 14px;
+    white-space: nowrap;
+    min-width: auto;
+  }
+  
   @media (max-width: 768px) {
+    .section-footer__row--blocks .section-footer__row__col:not(:last-child) {
+      margin-bottom: 10px;
+    }
+
+    .section-footer__row__col {
+      flex: 0 1 100%;
+    }
     .section-footer__menu-block__menu {
       max-height: 0;
       overflow: hidden;
       opacity: 0;
+      width: 100%;
+    }
+    .section-footer__menu-block__menu li {
+      width: 100%;
+      padding: 10px 0;
+      border-bottom: 1px solid rgb(154 154 154 / 10%);
+      margin: 0;
+    }
+    .section-footer__menu-block__menu li:last-child {
+      border-bottom: none;
+    }
+    .section-footer__menu-block__menu li a {
+      display: block;
+      width: 100%;
+      line-height: 1.2;
     }
     .footer-menu-toggle {
       cursor: pointer;
-      padding: 10px 0;
+      padding: 4px 0;
       width: 100%;
       text-align: left;
       background: none;
@@ -388,23 +441,32 @@
     }
     .section-footer__title {
       margin-bottom: 0;
+      margin-top: 0;
       justify-content: space-between;
       display: flex;
       width: 100%;
     }
     .section-footer__newsletter-block {
-      padding: 10px 0;
+      padding: 4px 0;
+      width: 100%;
     }
-    .h6 {
-      padding: 0;
+    .section-footer__newsletter-block form {
+      width: 100%;
+      margin-top: 10px;
     }
-    .app-block {
-      flex-direction: column;
+    .section-footer__inline-container {
+      flex-direction: row;
     }
-    .footer-menu-toggle[aria-expanded='true'] + .section-footer__menu-block__menu {
-      max-height: 1000px;
-      opacity: 1;
-      padding: 10px 0;
+    .section-footer__newsletter-block input {
+      width: auto;
+      margin-bottom: 0;
+    }
+    .section-footer__newsletter-block input {
+      width: auto;
+      margin-bottom: 0;
+    }
+    .signup-form__button {
+      padding: 8px 10px;
     }
   }
 </style>
@@ -625,6 +687,19 @@
             { "label": "Primary", "value": "primary" },
             { "label": "Secondary", "value": "secondary" }
           ]
+        },
+        {
+          "type": "text",
+          "id": "newsletter_tags",
+          "label": "Newsletter tags",
+          "default": "prospect,newsletter",
+          "info": "Separate multiple tags with commas"
+        },
+        {
+          "type": "text",
+          "id": "discount_code",
+          "label": "Discount code",
+          "default": "WELCOME-10"
         },
         {
           "type": "checkbox",
