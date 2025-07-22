@@ -57,8 +57,7 @@
         
         <div
           class="rte lightly-spaced-row {% if section.settings.media_enlarge_text %}large-text{% endif %}"
-          data-format-number
-          style="{{ media_font_family_style }}"
+          style="{% if section.settings.media_text_bg_enabled %}background-color: rgba(0, 0, 0, 0.5); padding: 20px;{% else %}padding: 15px;{% endif %}{{ media_font_family_style }}"
         >
           {{ media_text }}
         </div>
