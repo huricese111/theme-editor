@@ -1,4 +1,4 @@
-# 🚲 Hepha Bicycle Theme Editor
+# 🚲 Bicycle Theme Editor
 
 [![Shopify](https://img.shields.io/badge/Shopify-Theme-7AB55C?style=for-the-badge&logo=shopify&logoColor=white)](https://shopify.com)
 [![Liquid](https://img.shields.io/badge/Liquid-Template-2670E8?style=for-the-badge&logo=shopify&logoColor=white)](https://shopify.dev/docs/themes/liquid/reference)
