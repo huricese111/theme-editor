@@ -13,7 +13,7 @@
     {% render 'redirect-rules' %}
     {%- render 'doc-head-core' -%}
     {%- render 'doc-head-social' -%}
-    {% render 'gtag-js' %}
+    {% render :'gtag-js' %}
     {%- liquid
       assign base_font = settings.type_base_font
       assign base_font_bold = base_font | font_modify: 'weight', 'bolder'
@@ -38,11 +38,11 @@
       {{- nav_font_600 | font_face: font_display: 'fallback' -}}
 
       {%- render 'doc-head-styles' -%}
-      
+
       .ssw-reward-tab.ssw-reward-tab-right {
         display: none !important;
       }
-      
+
       .template-page.template-suffix-reward .ssw-reward-tab.ssw-reward-tab-right {
         display: block !important;
       }
@@ -190,7 +190,6 @@
       {%- if settings.animations_enabled_desktop %} cc-animate-enabled{% endif -%}
     "
   >
-
     <a class="skip-link visually-hidden" href="#content" data-cs-role="skip">
       {{- 'accessibility.skip_to_content' | t -}}
     </a>
@@ -237,7 +236,6 @@
       </template>
     {%- endif -%}
 
-{% render 'product-compare' %}
-
+    {% render 'product-compare' %}
   </body>
 </html>
