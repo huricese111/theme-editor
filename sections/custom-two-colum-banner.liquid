@@ -83,7 +83,7 @@
 {% render 'number-format' %}
 {% render 'media-content-styles' %}
 
-<div class="full-width-section">
+<div id="shopify-section-{{ section.id }}" class="full-width-section">
   <div class="container" style="max-width:none; padding:0">
     <div class="flexible-layout valign-middle valign-{{ section.settings.content_vertical_alignment | default: 'center' }}">
       {% render 'media-column', section: section %}
