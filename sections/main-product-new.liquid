@@ -306,6 +306,8 @@
   }
 </style>
 
+<script src="{{ 'custom.js' | asset_url }}" defer></script>
+
 {%- if product.media.size > 1 -%}
   <script src="{{ 'slideshow.js' | asset_url }}" defer></script>
 {%- endif -%}
@@ -1584,6 +1586,13 @@
         {
           "type": "header",
           "content": "Compatible Accessories"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_accessories",
+          "label": "Show compatible accessories",
+          "default": true,
+          "info": "Enable or disable the compatible accessories section"
         },
         {
           "type": "text",
