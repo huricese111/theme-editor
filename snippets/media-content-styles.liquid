@@ -4,6 +4,24 @@
 {%- endcomment -%}
 
 {% style %}
+ .flexible-layout {
+    gap: 0 !important;
+  }
+  
+  .flexible-layout .column {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  .column--content, .column--media {
+    margin: 0 !important;
+  }
+  
+  .full-width-section .container {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
   #shopify-section-{{ section.id }} .full-width-section {
     width: 100vw;
     position: relative;
