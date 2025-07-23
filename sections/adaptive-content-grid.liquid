@@ -465,6 +465,14 @@
   assign current_lang = request.locale.iso_code
   assign locale_code = current_lang
 
+  assign desktop_section_title_size = section.settings.desktop_section_title_size
+  assign mobile_section_title_size = section.settings.mobile_section_title_size
+  assign desktop_section_subtitle_size = section.settings.desktop_section_subtitle_size
+  assign mobile_section_subtitle_size = section.settings.mobile_section_subtitle_size
+  assign section_title_color = section.settings.section_title_color
+  assign section_subtitle_color = section.settings.section_subtitle_color
+  assign section_heading_alignment = section.settings.section_heading_alignment
+
   assign buy_button_text = 'Buy now'
   case current_lang
     when 'de'
@@ -486,6 +494,25 @@
       max-width: {{ section_width }};
       margin: 0 auto;
       padding: 50px 20px;
+    }
+
+    .section-heading {
+      text-align: {{ section_heading_alignment }};
+      margin-bottom: 40px;
+    }
+
+    .section-title {
+      font-size: {{ desktop_section_title_size }}px;
+      color: {{ section_title_color }};
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .section-subtitle {
+      font-size: {{ desktop_section_subtitle_size }}px;
+      color: {{ section_subtitle_color }};
+      margin-top: 0;
+      font-weight: 400;
     }
 
     .advanced-grid-container {
@@ -722,6 +749,22 @@
 </style>
 
 <div class="advanced-grid-section">
+  {% if section.settings.section_title != blank or section.settings.section_subtitle != blank %}
+    <div class="section-heading">
+      {% if section.settings.section_title != blank %}
+        <h2 class="section-title">
+          {% render 'localized-value', field: 'section_title', locale_code: locale_code, settings: section.settings %}
+        </h2>
+      {% endif %}
+      
+      {% if section.settings.section_subtitle != blank %}
+        <p class="section-subtitle">
+          {% render 'localized-value', field: 'section_subtitle', locale_code: locale_code, settings: section.settings %}
+        </p>
+      {% endif %}
+    </div>
+  {% endif %}
+
   <div class="advanced-grid-container">
     {% for block in section.blocks %}
       {%- assign settings = block.settings -%}
