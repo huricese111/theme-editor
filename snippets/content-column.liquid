@@ -25,7 +25,7 @@
     style="position: relative; display: flex; flex-direction: column; height: 100%;{% if section.settings.content_text_bg_color != blank %}background-color: {{ section.settings.content_text_bg_color }};{% endif %}{% if section.settings.content_text_bg_opacity != blank %}opacity: {{ section.settings.content_text_bg_opacity | divided_by: 100.0 }};{% endif %}"
   >
     {% for block in section.blocks %}
-      <div class="block-{{ block.id }}" {{ block.shopify_attributes }}>
+      <div class="block-{{ block.id }}" {% if block.type == 'custom_image' %}style="display: flex; justify-content: {{ block.settings.alignment }};"{% endif %} {{ block.shopify_attributes }}>
         {% case block.type %}
           {% when 'heading' %}
             {% render 'block-heading', block: block %}
