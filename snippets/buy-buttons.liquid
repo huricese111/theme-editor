@@ -87,7 +87,7 @@
             {%- endif -%}
           {%- endcapture -%}
 
-          {% if block.settings.show_accessories != false and block.settings.accessory_products.size > 0 %}
+          {% if block.settings.show_accessories != false %}
           <div class="compatible-accessories-section" style="margin-bottom: 20px;">
             {% if accessories_heading != blank %}
               <h3 class="accessories-heading" style="font-size: 1.2rem; margin-bottom: 15px; font-weight: bold;">
@@ -165,7 +165,7 @@
               {%- endfor -%}
             </div>
           </div>
-          {% endif %}
+          {%- endif -%}
 
           <button
             class="btn btn--large add-to-cart"
@@ -211,11 +211,6 @@
   document.addEventListener('DOMContentLoaded', function () {
     const accessoryButtons = document.querySelectorAll('.accessory-toggle-btn');
     let selectedAccessories = [];
-
-    // 如果没有配件按钮，则不需要执行后续代码
-    if (accessoryButtons.length === 0) {
-      return;
-    }
 
     function getButtonState(button) {
       return {
