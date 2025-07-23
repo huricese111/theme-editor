@@ -306,8 +306,6 @@
   }
 </style>
 
-<script src="{{ 'custom.js' | asset_url }}" defer></script>
-
 {%- if product.media.size > 1 -%}
   <script src="{{ 'slideshow.js' | asset_url }}" defer></script>
 {%- endif -%}
@@ -459,9 +457,6 @@
                     {% endunless %}
                     {{ block.shopify_attributes }}
                   >
-
-                {% when 'related-products' %}
-                  {% render 'block-related-products', block: block %}
 
                 {% when 'complementary' %}
                   {% render 'block-complementary-products', product: product, block: block %}
@@ -2641,9 +2636,7 @@
           "settings": {
             "show_quantity_selector": false,
             "show_pickup_availability": true,
-            "show_backorder_text": true,
-            "show_dynamic_checkout": true,
-            "show_gift_card_fields": false
+            "show_backorder_text": true
           }
         },
         {
