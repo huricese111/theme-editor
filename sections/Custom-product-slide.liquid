@@ -113,7 +113,6 @@
               {% endif %}
 
             {% elsif content_type == 'related_products' %}
-              <!-- 相关产品部分也需要修改类名 -->
               {% if product != blank and template.name == 'product' %}
                 {% assign source_product = product %}
               {% elsif block.settings.related_products_source != blank %}
