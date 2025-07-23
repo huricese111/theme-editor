@@ -4,24 +4,24 @@
 {%- endcomment -%}
 
 {% style %}
- .flexible-layout {
+  #shopify-section-{{ section.id }} .flexible-layout {
     gap: 0 !important;
   }
   
-  .flexible-layout .column {
+  #shopify-section-{{ section.id }} .flexible-layout .column {
     margin: 0 !important;
     padding: 0 !important;
   }
   
-  .column--content, .column--media {
+  #shopify-section-{{ section.id }} .column--content, #shopify-section-{{ section.id }} .column--media {
     margin: 0 !important;
   }
   
-  .full-width-section .container {
+  #shopify-section-{{ section.id }} .full-width-section .container {
     padding: 0 !important;
     margin: 0 !important;
   }
-
+  
   #shopify-section-{{ section.id }} .full-width-section {
     width: 100vw;
     position: relative;

@@ -164,7 +164,7 @@
         {% assign value = product.metafields.custom[value_key] %} 
         {% if name.value != blank or value.value != blank %}
           <div class="specification-row">
-            <div class="column label-column">{{ name.value }}</div>
+            <div class="column label-column" style="font-weight:bold">{{ name.value }}</div>
             <div class="column value-column">{{ value.value }}</div>
           </div>
         {% endif %} 
