@@ -1675,7 +1675,7 @@
 
   .tab-item-size {
     padding: 10px 24px;
-    background: #f5f5f5;
+    background: #ffffff;
     cursor: pointer;
     transition: all 0.3s ease;
     -webkit-tap-highlight-color: transparent;
@@ -1729,19 +1729,45 @@
   table.pf-inner-table {
     width: 100%;
     border-collapse: collapse;
-    border: 1px solid #ddd;
+    border: none;
+    background-color: transparent;
+    color: #000;
+    font-size: 14px;
   }
 
   table.pf-inner-table th,
   table.pf-inner-table td {
-    border: 1px solid #ddd;
-    padding: 10px;
+    border: none;
+    padding: 12px 16px;
     text-align: left;
+    border-bottom: 1px solid #e0e0e0;
   }
 
   table.pf-inner-table th {
-    background-color: #f5f5f5;
-    font-weight: bold;
+    background-color: transparent;
+    font-weight: 600;
+    color: #333;
+    font-size: 15px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #d0d0d0;
+  }
+  
+  table.pf-inner-table tr:last-child td {
+    border-bottom: none;
+  }
+  
+  table.pf-inner-table tr:hover {
+    background-color: rgba(0,0,0,0.02);
+  }
+  
+  table.pf-inner-table td:first-child {
+    font-weight: 500;
+    color: #666;
+    width: 40px;
+  }
+  
+  table.pf-inner-table td:nth-child(2) {
+    font-weight: 500;
   }
 
   .infotext {
@@ -1795,7 +1821,6 @@
       padding-bottom: 10px;
       -webkit-overflow-scrolling: touch;
       white-space: nowrap;
-      gap: 8px;
     }
     
     .tab-item-size {
