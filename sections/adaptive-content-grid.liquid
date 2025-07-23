@@ -15,6 +15,7 @@
   - Customizable text sizes for titles and descriptions
   - Border and padding controls
   - Mobile-optimized responsive design
+  - Section title and subtitle with multi-language support
   
   ============================================================================
 {% endcomment %}
@@ -23,6 +24,130 @@
 {
   "name": "Adaptive Content Grid",
   "settings": [
+    {
+      "type": "header",
+      "content": "Section Heading"
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title (English)",
+      "default": "Adaptive Content Grid"
+    },
+    {
+      "type": "text",
+      "id": "section_title_de",
+      "label": "Section Title (German)",
+      "default": "Adaptives Inhaltsraster"
+    },
+    {
+      "type": "text",
+      "id": "section_title_fr",
+      "label": "Section Title (French)",
+      "default": "Grille de contenu adaptative"
+    },
+    {
+      "type": "text",
+      "id": "section_title_fi",
+      "label": "Section Title (Finnish)",
+      "default": "Mukautuva sisältöruudukko"
+    },
+    {
+      "type": "text",
+      "id": "section_subtitle",
+      "label": "Section Subtitle (English)",
+      "default": "Explore our featured content"
+    },
+    {
+      "type": "text",
+      "id": "section_subtitle_de",
+      "label": "Section Subtitle (German)",
+      "default": "Entdecken Sie unsere vorgestellten Inhalte"
+    },
+    {
+      "type": "text",
+      "id": "section_subtitle_fr",
+      "label": "Section Subtitle (French)",
+      "default": "Explorez notre contenu en vedette"
+    },
+    {
+      "type": "text",
+      "id": "section_subtitle_fi",
+      "label": "Section Subtitle (Finnish)",
+      "default": "Tutustu esiteltyyn sisältöömme"
+    },
+    {
+      "type": "range",
+      "id": "desktop_section_title_size",
+      "label": "Desktop Section Title Size (px)",
+      "min": 20,
+      "max": 80,
+      "step": 1,
+      "default": 40,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "mobile_section_title_size",
+      "label": "Mobile Section Title Size (px)",
+      "min": 16,
+      "max": 60,
+      "step": 1,
+      "default": 30,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "desktop_section_subtitle_size",
+      "label": "Desktop Section Subtitle Size (px)",
+      "min": 14,
+      "max": 40,
+      "step": 1,
+      "default": 20,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "mobile_section_subtitle_size",
+      "label": "Mobile Section Subtitle Size (px)",
+      "min": 12,
+      "max": 30,
+      "step": 1,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "color",
+      "id": "section_title_color",
+      "label": "Section Title Color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "section_subtitle_color",
+      "label": "Section Subtitle Color",
+      "default": "#666666"
+    },
+    {
+      "type": "select",
+      "id": "section_heading_alignment",
+      "label": "Section Heading Alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
     {
       "type": "header",
       "content": "Layout Settings"
