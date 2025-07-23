@@ -374,6 +374,10 @@
             {
               "value": "custom",
               "label": "Custom Content"
+            },
+            {
+              "value": "related_products",
+              "label": "Related Products"
             }
           ],
           "default": "product"
@@ -393,6 +397,12 @@
           "id": "selected_collection",
           "label": "Select Collection",
           "info": "Only used when Content Type is Collection Products"
+        },
+        {
+          "type": "product",
+          "id": "related_products_source",
+          "label": "Select Product for Related Products",
+          "info": "Only used when Content Type is Related Products and not on product page"
         },
         {
           "type": "header",
@@ -923,8 +933,48 @@
             </div>
           {% endfor %}
         {% endif %}
+      {% elsif settings.content_type == 'related_products' %}
+            {% if product != blank and template.name == 'product' %}
+              {% assign source_product = product %}
+            {% elsif settings.related_products_source != blank %}
+              {% assign source_product = all_products[settings.related_products_source] %}
+            {% else %}
+              {% assign source_product = nil %}
+            {% endif %}
+            
+            {% if source_product != blank %}
+              {% assign related_products = source_product.metafields.custom.related_products.value %}
+              {% if related_products %}
+                {% for related_product in related_products %}
+                  <div
+                    class="advanced-grid-block {{ no_padding_class }}"
+                    style="background-color: {{ settings.background_color }};"
+                    {{ block.shopify_attributes }}
+                  >
+                    <div class="product-content-wrapper">
+                      <div class="product-block-container">
+                        <div class="product-block-wrapper">
+                          {% render 'product-block', product: related_product %}
+                        </div>
+                      </div>
 
-      {% else %}
+                      {% if show_buy_button %}
+                        <div class="product-button-container text-left">
+                          <a href="{{ related_product.url }}" class="product-buy-button">
+                            {{ buy_button_text }}
+                          </a>
+                        </div>
+                      {% endif %}
+                    </div>
+                  </div>
+                {% endfor %}
+              {% else %}
+                <div class="no-related-products">
+                  <p>{{ "No related products found" | t }}</p>
+                </div>
+              {% endif %}
+            {% endif %}
+          {% else %}
         <div
           class="advanced-grid-block {{ no_padding_class }}"
           style="background-color: {{ settings.background_color }};"
