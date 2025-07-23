@@ -73,8 +73,6 @@
  */
 {%- endcomment -%}
 
-// ... existing code ...
-
 {% schema %}
 {
   "name": "Frame geometry sheet",
@@ -1663,37 +1661,58 @@
 
   .custom-size-tabs {
     display: flex;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     flex-wrap: wrap;
-    gap: 5px;
+    cursor: pointer;
+    overflow-x: auto;
+    padding: 5px;
+    scrollbar-width: none;
+  }
+  
+  .custom-size-tabs::-webkit-scrollbar {
+    display: none;
   }
 
   .tab-item-size {
-    padding: 10px 20px;
+    padding: 10px 24px;
     background: #f5f5f5;
-    border-radius: 5px;
     cursor: pointer;
-    transition: all 0.3s;
-    border: 1px solid #ddd;
+    transition: all 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
+    font-weight: 500;
+    border: none;
   }
 
   .tab-item-size.active {
-    background: black;
-    font-weight: bold;
-    color: white;
-    border-color: black;
+    background: #000;
+    color: #fff;
+    font-weight: 500;
+  }
+  
+  .tab-item-size:hover:not(.active) {
+    background: #e6e6e6;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   }
 
   .sizetab-panel {
     display: none;
-    background-color: #ecf0f1;
-    padding: 20px;
-    border-radius: 5px;
+    background-color: #f8f8f8;
+    padding: 25px;
+    border-radius: 8px;
     overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
   }
 
   .sizetab-panel.active {
     display: block;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 
   .sizechart-two-column-layout {
@@ -1775,6 +1794,17 @@
       overflow-x: auto;
       padding-bottom: 10px;
       -webkit-overflow-scrolling: touch;
+      white-space: nowrap;
+      gap: 8px;
+    }
+    
+    .tab-item-size {
+      display: inline-block;
+      margin-bottom: 0;
+      font-size: 14px;
+      padding: 12px 18px;
+      line-height: 1;
+      white-space: nowrap;
     }
 
     .sizechart-two-column-layout {
