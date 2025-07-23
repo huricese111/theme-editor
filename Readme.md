@@ -34,10 +34,11 @@ Hepha Theme Editor is a sophisticated Shopify theme tailored for bicycle retaile
     <td><img src="https://img.shields.io/badge/🇩🇪-German-red?style=flat-square" alt="German"></td>
     <td><img src="https://img.shields.io/badge/🇬🇧-English-blue?style=flat-square" alt="English"></td>
     <td><img src="https://img.shields.io/badge/🇫🇷-French-blue?style=flat-square" alt="French"></td>
+    <td><img src="https://img.shields.io/badge/🇫🇮-Finnish-blue?style=flat-square" alt="Finnish"></td>
   </tr>
 </table>
 
-- **Complete Internationalization**: Fully localized for German, English, and French markets
+- **Complete Internationalization**: Fully localized for German, English, French, and Finnish markets
 - **Content Management**: Seamless localized content through Liquid templates
 - **Regional Options**: Market-specific financing and payment methods
 
@@ -462,6 +463,8 @@ Hepha Theme Editor is a sophisticated Shopify theme tailored for bicycle retaile
 - ⚙️ Theme settings for easy customization
 - 🔌 App integration points for extended functionality
 - 🛒 Optimized checkout flow
+- 🔄 Dynamic product recommendations
+- 🌐 Multi-currency support with automatic conversion
 
 ## 🌐 Internationalization
 
@@ -495,6 +498,12 @@ Hepha Theme Editor is a sophisticated Shopify theme tailored for bicycle retaile
       <td>EUR</td>
       <td>PayPal, Zinia</td>
     </tr>
+    <tr>
+      <td>🇫🇮 Finland</td>
+      <td>Finnish</td>
+      <td>EUR</td>
+      <td>PayPal, Klarna, MobilePay</td>
+    </tr>
   </tbody>
 </table>
 
@@ -505,11 +514,42 @@ Hepha Theme Editor is a sophisticated Shopify theme tailored for bicycle retaile
 - 📊 **Localized Product Information**: Region-specific specifications and compliance details
 - 🌐 **Currency Conversion**: Automatic currency formatting based on locale
 - 📅 **Date & Time Formatting**: Locale-aware date and time display
+- 🔄 **Dynamic Content Adaptation**: Content automatically adjusts based on user's location and language
+- 🧩 **Modular Translation System**: Efficient snippet-based localization with fallback support
 
-## 🚀 Getting Started
 
-### 📥 Installation
+## 📊 Performance & SEO
 
-1. **Upload Theme Files**
-   ```bash
-   theme deploy --env=production
+### 🚀 Performance Optimization
+
+- **Image Optimization**
+  - Responsive image sizing with srcset attributes
+  - Lazy loading for off-screen content
+  - WebP format support for modern browsers
+
+- **Code Efficiency**
+  - Minified CSS and JavaScript
+  - Deferred non-critical JavaScript
+  - Optimized asset loading sequence
+
+- **Mobile Performance**
+  - Mobile-first responsive design
+  - Touch-optimized interactions
+  - Reduced animation on low-power devices
+
+### 🔍 SEO Features
+
+- **Technical SEO**
+  - Semantic HTML structure
+  - Structured data for products and collections
+  - Optimized meta tags and descriptions
+
+- **Content Optimization**
+  - SEO-friendly URL structure
+  - Customizable page titles and meta descriptions
+  - Automatic canonical tags
+
+- **User Experience Signals**
+  - Fast page load times
+  - Mobile-friendly design
+  - Accessible navigation and content
