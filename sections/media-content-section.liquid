@@ -710,6 +710,101 @@
   ],
   "blocks": [
     {
+      "type": "custom_image",
+      "name": "Custom Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "image_width",
+          "label": "Image Width (px)",
+          "default": "400",
+          "info": "Enter a number in pixels"
+        },
+        {
+          "type": "range",
+          "id": "border_radius",
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "unit": "px",
+          "label": "Border Radius",
+          "default": 0
+        },
+        {
+          "type": "select",
+          "id": "alignment",
+          "label": "Alignment",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link",
+          "info": "Optional"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_in_new_tab",
+          "label": "Open in new tab",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "Margin Settings"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Top",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_right",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Right",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Bottom",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "margin_left",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Left",
+          "default": 0
+        }
+      ]
+    },
+    {
       "type": "heading",
       "name": "Heading",
       "settings": [

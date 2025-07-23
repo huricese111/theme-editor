@@ -58,6 +58,9 @@
 
           {% when 'discount-label' %}
             {% render 'discount-label', block: block %}
+            
+          {% when 'custom_image' %}
+            {% render 'block-custom-image', block: block %}
         {% endcase %}
       </div>
     {% endfor %}
