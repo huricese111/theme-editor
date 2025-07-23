@@ -1,14 +1,18 @@
 <style>
   .columns-container-{{ block.id }} {
-    display: grid;
-    grid-template-columns: repeat({{ block.settings.columns_count | default: 4 }}, 1fr);
-    gap: 15px;
-    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    margin-top: 0;
+    text-align: left;
+    justify-content: center;
+    align-items: flex-start;
   }
 
   .column-item {
-    text-align: center;
+    text-align: left;
     padding: 10px;
+    min-width: 100px;
   }
 
   .columns-container-{{ block.id }} .column-title {
@@ -26,8 +30,9 @@
 
   @media (max-width: 768px) {
     .columns-container-{{ block.id }} {
-      grid-template-columns: {% if block.settings.columns_count > 1 %}repeat(2, 1fr){% else %}1fr{% endif %};
-      gap: 10px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 10px;
     }
 
     .columns-container-{{ block.id }} .column-title {
