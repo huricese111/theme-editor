@@ -371,20 +371,10 @@
           "label": "Select Product"
         },
         {
-          "type": "radios",
+          "type": "checkbox",
           "id": "enable_buy_button",
           "label": "Enable buy button",
-          "options": [
-            {
-              "value": "true",
-              "label": "Yes"
-            },
-            {
-              "value": "false",
-              "label": "No"
-            }
-          ],
-          "default": "true"
+          "default": true
         }
       ]
     },
@@ -402,20 +392,19 @@
           "label": "Select Collection"
         },
         {
-          "type": "radios",
+          "type": "checkbox",
           "id": "enable_buy_button",
           "label": "Enable buy button",
-          "options": [
-            {
-              "value": "true",
-              "label": "Yes"
-            },
-            {
-              "value": "false",
-              "label": "No"
-            }
-          ],
-          "default": "true"
+          "default": true
+        },
+        {
+          "type": "range",
+          "id": "products_limit",
+          "label": "Number of products to show",
+          "min": 1,
+          "max": 12,
+          "step": 1,
+          "default": 4
         }
       ]
     },
@@ -589,20 +578,10 @@
           "info": "Only used when not on product page"
         },
         {
-          "type": "radios",
+          "type": "checkbox",
           "id": "enable_buy_button",
           "label": "Enable buy button",
-          "options": [
-            {
-              "value": "true",
-              "label": "Yes"
-            },
-            {
-              "value": "false",
-              "label": "No"
-            }
-          ],
-          "default": "true"
+          "default": true
         }
       ]
     },
@@ -1261,7 +1240,7 @@
                     </div>
                   </div>
 
-                  {% if settings.enable_buy_button == 'true' %}
+                  {% if settings.enable_buy_button %}
                     <div class="product-button-container text-left">
                       <a href="{{ product.url }}" class="product-buy-button">
                         {{ buy_button_text }}
