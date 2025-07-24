@@ -68,9 +68,45 @@
   }
   
   @media (max-width: 768px) {
+    .compare-content {
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .compare-thumbs {
+      width: 100%;
+      justify-content: center;
+    }
+    
     .compare-thumb {
-      min-width: 150px;
-      width: calc((100% - 20px) / 3);
+      min-width: 80px;
+      width: 100px !important;
+      height: 80px;
+      padding: 5px;
+      justify-content: center;
+    }
+    
+    .compare-thumb img {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto;
+    }
+    
+    .compare-thumb-info {
+      display: none !important;
+    }
+    
+    .compare-actions {
+      margin-left: 0 !important;
+      width: 100%;
+      justify-content: center;
+    }
+    
+    .compare-limit-notice {
+      margin-left: 0 !important;
+      display: block !important;
+      text-align: center;
     }
   }
   
@@ -1046,17 +1082,6 @@
             thumbsContainer.style.maxWidth = 'calc(100vw - 150px)';
           }
           
-          if (count > 0 && thumbs.length > 0) {
-            thumbs.forEach(thumb => {
-              if (count === 1) {
-                thumb.style.width = '100%';
-              } else if (count === 2) {
-                thumb.style.width = 'calc((100% - 10px) / 2)';
-              } else {
-                thumb.style.width = 'calc((100% - 20px) / 3)';
-              }
-            });
-          }
         } else {
           MAX_COMPARE_ITEMS = 3;
           
