@@ -15,13 +15,16 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    background: #000;
-    color: white;
-    padding: 15px 0;
+    background: #f5f5f5; 
+    color: #333; 
+    padding: 15px 0; 
     display: none; 
     justify-content: center;
     z-index: 1000;
-    box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    border-top: 1px solid #e0e0e0;
+    height: auto; 
+    min-height: 90px; 
   }
 
   .compare-content {
@@ -32,59 +35,146 @@
     max-width: 1200px;
     padding: 0 20px;
     justify-content: center;
+    gap: 15px; 
+    margin: 0 auto;
   }
-
-  .image-action-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    width: 100%;
-    flex-wrap: wrap;
-  }
-
+  
   .compare-thumbs {
     display: flex;
-    justify-content: center;
     gap: 10px;
     padding: 0;
-    flex-grow: 0;
-    max-height: 70px;
+    flex-grow: 0; 
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+    max-width: none; 
+    flex-wrap: nowrap;
   }
-
+  
   .compare-thumb {
     position: relative;
-    width: 70px;
-    height: 70px;
+    min-width: 180px;
+    width: calc((100% - 20px) / 3);
+    height: 90px;
     margin: 0;
+    background: white;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    padding: 8px 25px 8px 8px;
+    transition: transform 0.2s ease;
+    border: 1px solid #e0e0e0;  
+    box-sizing: border-box;
   }
-
+  
+  @media (max-width: 768px) {
+    .compare-thumb {
+      min-width: 150px;
+      width: calc((100% - 20px) / 3);
+    }
+  }
+  
   .compare-thumb img {
-    width: 100%;
-    height: 100%;
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
     border-radius: 4px;
-    object-fit: cover;
-    border: 2px solid white;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+    background: white;
+    flex-shrink: 0;
+  }
+  
+  .compare-thumb-info {
+    flex: 1;
+    padding-left: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    min-width: 0;
+  }
+  
+  .compare-thumb-title {
+    color: #333;
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0 0 3px;
+    line-height: 1.2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    max-height: 2.4em;
+  }
+    
+  .compare-thumb-title a {
+    color: inherit;
+    text-decoration: none;
+    display: inline-block;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .compare-thumb-title a:hover {
+    text-decoration: underline;
+  }
+  
+  .compare-thumb-price {
+    color: #333;
+    font-size: 13px;
+    font-weight: 600;
+    display: block;
+  }
+  
+  .compare-thumb-price .current-price {
+    font-size: 13px;
+    line-height: 1.3;
+  }
+  
+  .compare-thumb-price .compare-price {
+    color: #bf3737;
+    text-decoration: line-through;
+    opacity: 0.9;
+    margin-left: 5px;
+    font-size: 12px;
+  }
+  
+  .compare-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 15px;
+    background: white;
+    border-radius: 40px;
+    height: 50px;
+    margin-left: 15px;
+    flex-shrink: 0;
+    border: 1px solid #e0e0e0;
   }
 
   .remove-compare {
     position: absolute;
-    top: -10px;
-    right: -10px;
-    background: #ff3b30;
-    color: white;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.1);
+    color: #333;
     border: none;
     border-radius: 50%;
     width: 20px;
     height: 20px;
-    font-size: 14px;
+    font-size: 12px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     z-index: 2;
+    transition: all 0.2s ease;
+  }
+
+  .remove-compare:hover {
+    background: rgba(0, 0, 0, 0.2);
   }
 
   .compare-actions {
@@ -98,8 +188,8 @@
   }
 
   .compare-count {
-    background: #ffffff;
-    color: #000000;
+    background: #f0f0f0;
+    color: #333;
     border-radius: 50%;
     width: 24px;
     height: 24px;
@@ -107,83 +197,50 @@
     align-items: center;
     justify-content: center;
     font-size: 13px;
-    font-weight: bold;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    font-weight: 500;
+    border: 1px solid #e0e0e0;
   }
 
   .compare-btn {
-    background: #ffffff;
-    color: #000000;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-weight: 600;
-    cursor: pointer;
-    white-space: nowrap;
-    font-size: 14px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  }
-
-  .remove-compare {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    background: #ff3b30;
+    background: #333;
     color: white;
     border: none;
-    border-radius: 50%;
-    width: 18px;
-    height: 18px;
-    font-size: 12px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-    z-index: 2;
-  }
-
-  .compare-actions {
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-    padding: 8px 15px;
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 30px;
-    gap: 10px;
-  }
-
-  .compare-count {
-    background: #ffffff;
-    color: #000000;
-    border-radius: 50%;
-    width: 22px;
-    height: 22px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    font-weight: bold;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  }
-
-  .compare-btn {
-    background: #ffffff;
-    color: #000000;
-    border: none;
-    padding: 6px 15px;
-    border-radius: 30px;
+    padding: 8px 16px;
+    border-radius: 4px;
     font-weight: 600;
     cursor: pointer;
     white-space: nowrap;
     font-size: 14px;
     transition: all 0.2s ease;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   }
 
+
+
+  .compare-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 15px;
+  }
+
+
+
   .compare-btn:hover {
-    background: #f0f0f0;
+    background: #555;
     transform: translateY(-2px);
+  }
+
+  .compare-limit-notice {
+    margin-left: 15px;
+    font-size: 13px;
+    color: #666;
+    white-space: nowrap;
+  }
+  
+  @media (max-width: 768px) {
+    .compare-limit-notice {
+      display: none;
+    }
   }
 
   .compare-modal {
@@ -326,6 +383,23 @@
     stroke-width: 2;
     stroke-linecap: round;
   }
+
+  .clear-all-btn {
+    background: #f0f0f0;
+    color: #333;
+    border: 1px solid #e0e0e0;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    font-size: 14px;
+    transition: all 0.2s ease;
+  }
+
+  .clear-all-btn:hover {
+    background: #e0e0e0;
+  }
 </style>
 
 {% assign current_lang = request.locale.iso_code %}
@@ -334,6 +408,7 @@
 {% assign compare_button = 'Compare' %}
 {% assign clear_button = 'Clear All' %}
 {% assign loading_text = 'Loading comparison data...' %}
+{% assign compare_limit_notice = 'Max 3 products' %}
 
 {% case current_lang %}
   {% when 'de' %}
@@ -341,16 +416,19 @@
     {% assign compare_button = 'Vergleichen' %}
     {% assign clear_button = 'Alle löschen' %}
     {% assign loading_text = 'Vergleichsdaten werden geladen...' %}
+    {% assign compare_limit_notice = 'Max. 3 Produkte' %}
   {% when 'fr' %}
     {% assign compare_title = 'Comparaison de produits' %}
     {% assign compare_button = 'Comparer' %}
     {% assign clear_button = 'Tout effacer' %}
     {% assign loading_text = 'Chargement des données de comparaison...' %}
+    {% assign compare_limit_notice = 'Max. 3 produits' %}
   {% when 'fi' %}
     {% assign compare_title = 'Tuotevertailu' %}
     {% assign compare_button = 'Vertaa' %}
     {% assign clear_button = 'Tyhjennä kaikki' %}
     {% assign loading_text = 'Ladataan vertailutietoja...' %}
+    {% assign compare_limit_notice = 'Enintään 3 tuotetta' %}
 {% endcase %}
 
 <div class="compare-bar">
@@ -359,7 +437,9 @@
     <div class="compare-actions">
       <span class="compare-count">0</span>
       <button class="compare-btn">{{ compare_button }}</button>
+      <button class="clear-all-btn">{{ clear_button }}</button>
     </div>
+    <div class="compare-limit-notice">{{ compare_limit_notice }}</div>
   </div>
 </div>
 
@@ -397,7 +477,7 @@
     window.productCompareInitialized = true;
 
     document.addEventListener('DOMContentLoaded', function () {
-      let MAX_COMPARE_ITEMS = 4;
+      let MAX_COMPARE_ITEMS = 3;
       const STORAGE_KEY = 'compareProducts';
 
       const currentLang = '{{ request.locale.iso_code }}';
@@ -672,6 +752,7 @@
       function saveCompareList(list) {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
         updateUI();
+        handleResponsiveFeatures();
       }
 
       function updateUI() {
@@ -679,34 +760,72 @@
         const count = compareList.length;
         const countElement = document.querySelector('.compare-count');
         if (countElement) countElement.textContent = count;
-
+      
         const thumbsContainer = document.querySelector('.compare-thumbs');
         if (thumbsContainer) {
           thumbsContainer.innerHTML = '';
           compareList.forEach((product) => {
             const thumb = document.createElement('div');
             thumb.className = 'compare-thumb';
-
+      
             const img = document.createElement('img');
             img.src = product.image;
             img.alt = product.title;
             thumb.appendChild(img);
-
+            
+            const infoDiv = document.createElement('div');
+            infoDiv.className = 'compare-thumb-info';
+            
+            const titleDiv = document.createElement('div');
+            titleDiv.className = 'compare-thumb-title';
+            
+            const titleLink = document.createElement('a');
+            titleLink.href = '/products/' + product.handle;
+            titleLink.textContent = product.title;
+            titleLink.target = '_blank';
+            titleLink.rel = 'noopener';
+            
+            titleDiv.appendChild(titleLink);
+            infoDiv.appendChild(titleDiv);
+            
+            const priceDiv = document.createElement('div');
+            priceDiv.className = 'compare-thumb-price';
+      
+            if (product.price) {
+              if (product.comparePrice && product.comparePrice !== '' && product.comparePrice !== product.price) {
+                const currentPrice = document.createElement('span');
+                currentPrice.className = 'current-price';
+                currentPrice.textContent = product.price;
+      
+                const comparePrice = document.createElement('span');
+                comparePrice.className = 'compare-price';
+                comparePrice.textContent = product.comparePrice;
+      
+                priceDiv.appendChild(currentPrice);
+                priceDiv.appendChild(comparePrice);
+              } else {
+                priceDiv.textContent = product.price;
+              }
+            }
+      
+            infoDiv.appendChild(priceDiv);
+            thumb.appendChild(infoDiv);
+      
             const removeBtn = document.createElement('button');
             removeBtn.className = 'remove-compare';
             removeBtn.dataset.handle = product.handle;
             removeBtn.textContent = '×';
             thumb.appendChild(removeBtn);
-
+      
             thumbsContainer.appendChild(thumb);
           });
         }
-
+      
         const compareBar = document.querySelector('.compare-bar');
         if (compareBar) {
           compareBar.style.display = count > 0 ? 'flex' : 'none';
         }
-
+      
         document.querySelectorAll('.compare-checkbox-input').forEach((checkbox) => {
           const handle = checkbox.dataset.productHandle;
           const isInList = compareList.some((item) => item.handle === handle);
@@ -814,6 +933,8 @@
               handle: product.handle,
               title: product.title,
               image: product.image,
+              price: product.price || '',
+              comparePrice: product.comparePrice || ''
             });
             saveCompareList(compareList);
             return true;
@@ -860,8 +981,10 @@
               handle: checkbox.dataset.productHandle,
               title: checkbox.dataset.productTitle,
               image: checkbox.dataset.productImage,
+              price: checkbox.dataset.productPrice,
+              comparePrice: checkbox.dataset.productComparePrice
             };
-
+    
             if (checkbox.checked) {
               addProductToCompare(product);
             } else {
@@ -880,6 +1003,12 @@
 
           if (target.classList.contains('compare-btn')) {
             openComparisonModal();
+          }
+          
+          if (target.classList.contains('clear-all-btn')) {
+            if (confirm(getAlert('clearConfirm'))) {
+              clearComparison();
+            }
           }
 
           if (target.classList.contains('compare-modal-close') || target.classList.contains('compare-modal-overlay')) {
@@ -902,12 +1031,46 @@
 
       function handleResponsiveFeatures() {
         const screenWidth = window.innerWidth;
+        const compareList = getCompareList();
+        const count = compareList.length;
+        const thumbsContainer = document.querySelector('.compare-thumbs');
+        const thumbs = document.querySelectorAll('.compare-thumb');
+
+        if (thumbsContainer) {
+          thumbsContainer.classList.remove('has-four-items');
+        }
 
         if (screenWidth <= 768) {
           MAX_COMPARE_ITEMS = 3;
-          document.querySelector('.compare-thumbs').style.maxWidth = 'calc(100vw - 150px)';
+          if (thumbsContainer) {
+            thumbsContainer.style.maxWidth = 'calc(100vw - 150px)';
+          }
+          
+          if (count > 0 && thumbs.length > 0) {
+            thumbs.forEach(thumb => {
+              if (count === 1) {
+                thumb.style.width = '100%';
+              } else if (count === 2) {
+                thumb.style.width = 'calc((100% - 10px) / 2)';
+              } else {
+                thumb.style.width = 'calc((100% - 20px) / 3)';
+              }
+            });
+          }
         } else {
-          MAX_COMPARE_ITEMS = 4;
+          MAX_COMPARE_ITEMS = 3;
+          
+          if (count > 0 && thumbs.length > 0) {
+            thumbs.forEach(thumb => {
+              if (count === 1) {
+                thumb.style.width = '100%';
+              } else if (count === 2) {
+                thumb.style.width = 'calc((100% - 10px) / 2)';
+              } else {
+                thumb.style.width = 'calc((100% - 20px) / 3)';
+              }
+            });
+          }
         }
 
         langAlerts.en.maxItems = `You can compare up to ${MAX_COMPARE_ITEMS} products at a time.`;

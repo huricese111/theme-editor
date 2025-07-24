@@ -73,8 +73,8 @@
 {% endschema %}
 
 {% assign lang = request.locale.iso_code %}
-<div class="tabs-content-section">
-  <h2 class="specification-title" id="specification">
+<div class="specification-sheet-container" id="specification-sheet">
+  <h2 class="specification-sheet-title" id="specification-sheet-title">
     {% case lang %}
       {% when 'de' -%}
         Spezifikation
@@ -87,7 +87,7 @@
     {% endcase %}
   </h2>
 
-  <div class="specification-list">
+  <div class="specification-sheet-list" id="specification-sheet-list">
 
     <!-- E-Bike System -->
     {% render 'spec-module',
@@ -156,37 +156,42 @@
       lang: lang
     %}
     
+    <!-- Accessories Specifications -->
     <div class="specification-module">
-      {% for i in (1..10) %} 
-        {% capture name_key %}specification_name_{{ i }}{% endcapture %} 
-        {% capture value_key %}specification_value_{{ i }}{% endcapture %} 
-        {% assign name = product.metafields.custom[name_key] %} 
-        {% assign value = product.metafields.custom[value_key] %} 
-        {% if name.value != blank or value.value != blank %}
-          <div class="specification-row">
-            <div class="column label-column" style="font-weight:bold">{{ name.value }}</div>
-            <div class="column value-column">{{ value.value }}</div>
-          </div>
-        {% endif %} 
-      {% endfor %}
+      <div class="specification-row">
+        {% for i in (1..10) %} 
+          {% capture name_key %}specification_name_{{ i }}{% endcapture %} 
+          {% capture value_key %}specification_value_{{ i }}{% endcapture %} 
+          {% assign name = product.metafields.custom[name_key] %} 
+          {% assign value = product.metafields.custom[value_key] %} 
+          {% if name.value != blank or value.value != blank %}
+            <div class="column">
+              <div class="label-column">
+                <strong>{{ name.value }}</strong>
+              </div>
+              <div class="value-column">{{ value.value }}</div>
+            </div>
+          {% endif %} 
+        {% endfor %}
+      </div>
     </div>
   </div>
 </div>
 
 <style>
-  .tabs-content-section {
+  .specification-sheet-container {
     max-width: 1400px;
     margin: 0 auto;
     padding: 100px 20px;
   }
 
-  .specification-title {
+  .specification-sheet-title {
     font-size: 30px;
     margin-bottom: 20px;
     text-align: left;
   }
 
-  .specification-list {
+  .specification-sheet-list {
     display: flex;
     flex-direction: column;
   }
@@ -197,13 +202,16 @@
 
   .specification-row {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     padding: 5px 0;
+    flex-wrap: wrap;
+    margin: 0 -5px; 
   }
 
   .column {
-    flex: 1;
-    margin: 0 5px;
+    flex: 0 0 calc(33.33% - 10px);
+    margin: 0 5px 10px;
+    box-sizing: border-box;
   }
 
   .label-column {
@@ -228,7 +236,6 @@
     text-align: left;
   }
   
-  /* 新增的规格表样式 */
   .info-container {
     margin-top: 40px;
   }
@@ -254,6 +261,11 @@
   @media (max-width: 768px) {
     .specification-row {
       flex-direction: column;
+    }
+    
+    .column {
+      flex: 0 0 100%;
+      margin: 0 0 10px;
     }
     
     #specification-table th,

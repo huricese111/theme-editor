@@ -347,41 +347,20 @@
       "id": "show_buy_button",
       "label": "Show Buy Button on Products",
       "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_section_container",
+      "label": "Enable Section Container",
+      "default": true,
+      "info": "Adds a container with max-width around the section"
     }
   ],
   "blocks": [
     {
-      "type": "content_block",
-      "name": "Content Block",
+      "type": "product_block",
+      "name": "Single Product",
       "settings": [
-        {
-          "type": "header",
-          "content": "Content Type"
-        },
-        {
-          "type": "radio",
-          "id": "content_type",
-          "label": "Type",
-          "options": [
-            {
-              "value": "product",
-              "label": "Single Product"
-            },
-            {
-              "value": "collection",
-              "label": "Collection Products"
-            },
-            {
-              "value": "custom",
-              "label": "Custom Content"
-            },
-            {
-              "value": "related_products",
-              "label": "Related Products"
-            }
-          ],
-          "default": "product"
-        },
         {
           "type": "header",
           "content": "Product Selection"
@@ -389,21 +368,61 @@
         {
           "type": "product",
           "id": "selected_product",
-          "label": "Select Product",
-          "info": "Only used when Content Type is Single Product"
+          "label": "Select Product"
+        },
+        {
+          "type": "radios",
+          "id": "enable_buy_button",
+          "label": "Enable buy button",
+          "options": [
+            {
+              "value": "true",
+              "label": "Yes"
+            },
+            {
+              "value": "false",
+              "label": "No"
+            }
+          ],
+          "default": "true"
+        }
+      ]
+    },
+    {
+      "type": "collection_block",
+      "name": "Collection Products",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Collection Selection"
         },
         {
           "type": "collection",
           "id": "selected_collection",
-          "label": "Select Collection",
-          "info": "Only used when Content Type is Collection Products"
+          "label": "Select Collection"
         },
         {
-          "type": "product",
-          "id": "related_products_source",
-          "label": "Select Product for Related Products",
-          "info": "Only used when Content Type is Related Products and not on product page"
-        },
+          "type": "radios",
+          "id": "enable_buy_button",
+          "label": "Enable buy button",
+          "options": [
+            {
+              "value": "true",
+              "label": "Yes"
+            },
+            {
+              "value": "false",
+              "label": "No"
+            }
+          ],
+          "default": "true"
+        }
+      ]
+    },
+    {
+      "type": "custom_block",
+      "name": "Custom Content",
+      "settings": [
         {
           "type": "header",
           "content": "Image"
@@ -419,23 +438,8 @@
         },
         {
           "type": "text",
-          "id": "big_title",
-          "label": "Big Title (English)"
-        },
-        {
-          "type": "text",
-          "id": "big_title_de",
-          "label": "Big Title (German)"
-        },
-        {
-          "type": "text",
-          "id": "big_title_fr",
-          "label": "Big Title (French)"
-        },
-        {
-          "type": "text",
-          "id": "big_title_fi",
-          "label": "Big Title (Finnish)"
+          "id": "big_number",
+          "label": "Big Number"
         },
         {
           "type": "text",
@@ -569,6 +573,268 @@
           "default": "center"
         }
       ]
+    },
+    {
+      "type": "related_products_block",
+      "name": "Related Products",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Product Selection"
+        },
+        {
+          "type": "product",
+          "id": "related_products_source",
+          "label": "Select Product for Related Products",
+          "info": "Only used when not on product page"
+        },
+        {
+          "type": "radios",
+          "id": "enable_buy_button",
+          "label": "Enable buy button",
+          "options": [
+            {
+              "value": "true",
+              "label": "Yes"
+            },
+            {
+              "value": "false",
+              "label": "No"
+            }
+          ],
+          "default": "true"
+        }
+      ]
+    },
+     {
+      "type": "advertisement_block",
+      "name": "Advertisement Content",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Background Settings"
+        },
+        {
+          "type": "image_picker",
+          "id": "background_image",
+          "label": "Background Image"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "Background Color",
+          "default": "#f5f5f5"
+        },
+        {
+          "type": "select",
+          "id": "background_size",
+          "label": "Background Image Size",
+          "options": [
+            {
+              "value": "cover",
+              "label": "Cover"
+            },
+            {
+              "value": "contain",
+              "label": "Contain"
+            },
+            {
+              "value": "100",
+              "label": "100%"
+            },
+            {
+              "value": "75",
+              "label": "75%"
+            },
+            {
+              "value": "50",
+              "label": "50%"
+            }
+          ],
+          "default": "cover"
+        },
+        {
+          "type": "select",
+          "id": "background_position",
+          "label": "Background Image Position",
+          "options": [
+            {
+              "value": "center center",
+              "label": "Center"
+            },
+            {
+              "value": "top center",
+              "label": "Top Center"
+            },
+            {
+              "value": "bottom center",
+              "label": "Bottom Center"
+            },
+            {
+              "value": "center left",
+              "label": "Center Left"
+            },
+            {
+              "value": "center right",
+              "label": "Center Right"
+            }
+          ],
+          "default": "center center"
+        },
+        {
+          "type": "range",
+          "id": "min_height",
+          "label": "Minimum Height",
+          "min": 100,
+          "max": 800,
+          "step": 10,
+          "default": 400,
+          "unit": "px"
+        },
+        {
+          "type": "header",
+          "content": "Content Settings"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title (English)",
+          "default": "Refer a friend - get 5% off"
+        },
+        {
+          "type": "text",
+          "id": "title_de",
+          "label": "Title (German)"
+        },
+        {
+          "type": "text",
+          "id": "title_fr",
+          "label": "Title (French)"
+        },
+        {
+          "type": "text",
+          "id": "title_fi",
+          "label": "Title (Finnish)"
+        },
+        {
+          "type": "range",
+          "id": "title_size",
+          "label": "Title Font Size",
+          "min": 20,
+          "max": 80,
+          "step": 2,
+          "default": 48,
+          "unit": "px"
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Title Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "select",
+          "id": "text_alignment",
+          "label": "Text Alignment",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "header",
+          "content": "Button Settings"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text (English)",
+          "default": "Refer a friend"
+        },
+        {
+          "type": "text",
+          "id": "button_text_de",
+          "label": "Button Text (German)"
+        },
+        {
+          "type": "text",
+          "id": "button_text_fr",
+          "label": "Button Text (French)"
+        },
+        {
+          "type": "text",
+          "id": "button_text_fi",
+          "label": "Button Text (Finnish)"
+        },
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "Button URL"
+        },
+        {
+          "type": "color",
+          "id": "button_bg_color",
+          "label": "Button Background Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "button_text_color",
+          "label": "Button Text Color",
+          "default": "#000000"
+        },
+        {
+          "type": "range",
+          "id": "padding_top",
+          "label": "Top Padding",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "default": 40,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "padding_bottom",
+          "label": "Bottom Padding",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "default": 40,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "padding_left",
+          "label": "Left Padding",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "default": 40,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "padding_right",
+          "label": "Right Padding",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "default": 40,
+          "unit": "px"
+        }
+      ]
     }
   ],
   "presets": [
@@ -595,7 +861,6 @@
   assign desktop_big_title_size = section.settings.desktop_big_title_size
   assign mobile_big_title_size = section.settings.mobile_big_title_size
   assign section_width = section.settings.section_width | append: 'px'
-  assign show_buy_button = section.settings.show_buy_button
 
   assign current_lang = request.locale.iso_code
   assign locale_code = current_lang
@@ -652,7 +917,7 @@
 
     .advanced-grid-container {
       display: grid;
-      grid-template-columns: repeat({{ desktop_columns }}, 1fr);
+      grid-template-columns: repeat(auto-fill, minmax(calc((100% - ({{ desktop_columns }} - 1) * 20px) / {{ desktop_columns }}), 1fr));
       gap: 20px;
     }
 
@@ -842,7 +1107,7 @@
 
   @media (max-width: 768px) {
     .advanced-grid-container {
-      grid-template-columns: repeat({{ mobile_columns }}, 1fr);
+      grid-template-columns: repeat(auto-fill, minmax(calc((100% - ({{ mobile_columns }} - 1) * 20px) / {{ mobile_columns }}), 1fr));
     }
 
     .custom-big-title {
@@ -905,103 +1170,114 @@
       {%- assign settings = block.settings -%}
       {%- assign text_alignment_class = 'text-' | append: settings.text_alignment -%}
 
-      {% if settings.content_type == 'collection' and settings.selected_collection != blank %}
-        {%- assign collection = collections[settings.selected_collection] -%}
+      {% case block.type %}
+        {% when 'collection_block' %}
+          {% if settings.selected_collection != blank %}
+            {%- assign collection = collections[settings.selected_collection] -%}
 
-        {% if collection != blank %}
-          {% for product in collection.products %}
-            <div
-              class="advanced-grid-block {{ no_padding_class }}"
-              style="background-color: {{ settings.background_color }};"
-              {{ block.shopify_attributes }}
-            >
-              <div class="product-content-wrapper">
-                <div class="product-block-container">
-                  <div class="product-block-wrapper">
-                    {% render 'product-block', product: product %}
+            {% if collection != blank %}
+              {% for product in collection.products %}
+                <div
+                  class="advanced-grid-block {{ no_padding_class }}"
+                  style="background-color: {{ settings.background_color }};"
+                  {{ block.shopify_attributes }}
+                >
+                  <div class="product-content-wrapper">
+                    <div class="product-block-container">
+                      <div class="product-block-wrapper">
+                        {% render 'product-block', product: product %}
+                      </div>
+                    </div>
+
+                    {% if settings.enable_buy_button == 'true' %}
+                      <div class="product-button-container">
+                        <a href="{{ product.url }}" class="product-buy-button">
+                          {{ buy_button_text }}
+                        </a>
+                      </div>
+                    {% endif %}
                   </div>
                 </div>
-
-                {% if show_buy_button %}
-                  <div class="product-button-container">
-                    <a href="{{ product.url }}" class="product-buy-button">
-                      {{ buy_button_text }}
-                    </a>
-                  </div>
-                {% endif %}
-              </div>
-            </div>
-          {% endfor %}
-        {% endif %}
-      {% elsif settings.content_type == 'related_products' %}
-            {% if product != blank and template.name == 'product' %}
-              {% assign source_product = product %}
-            {% elsif settings.related_products_source != blank %}
-              {% assign source_product = all_products[settings.related_products_source] %}
-            {% else %}
-              {% assign source_product = nil %}
+              {% endfor %}
             {% endif %}
-            
-            {% if source_product != blank %}
-              {% assign related_products = source_product.metafields.custom.related_products.value %}
-              {% if related_products %}
-                {% for related_product in related_products %}
-                  <div
-                    class="advanced-grid-block {{ no_padding_class }}"
-                    style="background-color: {{ settings.background_color }};"
-                    {{ block.shopify_attributes }}
-                  >
-                    <div class="product-content-wrapper">
-                      <div class="product-block-container">
-                        <div class="product-block-wrapper">
-                          {% render 'product-block', product: related_product %}
-                        </div>
-                      </div>
+          {% endif %}
 
-                      {% if show_buy_button %}
-                        <div class="product-button-container text-left">
-                          <a href="{{ related_product.url }}" class="product-buy-button">
-                            {{ buy_button_text }}
-                          </a>
-                        </div>
-                      {% endif %}
+        {% when 'related_products_block' %}
+          {% if product != blank and template.name == 'product' %}
+            {% assign source_product = product %}
+          {% elsif settings.related_products_source != blank %}
+            {% assign source_product = all_products[settings.related_products_source] %}
+          {% else %}
+            {% assign source_product = nil %}
+          {% endif %}
+          
+          {% if source_product != blank %}
+            {% assign related_products = source_product.metafields.custom.related_products.value %}
+            {% if related_products %}
+              {% for related_product in related_products %}
+                <div
+                  class="advanced-grid-block {{ no_padding_class }}"
+                  style="background-color: {{ settings.background_color }};"
+                  {{ block.shopify_attributes }}
+                >
+                  <div class="product-content-wrapper">
+                    <div class="product-block-container">
+                      <div class="product-block-wrapper">
+                        {% render 'product-block', product: related_product %}
+                      </div>
+                    </div>
+
+                    {% if settings.enable_buy_button == 'true' %}
+                      <div class="product-button-container text-left">
+                        <a href="{{ related_product.url }}" class="product-buy-button">
+                          {{ buy_button_text }}
+                        </a>
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+              {% endfor %}
+            {% else %}
+              <div class="no-related-products">
+                <p>{{ "No related products found" | t }}</p>
+              </div>
+            {% endif %}
+          {% endif %}
+
+        {% when 'product_block' %}
+          <div
+            class="advanced-grid-block {{ no_padding_class }}"
+            style="background-color: {{ settings.background_color }};"
+            {{ block.shopify_attributes }}
+          >
+            {% if settings.selected_product != blank %}
+              {%- assign product = all_products[settings.selected_product] -%}
+
+              {% if product != blank %}
+                <div class="product-content-wrapper">
+                  <div class="product-block-container">
+                    <div class="product-block-wrapper">
+                      {% render 'product-block', product: product %}
                     </div>
                   </div>
-                {% endfor %}
-              {% else %}
-                <div class="no-related-products">
-                  <p>{{ "No related products found" | t }}</p>
+
+                  {% if settings.enable_buy_button == 'true' %}
+                    <div class="product-button-container text-left">
+                      <a href="{{ product.url }}" class="product-buy-button">
+                        {{ buy_button_text }}
+                      </a>
+                    </div>
+                  {% endif %}
                 </div>
               {% endif %}
             {% endif %}
-          {% else %}
-        <div
-          class="advanced-grid-block {{ no_padding_class }}"
-          style="background-color: {{ settings.background_color }};"
-          {{ block.shopify_attributes }}
-        >
-          {% if settings.content_type == 'product' and settings.selected_product != blank %}
-            {%- assign product = all_products[settings.selected_product] -%}
 
-            {% if product != blank %}
-              <div class="product-content-wrapper">
-                <div class="product-block-container">
-                  <div class="product-block-wrapper">
-                    {% render 'product-block', product: product %}
-                  </div>
-                </div>
-
-                {% if show_buy_button %}
-                  <div class="product-button-container text-left">
-                    <a href="{{ product.url }}" class="product-buy-button">
-                      {{ buy_button_text }}
-                    </a>
-                  </div>
-                {% endif %}
-              </div>
-            {% endif %}
-
-          {% else %}
+        {% when 'custom_block' %}
+          <div
+            class="advanced-grid-block {{ no_padding_class }}"
+            style="background-color: {{ settings.background_color }};"
+            {{ block.shopify_attributes }}
+          >
             <div class="custom-content-wrapper">
               <div class="custom-content-image">
                 {% if settings.image != blank %}
@@ -1024,9 +1300,9 @@
               </div>
 
               <div class="custom-content-text {{ text_alignment_class }}">
-                {% if settings.big_title != blank %}
+                {% if settings.big_number != blank %}
                   <h2 class="custom-big-title">
-                    {% render 'localized-value', field: 'big_title', locale_code: locale_code, settings: settings %}
+                    {{ settings.big_number }}
                   </h2>
                 {% endif %}
 
@@ -1057,9 +1333,98 @@
                 </div>
               </div>
             </div>
-          {% endif %}
-        </div>
-      {% endif %}
+          </div>
+
+          {% when 'advertisement_block' %}
+    <div
+      class="advanced-grid-block {{ no_padding_class }}"
+      style="padding: 0; overflow: hidden; border: none;"
+      {{ block.shopify_attributes }}
+    >
+      <div class="advertisement-wrapper">
+        <a href="{{ settings.button_url }}" style="display: block; text-decoration: none;">
+          <div
+            class="advertisement-content"
+            style="
+              display: flex;
+              flex-direction: column;
+              justify-content: flex-end;
+              background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 100%), 
+                {% if settings.background_image != blank %} 
+                  url('{{ settings.background_image | img_url: '3000x3000' }}') 
+                {% else %} 
+                  none 
+                {% endif %};
+              background-color: {{ settings.background_color }};
+              background-repeat: no-repeat;
+              background-position: {{ settings.background_position }};
+              background-size: {% if settings.background_size == 'cover' or settings.background_size == 'contain' %} 
+                {{ settings.background_size }} 
+              {% else %} 
+                {{ settings.background_size }}% 
+              {% endif %};
+              min-height: {{ settings.min_height }}px;
+              padding-top: {{ settings.padding_top }}px;
+              padding-bottom: {{ settings.padding_bottom }}px;
+              padding-left: {{ settings.padding_left }}px;
+              padding-right: {{ settings.padding_right }}px;
+              text-align: {{ settings.text_alignment }};
+            "
+          >
+            {% if settings.title != blank %}
+              <h2 
+                class="advertisement-title"
+                style="
+                  font-size: {{ settings.title_size }}px; 
+                  line-height: {{ settings.title_size | times: 1.2 }}px; 
+                  color: {{ settings.title_color }}; 
+                  font-weight: 700;
+                  margin-bottom: 20px;
+                "
+              >
+                {% if request.locale.iso_code == 'de' and settings.title_de != blank %}
+                  {{ settings.title_de }}
+                {% elsif request.locale.iso_code == 'fr' and settings.title_fr != blank %}
+                  {{ settings.title_fr }}
+                {% elsif request.locale.iso_code == 'fi' and settings.title_fi != blank %}
+                  {{ settings.title_fi }}
+                {% else %}
+                  {{ settings.title }}
+                {% endif %}
+              </h2>
+            {% endif %}
+            
+            {% if settings.button_text != blank and settings.button_url != blank %}
+              <div class="advertisement-button-container">
+                <span 
+                  class="advertisement-button"
+                  style="
+                    display: inline-block;
+                    padding: 12px 24px;
+                    background-color: {{ settings.button_bg_color }};
+                    color: {{ settings.button_text_color }};
+                    border-radius: 4px;
+                    font-weight: 600;
+                    text-decoration: none;
+                  "
+                >
+                  {% if request.locale.iso_code == 'de' and settings.button_text_de != blank %}
+                    {{ settings.button_text_de }}
+                  {% elsif request.locale.iso_code == 'fr' and settings.button_text_fr != blank %}
+                    {{ settings.button_text_fr }}
+                  {% elsif request.locale.iso_code == 'fi' and settings.button_text_fi != blank %}
+                    {{ settings.button_text_fi }}
+                  {% else %}
+                    {{ settings.button_text }}
+                  {% endif %}
+                </span>
+              </div>
+            {% endif %}
+          </div>
+        </a>
+      </div>
+    </div>
+      {% endcase %}
     {% endfor %}
   </div>
 </div>

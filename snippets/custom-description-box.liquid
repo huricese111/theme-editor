@@ -270,6 +270,8 @@
           data-product-handle="{{ product.handle }}"
           data-product-title="{{ product.title | escape }}"
           data-product-image="{{ product.featured_image | img_url: '200x' }}"
+          data-product-price="{{ product.price | money }}"
+          data-product-compare-price="{{ product.compare_at_price | money }}"
         >
         <span>
           {% case request.locale.iso_code %}
