@@ -181,19 +181,21 @@
 <style>
   .specification-sheet-container {
     max-width: 1400px;
-    margin: 0 auto;
-    padding: 100px 20px;
+    margin: 80px auto;
+    padding: 0 20px; 
   }
 
   .specification-sheet-title {
     font-size: 30px;
     margin-bottom: 20px;
     text-align: left;
+    padding: 0 30px; 
   }
 
   .specification-sheet-list {
     display: flex;
     flex-direction: column;
+    padding: 0 30px; 
   }
 
   .specification-module {
@@ -258,7 +260,24 @@
     font-weight: 600;
   }
 
+  @media (max-width: 1200px) {
+    .specification-sheet-container {
+      max-width: 100%;
+      padding: 0 30px;
+    }
+  }
+
   @media (max-width: 768px) {
+    .specification-sheet-container {
+      padding: 0 15px; 
+      margin: 50px 0; 
+    }
+    
+    .specification-sheet-title,
+    .specification-sheet-list {
+      padding: 0; 
+    }
+    
     .specification-row {
       flex-direction: column;
     }
@@ -275,6 +294,12 @@
     
     #specification-table th {
       width: 40%;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .specification-sheet-container {
+      padding: 0; /* 与产品轮播一致的内边距 */
     }
   }
 </style>

@@ -1,35 +1,5 @@
-{% comment %}
-  ============================================================================
-  Announcement Bar Section
-  ============================================================================
-  
-  Description: A customizable announcement bar component for Shopify themes.
-  This section displays promotional messages, countdown timers, and navigation
-  elements at the top of the website. Supports multiple announcements with
-  rotation functionality and localization features.
-  
-  Features:
-  - Multiple announcement messages with carousel navigation
-  - Countdown timer integration for time-sensitive promotions
-  - Custom styling with background colors and gradients
-  - Social media icons display
-  - Language and country selector integration
-  - Responsive design with mobile-optimized layout
-  - Custom button styling with hover effects
-  - Localization support for multilingual stores
-  
-  Components:
-  - Announcement text with optional countdown timer
-  - Navigation buttons for multiple announcements
-  - Social media links (desktop only)
-  - Localization selectors (desktop only)
-  - Custom action buttons with links
-  
-  ============================================================================
-{% endcomment %}
-
 <style>
-  .custom-announcement-button {
+   .custom-announcement-button {
     padding: 10px 20px;
     text-decoration: none;
     border-radius: 24px;
@@ -41,28 +11,28 @@
     flex: 2 0 0;
     align-items: center;
     display: flex;
-  }
+;
+}
   .custom-announcement-button:hover {
     opacity: 0.8;
   }
 
   @media (max-width: 768px) {
-    .custom-announcement-button,
-    .custom-close {
-      display: none;
-    }
 
-    .custom-announcement-title {
-      font-size: 14px;
-    }
-  }
+.custom-announcement-button,
+.custom-close {
+  display: none;
+}
+
+.custom-announcement-title {
+  font-size: 14px;
+}
+}
+
 </style>
 
-{% if section.blocks.size > 0
-  or section.settings.enable_language_selector
-  or section.settings.enable_country_selector
-  or section.settings.menu != blank
-%}
+
+{% if section.blocks.size > 0 or section.settings.enable_language_selector or section.settings.enable_country_selector or section.settings.menu != blank %}
   {%- liquid
     assign longest_announcement = 0
     assign number_of_blocks = 0
@@ -74,55 +44,59 @@
       endif
     endfor
   -%}
-  <announcement-bar
-    id="section-id-{{ section.id }}"
-    class="
-      announcement-bar
+  <announcement-bar id="section-id-{{ section.id }}" class="announcement-bar
       {%- if section.blocks.size > 0 %} announcement-bar--with-announcement{% endif -%}
       {%- if longest_announcement > 45 and section.settings.menu != blank %} announcement-bar--tablet-wrap{% endif -%}
-    "
-    {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}
-  >
+      " {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
     {% style %}
-            {%- liquid
-              assign bg_color = section.settings.announcement_bar_col
-              assign bg_gradient = section.settings.announcement_bar_gradient
-              assign text_color = section.settings.announcement_text_col
-              if section.blocks.size > 0 and section.blocks.first.settings.use_custom_colors
-                assign bg_color = section.blocks.first.settings.bg_color
-                assign bg_gradient = section.blocks.first.settings.bg_gradient
-                assign text_color = section.blocks.first.settings.text_color
-              endif
+      {%- liquid
+        assign bg_color = section.settings.announcement_bar_col
+        assign bg_gradient = section.settings.announcement_bar_gradient
+        assign text_color = section.settings.announcement_text_col
+        if section.blocks.size > 0 and section.blocks.first.settings.use_custom_colors
+          assign bg_color = section.blocks.first.settings.bg_color
+          assign bg_gradient = section.blocks.first.settings.bg_gradient
+          assign text_color = section.blocks.first.settings.text_color
+        endif
       -%}
-            #section-id-{{ section.id }} {
-              --bg-color: {{ bg_color }};
-              --bg-gradient: {{ bg_gradient }};
-              --heading-color: {{ text_color.rgb }};
-              --text-color: {{ text_color.rgb }};
-              --link-color: {{ text_color.rgb }};
-              --announcement-font-size: {{ section.settings.message_font_size }}px;
-            }
+      #section-id-{{ section.id }} {
+        --bg-color: {{ bg_color }};
+        --bg-gradient: {{ bg_gradient }};
+        --heading-color: {{ text_color.rgb }};
+        --text-color: {{ text_color.rgb }};
+        --link-color: {{ text_color.rgb }};
+        --announcement-font-size: {{ section.settings.message_font_size }}px;
+      }
     {% endstyle %}
+
     {%- for block in section.blocks offset: 1 -%}
-      <div
-        class="announcement-bg announcement-bg--inactive absolute inset-0"
-        data-index="{{ forloop.index }}"
-        style="background:{% if block.settings.use_custom_colors %}{{- block.settings.bg_gradient | default: block.settings.bg_color }}{% else %}{{- section.settings.announcement_bar_gradient | default: section.settings.announcement_bar_col }}{% endif %}"
-      ></div>
+      <div class="announcement-bg announcement-bg--inactive absolute inset-0"
+          data-index="{{ forloop.index }}"
+          style="
+            background:
+              {%- if block.settings.use_custom_colors %}
+                {{- block.settings.bg_gradient | default: block.settings.bg_color }}
+              {%- else %}
+                {{- section.settings.announcement_bar_gradient | default: section.settings.announcement_bar_col }}
+              {%- endif -%}
+          "></div>
     {%- endfor -%}
+
     <div class="container container--no-max relative">
       <div class="announcement-bar__left desktop-only">
+        
         {% if section.settings.show_social_icons %}
           {%- render 'social-media', icon: settings.social_custom_icon, icon_height: 20 -%}
         {% endif %}
       </div>
+
       <div class="announcement-bar__middle">
         {%- if section.blocks.size > 0 -%}
           <div class="announcement-bar__announcements">
             {%- for block in section.blocks -%}
               {%- liquid
                 if block.settings.show_countdown
-                  assign now = 'now' | date: '%Y-%m-%dT%H:%M'
+                  assign now = "now" | date: '%Y-%m-%dT%H:%M'
                   if block.settings.end_date != blank
                     assign end_date = block.settings.end_date
                     if block.settings.end_time != blank
@@ -130,31 +104,32 @@
                     endif
                     assign end_date = end_date | date: '%Y-%m-%dT%H:%M'
                   else
-                    assign now_split = now | split: 'T'
-                    assign end_date = now_split.first | append: 'T23:59' | date: '%Y-%m-%dT%H:%M'
+                    assign now_split = now | split: "T"
+                    assign end_date = now_split.first | append: "T23:59" | date: '%Y-%m-%dT%H:%M'
                   endif
+
                   if block.settings.hide_on_end and end_date < now
                     continue
                   endif
                 endif
-                assign current_locale = request.locale.iso_code
-                if current_locale == 'en'
-                  assign text_field = 'text'
-                  assign button_field = 'unique_button_text'
-                else
-                  assign text_field = 'text_' | append: current_locale
-                  assign button_field = 'unique_button_text_' | append: current_locale
-                endif
-                assign announcement_text = block.settings[text_field] | default: block.settings.text
-                assign button_text = block.settings[button_field] | default: block.settings.unique_button_text
               -%}
               <div
                 class="announcement{% if first_announcement_found %} announcement--inactive{% endif %}"
-                style="{% if block.settings.use_custom_colors %}--heading-color:{{ block.settings.text_color.rgb }};--text-color:{{ block.settings.text_color.rgb }};--link-color:{{ block.settings.text_color.rgb }};{% else %}--heading-color:{{ section.settings.announcement_text_col.rgb }};--text-color:{{ section.settings.announcement_text_col.rgb }};--link-color:{{ section.settings.announcement_text_col.rgb }};{% endif %}"
-                {{ block.shopify_attributes }}
+                style="
+                  {%- if block.settings.use_custom_colors %}
+                    --heading-color: {{ block.settings.text_color.rgb }};
+                    --text-color: {{ block.settings.text_color.rgb }};
+                    --link-color: {{ block.settings.text_color.rgb }};
+                  {%- else -%}
+                    --heading-color: {{ section.settings.announcement_text_col.rgb }};
+                    --text-color: {{ section.settings.announcement_text_col.rgb }};
+                    --link-color: {{ section.settings.announcement_text_col.rgb }};
+                  {%- endif %}
+                " {{ block.shopify_attributes }}
               >
                 {%- assign first_announcement_found = true -%}
                 <div class="announcement__text">
+
                   {% if block.settings.show_countdown and end_date > now %}
                     <script src="{{ 'countdown-timer.js' | asset_url }}" defer></script>
                     <span class="countdown-font-{{ block.settings.number_font }} announcement-text-separation-{{ block.settings.countdown_separator }}">
@@ -167,37 +142,45 @@
                       %}
                     </span>
                   {% endif %}
-                  <a href="{{ block.settings.unique_button_link }}" style="text-decoration: none; margin-left:8px;">
-                    {{- announcement_text -}}
-                  </a>
-                  <a
-                    href="{{ block.settings.unique_button_link }}"
-                    class="custom-announcement-button"
-                    style="background-color:{{ block.settings.unique_button_color }};color:white;margin-left:20px;text-decoration:none;padding:6px 10px;font-size:12px;"
-                    data-localize="{{ block.settings.unique_button_text }}"
-                  >
-                    {{- button_text }} &#8594;</a
-                  >
+
+                <a href="{{ block.settings.unique_button_link }}" style="text-decoration: none; margin-left:8px;">
+                {% if request.locale.iso_code == 'de' %}
+                            {{ block.settings.text_de }}
+                        {% elsif request.locale.iso_code == 'fr' %}
+                            {{ block.settings.text_fr }}
+                        {% else %}
+                            {{ block.settings.text }}
+                        {% endif %}
+                </a>
+
+                
+                  <a href="{{ block.settings.unique_button_link }}" class="custom-announcement-button"
+            style="background-color: {{ block.settings.unique_button_color }}; color: white; margin-left: 20px; text-decoration: none;
+    padding: 6px 10px;font-size:12px;"
+            data-localize="{{ block.settings.unique_button_text }}">
+             {% if request.locale.iso_code == 'de' %}
+                            {{ block.settings.unique_button_text_de }}
+                        {% elsif request.locale.iso_code == 'fr' %}
+                            {{ block.settings.unique_button_text_fr }}
+                        {% else %}
+                            {{ block.settings.unique_button_text }}
+                        {% endif %} &#8594;
+          </a>
+        
+      
+
+                  
+                  
                 </div>
               </div>
             {%- endfor -%}
           </div>
           <div class="announcement-bar__announcement-controller">
-            <button
-              class="announcement-button announcement-button--previous"
-              aria-label="{{ 'general.slider.previous' | t | escape }}"
-            >
-              {% render 'icon-chevron-left' %}
-            </button>
-            <button
-              class="announcement-button announcement-button--next"
-              aria-label="{{ 'general.slider.next' | t | escape }}"
-            >
-              {% render 'icon-chevron-right' %}
-            </button>
+            <button class="announcement-button announcement-button--previous" aria-label="{{ 'general.slider.previous' | t | escape }}">{% render 'icon-chevron-left' %}</button><button class="announcement-button announcement-button--next" aria-label="{{ 'general.slider.next' | t | escape }}">{% render 'icon-chevron-right' %}</button>
           </div>
         {%- endif -%}
       </div>
+
       <div class="announcement-bar__right desktop-only">
         {% if section.settings.menu != blank %}
           <span class="inline-menu">
@@ -301,7 +284,7 @@
           "id": "text",
           "label": "Text"
         },
-        {
+         {
           "type": "inline_richtext",
           "id": "text_de",
           "label": "Text DE"
@@ -310,11 +293,6 @@
           "type": "inline_richtext",
           "id": "text_fr",
           "label": "Text FR"
-        },
-        {
-          "type": "inline_richtext",
-          "id": "text_fi",
-          "label": "Text FI"
         },
         {
           "type": "url",
@@ -335,11 +313,6 @@
           "type": "text",
           "id": "unique_button_text_fr",
           "label": "Unique Button Text FR"
-        },
-        {
-          "type": "text",
-          "id": "unique_button_text_fi",
-          "label": "Unique Button Text FI"
         },
         {
           "type": "color",

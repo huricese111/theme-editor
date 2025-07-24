@@ -1,0 +1,66 @@
+{{ 'section-basestyles.css' | asset_url | stylesheet_tag }}
+
+<div id="custom-apps-{{ section.id }}" class="custom-apps-section">
+  <div class="container">
+    <div class="{% if section.settings.show_space %}fully-spaced-row--medium{% endif %}" id="appblock">
+      {%- for block in section.blocks -%}
+        <h2 class="section-title" data-localize="{{ section.settings.title }}">
+          {% if request.locale.iso_code == 'de' and section.settings.title_de != blank %}
+            {{ section.settings.title_de }}
+          {% elsif request.locale.iso_code == 'fr' and section.settings.title_fr != blank %}
+            {{ section.settings.title_fr }}
+          {% else %}
+            {{ section.settings.title }}
+          {% endif %}
+        </h2>
+        {% render block %}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Apps",
+  "class": "section-apps",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Wide display",
+      "default": false
+    },
+    {
+      "id": "show_space",
+      "type": "checkbox",
+      "label": "Show space above and below section",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "text",
+      "id": "title_de",
+      "label": "Title (German)"
+    },
+    {
+      "type": "text",
+      "id": "title_fr",
+      "label": "Title (French)"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Apps"
+    }
+  ]
+}
+{% endschema %}

@@ -1378,7 +1378,7 @@
                     >
                   {% else %}
                     <img
-                      src="{{ 'hepha_trekking7_geo_high.png' | asset_url }}"
+                      src="{{ 'hepha_trekking7_geo_step.png' | asset_url }}"
                       alt="Low Step Geometry"
                       class="geometry-image"
                       loading="eager"
@@ -1556,7 +1556,13 @@
   document.addEventListener('DOMContentLoaded', function () {
     function initTabs() {
       document.querySelectorAll('.sizetab-panel').forEach((panel, index) => {
-        panel.style.display = index === 0 ? 'block' : 'none';
+        if (index === 0) {
+          panel.classList.add('active');
+          panel.style.display = 'block';
+        } else {
+          panel.classList.remove('active');
+          panel.style.display = 'none';
+        }
       });
 
       const initialTab = document.querySelector('.tab-item-size[data-target="framesize"]');
@@ -1571,7 +1577,13 @@
 
         const targetId = targetTab.dataset.target;
         document.querySelectorAll('.sizetab-panel').forEach((panel) => {
-          panel.style.display = panel.id === targetId ? 'block' : 'none';
+          if (panel.id === targetId) {
+            panel.classList.add('active');
+            panel.style.display = 'block';
+          } else {
+            panel.classList.remove('active');
+            panel.style.display = 'none';
+          }
         });
       });
     }

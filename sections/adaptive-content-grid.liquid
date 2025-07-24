@@ -20,6 +20,8 @@
   ============================================================================
 {% endcomment %}
 
+{{ 'section-basestyles.css' | asset_url | stylesheet_tag }}
+
 {% schema %}
 {
   "name": "Adaptive Content Grid",
@@ -870,28 +872,20 @@
 
 <style>
     .advanced-grid-section {
-      max-width: {{ section_width }};
-      margin: 0 auto;
-      padding: 50px 20px;
+      padding: 50px 0;
     }
 
-    .section-heading {
+    [id^="shopify-section-"] .section-heading {
       text-align: {{ section_heading_alignment }};
       margin-bottom: 40px;
     }
 
-    .section-title {
-      font-size: {{ desktop_section_title_size }}px;
+    [id^="shopify-section-"] .section-title {
       color: {{ section_title_color }};
-      margin-bottom: 10px;
-      font-weight: 700;
     }
 
-    .section-subtitle {
-      font-size: {{ desktop_section_subtitle_size }}px;
+    [id^="shopify-section-"] .section-subtitle {
       color: {{ section_subtitle_color }};
-      margin-top: 0;
-      font-weight: 400;
     }
 
     .advanced-grid-container {
@@ -1127,7 +1121,9 @@
   }
 </style>
 
-<div class="advanced-grid-section">
+<div id="custom-adaptive-grid-{{ section.id }}" class="custom-adaptive-grid-section">
+  <div class="container">
+    <div class="advanced-grid-section">
   {% if section.settings.section_title != blank or section.settings.section_subtitle != blank %}
     <div class="section-heading">
       {% if section.settings.section_title != blank %}
@@ -1405,5 +1401,7 @@
     </div>
       {% endcase %}
     {% endfor %}
+  </div>
+    </div>
   </div>
 </div>
