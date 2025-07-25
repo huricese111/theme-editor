@@ -424,6 +424,48 @@
           "label": "Image"
         },
         {
+          "type": "color",
+          "id": "image_background_color",
+          "label": "Image Background Color",
+          "default": "#eeeeee"
+        },
+        {
+          "type": "select",
+          "id": "image_size",
+          "label": "Image Size",
+          "options": [
+            {
+              "value": "auto",
+              "label": "Original"
+            },
+            {
+              "value": "contain",
+              "label": "Contain"
+            },
+            {
+              "value": "cover",
+              "label": "Cover"
+            },
+            {
+              "value": "75",
+              "label": "75%"
+            },
+            {
+              "value": "50",
+              "label": "50%"
+            },
+            {
+              "value": "25",
+              "label": "25%"
+            },
+            {
+              "value": "10",
+              "label": "10%"
+            }
+          ],
+          "default": "auto"
+        },
+        {
           "type": "header",
           "content": "Titles"
         },
@@ -1018,9 +1060,44 @@
   .custom-image {
     width: 100%;
     height: 100%;
-    object-fit: cover;
     display: block;
     border-radius: 4px;
+  }
+  
+  .image-size-auto {
+    object-fit: auto;
+  }
+  
+  .image-size-contain {
+    object-fit: contain;
+  }
+  
+  .image-size-cover {
+    object-fit: cover;
+  }
+  
+  .image-size-75 {
+    object-fit: contain;
+    width: 75%;
+    margin: 0 auto;
+  }
+  
+  .image-size-50 {
+    object-fit: contain;
+    width: 50%;
+    margin: 0 auto;
+  }
+  
+  .image-size-25 {
+    object-fit: contain;
+    width: 25%;
+    margin: 0 auto;
+  }
+  
+  .image-size-10 {
+    object-fit: contain;
+    width: 10%;
+    margin: 0 auto;
   }
 
   .custom-big-title {
@@ -1255,17 +1332,18 @@
             {{ block.shopify_attributes }}
           >
             <div class="custom-content-wrapper">
-              <div class="custom-content-image">
+              <div class="custom-content-image" style="background-color: {{ settings.image_background_color }}">
                 {% if settings.image != blank %}
                   <div class="custom-image-wrapper">
                     {% if settings.button1_url != blank %}
                       <a href="{{ settings.button1_url }}">
                     {% endif %}
 
-                    {{
+                    {% capture image_class %}custom-image image-size-{{ settings.image_size }}{% endcapture %}
+                    {{  
                       settings.image
                       | image_url: width: 1000
-                      | image_tag: class: 'custom-image', loading: 'lazy', alt: settings.title
+                      | image_tag: class: image_class, loading: 'lazy', alt: settings.title
                     }}
 
                     {% if settings.button1_url != blank %}
