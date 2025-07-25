@@ -841,7 +841,7 @@
   assign mobile_desc_size = section.settings.mobile_desc_size
   assign desktop_big_title_size = section.settings.desktop_big_title_size
   assign mobile_big_title_size = section.settings.mobile_big_title_size
-  assign section_width = section.settings.section_width | append: 'px'
+  assign section_width = section.settings.section_width
 
   assign current_lang = request.locale.iso_code
   assign locale_code = current_lang
@@ -1122,7 +1122,7 @@
 </style>
 
 <div id="custom-adaptive-grid-{{ section.id }}" class="custom-adaptive-grid-section">
-  <div class="container">
+  <div class="{% if section.settings.enable_section_container %}container{% endif %}" {% if section.settings.enable_section_container %}style="max-width: {{ section.settings.section_width }}px;"{% endif %}>
     <div class="advanced-grid-section">
   {% if section.settings.section_title != blank or section.settings.section_subtitle != blank %}
     <div class="section-heading">
@@ -1164,7 +1164,7 @@
                       </div>
                     </div>
 
-                    {% if settings.enable_buy_button == 'true' %}
+                    {% if settings.enable_buy_button %}
                       <div class="product-button-container">
                         <a href="{{ product.url }}" class="product-buy-button">
                           {{ buy_button_text }}
@@ -1246,6 +1246,7 @@
                 </div>
               {% endif %}
             {% endif %}
+          </div>
 
         {% when 'custom_block' %}
           <div
