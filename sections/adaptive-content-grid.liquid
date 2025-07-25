@@ -280,6 +280,10 @@
       "content": "Text Sizes"
     },
     {
+      "type": "paragraph",
+      "content": "The following text size settings only affect Custom Content blocks, not other block types."
+    },
+    {
       "type": "range",
       "id": "desktop_title_size",
       "label": "Desktop Title (px)",
@@ -1031,8 +1035,20 @@
     }
 
     .custom-content-text {
-      padding: 20px;
-    }
+    padding: 30px;
+  }
+  
+  .advanced-grid-block .custom-content-text .custom-title {
+    margin: 0 0 16px 0;
+  }
+  
+  .advanced-grid-block .custom-content-text .custom-description {
+    margin: 0 0 24px 0;
+  }
+  
+  .advanced-grid-block .custom-content-text .custom-button-container {
+    margin-top: 24px;
+  }
 
     {% case image_aspect_ratio %}
     {% when '1-1' %}
@@ -1100,21 +1116,21 @@
     margin: 0 auto;
   }
 
-  .custom-big-title {
+  .advanced-grid-block .custom-big-title {
     font-size: {{ desktop_big_title_size }}px;
-    margin: 10px 0;
+    margin: 0 0 20px 0;
     line-height: 1.2;
   }
 
-  .custom-title {
+  .advanced-grid-block .custom-title {
     font-size: {{ desktop_title_size }}px;
-    margin: 10px 0;
+    margin: 0 0 16px 0;
     font-weight: 600;
   }
 
-  .custom-description {
+  .advanced-grid-block .custom-description {
     font-size: {{ desktop_desc_size }}px;
-    margin: 10px 0;
+    margin: 0 0 24px 0;
     line-height: 1.5;
   }
 
@@ -1132,11 +1148,11 @@
     background-color: #555;
   }
 
-  .custom-button-container {
+  .advanced-grid-block .custom-button-container {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    margin-top: 15px;
+    margin-top: 24px;
   }
 
   .text-left {
