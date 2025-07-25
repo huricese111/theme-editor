@@ -37,10 +37,10 @@
     assign hover_loading = 'manual'
   elsif prioritised_loading
     assign loading = 'eager'
-    assign hover_loading = 'lazy'
+    assign hover_loading = 'eager'
   else
-    assign loading = 'lazy'
-    assign hover_loading = 'lazy'
+    assign loading = 'eager'
+    assign hover_loading = 'eager'
   endif
 
   if in_predictive_search
@@ -69,6 +69,84 @@
     assign custom_crop = 'contain'
   endif
 -%}
+
+<style>
+  /* 基本图片容器样式 */
+  .product-block {
+    position: relative;
+  }
+  
+  .product-block__image {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* 次要图片样式 - 默认隐藏 */
+  .product-block__image--secondary {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: opacity;
+    backface-visibility: hidden;
+    pointer-events: none; /* 防止图片接收鼠标事件 */
+  }
+  
+  /* 图片缩放效果 */
+  .product-block__image img {
+    transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    backface-visibility: hidden;
+  }
+  
+  /* 悬停时显示次要图片和缩放效果 */
+  .product-block:hover .product-block__image--secondary {
+    opacity: 1;
+  }
+  
+  .product-block:hover .product-block__image img {
+    transform: scale(1.03);
+  }
+  
+  /* 控制元素的层级和位置 */
+  .image-page-button {
+    position: relative;
+    z-index: 10; /* 提高层级，确保在图片上方 */
+    cursor: pointer;
+  }
+  
+  .product-block-options,
+  .product-block-options--swatch {
+    position: relative;
+    z-index: 10; /* 提高层级，确保在图片上方 */
+  }
+  
+  /* 当与控制元素交互时，禁用悬停效果 */
+  .product-block .image-page-button:hover ~ .product-block__image--secondary,
+  .product-block .image-page-button:focus ~ .product-block__image--secondary,
+  .product-block .image-page-button:active ~ .product-block__image--secondary,
+  .product-block .product-block-options:hover ~ .product-block__image--secondary,
+  .product-block .product-block-options--swatch:hover ~ .product-block__image--secondary {
+    opacity: 0 !important;
+  }
+  
+  /* 当与控制元素交互时，禁用图片缩放效果 */
+  .product-block .image-page-button:hover ~ .product-block__image img,
+  .product-block .image-page-button:focus ~ .product-block__image img,
+  .product-block .image-page-button:active ~ .product-block__image img,
+  .product-block .product-block-options:hover ~ .product-block__image img,
+  .product-block .product-block-options--swatch:hover ~ .product-block__image img {
+    transform: none !important;
+  }
+  
+  /* 图片指示点样式 */
+  .product-block__image-dots {
+    position: relative;
+    z-index: 5;
+  }
+</style>
 
 <product-block 
   class="product-block{% if compact %} product-block--compact{% endif %}{% if card_layout == 'landscape' %} product-block--landscape{% endif %}" 
@@ -123,42 +201,33 @@
               <div>
                 {%- if show_hover_image -%}
                   <div
-                    class="product-block__image product-block__image--primary{% if product.featured_media.id == product.media.first.id %} product-block__image--active{% endif %}{% if product_images.last.id == product.featured_media.id %} product-block__image--show-on-hover{% endif %}"
+                    class="product-block__image product-block__image--primary product-block__image--active"
                     data-media-id="{{ product.media.first.id }}"
                   >
                     {%- render 'image' with product.media.first.preview_image,
-                      loading: loading,
+                      loading: 'eager',
                       size_cols_mobile: 2,
                       size_cols_desktop: size_cols_desktop,
                       custom_aspect_ratio: custom_aspect_ratio,
                       custom_crop: custom_crop
                     -%}
                   </div>
-                  {%- for media in product_images offset: 1 -%}
-                    {%- liquid
-                      assign image_state_class = ''
-                      if media.id == product.featured_media.id
-                        assign image_state_class = 'product-block__image--active'
-                      elsif forloop.index0 == 1 and product.featured_media.id == product.media.first.id
-                        assign image_state_class = 'product-block__image--show-on-hover'
-                      else
-                        assign image_state_class = 'product-block__image--inactivated'
-                      endif
-                    -%}
+                  {%- assign second_image = product_images[1] -%}
+                  {%- if second_image != blank -%}
                     <div
-                      class="product-block__image product-block__image--secondary {{ image_state_class }}"
-                      data-media-id="{{ media.id }}"
-                      data-image-index="{{ forloop.index }}"
+                      class="product-block__image product-block__image--secondary"
+                      data-media-id="{{ second_image.id }}"
+                      data-image-index="1"
                     >
-                      {%- render 'image' with media.preview_image,
-                        loading: hover_loading,
+                      {%- render 'image' with second_image.preview_image,
+                        loading: 'eager',
                         size_cols_mobile: 2,
                         size_cols_desktop: size_cols_desktop,
                         custom_aspect_ratio: custom_aspect_ratio,
                         custom_crop: custom_crop
                       -%}
                     </div>
-                  {%- endfor -%}
+                  {%- endif -%}
                 {%- else -%}
                   <div
                     class="product-block__image product-block__image--primary product-block__image--active"
@@ -277,4 +346,83 @@
       <div class="inner"></div>
     </div>
   {%- endif -%}
+  
+  <script>
+    // 为产品块添加图片切换功能
+    document.addEventListener('DOMContentLoaded', function() {
+      const productBlock = document.querySelector('product-block[data-product-id="{{ product.id }}"]');
+      if (!productBlock) return;
+      
+      const primaryImage = productBlock.querySelector('.product-block__image--primary');
+      const secondaryImage = productBlock.querySelector('.product-block__image--secondary');
+      const prevButton = productBlock.querySelector('.image-page-button--previous');
+      const nextButton = productBlock.querySelector('.image-page-button--next');
+      const imageDots = productBlock.querySelectorAll('.product-block__image-dot');
+      
+      // 如果没有次要图片或翻页按钮，则不需要添加交互
+      if (!secondaryImage || !prevButton || !nextButton) return;
+      
+      // 当前显示的图片索引
+      let currentIndex = 0;
+      const images = [primaryImage, secondaryImage];
+      
+      // 防止事件冒泡，避免触发产品块的悬停效果
+      prevButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        updateActiveImage();
+      });
+      
+      nextButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        currentIndex = (currentIndex + 1) % images.length;
+        updateActiveImage();
+      });
+      
+      // 更新活动图片和指示点
+      function updateActiveImage() {
+        images.forEach((img, index) => {
+          if (index === currentIndex) {
+            img.classList.add('product-block__image--active');
+            img.style.opacity = '1';
+            img.style.zIndex = '5';
+          } else {
+            img.classList.remove('product-block__image--active');
+            img.style.opacity = '0';
+            img.style.zIndex = '1';
+          }
+        });
+        
+        // 更新指示点
+        if (imageDots.length >= 2) {
+          imageDots.forEach((dot, index) => {
+            if (index === currentIndex) {
+              dot.classList.add('product-block__image-dot--active');
+            } else {
+              dot.classList.remove('product-block__image-dot--active');
+            }
+          });
+        }
+      }
+      
+      // 阻止产品选项悬停时的图片切换
+      const productOptions = productBlock.querySelector('.product-block-options, .product-block-options--swatch');
+      if (productOptions) {
+        productOptions.addEventListener('mouseenter', function(e) {
+          // 禁用悬停效果
+          secondaryImage.style.pointerEvents = 'none';
+          secondaryImage.style.opacity = '0';
+        });
+        
+        productOptions.addEventListener('mouseleave', function(e) {
+          // 恢复悬停效果
+          if (currentIndex === 1) {
+            secondaryImage.style.opacity = '1';
+          }
+        });
+      }
+    });
+  </script>
 </product-block>
