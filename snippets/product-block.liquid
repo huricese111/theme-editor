@@ -71,7 +71,7 @@
 -%}
 
 <style>
-  /* 基本图片容器样式 */
+  /* 基本样式 */
   .product-block {
     position: relative;
   }
@@ -81,18 +81,27 @@
     overflow: hidden;
   }
   
-  /* 次要图片样式 - 默认隐藏 */
+  /* 图片容器样式 */
+  .image-cont {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* 主要和次要图片样式 */
+  .product-block__image--primary,
   .product-block__image--secondary {
-    opacity: 0;
+    transition: opacity 0.4s ease;
+    backface-visibility: hidden;
+  }
+  
+  .product-block__image--secondary {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    will-change: opacity;
-    backface-visibility: hidden;
-    pointer-events: none; /* 防止图片接收鼠标事件 */
+    opacity: 0;
+    z-index: 1;
   }
   
   /* 图片缩放效果 */
@@ -101,50 +110,73 @@
     backface-visibility: hidden;
   }
   
-  /* 悬停时显示次要图片和缩放效果 */
-  .product-block:hover .product-block__image--secondary {
-    opacity: 1;
-  }
-  
   .product-block:hover .product-block__image img {
     transform: scale(1.03);
   }
   
-  /* 控制元素的层级和位置 */
+  /* 翻页按钮样式 */
   .image-page-button {
-    position: relative;
-    z-index: 10; /* 提高层级，确保在图片上方 */
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 20;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
     cursor: pointer;
   }
   
-  .product-block-options,
-  .product-block-options--swatch {
-    position: relative;
-    z-index: 10; /* 提高层级，确保在图片上方 */
+  .image-page-button--previous {
+    left: 10px;
   }
   
-  /* 当与控制元素交互时，禁用悬停效果 */
-  .product-block .image-page-button:hover ~ .product-block__image--secondary,
-  .product-block .image-page-button:focus ~ .product-block__image--secondary,
-  .product-block .image-page-button:active ~ .product-block__image--secondary,
-  .product-block .product-block-options:hover ~ .product-block__image--secondary,
-  .product-block .product-block-options--swatch:hover ~ .product-block__image--secondary {
-    opacity: 0 !important;
+  .image-page-button--next {
+    right: 10px;
   }
   
-  /* 当与控制元素交互时，禁用图片缩放效果 */
-  .product-block .image-page-button:hover ~ .product-block__image img,
-  .product-block .image-page-button:focus ~ .product-block__image img,
-  .product-block .image-page-button:active ~ .product-block__image img,
-  .product-block .product-block-options:hover ~ .product-block__image img,
-  .product-block .product-block-options--swatch:hover ~ .product-block__image img {
-    transform: none !important;
+  .product-block:hover .image-page-button {
+    opacity: 1;
   }
   
   /* 图片指示点样式 */
   .product-block__image-dots {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    z-index: 15;
+  }
+  
+  .product-block__image-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    margin: 0 3px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .product-block__image-dot--active {
+    background: #fff;
+  }
+  
+  /* 色板样式 */
+  .product-block-options,
+  .product-block-options--swatch {
     position: relative;
-    z-index: 5;
+    z-index: 10;
+  }
+  
+  .product-block-options__item {
+    cursor: pointer;
   }
 </style>
 
@@ -198,11 +230,12 @@
             tabindex="-1"
           >
             <div class="image-label-wrap">
-              <div>
+              <div class="product-block__images-container">
                 {%- if show_hover_image -%}
                   <div
                     class="product-block__image product-block__image--primary product-block__image--active"
                     data-media-id="{{ product.media.first.id }}"
+                    data-image-index="0"
                   >
                     {%- render 'image' with product.media.first.preview_image,
                       loading: 'eager',
@@ -212,14 +245,14 @@
                       custom_crop: custom_crop
                     -%}
                   </div>
-                  {%- assign second_image = product_images[1] -%}
-                  {%- if second_image != blank -%}
+                  
+                  {%- for image in product_images offset: 1 limit: 4 -%}
                     <div
                       class="product-block__image product-block__image--secondary"
-                      data-media-id="{{ second_image.id }}"
-                      data-image-index="1"
+                      data-media-id="{{ image.id }}"
+                      data-image-index="{{ forloop.index }}"
                     >
-                      {%- render 'image' with second_image.preview_image,
+                      {%- render 'image' with image.preview_image,
                         loading: 'eager',
                         size_cols_mobile: 2,
                         size_cols_desktop: size_cols_desktop,
@@ -227,11 +260,12 @@
                         custom_crop: custom_crop
                       -%}
                     </div>
-                  {%- endif -%}
+                  {%- endfor -%}
                 {%- else -%}
                   <div
                     class="product-block__image product-block__image--primary product-block__image--active"
                     data-media-id="{{ product.featured_media.id }}"
+                    data-image-index="0"
                   >
                     {%- render 'image' with product.featured_media.preview_image,
                       loading: loading,
@@ -244,13 +278,12 @@
                 {%- endif -%}
               </div>
               
-              {%- if show_hover_image and no_swiping != true -%}
+              {%- if show_hover_image and no_swiping != true and product_images.size > 1 -%}
                 <div class="product-block__image-dots" aria-hidden="true">
-                  <div class="product-block__image-dot product-block__image-dot--active"></div>
-                  <div class="product-block__image-dot"></div>
-                  {%- if product_images.size > 2 -%}
-                    <div class="product-block__image-dot product-block__image-dot--more"></div>
-                  {%- endif -%}
+                  <div class="product-block__image-dot product-block__image-dot--active" data-index="0"></div>
+                  {%- for image in product_images offset: 1 limit: 4 -%}
+                    <div class="product-block__image-dot" data-index="{{ forloop.index }}"></div>
+                  {%- endfor -%}
                 </div>
               {%- endif -%}
               
@@ -260,12 +293,13 @@
             </div>
           </a>
           
-          {%- if show_hover_image -%}
+          {%- if show_hover_image and product_images.size > 1 -%}
             <a
               class="image-page-button image-page-button--previous has-ltr-icon"
               href="#"
               aria-label="{{ 'general.slider.previous' | t | escape }}"
               tabindex="-1"
+              data-direction="prev"
             >
               {%- render 'icon-chevron-left', stroke_width: 1.3 -%}
             </a>
@@ -274,6 +308,7 @@
               href="#"
               aria-label="{{ 'general.slider.next' | t | escape }}"
               tabindex="-1"
+              data-direction="next"
             >
               {%- render 'icon-chevron-right', stroke_width: 1.3 -%}
             </a>
@@ -348,80 +383,118 @@
   {%- endif -%}
   
   <script>
-    // 为产品块添加图片切换功能
+    // 产品块图片交互功能
     document.addEventListener('DOMContentLoaded', function() {
-      const productBlock = document.querySelector('product-block[data-product-id="{{ product.id }}"]');
-      if (!productBlock) return;
+      // 初始化所有产品块
+      initProductBlocks();
       
-      const primaryImage = productBlock.querySelector('.product-block__image--primary');
-      const secondaryImage = productBlock.querySelector('.product-block__image--secondary');
-      const prevButton = productBlock.querySelector('.image-page-button--previous');
-      const nextButton = productBlock.querySelector('.image-page-button--next');
-      const imageDots = productBlock.querySelectorAll('.product-block__image-dot');
+      function initProductBlocks() {
+        const productBlocks = document.querySelectorAll('product-block');
+        productBlocks.forEach(initProductBlock);
+      }
       
-      // 如果没有次要图片或翻页按钮，则不需要添加交互
-      if (!secondaryImage || !prevButton || !nextButton) return;
-      
-      // 当前显示的图片索引
-      let currentIndex = 0;
-      const images = [primaryImage, secondaryImage];
-      
-      // 防止事件冒泡，避免触发产品块的悬停效果
-      prevButton.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        currentIndex = (currentIndex - 1 + images.length) % images.length;
-        updateActiveImage();
-      });
-      
-      nextButton.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        currentIndex = (currentIndex + 1) % images.length;
-        updateActiveImage();
-      });
-      
-      // 更新活动图片和指示点
-      function updateActiveImage() {
-        images.forEach((img, index) => {
-          if (index === currentIndex) {
-            img.classList.add('product-block__image--active');
-            img.style.opacity = '1';
-            img.style.zIndex = '5';
-          } else {
-            img.classList.remove('product-block__image--active');
-            img.style.opacity = '0';
-            img.style.zIndex = '1';
-          }
-        });
+      function initProductBlock(productBlock) {
+        // 获取当前产品块的元素
+        const images = productBlock.querySelectorAll('.product-block__image');
+        const prevButton = productBlock.querySelector('.image-page-button--previous');
+        const nextButton = productBlock.querySelector('.image-page-button--next');
+        const imageDots = productBlock.querySelectorAll('.product-block__image-dot');
+        const swatchItems = productBlock.querySelectorAll('.product-block-options__item');
         
-        // 更新指示点
-        if (imageDots.length >= 2) {
+        if (images.length <= 1) return; // 如果没有多个图片，不需要初始化
+        
+        let currentIndex = 0;
+        const maxIndex = images.length - 1;
+        
+        // 初始化图片状态
+        updateImageState();
+        
+        // 添加翻页按钮事件
+        if (prevButton && nextButton) {
+          prevButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            navigateImage('prev');
+          });
+          
+          nextButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            navigateImage('next');
+          });
+        }
+        
+        // 添加图片指示点事件
+        if (imageDots.length > 0) {
           imageDots.forEach((dot, index) => {
-            if (index === currentIndex) {
-              dot.classList.add('product-block__image-dot--active');
-            } else {
-              dot.classList.remove('product-block__image-dot--active');
+            dot.addEventListener('click', function(e) {
+              e.preventDefault();
+              e.stopPropagation();
+              currentIndex = index;
+              updateImageState();
+            });
+          });
+        }
+        
+        // 添加色板事件
+        if (swatchItems.length > 0) {
+          swatchItems.forEach(swatch => {
+            const mediaId = swatch.getAttribute('data-media');
+            if (mediaId) {
+              swatch.addEventListener('mouseenter', function() {
+                // 查找对应的图片
+                const targetImage = Array.from(images).find(img => 
+                  img.getAttribute('data-media-id') === mediaId
+                );
+                
+                if (targetImage) {
+                  // 获取目标图片的索引
+                  const targetIndex = parseInt(targetImage.getAttribute('data-image-index') || '0');
+                  currentIndex = targetIndex;
+                  updateImageState();
+                }
+              });
             }
           });
         }
-      }
-      
-      // 阻止产品选项悬停时的图片切换
-      const productOptions = productBlock.querySelector('.product-block-options, .product-block-options--swatch');
-      if (productOptions) {
-        productOptions.addEventListener('mouseenter', function(e) {
-          // 禁用悬停效果
-          secondaryImage.style.pointerEvents = 'none';
-          secondaryImage.style.opacity = '0';
-        });
         
-        productOptions.addEventListener('mouseleave', function(e) {
-          // 恢复悬停效果
-          if (currentIndex === 1) {
-            secondaryImage.style.opacity = '1';
+        // 图片导航函数
+        function navigateImage(direction) {
+          if (direction === 'prev') {
+            currentIndex = currentIndex > 0 ? currentIndex - 1 : maxIndex;
+          } else {
+            currentIndex = currentIndex < maxIndex ? currentIndex + 1 : 0;
           }
-        });
+          
+          updateImageState();
+        }
+        
+        // 更新图片状态
+        function updateImageState() {
+          // 更新图片显示状态
+          images.forEach((img, index) => {
+            if (index === currentIndex) {
+              img.classList.add('product-block__image--active');
+              img.style.opacity = '1';
+              img.style.zIndex = '5';
+            } else {
+              img.classList.remove('product-block__image--active');
+              img.style.opacity = '0';
+              img.style.zIndex = '1';
+            }
+          });
+          
+          // 更新指示点状态
+          if (imageDots.length > 0) {
+            imageDots.forEach((dot, index) => {
+              if (index === currentIndex) {
+                dot.classList.add('product-block__image-dot--active');
+              } else {
+                dot.classList.remove('product-block__image-dot--active');
+              }
+            });
+          }
+        }
       }
     });
   </script>
