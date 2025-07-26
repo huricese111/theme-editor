@@ -111,10 +111,10 @@
         {%- endif -%}
 
         {%- if section.settings.announcement_position == 'above-items' -%}
-          <div class="cart-drawer__content-item">
-            <div class="cart-info-block cart-info-block--lmtb">{{- announcement -}}</div>
-          </div>
-        {%- endif -%}
+        <div class="cart-drawer__content-item">
+          <div class="cart-info-block cart-info-block--lmtb">{{- announcement -}}</div>
+        </div>
+      {%- endif -%}
 
         <div class="cart-item-list cart-drawer__content-item">
           <div class="cart-item-list__body" data-merge-list="cart-items">
@@ -123,7 +123,8 @@
                   {% comment %} Discount items are difficult to predict - BOGOFs appear as a separate item with the same key as an existing item - simpler to always refresh {% endcomment %}
                   {%- if item.line_level_discount_allocations == empty -%}
                   data-merge-cache="{{ item.key }}|{{ item.quantity }}|{{ item.final_line_price }}|{% if item.selling_plan_allocation %}{{ item.selling_plan_allocation.selling_plan.id }}{% endif %}"
-                  {%- endif -%}>
+                  {%- endif -%}
+                  data-product-id="{{ item.product.id }}">
                 {%- render 'cart-item', item: item, forloop: forloop, drawer: true -%}
               </div>
             {% endfor %}
@@ -136,12 +137,6 @@
           </div>
         {%- endif -%}
       </div>
-
-       {% if section.settings.liquid_content != blank %}
-         <div class="cart-drawer__content-item">
-            {{ section.settings.liquid_content }}
-           </div>
-        {% endif %}
 
       <div data-merge="cross-sells" data-merge-cache="{% if cart.items == blank %}blank{% else %}{{ cart.items.first.product.id }}{% endif %}">
         {%- liquid
@@ -285,19 +280,17 @@
 
       <div class="checkout-buttons{% if cart.items == empty %} hidden{% endif %}" data-merge-attributes="checkout-buttons">
         {% if section.settings.enable_direct_cart %}
-          <a href="{{ routes.root_url | append: '/checkout' | replace: '//', '/' }}" class="btn btn--large btn--wide">{{ 'cart.summary.checkout' | t }}</a>
-          {% if section.settings.liquid_content2 != blank %}
-         <div class="cart-drawer__content-item">
-            {{ section.settings.liquid_content2 }}
-           </div>
-        {% endif %}
+          <a href="{{ routes.root_url | append: '/checkout' | replace: '//', '/' }}" 
+             class="btn btn--large btn--wide{% if cart.total_price == 0 %} btn--disabled{% endif %}" 
+             {% if cart.total_price == 0 %}onclick="showZeroPriceModal(); return false;"{% endif %}>
+            {{ 'cart.summary.checkout' | t }}
+          </a>
         {% else %}
-          <a href="{{ routes.cart_url }}" class="btn btn--large btn--wide">{{ 'cart.summary.checkout' | t }}</a>
-           {% if section.settings.liquid_content2 != blank %}
-         <div class="cart-drawer__content-item">
-            {{ section.settings.liquid_content2 }}
-           </div>
-        {% endif %}
+          <a href="{{ routes.cart_url }}" 
+             class="btn btn--large btn--wide{% if cart.total_price == 0 %} btn--disabled{% endif %}" 
+             {% if cart.total_price == 0 %}onclick="showZeroPriceModal(); return false;"{% endif %}>
+            {{ 'cart.summary.checkout' | t }}
+          </a>
         {% endif %}
       </div>
 
@@ -345,9 +338,351 @@
       </div>
     </div>
   </cart-form>
-</side-drawer>
+</cart-drawer>
 {%- endunless -%}
 
+{% if section.settings.enable_product_limits %}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // 获取限购产品ID列表
+    {% if section.settings.enable_product_limits and section.settings.limited_products != blank %}
+      const limitedProductIds = [
+        {% for product in section.settings.limited_products %}
+          "{{ product.id }}",
+        {% endfor %}
+      ];
+      
+      // 多语言提示信息
+      const messages = {
+        'en': "{{ section.settings.limit_message_en | escape }}",
+        'de': "{{ section.settings.limit_message_de | escape }}",
+        'fr': "{{ section.settings.limit_message_fr | escape }}",
+        'fi': "{{ section.settings.limit_message_fi | escape }}"
+      };
+    
+      // 获取当前语言
+      const lang = document.documentElement.lang.split('-')[0] || 'en';
+      const message = messages[lang] || messages['en'];
+      
+      // 创建弹窗函数
+      function showLimitModal() {
+        // 如果已有弹窗则不再创建
+        if (document.querySelector('.product-limit-modal')) return;
+        
+        const modal = document.createElement('div');
+        modal.className = 'product-limit-modal';
+        modal.innerHTML = `
+          <div class="product-limit-modal-content">
+            <div class="product-limit-modal-body">
+              <div class="product-limit-modal-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" y1="8" x2="12" y2="12"></line>
+                  <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+              </div>
+              <div class="product-limit-modal-message">${message}</div>
+              <button class="product-limit-modal-ok">{{ 'accessibility.close' | t }}</button>
+            </div>
+            <button class="product-limit-modal-close" aria-label="Close">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+        `;
+        document.body.appendChild(modal);
+        
+        // 点击确定按钮
+        modal.querySelector('.product-limit-modal-ok').addEventListener('click', function() {
+          document.body.removeChild(modal);
+        });
+        
+        // 点击关闭按钮
+        modal.querySelector('.product-limit-modal-close').addEventListener('click', function() {
+          document.body.removeChild(modal);
+        });
+        
+        // 点击背景关闭
+        modal.addEventListener('click', function(e) {
+          if (e.target === modal) {
+            document.body.removeChild(modal);
+          }
+        });
+
+        // 添加动画效果
+        setTimeout(() => {
+          modal.classList.add('is-active');
+        }, 10);
+      }
+      
+      // 监听购物车变化
+      function setupQuantityLimits() {
+        // 监听数量变化
+        document.addEventListener('change', function(e) {
+          if (e.target.classList.contains('cart-item__quantity-input')) {
+            const item = e.target.closest('[data-product-id]');
+            if (!item) return;
+            
+            const productId = item.getAttribute('data-product-id');
+            if (limitedProductIds.includes(productId) && parseInt(e.target.value) > 2) {
+              e.target.value = 2;
+              showLimitModal();
+            }
+          }
+        });
+        
+        // 监听增加按钮点击
+        document.addEventListener('click', function(e) {
+          if (e.target.closest('.quantity-up')) {
+            const item = e.target.closest('[data-product-id]');
+            if (!item) return;
+            
+            const productId = item.getAttribute('data-product-id');
+            const input = item.querySelector('.cart-item__quantity-input');
+            
+            if (limitedProductIds.includes(productId) && parseInt(input.value) >= 2) {
+              e.preventDefault();
+              e.stopPropagation();
+              showLimitModal();
+              return false;
+            }
+          }
+        }, true);
+      }
+      
+      // 初始化
+      setupQuantityLimits();
+    {% endif %}
+    
+    // 零元下单提示功能
+    window.showZeroPriceModal = function() {
+      // 如果已有弹窗则不再创建
+      if (document.querySelector('.product-limit-modal')) return;
+      
+      // 多语言提示信息
+      const zeroPriceMessages = {
+        'en': "{{ section.settings.zero_price_message_en | escape }}",
+        'de': "{{ section.settings.zero_price_message_de | escape }}",
+        'fr': "{{ section.settings.zero_price_message_fr | escape }}",
+        'fi': "{{ section.settings.zero_price_message_fi | escape }}"
+      };
+      
+      // 获取当前语言
+      const lang = document.documentElement.lang.split('-')[0] || 'en';
+      const message = zeroPriceMessages[lang] || zeroPriceMessages['en'];
+      
+      const modal = document.createElement('div');
+      modal.className = 'product-limit-modal';
+      modal.innerHTML = `
+        <div class="product-limit-modal-content">
+          <div class="product-limit-modal-body">
+            <div class="product-limit-modal-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+            </div>
+            <div class="product-limit-modal-message">${message}</div>
+            <button class="product-limit-modal-ok">{{ 'accessibility.close' | t }}</button>
+          </div>
+          <button class="product-limit-modal-close" aria-label="Close">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+      `;
+      document.body.appendChild(modal);
+      
+      // 点击确定按钮
+      modal.querySelector('.product-limit-modal-ok').addEventListener('click', function() {
+        document.body.removeChild(modal);
+      });
+      
+      // 点击关闭按钮
+      modal.querySelector('.product-limit-modal-close').addEventListener('click', function() {
+        document.body.removeChild(modal);
+      });
+      
+      // 点击背景关闭
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+          document.body.removeChild(modal);
+        }
+      });
+
+      // 添加动画效果
+      setTimeout(() => {
+        modal.classList.add('is-active');
+      }, 10);
+    };
+  });
+</script>
+
+<style>
+  .product-limit-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(4px);
+  }
+  
+  .product-limit-modal.is-active {
+    opacity: 1;
+  }
+  
+  .product-limit-modal-content {
+    position: relative;
+    background-color: #ffffff;
+    border-radius: 16px;
+    max-width: 450px;
+    width: 90%;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    transform: scale(0.9);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow: hidden;
+  }
+  
+  .product-limit-modal.is-active .product-limit-modal-content {
+    transform: scale(1);
+  }
+  
+  .product-limit-modal-body {
+    padding: 40px 32px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .product-limit-modal-icon {
+    margin-bottom: 24px;
+    color: #e53e3e;
+    height: 48px;
+    width: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  
+  .product-limit-modal-icon::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: rgba(229, 62, 62, 0.2);
+    animation: pulse-circle 2s infinite;
+  }
+  
+  @keyframes pulse-circle {
+    0% {
+      transform: scale(0.95);
+      box-shadow: 0 0 0 0 rgba(229, 62, 62, 0.4);
+    }
+    
+    70% {
+      transform: scale(1.1);
+      box-shadow: 0 0 0 10px rgba(229, 62, 62, 0);
+    }
+    
+    100% {
+      transform: scale(0.95);
+      box-shadow: 0 0 0 0 rgba(229, 62, 62, 0);
+    }
+  }
+  
+  .product-limit-modal-icon svg {
+    z-index: 1;
+  }
+  
+  .product-limit-modal-message {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #1a202c;
+    margin-bottom: 32px;
+    font-weight: 500;
+  }
+  
+  .product-limit-modal-ok {
+    background-color: #3182ce;
+    color: white;
+    border: none;
+    padding: 12px 32px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 6px rgba(49, 130, 206, 0.25);
+  }
+  
+  .product-limit-modal-ok:hover {
+    background-color: #2b6cb0;
+    transform: translateY(-2px);
+    box-shadow: 0 7px 14px rgba(49, 130, 206, 0.3);
+  }
+  
+  .product-limit-modal-ok:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.4);
+  }
+  
+  .product-limit-modal-ok:active {
+    transform: translateY(0);
+  }
+  
+  .product-limit-modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    color: #a0aec0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+  }
+  
+  .product-limit-modal-close:hover {
+    background-color: #f7fafc;
+    color: #4a5568;
+    transform: rotate(90deg);
+  }
+  
+  @media (max-width: 640px) {
+    .product-limit-modal-body {
+      padding: 32px 24px;
+    }
+    
+    .product-limit-modal-message {
+      font-size: 16px;
+      margin-bottom: 24px;
+    }
+  }
+</style>
+{% endif %}
 
 {% schema %}
 {
@@ -385,6 +720,78 @@
       "label": "Show backorder text",
       "default": false,
       "info": "Only shows for products which use inventory tracking and are available to purchase when out of stock."
+    },
+    {
+      "type": "header",
+      "content": "Product Quantity Limits"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_product_limits",
+      "label": "Enable product quantity limits",
+      "default": false
+    },
+    {
+      "type": "product_list",
+      "id": "limited_products",
+      "label": "Products with quantity limit",
+      "info": "Selected products will be limited to maximum 2 items per cart"
+    },
+    {
+      "type": "header",
+      "content": "Limit Messages"
+    },
+    {
+      "type": "text",
+      "id": "limit_message_en",
+      "label": "Limit message (English)",
+      "default": "You can only purchase a maximum of 2 of this product."
+    },
+    {
+      "type": "text",
+      "id": "limit_message_de",
+      "label": "Limit message (German)",
+      "default": "Sie können maximal 2 Stück dieses Produkts kaufen."
+    },
+    {
+      "type": "text",
+      "id": "limit_message_fr",
+      "label": "Limit message (French)",
+      "default": "Vous ne pouvez acheter que 2 exemplaires maximum de ce produit."
+    },
+    {
+      "type": "text",
+      "id": "limit_message_fi",
+      "label": "Limit message (Finnish)",
+      "default": "Voit ostaa enintään 2 kappaletta tätä tuotetta."
+    },
+    {
+      "type": "header",
+      "content": "Zero Price Messages"
+    },
+    {
+      "type": "text",
+      "id": "zero_price_message_en",
+      "label": "Zero price message (English)",
+      "default": "Orders with zero total cannot be processed. Please add items to your cart."
+    },
+    {
+      "type": "text",
+      "id": "zero_price_message_de",
+      "label": "Zero price message (German)",
+      "default": "Bestellungen mit einem Gesamtbetrag von Null können nicht bearbeitet werden. Bitte fügen Sie Artikel zu Ihrem Warenkorb hinzu."
+    },
+    {
+      "type": "text",
+      "id": "zero_price_message_fr",
+      "label": "Zero price message (French)",
+      "default": "Les commandes d'un montant total de zéro ne peuvent pas être traitées. Veuillez ajouter des articles à votre panier."
+    },
+    {
+      "type": "text",
+      "id": "zero_price_message_fi",
+      "label": "Zero price message (Finnish)",
+      "default": "Tilauksia, joiden kokonaissumma on nolla, ei voida käsitellä. Lisää tuotteita ostoskoriisi."
     },
     {
       "type": "header",
@@ -739,11 +1146,6 @@
       "default": false
     },
     {
-          "type": "liquid",
-          "id": "liquid_content",
-          "label": "Custom Liquid Code",
-        },
-    {
       "type": "color",
       "id": "empty_color_background",
       "label": "Background"
@@ -758,11 +1160,6 @@
       "id": "empty_color_text",
       "label": "Text"
     },
-     {
-          "type": "liquid",
-          "id": "liquid_content2",
-          "label": "Custom Liquid Code 2",
-        },
     {
       "type": "header",
       "content": "Recommended products"
