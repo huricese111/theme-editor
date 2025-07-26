@@ -395,6 +395,55 @@
 </div>
 
 <style>
+  .link-dropdown {
+    position: relative;
+    z-index: 100; /* 增加z-index值，确保高于产品块 */
+  }
+  
+  .link-dropdown__button {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .link-dropdown__button-text {
+    position: relative;
+  }
+  
+  .link-dropdown__button-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .link-dropdown__options {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    z-index: 100; /* 确保下拉选项显示在最上层 */
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    min-width: 180px;
+    padding: 8px 0;
+    margin-top: 5px;
+  }
+  
+  .link-dropdown__link {
+    display: block;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+  }
+  
+  .link-dropdown__link:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+  
+  .link-dropdown__link--active {
+    font-weight: bold;
+  }
+  
   @media (min-width: 1000px) {
     [data-section-id] .container:not(.container--reading-width) {
       max-width: 90vw !important;

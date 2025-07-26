@@ -71,7 +71,6 @@
 -%}
 
 <style>
-  /* 基本样式 */
   .product-block {
     position: relative;
   }
@@ -81,55 +80,80 @@
     overflow: hidden;
   }
   
-  /* 图片容器样式 */
   .image-cont {
     position: relative;
     overflow: hidden;
+    background-color: rgba(240, 240, 240, 0.2);
   }
   
-  /* 主要和次要图片样式 */
   .product-block__image--primary,
-  .product-block__image--secondary {
-    transition: opacity 0.4s ease;
-    backface-visibility: hidden;
-  }
-  
   .product-block__image--secondary {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    transition: opacity 0.6s ease-in-out;
+    backface-visibility: hidden;
+    will-change: opacity;
+    /* 使用更轻微的背景色 */
+    background-color: rgba(240, 240, 240, 0.1);
+  }
+  
+  /* 确保主图片始终可见，直到次要图片加载完成 */
+  .product-block__image--primary {
+    position: relative;
+    opacity: 1;
+    z-index: 2;
+  }
+  
+  .product-block__image--secondary {
     opacity: 0;
     z-index: 1;
   }
   
-  /* 图片缩放效果 */
-  .product-block__image img {
-    transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    backface-visibility: hidden;
+  /* 添加图片加载状态类 */
+  .product-block__image--loading {
+    opacity: 0;
   }
   
-  .product-block:hover .product-block__image img {
-    transform: scale(1.03);
+  .product-block__image--loaded {
+    opacity: 1;
   }
   
-  /* 翻页按钮样式 */
+  .product-block__images-container {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* 改进的翻页按钮样式 */
   .image-page-button {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    z-index: 20;
-    background: rgba(255, 255, 255, 0.8);
+    width: 36px;
+    height: 36px;
+    background-color: rgba(255, 255, 255, 0.8);
     border-radius: 50%;
-    width: 30px;
-    height: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 10;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border: none;
     cursor: pointer;
+  }
+  
+  .image-page-button svg {
+    width: 16px;
+    height: 16px;
+    stroke-width: 2px;
+    position: absolute; /* 添加这行 */
+    top: 50%; /* 添加这行 */
+    left: 50%; /* 添加这行 */
+    transform: translate(-50%, -50%); /* 添加这行 */
   }
   
   .image-page-button--previous {
@@ -144,39 +168,10 @@
     opacity: 1;
   }
   
-  /* 图片指示点样式 */
-  .product-block__image-dots {
-    position: absolute;
-    bottom: 10px;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: center;
-    z-index: 15;
-  }
-  
-  .product-block__image-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.5);
-    margin: 0 3px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .product-block__image-dot--active {
-    background: #fff;
-  }
-  
-  /* 色板样式 */
-  .product-block-options,
-  .product-block-options--swatch {
-    position: relative;
-    z-index: 10;
-  }
-  
-  .product-block-options__item {
-    cursor: pointer;
+  .image-page-button:hover {
+    background-color: rgba(255, 255, 255, 0.95);
+    transform: translateY(-50%) scale(1.05);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
   }
 </style>
 
@@ -246,6 +241,7 @@
                     -%}
                   </div>
                   
+                  <!-- 次要图片使用懒加载 -->
                   {%- for image in product_images offset: 1 limit: 4 -%}
                     <div
                       class="product-block__image product-block__image--secondary"
@@ -253,7 +249,7 @@
                       data-image-index="{{ forloop.index }}"
                     >
                       {%- render 'image' with image.preview_image,
-                        loading: 'eager',
+                        loading: 'lazy', /* 次要图片懒加载 */
                         size_cols_mobile: 2,
                         size_cols_desktop: size_cols_desktop,
                         custom_aspect_ratio: custom_aspect_ratio,
@@ -383,9 +379,7 @@
   {%- endif -%}
   
   <script>
-    // 产品块图片交互功能
     document.addEventListener('DOMContentLoaded', function() {
-      // 初始化所有产品块
       initProductBlocks();
       
       function initProductBlocks() {
@@ -394,72 +388,132 @@
       }
       
       function initProductBlock(productBlock) {
-        // 获取当前产品块的元素
         const images = productBlock.querySelectorAll('.product-block__image');
+        const primaryImage = productBlock.querySelector('.product-block__image--primary');
+        const secondaryImages = productBlock.querySelectorAll('.product-block__image--secondary');
         const prevButton = productBlock.querySelector('.image-page-button--previous');
         const nextButton = productBlock.querySelector('.image-page-button--next');
         const imageDots = productBlock.querySelectorAll('.product-block__image-dot');
         const swatchItems = productBlock.querySelectorAll('.product-block-options__item');
+        const imagesContainer = productBlock.querySelector('.product-block__images-container');
         
-        if (images.length <= 1) return; // 如果没有多个图片，不需要初始化
+        if (images.length <= 1) return;
         
         let currentIndex = 0;
+        let hoverEnabled = true;
+        let isTransitioning = false;
         const maxIndex = images.length - 1;
         
-        // 初始化图片状态
+        preloadImages();
         updateImageState();
         
-        // 添加翻页按钮事件
+        function preloadImages() {
+          images.forEach(img => {
+            img.classList.add('product-block__image--loading');
+            
+            const imgElement = img.querySelector('img');
+            if (imgElement) {
+              if (imgElement.complete) {
+                img.classList.remove('product-block__image--loading');
+                img.classList.add('product-block__image--loaded');
+              } else {
+                imgElement.addEventListener('load', function() {
+                  img.classList.remove('product-block__image--loading');
+                  img.classList.add('product-block__image--loaded');
+                });
+                
+                imgElement.addEventListener('error', function() {
+                  if (img === primaryImage) {
+                    img.classList.remove('product-block__image--loading');
+                    img.classList.add('product-block__image--loaded');
+                  }
+                });
+              }
+            }
+          });
+        }
+        
         if (prevButton && nextButton) {
           prevButton.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
-            navigateImage('prev');
+            if (!isTransitioning) {
+              navigateImage('prev');
+            }
           });
           
           nextButton.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
-            navigateImage('next');
+            if (!isTransitioning) {
+              navigateImage('next');
+            }
           });
         }
         
-        // 添加图片指示点事件
         if (imageDots.length > 0) {
           imageDots.forEach((dot, index) => {
             dot.addEventListener('click', function(e) {
               e.preventDefault();
               e.stopPropagation();
-              currentIndex = index;
-              updateImageState();
+              if (!isTransitioning && currentIndex !== index) {
+                currentIndex = index;
+                updateImageState();
+              }
             });
           });
         }
         
-        // 添加色板事件
         if (swatchItems.length > 0) {
           swatchItems.forEach(swatch => {
             const mediaId = swatch.getAttribute('data-media');
             if (mediaId) {
               swatch.addEventListener('mouseenter', function() {
-                // 查找对应的图片
+                hoverEnabled = false;
+                
                 const targetImage = Array.from(images).find(img => 
                   img.getAttribute('data-media-id') === mediaId
                 );
                 
                 if (targetImage) {
-                  // 获取目标图片的索引
                   const targetIndex = parseInt(targetImage.getAttribute('data-image-index') || '0');
-                  currentIndex = targetIndex;
-                  updateImageState();
+                  if (currentIndex !== targetIndex && !isTransitioning) {
+                    currentIndex = targetIndex;
+                    updateImageState();
+                  }
                 }
+              });
+              
+              swatch.addEventListener('mouseleave', function() {
+                setTimeout(() => {
+                  hoverEnabled = true;
+                }, 100);
               });
             }
           });
         }
         
-        // 图片导航函数
+        if (imagesContainer && secondaryImages.length > 0) {
+          imagesContainer.addEventListener('mouseenter', function() {
+            if (hoverEnabled && secondaryImages.length > 0 && currentIndex === 0 && !isTransitioning) {
+              currentIndex = 1;
+              updateImageState();
+            }
+          });
+          
+          imagesContainer.addEventListener('mouseleave', function() {
+            if (hoverEnabled && currentIndex !== 0 && !isTransitioning) {
+              currentIndex = 0;
+              updateImageState();
+            }
+          });
+        }
+        
         function navigateImage(direction) {
+          if (isTransitioning) return;
+          
+          hoverEnabled = false;
+          
           if (direction === 'prev') {
             currentIndex = currentIndex > 0 ? currentIndex - 1 : maxIndex;
           } else {
@@ -467,11 +521,30 @@
           }
           
           updateImageState();
+          
+          setTimeout(function() {
+            hoverEnabled = true;
+          }, 2000);
         }
         
-        // 更新图片状态
         function updateImageState() {
-          // 更新图片显示状态
+          isTransitioning = true;
+          
+          const targetImage = images[currentIndex];
+          const isLoaded = targetImage.classList.contains('product-block__image--loaded');
+          
+          if (!isLoaded && currentIndex !== 0) {
+            currentIndex = 0;
+            setTimeout(() => {
+              isTransitioning = false;
+              if (targetImage.classList.contains('product-block__image--loaded')) {
+                currentIndex = Array.from(images).indexOf(targetImage);
+                updateImageState();
+              }
+            }, 600);
+            return;
+          }
+          
           images.forEach((img, index) => {
             if (index === currentIndex) {
               img.classList.add('product-block__image--active');
@@ -484,7 +557,6 @@
             }
           });
           
-          // 更新指示点状态
           if (imageDots.length > 0) {
             imageDots.forEach((dot, index) => {
               if (index === currentIndex) {
@@ -494,7 +566,39 @@
               }
             });
           }
+          
+          setTimeout(() => {
+            isTransitioning = false;
+          }, 600);
         }
+      }
+      
+      const filterContainers = document.querySelectorAll('.filter-container');
+      if (filterContainers.length > 0) {
+        const observer = new MutationObserver(function(mutations) {
+          let hasRelevantChanges = false;
+          
+          mutations.forEach(function(mutation) {
+            if (mutation.type === 'childList') {
+              hasRelevantChanges = true;
+            }
+          });
+          
+          if (hasRelevantChanges) {
+            setTimeout(function() {
+              initProductBlocks();
+            }, 300);
+          }
+        });
+        
+        const ajaxContainers = document.querySelectorAll('[data-ajax-container]');
+        ajaxContainers.forEach(container => {
+          observer.observe(container, { childList: true, subtree: true });
+        });
+        
+        filterContainers.forEach(container => {
+          observer.observe(container, { childList: true, subtree: true });
+        });
       }
     });
   </script>
