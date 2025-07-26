@@ -165,7 +165,7 @@
 
 <style>
   .sticky-nav {
-    --sticky-bar-z-index: 10;
+    --sticky-bar-z-index: 999; /* 增加z-index值，确保在其他元素之上 */
     --sticky-bar-min-height: 60px;
     display: flex;
     align-items: center;
@@ -188,6 +188,7 @@
     left: 0;
     animation: fadeInDown 0.3s ease;
     z-index: var(--sticky-bar-z-index);
+    width: 100%; /* 确保宽度为100% */
   }
 
   .overlay-backdrop {
@@ -378,6 +379,7 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
+  // 配置选项
   const config = {
     headerSelector: 'header, .header, .announcement-bar, .announcement',
     scrollOffset: 30,
@@ -386,34 +388,55 @@
     cartButtonSelector: '.btn.btn--large.add-to-cart',
     cartButtonTextSelector: '[data-add-to-cart-text]',
     debounceTime: 50,
+    zIndexes: {
+      stickyNav: 999,
+      lightbox: 1000000
+    }
   };
 
+  // 获取DOM元素
   const stickyNav = document.getElementById('stickyNavBar');
   const stickyButtonContainer = document.getElementById('stickyNavButtonContainer');
   const stickyNavLinks = document.querySelector('.sticky-nav-links');
   
+  // 观察者和定时器变量
   let buttonMirrorObserver = null;
   let buttonTextObserver = null;
   let buttonUpdateInterval = null;
 
+  // 如果没有找到stickyNav元素，则退出
   if (!stickyNav) return;
 
+  /**
+   * 修复lightbox的z-index，确保它们显示在sticky bar之上
+   */
   function fixLightboxZIndex() {
     try {
       const lightboxes = document.querySelectorAll('.lightbox-container');
       lightboxes.forEach((lightbox) => {
         const currentZIndex = parseInt(getComputedStyle(lightbox).zIndex);
-        if (currentZIndex <= 950) lightbox.style.zIndex = '1000000';
+        if (currentZIndex <= config.zIndexes.stickyNav) {
+          lightbox.style.zIndex = config.zIndexes.lightbox.toString();
+        }
       });
-    } catch {}
+    } catch (e) {
+      console.error('Error fixing lightbox z-index:', e);
+    }
   }
 
+  /**
+   * 设置z-index管理，确保lightbox正确显示
+   */
   function setupZIndexManagement() {
+    // 初始修复
     fixLightboxZIndex();
+    
+    // 为幻灯片图片点击添加事件监听器
     document.querySelectorAll('.slide-image').forEach((image) => {
       image.addEventListener('click', () => setTimeout(fixLightboxZIndex, 50));
     });
     
+    // 使用MutationObserver监视DOM变化，处理动态添加的lightbox
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.addedNodes) {
@@ -425,9 +448,14 @@
         }
       });
     });
+    
+    // 开始观察body元素的变化
     observer.observe(document.body, { childList: true, subtree: true });
   }
 
+  /**
+   * 防抖函数，限制函数调用频率
+   */
   function debounce(func, wait) {
     let timeout;
     return function executedFunction(...args) {
@@ -440,6 +468,9 @@
     };
   }
 
+  /**
+   * 计算页面头部的总高度
+   */
   function calculateHeaderHeight() {
     try {
       let totalHeight = 0;
@@ -452,57 +483,95 @@
         }
       });
       return Math.max(totalHeight, 0);
-    } catch {
+    } catch (e) {
+      console.error('Error calculating header height:', e);
       return 0;
     }
   }
 
+  /**
+   * 设置sticky导航栏的行为
+   */
   function setupStickyNav() {
     let lastScrollPosition = 0;
     let headerHeight = calculateHeaderHeight();
 
+    // 更新sticky状态
     function updateStickyState() {
       try {
+        // 重新计算头部高度，以防它发生变化
         headerHeight = calculateHeaderHeight();
         const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-        if (scrollY > headerHeight) stickyNav.classList.add('sticky-nav--fixed');
-        else stickyNav.classList.remove('sticky-nav--fixed');
+        
+        // 当滚动超过头部高度时，添加fixed类
+        if (scrollY > headerHeight) {
+          stickyNav.classList.add('sticky-nav--fixed');
+        } else {
+          stickyNav.classList.remove('sticky-nav--fixed');
+        }
+        
         lastScrollPosition = scrollY;
-      } catch {}
+      } catch (e) {
+        console.error('Error updating sticky state:', e);
+      }
     }
 
+    // 创建防抖处理函数
     const debouncedScrollHandler = debounce(updateStickyState, config.debounceTime);
     const debouncedResizeHandler = debounce(updateStickyState, config.debounceTime);
+    
+    // 添加事件监听器
     window.addEventListener('scroll', debouncedScrollHandler);
     window.addEventListener('resize', debouncedResizeHandler);
+    
+    // 初始更新
     updateStickyState();
   }
 
+  /**
+   * 创建按钮文本观察器，监视原始按钮文本变化
+   */
   function createButtonTextObserver(original, mirror) {
+    // 如果已存在观察器，先断开连接
     if (buttonTextObserver) buttonTextObserver.disconnect();
+    
+    // 获取文本元素
     const textElement = original.querySelector(config.cartButtonTextSelector) || original;
+    
+    // 创建新的观察器
     buttonTextObserver = new MutationObserver(() => updateButtonAppearance(original, mirror));
     buttonTextObserver.observe(textElement, { characterData: true, childList: true, subtree: true });
   }
 
+  /**
+   * 创建购物车按钮镜像
+   */
   function createButtonMirror() {
     try {
+      // 清空按钮容器
       stickyButtonContainer.innerHTML = '';
+      
+      // 断开所有观察器连接
       if (buttonMirrorObserver) buttonMirrorObserver.disconnect();
       if (buttonTextObserver) buttonTextObserver.disconnect();
       if (buttonUpdateInterval) clearInterval(buttonUpdateInterval);
 
+      // 获取原始按钮
       const originalButton = document.querySelector(config.cartButtonSelector);
+      
+      // 如果找不到原始按钮，创建一个默认按钮
       if (!originalButton) {
         stickyButtonContainer.innerHTML = `<button class="sticky-cart-btn">Add to cart</button>`;
         return;
       }
 
+      // 创建新按钮
       const newButton = document.createElement('button');
       newButton.className = 'sticky-cart-btn';
       updateButtonAppearance(originalButton, newButton);
       stickyButtonContainer.appendChild(newButton);
 
+      // 添加点击事件监听器
       newButton.addEventListener('click', function (e) {
         e.preventDefault();
         if (!newButton.disabled) {
@@ -511,6 +580,7 @@
         }
       });
 
+      // 监视原始按钮的父元素，以便在按钮被移除时重新创建
       const containerObserver = new MutationObserver((mutations) => {
         mutations.forEach(mutation => {
           if (mutation.removedNodes) {
@@ -524,34 +594,53 @@
       });
       containerObserver.observe(originalButton.parentElement, { childList: true });
 
+      // 创建按钮属性观察器
       buttonMirrorObserver = new MutationObserver(() => updateButtonAppearance(originalButton, newButton));
       buttonMirrorObserver.observe(originalButton, { attributes: true, childList: true, subtree: true });
+      
+      // 创建按钮文本观察器
       createButtonTextObserver(originalButton, newButton);
-    } catch {}
+    } catch (e) {
+      console.error('Error creating button mirror:', e);
+    }
   }
 
+  /**
+   * 启动按钮更新循环，确保按钮状态同步
+   */
   function startButtonUpdateLoop(original, mirror) {
+    // 清除现有的更新间隔
     if (buttonUpdateInterval) clearInterval(buttonUpdateInterval);
     
     let updateCount = 0;
+    // 创建新的更新间隔
     buttonUpdateInterval = setInterval(() => {
+      // 如果原始按钮不再存在，停止更新
       if (!document.body.contains(original)) {
         clearInterval(buttonUpdateInterval);
         return;
       }
       
+      // 更新按钮外观
       updateButtonAppearance(original, mirror);
       updateCount++;
       
+      // 50次更新后停止，防止无限循环
       if (updateCount > 50) clearInterval(buttonUpdateInterval);
     }, 100);
   }
 
+  /**
+   * 更新镜像按钮的外观，使其与原始按钮匹配
+   */
   function updateButtonAppearance(original, mirror) {
     try {
+      // 获取原始按钮的样式
       const styles = window.getComputedStyle(original);
+      // 获取文本元素
       const textElement = original.querySelector(config.cartButtonTextSelector) || original;
       
+      // 更新镜像按钮的属性
       mirror.textContent = textElement.textContent || 'Add to cart';
       mirror.style.backgroundColor = styles.backgroundColor;
       mirror.style.color = styles.color;
@@ -561,27 +650,44 @@
       mirror.style.borderWidth = styles.borderWidth;
       mirror.disabled = original.disabled;
       
+      // 如果原始按钮不可见，隐藏镜像按钮
       mirror.style.display = original.offsetParent ? '' : 'none';
-    } catch {}
+    } catch (e) {
+      console.error('Error updating button appearance:', e);
+    }
   }
 
+  /**
+   * 设置滚动高亮功能，突出显示当前活动的导航链接
+   */
   function setupScrollHighlighting() {
     try {
+      // 获取所有导航链接
       const navLinks = document.querySelectorAll('.sticky-nav-link');
       if (!navLinks.length) return;
 
+      // 创建交叉观察器
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
+            // 获取当前可见部分的ID
             const id = entry.target.id;
+            // 查找对应的导航链接
             const link = document.querySelector(`.sticky-nav-link[data-anchor="${id}"]`);
+            
             if (link) {
+              // 移除所有链接的高亮
               navLinks.forEach(l => l.classList.remove(config.highlightClass));
+              // 为当前链接添加高亮
               link.classList.add(config.highlightClass);
+              
+              // 如果链接在可滚动容器中，确保它可见
               if (stickyNavLinks) {
                 const linkLeft = link.getBoundingClientRect().left;
                 const containerLeft = stickyNavLinks.getBoundingClientRect().left;
                 const containerWidth = stickyNavLinks.offsetWidth;
+                
+                // 如果链接不在可见区域内，滚动到它
                 if (linkLeft < containerLeft || linkLeft > containerLeft + containerWidth) {
                   stickyNavLinks.scrollTo({
                     left: link.offsetLeft - containerWidth/2 + link.offsetWidth/2,
@@ -594,35 +700,47 @@
         });
       }, { root: null, rootMargin: '0px', threshold: 0.1 });
 
+      // 为每个导航链接设置点击事件和观察
       navLinks.forEach((link) => {
         const targetId = link.dataset.anchor;
         if (!targetId) return;
+        
         const targetElement = document.getElementById(targetId);
         if (targetElement) {
+          // 观察目标元素
           observer.observe(targetElement);
+          
+          // 添加点击事件
           link.addEventListener('click', function (e) {
             e.preventDefault();
+            // 计算目标位置，考虑偏移量
             const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
             const offsetPosition = elementPosition - config.scrollOffset;
+            // 平滑滚动到目标位置
             window.scrollTo({ top: offsetPosition, behavior: config.scrollBehavior });
           });
         }
       });
 
+      // 初始化高亮第一个部分
       const firstSection = document.querySelector('[id]');
       if (firstSection) {
         navLinks.forEach(link => link.classList.remove(config.highlightClass));
         const activeLink = document.querySelector(`.sticky-nav-link[data-anchor="${firstSection.id}"]`);
         if (activeLink) activeLink.classList.add(config.highlightClass);
       }
-    } catch {}
+    } catch (e) {
+      console.error('Error setting up scroll highlighting:', e);
+    }
   }
 
+  // 初始化所有功能
   setupZIndexManagement();
   setupStickyNav();
   createButtonMirror();
   setupScrollHighlighting();
 
+  // 添加Escape键监听器，关闭lightbox
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') {
       document.querySelectorAll('.lightbox-container').forEach(lightbox => {
