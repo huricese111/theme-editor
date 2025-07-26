@@ -642,18 +642,95 @@
       
       // 更新镜像按钮的属性
       mirror.textContent = textElement.textContent || 'Add to cart';
-      mirror.style.backgroundColor = styles.backgroundColor;
-      mirror.style.color = styles.color;
-      mirror.style.borderColor = styles.borderColor;
-      mirror.style.opacity = styles.opacity;
-      mirror.style.fontWeight = styles.fontWeight;
-      mirror.style.borderWidth = styles.borderWidth;
+      
+      // 设置禁用状态（必须在样式应用之前设置）
       mirror.disabled = original.disabled;
+      
+      // 检查原始按钮是否可用
+      const isAvailable = !original.disabled && original.textContent.toLowerCase().includes('add to cart');
+      
+      // 根据可用状态应用不同的样式
+      if (isAvailable) {
+        // 可用状态 - 黑色按钮
+        mirror.style.backgroundColor = '#000';
+        mirror.style.color = '#fff';
+        mirror.style.borderColor = '#000';
+        mirror.style.cursor = 'pointer';
+        mirror.style.opacity = '1';
+      } else if (original.disabled) {
+        // 禁用状态 - 灰色按钮
+        mirror.style.backgroundColor = '#666';
+        mirror.style.color = '#fff';
+        mirror.style.borderColor = '#666';
+        mirror.style.cursor = 'not-allowed';
+        mirror.style.opacity = '0.65';
+      } else {
+        // 其他状态 - 复制原始按钮样式
+        mirror.style.backgroundColor = styles.backgroundColor;
+        mirror.style.color = styles.color;
+        mirror.style.borderColor = styles.borderColor;
+        mirror.style.cursor = styles.cursor;
+        mirror.style.opacity = styles.opacity;
+      }
+      
+      // 始终复制这些样式属性
+      mirror.style.borderStyle = styles.borderStyle;
+      mirror.style.borderWidth = styles.borderWidth;
+      mirror.style.borderRadius = styles.borderRadius;
+      mirror.style.fontWeight = styles.fontWeight;
+      mirror.style.fontSize = styles.fontSize;
+      mirror.style.letterSpacing = styles.letterSpacing;
+      mirror.style.textTransform = styles.textTransform;
+      mirror.style.boxShadow = styles.boxShadow;
+      mirror.style.transition = styles.transition;
+      
+      // 复制类名，但保留sticky-cart-btn类
+      mirror.className = 'sticky-cart-btn';
+      if (original.disabled) {
+        mirror.classList.add('mirror-disabled');
+      }
       
       // 如果原始按钮不可见，隐藏镜像按钮
       mirror.style.display = original.offsetParent ? '' : 'none';
+      
+      // 确保CSS样式规则存在
+      ensureStyleRules();
     } catch (e) {
       console.error('Error updating button appearance:', e);
+    }
+  }
+  
+  /**
+   * 确保CSS样式规则存在
+   */
+  function ensureStyleRules() {
+    const styleId = 'mirror-button-styles';
+    if (!document.getElementById(styleId)) {
+      const style = document.createElement('style');
+      style.id = styleId;
+      style.textContent = `
+        .sticky-cart-btn {
+          background-color: #000 !important;
+          color: #fff !important;
+          border: none !important;
+          border-radius: 4px !important;
+          font-weight: 600 !important;
+          cursor: pointer !important;
+          font-size: 14px !important;
+          letter-spacing: 0.5px !important;
+          transition: all 0.3s ease !important;
+        }
+        
+        .sticky-cart-btn.mirror-disabled,
+        .sticky-cart-btn:disabled {
+          background-color: #666 !important;
+          color: #fff !important;
+          border-color: #666 !important;
+          cursor: not-allowed !important;
+          opacity: 0.65 !important;
+        }
+      `;
+      document.head.appendChild(style);
     }
   }
 
