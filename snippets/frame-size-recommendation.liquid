@@ -1,0 +1,27 @@
+<div id="frame-recommendation" style="max-width:400px;margin:20px auto;padding:20px;border:1px solid #ddd;border-radius:8px;font-family:Arial,sans-serif;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+  <label for="user-height" style="display:block;margin-bottom:8px;font-weight:600;color:#333;">Enter your height (cm):</label>
+  <input type="number" id="user-height" min="140" max="200" placeholder="e.g. 170" style="width:100%;padding:10px 12px;margin-bottom:12px;border:1px solid #ccc;border-radius:4px;font-size:16px;" />
+  <button type="button" onclick="recommendFrame()" style="width:100%;padding:12px;background:#007bff;color:#fff;border:none;border-radius:4px;font-size:16px;cursor:pointer;transition:background-color 0.3s ease;">Get Recommendation</button>
+  <p id="recommendation-result" style="margin-top:16px;font-size:16px;color:#555;min-height:24px;"></p>
+</div>
+
+<script>
+function recommendFrame() {
+  var height = parseInt(document.getElementById('user-height').value);
+  var result = '';
+  if (isNaN(height)) {
+    result = 'Please enter a valid height.';
+  } else if (height < 150) {
+    result = 'Recommended frame: Step-Through / Low Step, Size M.';
+  } else if (height >= 150 && height < 165) {
+    result = 'Recommended frame: Step-Through / Low Step, Size L.';
+  } else if (height >= 165 && height < 175) {
+    result = 'Recommended frame: High Step, Size M.';
+  } else if (height >= 175) {
+    result = 'Recommended frame: High Step, Size L.';
+  } else {
+    result = 'Unable to recommend a frame size. Please contact sales.';
+  }
+  document.getElementById('recommendation-result').textContent = result;
+}
+</script>

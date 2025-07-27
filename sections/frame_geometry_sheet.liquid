@@ -1258,296 +1258,317 @@
 
 {{ 'section-basestyles.css' | asset_url | stylesheet_tag }}
 
-{% assign locale_prefix = request.locale.iso_code | slice: 0, 2 | downcase %}
+{%- assign section_title = section.settings.title -%}
+{%- if request.locale.iso_code == 'de' and section.settings.title_de != blank -%}
+  {%- assign section_title = section.settings.title_de -%}
+{%- elsif request.locale.iso_code == 'fr' and section.settings.title_fr != blank -%}
+  {%- assign section_title = section.settings.title_fr -%}
+{%- elsif request.locale.iso_code == 'fi' and section.settings.title_fi != blank -%}
+  {%- assign section_title = section.settings.title_fi -%}
+{%- endif -%}
 
-{% capture section_title %}
-  {% case locale_prefix %}
-    {% when 'de' %}{{ section.settings.title_de | default: section.settings.title_de }}
-    {% when 'fr' %}{{ section.settings.title_fr | default: section.settings.title_fr }}
-    {% when 'fi' %}{{ section.settings.title_fi | default: section.settings.title_fi }}
-    {% else %}{{ section.settings.title }}
-  {% endcase %}
-{% endcapture %}
-
-<div id="custom-frame-geometry" class="product-content-section">
+<section id="custom-frame-geometry" class="full-width-section">
   <div class="container">
     <h2 class="section-title">
       {{ section_title | escape }}
     </h2>
 
-  <div class="custom-size-tabs" role="tablist">
-    <div class="tab-item-size active" role="tab" data-target="framesize">Frame Size</div>
-    {% for block in section.blocks %}
-      {% case block.type %}
-        {% when 'step_through' %}
-          <div class="tab-item-size" role="tab" data-target="stepthrough-{{ forloop.index }}">Step Through</div>
-        {% when 'low_step' %}
-          <div
-            class="tab-item-size"
-            data-target="lowstep-{{ forloop.index }}"
-          >
-            Low Step
-          </div>
-        {% when 'high_step' %}
-          <div class="tab-item-size" role="tab" data-target="highstep-{{ forloop.index }}">High Step</div>
-        {% when 'mountain' %}
-          <div class="tab-item-size" role="tab" data-target="mountain-{{ forloop.index }}">Geometry</div>
-        {% when 'carbon' %}
-          <div class="tab-item-size" role="tab" data-target="carbon-{{ forloop.index }}">Geometry</div>
-      {% endcase %}
-    {% endfor %}
-  </div>
-
-  <div class="tab-content-area">
-    <div id="framesize" class="sizetab-panel active" role="tabpanel">
-      <div class="geometry-viewer">
-        {% if section.settings.geometry_type == 'custom' and section.settings.custom_geometry_image %}
-          {% assign geometry_img = section.settings.custom_geometry_image %}
-          <img
-            src="{{ geometry_img | img_url: '2400x' }}"
-            alt="Bike Geometry Diagram"
-            class="geometry-image"
-            loading="eager"
-          >
-        {% else %}
-          {% assign img_name = false %}
-          {% if section.settings.geometry_type == 'trekking' %}
-            {% assign img_name = 'Trekking 7.png' %}
-          {% elsif section.settings.geometry_type == 'mountain' %}
-            {% assign img_name = 'mountain7.png' %}
-          {% elsif section.settings.geometry_type == 'city' %}
-            {% assign img_name = 'City_frame.png' %}
-          {% endif %}
-
-          {% if img_name %}
-            <img
-              src="{{ img_name | asset_url }}"
-              alt="Bike Geometry Diagram"
-              class="geometry-image"
-              loading="eager"
+    <div class="custom-size-tabs" role="tablist">
+      <div class="tab-item-size active" role="tab" data-target="framesize">Frame Size</div>
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'step_through' %}
+            <div class="tab-item-size" role="tab" data-target="stepthrough-{{ forloop.index }}">Step Through</div>
+          {% when 'low_step' %}
+            <div
+              class="tab-item-size"
+              data-target="lowstep-{{ forloop.index }}"
             >
-          {% endif %}
-        {% endif %}
-      </div>
+              Low Step
+            </div>
+          {% when 'high_step' %}
+            <div class="tab-item-size" role="tab" data-target="highstep-{{ forloop.index }}">High Step</div>
+          {% when 'mountain' %}
+            <div class="tab-item-size" role="tab" data-target="mountain-{{ forloop.index }}">Geometry</div>
+          {% when 'carbon' %}
+            <div class="tab-item-size" role="tab" data-target="carbon-{{ forloop.index }}">Geometry</div>
+        {% endcase %}
+      {% endfor %}
     </div>
 
-    {% for block in section.blocks %}
-      {% case block.type %}
-        {% when 'step_through' %}
-          <div id="stepthrough-{{ forloop.index }}" class="sizetab-panel" role="tabpanel">
-            <div class="sizechart-two-column-layout">
-              <div class="sizechart-column">
-                <div class="geometry-viewer">
-                  {% if block.settings.step_through_image %}
-                    <img
-                      src="{{ block.settings.step_through_image | img_url: '2000x' }}"
-                      alt="Step Through Geometry"
-                      class="geometry-image"
-                      loading="eager"
-                    >
-                  {% else %}
-                    <img
-                      src="{{ 'hepha_trekking7_geo_step.png' | asset_url }}"
-                      alt="Step Through Geometry"
-                      class="geometry-image"
-                      loading="eager"
-                    >
-                  {% endif %}
+    <div class="tab-content-area">
+      <div id="framesize" class="sizetab-panel active" role="tabpanel">
+        <div class="geometry-viewer">
+          {% if section.settings.geometry_type == 'custom' and section.settings.custom_geometry_image %}
+            {% assign geometry_img = section.settings.custom_geometry_image %}
+            <img
+              src="{{ geometry_img | img_url: '2400x' }}"
+              alt="Bike Geometry Diagram"
+              class="geometry-image"
+              width="2400"
+              height="1600"
+              loading="eager"
+            >
+          {% else %}
+            {% assign img_name = false %}
+            {% if section.settings.geometry_type == 'trekking' %}
+              {% assign img_name = 'Trekking 7.png' %}
+            {% elsif section.settings.geometry_type == 'mountain' %}
+              {% assign img_name = 'mountain7.png' %}
+            {% elsif section.settings.geometry_type == 'city' %}
+              {% assign img_name = 'City_frame.png' %}
+            {% endif %}
+
+            {% if img_name %}
+              <img
+                src="{{ img_name | asset_url }}"
+                alt="Bike Geometry Diagram"
+                class="geometry-image"
+                width="2400"
+                height="1600"
+                loading="eager"
+              >
+            {% endif %}
+          {% endif %}
+        </div>
+      </div>
+
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'step_through' %}
+            <div id="stepthrough-{{ forloop.index }}" class="sizetab-panel" role="tabpanel">
+              <div class="sizechart-two-column-layout">
+                <div class="sizechart-column">
+                  <div class="geometry-viewer">
+                    {% if block.settings.step_through_image %}
+                      <img
+                        src="{{ block.settings.step_through_image | img_url: '2000x' }}"
+                        alt="Step Through Geometry"
+                        class="geometry-image"
+                        width="2000"
+                        height="1333"
+                        loading="eager"
+                      >
+                    {% else %}
+                      <img
+                        src="{{ 'hepha_trekking7_geo_step.png' | asset_url }}"
+                        alt="Step Through Geometry"
+                        class="geometry-image"
+                        width="2000"
+                        height="1333"
+                        loading="eager"
+                      >
+                    {% endif %}
+                  </div>
                 </div>
-              </div>
-              <div class="sizechart-column">
-                <div class="table-container">
-                  {% render 'frame-size-table',
-                    block: block,
-                    type: 'step_through',
-                    show_size_s: block.settings.show_size_s
-                  %}
+                <div class="sizechart-column">
+                  <div class="table-container">
+                    {% render 'frame-size-table',
+                      block: block,
+                      type: 'step_through',
+                      show_size_s: block.settings.show_size_s
+                    %}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-        {% when 'low_step' %}
-          <div id="lowstep-{{ forloop.index }}" class="sizetab-panel" role="tabpanel">
-            <div class="sizechart-two-column-layout">
-              <div class="sizechart-column">
-                <div class="geometry-viewer">
-                  {% if block.settings.low_step_image %}
-                    <img
-                      src="{{ block.settings.low_step_image | img_url: '2000x' }}"
-                      alt="Low Step Geometry"
-                      class="geometry-image"
-                      loading="eager"
-                    >
-                  {% else %}
-                    <img
-                      src="{{ 'hepha_trekking7_geo_step.png' | asset_url }}"
-                      alt="Low Step Geometry"
-                      class="geometry-image"
-                      loading="eager"
-                    >
-                  {% endif %}
+          {% when 'low_step' %}
+            <div id="lowstep-{{ forloop.index }}" class="sizetab-panel" role="tabpanel">
+              <div class="sizechart-two-column-layout">
+                <div class="sizechart-column">
+                  <div class="geometry-viewer">
+                    {% if block.settings.low_step_image %}
+                      <img
+                        src="{{ block.settings.low_step_image | img_url: '2000x' }}"
+                        alt="Low Step Geometry"
+                        class="geometry-image"
+                        width="2000"
+                        height="1333"
+                        loading="eager"
+                      >
+                    {% else %}
+                      <img
+                        src="{{ 'hepha_trekking7_geo_high.png' | asset_url }}"
+                        alt="Low Step Geometry"
+                        class="geometry-image"
+                        width="2000"
+                        height="1333"
+                        loading="eager"
+                      >
+                    {% endif %}
+                  </div>
                 </div>
-              </div>
-              <div class="sizechart-column">
-                <div class="table-container">
-                  {% render 'frame-size-table', block: block, type: 'low_step' %}
+                <div class="sizechart-column">
+                  <div class="table-container">
+                    {% render 'frame-size-table', block: block, type: 'low_step' %}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-        {% when 'high_step' %}
-          <div id="highstep-{{ forloop.index }}" class="sizetab-panel" role="tabpanel">
-            <div class="sizechart-two-column-layout">
-              <div class="sizechart-column">
-                <div class="geometry-viewer">
-                  {% if block.settings.high_step_image %}
-                    <img
-                      src="{{ block.settings.high_step_image | img_url: '2000x' }}"
-                      alt="High Step Geometry"
-                      class="geometry-image"
-                      loading="eager"
-                    >
-                  {% else %}
-                    <img
-                      src="{{ 'hepha_trekking7_geo_high.png' | asset_url }}"
-                      alt="High Step Geometry"
-                      class="geometry-image"
-                      loading="eager"
-                    >
-                  {% endif %}
+          {% when 'high_step' %}
+            <div id="highstep-{{ forloop.index }}" class="sizetab-panel" role="tabpanel">
+              <div class="sizechart-two-column-layout">
+                <div class="sizechart-column">
+                  <div class="geometry-viewer">
+                    {% if block.settings.high_step_image %}
+                      <img
+                        src="{{ block.settings.high_step_image | img_url: '2000x' }}"
+                        alt="High Step Geometry"
+                        class="geometry-image"
+                        width="2000"
+                        height="1333"
+                        loading="eager"
+                      >
+                    {% else %}
+                      <img
+                        src="{{ 'hepha_trekking7_geo_high.png' | asset_url }}"
+                        alt="High Step Geometry"
+                        class="geometry-image"
+                        width="2000"
+                        height="1333"
+                        loading="eager"
+                      >
+                    {% endif %}
+                  </div>
                 </div>
-              </div>
-              <div class="sizechart-column">
-                <div class="table-container">
-                  {% render 'frame-size-table',
-                    block: block,
-                    type: 'high_step',
-                    show_size_xl: block.settings.show_size_xl
-                  %}
+                <div class="sizechart-column">
+                  <div class="table-container">
+                    {% render 'frame-size-table',
+                      block: block,
+                      type: 'high_step',
+                      show_size_xl: block.settings.show_size_xl
+                    %}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-        {% when 'mountain' %}
-          <div id="mountain-{{ forloop.index }}" class="sizetab-panel" role="tabpanel">
-            <div class="sizechart-two-column-layout">
-              <div class="sizechart-column">
-                <div class="geometry-viewer">
-                  {% if block.settings.mountain_image %}
-                    <img
-                      src="{{ block.settings.mountain_image | img_url: '2000x' }}"
-                      alt="Mountain Geometry"
-                      class="geometry-image"
-                      loading="eager"
-                    >
-                  {% else %}
-                    <img
-                      src="{{ 'hepha_trekking7_geo_high.png' | asset_url }}"
-                      alt="Mountain Geometry"
-                      class="geometry-image"
-                      loading="eager"
-                    >
-                  {% endif %}
+          {% when 'mountain' %}
+            <div id="mountain-{{ forloop.index }}" class="sizetab-panel" role="tabpanel">
+              <div class="sizechart-two-column-layout">
+                <div class="sizechart-column">
+                  <div class="geometry-viewer">
+                    {% if block.settings.mountain_image %}
+                      <img
+                        src="{{ block.settings.mountain_image | img_url: '2000x' }}"
+                        alt="Mountain Geometry"
+                        class="geometry-image"
+                        width="2000"
+                        height="1333"
+                        loading="eager"
+                      >
+                    {% else %}
+                      <img
+                        src="{{ 'hepha_trekking7_geo_high.png' | asset_url }}"
+                        alt="Mountain Geometry"
+                        class="geometry-image"
+                        width="2000"
+                        height="1333"
+                        loading="eager"
+                      >
+                    {% endif %}
+                  </div>
                 </div>
-              </div>
-              <div class="sizechart-column">
-                <div class="table-container">
-                  {% render 'frame-size-table', block: block, type: 'mountain' %}
+                <div class="sizechart-column">
+                  <div class="table-container">
+                    {% render 'frame-size-table', block: block, type: 'mountain' %}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-        {% when 'carbon' %}
-          <div id="carbon-{{ forloop.index }}" class="sizetab-panel" role="tabpanel">
-            <div class="sizechart-two-column-layout">
-              <div class="sizechart-column">
-                <div class="geometry-viewer">
-                  {% if block.settings.carbon_image %}
-                    <img
-                      src="{{ block.settings.carbon_image | img_url: '2000x' }}"
-                      alt="Mountain Carbon Geometry"
-                      class="geometry-image"
-                      loading="eager"
-                    >
-                  {% else %}
-                    <img
-                      src="{{ 'geo_moutntain_carbon-02_1.png' | asset_url }}"
-                      alt="Mountain Carbon Geometry"
-                      class="geometry-image"
-                      loading="eager"
-                    >
-                  {% endif %}
+          {% when 'carbon' %}
+            <div id="carbon-{{ forloop.index }}" class="sizetab-panel" role="tabpanel">
+              <div class="sizechart-two-column-layout">
+                <div class="sizechart-column">
+                  <div class="geometry-viewer">
+                    {% if block.settings.carbon_image %}
+                      <img
+                        src="{{ block.settings.carbon_image | img_url: '2000x' }}"
+                        alt="Mountain Carbon Geometry"
+                        class="geometry-image"
+                        width="2000"
+                        height="1333"
+                        loading="eager"
+                      >
+                    {% else %}
+                      <img
+                        src="{{ 'geo_moutntain_carbon-02_1.png' | asset_url }}"
+                        alt="Mountain Carbon Geometry"
+                        class="geometry-image"
+                        width="2000"
+                        height="1333"
+                        loading="eager"
+                      >
+                    {% endif %}
+                  </div>
                 </div>
-              </div>
-              <div class="sizechart-column">
-                <div class="table-container">
-                  {% render 'frame-size-table', block: block, type: 'carbon' %}
+                <div class="sizechart-column">
+                  <div class="table-container">
+                    {% render 'frame-size-table', block: block, type: 'carbon' %}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-      {% endcase %}
-    {% endfor %}
-  </div>
+        {% endcase %}
+      {% endfor %}
+    </div>
 
-  <div class="container">
     {% if request.locale.iso_code == 'en' %}
-    <p class="infotext">
-      The e-bikes illustrated may differ in individual details from the standard model and may show special equipment at
-      an extra charge. All information on the scope of delivery, appearance, performance, dimensions and weights of the
-      bikes is non-binding and subject to component availability, errors, printing, typesetting and typing errors; we
-      reserve the right to make changes at any time. No rights can be derived from incorrect information. Please note
-      that model specifications may vary from country to country; for more information, please contact your authorized
-      dealer. *All prices are recommended retail prices including the applicable statutory VAT.
-    </p>
-  {% elsif request.locale.iso_code == 'de' %}
-    <p class="infotext">
-      Die abgebildeten E-Bikes können in einzelnen Details vom Serienmodell abweichen und teilweise Sonderausstattung
-      gegen Mehrpreis zeigen. Alle Angaben über Lieferumfang, Aussehen, Leistungen, Maße und Gewichte der Fahrräder
-      werden unverbindlich und unter dem Vorbehalt von Komponentenverfügbarkeit, Irrtümern, Druck-, Satz- und
-      "Tippfehlern gemacht; diesbezügliche Änderungen bleiben jederzeit vorbehalten. Aus unzutreffenden Angaben können
-      keine Rechte abgeleitet werden. Bitte beachten Sie, dass die Modellspezifikationen von Land zu Land variieren
-      können; nähere Informationen hat Ihr autorisierter Vertragshändler. *Alle Preise sind unverbindliche
-      Preisempfehlungen inklusive der gültigen gesetzlichen MWST.
-    </p>
-  {% elsif request.locale.iso_code == 'fr' %}
-    <p class="infotext">
-      Les vélos électriques illustrés peuvent différer du modèle standard dans certains détails et présenter des
-      équipements spéciaux moyennant un supplément de prix. Toutes les informations relatives à l'étendue de la
-      livraison, à l'aspect, aux performances, aux dimensions et au poids des vélos sont sans engagement et sous réserve
-      de la disponibilité des composants, d'erreurs, de fautes d'impression, de composition et de frappe ; nous nous
-      réservons le droit de procéder à des modifications à tout moment. Aucun droit ne peut être tiré d'informations
-      incorrectes. Veuillez noter que les spécifications des modèles peuvent varier d'un pays à l'autre. Pour plus
-      d'informations, veuillez contacter votre revendeur agréé. *Tous les prix sont des prix de vente recommandés
-      incluant la TVA légale applicable.
-    </p>
-  {% elsif request.locale.iso_code == 'fi' %}
-    <p class="infotext">
-      Kuvatut sähköpyörät saattavat poiketa yksityiskohdissaan vakiomallista ja niissä voi olla erikoisvarusteita
-      lisämaksusta. Kaikki tiedot toimitussisällöstä, ulkonäöstä, suorituskyvystä, mitoista ja pyörien painoista ovat
-      sitoumuksettomia ja riippuvat komponenttien saatavuudesta, virheistä, paino-, asettelu- ja kirjoitusvirheistä;
-      pidätämme oikeuden tehdä muutoksia milloin tahansa. Virheellisistä tiedoista ei voi johtaa oikeuksia. Huomioithan,
-      että mallikohtaiset tiedot voivat vaihdella maittain; lisätietoja saat valtuutetulta jälleenmyyjältäsi. *Kaikki
-      hinnat ovat suositushintoja, jotka sisältävät voimassa olevan lakisääteisen arvonlisäveron.
-    </p>
-  {% else %}
-    <p class="infotext">
-      Les vélos électriques illustrés peuvent différer du modèle standard dans certains détails et présenter des
-      équipements spéciaux moyennant un supplément de prix. Toutes les informations relatives à l'étendue de la
-      livraison, à l'aspect, aux performances, aux dimensions et au poids des vélos sont sans engagement et sous réserve
-      de la disponibilité des composants, d'erreurs, de fautes d'impression, de composition et de frappe ; nous nous
-      réservons le droit de procéder à des modifications à tout moment. Aucun droit ne peut être tiré d'informations
-      incorrectes. Veuillez noter que les spécifications des modèles peuvent varier d'un pays à l'autre. Pour plus
-      d'informations, veuillez contacter votre revendeur agréé. *Tous les prix sont des prix de vente recommandés
-      incluant la TVA légale applicable.
-    </p>
-  {% endif %}
+      <p class="infotext">
+        The e-bikes illustrated may differ in individual details from the standard model and may show special equipment at
+        an extra charge. All information on the scope of delivery, appearance, performance, dimensions and weights of the
+        bikes is non-binding and subject to component availability, errors, printing, typesetting and typing errors; we
+        reserve the right to make changes at any time. No rights can be derived from incorrect information. Please note
+        that model specifications may vary from country to country; for more information, please contact your authorized
+        dealer. *All prices are recommended retail prices including the applicable statutory VAT.
+      </p>
+    {% elsif request.locale.iso_code == 'de' %}
+      <p class="infotext">
+        Die abgebildeten E-Bikes können in einzelnen Details vom Serienmodell abweichen und teilweise Sonderausstattung
+        gegen Mehrpreis zeigen. Alle Angaben über Lieferumfang, Aussehen, Leistungen, Maße und Gewichte der Fahrräder
+        werden unverbindlich und unter dem Vorbehalt von Komponentenverfügbarkeit, Irrtümern, Druck-, Satz- und
+        "Tippfehlern gemacht; diesbezügliche Änderungen bleiben jederzeit vorbehalten. Aus unzutreffenden Angaben können
+        keine Rechte abgeleitet werden. Bitte beachten Sie, dass die Modellspezifikationen von Land zu Land variieren
+        können; nähere Informationen hat Ihr autorisierter Vertragshändler. *Alle Preise sind unverbindliche
+        Preisempfehlungen inklusive der gültigen gesetzlichen MWST.
+      </p>
+    {% elsif request.locale.iso_code == 'fr' %}
+      <p class="infotext">
+        Les vélos électriques illustrés peuvent différer du modèle standard dans certains détails et présenter des
+        équipements spéciaux moyennant un supplément de prix. Toutes les informations relatives à l'étendue de la
+        livraison, à l'aspect, aux performances, aux dimensions et au poids des vélos sont sans engagement et sous réserve
+        de la disponibilité des composants, d'erreurs, de fautes d'impression, de composition et de frappe ; nous nous
+        réservons le droit de procéder à des modifications à tout moment. Aucun droit ne peut être tiré d'informations
+        incorrectes. Veuillez noter que les spécifications des modèles peuvent varier d'un pays à l'autre. Pour plus
+        d'informations, veuillez contacter votre revendeur agréé. *Tous les prix sont des prix de vente recommandés
+        incluant la TVA légale applicable.
+      </p>
+    {% elsif request.locale.iso_code == 'fi' %}
+      <p class="infotext">
+        Kuvatut sähköpyörät saattavat poiketa yksityiskohdissaan vakiomallista ja niissä voi olla erikoisvarusteita
+        lisämaksusta. Kaikki tiedot toimitussisällöstä, ulkonäöstä, suorituskyvystä, mitoista ja pyörien painoista ovat
+        sitoumuksettomia ja riippuvat komponenttien saatavuudesta, virheistä, paino-, asettelu- ja kirjoitusvirheistä;
+        pidätämme oikeuden tehdä muutoksia milloin tahansa. Virheellisistä tiedoista ei voi johtaa oikeuksia. Huomioithan,
+        että mallikohtaiset tiedot voivat vaihdella maittain; lisätietoja saat valtuutetulta jälleenmyyjältäsi. *Kaikki
+        hinnat ovat suositushintoja, jotka sisältävät voimassa olevan lakisääteisen arvonlisäveron.
+      </p>
+    {% else %}
+      <p class="infotext">
+        Les vélos électriques illustrés peuvent différer du modèle standard dans certains détails et présenter des
+        équipements spéciaux moyennant un supplément de prix. Toutes les informations relatives à l'étendue de la
+        livraison, à l'aspect, aux performances, aux dimensions et au poids des vélos sont sans engagement et sous réserve
+        de la disponibilité des composants, d'erreurs, de fautes d'impression, de composition et de frappe ; nous nous
+        réservons le droit de procéder à des modifications à tout moment. Aucun droit ne peut être tiré d'informations
+        incorrectes. Veuillez noter que les spécifications des modèles peuvent varier d'un pays à l'autre. Pour plus
+        d'informations, veuillez contacter votre revendeur agréé. *Tous les prix sont des prix de vente recommandés
+        incluant la TVA légale applicable.
+      </p>
+    {% endif %}
   </div>
-</div>
+</section>
 
 <script>
   const frameSizeViewer = document.querySelector('#framesize .geometry-viewer');
@@ -1618,7 +1639,7 @@
 </script>
 
 <style>
-  #custom-frame-geometry .geometry-viewer {
+  .geometry-viewer {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     margin: 0 auto;
@@ -1628,7 +1649,7 @@
     position: relative;
   }
 
-  #custom-frame-geometry .geometry-image {
+  .geometry-image {
     width: 100%;
     max-width: 100%;
     height: auto;
@@ -1637,7 +1658,7 @@
     object-fit: contain;
   }
 
-  #custom-frame-geometry .swipe-hint {
+  .swipe-hint {
     position: absolute;
     bottom: 10px;
     left: 50%;
@@ -1664,13 +1685,10 @@
     }
   }
 
-  #custom-frame-geometry .section-title {
-    font-size: 30px;
-    margin-bottom: 20px;
-    text-align: left;
-  }
+  /* 移除与基础样式冲突的样式 */
+  /* .explore-title 和 .product-content-section 样式已被基础样式替代 */
 
-  #custom-frame-geometry .custom-size-tabs {
+  .custom-size-tabs {
     display: flex;
     margin-bottom: 20px;
     flex-wrap: wrap;
@@ -1680,11 +1698,11 @@
     scrollbar-width: none;
   }
   
-  #custom-frame-geometry .custom-size-tabs::-webkit-scrollbar {
+  .custom-size-tabs::-webkit-scrollbar {
     display: none;
   }
 
-  #custom-frame-geometry .tab-item-size {
+  .tab-item-size {
     padding: 10px 24px;
     background: #ffffff;
     cursor: pointer;
@@ -1694,19 +1712,19 @@
     border: none;
   }
 
-  #custom-frame-geometry .tab-item-size.active {
+  .tab-item-size.active {
     background: #000;
     color: #fff;
     font-weight: 500;
   }
   
-  #custom-frame-geometry .tab-item-size:hover:not(.active) {
+  .tab-item-size:hover:not(.active) {
     background: #e6e6e6;
     transform: translateY(-2px);
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   }
 
-  #custom-frame-geometry .sizetab-panel {
+  .sizetab-panel {
     display: none;
     background-color: #f8f8f8;
     padding: 25px;
@@ -1716,7 +1734,7 @@
     transition: all 0.3s ease;
   }
 
-  #custom-frame-geometry .sizetab-panel.active {
+  .sizetab-panel.active {
     display: block;
     animation: fadeIn 0.3s ease-in-out;
   }
@@ -1726,18 +1744,18 @@
     to { opacity: 1; }
   }
 
-  #custom-frame-geometry .sizechart-two-column-layout {
+  .sizechart-two-column-layout {
     display: flex;
     justify-content: space-between;
     gap: 20px;
   }
 
-  #custom-frame-geometry .sizechart-column {
+  .sizechart-column {
     width: 50%;
     box-sizing: border-box;
   }
 
-  #custom-frame-geometry table.pf-inner-table {
+  table.pf-inner-table {
     width: 100%;
     border-collapse: collapse;
     border: none;
@@ -1746,15 +1764,15 @@
     font-size: 14px;
   }
 
-  #custom-frame-geometry table.pf-inner-table th,
-  #custom-frame-geometry table.pf-inner-table td {
+  table.pf-inner-table th,
+  table.pf-inner-table td {
     border: none;
     padding: 12px 16px;
     text-align: left;
     border-bottom: 1px solid #e0e0e0;
   }
 
-  #custom-frame-geometry table.pf-inner-table th {
+  table.pf-inner-table th {
     background-color: transparent;
     font-weight: 600;
     color: #333;
@@ -1763,25 +1781,25 @@
     border-bottom: 2px solid #d0d0d0;
   }
   
-  #custom-frame-geometry table.pf-inner-table tr:last-child td {
+  table.pf-inner-table tr:last-child td {
     border-bottom: none;
   }
   
-  #custom-frame-geometry table.pf-inner-table tr:hover {
+  table.pf-inner-table tr:hover {
     background-color: rgba(0,0,0,0.02);
   }
   
-  #custom-frame-geometry table.pf-inner-table td:first-child {
+  table.pf-inner-table td:first-child {
     font-weight: 500;
     color: #666;
     width: 40px;
   }
   
-  #custom-frame-geometry table.pf-inner-table td:nth-child(2) {
+  table.pf-inner-table td:nth-child(2) {
     font-weight: 500;
   }
 
-  #custom-frame-geometry .infotext {
+  .infotext {
     font-weight: 400;
     font-size: 12px;
     color: #666;
@@ -1790,51 +1808,43 @@
     line-height: 1.6;
   }
 
-  #custom-frame-geometry #framesize {
+  #framesize {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
     min-height: 400px;
   }
 
-  #custom-frame-geometry .table-container {
+  .table-container {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
 
-  #custom-frame-geometry .pf-inner-table {
+  .pf-inner-table {
     min-width: 600px;
   }
 
   @media (min-width: 769px) {
-    #custom-frame-geometry .geometry-viewer {
+    .geometry-viewer {
       overflow-x: hidden;
     }
   }
 
   @media (max-width: 768px) {
-    #custom-frame-geometry .sizetab-panel{
-      width: 100%;
+    .geometry-viewer {
       padding: 0;
+      width: calc(100% + 30px);
+      margin-left: -15px;
     }
 
-    #custom-frame-geometry .tab-content-area {
-      width: 100%;
-    }
-
-    #custom-frame-geometry .geometry-viewer {
-      padding: 0 15px;
-      width: 100%; 
-      margin-left: 0; 
-    }
-
-    #custom-frame-geometry .geometry-image {
+    .geometry-image {
       height: auto;
       max-height: 280px;
+      min-width: 100%;
       width: 100%;
     }
 
-    #custom-frame-geometry .custom-size-tabs {
+    .custom-size-tabs {
       flex-direction: row;
       overflow-x: auto;
       padding-bottom: 10px;
@@ -1842,7 +1852,7 @@
       white-space: nowrap;
     }
     
-    #custom-frame-geometry .tab-item-size {
+    .tab-item-size {
       display: inline-block;
       margin-bottom: 0;
       font-size: 14px;
@@ -1851,43 +1861,46 @@
       white-space: nowrap;
     }
 
-    #custom-frame-geometry .sizechart-two-column-layout {
+    #custom-frame-geometry .tab-content-area {
+      width: 100%;
+    }
+
+    .sizechart-two-column-layout {
       flex-direction: column;
     }
 
-    #custom-frame-geometry .sizechart-column {
+    .sizechart-column {
       width: 100%;
     }
 
-    #custom-frame-geometry .table-container {
+    .table-container {
       width: 100%;
       overflow-x: auto;
-      padding: 0 15px;
     }
 
-    #custom-frame-geometry .pf-inner-table {
+    .pf-inner-table {
       min-width: 100%;
       width: 100%;
     }
 
-    #custom-frame-geometry table.pf-inner-table {
+    table.pf-inner-table {
       font-size: 12px;
     }
 
-    #custom-frame-geometry table.pf-inner-table th,
-    #custom-frame-geometry table.pf-inner-table td {
+    table.pf-inner-table th,
+    table.pf-inner-table td {
       padding: 6px 8px;
       white-space: nowrap;
     }
 
-    #custom-frame-geometry #framesize .geometry-viewer {
+    #framesize .geometry-viewer {
       height: 300px;
       display: flex;
       align-items: center;
       justify-content: flex-start;
     }
 
-    #custom-frame-geometry #framesize .geometry-image {
+    #framesize .geometry-image {
       height: 100%;
       width: auto;
       min-width: auto;
@@ -1897,21 +1910,21 @@
     }
 
     /* 滑动提示显示在Frame Size页卡 */
-    #custom-frame-geometry #framesize .swipe-hint {
+    #framesize .swipe-hint {
       display: block;
     }
 
     /* 其他页卡保持图片在上、表格在下 */
-    #custom-frame-geometry .sizetab-panel:not(#framesize) .sizechart-two-column-layout {
+    .sizetab-panel:not(#framesize) .sizechart-two-column-layout {
       flex-direction: column;
     }
 
-    #custom-frame-geometry .sizetab-panel:not(#framesize) .sizechart-column:first-child {
+    .sizetab-panel:not(#framesize) .sizechart-column:first-child {
       order: 1;
       margin-bottom: 20px;
     }
 
-    #custom-frame-geometry .sizetab-panel:not(#framesize) .sizechart-column:last-child {
+    .sizetab-panel:not(#framesize) .sizechart-column:last-child {
       order: 2;
     }
   }
