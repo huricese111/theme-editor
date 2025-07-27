@@ -72,6 +72,8 @@
   ============================================================================
 {% endcomment %}
 
+{{ 'section-basestyles.css' | asset_url | stylesheet_tag }}
+
 {% assign locale_prefix = request.locale.iso_code | slice: 0, 2 | downcase %}
 
 {% capture section_title %}
@@ -93,8 +95,8 @@
 {% endcapture %}
 
 <div
+  id="custom-blog-carousel-{{ section.id }}"
   class="blog-carousel-section"
-  id="blog-carousel-{{ section.id }}"
   style="
     --button-bg: {{ section.settings.button_background_color | default: '#ffffff' }};
     --button-text: {{ section.settings.button_text_color | default: '#222222' }};
@@ -102,75 +104,76 @@
     --button-hover-text: {{ section.settings.button_hover_text_color | default: '#ffffff' }};
   "
 >
-  <div class="carousel-header">
-    <h2 class="section-title">
-      {{ section_title | escape }}
-    </h2>
-  </div>
+  <div class="container">
+    <div class="carousel-header">
+      <h2 class="section-title">
+        {{ section_title | escape }}
+      </h2>
+    </div>
 
-  <div class="carousel-outer">
-    <div class="carousel-container">
-      <div class="carousel-track">
-        <div class="carousel-slides" id="carousel-slides-{{ section.id }}">
-          {% assign articles_count = section.blocks | size %}
-          {% for block in section.blocks %}
-            {% assign article = block.settings.selected_article %}
-            {% if article != blank %}
-              <div class="carousel-slide">
-                <div class="slide-image">
-                  <a href="{{ article.url }}">
-                    {%- liquid
-                      assign loading = 'lazy'
-                      if forloop.index < 4
-                        assign loading = 'eager'
-                      endif
-                      assign has_image = article.image | default: false
-                    -%}
-                    {%- if has_image -%}
-                      <img
-                        src="{{ article.image | img_url: '600x' }}"
-                        loading="{{ loading }}"
-                        alt="{{ article.image.alt | escape }}"
-                        class="article-image"
-                      >
-                    {%- else -%}
-                      <div class="image-placeholder">{{ 'image' | placeholder_svg_tag }}</div>
-                    {%- endif -%}
-                  </a>
-                </div>
-
-                <div class="slide-content">
-                  <div class="article-meta">
-                    <span class="article-date">{{ article.published_at | date: '%b %d, %Y' }}</span>
+    <div class="carousel-outer">
+      <div class="carousel-container">
+        <div class="carousel-track">
+          <div class="carousel-slides" id="carousel-slides-{{ section.id }}">
+            {% assign articles_count = section.blocks | size %}
+            {% for block in section.blocks %}
+              {% assign article = block.settings.selected_article %}
+              {% if article != blank %}
+                <div class="carousel-slide">
+                  <div class="slide-image">
+                    <a href="{{ article.url }}">
+                      {%- liquid
+                        assign loading = 'lazy'
+                        if forloop.index < 4
+                          assign loading = 'eager'
+                        endif
+                        assign has_image = article.image | default: false
+                      -%}
+                      {%- if has_image -%}
+                        <img
+                          src="{{ article.image | img_url: '600x' }}"
+                          loading="{{ loading }}"
+                          alt="{{ article.image.alt | escape }}"
+                          class="article-image"
+                        >
+                      {%- else -%}
+                        <div class="image-placeholder">{{ 'image' | placeholder_svg_tag }}</div>
+                      {%- endif -%}
+                    </a>
                   </div>
-                  <a href="{{ article.url }}">
-                    <h3 class="article-title">{{ article.title }}</h3>
-                  </a>
-                  <p class="article-excerpt">
-                    {{ article.excerpt | default: article.content | strip_html | truncate: 120 }}
-                  </p>
-                  <a href="{{ article.url }}" class="article-button">{{ button_text | strip }}</a>
-                </div>
-              </div>
-            {% endif %}
-          {% endfor %}
-        </div>
-      </div>
 
-      <div class="carousel-arrows">
-        <div class="carousel-arrow prev-arrow">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="white" width="20px" height="auto">
-            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="48" d="M328 112L184 256l144 144"></path>
-          </svg>
+                  <div class="slide-content">
+                    <div class="article-meta">
+                      <span class="article-date">{{ article.published_at | date: '%b %d, %Y' }}</span>
+                    </div>
+                    <a href="{{ article.url }}">
+                      <h3 class="article-title">{{ article.title }}</h3>
+                    </a>
+                    <p class="article-excerpt">
+                      {{ article.excerpt | default: article.content | strip_html | truncate: 120 }}
+                    </p>
+                    <a href="{{ article.url }}" class="article-button">{{ button_text | strip }}</a>
+                  </div>
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
         </div>
-        <div class="carousel-arrow next-arrow">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="white" width="20px" height="auto">
-            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="48" d="M184 112l144 144-144 144"></path>
-          </svg>
+
+        <div class="carousel-arrows">
+          <div class="carousel-arrow prev-arrow">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="white" width="20px" height="auto">
+              <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="48" d="M328 112L184 256l144 144"></path>
+            </svg>
+          </div>
+          <div class="carousel-arrow next-arrow">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="white" width="20px" height="auto">
+              <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="48" d="M184 112l144 144-144 144"></path>
+            </svg>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 </div>
 
 {% schema %}
@@ -351,15 +354,13 @@
 {% endschema %}
 
 <style>
-  .blog-carousel-section {
-    margin: 80px auto;
-    max-width: 1400px;
-    position: relative;
+  #custom-blog-carousel-{{ section.id }} {
+      margin: 80px 0;
+      position: relative;
   }
 
   .carousel-header {
     margin-bottom: 30px;
-    padding: 0 50px;
   }
 
    .carousel-track {
@@ -390,8 +391,7 @@
   }
 
   .carousel-outer {
-    position: relative;
-    padding: 0 50px;
+    position: relative;  
   }
 
   .carousel-container {

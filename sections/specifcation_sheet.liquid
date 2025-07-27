@@ -72,234 +72,229 @@
 }
 {% endschema %}
 
+{{ 'section-basestyles.css' | asset_url | stylesheet_tag }}
+
 {% assign lang = request.locale.iso_code %}
-<div class="specification-sheet-container" id="specification-sheet">
-  <h2 class="specification-sheet-title" id="specification">
-    {% case lang %}
-      {% when 'de' -%}
-        Spezifikation
-      {% when 'fr' -%}
-        Spécifications
-      {% when 'fi' -%}
-        Tekniset tiedot
-      {% else -%}
-        Specification
-    {% endcase %}
-  </h2>
+<div id="custom-specification-sheet">
+  <div class="container">
+    <h2 class="section-title" id="specification">
+      {% case lang %}
+        {% when 'de' -%}
+          Spezifikation
+        {% when 'fr' -%}
+          Spécifications
+        {% when 'fi' -%}
+          Tekniset tiedot
+        {% else -%}
+          Specification
+      {% endcase %}
+    </h2>
 
-  <div class="specification-sheet-list" id="specification-sheet-list">
+    <div class="specification-sheet-list" id="specification-sheet-list">
 
-    <!-- E-Bike System -->
-    {% render 'spec-module',
-      fields: 'motor2,battery,display',
-      labels: 'motor,battery,display',
-      title: 'e-bike-system',
-      lang: lang
-    %}
+      <!-- E-Bike System -->
+      {% render 'spec-module',
+        fields: 'motor2,battery,display',
+        labels: 'motor,battery,display',
+        title: 'e-bike-system',
+        lang: lang
+      %}
 
-    <!-- Frame -->
-    {% render 'spec-module',
-      fields: 'frame',
-      labels: 'frame',
-      title: 'frame',
-      lang: lang
-    %}
+      <!-- Frame -->
+      {% render 'spec-module',
+        fields: 'frame',
+        labels: 'frame',
+        title: 'frame',
+        lang: lang
+      %}
 
-    <!-- Suspension -->
-    {% render 'spec-module', fields: 'fork,shock', labels: 'fork,shock', title: 'suspension', lang: lang %}
+      <!-- Suspension -->
+      {% render 'spec-module', fields: 'fork,shock', labels: 'fork,shock', title: 'suspension', lang: lang %}
 
-    <!-- Shifting -->
-    {% render 'spec-module',
-      fields: 'derailleur,shifters,sprocket,cassette',
-      labels: 'derailleur,shifters,sprocket,cassette',
-      title: 'shifting',
-      lang: lang
-    %}
+      <!-- Shifting -->
+      {% render 'spec-module',
+        fields: 'derailleur,shifters,sprocket,cassette',
+        labels: 'derailleur,shifters,sprocket,cassette',
+        title: 'shifting',
+        lang: lang
+      %}
 
-    <!-- Brakes -->
-    {% render 'spec-module',
-      fields: 'brake_f_r,brake_disc_f_r,brake_levers',
-      labels: 'brake_f_r,brake_disc_f_r,brake_levers',
-      title: 'brakes',
-      lang: lang
-    %}
+      <!-- Brakes -->
+      {% render 'spec-module',
+        fields: 'brake_f_r,brake_disc_f_r,brake_levers',
+        labels: 'brake_f_r,brake_disc_f_r,brake_levers',
+        title: 'brakes',
+        lang: lang
+      %}
 
-    <!-- Wheels -->
-    {% render 'spec-module',
-      fields: 'tires,rims,hub_front_f_r',
-      labels: 'tires,rims,hub_front_f_r',
-      title: 'wheels',
-      lang: lang
-    %}
+      <!-- Wheels -->
+      {% render 'spec-module',
+        fields: 'tires,rims,hub_front_f_r',
+        labels: 'tires,rims,hub_front_f_r',
+        title: 'wheels',
+        lang: lang
+      %}
 
-    <!-- Steering & Seating -->
-    {% render 'spec-module',
-      fields: 'handlebar,grips,stem,seat_post,saddle',
-      labels: 'handlebar,grips,stem,seat_post,saddle',
-      title: 'steering_seating',
-      lang: lang
-    %}
+      <!-- Steering & Seating -->
+      {% render 'spec-module',
+        fields: 'handlebar,grips,stem,seat_post,saddle',
+        labels: 'handlebar,grips,stem,seat_post,saddle',
+        title: 'steering_seating',
+        lang: lang
+      %}
 
-    <!-- Components -->
-    {% render 'spec-module',
-      fields: 'front_light,rear_light,carrier',
-      labels: 'front_light,rear_light,carrier',
-      title: 'components',
-      lang: lang
-    %}
+      <!-- Components -->
+      {% render 'spec-module',
+        fields: 'front_light,rear_light,carrier',
+        labels: 'front_light,rear_light,carrier',
+        title: 'components',
+        lang: lang
+      %}
 
-    <!-- Weight & Class -->
-    {% render 'spec-module',
-      fields: 'perm_total_weight,bike_weight,category',
-      labels: 'perm_total_weight,bike_weight,category',
-      title: 'weight_class',
-      lang: lang
-    %}
-    
-    <!-- Accessories Specifications -->
-    <div class="specification-module">
-      <div class="specification-row">
-        {% for i in (1..10) %} 
-          {% capture name_key %}specification_name_{{ i }}{% endcapture %} 
-          {% capture value_key %}specification_value_{{ i }}{% endcapture %} 
-          {% assign name = product.metafields.custom[name_key] %} 
-          {% assign value = product.metafields.custom[value_key] %} 
-          {% if name.value != blank or value.value != blank %}
-            <div class="column">
-              <div class="label-column">
-                <strong>{{ name.value }}</strong>
+      <!-- Weight & Class -->
+      {% render 'spec-module',
+        fields: 'perm_total_weight,bike_weight,category',
+        labels: 'perm_total_weight,bike_weight,category',
+        title: 'weight_class',
+        lang: lang
+      %}
+      
+      <!-- Accessories Specifications -->
+      <div class="specification-module accessories-specs">
+        <div class="specification-row">
+          {% for i in (1..10) %} 
+            {% capture name_key %}specification_name_{{ i }}{% endcapture %} 
+            {% capture value_key %}specification_value_{{ i }}{% endcapture %} 
+            {% assign name = product.metafields.custom[name_key] %} 
+            {% assign value = product.metafields.custom[value_key] %} 
+            {% if name.value != blank or value.value != blank %}
+              <div class="column">
+                <div class="label-column">
+                  <strong>{{ name.value }}</strong>
+                </div>
+                <div class="value-column">{{ value.value }}</div>
               </div>
-              <div class="value-column">{{ value.value }}</div>
-            </div>
-          {% endif %} 
-        {% endfor %}
+            {% endif %} 
+          {% endfor %}
+        </div>
       </div>
     </div>
   </div>
 </div>
 
 <style>
-  .specification-sheet-container {
-    max-width: 1400px;
-    margin: 80px auto;
-    padding: 0 20px; 
+  #custom-specification-sheet {
+    margin: 80px 0;
   }
 
-  .specification-sheet-title {
-    font-size: 30px;
-    margin-bottom: 20px;
-    text-align: left;
-    padding: 0 30px; 
-  }
-
-  .specification-sheet-list {
+  #custom-specification-sheet .specification-sheet-list {
     display: flex;
     flex-direction: column;
-    padding: 0 30px; 
   }
 
-  .specification-module {
+  #custom-specification-sheet .specification-module {
     margin-bottom: 20px;
   }
 
-  .specification-row {
+  #custom-specification-sheet .specification-row {
     display: flex;
     justify-content: flex-start;
     padding: 5px 0;
     flex-wrap: wrap;
-    margin: 0 -5px; 
+    margin: 0 6px; 
   }
 
-  .column {
+  #custom-specification-sheet .column {
     flex: 0 0 calc(33.33% - 10px);
     margin: 0 5px 10px;
     box-sizing: border-box;
   }
 
-  .label-column {
+  #custom-specification-sheet .label-column {
     font-size: 18px;
     margin-bottom: 5px;
-    flex:0.5;
+    flex: 0.5;
+    padding-left: 10px; 
   }
 
-  .value-column {
+  #custom-specification-sheet .value-column {
     font-size: 16px;
+    padding-left: 10px; 
   }
 
-  .specification-header {
+  #custom-specification-sheet .specification-header {
     width: 100%;
     background-color: #f0f0f0;
     padding: 10px;
     margin: 10px 0;
   }
 
-  .specification-header h5 {
+  #custom-specification-sheet .specification-header h5 {
     margin: 0;
     text-align: left;
+    padding-left: 10px; 
   }
   
-  .info-container {
+  #custom-specification-sheet .info-container {
     margin-top: 40px;
   }
   
-  #specification-table {
+  #custom-specification-sheet #specification-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
   }
   
-  #specification-table th,
-  #specification-table td {
+  #custom-specification-sheet #specification-table th,
+  #custom-specification-sheet #specification-table td {
     padding: 10px;
     text-align: left;
     border-bottom: 1px solid #ddd;
   }
   
-  #specification-table th {
+  #custom-specification-sheet #specification-table th {
     width: 30%;
     font-weight: 600;
   }
 
-  @media (max-width: 1200px) {
-    .specification-sheet-container {
-      max-width: 100%;
-      padding: 0 30px;
-    }
-  }
-
   @media (max-width: 768px) {
-    .specification-sheet-container {
-      padding: 0 15px; 
+    #custom-specification-sheet {
       margin: 50px 0; 
     }
     
-    .specification-sheet-title,
-    .specification-sheet-list {
-      padding: 0; 
-    }
-    
-    .specification-row {
+    #custom-specification-sheet .specification-row {
       flex-direction: column;
+      margin: 0 10px; 
     }
     
-    .column {
+    #custom-specification-sheet .column {
       flex: 0 0 100%;
       margin: 0 0 10px;
     }
     
-    #specification-table th,
-    #specification-table td {
+    #custom-specification-sheet #specification-table th,
+    #custom-specification-sheet #specification-table td {
       padding: 8px;
     }
     
-    #specification-table th {
+    #custom-specification-sheet #specification-table th {
       width: 40%;
     }
   }
-
-  @media (max-width: 480px) {
-    .specification-sheet-container {
-      padding: 30px; 
+  
+  /* Accessories Specifications specific styles */
+  #custom-specification-sheet .accessories-specs .specification-row {
+    margin: 0;
+  }
+  
+  #custom-specification-sheet .accessories-specs .label-column,
+  #custom-specification-sheet .accessories-specs .value-column {
+    padding-left: 0px;
+  }
+  
+  @media (max-width: 768px) {
+    #custom-specification-sheet .accessories-specs .specification-row {
+      margin: 0;
     }
   }
 </style>

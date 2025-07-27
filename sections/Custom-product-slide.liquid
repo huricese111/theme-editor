@@ -51,6 +51,8 @@
   ============================================================================
 {% endcomment %}
 
+{{ 'section-basestyles.css' | asset_url | stylesheet_tag }}
+
 {% assign locale_prefix = request.locale.iso_code | slice: 0, 2 | downcase %}
 
 {% capture section_title %}
@@ -71,8 +73,7 @@
   {% endcase %}
 {% endcapture %}
 
-<div 
-  class="product-carousel-section" 
+<div id="custom-product-carousel-{{ section.id }}" class="product-carousel-section" 
   data-section-id="{{ section.id }}"
   style="
     --button-bg: {{ section.settings.button_background_color | default: '#ffffff' }};
@@ -81,71 +82,71 @@
     --button-hover-text: {{ section.settings.button_hover_text_color | default: '#ffffff' }};
   "
 >
-  <div class="section-{{ section.id }}-carousel-header">
-    <h2 class="section-{{ section.id }}-section-title">
+  <div class="container">
+    <h2 class="section-title">
       {{ section_title | escape }}
     </h2>
-  </div>
 
-  <div class="section-{{ section.id }}-carousel-outer">
-    <div class="section-{{ section.id }}-carousel-container">
-      <div class="section-{{ section.id }}-carousel-track">
-        <div class="section-{{ section.id }}-carousel-slides" id="carousel-slides-{{ section.id }}">
-          {% for block in section.blocks %}
-            {% assign content_type = block.settings.content_type %}
+    <div class="section-{{ section.id }}-carousel-outer">
+      <div class="section-{{ section.id }}-carousel-container">
+        <div class="section-{{ section.id }}-carousel-track">
+          <div class="section-{{ section.id }}-carousel-slides" id="carousel-slides-{{ section.id }}">
+            {% for block in section.blocks %}
+              {% assign content_type = block.settings.content_type %}
 
-            {% if content_type == 'product' and block.settings.selected_product != blank %}
-              {% assign product = all_products[block.settings.selected_product] %}
-              {% if product != blank %}
-                <div class="section-{{ section.id }}-carousel-slide">
-                  {% render 'product-block', product: product %}
-                </div>
-              {% endif %}
-
-            {% elsif content_type == 'collection' and block.settings.selected_collection != blank %}
-              {% assign collection = collections[block.settings.selected_collection] %}
-              {% if collection != blank %}
-                {% for product in collection.products limit: block.settings.product_limit %}
+              {% if content_type == 'product' and block.settings.selected_product != blank %}
+                {% assign product = all_products[block.settings.selected_product] %}
+                {% if product != blank %}
                   <div class="section-{{ section.id }}-carousel-slide">
                     {% render 'product-block', product: product %}
                   </div>
-                {% endfor %}
-              {% endif %}
+                {% endif %}
 
-            {% elsif content_type == 'related_products' %}
-              {% if product != blank and template.name == 'product' %}
-                {% assign source_product = product %}
-              {% elsif block.settings.related_products_source != blank %}
-                {% assign source_product = all_products[block.settings.related_products_source] %}
-              {% else %}
-                {% assign source_product = null %}
-              {% endif %}
-
-              {% if source_product != blank %}
-                {% assign related_products = source_product.metafields.custom.related_products.value %}
-                {% if related_products %}
-                  {% for related_product in related_products limit: block.settings.product_limit %}
+              {% elsif content_type == 'collection' and block.settings.selected_collection != blank %}
+                {% assign collection = collections[block.settings.selected_collection] %}
+                {% if collection != blank %}
+                  {% for product in collection.products limit: block.settings.product_limit %}
                     <div class="section-{{ section.id }}-carousel-slide">
-                      {% render 'product-block', product: related_product %}
+                      {% render 'product-block', product: product %}
                     </div>
                   {% endfor %}
                 {% endif %}
-              {% endif %}
-            {% endif %}
-          {% endfor %}
-        </div>
-      </div>
 
-      <div class="section-{{ section.id }}-carousel-arrows">
-        <div class="section-{{ section.id }}-carousel-arrow section-{{ section.id }}-prev-arrow">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="white" width="20px" height="auto">
-            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="48" d="M328 112L184 256l144 144"></path>
-          </svg>
+              {% elsif content_type == 'related_products' %}
+                {% if product != blank and template.name == 'product' %}
+                  {% assign source_product = product %}
+                {% elsif block.settings.related_products_source != blank %}
+                  {% assign source_product = all_products[block.settings.related_products_source] %}
+                {% else %}
+                  {% assign source_product = null %}
+                {% endif %}
+
+                {% if source_product != blank %}
+                  {% assign related_products = source_product.metafields.custom.related_products.value %}
+                  {% if related_products %}
+                    {% for related_product in related_products limit: block.settings.product_limit %}
+                      <div class="section-{{ section.id }}-carousel-slide">
+                        {% render 'product-block', product: related_product %}
+                      </div>
+                    {% endfor %}
+                  {% endif %}
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+          </div>
         </div>
-        <div class="section-{{ section.id }}-carousel-arrow section-{{ section.id }}-next-arrow">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="white" width="20px" height="auto">
-            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="48" d="M184 112l144 144-144 144"></path>
-          </svg>
+
+        <div class="section-{{ section.id }}-carousel-arrows">
+          <div class="section-{{ section.id }}-carousel-arrow section-{{ section.id }}-prev-arrow">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="white" width="20px" height="auto">
+              <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="48" d="M328 112L184 256l144 144"></path>
+            </svg>
+          </div>
+          <div class="section-{{ section.id }}-carousel-arrow section-{{ section.id }}-next-arrow">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="white" width="20px" height="auto">
+              <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="48" d="M184 112l144 144-144 144"></path>
+            </svg>
+          </div>
         </div>
       </div>
     </div>
@@ -337,72 +338,57 @@
 {% endschema %}
 
 <style>
-  .product-carousel-section {
-    margin: 80px auto;
-    max-width: 1400px;
-    position: relative;
-    touch-action: none;
+  #custom-product-carousel-{{ section.id }} {
+    margin: 80px 0;
   }
 
-  .section-{{ section.id }}-carousel-header {
-    margin-bottom: 30px;
-    padding: 0 50px;
-  }
-
-  .section-{{ section.id }}-carousel-track {
+  #custom-product-carousel-{{ section.id }} .section-{{ section.id }}-carousel-track {
     touch-action: pan-y;
     overflow: hidden;
   }
 
-  .section-{{ section.id }}-carousel-slides {
+  #custom-product-carousel-{{ section.id }} .section-{{ section.id }}-carousel-slides {
     will-change: transform;
     display: flex;
     min-width: 100%;
   }
 
-  .product-carousel-section {
-    touch-action: none;
-  }
-
-  .section-{{ section.id }}-carousel-track {
+  #custom-product-carousel-{{ section.id }} .section-{{ section.id }}-carousel-track {
     touch-action: pan-x;
   }
 
-  .section-{{ section.id }}-section-title {
-    font-size: 32px;
-    font-weight: 700;
-    color: #222;
-    text-align: left;
-    margin: 0 0 20px;
-  }
-
-  .section-{{ section.id }}-carousel-outer {
+  #custom-product-carousel-{{ section.id }} .section-{{ section.id }}-carousel-outer {
     position: relative;
-    padding: 0 50px;
+    padding: 0; 
   }
 
-  .section-{{ section.id }}-carousel-container {
+  #custom-product-carousel-{{ section.id }} .section-{{ section.id }}-carousel-container {
     position: relative;
     border-radius: 12px;
+    padding: 0 20px; 
   }
 
-  .section-{{ section.id }}-carousel-track {
+  #custom-product-carousel-{{ section.id }} .section-{{ section.id }}-carousel-track {
     overflow: hidden;
   }
 
-  .section-{{ section.id }}-carousel-slides {
+  #custom-product-carousel-{{ section.id }} .section-{{ section.id }}-carousel-slides {
     display: flex;
     transition: transform 0.5s ease;
     padding: 5px 0;
   }
 
-  .section-{{ section.id }}-carousel-slide {
+  #custom-product-carousel-{{ section.id }} .section-{{ section.id }}-carousel-slide {
     flex: 0 0 auto;
     width: calc(33.333% - 20px);
     margin-right: 20px;
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    height: 100%;
   }
 
   .section-{{ section.id }}-product-block-container {
@@ -525,60 +511,55 @@
   }
 
   @media (max-width: 1200px) {
-    .section-{{ section.id }}-carousel-slide {
+    #custom-product-carousel-{{ section.id }} .section-{{ section.id }}-carousel-slide {
       width: calc(50% - 15px);
     }
 
-    .product-carousel-section {
-      max-width: 100%;
-      padding: 0 30px;
+    #custom-product-carousel-{{ section.id }} .section-{{ section.id }}-carousel-outer {
+      padding: 0 20px; 
     }
 
-    .section-{{ section.id }}-carousel-header {
-      padding: 0 30px;
+    #custom-product-carousel-{{ section.id }} .section-{{ section.id }}-carousel-container {
+      padding: 0 20px; 
     }
   }
 
   @media (max-width: 768px) {
-    .section-{{ section.id }}-carousel-outer {
-      padding: 0 30px;
+    #custom-product-carousel-{{ section.id }} .container {
+      padding-left: 15px;
+      padding-right: 0;
     }
 
-    .section-{{ section.id }}-carousel-slide {
-      width: calc(100% - 50px);
-      margin-right: 10px;
+     #custom-product-carousel-{{ section.id }} .section-{{ section.id }}-carousel-container {
+      padding: 0;
     }
 
-    .section-{{ section.id }}-carousel-arrow {
-      width: 40px;
-      height: 40px;
-    }
-
-    .product-carousel-section {
-      padding: 0 15px;
+    #custom-product-carousel-{{ section.id }} {
       margin: 50px 0;
     }
 
-    .section-{{ section.id }}-section-title {
-      font-size: 26px;
+    #custom-product-carousel-{{ section.id }} .section-{{ section.id }}-carousel-outer {
+      padding: 0 15px; /* 移动端调整内边距 */
     }
 
-    .section-{{ section.id }}-carousel-header {
-      padding: 0 30px;
+    #custom-product-carousel-{{ section.id }} .section-{{ section.id }}-carousel-slide {
+      width: calc(100% - 30px);
+      margin-right: 10px;
+    }
+
+    #custom-product-carousel-{{ section.id }} .section-{{ section.id }}-carousel-arrow {
+      width: 40px;
+      height: 40px;
     }
   }
 
   @media (max-width: 480px) {
-    .section-{{ section.id }}-carousel-outer {
-      padding: 0;
+    #custom-product-carousel-{{ section.id }} .section-{{ section.id }}-carousel-outer {
+      padding: 0; /* 小屏幕移除内边距 */
     }
 
-    .section-{{ section.id }}-carousel-arrows {
+    #custom-product-carousel-{{ section.id }} .section-{{ section.id }}-carousel-arrows {
       display: none;
-    }
-
-    .section-{{ section.id }}-carousel-header {
-      padding: 0;
     }
   }
 </style>

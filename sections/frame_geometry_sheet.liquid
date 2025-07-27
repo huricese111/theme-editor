@@ -1256,6 +1256,8 @@
 }
 {% endschema %}
 
+{{ 'section-basestyles.css' | asset_url | stylesheet_tag }}
+
 {% assign locale_prefix = request.locale.iso_code | slice: 0, 2 | downcase %}
 
 {% capture section_title %}
@@ -1267,10 +1269,11 @@
   {% endcase %}
 {% endcapture %}
 
-<div class="product-content-section" id="frame_geometry">
-  <h2 class="explore-title">
-    {{ section_title | escape }}
-  </h2>
+<div id="custom-frame-geometry" class="product-content-section">
+  <div class="container">
+    <h2 class="section-title">
+      {{ section_title | escape }}
+    </h2>
 
   <div class="custom-size-tabs" role="tablist">
     <div class="tab-item-size active" role="tab" data-target="framesize">Frame Size</div>
@@ -1491,7 +1494,8 @@
     {% endfor %}
   </div>
 
-  {% if request.locale.iso_code == 'en' %}
+  <div class="container">
+    {% if request.locale.iso_code == 'en' %}
     <p class="infotext">
       The e-bikes illustrated may differ in individual details from the standard model and may show special equipment at
       an extra charge. All information on the scope of delivery, appearance, performance, dimensions and weights of the
@@ -1542,6 +1546,7 @@
       incluant la TVA légale applicable.
     </p>
   {% endif %}
+  </div>
 </div>
 
 <script>
@@ -1613,7 +1618,7 @@
 </script>
 
 <style>
-  .geometry-viewer {
+  #custom-frame-geometry .geometry-viewer {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     margin: 0 auto;
@@ -1623,7 +1628,7 @@
     position: relative;
   }
 
-  .geometry-image {
+  #custom-frame-geometry .geometry-image {
     width: 100%;
     max-width: 100%;
     height: auto;
@@ -1632,7 +1637,7 @@
     object-fit: contain;
   }
 
-  .swipe-hint {
+  #custom-frame-geometry .swipe-hint {
     position: absolute;
     bottom: 10px;
     left: 50%;
@@ -1659,19 +1664,13 @@
     }
   }
 
-  .explore-title {
+  #custom-frame-geometry .section-title {
     font-size: 30px;
     margin-bottom: 20px;
     text-align: left;
   }
 
-  .product-content-section {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-
-  .custom-size-tabs {
+  #custom-frame-geometry .custom-size-tabs {
     display: flex;
     margin-bottom: 20px;
     flex-wrap: wrap;
@@ -1681,11 +1680,11 @@
     scrollbar-width: none;
   }
   
-  .custom-size-tabs::-webkit-scrollbar {
+  #custom-frame-geometry .custom-size-tabs::-webkit-scrollbar {
     display: none;
   }
 
-  .tab-item-size {
+  #custom-frame-geometry .tab-item-size {
     padding: 10px 24px;
     background: #ffffff;
     cursor: pointer;
@@ -1695,19 +1694,19 @@
     border: none;
   }
 
-  .tab-item-size.active {
+  #custom-frame-geometry .tab-item-size.active {
     background: #000;
     color: #fff;
     font-weight: 500;
   }
   
-  .tab-item-size:hover:not(.active) {
+  #custom-frame-geometry .tab-item-size:hover:not(.active) {
     background: #e6e6e6;
     transform: translateY(-2px);
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   }
 
-  .sizetab-panel {
+  #custom-frame-geometry .sizetab-panel {
     display: none;
     background-color: #f8f8f8;
     padding: 25px;
@@ -1717,7 +1716,7 @@
     transition: all 0.3s ease;
   }
 
-  .sizetab-panel.active {
+  #custom-frame-geometry .sizetab-panel.active {
     display: block;
     animation: fadeIn 0.3s ease-in-out;
   }
@@ -1727,18 +1726,18 @@
     to { opacity: 1; }
   }
 
-  .sizechart-two-column-layout {
+  #custom-frame-geometry .sizechart-two-column-layout {
     display: flex;
     justify-content: space-between;
     gap: 20px;
   }
 
-  .sizechart-column {
+  #custom-frame-geometry .sizechart-column {
     width: 50%;
     box-sizing: border-box;
   }
 
-  table.pf-inner-table {
+  #custom-frame-geometry table.pf-inner-table {
     width: 100%;
     border-collapse: collapse;
     border: none;
@@ -1747,15 +1746,15 @@
     font-size: 14px;
   }
 
-  table.pf-inner-table th,
-  table.pf-inner-table td {
+  #custom-frame-geometry table.pf-inner-table th,
+  #custom-frame-geometry table.pf-inner-table td {
     border: none;
     padding: 12px 16px;
     text-align: left;
     border-bottom: 1px solid #e0e0e0;
   }
 
-  table.pf-inner-table th {
+  #custom-frame-geometry table.pf-inner-table th {
     background-color: transparent;
     font-weight: 600;
     color: #333;
@@ -1764,25 +1763,25 @@
     border-bottom: 2px solid #d0d0d0;
   }
   
-  table.pf-inner-table tr:last-child td {
+  #custom-frame-geometry table.pf-inner-table tr:last-child td {
     border-bottom: none;
   }
   
-  table.pf-inner-table tr:hover {
+  #custom-frame-geometry table.pf-inner-table tr:hover {
     background-color: rgba(0,0,0,0.02);
   }
   
-  table.pf-inner-table td:first-child {
+  #custom-frame-geometry table.pf-inner-table td:first-child {
     font-weight: 500;
     color: #666;
     width: 40px;
   }
   
-  table.pf-inner-table td:nth-child(2) {
+  #custom-frame-geometry table.pf-inner-table td:nth-child(2) {
     font-weight: 500;
   }
 
-  .infotext {
+  #custom-frame-geometry .infotext {
     font-weight: 400;
     font-size: 12px;
     color: #666;
@@ -1791,43 +1790,51 @@
     line-height: 1.6;
   }
 
-  #framesize {
+  #custom-frame-geometry #framesize {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
     min-height: 400px;
   }
 
-  .table-container {
+  #custom-frame-geometry .table-container {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
 
-  .pf-inner-table {
+  #custom-frame-geometry .pf-inner-table {
     min-width: 600px;
   }
 
   @media (min-width: 769px) {
-    .geometry-viewer {
+    #custom-frame-geometry .geometry-viewer {
       overflow-x: hidden;
     }
   }
 
   @media (max-width: 768px) {
-    .geometry-viewer {
+    #custom-frame-geometry .sizetab-panel{
+      width: 100%;
       padding: 0;
-      width: calc(100% + 30px);
-      margin-left: -15px;
     }
 
-    .geometry-image {
-      height: auto;
-      max-height: 280px;
-      min-width: 100%;
+    #custom-frame-geometry .tab-content-area {
       width: 100%;
     }
 
-    .custom-size-tabs {
+    #custom-frame-geometry .geometry-viewer {
+      padding: 0 15px;
+      width: 100%; 
+      margin-left: 0; 
+    }
+
+    #custom-frame-geometry .geometry-image {
+      height: auto;
+      max-height: 280px;
+      width: 100%;
+    }
+
+    #custom-frame-geometry .custom-size-tabs {
       flex-direction: row;
       overflow-x: auto;
       padding-bottom: 10px;
@@ -1835,7 +1842,7 @@
       white-space: nowrap;
     }
     
-    .tab-item-size {
+    #custom-frame-geometry .tab-item-size {
       display: inline-block;
       margin-bottom: 0;
       font-size: 14px;
@@ -1844,42 +1851,43 @@
       white-space: nowrap;
     }
 
-    .sizechart-two-column-layout {
+    #custom-frame-geometry .sizechart-two-column-layout {
       flex-direction: column;
     }
 
-    .sizechart-column {
+    #custom-frame-geometry .sizechart-column {
       width: 100%;
     }
 
-    .table-container {
+    #custom-frame-geometry .table-container {
       width: 100%;
       overflow-x: auto;
+      padding: 0 15px;
     }
 
-    .pf-inner-table {
+    #custom-frame-geometry .pf-inner-table {
       min-width: 100%;
       width: 100%;
     }
 
-    table.pf-inner-table {
+    #custom-frame-geometry table.pf-inner-table {
       font-size: 12px;
     }
 
-    table.pf-inner-table th,
-    table.pf-inner-table td {
+    #custom-frame-geometry table.pf-inner-table th,
+    #custom-frame-geometry table.pf-inner-table td {
       padding: 6px 8px;
       white-space: nowrap;
     }
 
-    #framesize .geometry-viewer {
+    #custom-frame-geometry #framesize .geometry-viewer {
       height: 300px;
       display: flex;
       align-items: center;
       justify-content: flex-start;
     }
 
-    #framesize .geometry-image {
+    #custom-frame-geometry #framesize .geometry-image {
       height: 100%;
       width: auto;
       min-width: auto;
@@ -1889,21 +1897,21 @@
     }
 
     /* 滑动提示显示在Frame Size页卡 */
-    #framesize .swipe-hint {
+    #custom-frame-geometry #framesize .swipe-hint {
       display: block;
     }
 
     /* 其他页卡保持图片在上、表格在下 */
-    .sizetab-panel:not(#framesize) .sizechart-two-column-layout {
+    #custom-frame-geometry .sizetab-panel:not(#framesize) .sizechart-two-column-layout {
       flex-direction: column;
     }
 
-    .sizetab-panel:not(#framesize) .sizechart-column:first-child {
+    #custom-frame-geometry .sizetab-panel:not(#framesize) .sizechart-column:first-child {
       order: 1;
       margin-bottom: 20px;
     }
 
-    .sizetab-panel:not(#framesize) .sizechart-column:last-child {
+    #custom-frame-geometry .sizetab-panel:not(#framesize) .sizechart-column:last-child {
       order: 2;
     }
   }
