@@ -1,0 +1,27 @@
+{
+  "parent": "product.trekking-7-se-3.json",
+  "context": { "market": "austria" },
+  "sections": {},
+  "order": [
+    "main",
+    "custom_sildeshow_tab_2_UbJ9hE",
+    "custom_sildeshow_tab_2_KMjgfk",
+    "custom_sildeshow_tab_2_LbakJE",
+    "custom_two_colum_banner_Hm6zwc",
+    "custom_two_colum_banner_Lz3mQi",
+    "custom_two_colum_banner_VYFhnY",
+    "custom_two_colum_banner_Mcq7j6",
+    "custom_two_colum_banner_NRgP9b",
+    "custom_two_colum_banner_XHjFYW",
+    "custom_textarea_7pF4tW",
+    "custom_imagerow_qBiGJA",
+    "highlight_slideshow_TCPETE",
+    "custom_column_BUMNyi",
+    "custom_specification_DXgxaL",
+    "custom_frame_geometry_TTnCVB",
+    "173431823006a348bf",
+    "custom_product_tab_test_m9aDPj",
+    "custom_stickybar_2_F8Vnk9",
+    "custom_recommend_product_modal_VkPHz9"
+  ]
+}

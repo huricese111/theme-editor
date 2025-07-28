@@ -1,0 +1,10 @@
+{
+  "parent": "product.allmountain7carbon-ltd-25.json",
+  "context": { "market": "france" },
+  "sections": {
+    "main": {
+      "settings": {},
+      "blocks": { "accordion_DPPTVK": { "disabled": true, "settings": {} } }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "parent": "product.trekking-7-2024-model.json",
+  "context": { "market": "finland" },
+  "sections": {
+    "main": {
+      "settings": {},
+      "blocks": { "accordion_DPPTVK": { "disabled": true, "settings": {} } }
+    }
+  }
+}

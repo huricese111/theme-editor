@@ -1,0 +1,7 @@
+{
+  "parent": "index.json",
+  "context": { "market": "finland" },
+  "sections": {
+    "news_sildeshow_HVwpi3": { "disabled": true, "settings": {}, "blocks": {} }
+  }
+}

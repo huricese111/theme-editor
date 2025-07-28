@@ -1,0 +1,16 @@
+{
+  "parent": "page.page-promotion-2025-04-01.json",
+  "context": { "b2b": true },
+  "sections": {
+    "collapsible_tabs_qETzUn": {
+      "settings": {},
+      "blocks": {
+        "question_UXgx8x": {
+          "settings": {
+            "answer_de": "<p>A：</p><ol><li>Wählen Sie das gewünschte E-Bike aus und gehen Sie zur Produktseite.</li><li>Wählen Sie auf der rechten Seite der Produktseite die Größe und Farbe aus und überprüfen Sie das angezeigte kostenlose Zubehör im Bereich „Passendes Zubehör“. </li><li>3. Klicken Sie auf die Schaltfläche „Add“.</li><li>Klicken Sie auf die Schaltfläche „In den Warenkorb“.</li><li>Stellen Sie sicher, dass sich die kostenlosen Geschenke in Ihrem Warenkorb befinden. Klicken Sie dann auf „Jetzt kaufen“, um den Kauf abzuschließen.</li></ol>"
+          }
+        }
+      }
+    }
+  }
+}

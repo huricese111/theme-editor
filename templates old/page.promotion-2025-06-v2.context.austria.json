@@ -1,0 +1,53 @@
+{
+  "parent": "page.promotion-2025-06-v2.json",
+  "context": { "market": "austria" },
+  "sections": {
+    "custom_two_colum_banner_kji6Re": {
+      "settings": {},
+      "blocks": {
+        "slide_Ew43jA": {
+          "settings": {
+            "title_1": "<p>Trekking SE Ultra</p><p>500 € OFF </p>",
+            "title_1_de": "<p>Trekking SE Ultra</p><p>500 € Rabatt</p>"
+          }
+        }
+      }
+    },
+    "collapsible_tabs_qETzUn": {
+      "settings": {},
+      "blocks": {
+        "question_ytzVBz": { "disabled": true, "settings": {} },
+        "question_bbRFXj": { "disabled": true, "settings": {} }
+      }
+    },
+    "custom_imagerow_jAg74G": {
+      "settings": {},
+      "blocks": {},
+      "block_order": []
+    },
+    "custom_imagerow_MfjKmf": {
+      "custom_css": [
+        ".product-content-section {padding: 0 64px 0 50px; margin-top: -20px;}",
+        ".smallmodule {gap: 20px;}",
+        ".smallmodulerow {max-width: 1074px;}",
+        ".module {padding: 0 0 20px !important; margin: 0; width: 46%;}",
+        ".module-description {padding: 0 20px;}",
+        ".imgrowrow {width: 100%; background: #eee; margin-bottom: 20px; height: 240px; display: flex; justify-content: center; align-items: center;}",
+        "@media (max-width: 768px) {.product-content-section {padding: 0 20px 0 20px; } .module {width: 100%; margin-bottom: 0 !important; } .module-description {font-size: 16px !important; }}"
+      ],
+      "settings": {},
+      "blocks": {}
+    }
+  },
+  "order": [
+    "custom_two_colum_banner_Whmtii",
+    "custom_two_colum_banner_kji6Re",
+    "custom_sale_tab_3_F6gyF3",
+    "custom_imagerow_MfjKmf",
+    "custom_sale_tab_3_4Mhfkx",
+    "custom_imagerow_jAg74G",
+    "custom_liquid_dbXEPa",
+    "17415882502d62e51b",
+    "collapsible_tabs_qETzUn"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "parent": "index.json",
+  "context": { "market": "austria" },
+  "sections": {
+    "custom_responsive_banner_V9XweL": {
+      "settings": {
+        "left_title": "Save up to €500",
+        "left_title_de": "Sparen Sie bis zu €500"
+      },
+      "blocks": {}
+    }
+  },
+  "order": [
+    "custom_firework_video_BdqkkG",
+    "custom_responsive_banner_V9XweL",
+    "custom_liquid_97nN63",
+    "custom_bikeslideshow_T9e6pt",
+    "custom_two_colum_banner_yjTCPV",
+    "custom_two_colum_banner_zUCAWm",
+    "custom_product_tab_test_m9aDPj",
+    "news_sildeshow_HVwpi3",
+    "17415882502d62e51b"
+  ]
+}

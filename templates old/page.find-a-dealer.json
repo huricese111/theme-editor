@@ -1,0 +1,90 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": { "show_page_title": true, "full_width": false }
+    },
+    "1735414705069317c7": {
+      "type": "apps",
+      "blocks": {
+        "sc_store_locator_map_map_bJw73c": {
+          "type": "shopify://apps/sc-store-locator-map/blocks/map/4ca379c6-722c-49d3-b6ec-a7fe7c1061a5",
+          "settings": {
+            "distance_unit": "KM",
+            "display_title": false,
+            "display_header_html": false,
+            "display_search": true,
+            "display_footer_html": false,
+            "search_text": "#121212",
+            "search_background": "linear-gradient(180deg, rgba(245, 245, 245, 1), rgba(243, 243, 243, 1) 100%)",
+            "display_addresses_sidebar": true,
+            "map_theme": "default",
+            "google_maps_language": "en"
+          }
+        }
+      },
+      "block_order": ["sc_store_locator_map_map_bJw73c"],
+      "custom_css": [
+        "button#submitBtn {flex-grow: 0.3; color: white; background: black; max-width: 120px;}"
+      ],
+      "settings": {
+        "full_width": false,
+        "show_space": true,
+        "title": "Dealer Search",
+        "title_de": "Händlersuche",
+        "title_fr": "Recherche de revendeurs"
+      }
+    },
+    "custom_liquid_4aAbp8": {
+      "type": "custom-liquid",
+      "name": "Custom Liquid",
+      "settings": {
+        "full_width": false,
+        "show_space": false,
+        "code": "<script>\n\ndocument.addEventListener('DOMContentLoaded', function () {\n    // Select all <a> elements with href=\"javascript:void(0);\"\n    const links = document.querySelectorAll('a[href=\"javascript:void(0);\"]');\n\n    links.forEach(link => {\n        // Disable the link's click event\n        link.addEventListener('click', function (event) {\n            event.preventDefault(); // Prevent default behavior\n            alert('This link has been disabled.'); // Optional: Notify the user\n        });\n\n        // Optionally, you can also modify the style to indicate it's disabled\n        link.style.pointerEvents = 'none'; // Prevent any click events\n        link.style.color = 'gray'; // Change color to indicate it's disabled\n    });\n});\n\n</script>"
+      }
+    },
+    "custom_liquid_dfUhnt": {
+      "type": "custom-liquid",
+      "settings": {
+        "full_width": true,
+        "show_space": true,
+        "code": "{% style %}\n.main_search_label {\n    position: relative;\n    text-align: left;\n    width: 100%;\n}\n\n.distance_label,\n.search_limit_label,\n#filters_text,\n#submitBtn {\n    position: relative;\n    display: flex;\n    align-items: center;\n    min-width: 80px;\n    text-align: left;\n    justify-content: flex-end;\n    white-space: nowrap;\n}\n\nbutton#submitBtn {\n    justify-content: center;\n}\n\n.pac-target-input::placeholder {\n    color: transparent; \n}\n\n@media (max-width: 800px) {\n    .main_search_label {\n        height: 50px;\n    }\n    \n    .distance_label::after,\n    .search_limit_label::after {\n        left: 0;\n    }\n}\n\n{% if request.locale.iso_code == 'de' %}\n.main_search_label,\n.distance_label,\n.search_limit_label,\n#filters_text,\n#submitBtn,\nlabel[for=\"search_filter_17635\"],\nlabel[for=\"search_filter_17640\"] {\n    color: transparent !important; \n    white-space: nowrap;\n}\n\nlabel[for=\"search_filter_17640\"],\nlabel[for=\"search_filter_17635\"] {\n    position: relative;\n    display: flex;\n}\n\n.main_search_label::after {\n    content: \"Finden Sie Standorte in der Nähe dieses Standorts\";\n    visibility: visible;\n    color: initial;\n    position: absolute;\n    left: 0;\n}\n\n.distance_label::after {\n    content: \"Distanz\";\n    visibility: visible;\n    color: initial;\n    position: absolute;\n    right: 0;\n}\n\n.search_limit_label::after {\n    content: \"Ergebnisse\";\n    color: initial;\n    position: absolute;\n    right: 0;\n}\n\n#filters_text::after {\n    content: \"Such-Filter\";\n    color: initial;\n    position: absolute;\n    left: 0;\n}\n\n#submitBtn::after {\n    content: \"Suchen\";\n    color: white;\n    position: absolute;\n    margin: 0 auto;\n}\n\nlabel[for=\"search_filter_17640\"]::after {\n    content: \"Händler\"; \n    color: initial;\n    position: absolute;\n    left: 20px;\n    margin-top: -25px;\n}\n\nlabel[for=\"search_filter_17635\"]::after {\n    content: \"Servicezentrum\"; \n    color: initial;\n    position: absolute;\n    left: 20px;\n    margin-top: -25px;\n}\n{% elsif request.locale.iso_code == 'fr' %}\n.main_search_label,\n.distance_label,\n.search_limit_label,\n#filters_text,\n#submitBtn,\nlabel[for=\"search_filter_17635\"],\nlabel[for=\"search_filter_17640\"],\nlabel[for=\"search_filter_17634\"] {\n    color: transparent !important; \n    white-space: nowrap;\n}\n\nlabel[for=\"search_filter_17640\"],\nlabel[for=\"search_filter_17635\"],\nlabel[for=\"search_filter_17634\"] {\n    position: relative;\n    display: flex;\n}\n\n.main_search_label::after {\n    content: \"Trouver des sites près de\";\n    visibility: visible;\n    color: initial;\n    position: absolute;\n    left: 0;\n}\n\n.distance_label::after {\n    content: \"Distance\";\n    visibility: visible;\n    color: initial;\n    position: absolute;\n    right: 0;\n}\n\n.search_limit_label::after {\n    content: \"Ergebnisse\";\n    color: initial;\n    position: absolute;\n    right: 0;\n}\n\n#filters_text::after {\n    content: \"Filtres de recherche\";\n    color: initial;\n    position: absolute;\n    left: 0;\n}\n\n#submitBtn::after {\n    content: \"Recherche\";\n    color: white;\n    position: absolute;\n    margin: 0 auto;\n}\n\nlabel[for=\"search_filter_17640\"]::after {\n    content: \"Revendeur\"; \n    color: initial;\n    position: absolute;\n    left: 20px;\n    margin-top: -25px;\n}\n\nlabel[for=\"search_filter_17635\"]::after {\n    content: \"Centre de service\"; \n    color: initial;\n    position: absolute;\n    left: 20px;\n    margin-top: -25px;\n}\n\nlabel[for=\"search_filter_17634\"]::after {\n    content: \"Centre d'essai\"; \n    color: initial;\n    position: absolute;\n    left: 20px;\n    margin-top: -25px;\n}\n{% endif %}\n{% endstyle %}"
+      }
+    },
+    "rich_text_7haPec": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_jKHHGV": {
+          "type": "heading",
+          "settings": {
+            "title": "Find & Buy an E-Bike Nearby with HEPHA",
+            "use_h1": true
+          }
+        },
+        "text_fXwg6E": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Looking for an e-bike near you? Perfect! At HEPHA, we believe mobility is personal. Not off-the-rack. Not a compromise. We'll connect you with your new favorite ride – right in your local area. With real people who advise you. Not algorithms or chatbots.</p><h2>Why an E-Bike Will Transform Your Life</h2><p>Let's be honest: e-bikes are simply more fun! You reach your destination faster, without breaking a sweat. The electric assistance up to 15.5 mph (25 km/h) gives you exactly the boost you need – but only when you want it. You decide how much power you need.</p><p>An e-bike fundamentally changes your daily routine. Suddenly hills aren't obstacles anymore. Headwind on your way home? No problem! You transport your shopping effortlessly. And when it rains? You'll still get home faster than by bus or train.</p><p>The decisive advantage of buying an electric bike near you: you don't have to wait weeks for your new ride. No nasty surprises when unpacking. No desperate wrenching. You hop on right in the store, ride away and feel it: this is the one!</p><h2>How to Find Your Perfect E-Bike Nearby</h2><p>HEPHA works with selected dealers across the country. Whether you want to cruise along coastal paths, explore mountain trails, or commute from A to B – our partners are never far away.</p><p>Finding your e-bike near me is child's play:</p><ol><li>Go to www.hepha.com and use our dealer locator</li><li>Enter your ZIP code or city</li><li>Select a HEPHA partner in your area</li><li>Schedule an appointment or stop by spontaneously</li></ol><p><strong>Pro Tip</strong>: Definitely ask for a test ride! Nothing says more about a bike than the feeling when you cover the first few yards with it. Feel that tingle? Then it's yours!</p><h2>Benefits of Buying an E-Bike from a Local Dealer</h2><p>Looking at electric bikes online is convenient. But buying e-bikes near me? That's smart! Here's why you should purchase your e-bike from a local dealer in your area:</p><h3>Personal Advice Without the BS</h3><p>Our partners aren't sales robots – they're people with gasoline (or better: electricity!) in their blood. They listen, ask the right questions, and figure out which bike truly suits you. City cruiser or trekking machine? Step-through frame or sporty geometry? Battery in the frame or on the down tube? They know.</p><h3>Test Rides That Excite</h3><p>You sit on it, pedal, and immediately know: this is it – or not. Nothing replaces the feeling when the electric assistance kicks in and gently pushes you forward. That smile on your face? Priceless.</p><h3>Immediate Availability Without Waiting</h3><p>You don't have to wait weeks for packages or desperately study manuals on the weekend. Your new e-bike is professionally adjusted and ready to go.</p><h3>Service and Maintenance With Heart</h3><p>After the purchase is when it really begins. Our partners take care of everything – from the first service to regular checks to software updates. And if something sticks? No problem, you don't have to call an anonymous call center. A real person helps you.</p><h2>HEPHA E-Bikes: Technology That Inspires</h2><p>At HEPHA, we focus on clear lines: lots of technology, little frills. Our e-bikes are lightweight, intelligently designed, and powerful. And yes, they look damn good – without being flashy.</p><p>Here are the technical highlights that distinguish every HEPHA e-bike:</p><ul><li>Powerful mid-motor with plenty of torque – so you can climb any hill without puffing</li><li>At least 708 Wh battery – for range without constant charging anxiety</li><li>Electric assistance up to 25 km/h – enough power, but always within legal limits</li><li>High-quality brakes for maximum safety in any situation</li><li>Well-thought-out riding characteristics for stability and comfort</li><li>Timeless design that doesn't scream for attention, but convinces through sovereignty</li></ul><p>The best part? With HEPHA, you get quality that doesn't shout luxury, but impresses through performance. We build e-bikes for people who want to ride – not for Instagram photo shoots.</p><h2>E-Bike Models for Every Purpose</h2><p>Every person is different. Every journey is different. That's why we don't have one perfect bike, but different models for different needs. Wondering which e-bike near you fits your style?</p><h3>City E-Bike: The Urban Everyday Hero</h3><p>Perfect for the urban jungle. Light, nimble, with clever details for bags, child seats, or weekly shopping. Your daily companion – quiet, fast, reliable. Ideal for anyone who wants to stay flexible in urban areas.</p><h3>Trekking E-Bike: The Long-Distance Champion</h3><p>Do you commute longer distances daily? Planning weekend tours through forests and meadows? Then a trekking e-bike is your perfect partner. More range, more comfort, more versatility – ideal for adventures on asphalt and light natural paths.</p><h3>E-MTB: The Off-Road Specialist</h3><p>Forest, gravel, hills – nothing stops you. Our mountain bike models with generous suspension travel and strong motorization take on everything you put in their way. For everyone seeking adventure off the beaten path.</p><h2>Find HEPHA Partners in Your Area</h2><p>We make it easy to find an e-bike dealer near me. No complicated process, no endless forms:</p><p>➡️ Go to the dealer search on hepha.com<br/>➡️ Enter your ZIP code<br/>➡️ Choose a partner in your area<br/>➡️ Look forward to your first pedal into your new bike life</p><p>Not sure which model suits you? No problem! That's exactly what our partners are there for. They take time, explain technology, differences, and options. You don't have to be a tech geek. You just need to want to ride.</p><p>And when you've found your dream bike, they'll also help you with:</p><ul><li>Financing options for your budget</li><li>Suitable insurance offers</li><li>Attractive leasing options like cycle-to-work schemes</li></ul><h2>Frequently Asked Questions</h2><p><strong>Where can I find an e-bike near me?</strong><br/>Simply through the dealer search on hepha.com. Enter your location or ZIP code – done.</p><p><strong>Can I test a HEPHA e-bike before buying?</strong><br/>Absolutely! Our partners offer free test rides. That's the only way to feel if the bike really suits you.</p><p><strong>How much does a good HEPHA e-bike cost?</strong><br/>Depending on the model, our prices start at about 2,500€. For high-quality technology, powerful battery, and durable components, we recommend a price range of 3,000€-4,500€.</p><p><strong>What range do HEPHA e-bikes have?</strong><br/>With our 708 Wh battery, you can go between 60 and 120 kilometers depending on assistance level, terrain, and riding style. Enough for almost any adventure!</p><p><strong>What happens if something breaks?</strong><br/>That's what our partners are for – quick and uncomplicated. Service isn't an option with HEPHA, it's standard.</p><p><strong>Does HEPHA also offer e-bikes with more than 25 km/h?</strong><br/>We focus on pedelecs with electric assistance up to 25 km/h. These offer the perfect balance of performance, range, and legal simplicity.</p><p><strong>Conclusion: Buy Electric Bikes Near Me – Because Local is Simply Better</strong></p><p>Looking for an e-bike in my area? Found it! With HEPHA, you get top-level technology, service with heart, and advice that doesn't read from a script, but listens.</p><p>No shipping drama. No online guesswork. No screwdriver frustration. Just you, your new bike – and a lot of excitement to get going.</p>",
+            "enlarge_text": true
+          }
+        }
+      },
+      "block_order": ["heading_jKHHGV", "text_fXwg6E"],
+      "settings": {
+        "height": "large",
+        "text_alignment": "left",
+        "full_width": true,
+        "color_scheme": "default"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "1735414705069317c7",
+    "custom_liquid_4aAbp8",
+    "custom_liquid_dfUhnt",
+    "rich_text_7haPec"
+  ]
+}

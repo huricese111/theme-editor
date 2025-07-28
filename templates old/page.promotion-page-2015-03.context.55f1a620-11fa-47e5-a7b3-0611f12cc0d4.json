@@ -1,0 +1,18 @@
+{
+  "parent": "page.promotion-page-2015-03.json",
+  "context": { "market": "55f1a620-11fa-47e5-a7b3-0611f12cc0d4" },
+  "sections": {
+    "custom_two_colum_banner_9qPXQf": {
+      "settings": {},
+      "blocks": {
+        "slide_hLkKFr": {
+          "settings": {
+            "heading_size_1": 80,
+            "subheading_2": "<p>Discover Spring's Beauty with Savings on Hepha E-Bikes!<br/><strong>01.03.2025 - 31.03.2025</strong><br/>3 years of free comprehensive protection on the Trekking 7 SE Ultra<br/>1,999 € for the Hepha Trekking 7 LTD Long Range, limited stock!</p>",
+            "subheading_2_de": "<p>Entdecken Sie die Schönheit des Frühlings mit Ersparnissen bei Hepha E-Bikes!<br/><strong>01.03.2025 - 31.03.2025</strong><br/>3 Jahre kostenloser Komplettschutz auf das Trekking 7 SE Ultra<br/>1.999 € für das Hepha Trekking 7 LTD Long Range, begrenzter Vorrat!</p>"
+          }
+        }
+      }
+    }
+  }
+}

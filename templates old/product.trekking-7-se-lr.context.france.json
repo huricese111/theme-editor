@@ -1,0 +1,15 @@
+{
+  "parent": "product.trekking-7-se-lr.json",
+  "context": { "market": "france" },
+  "sections": {
+    "custom_two_colum_banner_jVBYyG": {
+      "disabled": true,
+      "settings": {},
+      "blocks": {}
+    },
+    "main": {
+      "settings": {},
+      "blocks": { "accordion_DPPTVK": { "disabled": true, "settings": {} } }
+    }
+  }
+}

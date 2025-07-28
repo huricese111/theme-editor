@@ -1,0 +1,34 @@
+{
+  "parent": "page.mountain-carbon-collection.json",
+  "context": { "market": "austria" },
+  "sections": {
+    "custom_slideshow_tab_RGFFnK": {
+      "settings": {
+        "footer_description": "Pay in 3 interest-free",
+        "footer_description_de": "oder einfach in Raten zahlen"
+      },
+      "blocks": {}
+    },
+    "custom_slideshow_tab_Lxtebk": {
+      "settings": {
+        "footer_description": "Pay in 3 interest-free",
+        "footer_description_de": "oder einfach in Raten zahlen"
+      },
+      "blocks": {}
+    },
+    "custom_slideshow_tab_xgxENH": {
+      "settings": {
+        "footer_description": "Pay in 3 interest-free",
+        "footer_description_de": "oder einfach in Raten zahlen"
+      },
+      "blocks": {}
+    },
+    "custom_slideshow_tab_dbDynF": {
+      "settings": {
+        "footer_description": "Pay in 3 interest-free",
+        "footer_description_de": "oder einfach in Raten zahlen"
+      },
+      "blocks": {}
+    }
+  }
+}

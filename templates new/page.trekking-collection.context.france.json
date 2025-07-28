@@ -1,0 +1,5 @@
+{
+  "parent": "page.trekking-collection.json",
+  "context": { "market": "france" },
+  "sections": {}
+}

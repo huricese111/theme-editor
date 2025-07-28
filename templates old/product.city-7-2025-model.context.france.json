@@ -1,0 +1,10 @@
+{
+  "parent": "product.city-7-2025-model.json",
+  "context": { "market": "france" },
+  "sections": {
+    "main": {
+      "settings": {},
+      "blocks": { "accordion_DPPTVK": { "disabled": true, "settings": {} } }
+    }
+  }
+}

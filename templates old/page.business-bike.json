@@ -1,0 +1,215 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "rich_text_VBddJb": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_kGf4PH": {
+          "type": "heading",
+          "settings": {
+            "title": "We apologize, but the cooperation with Business Bike is not available in Austria.",
+            "use_h1": false
+          }
+        },
+        "heading_44Cmtj": {
+          "type": "heading",
+          "settings": {
+            "title": "We apologize, but the cooperation with Business Bike is not available in France.",
+            "use_h1": false
+          }
+        },
+        "text_NihDgX": {
+          "type": "text",
+          "settings": {
+            "text": "<p>If you need support, please feel free to contact us at <a href=\"mailto:presales@hepha.com\" target=\"_blank\">presales@hepha.com</a>.</p>",
+            "enlarge_text": true
+          }
+        }
+      },
+      "block_order": ["heading_kGf4PH", "heading_44Cmtj", "text_NihDgX"],
+      "disabled": true,
+      "settings": {
+        "height": "large",
+        "text_alignment": "center",
+        "full_width": false,
+        "color_scheme": "default"
+      }
+    },
+    "custom_liquid_MinCyG": {
+      "type": "custom-liquid",
+      "settings": {
+        "full_width": true,
+        "show_space": true,
+        "code": "<!-- Folgenden Code an der Stelle, an welcher die HändlerSeite erscheinen soll: -->\n<bb-trader-page></bb-trader-page>\n\n<!-- Folgenden Code an einer beliebigen Stelle im Markup: -->\n<script src=\"//static.businessbike.de/elements/trader-page/bundle.js\" defer></script>"
+      }
+    },
+    "custom_imagerow_3BF6pE": {
+      "type": "custom-imagerow",
+      "blocks": {
+        "module_rbHYm7": {
+          "type": "module",
+          "settings": {
+            "module_big_title": "1",
+            "module_title": "Inquiry with Your Company & Opening an Account",
+            "module_title_de": "Anfrage bei Ihrer Firma & Eröffnung eines Accounts",
+            "module_title_fr": "",
+            "description": "<p>Check whether your company already has an account with BusinessBike. The best way to do this is to contact the responsible person within your company (this is usually handled by the HR department). They will provide you with the internet address for your employer's BusinessBike portal.</p>",
+            "description_de": "<p>Prüfen Sie, ob Ihr Unternehmen bereits einen Account bei BusinessBike hat. Dazu wenden Sie sich am besten an die zuständige Person in Ihrem Unternehmen (meist wird das Thema von der Personalabteilung mit bearbeitet). Dort bekommen Sie die Internet-Adresse zum BusinessBike-Portal Ihres Arbeitgebers.</p>",
+            "description_fr": "",
+            "background_color": "#ffffff",
+            "button1_text": "",
+            "button1_text_de": "",
+            "button1_text_fr": "",
+            "button1_url": "",
+            "button1_background_color": "",
+            "button1_text_color": ""
+          }
+        },
+        "module_DtwLxi": {
+          "type": "module",
+          "settings": {
+            "module_big_title": "2",
+            "module_title": "Select Your Bike and Fill Out the Leasing Form.",
+            "module_title_de": "Bike aussuchen und Leasingformular ausfüllen.",
+            "module_title_fr": "",
+            "description": "<p>Select the HEPHA e-bike of your choice. Then, fill out the form at the bottom of this page! Tip: Please use the same email address you provided during registration in the BusinessBike portal when completing the form.</p>",
+            "description_de": "<p>Wählen Sie Ihr Wunsch-HEPHA E-Bike aus. Füllen Sie dann das Formular am Ende dieser Seite aus! Tipp: Bitte verwenden Sie beim Ausfüllen des Formulars die gleiche E-Mail-Adresse, die Sie bei der Registrierung im BusinessBike-Portal angegeben haben.</p>",
+            "description_fr": "",
+            "background_color": "#ffffff",
+            "button1_text": "",
+            "button1_text_de": "",
+            "button1_text_fr": "",
+            "button1_url": "",
+            "button1_background_color": "",
+            "button1_text_color": ""
+          }
+        },
+        "module_aXyitG": {
+          "type": "module",
+          "settings": {
+            "module_big_title": "3",
+            "module_title": "We Create an Offer for You",
+            "module_title_de": "Wir erstellen ein Angebot für Sie",
+            "module_title_fr": "",
+            "description": "<p>We will create an offer for your HEPHA e-bike through the BusinessBike portal. You will be notified automatically.</p>",
+            "description_de": "<p>Wir erstellen für Sie ein Angebot für Ihr HEPHA E-Bike über das Portal BusinessBike. Sie werden automatisch benachrichtigt.</p>",
+            "description_fr": "",
+            "background_color": "#ffffff",
+            "button1_text": "",
+            "button1_text_de": "",
+            "button1_text_fr": "",
+            "button1_url": "",
+            "button1_background_color": "",
+            "button1_text_color": ""
+          }
+        },
+        "module_Dbbft6": {
+          "type": "module",
+          "settings": {
+            "module_big_title": "4",
+            "module_title": "Complete the Order",
+            "module_title_de": "Bestellung abschließen",
+            "module_title_fr": "",
+            "description": "<p>Enter your Bikeleasing User ID and wait for your order to be approved. Once approved, your new bike and gear are shipped.</p>",
+            "description_de": "<p>Warten Sie darauf, dass Ihre Bestellung genehmigt wird. Sobald sie genehmigt ist, werden Ihr neues Fahrrad versandt.</p>",
+            "description_fr": "",
+            "background_color": "#ffffff",
+            "button1_text": "",
+            "button1_text_de": "",
+            "button1_text_fr": "",
+            "button1_url": "",
+            "button1_background_color": "",
+            "button1_text_color": ""
+          }
+        }
+      },
+      "block_order": [
+        "module_rbHYm7",
+        "module_DtwLxi",
+        "module_aXyitG",
+        "module_Dbbft6"
+      ],
+      "custom_css": [
+        ".module {width: 46%; justify-content: flex-start; justify-content: center;}",
+        "@media (max-width: 768px) {.module {width: 100% !important; height: 100% !important; }}"
+      ],
+      "settings": {
+        "title": "How to order with Business Bike",
+        "title_de": "Wie man über Bikeleasing bestellt",
+        "title_fr": "",
+        "title_font_size": 24,
+        "description_font_size": 16
+      }
+    },
+    "custom_product_tab_test_m9aDPj": {
+      "type": "custom-product-tab-test",
+      "settings": {
+        "title": "Explore more HEPHA E-Bikes",
+        "title_de": "Entdecken Sie mehr HEPHA E-Bikes",
+        "title_fr": "Découvrez d'autres vélos électriques HEPHA",
+        "image": "shopify://shop_images/HEPHA-Trekking7_01_grey_7ff138ad-9f41-4981-b752-1bd80fee72c0.jpg",
+        "background_color": "#ffffff",
+        "background_position": "center center",
+        "background_size": "cover",
+        "background_align_items": "flex-start",
+        "background_padding_top": 20,
+        "background_padding_right": 20,
+        "background_padding_bottom": 20,
+        "background_padding_left": 20,
+        "ad_link": "shopify://collections/hepha-ebikes",
+        "ad_button_color": "#000000",
+        "ad_button_text_color": "#ffffff",
+        "title_1": "<p>Not sure which E-Bike is right for you? Discover and compare our full range of E-Bikes to find the perfect model for your adventures.</p>",
+        "title_1_de": "<p>Nicht sicher, welches E-Bike das richtige für Sie ist? Entdecken und vergleichen Sie unser gesamtes Sortiment an E-Bikes, um das perfekte Modell für Ihre Abenteuer zu finden.</p>",
+        "title_1_fr": "<p>Vous n’êtes pas sûr de quel vélo électrique est fait pour vous ? Découvrez et comparez notre gamme complète de vélos électriques pour trouver le modèle parfait pour vos aventures.</p>",
+        "heading_color_1": "#ffffff",
+        "heading_size_1": 18,
+        "button_label": "Explore all E-Bikes!",
+        "button_label_de": "Entdecke alle E-Bikes!",
+        "button_label_fr": "Découvrez tous modèles !",
+        "product_source_trekking7ltd": "collection",
+        "trekking7ltd_collection": "trekking-7-my23",
+        "trekking7ltd_products": [],
+        "product_source_trekking7": "collection",
+        "trekking7_collection": "new-bike-2024",
+        "trekking7_products": [],
+        "product_source_mountain7": "collection",
+        "mountain7_collection": "mountain-7-2024",
+        "mountain7_products": [],
+        "product_source_mountain7carbon": "collection",
+        "mountain7carbon_collection": "mountain-7-carbon",
+        "mountain7carbon_products": [],
+        "product_source_city7": "collection",
+        "city7_collection": "city-e-bike",
+        "city7_products": [],
+        "show_description": true
+      }
+    },
+    "custom_liquid_BFPmec": {
+      "type": "custom-liquid",
+      "custom_css": [
+        ".strongly-spaced-row,.fully-spaced-row--medium {margin-top: 0; margin-bottom: 80px;}"
+      ],
+      "settings": {
+        "full_width": false,
+        "show_space": true,
+        "code": "<style>\n.headingtitle{\nfont-size: 32px;\n    color: #333;\n    padding: 0;\n    text-align: center;\n    font-weight: 700;\n    margin: 0;\n    line-height: 40px;\n    margin-bottom:40px;\n}\n</style>\n\n\n{% if request.locale.iso_code == 'de' %}\n\n<h3 class=\"headingtitle\" id=\"target-section\">Bereit? Dann reichen Sie hier Ihren Firmenfahrradleasing-Antrag für Ihr Business Bike ein!\n</h3>\n\n<!--pifyform-start-->\n\n\t<!--pifyform-start-->\n<style>.pifyform.formloading iframe{visibility: hidden !important;} .pifyform.formloading{background-image: url(https://form-builder.pifyapp.com/assets/images/loading.gif?v=4.6);background-position: center 30px;background-size: 30px 30px;background-repeat: no-repeat;}</style>\n<div id=\"pifyform-11659\" class=\"pifyform\" style=\"margin:10px 0;\">\n<script charset=\"UTF-8\" defer>document.getElementById(\"pifyform-11659\").classList.add(\"formloading\");(function(h){function n(a){return null===a?null:a.scrollHeight>a.clientHeight?a:n(a.parentNode)}function t(b){if(b.data && typeof(b.data)==\"string\"){var f =null;try{f=JSON.parse(b.data);}catch(e){}if(f!=null&&f.height!=undefined){if(f.formId==undefined){d.style.height=f.height+\"px\"}else if(\"pifyform-\"+f.formId==d.id){d.style.height=f.height+\"px\"} }if(f!=null&&f.redirect!=undefined&&f.redirect!=\"\"){window.location.href=f.redirect;}if(f!=null&&f.retsetHeight!=undefined&&f.retsetHeight){d.style.height=\"520px\";window.location.href=\"#pifyform-11659\";}if(document.getElementsByClassName('lazyframe').length>0){var lazyframe=document.getElementsByClassName('lazyframe')[0];lazyframe.style.height=\"100%\";lazyframe.removeAttribute(\"data-ratio\");lazyframe.parentNode.style.overflow='hidden'} if(f!=null&&f.getter){b={};var f=[].concat(f.getter),k,h=f.length,m,c,g,e;for(k=0;k<h;k++){m=k;c=f[k]||{};c.n&&(m=c.n);g=null;try{switch(c.t){case \"window\":e=window;break;case \"scrollParent\":e=n(a)||window;break;default:e=a}if(c.e)if(\"rect\"===c.v){g={};var l=e.getBoundingClientRect();g={top:l.top,left:l.left,width:l.width,height:l.height} }else g=e[c.v].apply(e,[].concat(c.e))||!0;else c.s?(e[c.v]=c.s,g=!0):g=e[c.v]||!1}catch(u){}b[m]=g}b.innerState=!p&&!q;a.contentWindow.postMessage(JSON.stringify({queryRes:b}),\"*\")} } }var d = document.getElementById(\"pifyform-11659\");var a = document.createElement(\"iframe\");d.style.overflowY=\"auto\";d.style.overflowX=\"hidden\";var p=d.style.height&&\"auto\"!==d.style.height,q=\"absolute\"===d.style.position||window.getComputedStyle&&\"absolute\"===window.getComputedStyle(d,null).getPropertyValue(\"position\")||d.currentStyle&&\"absolute\"===d.currentStyle.position;h.addEventListener&&h.addEventListener(\"message\",t,!1);a.src=\"https://form-builder-an.pifyapp.com/form/s/11659\";a.id=\"form-iframe-11659\";a.onload=function(){document.getElementById(\"pifyform-11659\").classList.remove(\"formloading\");a.contentWindow.postMessage(JSON.stringify({parentUrl: window.location.href}), \"*\");};a.frameBorder=0;a.scrolling=\"no\";a.style.display=\"block\";a.style.minWidth=\"100%\";a.style.width=\"100px\";a.style.height=\"100%\";a.style.border=\"none\";a.style.overflow=\"auto\";setTimeout(function(){if(!document.getElementById(\"form-iframe-11659\")){d.appendChild(a);} },50);})(window);</script>\n</div>\n<!--pifyform-end-->\n{% else %}\n\n<!--pifyform-start-->\n<style>\n  .pifyform.formloading iframe {\n    visibility: hidden !important;\n  }\n\n  .pifyform.formloading {\n    background-image: url(https://form-builder.pifyapp.com/assets/images/loading.gif?v=4.6);\n    background-position: center 30px;\n    background-size: 30px 30px;\n    background-repeat: no-repeat;\n  }\n</style>\n\n<h3 class=\"headingtitle\">Ready? Then submit your company bike leasing application for your Business Bike here!\n</h3>\n\t<!--pifyform-start-->\n<style>.pifyform.formloading iframe{visibility: hidden !important;} .pifyform.formloading{background-image: url(https://form-builder.pifyapp.com/assets/images/loading.gif?v=4.6);background-position: center 30px;background-size: 30px 30px;background-repeat: no-repeat;}</style>\n<div id=\"pifyform-11660\" class=\"pifyform\" style=\"margin:10px 0;\">\n<script charset=\"UTF-8\" defer>document.getElementById(\"pifyform-11660\").classList.add(\"formloading\");(function(h){function n(a){return null===a?null:a.scrollHeight>a.clientHeight?a:n(a.parentNode)}function t(b){if(b.data && typeof(b.data)==\"string\"){var f =null;try{f=JSON.parse(b.data);}catch(e){}if(f!=null&&f.height!=undefined){if(f.formId==undefined){d.style.height=f.height+\"px\"}else if(\"pifyform-\"+f.formId==d.id){d.style.height=f.height+\"px\"} }if(f!=null&&f.redirect!=undefined&&f.redirect!=\"\"){window.location.href=f.redirect;}if(f!=null&&f.retsetHeight!=undefined&&f.retsetHeight){d.style.height=\"520px\";window.location.href=\"#pifyform-11660\";}if(document.getElementsByClassName('lazyframe').length>0){var lazyframe=document.getElementsByClassName('lazyframe')[0];lazyframe.style.height=\"100%\";lazyframe.removeAttribute(\"data-ratio\");lazyframe.parentNode.style.overflow='hidden'} if(f!=null&&f.getter){b={};var f=[].concat(f.getter),k,h=f.length,m,c,g,e;for(k=0;k<h;k++){m=k;c=f[k]||{};c.n&&(m=c.n);g=null;try{switch(c.t){case \"window\":e=window;break;case \"scrollParent\":e=n(a)||window;break;default:e=a}if(c.e)if(\"rect\"===c.v){g={};var l=e.getBoundingClientRect();g={top:l.top,left:l.left,width:l.width,height:l.height} }else g=e[c.v].apply(e,[].concat(c.e))||!0;else c.s?(e[c.v]=c.s,g=!0):g=e[c.v]||!1}catch(u){}b[m]=g}b.innerState=!p&&!q;a.contentWindow.postMessage(JSON.stringify({queryRes:b}),\"*\")} } }var d = document.getElementById(\"pifyform-11660\");var a = document.createElement(\"iframe\");d.style.overflowY=\"auto\";d.style.overflowX=\"hidden\";var p=d.style.height&&\"auto\"!==d.style.height,q=\"absolute\"===d.style.position||window.getComputedStyle&&\"absolute\"===window.getComputedStyle(d,null).getPropertyValue(\"position\")||d.currentStyle&&\"absolute\"===d.currentStyle.position;h.addEventListener&&h.addEventListener(\"message\",t,!1);a.src=\"https://form-builder-an.pifyapp.com/form/s/11660\";a.id=\"form-iframe-11660\";a.onload=function(){document.getElementById(\"pifyform-11660\").classList.remove(\"formloading\");a.contentWindow.postMessage(JSON.stringify({parentUrl: window.location.href}), \"*\");};a.frameBorder=0;a.scrolling=\"no\";a.style.display=\"block\";a.style.minWidth=\"100%\";a.style.width=\"100px\";a.style.height=\"100%\";a.style.border=\"none\";a.style.overflow=\"auto\";setTimeout(function(){if(!document.getElementById(\"form-iframe-11660\")){d.appendChild(a);} },50);})(window);</script>\n</div>\n<!--pifyform-end-->\n\n{% endif %}"
+      }
+    }
+  },
+  "order": [
+    "rich_text_VBddJb",
+    "custom_liquid_MinCyG",
+    "custom_imagerow_3BF6pE",
+    "custom_product_tab_test_m9aDPj",
+    "custom_liquid_BFPmec"
+  ]
+}

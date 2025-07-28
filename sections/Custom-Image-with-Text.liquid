@@ -132,6 +132,14 @@
           "label": "16:9"
         },
         {
+          "value": "9/16",
+          "label": "9:16"
+        },
+        {
+          "value": "4/3",
+          "label": "4:3"
+        },
+        {
           "value": "3/4",
           "label": "Portrait (3:4)"
         },
@@ -788,7 +796,7 @@
     class="lightbox-content"
     src="{{ block.settings.image | img_url: '1200x' }}"
     alt="{{ block.settings.image.alt | strip_html }}"
-    style="max-width: 90%; max-height: 90%;"
+    style="max-width: 90%; max-height: 90%; border-radius: 12px;"
   >
 </div>
 
@@ -914,6 +922,14 @@
 
   [data-aspect-ratio='16/9'] .slide-image {
     padding-bottom: 56.25%;
+  }
+
+  [data-aspect-ratio='9/16'] .slide-image {
+    padding-bottom: 177.78%;
+  }
+
+  [data-aspect-ratio='4/3'] .slide-image {
+    padding-bottom: 75%;
   }
 
   [data-aspect-ratio='3/4'] .slide-image {

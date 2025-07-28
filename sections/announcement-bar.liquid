@@ -29,6 +29,56 @@
 }
 }
 
+/* Language Switcher Button */
+.language-switcher-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  padding: 6px 10px;
+  color: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+}
+
+.language-switcher-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.language-switcher-flag {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.language-switcher-text {
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.language-switcher-arrow {
+  opacity: 0.7;
+  transition: transform 0.2s ease;
+}
+
+.language-switcher-btn:hover .language-switcher-arrow {
+  transform: translateY(1px);
+}
+
+@media (max-width: 768px) {
+  .language-switcher-btn {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+  
+  .language-switcher-flag {
+    font-size: 14px;
+  }
+}
+
 </style>
 
 
@@ -189,9 +239,34 @@
             {% endfor %}
           </span>
         {% endif %}
+        
+        <!-- Enhanced Language Switcher -->
         {% if section.settings.enable_language_selector or section.settings.enable_country_selector %}
           <div class="header-localization">
-            {% render 'localization-form', id: 'annbar-localization', hide_labels: true, promote_popular: true %}
+            <!-- Quick Language Switcher Button -->
+            <button class="language-switcher-btn" onclick="document.getElementById('language-popup').classList.remove('hidden')" aria-label="Change language and location">
+              <span class="language-switcher-flag">
+                {% case request.locale.iso_code %}
+                  {% when 'de' %}
+                    🇩🇪
+                  {% when 'fr' %}
+                    🇫🇷
+                  {% when 'fi' %}
+                    🇫🇮
+                  {% else %}
+                    🇬🇧
+                {% endcase %}
+              </span>
+              <span class="language-switcher-text">{{ request.locale.iso_code | upcase }}</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" class="language-switcher-arrow">
+                <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" fill="none"/>
+              </svg>
+            </button>
+            
+            <!-- Original localization form (hidden) -->
+            <div style="display: none;">
+              {% render 'localization-form', id: 'annbar-localization', hide_labels: true, promote_popular: true %}
+            </div>
           </div>
         {% endif %}
       </div>

@@ -1,0 +1,27 @@
+{
+  "parent": "page.mountain-collection.json",
+  "context": { "market": "austria" },
+  "sections": {
+    "custom_slideshow_tab_RGFFnK": {
+      "settings": {
+        "footer_description": "or Pay with Instalment Plans",
+        "footer_description_de": "oder einfach in Raten zahlen"
+      },
+      "blocks": {}
+    },
+    "custom_slideshow_tab_Lxtebk": {
+      "settings": {
+        "footer_description": "or Pay with Instalment Plans",
+        "footer_description_de": "oder einfach in Raten zahlen"
+      },
+      "blocks": {}
+    },
+    "custom_slideshow_tab_xgxENH": {
+      "settings": {
+        "footer_description": "or Pay with Instalment Plans",
+        "footer_description_de": "oder einfach in Raten zahlen"
+      },
+      "blocks": {}
+    }
+  }
+}

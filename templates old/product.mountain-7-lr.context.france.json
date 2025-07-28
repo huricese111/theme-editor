@@ -1,0 +1,10 @@
+{
+  "parent": "product.mountain-7-lr.json",
+  "context": { "market": "france" },
+  "sections": {
+    "main": {
+      "settings": {},
+      "blocks": { "accordion_DPPTVK": { "disabled": true, "settings": {} } }
+    }
+  }
+}

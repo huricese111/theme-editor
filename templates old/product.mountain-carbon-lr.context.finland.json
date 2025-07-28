@@ -1,0 +1,11 @@
+{
+  "parent": "product.mountain-carbon-lr.json",
+  "context": { "market": "finland" },
+  "sections": {
+    "main": {
+      "custom_css": [".gw-button-widget{display: none;}"],
+      "settings": {},
+      "blocks": { "accordion_DPPTVK": { "disabled": true, "settings": {} } }
+    }
+  }
+}

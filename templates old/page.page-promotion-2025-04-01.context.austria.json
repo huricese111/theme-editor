@@ -1,0 +1,36 @@
+{
+  "parent": "page.page-promotion-2025-04-01.json",
+  "context": { "market": "austria" },
+  "sections": {
+    "custom_imagerow_jAg74G": {
+      "disabled": true,
+      "settings": {},
+      "blocks": {}
+    },
+    "collapsible_tabs_qETzUn": {
+      "settings": {},
+      "blocks": {
+        "question_CqpMaE": {
+          "settings": {
+            "answer": "<p>A: For the Trekking 7 SE Long Range (RRP: €2,799), you get the following offers:</p><p>-€400: Price discount, the final price is €2,399.</p>",
+            "answer_fr": "<p>R: Pour le Trekking 7 SE Long Range (PVP : 2 799 €), vous bénéficiez des offres suivantes :</p><p>- 400 € : Remise, le prix final est de 2 399 €.</p>"
+          }
+        },
+        "question_awRpRT": {
+          "settings": {
+            "answer": "<p>A: For the Trekking 7 SE Long Range (RRP: €3,299), you get the following offers:</p><p>-€500: Price discount, the final price is €2,799.</p>",
+            "answer_fr": "<p>R: Pour le Trekking 7 SE Ultra (PVP : 3 299 €), vous bénéficiez des offres suivantes :</p><p>- 500 € : Remise, le prix final est de 2 799 €.</p>"
+          }
+        },
+        "question_UXgx8x": {
+          "settings": {
+            "title": "Q: How do I get a free 100Nm upgrade, a free Abus folding lock?",
+            "title_de": "F： Wie erhalte ich ein Gratis 100Nm Upgrade, ein Gratis Abus Faltschloss?"
+          }
+        },
+        "question_ytzVBz": { "disabled": true, "settings": {} },
+        "question_bbRFXj": { "disabled": true, "settings": {} }
+      }
+    }
+  }
+}

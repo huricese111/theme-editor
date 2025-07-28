@@ -1,0 +1,191 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "title": { "type": "title", "settings": {} },
+        "loox_reviews_loox_rating_rikqwX": {
+          "type": "shopify://apps/loox-reviews/blocks/loox-rating/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
+          "settings": {
+            "contentSize": 16,
+            "pattern": "",
+            "hideText": false,
+            "alignment": "",
+            "layout": "",
+            "textColor": "",
+            "starColor": "",
+            "showAllReviews": false,
+            "looxOpenFloatingWidget": false,
+            "emptyRatingWidget": false
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {
+            "show_tax_and_shipping": false,
+            "enable_product_reviews_by_price": true
+          }
+        },
+        "description_JNVXj3": {
+          "type": "description",
+          "settings": {
+            "show_in_tab": false,
+            "open_tab": false,
+            "icon": "",
+            "show_in_quickbuy": false
+          }
+        },
+        "variant_picker_4U3kqg": {
+          "type": "variant-picker",
+          "settings": {
+            "show_single": false,
+            "selector_style": "listed",
+            "dynamic_availability": "show",
+            "enable_size_chart": false,
+            "size_chart_label": "Size guide",
+            "size_chart_variant": "Size",
+            "size_chart_page": ""
+          }
+        },
+        "buy_buttons_XCfCeB": {
+          "type": "buy-buttons",
+          "settings": {
+            "show_quantity_selector": false,
+            "enable_payment_button": true,
+            "show_backorder_text": false,
+            "show_pickup_availability": false,
+            "show_gift_card_recipient": false,
+            "enable_contact_notify": true,
+            "contact_expert_content": "",
+            "notify_me_content": ""
+          }
+        },
+        "usedbike_LC3Dr6": {
+          "type": "usedbike",
+          "settings": {
+            "text": "Save with Used - Like New",
+            "text_de": "Save with Used - Like New",
+            "text_fr": "Save with Used - Like New",
+            "currentprice": "2.599",
+            "currentprice_de": "2.599",
+            "currentprice_fr": "2.599",
+            "wasprice": "2.799",
+            "wasprice_de": "2.799",
+            "wasprice_fr": "2.799",
+            "url": "shopify://collections/used-bikes"
+          }
+        },
+        "pop_up_n8JhKm": {
+          "type": "pop-up",
+          "disabled": true,
+          "settings": {
+            "text": "Which frame size fit me?",
+            "text_de": "Welche Rahmengröße passt zu mir?",
+            "text_fr": "Quelle taille de cadre me convient ?",
+            "style": "primary",
+            "page": "about-hepha",
+            "show_in_quickbuy": false
+          }
+        },
+        "custom_liquid_9JfyFa": {
+          "type": "custom-liquid",
+          "settings": {
+            "custom_liquid": "{% render 'custom-bidex-find-dealers' %}",
+            "show_in_quickbuy": false
+          }
+        },
+        "sharing_fkH7VM": {
+          "type": "sharing",
+          "settings": {
+            "show_twitter": true,
+            "show_facebook": true,
+            "show_pinterest": true,
+            "show_linkedin": true,
+            "show_whatsapp": true,
+            "show_snapchat": true,
+            "show_threads": true,
+            "show_tumblr": true,
+            "show_twitch": true
+          }
+        }
+      },
+      "block_order": [
+        "title",
+        "loox_reviews_loox_rating_rikqwX",
+        "price",
+        "description_JNVXj3",
+        "variant_picker_4U3kqg",
+        "buy_buttons_XCfCeB",
+        "usedbike_LC3Dr6",
+        "pop_up_n8JhKm",
+        "custom_liquid_9JfyFa",
+        "sharing_fkH7VM"
+      ],
+      "custom_css": [
+        ".product-detail .gallery {height: 100%;}",
+        ".product-detail .detail {padding: 50px 30px;}"
+      ],
+      "settings": {
+        "show_breadcrumbs": false,
+        "select_first_variant": true,
+        "show_location_underneath": false,
+        "inventory_transfers_enable": false,
+        "enable_sticky_columns": true,
+        "enable_sticky_atc": true,
+        "sticky_atc_position": "end",
+        "sticky_atc_mobile": true,
+        "sticky_atc_behavior": "add_to_cart",
+        "sticky_atc_button_style": "secondary",
+        "gallery_size": "medium",
+        "gallery_layout": "carousel-under",
+        "enable_zoom": true,
+        "show_alt_text": false,
+        "alt_text_icon": "",
+        "enable_video_autoplay": false,
+        "enable_video_looping": false,
+        "enable_media_grouping": false,
+        "media_grouping_option": "Color,Colour,Couleur,Farbe"
+      }
+    },
+    "custom_related_product_pbhYzr": {
+      "type": "custom_related_product",
+      "custom_css": [
+        ".carousel-wrapper {position: relative; margin-bottom: 50px; margin-top: 50px;}"
+      ],
+      "settings": {}
+    },
+    "image_with_text_YzqVBU": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_gT6TbE": {
+          "type": "heading",
+          "settings": { "title": "Image with text", "use_h1": false }
+        },
+        "text_L7f4yq": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Pair text with an image to give customers insight into your brand. Tell a story, explain a product detail, or describe a new promotion.</p>",
+            "enlarge_text": false
+          }
+        },
+        "button_k3NLaq": {
+          "type": "button",
+          "settings": {
+            "button_label": "Button text",
+            "button_link": "",
+            "button_style": "primary"
+          }
+        }
+      },
+      "block_order": ["heading_gT6TbE", "text_L7f4yq", "button_k3NLaq"],
+      "settings": {
+        "image_width": 700,
+        "image_link": "",
+        "image_position": "left",
+        "text_alignment": "left",
+        "color_scheme": "default"
+      }
+    }
+  },
+  "order": ["main", "custom_related_product_pbhYzr", "image_with_text_YzqVBU"]
+}

@@ -1,0 +1,601 @@
+{% comment %}
+  Smart Language Selection Popup
+  Features:
+  - Multi-tier IP geolocation detection with fallbacks
+  - Auto-detect user location and language (including VPN detection)
+  - Show popup on first visit or language mismatch
+  - Two-tier country selection (detected + manual)
+{% endcomment %}
+
+<div id="language-popup" class="language-popup hidden" data-popup>
+  <div class="language-popup__overlay"></div>
+  <div class="language-popup__content">
+    <div class="language-popup__header">
+      <h2 class="language-popup__title">Choose your location and language</h2>
+      <button class="language-popup__close" data-close-popup aria-label="Close">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="language-popup__body">
+      <!-- Detected Location Section -->
+      <div class="language-popup__section">
+        <h3 class="language-popup__section-title">Your current location and available languages</h3>
+        <div class="language-popup__detected" id="detected-location">
+          <div class="language-option" data-loading>
+            <span class="language-option__flag">🌍</span>
+            <span class="language-option__country">Detecting location...</span>
+            <div class="language-option__languages">
+              <span class="language-option__lang detecting">Loading...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <hr class="language-popup__divider">
+      
+      <!-- Manual Selection Section -->
+      <div class="language-popup__section">
+        <h3 class="language-popup__section-title">Europe</h3>
+        <div class="language-popup__countries">
+          <!-- Germany -->
+          <div class="language-option" data-country="DE">
+            <span class="language-option__flag">🇩🇪</span>
+            <span class="language-option__country">Deutschland</span>
+            <div class="language-option__languages">
+              <button class="language-option__lang" data-locale="de" data-country="DE" data-url="/de">Deutsch</button>
+              <button class="language-option__lang" data-locale="en" data-country="DE" data-url="/">English</button>
+            </div>
+          </div>
+          
+          <!-- France -->
+          <div class="language-option" data-country="FR">
+            <span class="language-option__flag">🇫🇷</span>
+            <span class="language-option__country">France</span>
+            <div class="language-option__languages">
+              <button class="language-option__lang" data-locale="fr" data-country="FR" data-url="/fr-fr">Français</button>
+              <button class="language-option__lang" data-locale="en" data-country="FR" data-url="/en-fr">English</button>
+            </div>
+          </div>
+          
+          <!-- Austria -->
+          <div class="language-option" data-country="AT">
+            <span class="language-option__flag">🇦🇹</span>
+            <span class="language-option__country">Österreich</span>
+            <div class="language-option__languages">
+              <button class="language-option__lang" data-locale="de" data-country="AT" data-url="/at-at">Deutsch</button>
+              <button class="language-option__lang" data-locale="en" data-country="AT" data-url="/en-at">English</button>
+            </div>
+          </div>
+          
+          <!-- Finland -->
+          <div class="language-option" data-country="FI">
+            <span class="language-option__flag">🇫🇮</span>
+            <span class="language-option__country">Finland</span>
+            <div class="language-option__languages">
+              <button class="language-option__lang" data-locale="fi" data-country="FI" data-url="/fi-fi">Suomi</button>
+              <button class="language-option__lang" data-locale="en" data-country="FI" data-url="/en-fi">English</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.language-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.language-popup.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.language-popup__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+}
+
+.language-popup__content {
+  position: relative;
+  background: white;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.language-popup__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 24px 0;
+}
+
+.language-popup__title {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0;
+  color: #111;
+}
+
+.language-popup__close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
+  color: #666;
+  transition: background-color 0.2s ease;
+}
+
+.language-popup__close:hover {
+  background-color: #f3f4f6;
+}
+
+.language-popup__body {
+  padding: 24px;
+}
+
+.language-popup__section {
+  margin-bottom: 24px;
+}
+
+.language-popup__section:last-child {
+  margin-bottom: 0;
+}
+
+.language-popup__section-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 16px 0;
+  color: #374151;
+}
+
+.language-popup__divider {
+  border: none;
+  height: 1px;
+  background: #e5e7eb;
+  margin: 24px 0;
+}
+
+.language-popup__countries {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.language-option {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.language-option:hover {
+  border-color: #d1d5db;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.language-option__flag {
+  font-size: 24px;
+  margin-right: 12px;
+}
+
+.language-option__country {
+  font-weight: 500;
+  color: #111;
+  min-width: 120px;
+}
+
+.language-option__languages {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.language-option__lang {
+  background: #f3f4f6;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  color: #374151;
+}
+
+.language-option__lang:hover {
+  background: #e5e7eb;
+  border-color: #9ca3af;
+}
+
+.language-option__lang.active {
+  background: #3b82f6;
+  border-color: #3b82f6;
+  color: white;
+}
+
+.language-option__lang.detecting {
+  background: #f59e0b;
+  border-color: #f59e0b;
+  color: white;
+  cursor: default;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@media (max-width: 768px) {
+  .language-popup__content {
+    width: 95%;
+    margin: 20px;
+  }
+  
+  .language-popup__header {
+    padding: 20px 20px 0;
+  }
+  
+  .language-popup__title {
+    font-size: 20px;
+  }
+  
+  .language-popup__body {
+    padding: 20px;
+  }
+  
+  .language-option {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  
+  .language-option__languages {
+    margin-left: 0;
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+</style>
+
+<script>
+class SmartLanguagePopup {
+  constructor() {
+    this.popup = document.getElementById('language-popup');
+    this.overlay = this.popup?.querySelector('.language-popup__overlay');
+    this.closeBtn = this.popup?.querySelector('[data-close-popup]');
+    this.detectedSection = document.getElementById('detected-location');
+    
+    // 更可靠的地理位置检测服务
+    this.geoServices = [
+      {
+        name: 'ipapi.co',
+        url: 'https://ipapi.co/json/',
+        parser: (data) => ({
+          countryCode: data.country_code,
+          countryName: data.country_name,
+          language: data.languages?.split(',')[0] || 'en'
+        })
+      },
+      {
+        name: 'ipgeolocation.io',
+        url: 'https://api.ipgeolocation.io/ipgeo?apiKey=free',
+        parser: (data) => ({
+          countryCode: data.country_code2,
+          countryName: data.country_name,
+          language: 'en'
+        })
+      },
+      {
+        name: 'freeipapi.com',
+        url: 'https://freeipapi.com/api/json/',
+        parser: (data) => ({
+          countryCode: data.countryCode,
+          countryName: data.countryName,
+          language: 'en'
+        })
+      }
+    ];
+    
+    this.init();
+  }
+  
+  init() {
+    if (!this.popup) return;
+    
+    this.bindEvents();
+    this.checkShouldShow();
+  }
+  
+  bindEvents() {
+    // Close popup events
+    this.closeBtn?.addEventListener('click', () => this.hidePopup());
+    this.overlay?.addEventListener('click', () => this.hidePopup());
+    
+    // Language selection events
+    this.popup.addEventListener('click', (e) => {
+      const langBtn = e.target.closest('[data-locale]');
+      if (langBtn && !langBtn.classList.contains('detecting')) {
+        this.selectLanguage(langBtn.dataset.locale, langBtn.dataset.country, langBtn.dataset.url);
+      }
+    });
+    
+    // Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !this.popup.classList.contains('hidden')) {
+        this.hidePopup();
+      }
+    });
+  }
+  
+  async checkShouldShow() {
+    // 检查用户是否已经做过选择
+    const hasSelection = localStorage.getItem('language-selection-made');
+    if (hasSelection) return;
+    
+    // 立即显示弹窗并开始检测
+    this.showPopup();
+    
+    // 异步检测用户位置
+    await this.detectUserLocation();
+  }
+  
+  async detectUserLocation() {
+    let detectionSuccess = false;
+    
+    // 首先尝试使用浏览器的时区和语言进行智能推测
+    this.updateDetectedLocationFromBrowser();
+    
+    // 然后尝试IP地理位置服务
+    for (const service of this.geoServices) {
+      try {
+        console.log(`Trying geolocation service: ${service.name}`);
+        
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 3000); // 减少到3秒超时
+        
+        const response = await fetch(service.url, {
+          signal: controller.signal,
+          method: 'GET',
+          mode: 'cors',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        clearTimeout(timeoutId);
+        
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+        
+        const data = await response.json();
+        const parsed = service.parser(data);
+        
+        if (parsed.countryCode && parsed.countryName) {
+          console.log(`Successfully detected location via ${service.name}:`, parsed);
+          this.updateDetectedLocation(parsed.countryCode, parsed.countryName, parsed.language);
+          detectionSuccess = true;
+          break;
+        }
+      } catch (error) {
+        console.warn(`Geolocation service ${service.name} failed:`, error.message);
+        continue;
+      }
+    }
+    
+    // 如果所有服务都失败，保持浏览器检测结果
+    if (!detectionSuccess) {
+      console.log('All IP geolocation services failed, using browser-based detection');
+    }
+  }
+  
+  updateDetectedLocationFromBrowser() {
+    // 基于浏览器语言和时区的智能检测
+    const browserLang = navigator.language.toLowerCase();
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    
+    // 时区到国家的映射
+    const timezoneCountryMap = {
+      'europe/berlin': { code: 'DE', name: 'Germany', flag: '🇩🇪' },
+      'europe/paris': { code: 'FR', name: 'France', flag: '🇫🇷' },
+      'europe/vienna': { code: 'AT', name: 'Austria', flag: '🇦🇹' },
+      'europe/helsinki': { code: 'FI', name: 'Finland', flag: '🇫🇮' },
+      'europe/zurich': { code: 'DE', name: 'Germany', flag: '🇩🇪' },
+      'europe/amsterdam': { code: 'FR', name: 'France', flag: '🇫🇷' }
+    };
+    
+    // 语言到国家的映射
+    const langCountryMap = {
+      'de': { code: 'DE', name: 'Germany', flag: '🇩🇪' },
+      'de-de': { code: 'DE', name: 'Germany', flag: '🇩🇪' },
+      'de-at': { code: 'AT', name: 'Austria', flag: '🇦🇹' },
+      'fr': { code: 'FR', name: 'France', flag: '🇫🇷' },
+      'fr-fr': { code: 'FR', name: 'France', flag: '🇫🇷' },
+      'fi': { code: 'FI', name: 'Finland', flag: '🇫🇮' },
+      'fi-fi': { code: 'FI', name: 'Finland', flag: '🇫🇮' }
+    };
+    
+    // 首先尝试时区匹配
+    let detected = timezoneCountryMap[timezone.toLowerCase()];
+    
+    // 如果时区匹配失败，尝试语言匹配
+    if (!detected) {
+      detected = langCountryMap[browserLang] || langCountryMap[browserLang.split('-')[0]];
+    }
+    
+    // 如果都失败，使用默认值
+    if (!detected) {
+      detected = { code: 'INT', name: 'International', flag: '🌍' };
+    }
+    
+    // 更新检测到的位置
+    this.updateDetectedLocationDisplay(detected.code, detected.name, detected.flag);
+  }
+  
+  updateDetectedLocationDisplay(countryCode, countryName, flag) {
+    const languageMap = {
+      'de': 'Deutsch',
+      'fr': 'Français',
+      'fi': 'Suomi',
+      'en': 'English'
+    };
+    
+    // URL映射
+    const countryUrlMap = {
+      'DE': {
+        'de': '/de',
+        'en': '/'
+      },
+      'FR': {
+        'fr': '/fr-fr',
+        'en': '/en-fr'
+      },
+      'AT': {
+        'de': '/de-at',
+        'en': '/en-at'
+      },
+      'FI': {
+        'fi': '/fi-fi',
+        'en': '/en-fi'
+      }
+    };
+    
+    const supportedCountries = ['DE', 'FR', 'AT', 'FI'];
+    
+    if (!supportedCountries.includes(countryCode)) {
+      // 对于不支持的国家，推荐根域名
+      this.detectedSection.innerHTML = `
+        <div class="language-option">
+          <span class="language-option__flag">${flag}</span>
+          <span class="language-option__country">${countryName}</span>
+          <div class="language-option__languages">
+            <button class="language-option__lang active" 
+                    data-locale="en" 
+                    data-country="INT"
+                    data-url="/">
+              English
+            </button>
+          </div>
+        </div>
+      `;
+      return;
+    }
+    
+    // 对于支持的国家，显示可用语言
+    const urlMap = countryUrlMap[countryCode];
+    const availableLanguages = Object.keys(urlMap);
+    
+    const languageButtons = availableLanguages.map(lang => {
+      const langName = languageMap[lang] || 'English';
+      const url = urlMap[lang];
+      const browserLang = navigator.language.split('-')[0];
+      const isPreferred = lang === browserLang || (lang === 'en' && !availableLanguages.includes(browserLang));
+      
+      return `
+        <button class="language-option__lang ${isPreferred ? 'active' : ''}" 
+                data-locale="${lang}" 
+                data-country="${countryCode}"
+                data-url="${url}">
+          ${langName}
+        </button>
+      `;
+    }).join('');
+    
+    this.detectedSection.innerHTML = `
+      <div class="language-option">
+        <span class="language-option__flag">${flag}</span>
+        <span class="language-option__country">${countryName}</span>
+        <div class="language-option__languages">
+          ${languageButtons}
+        </div>
+      </div>
+    `;
+  }
+  
+  updateDetectedLocation(countryCode, countryName, language) {
+    const flagMap = {
+      'DE': '🇩🇪',
+      'FR': '🇫🇷', 
+      'AT': '🇦🇹',
+      'FI': '🇫🇮',
+      'GB': '🇬🇧',
+      'US': '🇺🇸',
+      'CA': '🇨🇦',
+      'AU': '🇦🇺'
+    };
+    
+    const flag = flagMap[countryCode] || '🌍';
+    this.updateDetectedLocationDisplay(countryCode, countryName, flag);
+  }
+  
+  shouldShowPopup() {
+    // 总是显示弹窗，除非用户已经做过选择
+    return !localStorage.getItem('language-popup-shown');
+  }
+  
+  showPopup() {
+    this.popup.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    localStorage.setItem('language-popup-shown', 'true');
+  }
+  
+  hidePopup() {
+    this.popup.classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+  
+  selectLanguage(locale, country, url) {
+    // 存储用户选择
+    localStorage.setItem('language-selection-made', 'true');
+    localStorage.setItem('selected-locale', locale);
+    localStorage.setItem('selected-country', country);
+    
+    // 重定向到指定URL
+    this.applyLanguageSelection(url);
+    
+    this.hidePopup();
+  }
+  
+  applyLanguageSelection(url) {
+    // 直接URL重定向
+    window.location.href = url;
+  }
+}
+
+// 当DOM准备就绪时初始化
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => new SmartLanguagePopup());
+} else {
+  new SmartLanguagePopup();
+}
+</script>

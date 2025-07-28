@@ -226,6 +226,37 @@
       "id": "icon_color",
       "label": "Icon Color",
       "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Mobile Font Sizes"
+    },
+    {
+      "type": "range",
+      "id": "mobile_title_font_size",
+      "label": "Mobile Title Font Size (px)",
+      "default": 40,
+      "min": 10,
+      "max": 60,
+      "step": 1
+    },
+    {
+      "type": "range",
+      "id": "mobile_text_font_size",
+      "label": "Mobile Text Font Size (px)",
+      "default": 16,
+      "min": 10,
+      "max": 40,
+      "step": 1
+    },
+    {
+      "type": "range",
+      "id": "mobile_item_font_size",
+      "label": "Mobile Item Font Size (px)",
+      "default": 14,
+      "min": 10,
+      "max": 40,
+      "step": 1
     }
   ],
   "blocks": [
@@ -474,6 +505,24 @@
 
     #section-{{ section.id }} .container {
       padding: 30px 15px;
+    }
+    
+    /* Mobile font size overrides */
+    #section-{{ section.id }} .textarea-section-title {
+      font-size: {{ section.settings.mobile_title_font_size }}px !important;
+    }
+    
+    #section-{{ section.id }} .rich-text-content {
+      font-size: {{ section.settings.mobile_text_font_size }}px !important;
+    }
+    
+    #section-{{ section.id }} .list-item {
+      font-size: {{ section.settings.mobile_item_font_size }}px !important;
+    }
+    
+    #section-{{ section.id }} .icon {
+      width: {{ section.settings.mobile_item_font_size }}px !important;
+      height: {{ section.settings.mobile_item_font_size }}px !important;
     }
   }
 </style>

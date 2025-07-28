@@ -1,0 +1,5 @@
+{
+  "parent": "page.mountain-collection.json",
+  "context": { "market": "finland" },
+  "sections": {}
+}

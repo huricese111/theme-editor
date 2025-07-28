@@ -1,0 +1,47 @@
+{
+  "parent": "page.promotion-test.json",
+  "context": { "market": "france" },
+  "sections": {
+    "custom_two_colum_banner_7kgaJE": {
+      "settings": {},
+      "blocks": {
+        "slide_C7yrmJ": {
+          "settings": {
+            "title_1": "<p><strong>How to join the Promotion?</strong></p>",
+            "title_1_de": "",
+            "title_1_fr": "<p>Comment participer à la promotion ?</p>",
+            "subheading_1": "<ul><li>Visit the product page of your choice.</li><li>Choose your E-Bike's size and color, add your accessories or services, and then click “Add to Cart”.</li><li>Check out and follow our standard payment procedure.</li></ul>",
+            "subheading_1_de": "",
+            "subheading_1_fr": "<ul><li>Visitez la page du produit de votre choix.</li><li>Sélectionnez la taille et la couleur de votre vélo électrique préféré, ajoutez vos accessoires ou services, puis cliquez sur \"Ajouter au panier\".</li><li>Procédez au paiement selon notre procédure standard.</li></ul>",
+            "subheading_size_1": 20,
+            "button_label": "",
+            "button_label_de": "",
+            "link": ""
+          }
+        }
+      }
+    },
+    "collapsible_tabs_qETzUn": {
+      "settings": {},
+      "blocks": {
+        "question_ytzVBz": { "disabled": true, "settings": {} },
+        "question_bbRFXj": { "disabled": true, "settings": {} }
+      }
+    },
+    "custom_two_colum_banner_RjcLFC": {
+      "settings": {},
+      "blocks": {
+        "slide_ALLHM8": {
+          "settings": {
+            "subheading_image_1": "shopify://shop_images/Group_375_6acaf536-2c68-4da6-ac08-cd2b02e95569.png"
+          }
+        },
+        "slide_YftcRJ": {
+          "settings": {
+            "subheading_image_1": "shopify://shop_images/Group_376-2.png"
+          }
+        }
+      }
+    }
+  }
+}

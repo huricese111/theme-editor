@@ -1,0 +1,5 @@
+{
+  "parent": "page.impressum.json",
+  "context": { "market": "france" },
+  "sections": {}
+}

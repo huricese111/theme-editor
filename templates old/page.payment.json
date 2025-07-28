@@ -1,0 +1,990 @@
+{
+  "sections": {
+    "custom_two_colum_banner_XGjjj4": {
+      "type": "custom-two-colum-banner",
+      "blocks": {
+        "slide_zYEjJi": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/HEPHA-Trekking7_01_grey.jpg",
+            "background_color": "rgba(0,0,0,0)",
+            "background_size": "cover",
+            "background_position": "center",
+            "background_align_items": "center",
+            "background_padding_top": 0,
+            "background_padding_left": 0,
+            "background_padding_right": 0,
+            "background_padding_bottom": 0,
+            "title_1": "<p>Payment and Finance</p>",
+            "title_1_de": "<p>Zahlung und Finanzierung</p>",
+            "title_1_fr": "<p>Paiement et Financement</p>",
+            "heading_color_1": "#ffffff",
+            "heading_size_1": 50,
+            "subheading_1": "",
+            "subheading_1_de": "",
+            "subheading_1_fr": "",
+            "subheading_color_1": "rgba(0,0,0,0)",
+            "subheading_size_1": 0,
+            "subheading_image_1_link": "",
+            "subheading_image_1b_link": "",
+            "title_2": "",
+            "title_2_de": "",
+            "title_2_fr": "",
+            "heading_color_2": "#000000",
+            "heading_size_2": 24,
+            "subheading_2": "",
+            "subheading_2_de": "",
+            "subheading_2_fr": "",
+            "subheading_color_2": "#000000",
+            "subheading_size_2": 16,
+            "subheading_image_2_link": "",
+            "collection": "",
+            "button_label": "",
+            "button_label_de": "",
+            "button_label_fr": "",
+            "link": "",
+            "button_color": "#007bff",
+            "button2_label": "",
+            "button2_label_de": "",
+            "button2_label_fr": "",
+            "link2": "",
+            "button2_color": "#007bff",
+            "button_text_color": "#ffffff",
+            "column_1title": "",
+            "column_1title_de": "",
+            "column_1title_fr": "",
+            "column_1description": "",
+            "column_1description_de": "",
+            "column_1description_fr": "",
+            "column_2title": "",
+            "column_2title_de": "",
+            "column_2title_fr": "",
+            "column_2description": "",
+            "column_2description_de": "",
+            "column_2description_fr": "",
+            "column_3title": "",
+            "column_3title_de": "",
+            "column_3title_fr": "",
+            "column_3description": "",
+            "column_3description_de": "",
+            "column_3description_fr": "",
+            "column_4title": "",
+            "column_4title_de": "",
+            "column_4title_fr": "",
+            "column_4description": "",
+            "column_4description_de": "",
+            "column_4description_fr": ""
+          }
+        }
+      },
+      "block_order": ["slide_zYEjJi"],
+      "custom_css": [
+        ".two-column-slides {height: 500px;}",
+        ".two-column-slide__content {align-items: center; max-width: 800px;}",
+        "@media (max-width: 768px) {.two-column-slide__heading {font-size: 34px !important; line-height: 40px !important; } .two-column-slide__text {font-size: 18px !important; line-height: 24px !important; }}"
+      ],
+      "settings": {
+        "section_id": "",
+        "mobile_font_size_heading": 40,
+        "mobile_line_height_heading": 42,
+        "mobile_font_size_text": 20,
+        "mobile_line_height_text": 24,
+        "mobile_slide_padding_top": 30
+      }
+    },
+    "custom_textarea_bFrB8X": {
+      "type": "custom_textarea",
+      "custom_css": [
+        ".custom-text-area {justify-content: center; text-align: center;}",
+        ".description-and-items {text-align: center; justify-content: center;}",
+        ".custom-text-area .header {justify-content: center; align-items: center !important;}",
+        ".custom-tab-container {padding: 40px 0 0 0; margin-bottom: 0 !important;}",
+        "@media (max-width: 768px) {.custom-text-area .header {flex-direction: column; } .custom-text-area, description-and-items {justify-content: center; text-align: center; }}"
+      ],
+      "settings": {
+        "section_title": "Payment",
+        "section_title_de": "Zahlung",
+        "section_title_fr": "Paiement",
+        "text_description": "To make paying for your order as simple and flexible as possible, we support multiple different payment methods. You can make your choice at the end of the checkout process.",
+        "text_description_de": "Um die Bezahlung Ihrer Bestellung so einfach und flexibel wie möglich zu gestalten, unterstützen wir mehrere verschiedene Zahlungsmethoden. Sie können Ihre Wahl am Ende des Bestellvorgangs treffen. Möchten Sie ein E bike Fahrrad kaufen? Ganz einfach!",
+        "text_description_fr": "Pour rendre le paiement de votre commande aussi simple et flexible que possible, nous prenons en charge plusieurs méthodes de paiement. Vous pouvez faire votre choix à la fin du processus de commande.",
+        "title_font_size": 32,
+        "text_font_size": 18,
+        "show_item_list": true,
+        "layout": "title_above",
+        "item_font_size": 16,
+        "custom_icon": "solid_dot"
+      }
+    },
+    "custom_imagerow_P4dUXn": {
+      "type": "custom-imagerow",
+      "blocks": {
+        "module_VtXcKM": {
+          "type": "module",
+          "settings": {
+            "image": "shopify://shop_images/fd985e048246f9db4bee048f989a3e16.png",
+            "subheading_image_1_width": 100,
+            "module_big_title": "",
+            "module_title": "paypal",
+            "module_title_de": "paypal",
+            "module_title_fr": "paypal",
+            "description": "",
+            "description_de": "",
+            "description_fr": "",
+            "background_color": "#ffffff",
+            "button1_text": "",
+            "button1_text_de": "",
+            "button1_text_fr": "",
+            "button1_url": "",
+            "button1_background_color": "",
+            "button1_text_color": ""
+          }
+        },
+        "module_RxQbgY": {
+          "type": "module",
+          "settings": {
+            "image": "shopify://shop_images/62b32650b223544c209f5eb6.png",
+            "subheading_image_1_width": 100,
+            "module_big_title": "",
+            "module_title": "Klarna",
+            "module_title_de": "Klarna",
+            "module_title_fr": "Klarna",
+            "description": "",
+            "description_de": "",
+            "description_fr": "",
+            "background_color": "#ffffff",
+            "button1_text": "",
+            "button1_text_de": "",
+            "button1_text_fr": "",
+            "button1_url": "",
+            "button1_background_color": "",
+            "button1_text_color": ""
+          }
+        },
+        "module_PDqg3t": {
+          "type": "module",
+          "settings": {
+            "image": "shopify://shop_images/534029.webp",
+            "module_big_title": "",
+            "module_title": "Sofort",
+            "module_title_de": "Sofort",
+            "module_title_fr": "Sofort",
+            "description": "",
+            "description_de": "",
+            "description_fr": "",
+            "background_color": "#ffffff",
+            "button1_text": "",
+            "button1_text_de": "",
+            "button1_text_fr": "",
+            "button1_url": "",
+            "button1_background_color": "",
+            "button1_text_color": ""
+          }
+        },
+        "module_4JRETh": {
+          "type": "module",
+          "settings": {
+            "image": "shopify://shop_images/2945212.webp",
+            "subheading_image_1_width": 100,
+            "module_big_title": "",
+            "module_title": "VISA",
+            "module_title_de": "VISA",
+            "module_title_fr": "VISA",
+            "description": "",
+            "description_de": "",
+            "description_fr": "",
+            "background_color": "#ffffff",
+            "button1_text": "",
+            "button1_text_de": "",
+            "button1_text_fr": "",
+            "button1_url": "",
+            "button1_background_color": "",
+            "button1_text_color": ""
+          }
+        },
+        "module_eQDcBn": {
+          "type": "module",
+          "settings": {
+            "image": "shopify://shop_images/Mastercard_new_logo-1200x865.png",
+            "module_big_title": "",
+            "module_title": "Mastercard",
+            "module_title_de": "Mastercard",
+            "module_title_fr": "Mastercard",
+            "description": "",
+            "description_de": "",
+            "description_fr": "",
+            "background_color": "#ffffff",
+            "button1_text": "",
+            "button1_text_de": "",
+            "button1_text_fr": "",
+            "button1_url": "",
+            "button1_background_color": "",
+            "button1_text_color": ""
+          }
+        },
+        "module_iBQwP4": {
+          "type": "module",
+          "settings": {
+            "image": "shopify://shop_images/png-transparent-maestro-payment-mastercard-debit-card-logo-mastercard-blue-text-payment_1_1802dac8-9d85-456c-8565-d112b7df5528.png",
+            "subheading_image_1_width": 100,
+            "module_big_title": "",
+            "module_title": "Maestro",
+            "module_title_de": "Maestro",
+            "module_title_fr": "Maestro",
+            "description": "",
+            "description_de": "",
+            "description_fr": "",
+            "background_color": "#ffffff",
+            "button1_text": "",
+            "button1_text_de": "",
+            "button1_text_fr": "",
+            "button1_url": "",
+            "button1_background_color": "",
+            "button1_text_color": ""
+          }
+        },
+        "module_yTac9B": {
+          "type": "module",
+          "settings": {
+            "image": "shopify://shop_images/Amex_American_Express_Logo_PNG_-_4000x4000_5b31dee2-2902-409a-afa5-46528ae70a99.png",
+            "subheading_image_1_width": 100,
+            "module_big_title": "",
+            "module_title": "American Express",
+            "module_title_de": "American Express",
+            "module_title_fr": "American Express",
+            "description": "",
+            "description_de": "",
+            "description_fr": "",
+            "background_color": "#ffffff",
+            "button1_text": "",
+            "button1_text_de": "",
+            "button1_text_fr": "",
+            "button1_url": "",
+            "button1_background_color": "",
+            "button1_text_color": ""
+          }
+        },
+        "module_LhKNR6": {
+          "type": "module",
+          "settings": {
+            "image": "shopify://shop_images/money-Real-time_bank_transfer.svg",
+            "module_big_title": "",
+            "module_title": "Bank Transfer",
+            "module_title_de": "Überweisung",
+            "module_title_fr": "virement",
+            "description": "",
+            "description_de": "",
+            "description_fr": "",
+            "background_color": "#ffffff",
+            "button1_text": "",
+            "button1_text_de": "",
+            "button1_text_fr": "",
+            "button1_url": "",
+            "button1_background_color": "",
+            "button1_text_color": ""
+          }
+        },
+        "module_KY6imf": {
+          "type": "module",
+          "settings": {
+            "image": "shopify://shop_images/kisspng-apple-pay-mobile-payment-apple-wallet-apple-pay-5b335f596d1794.0718049215300934014469.png",
+            "subheading_image_1_width": 100,
+            "module_big_title": "",
+            "module_title": "Apple Pay",
+            "module_title_de": "Apple Pay",
+            "module_title_fr": "Apple Pay",
+            "description": "",
+            "description_de": "",
+            "description_fr": "",
+            "background_color": "#ffffff",
+            "button1_text": "",
+            "button1_text_de": "",
+            "button1_text_fr": "",
+            "button1_url": "",
+            "button1_background_color": "",
+            "button1_text_color": ""
+          }
+        },
+        "module_eQkTmM": {
+          "type": "module",
+          "settings": {
+            "image": "shopify://shop_images/7123945_logo_pay_google_gpay_icon_487145cc-fdf6-4487-afb3-160f94042535.png",
+            "subheading_image_1_width": 100,
+            "module_big_title": "",
+            "module_title": "Google Pay",
+            "module_title_de": "Google Pay",
+            "module_title_fr": "Google Pay",
+            "description": "",
+            "description_de": "",
+            "description_fr": "",
+            "background_color": "#ffffff",
+            "button1_text": "",
+            "button1_text_de": "",
+            "button1_text_fr": "",
+            "button1_url": "",
+            "button1_background_color": "",
+            "button1_text_color": ""
+          }
+        },
+        "module_MEkqqM": {
+          "type": "module",
+          "settings": {
+            "image": "shopify://shop_images/ShopPay.png",
+            "module_big_title": "",
+            "module_title": "Shop pay",
+            "module_title_de": "Shop pay",
+            "module_title_fr": "Shop pay",
+            "description": "",
+            "description_de": "",
+            "description_fr": "",
+            "background_color": "#ffffff",
+            "button1_text": "",
+            "button1_text_de": "",
+            "button1_text_fr": "",
+            "button1_url": "",
+            "button1_background_color": "",
+            "button1_text_color": ""
+          }
+        }
+      },
+      "block_order": [
+        "module_VtXcKM",
+        "module_RxQbgY",
+        "module_PDqg3t",
+        "module_4JRETh",
+        "module_eQDcBn",
+        "module_iBQwP4",
+        "module_yTac9B",
+        "module_LhKNR6",
+        "module_KY6imf",
+        "module_eQkTmM",
+        "module_MEkqqM"
+      ],
+      "custom_css": [
+        ".product-content-section {padding: 0 20px;}",
+        ".module {width: 14%; padding: 0 !important; border: none; height: 100% !important;}",
+        ".iconrow-title {margin-bottom: 0 !important; display: none !important;}",
+        ".module img {height: 100px; width: auto;}",
+        "@media (max-width: 768px) {.module {width: 42% !important; }}"
+      ],
+      "settings": {
+        "title": "",
+        "title_de": "",
+        "title_fr": "",
+        "title_font_size": 16,
+        "description_font_size": 16
+      }
+    },
+    "custom_imagerow_FEFM9Q": {
+      "type": "custom-imagerow",
+      "blocks": {
+        "module_YfanyC": {
+          "type": "module",
+          "settings": {
+            "image": "shopify://shop_images/Klarna_Payment_Badge_svg.png",
+            "subheading_image_1_width": 130,
+            "module_big_title": "",
+            "module_title": "Klarna",
+            "module_title_de": "Klarna ",
+            "module_title_fr": "Klarna ",
+            "description": "<p>Payment in installments from 6 to 36 months.</p>",
+            "description_de": "<p>Zahlung in Raten von 6 bis 36 Monaten.</p>",
+            "description_fr": "<p>Paiement en plusieurs fois de 6 à 36 mois.</p>",
+            "background_color": "#ffffff",
+            "button1_text": "",
+            "button1_text_de": "",
+            "button1_text_fr": "",
+            "button1_url": "",
+            "button1_background_color": "",
+            "button1_text_color": ""
+          }
+        },
+        "module_jG6HdN": {
+          "type": "module",
+          "settings": {
+            "image": "shopify://shop_images/20250214-163529.png",
+            "subheading_image_1_width": 130,
+            "module_big_title": "",
+            "module_title": "Zinia",
+            "module_title_de": "Zinia",
+            "module_title_fr": "Zinia",
+            "description": "<p>Payment in installments from 6 to 48 months.</p>",
+            "description_de": "<p>Zahlung in Raten von 6 bis 48 Monaten.</p>",
+            "description_fr": "<p>Paiement en plusieurs fois de 6 à 48 mois.</p>",
+            "background_color": "#ffffff",
+            "button1_text": "",
+            "button1_text_de": "",
+            "button1_text_fr": "",
+            "button1_url": "",
+            "button1_background_color": "",
+            "button1_text_color": ""
+          }
+        }
+      },
+      "block_order": ["module_YfanyC", "module_jG6HdN"],
+      "disabled": true,
+      "custom_css": [
+        ".module {align-items: flex-start; height: 230px !important; padding-left: 30px !important; padding-top: 30px !important;}"
+      ],
+      "settings": {
+        "title": "Finance",
+        "title_de": "Finanzierung",
+        "title_fr": "Financement",
+        "title_font_size": 20,
+        "description_font_size": 18
+      }
+    },
+    "collapsible_tab_7GAqw4": {
+      "type": "collapsible_tab",
+      "blocks": {
+        "panel_KcrxDJ": {
+          "type": "panel",
+          "settings": {
+            "title": "Can I finance more than one item?",
+            "title_de": "Kann ich mehr als einen Artikel finanzieren lassen?",
+            "title_fr": "",
+            "content_1": "<p>Yes, you can finance all items in your shopping cart.</p>",
+            "content_1_de": "<p>Ja, du kannst dir sämtliche Artikel in deinem Warenkob finanzieren lassen.</p>",
+            "content_1_fr": "",
+            "content_2": "",
+            "content_2_de": "",
+            "content_2_fr": "",
+            "content_3": "",
+            "content_3_de": "",
+            "content_3_fr": "",
+            "content_4": "",
+            "content_4_de": "",
+            "content_4_fr": "",
+            "content_5": "",
+            "content_5_de": "",
+            "content_5_fr": "",
+            "content_6": "",
+            "content_6_de": "",
+            "content_6_fr": ""
+          }
+        },
+        "panel_qmKB3D": {
+          "type": "panel",
+          "settings": {
+            "title": "Is there a minimum amount for financing?",
+            "title_de": "Gibt es einen Mindestbetrag für die Finanzierung?",
+            "title_fr": "",
+            "content_1": "<p>Yes, the total amount in the shopping cart (financing amount) must be at least €99.</p>",
+            "content_1_de": "<p>Ja, der Betrag des Warenkorbs (Finanzierungsbetrag) muss mindestens 99 € betragen</p>",
+            "content_1_fr": "",
+            "content_2": "",
+            "content_2_de": "",
+            "content_2_fr": "",
+            "content_3": "",
+            "content_3_de": "",
+            "content_3_fr": "",
+            "content_4": "",
+            "content_4_de": "",
+            "content_4_fr": "",
+            "content_5": "",
+            "content_5_de": "",
+            "content_5_fr": "",
+            "content_6": "",
+            "content_6_de": "",
+            "content_6_fr": ""
+          }
+        },
+        "panel_xi64FX": {
+          "type": "panel",
+          "settings": {
+            "title": "When will I receive my order?",
+            "title_de": "Wann erhalte ich meine Bestellung?",
+            "title_fr": "",
+            "content_1": "<p>Once your documents have been received by Santander Consumer Bank AG, reviewed, and positively assessed, the goods (if available) will be shipped to you.</p>",
+            "content_1_de": "<p>Sobald deine Unterlagen bei der Santander Consumer Bank AG eingegangen sind, eingehend geprüft und positiv bewertet wurden, wird die Ware (sofern verfügbar) an dich versandt. </p>",
+            "content_1_fr": "",
+            "content_2": "",
+            "content_2_de": "",
+            "content_2_fr": "",
+            "content_3": "",
+            "content_3_de": "",
+            "content_3_fr": "",
+            "content_4": "",
+            "content_4_de": "",
+            "content_4_fr": "",
+            "content_5": "",
+            "content_5_de": "",
+            "content_5_fr": "",
+            "content_6": "",
+            "content_6_de": "",
+            "content_6_fr": ""
+          }
+        },
+        "panel_pGDCLb": {
+          "type": "panel",
+          "settings": {
+            "title": "Can I cancel the financing application?",
+            "title_de": "Kann ich den Finanzierungsantrag stornieren?",
+            "title_fr": "",
+            "content_1": "<p>The statutory right of withdrawal applies to the purchase contract, which begins at the earliest upon receipt of the goods. If you wish to proceed with the purchase contract and only choose an alternative payment method, the financing contract must be canceled within the specified period. If you want to withdraw from the purchase contract, the financing contract will become void. For more information about the right of withdrawal, please refer to the withdrawal instructions in your financing contract.</p>",
+            "content_1_de": "<p>Für den Kaufvertrag gilt das gesetzliche Widerrufsrecht, welches frühestens mit Erhalt der Ware beginnt. Wenn du mit dem Kaufvertrag fortfahren und nur eine alternative Zahlungsmethode wählen möchtest, muss der Finanzierungsvertrag innerhalb der angegebenen Frist widerrufen werden. Wenn du den Kaufvertrag widerrufen oder vom Kaufvertrag zurücktreten möchtest, erlischt der. Nähere Informationen zum Widerrufsrecht kannst du der Widerrufsbelehrung aus deinem Finanzierungsvertrag entnehmen.</p>",
+            "content_1_fr": "",
+            "content_2": "",
+            "content_2_de": "",
+            "content_2_fr": "",
+            "content_3": "",
+            "content_3_de": "",
+            "content_3_fr": "",
+            "content_4": "",
+            "content_4_de": "",
+            "content_4_fr": "",
+            "content_5": "",
+            "content_5_de": "",
+            "content_5_fr": "",
+            "content_6": "",
+            "content_6_de": "",
+            "content_6_fr": ""
+          }
+        },
+        "panel_dK3jMb": {
+          "type": "panel",
+          "settings": {
+            "title": "Why is a legitimacy check required?",
+            "title_de": "Warum ist eine Legitimitätsprüfung erforderlich?",
+            "title_fr": "",
+            "content_1": "<p>Every bank is legally required to conduct a legitimacy check. This verification is for your own safety, ensuring that you can be unequivocally identified as the applicant for the financing. Note: If you are already a customer of Santander Consumer Bank, a new authentication may not be required under certain conditions.</p>",
+            "content_1_de": "<p>Jede Bank ist gesetzlich verpflichtet, eine Legitimitätsprüfung durchzuführen. Diese Verifizierung dient deiner eigenen Sicherheit, um dich als Antragsteller der Finanzierung zweifelsfrei identifizieren zu konnen. Hinweis: Wenn du bereits Kunde der Santander Consumer Bank bist, ist unter bestimmten Voraussetzungen keine erneute Authentifizierung erforderlich</p>",
+            "content_1_fr": "",
+            "content_2": "",
+            "content_2_de": "",
+            "content_2_fr": "",
+            "content_3": "",
+            "content_3_de": "",
+            "content_3_fr": "",
+            "content_4": "",
+            "content_4_de": "",
+            "content_4_fr": "",
+            "content_5": "",
+            "content_5_de": "",
+            "content_5_fr": "",
+            "content_6": "",
+            "content_6_de": "",
+            "content_6_fr": ""
+          }
+        },
+        "panel_JiV7mA": {
+          "type": "panel",
+          "settings": {
+            "title": "Who can I contact if I have questions about my financing?",
+            "title_de": "An wen kann ich mich wenden, wenn ich Fragen zu meiner Finanzierung habe?",
+            "title_fr": "",
+            "content_1": "<p>Your contact person for questions regarding your financing application is the Santander E-Commerce Team: 02161 - 690 7680 <a href=\"mailto:caps@santander.de\" target=\"_blank\">caps@santander.de</a>, Monday to Friday from 9:00 AM to 7:00 PM.</p>",
+            "content_1_de": "<p>Dein Ansprechpartner für Fragen zu deinem Finanzierungsantrag ist das Santander E-Commerce Team: 02161 - 690 7680 caps@santander.de Montag bis Freitag von 9:00 bis 19:00 Uhr</p>",
+            "content_1_fr": "",
+            "content_2": "",
+            "content_2_de": "",
+            "content_2_fr": "",
+            "content_3": "",
+            "content_3_de": "",
+            "content_3_fr": "",
+            "content_4": "",
+            "content_4_de": "",
+            "content_4_fr": "",
+            "content_5": "",
+            "content_5_de": "",
+            "content_5_fr": "",
+            "content_6": "",
+            "content_6_de": "",
+            "content_6_fr": ""
+          }
+        },
+        "panel_cjJFdc": {
+          "type": "panel",
+          "settings": {
+            "title": "What should I do if I receive an error message?",
+            "title_de": "Was soll ich tun, wenn ich eine Fehlermeldung erhalte?",
+            "title_fr": "",
+            "content_1": "<p>The browser-based Santander financing platform is compatible with the following internet browsers: Internet Explorer, Mozilla Firefox, and Opera. Functionality may not be guaranteed with other browsers (e.g., Safari or Google Chrome).</p>",
+            "content_1_de": "<p>Die browsergestützte Santander Finanzierungsplattform ist mit den folgenden Internetbrowsern kompatibel: Internet Explorer, Mozilla Firefox und Opera. Bei anderen Browsern (z. B. Safari oder Google Chrome) kann die Funktionalität der Plattform nicht gewährleistet werden. </p>",
+            "content_1_fr": "",
+            "content_2": "",
+            "content_2_de": "",
+            "content_2_fr": "",
+            "content_3": "",
+            "content_3_de": "",
+            "content_3_fr": "",
+            "content_4": "",
+            "content_4_de": "",
+            "content_4_fr": "",
+            "content_5": "",
+            "content_5_de": "",
+            "content_5_fr": "",
+            "content_6": "",
+            "content_6_de": "",
+            "content_6_fr": ""
+          }
+        },
+        "panel_VqVqJF": {
+          "type": "panel",
+          "settings": {
+            "title": "Are there acceptance criteria for shopping cart financing?",
+            "title_de": "Gibt es Annahmekriterien für eine Warekorbfinanzierung?",
+            "title_fr": "",
+            "content_1": "<p>The following requirements must generally be met: (1) Age of majority, (2) Main residence in Germany, (3) Possession of a checking account, (4) Regular income, (5) Valid ID or passport with a current proof of address for your main residence, and (6) For non-EU citizens, additional documentation such as residence and work permits and a current proof of address for your main residence are required.</p>",
+            "content_1_de": "<p>Folgende Voraussetzungen müssen grundsätzlich erfüllt sein: (1) Volljährigkeit, (2) Hauptwohnsitz in Deutschland, (3) Verfügung über ein Girokonto, (4) Regelmäßiges Einkommen, (5) Besitz eines gültigen Personalausweises oder Reisepasses mit einem aktuellen Nachweis über die Anschrift Ihres Hauptwohnsitzes und (6) Bei Nicht-EU-Bürgern sind weitere Nachweise, wie Aufenthalts- und Arbeitserlaubnis und eine ein aktueller Nachweis über die Anschrift Ihres Hauptwohnsitzes erforderlich.</p>",
+            "content_1_fr": "",
+            "content_2": "",
+            "content_2_de": "",
+            "content_2_fr": "",
+            "content_3": "",
+            "content_3_de": "",
+            "content_3_fr": "",
+            "content_4": "",
+            "content_4_de": "",
+            "content_4_fr": "",
+            "content_5": "",
+            "content_5_de": "",
+            "content_5_fr": "",
+            "content_6": "",
+            "content_6_de": "",
+            "content_6_fr": ""
+          }
+        },
+        "panel_xYfJkA": {
+          "type": "panel",
+          "settings": {
+            "title": "Where is financing with Zinia by Santander available?",
+            "title_de": "Wo ist die Finanzierung mit Zinia von Santander verfügbar?",
+            "title_fr": "",
+            "content_1": "<p>Currently, we offer financing with Santander only in Germany.</p>",
+            "content_1_de": "<p>Aktuell bieten wir die Finanzierung mit Santander nur in Deutschland an.</p>",
+            "content_1_fr": "",
+            "content_2": "",
+            "content_2_de": "",
+            "content_2_fr": "",
+            "content_3": "",
+            "content_3_de": "",
+            "content_3_fr": "",
+            "content_4": "",
+            "content_4_de": "",
+            "content_4_fr": "",
+            "content_5": "",
+            "content_5_de": "",
+            "content_5_fr": "",
+            "content_6": "",
+            "content_6_de": "",
+            "content_6_fr": ""
+          }
+        }
+      },
+      "block_order": [
+        "panel_KcrxDJ",
+        "panel_qmKB3D",
+        "panel_xi64FX",
+        "panel_pGDCLb",
+        "panel_dK3jMb",
+        "panel_JiV7mA",
+        "panel_cjJFdc",
+        "panel_VqVqJF",
+        "panel_xYfJkA"
+      ],
+      "settings": { "title": "FAQ", "title_de": "FAQ", "title_fr": "" }
+    },
+    "custom_imagerow_Hza4XE": {
+      "type": "custom-imagerow",
+      "blocks": {
+        "module_QRH9LM": {
+          "type": "module",
+          "settings": {
+            "image": "shopify://shop_images/jobrad_318789ee-f0dc-4a87-b64d-32d8107e27f5.png",
+            "subheading_image_1_width": 130,
+            "module_big_title": "",
+            "module_title": "Jobrad",
+            "module_title_de": "Jobrad",
+            "module_title_fr": "Jobrad",
+            "description": "<p>With JobRad, you save up to 40% of the purchase price when acquiring a bicycle with leasable accessories.</p>",
+            "description_de": "",
+            "description_fr": "",
+            "background_color": "#ffffff",
+            "button1_text": "",
+            "button1_text_de": "",
+            "button1_text_fr": "",
+            "button1_url": "",
+            "button1_background_color": "",
+            "button1_text_color": ""
+          }
+        },
+        "module_LH7dt6": {
+          "type": "module",
+          "settings": {
+            "module_big_title": "",
+            "module_title": "Default Title",
+            "module_title_de": "Standardtitel",
+            "module_title_fr": "Titre par défaut",
+            "description": "",
+            "description_de": "",
+            "description_fr": "",
+            "background_color": "#ffffff",
+            "button1_text": "",
+            "button1_text_de": "",
+            "button1_text_fr": "",
+            "button1_url": "",
+            "button1_background_color": "",
+            "button1_text_color": ""
+          }
+        },
+        "module_Pxf9DD": {
+          "type": "module",
+          "settings": {
+            "module_big_title": "",
+            "module_title": "Default Title",
+            "module_title_de": "Standardtitel",
+            "module_title_fr": "Titre par défaut",
+            "description": "",
+            "description_de": "",
+            "description_fr": "",
+            "background_color": "#ffffff",
+            "button1_text": "",
+            "button1_text_de": "",
+            "button1_text_fr": "",
+            "button1_url": "",
+            "button1_background_color": "",
+            "button1_text_color": ""
+          }
+        },
+        "module_WGQx7j": {
+          "type": "module",
+          "settings": {
+            "module_big_title": "",
+            "module_title": "Default Title",
+            "module_title_de": "Standardtitel",
+            "module_title_fr": "Titre par défaut",
+            "description": "",
+            "description_de": "",
+            "description_fr": "",
+            "background_color": "#ffffff",
+            "button1_text": "",
+            "button1_text_de": "",
+            "button1_text_fr": "",
+            "button1_url": "",
+            "button1_background_color": "",
+            "button1_text_color": ""
+          }
+        }
+      },
+      "block_order": [
+        "module_QRH9LM",
+        "module_LH7dt6",
+        "module_Pxf9DD",
+        "module_WGQx7j"
+      ],
+      "disabled": true,
+      "custom_css": [
+        ".module {width: 48%; align-items: flex-start; height: 230px !important; padding-left: 30px !important; padding-top: 30px !important;}"
+      ],
+      "settings": {
+        "title": "Leasing",
+        "title_de": "Leasing",
+        "title_fr": "",
+        "title_font_size": 20,
+        "description_font_size": 16
+      }
+    },
+    "custom_imagerow_g6rfNh": {
+      "type": "custom-imagerow",
+      "blocks": {
+        "module_dLyyBA": {
+          "type": "module",
+          "settings": {
+            "image": "shopify://shop_images/Frame_29_e2279033-c3c6-40ba-92ef-7f9bb8eb0d0e.jpg",
+            "module_big_title": "",
+            "module_title": "Jobrad",
+            "module_title_de": "Jobrad",
+            "module_title_fr": "Jobrad",
+            "description": "",
+            "description_de": "",
+            "description_fr": "",
+            "background_color": "#ffffff",
+            "button1_text": "",
+            "button1_text_de": "",
+            "button1_text_fr": "",
+            "button1_url": "shopify://pages/jobrad",
+            "button1_background_color": "rgba(0,0,0,0)",
+            "button1_text_color": "rgba(0,0,0,0)"
+          }
+        },
+        "module_Cnezjb": {
+          "type": "module",
+          "settings": {
+            "image": "shopify://shop_images/Frame_30_858adba7-6d86-4011-9600-f00eeb73832c.jpg",
+            "module_big_title": "",
+            "module_title": "Bikeleasing",
+            "module_title_de": "Bikeleasing",
+            "module_title_fr": "Bikeleasing",
+            "description": "",
+            "description_de": "",
+            "description_fr": "",
+            "background_color": "#ffffff",
+            "button1_text": "",
+            "button1_text_de": "",
+            "button1_text_fr": "",
+            "button1_url": "shopify://pages/save-with-bikeleasing",
+            "button1_background_color": "",
+            "button1_text_color": ""
+          }
+        },
+        "module_VXAzk3": {
+          "type": "module",
+          "settings": {
+            "image": "shopify://shop_images/Frame_31_da23b0a6-f400-4512-ba14-3266a65bde27.jpg",
+            "module_big_title": "",
+            "module_title": "Business bike",
+            "module_title_de": "Business bike",
+            "module_title_fr": "Business bike",
+            "description": "",
+            "description_de": "",
+            "description_fr": "",
+            "background_color": "#ffffff",
+            "button1_text": "",
+            "button1_text_de": "",
+            "button1_text_fr": "",
+            "button1_url": "shopify://pages/business-bike",
+            "button1_background_color": "",
+            "button1_text_color": ""
+          }
+        },
+        "module_Ma6wdW": {
+          "type": "module",
+          "settings": {
+            "image": "shopify://shop_images/Frame_32_0c3db4d7-ad60-4177-a770-c5a0dc0f6d85.jpg",
+            "module_big_title": "",
+            "module_title": "Deutsche Dienstrad",
+            "module_title_de": "Deutsche Dienstrad",
+            "module_title_fr": "Deutsche Dienstrad",
+            "description": "",
+            "description_de": "",
+            "description_fr": "",
+            "background_color": "#ffffff",
+            "button1_text": "",
+            "button1_text_de": "",
+            "button1_text_fr": "",
+            "button1_url": "shopify://pages/deutsche-dienstrad",
+            "button1_background_color": "",
+            "button1_text_color": ""
+          }
+        }
+      },
+      "block_order": [
+        "module_dLyyBA",
+        "module_Cnezjb",
+        "module_VXAzk3",
+        "module_Ma6wdW"
+      ],
+      "custom_css": [
+        ".product-content-section {padding: 0 20px;}",
+        ".module {width: 48%; padding: 0 !important; border: none; height: 100% !important;}",
+        "@media (max-width: 768px) {.module {width: 42% !important; }}"
+      ],
+      "settings": {
+        "title": "Leasing",
+        "title_de": "Leasing",
+        "title_fr": "À propos du crédit-bail",
+        "title_font_size": 18,
+        "description_font_size": 16
+      }
+    },
+    "collapsible_tabs_mmDpGG": {
+      "type": "collapsible-tabs",
+      "blocks": {
+        "question_kmNRwp": {
+          "type": "question",
+          "settings": {
+            "title": "Shipping Countries and Costs",
+            "title_de": "Versandländer und -kosten",
+            "title_fr": "Pays de livraison et frais",
+            "answer": "<p>We currently ship our e-bikes and accessories to France, Germany, and Austria.</p><p><strong>Shipping costs:</strong></p>",
+            "answer_de": "<p>Wir versenden unsere E-Bikes und Zubehör nach Frankreich, Deutschland und Österreich.</p><p><strong>Versandkosten: </strong></p>",
+            "answer_fr": "<p>Nous expédions actuellement nos vélos électriques et accessoires vers la France, l'Allemagne et l'Autriche.</p><p><strong>Frais d'expédition : </strong></p>",
+            "liquid_content": "{% if request.locale.iso_code == 'de' %}\n<table border=\"1\" width=\"100%\">\n    <tr>\n        <th></th>\n        <th>Produktpreis</th>\n        <th>Germany</th>\n        <th>France</th>\n        <th>Österreich</th>\n    </tr>\n    <tr>\n        <td>E-Bike</td>\n        <td>--</td>\n        <td>39,9€</td>\n        <td>39,9€</td>\n        <td>39,9€</td>\n    </tr>\n    <tr>\n        <td rowspan=\"3\" style=\"vertical-align: middle;\">Zubehör</td>\n        <td>&lt; 100€</td>\n        <td>4,95€</td>\n        <td>9,95€</td>\n        <td>9,95€</td>\n    </tr>\n    <tr>\n        <td>100€ - 149€</td>\n        <td>Kostenloser Versand</td>\n        <td>9,95€</td>\n        <td>9,95€</td>\n    </tr>\n    <tr>\n        <td>≥ 150€</td>\n        <td>Kostenloser Versand</td>\n        <td>Kostenloser Versand</td>\n        <td>Kostenloser Versand</td>\n    </tr>\n</table>\n\n{% elsif request.locale.iso_code == 'fr' %}\n<table border=\"1\" width=\"100%\">\n    <tr>\n        <th>Produit</th>\n        <th>Prix des produits</th>\n        <th>Allemagne</th>\n        <th>France</th>\n        <th>Autriche</th>\n    </tr>\n    <tr>\n        <td>Vélo électrique</td>\n        <td>--</td>\n        <td>39,9€</td>\n        <td>39,9€</td>\n        <td>39,9€</td>\n    </tr>\n    <tr>\n        <td rowspan=\"3\" style=\"vertical-align: middle;\">Accessoires</td>\n        <td>&lt; 100€</td>\n        <td>4,95€</td>\n        <td>9,95€</td>\n        <td>9,95€</td>\n    </tr>\n    <tr>\n        <td>100€ - 149€</td>\n        <td>Livraison gratuite</td>\n        <td>9,95€</td>\n        <td>9,95€</td>\n    </tr>\n    <tr>\n        <td>≥ 150€</td>\n        <td>Livraison gratuite</td>\n        <td>Livraison gratuite</td>\n        <td>Livraison gratuite</td>\n    </tr>\n</table>\n\n{% else %}\n<table border=\"1\" width=\"100%\">\n    <tr>\n        <th></th>\n        <th>Product price</th>\n        <th>Germany</th>\n        <th>France</th>\n        <th>Austria</th>\n    </tr>\n    <tr>\n        <td>E-Bike</td>\n        <td>--</td>\n        <td>39,9€</td>\n        <td>39,9€</td>\n        <td>39,9€</td>\n    </tr>\n    <tr>\n        <td rowspan=\"3\" style=\"vertical-align: middle;\">Accessories</td>\n        <td>&lt; 100€</td>\n        <td>4,95€</td>\n        <td>9,95€</td>\n        <td>9,95€</td>\n    </tr>\n    <tr>\n        <td>100€ - 149€</td>\n        <td>Free shipping</td>\n        <td>9,95€</td>\n        <td>9,95€</td>\n    </tr>\n    <tr>\n        <td>≥ 150€</td>\n        <td>Free shipping</td>\n        <td>Free shipping</td>\n        <td>Free shipping</td>\n    </tr>\n</table>\n\n{% endif %}",
+            "liquid_content_de": "",
+            "liquid_content_fr": "",
+            "answer_2": "",
+            "answer_2_de": "",
+            "answer_2_fr": ""
+          }
+        },
+        "question_r8enfH": {
+          "type": "question",
+          "settings": {
+            "title": "Estimated Delivery Times",
+            "title_de": "Voraussichtliche Lieferzeiten",
+            "title_fr": "Délais de livraison estimés",
+            "answer": "<p>Generally, all Hepha orders are processed within three business days. The estimated delivery time after shipping is 2-4 working days* for Germany, 3-6 working days* for Austria, and 7-15 working days* for France.</p><p>*Actual shipping time depends on your location and the warehouse from which your product is shipped. Unforeseen circumstances can also cause delays in delivery.</p>",
+            "answer_de": "<p>Generell werden alle Bestellungen von Hepha innerhalb von drei Werktagen bearbeitet. Die geschätzte Lieferzeit nach dem Versand beträgt für Deutschland 2-4 Werktage*, für Österreich 3-6 Werktage* und für Frankreich 7-15 Werktage*.</p><p>*Die tatsächliche Versandzeit hängt von Ihrem Standort und dem Standort des Lagers ab, aus dem Ihr Produkt versendet wird. Unvorhergesehene Umstände können ebenfalls zu Lieferverzögerungen führen.</p>",
+            "answer_fr": "<p>En général, toutes les commandes Hepha sont traitées dans un délai de trois jours ouvrables. Le délai de livraison estimé après l'expédition est de 2 à 4 jours ouvrables* pour l'Allemagne, de 3 à 6 jours ouvrables* pour l'Autriche et de 7 à 15 jours ouvrables* pour la France.<br/></p><p>*Le temps d'expédition réel dépend de votre emplacement et de l'entrepôt d'où votre produit est expédié. Des circonstances imprévues peuvent également entraîner des retards dans la livraison</p>",
+            "liquid_content": "",
+            "liquid_content_de": "",
+            "liquid_content_fr": "",
+            "answer_2": "",
+            "answer_2_de": "",
+            "answer_2_fr": ""
+          }
+        },
+        "question_mEANzX": {
+          "type": "question",
+          "settings": {
+            "title": "Tracking Information",
+            "title_de": "Verfolgungsinformationen einsehen",
+            "title_fr": "Informations de suivi",
+            "answer": "<p>Upon shipment of your order, you will receive a shipping confirmation email containing a link to track your package.*</p><p>*Please note that for the ZUFALL delivery service, the link/tracking number will only be active when the bike is being collected.</p>",
+            "answer_de": "<p>Sobald Ihre Bestellung versandt wurde, erhalten Sie eine Versandbestätigungs-E-Mail, die einen Link zur Verfolgung Ihres Pakets enthält.*</p><p>*Bitte beachten Sie, dass für den ZUFALL-Lieferdienst der Link/die Sendungsnummer nur dann aktiv wird, wenn das Fahrrad abgeholt wird.</p>",
+            "answer_fr": "<p>Après l'expédition de votre commande, vous recevrez un e-mail de confirmation d'expédition contenant un lien pour suivre votre colis.*</p><p>*Veuillez noter que pour le service de livraison ZUFALL, le lien/numéro de suivi ne sera actif que lorsque le vélo sera en cours de collecte.</p>",
+            "liquid_content": "",
+            "liquid_content_de": "",
+            "liquid_content_fr": "",
+            "answer_2": "",
+            "answer_2_de": "",
+            "answer_2_fr": ""
+          }
+        },
+        "question_eR9knq": {
+          "type": "question",
+          "settings": {
+            "title": "Lost During Shipping",
+            "title_de": "Bei unvorhergesehenen Umständen",
+            "title_fr": "En cas de circonstances imprévues",
+            "answer": "<p>In the event that the ordered product(s) do not reach the provided address (when correctly provided) or are lost during the shipping process, we reserve the right to conduct a full investigation and search that may take up to 30 days. Within this period, we retain the right to withhold a full refund or resend the same product(s). We will keep you updated on the progress and results of the investigation, allowing for appropriate and reasonable action to be taken.</p><p>In Case of Unforeseen Circumstances:<br/></p><p>In situations beyond our control (such as adverse weather conditions, traffic delays, production delays, or issues with third-party suppliers), we may be unable to deliver goods within the specified timeframes. We will not be liable for delays caused by such circumstances. If a timely delivery is not possible, an alternative delivery date will be provided. Special circumstances like high order volumes, new product releases, or restocking days may also lead to extended shipping times. In such cases, we will communicate this on the product page and send a follow-up email reminder.<br/></p><p>All of our bikes are packed in special bike boxes to protect your bike during transportation. Your bike ships pre-assembled, and will be ready to ride after a few simple steps. We created a quick video that shows everything you need to do. <br/></p><p>We hope this information is helpful. If you have any further questions, please feel free to contact us at: <a href=\"mailto:service@hepha.com\" target=\"_blank\" title=\"mailto:service@hepha.com\">service@hepha.com</a></p>",
+            "answer_de": "<p>Sollten unvorhergesehene Umstände außerhalb unserer Kontrolle eintreten (zum Beispiel widrige Wetterbedingungen, unvorhersehbare Verzögerungen durch Verkehrsstaus, Straßenarbeiten, Umleitungen oder mechanische Pannen, unvorhergesehene Produktionsverzögerungen, Verzögerungen durch Drittlieferanten, jeweils soweit dies außerhalb unserer Kontrolle liegt), können wir die Ware möglicherweise nicht innerhalb dieser Zeitrahmen liefern, und wir haften nicht für Verzögerungen oder das Versäumnis, die Ware zu liefern, wenn die Verzögerung oder das Versäumnis ganz oder teilweise durch solche Umstände verursacht wird. Sollte keine rechtzeitige Lieferung erfolgen, wird ein alternativer Liefertermin festgelegt. Besondere Umstände wie ein hoher Bestellvolumen, neue Produktveröffentlichungen oder Auffüllungstage können ebenfalls zu längeren Lieferzeiten führen. In diesem Fall werden wir es auf der Produktseite vermerken und eine Erinnerung per E-Mail senden.</p><p>Für den Fall unvorhergesehener Umstände:</p><p>Alle unsere Fahrräder werden in speziellen Fahrradboxen verpackt, um Ihr Fahrrad während des Transports zu schützen. Wir liefern dir dein Fahrrad vormontiert, nach nur wenigen Handgriffen kannst du losfahren. In diesem kurzen Video erfährst du, was du tun musst. Schau jetzt</p><p>All of our bikes are packed in special bike boxes to protect your bike during transportation. Your bike ships pre-assembled, and will be ready to ride after a few simple steps. We created a quick video that shows everything you need to do. </p><p>Wir hoffen, dass diese Informationen hilfreich sind. Sollten Sie weitere Fragen haben, können Sie uns gerne kontaktieren: <a href=\"mailto:service@hepha.com\" target=\"_blank\" title=\"mailto:service@hepha.com\">service@hepha.com</a></p>",
+            "answer_fr": "<p>Dans des situations indépendantes de notre volonté (telles que des conditions météorologiques défavorables, des retards de circulation, des retards de production ou des problèmes avec les fournisseurs tiers), nous pourrions ne pas être en mesure de livrer les marchandises dans les délais spécifiés. Nous ne serons pas responsables des retards causés par de telles circonstances. Si une livraison en temps voulu n'est pas possible, une nouvelle date de livraison sera proposée. Des circonstances particulières telles que de forts volumes de commandes, de nouveaux lancements de produits ou des jours de réapprovisionnement peuvent également entraîner des délais de livraison prolongés. Dans de tels cas, nous communiquerons ces informations sur la page produit et enverrons un rappel par e-mail.</p><p>En cas de circonstances imprévues:<br/></p><p>Tous nos vélos sont emballés dans des boîtes spéciales pour protéger votre vélo pendant le transport. Votre vélo est livré pré-assemblé et sera prêt à rouler après quelques étapes simples. Nous avons créé une vidéo rapide qui montre tout ce que vous devez faire. Voir maintenant</p><p>All of our bikes are packed in special bike boxes to protect your bike during transportation. Your bike ships pre-assembled, and will be ready to ride after a few simple steps. We created a quick video that shows everything you need to do. </p><p>Nous espérons que ces informations vous seront utiles. Si vous avez d'autres questions, n'hésitez pas à nous contacter à l'adresse suivante : <a href=\"mailto:service@hepha.com\" target=\"_blank\" title=\"mailto:service@hepha.com\">service@hepha.com</a></p>",
+            "liquid_content": "",
+            "liquid_content_de": "",
+            "liquid_content_fr": "",
+            "answer_2": "",
+            "answer_2_de": "",
+            "answer_2_fr": ""
+          }
+        }
+      },
+      "block_order": [
+        "question_kmNRwp",
+        "question_r8enfH",
+        "question_mEANzX",
+        "question_eR9knq"
+      ],
+      "custom_css": [
+        ".collapsible-tabs {max-width: 1100px;}",
+        ".collapsible-tabs__heading {text-align: center;}"
+      ],
+      "settings": {
+        "title": "Shipping",
+        "title_de": "Versand",
+        "title_fr": "Expédition"
+      }
+    }
+  },
+  "order": [
+    "custom_two_colum_banner_XGjjj4",
+    "custom_textarea_bFrB8X",
+    "custom_imagerow_P4dUXn",
+    "custom_imagerow_FEFM9Q",
+    "collapsible_tab_7GAqw4",
+    "custom_imagerow_Hza4XE",
+    "custom_imagerow_g6rfNh",
+    "collapsible_tabs_mmDpGG"
+  ]
+}

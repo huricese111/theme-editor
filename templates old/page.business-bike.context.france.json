@@ -1,0 +1,27 @@
+{
+  "parent": "page.business-bike.json",
+  "context": { "market": "france" },
+  "sections": {
+    "custom_liquid_MinCyG": { "disabled": true, "settings": {}, "blocks": {} },
+    "custom_imagerow_3BF6pE": {
+      "disabled": true,
+      "settings": {},
+      "blocks": {}
+    },
+    "custom_liquid_BFPmec": { "disabled": true, "settings": {}, "blocks": {} },
+    "rich_text_VBddJb": {
+      "disabled": false,
+      "settings": {},
+      "blocks": {
+        "heading_44Cmtj": { "disabled": false, "settings": {} },
+        "heading_kGf4PH": { "disabled": true, "settings": {} }
+      }
+    }
+  },
+  "order": [
+    "rich_text_VBddJb",
+    "custom_liquid_MinCyG",
+    "custom_imagerow_3BF6pE",
+    "custom_liquid_BFPmec"
+  ]
+}

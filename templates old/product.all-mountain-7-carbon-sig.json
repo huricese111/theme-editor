@@ -1,0 +1,813 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "title": { "type": "title", "settings": {} },
+        "price": {
+          "type": "price",
+          "settings": {
+            "show_tax_and_shipping": false,
+            "enable_product_reviews_by_price": true
+          }
+        },
+        "description_JNVXj3": {
+          "type": "description",
+          "settings": {
+            "show_in_tab": false,
+            "open_tab": false,
+            "icon": "",
+            "show_in_quickbuy": false
+          }
+        },
+        "specification_simple_KR3q47": {
+          "type": "specification_simple",
+          "settings": {}
+        },
+        "payever_widget_finexp_TUdUtz": {
+          "type": "payever-widget-finexp",
+          "settings": {}
+        },
+        "variant_picker_BNiCD8": {
+          "type": "variant-picker",
+          "settings": {
+            "show_single": false,
+            "selector_style": "listed",
+            "dynamic_availability": "show",
+            "enable_size_chart": false,
+            "size_chart_label": "",
+            "size_chart_variant": "",
+            "size_chart_page": ""
+          }
+        },
+        "variant_description_app_metafield_9LbpaA": {
+          "type": "shopify://apps/variant-description/blocks/app-metafield/dee11698-5b0b-4a0f-9562-ea29cbe9c77e",
+          "settings": {
+            "namespace": "custom",
+            "key": "size",
+            "show_product_description": false,
+            "fallback_richtext": "",
+            "fallback_liquid": "",
+            "product_description_selector": "",
+            "custom_liquid": ""
+          }
+        },
+        "pop_up_AAc34B": {
+          "type": "pop-up",
+          "settings": {
+            "text": "Which frame size fit me?",
+            "text_de": "Welche Rahmengröße passt zu mir?",
+            "text_fr": "Quelle taille de cadre me convient ?",
+            "style": "link",
+            "page": "mountain7-sizechart",
+            "show_in_quickbuy": false
+          }
+        },
+        "selleasy_lb_upsell_addon_block_dWnQBC": {
+          "type": "shopify://apps/selleasy/blocks/lb-upsell-addon-block/790c1a03-a71f-4bc1-9869-00dad526d3c2",
+          "settings": {}
+        },
+        "buy_buttons_ieLink": {
+          "type": "buy-buttons",
+          "settings": {
+            "show_quantity_selector": false,
+            "enable_payment_button": true,
+            "show_backorder_text": false,
+            "show_pickup_availability": false,
+            "show_gift_card_recipient": false,
+            "enable_contact_notify": false,
+            "contact_expert_content": "",
+            "notify_me_content": ""
+          }
+        },
+        "pop_up_zVXKyw": {
+          "type": "pop-up",
+          "disabled": true,
+          "settings": {
+            "text": "Click & Collect at your local dealer",
+            "text_de": "Click & Collect bei Ihrem lokalen Händler",
+            "text_fr": "Click & Collect chez votre revendeur local",
+            "style": "link",
+            "page": "click-collect-at-your-local-dealer",
+            "show_in_quickbuy": false
+          }
+        },
+        "sharing_Hmw8qb": {
+          "type": "sharing",
+          "settings": {
+            "show_twitter": true,
+            "show_facebook": true,
+            "show_pinterest": true,
+            "show_linkedin": true,
+            "show_whatsapp": true,
+            "show_snapchat": true,
+            "show_threads": true,
+            "show_tumblr": true,
+            "show_twitch": true
+          }
+        },
+        "leasingbike_LNR9yY": {
+          "type": "leasingbike",
+          "settings": {
+            "jobrad_url": "shopify://pages/jobrad",
+            "bikeleasing_url": "shopify://pages/save-with-bikeleasing",
+            "deutsche_url": "shopify://pages/deutsche-dienstrad",
+            "businessbike_url": "shopify://pages/business-bike"
+          }
+        },
+        "accordion_DPPTVK": {
+          "type": "accordion",
+          "settings": {
+            "title": "Financing with one of our partners",
+            "title_de": "Finanzierung mit einem unserer Partner",
+            "title_fr": "Financer avec l'un de nos partenaires",
+            "icon": "",
+            "content": "",
+            "content_de": "",
+            "content_fr": "",
+            "page": "",
+            "custom_liquid": "{% render \"financing\" %}",
+            "open": false,
+            "show_in_quickbuy": false
+          }
+        },
+        "accordion_VTmjJ4": {
+          "type": "accordion",
+          "settings": {
+            "title": "Click & Collect at your local dealer",
+            "title_de": "Click & Collect bei Ihrem lokalen Händler",
+            "title_fr": "Click & Collect chez votre revendeur local",
+            "icon": "",
+            "content": "<p>When you order a bike from <a href=\"https://hepha.com\" target=\"_blank\" title=\"https://hepha.com\">hepha.com</a>, we’ll ship it for free to a dealer of your choice through our Click & Collect service. Once your bike arrives, the dealer will reach out to arrange a pickup time. Enjoy personalized assistance, test rides, and expert advice with this service. <a href=\"/pages/click-collect-at-your-local-dealer\" target=\"_blank\" title=\"Click & Collect at your local dealer\">Learn more</a></p>",
+            "content_de": "<p>Wenn Sie ein Fahrrad bei <a href=\"https://hepha.com/de\" target=\"_blank\" title=\"https://hepha.com/de\">hepha.com</a> bestellen, versenden wir es kostenlos an einen Händler Ihrer Wahl über unseren Click & Collect-Service. Sobald Ihr Fahrrad angekommen ist, wird der Händler Sie kontaktieren, um einen Abholtermin zu vereinbaren. Genießen Sie mit diesem Service persönliche Unterstützung, Testfahrten und Expertenrat. <a href=\"/pages/click-collect-at-your-local-dealer\" target=\"_blank\" title=\"Click & Collect at your local dealer\">Erfahren Sie mehr</a></p>",
+            "content_fr": "<p>Vous commandez un vélo sur <a href=\"https://hepha.com/fr-fr\" target=\"_blank\" title=\"https://hepha.com/fr-fr\">hepha.com</a>, nous l'expédierons gratuitement à un revendeur de votre choix grâce à notre service Click & Collect. Une fois votre vélo arrivé, le revendeur vous contactera pour organiser un rendez-vous pour le récupérer. Profitez de l'assistance personnalisée, des essais de conduite et des conseils d'experts avec ce service. <a href=\"/pages/click-collect-at-your-local-dealer\" target=\"_blank\" title=\"Click & Collect at your local dealer\">En savoir plus</a></p>",
+            "page": "",
+            "custom_liquid": "",
+            "open": false,
+            "show_in_quickbuy": false
+          }
+        }
+      },
+      "block_order": [
+        "title",
+        "price",
+        "description_JNVXj3",
+        "specification_simple_KR3q47",
+        "payever_widget_finexp_TUdUtz",
+        "variant_picker_BNiCD8",
+        "variant_description_app_metafield_9LbpaA",
+        "pop_up_AAc34B",
+        "selleasy_lb_upsell_addon_block_dWnQBC",
+        "buy_buttons_ieLink",
+        "pop_up_zVXKyw",
+        "sharing_Hmw8qb",
+        "leasingbike_LNR9yY",
+        "accordion_DPPTVK",
+        "accordion_VTmjJ4"
+      ],
+      "custom_css": [],
+      "settings": {
+        "show_breadcrumbs": false,
+        "select_first_variant": true,
+        "show_location_underneath": false,
+        "inventory_transfers_enable": false,
+        "enable_sticky_columns": true,
+        "enable_sticky_atc": true,
+        "sticky_atc_position": "end",
+        "sticky_atc_mobile": true,
+        "sticky_atc_behavior": "add_to_cart",
+        "sticky_atc_button_style": "secondary",
+        "gallery_size": "large",
+        "gallery_layout": "carousel-under",
+        "enable_zoom": false,
+        "show_alt_text": false,
+        "alt_text_icon": "",
+        "enable_video_autoplay": false,
+        "enable_video_looping": false,
+        "enable_media_grouping": true,
+        "media_grouping_option": "Choose from the following colors,Wählen Sie aus den folgenden Rahmenfarben, Choisissez parmi les couleurs suivantes"
+      }
+    },
+    "custom_carousel_image_FiLngH": {
+      "type": "custom-carousel-image",
+      "blocks": {
+        "customslide_CBC7Kr": {
+          "type": "customslide",
+          "settings": {
+            "image": "shopify://shop_images/HEPHA_All-Mountain-7-Carbon-LTD_gallery-01.png"
+          }
+        },
+        "customslide_heWx9W": {
+          "type": "customslide",
+          "settings": {
+            "image": "shopify://shop_images/HEPHA_All-Mountain-7-Carbon-LTD_gallery-02.png"
+          }
+        },
+        "customslide_DCJR4c": {
+          "type": "customslide",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/HEPHA_All-Mountain-7-Carbon-LTD_gallery-03.png"
+          }
+        },
+        "customslide_H7LtNi": {
+          "type": "customslide",
+          "settings": {
+            "image": "shopify://shop_images/HEPHA_All-Mountain-7-Carbon-LTD_gallery-04.png"
+          }
+        },
+        "customslide_ttEzCX": {
+          "type": "customslide",
+          "settings": {
+            "image": "shopify://shop_images/HEPHA_All-Mountain-7-Carbon-LTD_gallery-05.png"
+          }
+        }
+      },
+      "block_order": [
+        "customslide_CBC7Kr",
+        "customslide_heWx9W",
+        "customslide_DCJR4c",
+        "customslide_H7LtNi",
+        "customslide_ttEzCX"
+      ],
+      "settings": {}
+    },
+    "custom_textarea_NV64QN": {
+      "type": "custom_textarea",
+      "blocks": {
+        "list_item_ndLqVt": {
+          "type": "list_item",
+          "settings": {
+            "item_text": "New P110 motor - 110 Nm",
+            "item_text_de": "Neuer P110 Motor - 110 Nm",
+            "item_text_fr": "Nouveau moteur P110 - 110 Nm",
+            "item_text_fi": ""
+          }
+        },
+        "list_item_kPr7ey": {
+          "type": "list_item",
+          "settings": {
+            "item_text": "Battery with 800 Wh capacity",
+            "item_text_de": "Akku mit 800 Wh Kapazität",
+            "item_text_fr": "Batterie d'une capacité de 800 Wh",
+            "item_text_fi": ""
+          }
+        },
+        "list_item_PmjQ4P": {
+          "type": "list_item",
+          "settings": {
+            "item_text": "revised carbon rear triangle",
+            "item_text_de": "überarbeiteter Carbon-Hinterbau",
+            "item_text_fr": "triangle arrière en carbone retravaillé",
+            "item_text_fi": ""
+          }
+        },
+        "list_item_QFbnTc": {
+          "type": "list_item",
+          "settings": {
+            "item_text": "SRAM GX AXS",
+            "item_text_de": "SRAM GX AXS",
+            "item_text_fr": "SRAM GX AXS",
+            "item_text_fi": ""
+          }
+        },
+        "list_item_3pDib8": {
+          "type": "list_item",
+          "settings": {
+            "item_text": "E-Dropper",
+            "item_text_de": "E-Dropper",
+            "item_text_fr": "E-Dropper",
+            "item_text_fi": ""
+          }
+        },
+        "list_item_PzaNin": {
+          "type": "list_item",
+          "settings": {
+            "item_text": "SUV ready",
+            "item_text_de": "SUV bereit",
+            "item_text_fr": "SUV prêt",
+            "item_text_fi": ""
+          }
+        }
+      },
+      "block_order": [
+        "list_item_ndLqVt",
+        "list_item_kPr7ey",
+        "list_item_PmjQ4P",
+        "list_item_QFbnTc",
+        "list_item_3pDib8",
+        "list_item_PzaNin"
+      ],
+      "settings": {
+        "section_title": "The All Mountain 7 Carbon Tschugg Signature is more than a bike.",
+        "section_title_de": "Dieses Bike ist kein Kompromiss.",
+        "section_title_fr": "Voici le All Mountain 7 Carbon Tschugg Signature.",
+        "section_title_fi": "",
+        "text_description": "It’s Guido’s weapon of choice. Together with MTB legend Guido Tschugg, we built this full-suspension e-MTB to push limits – with 110 Nm torque, a powerful 800 Wh battery, and no compromise in performance. Equipped with race-proven SRAM Eagle drivetrain, Magura Gustav Pro brakes, 160 mm SR Suntour fork, Newmen wheels, and SQlab cockpit. Every detail – from the paint to the parts – was crafted with Guido. For riders who want the edge. And ride like legends.",
+        "text_description_de": "Es ist das Ergebnis aus Leidenschaft, Erfahrung und purer Rennlust. Gemeinsam mit MTB-Legende Guido Tschugg haben wir das All Mountain 7 Carbon Signature entwickelt. Mit 110 Nm Drehmoment, 800 Wh Akku und Rennausstattung: Magura Gustav Pro Bremse, SRAM Eagle Schaltung, 160 mm SR Suntour Gabel, Newmen Laufräder und SQlab Cockpit. Farbgebung und Ausstattung wurden mit Guido konzipiert – für Fahrer, die alles wollen. Und keine Grenzen kennen.",
+        "text_description_fr": "Un e-bike fully né d’une collaboration avec Guido Tschugg, pilote pro et icône du VTT. 110 Nm, 800 Wh et zéro compromis : transmission SRAM Eagle, freinage Magura Gustav Pro, fourche SR Suntour 160 mm, roues Newmen et composants SQlab. Chaque détail a été conçu avec Guido – pour les riders qui veulent tout. Et qui roulent comme des légendes.",
+        "text_description_fi": "",
+        "title_font_size": 50,
+        "text_font_size": 18,
+        "show_item_list": true,
+        "layout": "title_above",
+        "item_font_size": 16,
+        "custom_icon": "checkmark"
+      }
+    },
+    "custom_two_colum_banner_giBJKD": {
+      "type": "custom-two-colum-banner",
+      "blocks": {
+        "slide_NLVjLr": {
+          "type": "slide",
+          "settings": {
+            "background_color": "#dbdbd3",
+            "liquid_content4": "",
+            "background_size": "cover",
+            "background_position": "center",
+            "background_align_items": "center",
+            "background_padding_top": 0,
+            "background_padding_left": 0,
+            "background_padding_right": 0,
+            "background_padding_bottom": 0,
+            "liquid_content": "",
+            "subheading_image_title_link": "",
+            "subheading_image_title_position": "",
+            "title_1": "<p>Signature design. Signature specs.</p>",
+            "title_1_de": "<p>Eigenes Design. Eigene Specs.</p>",
+            "title_1_fr": "<p>Propre design. Propres spécifications.</p>",
+            "title_1_fi": "",
+            "heading_color_1": "#333333",
+            "heading_size_1": 50,
+            "subheading_1": "<p>The new top model in the series was developed in close collaboration with Guido Tschugg - our Testimonial and Technical Advisor.</p>",
+            "subheading_1_de": "<p>Das neue Topmodell der<br/>Serie wurde in enger Zusammenarbeit mit <strong>Guido Tschugg</strong> entwickelt –<br/>unserem Testimonial und Technical Advisor.</p>",
+            "subheading_1_fr": "<p>Le nouveau modèle haut de gamme de la série a été développé en étroite collaboration avec Guido Tschugg, notre conseiller technique et témoin.</p>",
+            "subheading_1_fi": "",
+            "subheading_color_1": "#333333",
+            "subheading_size_1": 18,
+            "liquid_content3": "",
+            "subheading_image_1_link": "",
+            "subheading_image_1_width": 180,
+            "subheading_image_1_position": "",
+            "subheading_image_1b_position": "",
+            "subheading_image_1b_link": "",
+            "title_2": "",
+            "title_2_de": "",
+            "title_2_fr": "",
+            "title_2_fi": "",
+            "heading_color_2": "#000000",
+            "heading_size_2": 24,
+            "subheading_2": "",
+            "subheading_2_de": "",
+            "subheading_2_fr": "",
+            "subheading_2_fi": "",
+            "subheading_color_2": "#000000",
+            "subheading_size_2": 16,
+            "subheading_image_2_position": "",
+            "subheading_image_2_link": "",
+            "collection": "",
+            "buttongroup_label": "",
+            "buttongroup_label_de": "",
+            "buttongroup_label_fr": "",
+            "buttongroup_label_fi": "",
+            "button_label": "",
+            "button_label_de": "",
+            "button_label_fr": "",
+            "button_label_fi": "",
+            "link": "",
+            "button_color": "#007bff",
+            "button2_label": "",
+            "button2_label_de": "",
+            "button2_label_fr": "",
+            "button2_label_fi": "",
+            "link2": "",
+            "link2_de": "",
+            "link2_fr": "",
+            "link2_fi": "",
+            "button2_color": "#007bff",
+            "button_text_color": "#ffffff",
+            "column_1title": "",
+            "column_1title_de": "",
+            "column_1title_fr": "",
+            "column_1title_fi": "",
+            "column_1description": "",
+            "column_1description_de": "",
+            "column_1description_fr": "",
+            "column_1description_fi": "",
+            "column_2title": "",
+            "column_2title_de": "",
+            "column_2title_fr": "",
+            "column_2title_fi": "",
+            "column_2description": "",
+            "column_2description_de": "",
+            "column_2description_fr": "",
+            "column_2description_fi": "",
+            "column_3title": "",
+            "column_3title_de": "",
+            "column_3title_fr": "",
+            "column_3title_fi": "",
+            "column_3description": "",
+            "column_3description_de": "",
+            "column_3description_fr": "",
+            "column_3description_fi": "",
+            "column_4title": "",
+            "column_4title_de": "",
+            "column_4title_fr": "",
+            "column_4title_fi": "",
+            "column_4description": "",
+            "column_4description_de": "",
+            "column_4description_fr": "",
+            "column_4description_fi": "",
+            "liquid_content2": "",
+            "liquid_content5": ""
+          }
+        },
+        "slide_YiV7jU": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/tschugg-new-sponsor-2024-0106_lr_3014acd2-9fc4-4ec1-9bd9-284604af5517.jpg",
+            "background_color": "#ffffff",
+            "liquid_content4": "",
+            "background_size": "cover",
+            "background_position": "center",
+            "background_align_items": "center",
+            "background_padding_top": 0,
+            "background_padding_left": 0,
+            "background_padding_right": 0,
+            "background_padding_bottom": 0,
+            "liquid_content": "",
+            "subheading_image_title_link": "",
+            "subheading_image_title_position": "",
+            "title_1": "",
+            "title_1_de": "",
+            "title_1_fr": "",
+            "title_1_fi": "",
+            "heading_color_1": "#000000",
+            "heading_size_1": 24,
+            "subheading_1": "",
+            "subheading_1_de": "",
+            "subheading_1_fr": "",
+            "subheading_1_fi": "",
+            "subheading_color_1": "#000000",
+            "subheading_size_1": 16,
+            "liquid_content3": "",
+            "subheading_image_1_link": "",
+            "subheading_image_1_position": "",
+            "subheading_image_1b_position": "",
+            "subheading_image_1b_link": "",
+            "title_2": "",
+            "title_2_de": "",
+            "title_2_fr": "",
+            "title_2_fi": "",
+            "heading_color_2": "#000000",
+            "heading_size_2": 24,
+            "subheading_2": "",
+            "subheading_2_de": "",
+            "subheading_2_fr": "",
+            "subheading_2_fi": "",
+            "subheading_color_2": "#000000",
+            "subheading_size_2": 16,
+            "subheading_image_2_position": "",
+            "subheading_image_2_link": "",
+            "collection": "",
+            "buttongroup_label": "",
+            "buttongroup_label_de": "",
+            "buttongroup_label_fr": "",
+            "buttongroup_label_fi": "",
+            "button_label": "",
+            "button_label_de": "",
+            "button_label_fr": "",
+            "button_label_fi": "",
+            "link": "",
+            "button_color": "#007bff",
+            "button2_label": "",
+            "button2_label_de": "",
+            "button2_label_fr": "",
+            "button2_label_fi": "",
+            "link2": "",
+            "link2_de": "",
+            "link2_fr": "",
+            "link2_fi": "",
+            "button2_color": "#007bff",
+            "button_text_color": "#ffffff",
+            "column_1title": "",
+            "column_1title_de": "",
+            "column_1title_fr": "",
+            "column_1title_fi": "",
+            "column_1description": "",
+            "column_1description_de": "",
+            "column_1description_fr": "",
+            "column_1description_fi": "",
+            "column_2title": "",
+            "column_2title_de": "",
+            "column_2title_fr": "",
+            "column_2title_fi": "",
+            "column_2description": "",
+            "column_2description_de": "",
+            "column_2description_fr": "",
+            "column_2description_fi": "",
+            "column_3title": "",
+            "column_3title_de": "",
+            "column_3title_fr": "",
+            "column_3title_fi": "",
+            "column_3description": "",
+            "column_3description_de": "",
+            "column_3description_fr": "",
+            "column_3description_fi": "",
+            "column_4title": "",
+            "column_4title_de": "",
+            "column_4title_fr": "",
+            "column_4title_fi": "",
+            "column_4description": "",
+            "column_4description_de": "",
+            "column_4description_fr": "",
+            "column_4description_fi": "",
+            "liquid_content2": "",
+            "liquid_content5": ""
+          }
+        }
+      },
+      "block_order": ["slide_NLVjLr", "slide_YiV7jU"],
+      "settings": {
+        "section_id": "",
+        "mobile_font_size_heading": 40,
+        "mobile_line_height_heading": 42,
+        "mobile_font_size_text": 20,
+        "mobile_line_height_text": 24,
+        "mobile_slide_padding_top": 30
+      }
+    },
+    "highlight_slideshow_wd7rDD": {
+      "type": "highlight_slideshow",
+      "blocks": {
+        "customslide_GCDzxU": {
+          "type": "customslide",
+          "settings": {
+            "image": "shopify://shop_images/Highlight-Gallery_P101C.png",
+            "title": "Maximum force: 100 Nm motor",
+            "title_de": "Maximale Kraft: 100 Nm Motor",
+            "title_fr": "Force maximale : moteur de 100 Nm",
+            "description": "With its 100 Nm, the powerful HEPHA P101 motor offers enough power for even the most demanding uphills. Nevertheless, it is extremely efficient, which benefits both range and long-term performance.",
+            "description_de": "Der HEPHA P101 Motor bietet mit seinen 100 Nm ordentlich Schub für noch mehr Fahrspaß oder auch steilere Uphills! Seine Effizienz sorgt dafür, dass der Spaß auch auf längeren Touren anhält!",
+            "description_fr": "Avec ses 100 Nm, le moteur HEPHA P101 offre une poussée suffisante pour encore plus de plaisir de conduite ou même des montées plus raides ! Son efficacité garantit que le plaisir dure même sur les longues randonnées !",
+            "description_richtext": "",
+            "description_richtext_de": "",
+            "description_richtext_fr": ""
+          }
+        },
+        "customslide_e4tEdG": {
+          "type": "customslide",
+          "settings": {
+            "image": "shopify://shop_images/HEPHA_804-Wh-battery.png",
+            "title": "High-capacity 804 Wh battery",
+            "title_de": "Kapazitätsstarker 804 Wh Akku",
+            "title_fr": "Batterie de grande capacité 804 Wh",
+            "description": "The Ultra's battery is perfectly integrated into the frame and offers 804 Wh capacity with state-of-the-art cell technology. It can be removed or charged on the bike.",
+            "description_de": "La batterie de l'Ultra est parfaitement intégrée au cadre et offre une capacité de 804 Wh avec une technologie cellulaire de pointe. Elle peut être retirée ou chargée sur le vélo.",
+            "description_fr": "La batterie de l'Ultra est parfaitement intégrée au cadre et offre une capacité de 804 Wh avec une technologie cellulaire de pointe. Elle peut être retirée ou chargée sur le vélo.",
+            "description_richtext": "",
+            "description_richtext_de": "",
+            "description_richtext_fr": ""
+          }
+        },
+        "customslide_m6Mb8B": {
+          "type": "customslide",
+          "settings": {
+            "image": "shopify://shop_images/Hepha_AllMtn7LTD_Frame.png",
+            "title": "Full carbon frame",
+            "title_de": "Voll-Carbon Rahmen",
+            "title_fr": "Cadre entièrement en carbone",
+            "description": "Light, stiff and robust: thanks to sophisticated layering, our carbon frame is one of the most robust on the market despite its low weight. This is also reflected in the approval for a total weight of up to 150 kg!",
+            "description_de": "Leicht, steif und robust: Dank eines ausgeklügelten Layerings zählt unser Carbonrahmen trotz seines geringen Gewichts zu den widerstandsfähigsten auf dem Markt. Das zeigt sich auch an der Freigabe für ein Gesamtgewicht von bis zu 150 kg!",
+            "description_fr": "Léger, rigide et robuste : grâce à une stratification sophistiquée, notre cadre en carbone est l'un des plus robustes du marché malgré son faible poids. Cela se reflète également dans l'homologation pour un poids total allant jusqu'à 150 kg !",
+            "description_richtext": "",
+            "description_richtext_de": "",
+            "description_richtext_fr": ""
+          }
+        },
+        "customslide_48y4MJ": {
+          "type": "customslide",
+          "settings": {
+            "image": "shopify://shop_images/Hepha_All-Mountain-7-LTD_Suspension.png",
+            "title": "4-Link Virtual Pivot suspension system",
+            "title_de": "4-Link Virtual Pivot-Federungssystem",
+            "title_fr": "Système de suspension à pivot virtuel à 4 bras",
+            "description": "This special system offers an excellent balance between traction and sensitivity as well as independence from braking influences. This guarantees maximum control even on the roughest trails.",
+            "description_de": "Dieses spezielle System bietet eine hervorragende Balance zwischen Traktion und Sensibilität sowie Unabhängigkeit von Bremseinflüssen. Dies garantiert maximale Kontrolle auch auf den härtesten Trails.",
+            "description_fr": "Ce système spécial offre un excellent rapport entre traction et sensibilité ainsi qu'une indépendance vis-à-vis des influences de freinage. Cela garantit un contrôle maximal même sur les sentiers les plus accidentés.",
+            "description_richtext": "",
+            "description_richtext_de": "",
+            "description_richtext_fr": ""
+          }
+        },
+        "customslide_jC4XnW": {
+          "type": "customslide",
+          "settings": {
+            "image": "shopify://shop_images/HEPHA_All-Mountain-7-Carbon-LTD_highlight-05.png",
+            "title": "1.96\" Display",
+            "title_de": "1.96\" Display",
+            "title_fr": "Écran 1.96\"",
+            "description": "The sporty display sits well protected to the left of the stem. Thanks to the high-quality IPS technology, it is very easy to read even in bright light.",
+            "description_de": "Das sportliche Display sitzt gut geschützt links am Vorbau. Dank der hochwertigen IPS-Technologie ist es auch bei hellem Licht sehr gut lesbar.",
+            "description_fr": "L'écran extra-large de 3,5 pouces est clairement visible et centré dans le champ de vision du conducteur. Grâce à la technologie IPS de haute qualité, il est très facile à lire même en pleine lumière.",
+            "description_richtext": "",
+            "description_richtext_de": "",
+            "description_richtext_fr": ""
+          }
+        },
+        "customslide_LpPzCP": {
+          "type": "customslide",
+          "settings": {
+            "image": "shopify://shop_images/Hepha_AllMtn7LTD_Psylo.png",
+            "title": "RockShox Psylo with 150 mm",
+            "title_de": "RockShox Psylo mit 150 mm",
+            "title_fr": "RockShox Psylo avec 150 mm",
+            "description": "For those who want more – without breaking the bank. The Psylo Silver RC takes you further with a rugged 35 mm chassis and optimized Motion Control™ damping. Inspired by our premium forks, it delivers top performance and reliability on any trail.",
+            "description_de": "Für alle, die mehr wollen – ohne großes Budget. Die Psylo Silver RC bringt dich weiter: Mit robustem 35-mm-Chassis und optimierter Motion Control™-Dämpfung. Inspiriert von unseren Premium-Gabeln, liefert sie Top-Performance und Zuverlässigkeit auf jedem Trail.",
+            "description_fr": "Pour ceux qui en veulent plus – sans exploser leur budget. La Psylo Silver RC vous emmène plus loin avec un châssis robuste de 35 mm et un amortissement Motion Control™ optimisé. Inspirée de nos fourches haut de gamme, elle assure performance et fiabilité sur tous les sentiers.",
+            "description_richtext": "",
+            "description_richtext_de": "",
+            "description_richtext_fr": ""
+          }
+        },
+        "customslide_wdbYqw": {
+          "type": "customslide",
+          "settings": {
+            "image": "shopify://shop_images/Hepha_AllMtn7LTD_SCues.png",
+            "title": "10-speed Shimano CUES gears",
+            "title_de": "10-Gang Shimano CUES Schaltung",
+            "title_fr": "10 vitesses Shimano CUES",
+            "description": "The Shimano CUES drivetrain is ideal for e-mountainbikes. Thanks to LINKGLIDE technology, it shifts smoothly and with low wear, ideal for high torques and demanding terrain.",
+            "description_de": "Die Shimano CUES Schaltung ist ideal gerade für E-Mountainbikes. Dank LINKGLIDE-Technologie schaltet sie sanft und verschleißarm, ideal für hohe Drehmomente und anspruchsvolles Gelände.",
+            "description_fr": "La transmission Shimano CUES est idéale pour les vélos de montagne électriques. Grâce à la technologie LINKGLIDE, elle passe les vitesses en douceur et avec une faible usure, idéale pour les couples élevés et les terrains exigeants.",
+            "description_richtext": "",
+            "description_richtext_de": "",
+            "description_richtext_fr": ""
+          }
+        },
+        "customslide_jHRL7H": {
+          "type": "customslide",
+          "settings": {
+            "image": "shopify://shop_images/Frame_377_77b0c983-39ff-4d1c-9972-46079a9e94e1.jpg",
+            "title": "6 A fast charger",
+            "title_de": "6 A Schnellladegerät",
+            "title_fr": "Chargeur rapide 6 A",
+            "description": "Quickly mobile again - no problem with our standard HEPHA quick charger. With its 6 A, it charges almost 1.5 times faster than conventional chargers. It can be used both on the road and as a detachable wallbox at home!",
+            "description_de": "Schnell wieder mobil - mit unserem serienmäßigen HEPHA Schnellladegerät kein Problem. Es lädt fast 1,5 mal schneller als herkömmliche Ladegeräte. Es ist sowohl mobil auf der Tour als auch als abnehmbare Wallbox zuhause einsetzbar!",
+            "description_fr": "De nouveau rapidement mobile – aucun problème avec notre chargeur rapide HEPHA standard. Avec ses 6 A, il charge presque 1,5 fois plus vite que les chargeurs classiques. Il peut être utilisé aussi bien en déplacement que comme boîtier mural amovible à la maison !",
+            "description_richtext": "",
+            "description_richtext_de": "",
+            "description_richtext_fr": ""
+          }
+        },
+        "customslide_cTjT9b": {
+          "type": "customslide",
+          "settings": {
+            "image": "shopify://shop_images/app_432ee281-bc29-43b1-9f76-b357a74d18a6.png",
+            "title": "Smart APP",
+            "title_de": "Smarte App",
+            "title_fr": "Application intelligente",
+            "description": "With the HEPHA APP, you can unlock the full potential of your e-bike: record rides, configure your e-bike, update your system or get help with questions.",
+            "description_de": "Mit der HEPHA APP setzen Sie das volle Potenzial Ihres E-Bikes frei: Zeichnen Sie Fahrten auf, konfigurieren Sie Ihr E-Bike, updaten Sie Ihr System oder erhalten Sie Hilfe bei Fragen..",
+            "description_fr": "Avec l'application HEPHA, vous pouvez exploiter tout le potentiel de votre vélo électrique : enregistrer des trajets, configurer votre vélo électrique, mettre à jour votre système ou obtenir de l'aide en cas de questions.",
+            "description_richtext": "",
+            "description_richtext_de": "",
+            "description_richtext_fr": ""
+          }
+        }
+      },
+      "block_order": [
+        "customslide_GCDzxU",
+        "customslide_e4tEdG",
+        "customslide_m6Mb8B",
+        "customslide_48y4MJ",
+        "customslide_jC4XnW",
+        "customslide_LpPzCP",
+        "customslide_wdbYqw",
+        "customslide_jHRL7H",
+        "customslide_cTjT9b"
+      ],
+      "disabled": true,
+      "settings": {}
+    },
+    "custom_firework_video_qbyhVV": {
+      "type": "custom_firework_video",
+      "disabled": true,
+      "settings": {
+        "mode": "row",
+        "source": "manual",
+        "manual_playlist_id": "oPNnaq"
+      }
+    },
+    "custom_specification_DXgxaL": {
+      "type": "custom_specification",
+      "settings": {}
+    },
+    "custom_frame_geometry_jXUWB7": {
+      "type": "custom_frame_geometry",
+      "blocks": {
+        "carbon_q4xMa6": {
+          "type": "carbon",
+          "settings": {
+            "carbon_image": "shopify://shop_images/hepha_web_geo_moutntain_carbon-02_1.png",
+            "frame_height_high": "440 mm",
+            "frame_height_high_L": "480 mm",
+            "seat_tube_angle_high": "74°",
+            "seat_tube_angle_high_L": "74°",
+            "fork_offset_high": "66 mm",
+            "fork_offset_high_L": "66 mm",
+            "seat_angle_high": "68.5°",
+            "seat_angle_high_L": "68.5°",
+            "head_tube_length_high": "110 mm",
+            "head_tube_length_high_L": "124 mm",
+            "head_tube_angle_high": "66°",
+            "head_tube_angle_high_L": "66°",
+            "top_tube_horizontal_high": "632 mm",
+            "top_tube_horizontal_high_L": "655 mm",
+            "chain_stay_length_high": "458 mm",
+            "chain_stay_length_high_L": "458 mm",
+            "bottom_bracket_drop_high": "20 mm",
+            "bottom_bracket_drop_high_L": "20 mm",
+            "wheelbase_high": "1225",
+            "wheelbase_high_L": "1249",
+            "stack_high": "618 mm",
+            "stack_high_L": "627 mm",
+            "reach_high": "455 mm",
+            "reach_high_L": "475 mm",
+            "standover_height_high": "",
+            "standover_height_high_L": "",
+            "seat_height_min_high": "",
+            "seat_height_min_high_L": "",
+            "seat_height_max_high": "",
+            "seat_height_max_high_L": ""
+          }
+        }
+      },
+      "block_order": ["carbon_q4xMa6"],
+      "settings": {
+        "background_image": "shopify://shop_images/hepha_frame_size_hepha_frame_size_mountain7_desktop_54bdf7db-5040-4dce-8f95-99e513ad0cb5.png",
+        "mobile_background_image": "shopify://shop_images/hepha_frame_size_hepha_frame_size_mountain7_mobile_722f5ba0-0e71-4c4c-b54f-851d697c3a2b.png"
+      }
+    },
+    "custom_product_tab_test_m9aDPj": {
+      "type": "custom-product-tab-test",
+      "settings": {
+        "title": "Related Products",
+        "title_de": "Ähnliche Modelle",
+        "title_fr": "Modèles associés",
+        "title_fi": "Liittyvät tuotteet",
+        "image": "shopify://shop_images/HEPHA-Trekking7_01_grey_7ff138ad-9f41-4981-b752-1bd80fee72c0.jpg",
+        "background_color": "#ffffff",
+        "background_position": "center center",
+        "background_size": "cover",
+        "background_align_items": "flex-start",
+        "background_padding_top": 20,
+        "background_padding_right": 20,
+        "background_padding_bottom": 20,
+        "background_padding_left": 20,
+        "ad_link": "shopify://collections/hepha-ebikes",
+        "ad_button_color": "#000000",
+        "ad_button_text_color": "#ffffff",
+        "title_1": "<p>Not sure which E-Bike is right for you? Discover and compare our full range of E-Bikes to find the perfect model for your adventures.</p>",
+        "title_1_de": "<p>Nicht sicher, welches E-Bike das richtige für Sie ist? Entdecken und vergleichen Sie unser gesamtes Sortiment an E-Bikes, um das perfekte Modell für Ihre Abenteuer zu finden.</p>",
+        "title_1_fr": "<p>Vous n’êtes pas sûr de quel vélo électrique est fait pour vous ? Découvrez et comparez notre gamme complète de vélos électriques pour trouver le modèle parfait pour vos aventures.</p>",
+        "title_1_fi": "",
+        "heading_color_1": "#ffffff",
+        "heading_size_1": 18,
+        "button_label": "Explore all E-Bikes!",
+        "button_label_de": "Entdecke alle E-Bikes!",
+        "button_label_fr": "Découvrez tous modèles !",
+        "button_label_fi": "",
+        "product_source_trekking7ltd": "collection",
+        "trekking7ltd_collection": "trekking-7-my23",
+        "trekking7ltd_products": [],
+        "product_source_trekking7": "collection",
+        "trekking7_collection": "new-bike-2024",
+        "trekking7_products": [],
+        "product_source_mountain7": "collection",
+        "mountain7_collection": "mountain-7-2024",
+        "mountain7_products": [],
+        "product_source_mountain7carbon": "collection",
+        "mountain7carbon_collection": "mountain-7-carbon",
+        "mountain7carbon_products": [],
+        "product_source_city7": "collection",
+        "city7_collection": "city-e-bike",
+        "city7_products": [],
+        "show_description": true
+      }
+    },
+    "custom_stickybar_b9zk6H": { "type": "custom-stickybar", "settings": {} }
+  },
+  "order": [
+    "main",
+    "custom_carousel_image_FiLngH",
+    "custom_textarea_NV64QN",
+    "custom_two_colum_banner_giBJKD",
+    "highlight_slideshow_wd7rDD",
+    "custom_firework_video_qbyhVV",
+    "custom_specification_DXgxaL",
+    "custom_frame_geometry_jXUWB7",
+    "custom_product_tab_test_m9aDPj",
+    "custom_stickybar_b9zk6H"
+  ]
+}
