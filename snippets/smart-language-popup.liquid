@@ -1,8 +1,8 @@
 {% comment %}
   Smart Language Selection Popup
   Features:
-  - Multi-tier IP geolocation detection with fallbacks
-  - Auto-detect user location and language (including VPN detection)
+  - Shopify native geolocation detection with caching
+  - Auto-detect user location and language
   - Show popup on first visit or language mismatch
   - Two-tier country selection (detected + manual)
 {% endcomment %}
@@ -45,8 +45,8 @@
             <span class="language-option__flag">🇩🇪</span>
             <span class="language-option__country">Deutschland</span>
             <div class="language-option__languages">
-              <button class="language-option__lang" data-locale="de" data-country="DE" data-url="/de">Deutsch</button>
-              <button class="language-option__lang" data-locale="en" data-country="DE" data-url="/">English</button>
+              <button class="language-option__lang" data-locale="de-DE" data-country="DE">Deutsch</button>
+              <button class="language-option__lang" data-locale="en-DE" data-country="DE">English</button>
             </div>
           </div>
           
@@ -55,8 +55,8 @@
             <span class="language-option__flag">🇫🇷</span>
             <span class="language-option__country">France</span>
             <div class="language-option__languages">
-              <button class="language-option__lang" data-locale="fr" data-country="FR" data-url="/fr-fr">Français</button>
-              <button class="language-option__lang" data-locale="en" data-country="FR" data-url="/en-fr">English</button>
+              <button class="language-option__lang" data-locale="fr-FR" data-country="FR">Français</button>
+              <button class="language-option__lang" data-locale="en-FR" data-country="FR">English</button>
             </div>
           </div>
           
@@ -65,8 +65,8 @@
             <span class="language-option__flag">🇦🇹</span>
             <span class="language-option__country">Österreich</span>
             <div class="language-option__languages">
-              <button class="language-option__lang" data-locale="de" data-country="AT" data-url="/at-at">Deutsch</button>
-              <button class="language-option__lang" data-locale="en" data-country="AT" data-url="/en-at">English</button>
+              <button class="language-option__lang" data-locale="de-AT" data-country="AT">Deutsch</button>
+              <button class="language-option__lang" data-locale="fr-AT" data-country="AT">Français</button>
             </div>
           </div>
           
@@ -75,8 +75,8 @@
             <span class="language-option__flag">🇫🇮</span>
             <span class="language-option__country">Finland</span>
             <div class="language-option__languages">
-              <button class="language-option__lang" data-locale="fi" data-country="FI" data-url="/fi-fi">Suomi</button>
-              <button class="language-option__lang" data-locale="en" data-country="FI" data-url="/en-fi">English</button>
+              <button class="language-option__lang" data-locale="fi-FI" data-country="FI">Suomi</button>
+              <button class="language-option__lang" data-locale="en-FI" data-country="FI">English</button>
             </div>
           </div>
         </div>
@@ -294,36 +294,13 @@ class SmartLanguagePopup {
     this.closeBtn = this.popup?.querySelector('[data-close-popup]');
     this.detectedSection = document.getElementById('detected-location');
     
-    // 更可靠的地理位置检测服务
-    this.geoServices = [
-      {
-        name: 'ipapi.co',
-        url: 'https://ipapi.co/json/',
-        parser: (data) => ({
-          countryCode: data.country_code,
-          countryName: data.country_name,
-          language: data.languages?.split(',')[0] || 'en'
-        })
-      },
-      {
-        name: 'ipgeolocation.io',
-        url: 'https://api.ipgeolocation.io/ipgeo?apiKey=free',
-        parser: (data) => ({
-          countryCode: data.country_code2,
-          countryName: data.country_name,
-          language: 'en'
-        })
-      },
-      {
-        name: 'freeipapi.com',
-        url: 'https://freeipapi.com/api/json/',
-        parser: (data) => ({
-          countryCode: data.countryCode,
-          countryName: data.countryName,
-          language: 'en'
-        })
-      }
-    ];
+    // Country URL mapping for supported countries
+    this.countryUrlMap = {
+      'DE': '/de',
+      'FR': '/fr', 
+      'AT': '/de-at',
+      'FI': '/fi'
+    };
     
     this.init();
   }
@@ -344,7 +321,7 @@ class SmartLanguagePopup {
     this.popup.addEventListener('click', (e) => {
       const langBtn = e.target.closest('[data-locale]');
       if (langBtn && !langBtn.classList.contains('detecting')) {
-        this.selectLanguage(langBtn.dataset.locale, langBtn.dataset.country, langBtn.dataset.url);
+        this.selectLanguage(langBtn.dataset.locale, langBtn.dataset.country);
       }
     });
     
@@ -357,210 +334,121 @@ class SmartLanguagePopup {
   }
   
   async checkShouldShow() {
+    // 始终加载和显示位置信息
+    await this.loadAndDisplayLocation();
+    
     // 检查用户是否已经做过选择
     const hasSelection = localStorage.getItem('language-selection-made');
     if (hasSelection) return;
     
-    // 立即显示弹窗并开始检测
-    this.showPopup();
-    
-    // 异步检测用户位置
-    await this.detectUserLocation();
+    // 检查是否应该显示弹窗
+    const shouldShow = this.shouldShowPopup();
+    if (shouldShow) {
+      setTimeout(() => this.showPopup(), 1000);
+    }
   }
   
-  async detectUserLocation() {
-    let detectionSuccess = false;
-    
-    // 首先尝试使用浏览器的时区和语言进行智能推测
-    this.updateDetectedLocationFromBrowser();
-    
-    // 然后尝试IP地理位置服务
-    for (const service of this.geoServices) {
-      try {
-        console.log(`Trying geolocation service: ${service.name}`);
-        
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 3000); // 减少到3秒超时
-        
-        const response = await fetch(service.url, {
-          signal: controller.signal,
-          method: 'GET',
-          mode: 'cors',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          }
-        });
-        
-        clearTimeout(timeoutId);
-        
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}`);
-        }
-        
+  async loadAndDisplayLocation() {
+    try {
+      console.log('Loading Shopify geolocation...');
+      const response = await fetch('/browsing_context_suggestions.json');
+      
+      if (response.ok) {
         const data = await response.json();
-        const parsed = service.parser(data);
+        console.log('Shopify API full response:', data);
         
-        if (parsed.countryCode && parsed.countryName) {
-          console.log(`Successfully detected location via ${service.name}:`, parsed);
-          this.updateDetectedLocation(parsed.countryCode, parsed.countryName, parsed.language);
-          detectionSuccess = true;
-          break;
+        // Try to extract country from different possible locations in the response
+        let countryCode = null;
+        let countryName = null;
+        
+        // Check various possible response structures
+        if (data.detected_values?.country) {
+          countryCode = data.detected_values.country.handle || data.detected_values.country.iso_code;
+          countryName = data.detected_values.country.name;
+        } else if (data.country) {
+          if (typeof data.country === 'string') {
+            countryCode = data.country;
+            countryName = data.country;
+          } else {
+            countryCode = data.country.handle || data.country.iso_code || data.country.code;
+            countryName = data.country.name || data.country.label;
+          }
+        } else if (data.recommendations?.country) {
+          countryCode = data.recommendations.country.handle || data.recommendations.country.iso_code;
+          countryName = data.recommendations.country.name;
         }
-      } catch (error) {
-        console.warn(`Geolocation service ${service.name} failed:`, error.message);
-        continue;
+        
+        console.log('Extracted country:', { countryCode, countryName });
+        
+        if (countryName) {
+          this.displayDetectedCountry(countryCode, countryName);
+        } else {
+          this.displayDetectedCountry('INT', 'International');
+        }
+      } else {
+        console.warn('Shopify API failed with status:', response.status);
+        this.displayDetectedCountry('INT', 'International');
       }
-    }
-    
-    // 如果所有服务都失败，保持浏览器检测结果
-    if (!detectionSuccess) {
-      console.log('All IP geolocation services failed, using browser-based detection');
+    } catch (error) {
+      console.error('Error loading Shopify location:', error);
+      this.displayDetectedCountry('INT', 'International');
     }
   }
   
-  updateDetectedLocationFromBrowser() {
-    // 基于浏览器语言和时区的智能检测
-    const browserLang = navigator.language.toLowerCase();
-    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  displayDetectedCountry(countryCode, countryName) {
+    console.log('Displaying country:', countryName);
     
-    // 时区到国家的映射
-    const timezoneCountryMap = {
-      'europe/berlin': { code: 'DE', name: 'Germany', flag: '🇩🇪' },
-      'europe/paris': { code: 'FR', name: 'France', flag: '🇫🇷' },
-      'europe/vienna': { code: 'AT', name: 'Austria', flag: '🇦🇹' },
-      'europe/helsinki': { code: 'FI', name: 'Finland', flag: '🇫🇮' },
-      'europe/zurich': { code: 'DE', name: 'Germany', flag: '🇩🇪' },
-      'europe/amsterdam': { code: 'FR', name: 'France', flag: '🇫🇷' }
+    const flagMap = {
+      'DE': '🇩🇪', 'FR': '🇫🇷', 'AT': '🇦🇹', 'FI': '🇫🇮',
+      'GB': '🇬🇧', 'US': '🇺🇸', 'CA': '🇨🇦', 'AU': '🇦🇺',
+      'SG': '🇸🇬', 'JP': '🇯🇵', 'KR': '🇰🇷', 'CN': '🇨🇳',
+      'HK': '🇭🇰', 'TW': '🇹🇼', 'INT': '🌍'
     };
     
-    // 语言到国家的映射
-    const langCountryMap = {
-      'de': { code: 'DE', name: 'Germany', flag: '🇩🇪' },
-      'de-de': { code: 'DE', name: 'Germany', flag: '🇩🇪' },
-      'de-at': { code: 'AT', name: 'Austria', flag: '🇦🇹' },
-      'fr': { code: 'FR', name: 'France', flag: '🇫🇷' },
-      'fr-fr': { code: 'FR', name: 'France', flag: '🇫🇷' },
-      'fi': { code: 'FI', name: 'Finland', flag: '🇫🇮' },
-      'fi-fi': { code: 'FI', name: 'Finland', flag: '🇫🇮' }
+    const countryLanguageMap = {
+      'DE': [{ code: 'de-DE', name: 'Deutsch' }, { code: 'en-DE', name: 'English' }],
+      'FR': [{ code: 'fr-FR', name: 'Français' }, { code: 'en-FR', name: 'English' }],
+      'AT': [{ code: 'de-AT', name: 'Deutsch' }, { code: 'fr-AT', name: 'Français' }],
+      'FI': [{ code: 'fi-FI', name: 'Suomi' }, { code: 'en-FI', name: 'English' }]
     };
     
-    // 首先尝试时区匹配
-    let detected = timezoneCountryMap[timezone.toLowerCase()];
+    const flag = flagMap[countryCode] || '🌍';
+    const supportedLanguages = countryLanguageMap[countryCode];
     
-    // 如果时区匹配失败，尝试语言匹配
-    if (!detected) {
-      detected = langCountryMap[browserLang] || langCountryMap[browserLang.split('-')[0]];
-    }
-    
-    // 如果都失败，使用默认值
-    if (!detected) {
-      detected = { code: 'INT', name: 'International', flag: '🌍' };
-    }
-    
-    // 更新检测到的位置
-    this.updateDetectedLocationDisplay(detected.code, detected.name, detected.flag);
-  }
-  
-  updateDetectedLocationDisplay(countryCode, countryName, flag) {
-    const languageMap = {
-      'de': 'Deutsch',
-      'fr': 'Français',
-      'fi': 'Suomi',
-      'en': 'English'
-    };
-    
-    // URL映射
-    const countryUrlMap = {
-      'DE': {
-        'de': '/de',
-        'en': '/'
-      },
-      'FR': {
-        'fr': '/fr-fr',
-        'en': '/en-fr'
-      },
-      'AT': {
-        'de': '/de-at',
-        'en': '/en-at'
-      },
-      'FI': {
-        'fi': '/fi-fi',
-        'en': '/en-fi'
-      }
-    };
-    
-    const supportedCountries = ['DE', 'FR', 'AT', 'FI'];
-    
-    if (!supportedCountries.includes(countryCode)) {
-      // 对于不支持的国家，推荐根域名
+    if (supportedLanguages) {
+      const languageButtons = supportedLanguages.map(lang => 
+        `<button class="language-option__lang" data-locale="${lang.code}" data-country="${countryCode}">${lang.name}</button>`
+      ).join('');
+      
       this.detectedSection.innerHTML = `
         <div class="language-option">
           <span class="language-option__flag">${flag}</span>
           <span class="language-option__country">${countryName}</span>
           <div class="language-option__languages">
-            <button class="language-option__lang active" 
-                    data-locale="en" 
-                    data-country="INT"
-                    data-url="/">
-              English
-            </button>
+            ${languageButtons}
           </div>
         </div>
       `;
-      return;
-    }
-    
-    // 对于支持的国家，显示可用语言
-    const urlMap = countryUrlMap[countryCode];
-    const availableLanguages = Object.keys(urlMap);
-    
-    const languageButtons = availableLanguages.map(lang => {
-      const langName = languageMap[lang] || 'English';
-      const url = urlMap[lang];
-      const browserLang = navigator.language.split('-')[0];
-      const isPreferred = lang === browserLang || (lang === 'en' && !availableLanguages.includes(browserLang));
-      
-      return `
-        <button class="language-option__lang ${isPreferred ? 'active' : ''}" 
-                data-locale="${lang}" 
-                data-country="${countryCode}"
-                data-url="${url}">
-          ${langName}
-        </button>
-      `;
-    }).join('');
-    
-    this.detectedSection.innerHTML = `
-      <div class="language-option">
-        <span class="language-option__flag">${flag}</span>
-        <span class="language-option__country">${countryName}</span>
-        <div class="language-option__languages">
-          ${languageButtons}
+    } else {
+      this.detectedSection.innerHTML = `
+        <div class="language-option">
+          <span class="language-option__flag">${flag}</span>
+          <span class="language-option__country">${countryName}</span>
+          <div class="language-option__languages">
+            <button class="language-option__lang" data-locale="en-INT" data-country="INT">Visit Main Site</button>
+          </div>
         </div>
-      </div>
-    `;
-  }
-  
-  updateDetectedLocation(countryCode, countryName, language) {
-    const flagMap = {
-      'DE': '🇩🇪',
-      'FR': '🇫🇷', 
-      'AT': '🇦🇹',
-      'FI': '🇫🇮',
-      'GB': '🇬🇧',
-      'US': '🇺🇸',
-      'CA': '🇨🇦',
-      'AU': '🇦🇺'
-    };
-    
-    const flag = flagMap[countryCode] || '🌍';
-    this.updateDetectedLocationDisplay(countryCode, countryName, flag);
+      `;
+    }
   }
   
   shouldShowPopup() {
-    // 总是显示弹窗，除非用户已经做过选择
-    return !localStorage.getItem('language-popup-shown');
+    // Check if current page language matches user's preferred language
+    const currentLang = document.documentElement.lang || 'en';
+    const browserLang = navigator.language.split('-')[0];
+    
+    // Show popup if languages don't match or it's first visit
+    return currentLang !== browserLang || !localStorage.getItem('language-popup-shown');
   }
   
   showPopup() {
@@ -574,25 +462,44 @@ class SmartLanguagePopup {
     document.body.style.overflow = '';
   }
   
-  selectLanguage(locale, country, url) {
-    // 存储用户选择
+  selectLanguage(locale, country) {
+    // Store user selection
     localStorage.setItem('language-selection-made', 'true');
     localStorage.setItem('selected-locale', locale);
     localStorage.setItem('selected-country', country);
     
-    // 重定向到指定URL
-    this.applyLanguageSelection(url);
+    // Submit localization form or redirect
+    this.applyLanguageSelection(locale, country);
     
     this.hidePopup();
   }
   
-  applyLanguageSelection(url) {
-    // 直接URL重定向
-    window.location.href = url;
+  buildRelativeUrl(urlPrefix) {
+    const currentPath = window.location.pathname;
+    const currentSearch = window.location.search;
+    
+    // Remove existing language prefix from path
+    const cleanPath = currentPath.replace(/^\/(de|fr|fi|de-at)/, '') || '/';
+    
+    // Build new URL with language prefix
+    return urlPrefix + cleanPath + currentSearch;
+  }
+  
+  applyLanguageSelection(locale, country) {
+    const urlPrefix = this.countryUrlMap[country];
+    
+    if (urlPrefix) {
+      // Redirect to country-specific URL with relative path
+      const newUrl = this.buildRelativeUrl(urlPrefix);
+      window.location.href = newUrl;
+    } else {
+      // For international users, redirect to main site
+      window.location.href = '/';
+    }
   }
 }
 
-// 当DOM准备就绪时初始化
+// Initialize when DOM is ready
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => new SmartLanguagePopup());
 } else {
