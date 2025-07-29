@@ -44,19 +44,24 @@ if (!customElements.get('location-map')) {
     }
 
     createMap() {
-      const map = new google.maps.Map(this, this.mapOptions);
-      const geocoder = new google.maps.Geocoder();
+      this.map = new google.maps.Map(this, this.mapOptions);
+      this.geocoder = new google.maps.Geocoder();
+      this.infoWindow = new google.maps.InfoWindow();
+      this.marker = null;
 
-      geocoder.geocode({ address: this.dataset.address })
+      // 将updateDynamicMap和updateInfoWindow函数暴露到全局
+      window.updateDynamicMap = this.updateMap.bind(this);
+      window.updateInfoWindow = this.updateInfoWindow.bind(this);
+
+      this.geocoder.geocode({ address: this.dataset.address })
         .then(({ results }) => {
           if (results[0]) {
-            map.setCenter(results[0].geometry.location);
+            this.map.setCenter(results[0].geometry.location);
 
-            // eslint-disable-next-line no-new
-            new google.maps.Marker({
-              map,
+            this.marker = new google.maps.Marker({
+              map: this.map,
               position: results[0].geometry.location,
-              clickable: false
+              clickable: true
             });
           }
         })
@@ -67,6 +72,44 @@ if (!customElements.get('location-map')) {
             mapContainer.innerHTML = `<div class="alert mb-8 bg-error-bg text-error-text">${error}</div>`;
           }
         });
+    }
+
+    updateMap(address) {
+      if (!this.geocoder || !this.map) return;
+
+      this.geocoder.geocode({ address: address })
+        .then(({ results }) => {
+          if (results[0]) {
+            this.map.setCenter(results[0].geometry.location);
+            
+            // 移除旧标记
+            if (this.marker) {
+              this.marker.setMap(null);
+            }
+            
+            // 创建新标记
+            this.marker = new google.maps.Marker({
+              map: this.map,
+              position: results[0].geometry.location,
+              clickable: true
+            });
+          }
+        })
+        .catch((error) => {
+          console.error('Geocoding failed:', error);
+        });
+    }
+
+    updateInfoWindow(content) {
+      if (!this.infoWindow || !this.marker) return;
+      
+      this.infoWindow.setContent(content);
+      this.infoWindow.open(this.map, this.marker);
+      
+      // 添加点击标记显示info window的事件
+      this.marker.addListener('click', () => {
+        this.infoWindow.open(this.map, this.marker);
+      });
     }
 
     static getStyle(style) {
