@@ -313,11 +313,18 @@
       {% endif %}
     </div>
     <div class="section-footer__row__col">
-      {% if section.settings.enable_language_selector or section.settings.enable_country_selector %}
-        <div class="section-footer__localization">
-          {% render 'localization-form', id: 'footer-localization', hide_labels: true, promote_popular: true %}
-        </div>
-      {% endif %}
+     {% if section.settings.enable_language_selector or section.settings.enable_country_selector %}
+          <div class="section-footer__localization">
+            <!-- Enhanced Language Switcher Component -->
+            {% render 'enhanced-language-switcher', 
+               enable_language_selector: section.settings.enable_language_selector, 
+               enable_country_selector: section.settings.enable_country_selector,
+               show_border: true,
+               button_size: 'large',
+               margin_bottom: '10px',
+               css_scope: 'footer' %}
+          </div>
+        {% endif %}
 
       <div class="copyright">
         {%- assign copyright_year = 'now' | date: '%Y' -%}
@@ -497,10 +504,12 @@
       padding: 8px 10px;
     }
 
-    .localization__grid {
-        display: flex;
-        flex-direction: row !important;
-        align-items: flex-start;
+    .section-footer__newsletter-block input {
+      width: auto;
+      margin-bottom: 0;
+    }
+    .signup-form__button {
+      padding: 8px 10px;
     }
   }
 </style>
@@ -526,7 +535,6 @@
           } else {
             menu.style.maxHeight = '0';
             menu.style.opacity = '0';
-            // 恢复箭头
             if (arrow) arrow.style.transform = 'rotate(0deg)';
           }
         }

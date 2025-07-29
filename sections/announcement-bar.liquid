@@ -1,111 +1,3 @@
-<style>
-   .custom-announcement-button {
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 24px;
-    font-size: 16px;
-    line-height: 16px;
-    margin-left: 20px;
-  }
-  .announcement-bar__left {
-    flex: 2 0 0;
-    align-items: center;
-    display: flex;
-;
-}
-  .custom-announcement-button:hover {
-    opacity: 0.8;
-  }
-
-  @media (max-width: 768px) {
-
-.custom-announcement-button,
-.custom-close {
-  display: none;
-}
-
-.custom-announcement-title {
-  font-size: 14px;
-}
-}
-
-.language-switcher-flag .flag-icon {
-  width: 20px;
-  height: 15px;
-  border-radius: 2px;
-  display: inline-block;
-  vertical-align: middle;
-}
-
-.language-switcher-btn {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 4px 8px;
-  border-radius: 4px;
-  transition: background-color 0.2s ease;
-}
-
-.language-switcher-btn:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-/* Language Switcher Button */
-.language-switcher-btn {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 6px;
-  padding: 6px 10px;
-  color: inherit;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-size: 14px;
-}
-
-.language-switcher-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.3);
-}
-
-.language-switcher-flag {
-  font-size: 16px;
-  line-height: 1;
-}
-
-.language-switcher-text {
-  font-weight: 500;
-  font-size: 12px;
-}
-
-.language-switcher-arrow {
-  opacity: 0.7;
-  transition: transform 0.2s ease;
-}
-
-.language-switcher-btn:hover .language-switcher-arrow {
-  transform: translateY(1px);
-}
-
-@media (max-width: 768px) {
-  .language-switcher-btn {
-    padding: 4px 8px;
-    font-size: 12px;
-  }
-  
-  .language-switcher-flag {
-    font-size: 14px;
-  }
-}
-
-</style>
-
-
 {% if section.blocks.size > 0 or section.settings.enable_language_selector or section.settings.enable_country_selector or section.settings.menu != blank %}
   {%- liquid
     assign longest_announcement = 0
@@ -118,10 +10,14 @@
       endif
     endfor
   -%}
-  <announcement-bar id="section-id-{{ section.id }}" class="announcement-bar
+  
+  <announcement-bar 
+    id="section-id-{{ section.id }}" 
+    class="announcement-bar
       {%- if section.blocks.size > 0 %} announcement-bar--with-announcement{% endif -%}
-      {%- if longest_announcement > 45 and section.settings.menu != blank %} announcement-bar--tablet-wrap{% endif -%}
-      " {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
+      {%- if longest_announcement > 45 and section.settings.menu != blank %} announcement-bar--tablet-wrap{% endif -%}"
+    {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
+    
     {% style %}
       {%- liquid
         assign bg_color = section.settings.announcement_bar_col
@@ -141,24 +37,110 @@
         --link-color: {{ text_color.rgb }};
         --announcement-font-size: {{ section.settings.message_font_size }}px;
       }
+      
+      .announcement__text {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      
+      .announcement-text-link {
+        text-decoration: none;
+        color: inherit;
+        display: inline-flex;
+        align-items: center;
+      }
+      
+      .custom-announcement-button {
+        background-color: var(--button-bg-color, #000);
+        color: white;
+        margin-left: 20px;
+        text-decoration: none;
+        padding: 6px 10px;
+        font-size: 12px;
+        border-radius: 4px;
+        display: inline-flex;
+        align-items: center;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .custom-announcement-button:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        background-color: var(--button-bg-color-hover, #333);
+      }
+      
+      .custom-announcement-button:hover .arrow-icon {
+        transform: translateX(2px);
+      }
+      
+      .custom-announcement-button:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      
+      @media (max-width: 767px) {
+        .custom-announcement-button {
+          display: none;
+        }
+      }
+      
+      .custom-announcement-button .arrow-icon {
+        display: inline-block;
+        margin-left: 5px;
+        vertical-align: middle;
+        transition: transform 0.3s ease;
+      }
+      
+      .announcement-text-link {
+        text-decoration: none;
+        margin-left: 8px;
+        color: inherit;
+      }
+      
+      .announcement-bar a,
+      .announcement-bar__link,
+      .inline-menu__link {
+        text-decoration: none;
+      }
+      
+      .announcement-bar a:hover,
+      .announcement-bar__link:hover,
+      .inline-menu__link:hover {
+        text-decoration: none;
+      }
+      
+      .announcement-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: -1;
+      }
+      
+      .announcement-bg--inactive {
+        opacity: 0;
+      }
     {% endstyle %}
 
     {%- for block in section.blocks offset: 1 -%}
-      <div class="announcement-bg announcement-bg--inactive absolute inset-0"
-          data-index="{{ forloop.index }}"
-          style="
-            background:
-              {%- if block.settings.use_custom_colors %}
-                {{- block.settings.bg_gradient | default: block.settings.bg_color }}
-              {%- else %}
-                {{- section.settings.announcement_bar_gradient | default: section.settings.announcement_bar_col }}
-              {%- endif -%}
-          "></div>
+      <div class="announcement-bg announcement-bg--inactive"
+           data-index="{{ forloop.index }}"
+           style="background:
+             {%- if block.settings.use_custom_colors %}
+               {{- block.settings.bg_gradient | default: block.settings.bg_color }}
+             {%- else %}
+               {{- section.settings.announcement_bar_gradient | default: section.settings.announcement_bar_col }}
+             {%- endif -%}"></div>
     {%- endfor -%}
 
     <div class="container container--no-max relative">
       <div class="announcement-bar__left desktop-only">
-        
         {% if section.settings.show_social_icons %}
           {%- render 'social-media', icon: settings.social_custom_icon, icon_height: 20 -%}
         {% endif %}
@@ -186,24 +168,45 @@
                     continue
                   endif
                 endif
+                
+                assign announcement_text = block.settings.text
+                assign button_text = block.settings.unique_button_text
+                
+                if request.locale.iso_code == 'de'
+                  if block.settings.text_de != blank
+                    assign announcement_text = block.settings.text_de
+                  endif
+                  if block.settings.unique_button_text_de != blank
+                    assign button_text = block.settings.unique_button_text_de
+                  endif
+                elsif request.locale.iso_code == 'fr'
+                  if block.settings.text_fr != blank
+                    assign announcement_text = block.settings.text_fr
+                  endif
+                  if block.settings.unique_button_text_fr != blank
+                    assign button_text = block.settings.unique_button_text_fr
+                  endif
+                endif
               -%}
-              <div
-                class="announcement{% if first_announcement_found %} announcement--inactive{% endif %}"
-                style="
-                  {%- if block.settings.use_custom_colors %}
-                    --heading-color: {{ block.settings.text_color.rgb }};
-                    --text-color: {{ block.settings.text_color.rgb }};
-                    --link-color: {{ block.settings.text_color.rgb }};
-                  {%- else -%}
-                    --heading-color: {{ section.settings.announcement_text_col.rgb }};
-                    --text-color: {{ section.settings.announcement_text_col.rgb }};
-                    --link-color: {{ section.settings.announcement_text_col.rgb }};
-                  {%- endif %}
-                " {{ block.shopify_attributes }}
-              >
+              
+              <div class="announcement{% if first_announcement_found %} announcement--inactive{% endif %}"
+                   style="
+                     {%- if block.settings.use_custom_colors %}
+                       --heading-color: {{ block.settings.text_color.rgb }};
+                       --text-color: {{ block.settings.text_color.rgb }};
+                       --link-color: {{ block.settings.text_color.rgb }};
+                       --button-bg-color: {{ block.settings.unique_button_color }};
+                     {%- else -%}
+                       --heading-color: {{ section.settings.announcement_text_col.rgb }};
+                       --text-color: {{ section.settings.announcement_text_col.rgb }};
+                       --link-color: {{ section.settings.announcement_text_col.rgb }};
+                       --button-bg-color: {{ block.settings.unique_button_color }};
+                     {%- endif %}"
+                   {{ block.shopify_attributes }}>
+                
                 {%- assign first_announcement_found = true -%}
+                
                 <div class="announcement__text">
-
                   {% if block.settings.show_countdown and end_date > now %}
                     <script src="{{ 'countdown-timer.js' | asset_url }}" defer></script>
                     <span class="countdown-font-{{ block.settings.number_font }} announcement-text-separation-{{ block.settings.countdown_separator }}">
@@ -212,45 +215,36 @@
                         end_time: block.settings.end_time,
                         end_midnight: true,
                         hide_on_end: true,
-                        show_labels: true
-                      %}
+                        show_labels: true %}
                     </span>
                   {% endif %}
 
-                <a href="{{ block.settings.unique_button_link }}" style="text-decoration: none; margin-left:8px;">
-                {% if request.locale.iso_code == 'de' %}
-                            {{ block.settings.text_de }}
-                        {% elsif request.locale.iso_code == 'fr' %}
-                            {{ block.settings.text_fr }}
-                        {% else %}
-                            {{ block.settings.text }}
-                        {% endif %}
-                </a>
+                  <a href="{{ block.settings.unique_button_link }}" class="announcement-text-link">
+                    {{ announcement_text }}
+                  </a>
 
-                
-                  <a href="{{ block.settings.unique_button_link }}" class="custom-announcement-button"
-            style="background-color: {{ block.settings.unique_button_color }}; color: white; margin-left: 20px; text-decoration: none;
-    padding: 6px 10px;font-size:12px;"
-            data-localize="{{ block.settings.unique_button_text }}">
-             {% if request.locale.iso_code == 'de' %}
-                            {{ block.settings.unique_button_text_de }}
-                        {% elsif request.locale.iso_code == 'fr' %}
-                            {{ block.settings.unique_button_text_fr }}
-                        {% else %}
-                            {{ block.settings.unique_button_text }}
-                        {% endif %} &#8594;
-          </a>
-        
-      
-
-                  
-                  
+                  <a href="{{ block.settings.unique_button_link }}" 
+                     class="custom-announcement-button"
+                     data-localize="{{ block.settings.unique_button_text }}">
+                    {{ button_text }}
+                    <svg class="arrow-icon" width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M8.59 16.59L13.17 12L8.59 7.41L10 6l6 6-6 6-1.41-1.41z"/>
+                    </svg>
+                  </a>
                 </div>
               </div>
             {%- endfor -%}
           </div>
+          
           <div class="announcement-bar__announcement-controller">
-            <button class="announcement-button announcement-button--previous" aria-label="{{ 'general.slider.previous' | t | escape }}">{% render 'icon-chevron-left' %}</button><button class="announcement-button announcement-button--next" aria-label="{{ 'general.slider.next' | t | escape }}">{% render 'icon-chevron-right' %}</button>
+            <button class="announcement-button announcement-button--previous" 
+                    aria-label="{{ 'general.slider.previous' | t | escape }}">
+              {% render 'icon-chevron-left' %}
+            </button>
+            <button class="announcement-button announcement-button--next" 
+                    aria-label="{{ 'general.slider.next' | t | escape }}">
+              {% render 'icon-chevron-right' %}
+            </button>
           </div>
         {%- endif -%}
       </div>
@@ -259,63 +253,23 @@
         {% if section.settings.menu != blank %}
           <span class="inline-menu">
             {% for link in linklists[section.settings.menu].links %}
-              <a class="inline-menu__link announcement-bar__link" href="{{ link.url }}">{{ link.title }}</a>
+              <a class="inline-menu__link announcement-bar__link" href="{{ link.url }}">
+                {{ link.title }}
+              </a>
             {% endfor %}
           </span>
         {% endif %}
         
-        <!-- Enhanced Language Switcher -->
-        {% if section.settings.enable_language_selector or section.settings.enable_country_selector %}
-          <div class="header-localization">
-            <!-- Quick Language Switcher Button -->
-            <button class="language-switcher-btn" onclick="document.getElementById('language-popup').classList.remove('hidden')" aria-label="Change language and location">
-              <span class="language-switcher-flag">
-                {% case request.locale.iso_code %}
-                  {% when 'de' %}
-                    <svg class="flag-icon" viewBox="0 0 640 480" width="20" height="15">
-                      <rect width="640" height="160" fill="#000"/>
-                      <rect y="160" width="640" height="160" fill="#dd0000"/>
-                      <rect y="320" width="640" height="160" fill="#ffce00"/>
-                    </svg>
-                  {% when 'fr' %}
-                    <svg class="flag-icon" viewBox="0 0 640 480" width="20" height="15">
-                      <rect width="213.3" height="480" fill="#002654"/>
-                      <rect x="213.3" width="213.3" height="480" fill="#fff"/>
-                      <rect x="426.6" width="213.4" height="480" fill="#ce1126"/>
-                    </svg>
-                  {% when 'fi' %}
-                    <svg class="flag-icon" viewBox="0 0 640 480" width="20" height="15">
-                      <rect width="640" height="480" fill="#fff"/>
-                      <rect y="175" width="640" height="130" fill="#003580"/>
-                      <rect x="175" width="130" height="480" fill="#003580"/>
-                    </svg>
-                  {% else %}
-                    <svg class="flag-icon" viewBox="0 0 640 480" width="20" height="15">
-                      <rect width="640" height="480" fill="#4285f4"/>
-                      <circle cx="320" cy="240" r="180" fill="#34a853" opacity="0.8"/>
-                      <circle cx="280" cy="200" r="40" fill="#4285f4"/>
-                      <circle cx="380" cy="220" r="30" fill="#4285f4"/>
-                      <circle cx="320" cy="280" r="35" fill="#4285f4"/>
-                      <circle cx="250" cy="300" r="25" fill="#4285f4"/>
-                    </svg>
-                  {% endcase %}
-                </span>
-                <span class="language-switcher-text">{{ request.locale.iso_code | upcase }}</span>
-                <svg width="12" height="12" viewBox="0 0 24 24" class="language-switcher-arrow">
-                  <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" fill="none"/>
-                </svg>
-              </button>
-              
-              <!-- Original localization form (hidden) -->
-              <div style="display: none;">
-                {% render 'localization-form', id: 'annbar-localization', hide_labels: true, promote_popular: true %}
-              </div>
-              <!-- 删除这里的多余 </div> 标签 -->
-              {% endif %}
-              </div>
-              </div>
-              </div>
-              </announcement-bar>
+        {% render 'enhanced-language-switcher', 
+           enable_language_selector: section.settings.enable_language_selector, 
+           enable_country_selector: section.settings.enable_country_selector,
+           show_border: true,
+           button_size: 'normal',
+           margin_bottom: '0',
+           css_scope: 'announcement-bar' %}
+      </div>
+    </div>
+  </announcement-bar>
 {%- endif -%}
 
 {% schema %}
@@ -401,42 +355,43 @@
         {
           "type": "inline_richtext",
           "id": "text",
-          "label": "Text"
+          "label": "Text (English - Default)"
         },
-         {
+        {
           "type": "inline_richtext",
           "id": "text_de",
-          "label": "Text DE"
+          "label": "Text (German)"
         },
         {
           "type": "inline_richtext",
           "id": "text_fr",
-          "label": "Text FR"
+          "label": "Text (French)"
         },
         {
           "type": "url",
           "id": "unique_button_link",
-          "label": "Unique Button Link"
+          "label": "Button Link"
         },
         {
           "type": "text",
           "id": "unique_button_text",
-          "label": "Unique Button Text"
+          "label": "Button Text (English - Default)"
         },
         {
           "type": "text",
           "id": "unique_button_text_de",
-          "label": "Unique Button Text DE"
+          "label": "Button Text (German)"
         },
         {
           "type": "text",
           "id": "unique_button_text_fr",
-          "label": "Unique Button Text FR"
+          "label": "Button Text (French)"
         },
         {
           "type": "color",
           "id": "unique_button_color",
-          "label": "Unique Button Color"
+          "label": "Button Color",
+          "default": "#000000"
         },
         {
           "type": "header",
