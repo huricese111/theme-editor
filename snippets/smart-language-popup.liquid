@@ -42,7 +42,13 @@
         <div class="language-popup__countries">
           <!-- Germany -->
           <div class="language-option" data-country="DE">
-            <span class="language-option__flag">🇩🇪</span>
+            <span class="language-option__flag">
+              <svg class="flag-icon" viewBox="0 0 640 480">
+                <rect width="640" height="160" fill="#000"/>
+                <rect y="160" width="640" height="160" fill="#dd0000"/>
+                <rect y="320" width="640" height="160" fill="#ffce00"/>
+              </svg>
+            </span>
             <span class="language-option__country">Deutschland</span>
             <div class="language-option__languages">
               <button class="language-option__lang" data-locale="de-DE" data-country="DE">Deutsch</button>
@@ -52,7 +58,13 @@
           
           <!-- France -->
           <div class="language-option" data-country="FR">
-            <span class="language-option__flag">🇫🇷</span>
+            <span class="language-option__flag">
+              <svg class="flag-icon" viewBox="0 0 640 480">
+                <rect width="213.3" height="480" fill="#002654"/>
+                <rect x="213.3" width="213.3" height="480" fill="#fff"/>
+                <rect x="426.6" width="213.4" height="480" fill="#ce1126"/>
+              </svg>
+            </span>
             <span class="language-option__country">France</span>
             <div class="language-option__languages">
               <button class="language-option__lang" data-locale="fr-FR" data-country="FR">Français</button>
@@ -62,7 +74,13 @@
           
           <!-- Austria -->
           <div class="language-option" data-country="AT">
-            <span class="language-option__flag">🇦🇹</span>
+            <span class="language-option__flag">
+              <svg class="flag-icon" viewBox="0 0 640 480">
+                <rect width="640" height="160" fill="#c8102e"/>
+                <rect y="160" width="640" height="160" fill="#fff"/>
+                <rect y="320" width="640" height="160" fill="#c8102e"/>
+              </svg>
+            </span>
             <span class="language-option__country">Österreich</span>
             <div class="language-option__languages">
               <button class="language-option__lang" data-locale="de-AT" data-country="AT">Deutsch</button>
@@ -72,7 +90,13 @@
           
           <!-- Finland -->
           <div class="language-option" data-country="FI">
-            <span class="language-option__flag">🇫🇮</span>
+            <span class="language-option__flag">
+              <svg class="flag-icon" viewBox="0 0 640 480">
+                <rect width="640" height="480" fill="#fff"/>
+                <rect y="175" width="640" height="130" fill="#003580"/>
+                <rect x="175" width="130" height="480" fill="#003580"/>
+              </svg>
+            </span>
             <span class="language-option__country">Finland</span>
             <div class="language-option__languages">
               <button class="language-option__lang" data-locale="fi-FI" data-country="FI">Suomi</button>
@@ -228,6 +252,24 @@
   transition: all 0.2s ease;
   text-decoration: none;
   color: #374151;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.lang-flag {
+  width: 16px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
+.lang-flag .flag-icon {
+  width: 16px;
+  height: 12px;
+}
+
+.lang-name {
+  white-space: nowrap;
 }
 
 .language-option__lang:hover {
@@ -247,6 +289,36 @@
   color: white;
   cursor: default;
   animation: pulse 2s infinite;
+}
+
+.flag-icon {
+  width: 24px;
+  height: 18px;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.language-option__flag {
+  margin-right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+}
+
+.country-code {
+  font-size: 12px;
+  font-weight: 600;
+  color: #666;
+  background: #f3f4f6;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-right: 8px;
+  min-width: 24px;
+  text-align: center;
 }
 
 @keyframes pulse {
@@ -284,6 +356,7 @@
     justify-content: flex-start;
   }
 }
+
 </style>
 
 <script>
@@ -294,12 +367,12 @@ class SmartLanguagePopup {
     this.closeBtn = this.popup?.querySelector('[data-close-popup]');
     this.detectedSection = document.getElementById('detected-location');
     
-    // Country URL mapping for supported countries
+    // Country URL mapping for supported countries (更新为默认语言)
     this.countryUrlMap = {
-      'DE': '/de',
-      'FR': '/fr', 
-      'AT': '/de-at',
-      'FI': '/fi'
+      'DE': '/de',     // 德国默认德语
+      'FR': '/fr-fr',  // 法国默认法语 
+      'AT': '/de-at',  // 奥地利默认德语
+      'FI': '/fi-fi'   // 芬兰默认芬兰语
     };
     
     this.init();
@@ -398,31 +471,57 @@ class SmartLanguagePopup {
   displayDetectedCountry(countryCode, countryName) {
     console.log('Displaying country:', countryName);
     
-    const flagMap = {
-      'DE': '🇩🇪', 'FR': '🇫🇷', 'AT': '🇦🇹', 'FI': '🇫🇮',
-      'GB': '🇬🇧', 'US': '🇺🇸', 'CA': '🇨🇦', 'AU': '🇦🇺',
-      'SG': '🇸🇬', 'JP': '🇯🇵', 'KR': '🇰🇷', 'CN': '🇨🇳',
-      'HK': '🇭🇰', 'TW': '🇹🇼', 'INT': '🌍'
+    // SVG国旗图标映射
+    const flagSvgMap = {
+      'DE': `<svg class="flag-icon" viewBox="0 0 640 480">
+               <rect width="640" height="160" fill="#000"/>
+               <rect y="160" width="640" height="160" fill="#dd0000"/>
+               <rect y="320" width="640" height="160" fill="#ffce00"/>
+             </svg>`,
+      'FR': `<svg class="flag-icon" viewBox="0 0 640 480">
+               <rect width="213.3" height="480" fill="#002654"/>
+               <rect x="213.3" width="213.3" height="480" fill="#fff"/>
+               <rect x="426.6" width="213.4" height="480" fill="#ce1126"/>
+             </svg>`,
+      'AT': `<svg class="flag-icon" viewBox="0 0 640 480">
+               <rect width="640" height="160" fill="#c8102e"/>
+               <rect y="160" width="640" height="160" fill="#fff"/>
+               <rect y="320" width="640" height="160" fill="#c8102e"/>
+             </svg>`,
+      'FI': `<svg class="flag-icon" viewBox="0 0 640 480">
+               <rect width="640" height="480" fill="#fff"/>
+               <rect y="175" width="640" height="130" fill="#003580"/>
+               <rect x="175" width="130" height="480" fill="#003580"/>
+             </svg>`,
+      'INT': `<svg class="flag-icon" viewBox="0 0 640 480">
+                <rect width="640" height="480" fill="#f8f9fa"/>
+                <circle cx="320" cy="240" r="120" fill="none" stroke="#6c757d" stroke-width="3"/>
+                <path d="M200 240 Q240 200 280 240 Q320 280 360 240 Q400 200 440 240" fill="none" stroke="#28a745" stroke-width="4"/>
+                <path d="M200 240 Q240 280 280 240 Q320 200 360 240 Q400 280 440 240" fill="none" stroke="#007bff" stroke-width="4"/>
+                <circle cx="320" cy="240" r="8" fill="#dc3545"/>
+              </svg>`
     };
     
     const countryLanguageMap = {
-      'DE': [{ code: 'de-DE', name: 'Deutsch' }, { code: 'en-DE', name: 'English' }],
-      'FR': [{ code: 'fr-FR', name: 'Français' }, { code: 'en-FR', name: 'English' }],
-      'AT': [{ code: 'de-AT', name: 'Deutsch' }, { code: 'en-AT', name: 'English' }],
-      'FI': [{ code: 'fi-FI', name: 'Suomi' }, { code: 'en-FI', name: 'English' }]
+      'DE': [{ code: 'de-DE', name: 'Deutsch', flag: 'DE' }, { code: 'en-DE', name: 'English', flag: 'DE' }],
+      'FR': [{ code: 'fr-FR', name: 'Français', flag: 'FR' }, { code: 'en-FR', name: 'English', flag: 'FR' }],
+      'AT': [{ code: 'de-AT', name: 'Deutsch', flag: 'AT' }, { code: 'en-AT', name: 'English', flag: 'AT' }],
+      'FI': [{ code: 'fi-FI', name: 'Suomi', flag: 'FI' }, { code: 'en-FI', name: 'English', flag: 'FI' }]
     };
     
-    const flag = flagMap[countryCode] || '🌍';
+    const flagSvg = flagSvgMap[countryCode] || flagSvgMap['INT'];
     const supportedLanguages = countryLanguageMap[countryCode];
     
     if (supportedLanguages) {
-      const languageButtons = supportedLanguages.map(lang => 
-        `<button class="language-option__lang" data-locale="${lang.code}" data-country="${countryCode}">${lang.name}</button>`
-      ).join('');
+      const languageButtons = supportedLanguages.map(lang => {
+        return `<button class="language-option__lang" data-locale="${lang.code}" data-country="${countryCode}">
+                  <span class="lang-name">${lang.name}</span>
+                </button>`;
+      }).join('');
       
       this.detectedSection.innerHTML = `
         <div class="language-option">
-          <span class="language-option__flag">${flag}</span>
+          <span class="language-option__flag">${flagSvg}</span>
           <span class="language-option__country">${countryName}</span>
           <div class="language-option__languages">
             ${languageButtons}
@@ -432,10 +531,12 @@ class SmartLanguagePopup {
     } else {
       this.detectedSection.innerHTML = `
         <div class="language-option">
-          <span class="language-option__flag">${flag}</span>
+          <span class="language-option__flag">${flagSvg}</span>
           <span class="language-option__country">${countryName}</span>
           <div class="language-option__languages">
-            <button class="language-option__lang" data-locale="en-INT" data-country="INT">Visit Main Site</button>
+            <button class="language-option__lang" data-locale="en-INT" data-country="INT">
+              <span class="lang-name">Visit Main Site</span>
+            </button>
           </div>
         </div>
       `;
@@ -478,23 +579,67 @@ class SmartLanguagePopup {
     const currentPath = window.location.pathname;
     const currentSearch = window.location.search;
     
-    // Remove existing language prefix from path
-    const cleanPath = currentPath.replace(/^\/(de|fr|fi|de-at)/, '') || '/';
+    // 移除所有可能的语言前缀
+    const cleanPath = currentPath.replace(/^\/(de|fr|fi|de-at|fr-fr|en-de|en-fr|en-at|fi-fi|en-fi)/, '') || '/';
     
-    // Build new URL with language prefix
+    // 构建新的URL
     return urlPrefix + cleanPath + currentSearch;
   }
   
   applyLanguageSelection(locale, country) {
-    const urlPrefix = this.countryUrlMap[country];
+    // 根据locale确定正确的URL前缀
+    const localeUrlMap = {
+      // 德国
+      'de-DE': '/de',
+      'en-DE': '/',
+      // 法国  
+      'fr-FR': '/fr-fr',
+      'en-FR': '/en-fr',
+      // 奥地利
+      'de-AT': '/de-at', 
+      'en-AT': '/en-at',
+      // 芬兰
+      'fi-FI': '/fi-fi',
+      'en-FI': '/en-fi'
+    };
     
-    if (urlPrefix) {
-      // Redirect to country-specific URL with relative path
-      const newUrl = this.buildRelativeUrl(urlPrefix);
+    const newUrlPrefix = localeUrlMap[locale];
+    
+    if (newUrlPrefix !== undefined) {
+      // 获取当前完整URL信息
+      const currentPath = window.location.pathname;
+      const currentSearch = window.location.search;
+      const currentOrigin = window.location.origin;
+      
+      // 定义所有可能的语言前缀（按长度降序排列，确保先匹配较长的前缀）
+      const allPrefixes = [
+        '/fr-fr', '/en-fr', '/de-at', '/en-at', '/fi-fi', '/en-fi',
+        '/de', '/fr', '/fi'
+      ];
+      
+      // 检查当前路径是否以任何语言前缀开头
+      let cleanPath = currentPath;
+      for (const prefix of allPrefixes) {
+        if (currentPath.startsWith(prefix + '/') || currentPath === prefix) {
+          cleanPath = currentPath.substring(prefix.length) || '/';
+          break;
+        }
+      }
+      
+      // 构建新的完整URL
+      let newUrl;
+      if (newUrlPrefix === '/') {
+        // 对于根路径（en-DE），直接使用域名 + 清理后的路径
+        newUrl = currentOrigin + (cleanPath === '/' ? '/' : cleanPath) + currentSearch;
+      } else {
+        // 对于其他语言前缀，添加前缀
+        newUrl = currentOrigin + newUrlPrefix + (cleanPath === '/' ? '' : cleanPath) + currentSearch;
+      }
+      
       window.location.href = newUrl;
     } else {
-      // For international users, redirect to main site
-      window.location.href = '/';
+      // 对于国际用户，重定向到主站
+      window.location.href = window.location.origin + '/';
     }
   }
 }

@@ -29,6 +29,30 @@
 }
 }
 
+.language-switcher-flag .flag-icon {
+  width: 20px;
+  height: 15px;
+  border-radius: 2px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.language-switcher-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.language-switcher-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
 /* Language Switcher Button */
 .language-switcher-btn {
   display: flex;
@@ -248,30 +272,50 @@
               <span class="language-switcher-flag">
                 {% case request.locale.iso_code %}
                   {% when 'de' %}
-                    🇩🇪
+                    <svg class="flag-icon" viewBox="0 0 640 480" width="20" height="15">
+                      <rect width="640" height="160" fill="#000"/>
+                      <rect y="160" width="640" height="160" fill="#dd0000"/>
+                      <rect y="320" width="640" height="160" fill="#ffce00"/>
+                    </svg>
                   {% when 'fr' %}
-                    🇫🇷
+                    <svg class="flag-icon" viewBox="0 0 640 480" width="20" height="15">
+                      <rect width="213.3" height="480" fill="#002654"/>
+                      <rect x="213.3" width="213.3" height="480" fill="#fff"/>
+                      <rect x="426.6" width="213.4" height="480" fill="#ce1126"/>
+                    </svg>
                   {% when 'fi' %}
-                    🇫🇮
+                    <svg class="flag-icon" viewBox="0 0 640 480" width="20" height="15">
+                      <rect width="640" height="480" fill="#fff"/>
+                      <rect y="175" width="640" height="130" fill="#003580"/>
+                      <rect x="175" width="130" height="480" fill="#003580"/>
+                    </svg>
                   {% else %}
-                    🇬🇧
-                {% endcase %}
-              </span>
-              <span class="language-switcher-text">{{ request.locale.iso_code | upcase }}</span>
-              <svg width="12" height="12" viewBox="0 0 24 24" class="language-switcher-arrow">
-                <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" fill="none"/>
-              </svg>
-            </button>
-            
-            <!-- Original localization form (hidden) -->
-            <div style="display: none;">
-              {% render 'localization-form', id: 'annbar-localization', hide_labels: true, promote_popular: true %}
-            </div>
-          </div>
-        {% endif %}
-      </div>
-    </div>
-  </announcement-bar>
+                    <svg class="flag-icon" viewBox="0 0 640 480" width="20" height="15">
+                      <rect width="640" height="480" fill="#4285f4"/>
+                      <circle cx="320" cy="240" r="180" fill="#34a853" opacity="0.8"/>
+                      <circle cx="280" cy="200" r="40" fill="#4285f4"/>
+                      <circle cx="380" cy="220" r="30" fill="#4285f4"/>
+                      <circle cx="320" cy="280" r="35" fill="#4285f4"/>
+                      <circle cx="250" cy="300" r="25" fill="#4285f4"/>
+                    </svg>
+                  {% endcase %}
+                </span>
+                <span class="language-switcher-text">{{ request.locale.iso_code | upcase }}</span>
+                <svg width="12" height="12" viewBox="0 0 24 24" class="language-switcher-arrow">
+                  <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" fill="none"/>
+                </svg>
+              </button>
+              
+              <!-- Original localization form (hidden) -->
+              <div style="display: none;">
+                {% render 'localization-form', id: 'annbar-localization', hide_labels: true, promote_popular: true %}
+              </div>
+              <!-- 删除这里的多余 </div> 标签 -->
+              {% endif %}
+              </div>
+              </div>
+              </div>
+              </announcement-bar>
 {%- endif -%}
 
 {% schema %}
