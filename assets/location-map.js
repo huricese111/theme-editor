@@ -39,7 +39,7 @@ if (!customElements.get('location-map')) {
         this.mapOptions.styles = LocationMap.getStyle(this.dataset.mapStyle);
       }
 
-      loadScript(`https://maps.googleapis.com/maps/api/js?key=${this.dataset.apiKey}`)
+      loadScript(`https://maps.googleapis.com/maps/api/js?key=${this.dataset.apiKey}&language=en&region=US`)
         .then(this.createMap.bind(this));
     }
 

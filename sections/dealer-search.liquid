@@ -38,6 +38,58 @@
     {%- assign direction_text = 'Directions' -%}
 {%- endcase -%}
 
+{%- comment -%} Multi-language translations for form fields {%- endcomment -%}
+{%- assign placeholder_text = 'Find sites near this location' -%}
+{%- assign distance_label = 'Distance' -%}
+{%- assign results_label = 'Results' -%}
+{%- assign search_button_text = 'Search' -%}
+{%- assign search_filters_title = 'Search Filters' -%}
+{%- assign dealer_text = 'Dealer' -%}
+{%- assign rental_station_text = 'Rental Station' -%}
+{%- assign service_center_text = 'Service Center' -%}
+{%- assign all_text = 'All' -%}
+{%- assign phone_label = 'Phone' -%}
+{%- assign email_label = 'Email' -%}
+
+{%- case request.locale.iso_code -%}
+  {%- when 'de' -%}
+    {%- assign placeholder_text = 'Finden Sie Standorte in der Nähe dieses Standorts' -%}
+    {%- assign distance_label = 'Distanz' -%}
+    {%- assign results_label = 'Ergebnisse' -%}
+    {%- assign search_button_text = 'Suchen' -%}
+    {%- assign search_filters_title = 'Such-Filter' -%}
+    {%- assign dealer_text = 'Händler' -%}
+    {%- assign rental_station_text = 'Rental Station' -%}
+    {%- assign service_center_text = 'Servicezentrum' -%}
+    {%- assign all_text = 'Alle' -%}
+    {%- assign phone_label = 'Telefon' -%}
+    {%- assign email_label = 'E-Mail' -%}
+  {%- when 'fr' -%}
+    {%- assign placeholder_text = 'Trouver des sites près de' -%}
+    {%- assign distance_label = 'Distance' -%}
+    {%- assign results_label = 'Ergebnisse' -%}
+    {%- assign search_button_text = 'Recherche' -%}
+    {%- assign search_filters_title = 'Filtres de recherche' -%}
+    {%- assign dealer_text = 'Revendeur' -%}
+    {%- assign rental_station_text = 'Rental Station' -%}
+    {%- assign service_center_text = 'Centre de service' -%}
+    {%- assign all_text = 'Tous' -%}
+    {%- assign phone_label = 'Téléphone' -%}
+    {%- assign email_label = 'E-mail' -%}
+  {%- when 'fi' -%}
+    {%- assign placeholder_text = 'Löydä sivustoja tämän sijainnin läheltä' -%}
+    {%- assign distance_label = 'Etäisyys' -%}
+    {%- assign results_label = 'Tulokset' -%}
+    {%- assign search_button_text = 'Haku' -%}
+    {%- assign search_filters_title = 'Hakusuodattimet' -%}
+    {%- assign dealer_text = 'Jälleenmyyjä' -%}
+    {%- assign rental_station_text = 'Vuokraamo' -%}
+    {%- assign service_center_text = 'Huoltokeskus' -%}
+    {%- assign all_text = 'Kaikki' -%}
+    {%- assign phone_label = 'Puhelin' -%}
+    {%- assign email_label = 'Sähköposti' -%}
+{%- endcase -%}
+
 <div
   class="section-id-{{ section.id }} map-section use-color-scheme use-color-scheme--{{ section.settings.color_scheme }}{% unless section.settings.full_width %} map-section--map-constrained{% endunless %}{% if display_map %} map-section--display-map{% endif %}"
   {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}
@@ -53,49 +105,57 @@
         <!-- Search Form -->
         <div class="dealer-search__form">
           <div class="search-input-group">
-            <input type="text" id="location-search" placeholder="Find sites near this location" class="search-input">
+            <div class="search-input-wrapper">
+              <input type="text" id="location-search" placeholder="{{ placeholder_text }}" class="search-input">
+            </div>
             <div class="search-controls">
               <div class="search-control">
-                <label for="distance-select">Distance</label>
-                <select id="distance-select" class="search-select">
-                  <option value="25">25 KM</option>
-                  <option value="50">50 KM</option>
-                  <option value="100">100 KM</option>
-                  <option value="200">200 KM</option>
-                </select>
+                <label for="distance-select">{{ distance_label }}</label>
+                <div class="select-wrapper">
+                  <select id="distance-select" class="search-select">
+                    <option value="25">25 KM</option>
+                    <option value="50">50 KM</option>
+                    <option value="100">100 KM</option>
+                    <option value="200">200 KM</option>
+                  </select>
+                  <svg class="select-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6,9 12,15 18,9"></polyline>
+                  </svg>
+                </div>
               </div>
               <div class="search-control">
-                <label for="results-select">Results</label>
-                <select id="results-select" class="search-select">
-                  <option value="25">25</option>
-                  <option value="50">50</option>
-                  <option value="100">100</option>
-                  <option value="all">All</option>
-                </select>
+                <label for="results-select">{{ results_label }}</label>
+                <div class="select-wrapper">
+                  <select id="results-select" class="search-select">
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="all">{{ all_text }}</option>
+                  </select>
+                  <svg class="select-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6,9 12,15 18,9"></polyline>
+                  </svg>
+                </div>
               </div>
-              <button type="button" id="search-btn" class="search-button">Search</button>
+              <button type="button" id="search-btn" class="dealer-search-btn">{{ search_button_text }}</button>
             </div>
           </div>
           
           <!-- Search Filters -->
           <div class="search-filters">
-            <h4 class="search-filters__title">Search Filters</h4>
+            <h4 class="search-filters__title">{{ search_filters_title }}</h4>
             <div class="filter-options">
               <label class="filter-option">
-                <input type="checkbox" id="filter-click-collect" value="click-collect">
-                <span>Click and Collect</span>
-              </label>
-              <label class="filter-option">
                 <input type="checkbox" id="filter-dealer" value="dealer">
-                <span>Dealer</span>
+                <span>{{ dealer_text }}</span>
               </label>
               <label class="filter-option">
                 <input type="checkbox" id="filter-rental" value="rental">
-                <span>Rental Station</span>
+                <span>{{ rental_station_text }}</span>
               </label>
               <label class="filter-option">
                 <input type="checkbox" id="filter-service" value="service">
-                <span>Service Center</span>
+                <span>{{ service_center_text }}</span>
               </label>
             </div>
           </div>
@@ -139,13 +199,13 @@
                   
                   {% if block.settings.phone != blank %}
                     <div class="location-card__phone">
-                      <strong>Phone:</strong> {{ block.settings.phone | escape }}
+                      <strong>{{ phone_label }}:</strong> {{ block.settings.phone | escape }}
                     </div>
                   {% endif %}
                   
                   {% if block.settings.email != blank %}
                     <div class="location-card__email">
-                      <strong>Email:</strong> {{ block.settings.email | escape }}
+                      <strong>{{ email_label }}:</strong> {{ block.settings.email | escape }}
                     </div>
                   {% endif %}
                   
@@ -182,7 +242,7 @@
               <iframe
                 id="map-iframe"
                 class="map"
-                src="https://www.google.com/maps/embed/v1/place?key={{ section.settings.api_key }}&q={{ first_map_address }}&zoom=14"
+                src="https://www.google.com/maps/embed/v1/place?key={{ section.settings.api_key }}&q={{ first_map_address }}&zoom=14&language=en&region=US"
                 width="100%"
                 height="100%"
                 frameborder="0"
@@ -212,6 +272,24 @@
     
     let allLocations = Array.from(locationCards);
     let filteredLocations = [...allLocations];
+    let searchHistory = JSON.parse(localStorage.getItem('dealerSearchHistory') || '[]');
+    let currentSuggestionIndex = -1;
+    let searchTimeout;
+    
+    const suggestionsContainer = document.createElement('div');
+    suggestionsContainer.className = 'search-suggestions';
+    suggestionsContainer.style.display = 'none';
+    
+    // 创建搜索输入框包装器
+    const searchWrapper = document.createElement('div');
+    searchWrapper.className = 'search-input-wrapper';
+    
+    // 将搜索输入框移到包装器中
+    locationSearch.parentNode.insertBefore(searchWrapper, locationSearch);
+    searchWrapper.appendChild(locationSearch);
+    
+    // 将建议框添加到包装器中
+    searchWrapper.appendChild(suggestionsContainer);
     
     if (!mapContainer) return;
     
@@ -219,12 +297,19 @@
     const mapType = mapContainer.dataset.mapType;
     const mapStyle = mapContainer.dataset.mapStyle;
     
-    // Search functionality
-    function performSearch() {
+    // Enhanced search functionality
+    function performSearch(saveToHistory = true) {
       const searchTerm = locationSearch.value.toLowerCase().trim();
       const selectedFilters = Array.from(filterCheckboxes)
         .filter(cb => cb.checked)
         .map(cb => cb.value);
+      
+      // Save to search history
+      if (saveToHistory && searchTerm && !searchHistory.includes(searchTerm)) {
+        searchHistory.unshift(searchTerm);
+        searchHistory = searchHistory.slice(0, 10); // Keep only last 10 searches
+        localStorage.setItem('dealerSearchHistory', JSON.stringify(searchHistory));
+      }
       
       filteredLocations = allLocations.filter(card => {
         // Text search
@@ -248,6 +333,126 @@
       });
       
       displayResults();
+      hideSuggestions();
+    }
+    
+    // Generate search suggestions
+    function generateSuggestions(query) {
+      const suggestions = [];
+      
+      // Add search history
+      const historyMatches = searchHistory.filter(item => 
+        item.toLowerCase().includes(query.toLowerCase())
+      ).slice(0, 3);
+      
+      suggestions.push(...historyMatches.map(item => ({
+        text: item,
+        type: 'history',
+        icon: '🕒'
+      })));
+      
+      // Add location suggestions
+      const locationSuggestions = new Set();
+      allLocations.forEach(card => {
+        const storeName = card.getAttribute('data-store-name');
+        const city = card.getAttribute('data-city');
+        const country = card.getAttribute('data-country');
+        
+        [storeName, city, country].forEach(item => {
+          if (item && item.toLowerCase().includes(query.toLowerCase()) && 
+              !locationSuggestions.has(item) && item.toLowerCase() !== query.toLowerCase()) {
+            locationSuggestions.add(item);
+          }
+        });
+      });
+      
+      suggestions.push(...Array.from(locationSuggestions).slice(0, 5).map(item => ({
+        text: item,
+        type: 'suggestion',
+        icon: '📍'
+      })));
+      
+      return suggestions.slice(0, 8);
+    }
+    
+    // Show search suggestions
+    function showSuggestions(query) {
+      if (!query.trim()) {
+        hideSuggestions();
+        return;
+      }
+      
+      const suggestions = generateSuggestions(query);
+      
+      if (suggestions.length === 0) {
+        hideSuggestions();
+        return;
+      }
+      
+      suggestionsContainer.innerHTML = suggestions.map((suggestion, index) => `
+        <div class="suggestion-item ${index === currentSuggestionIndex ? 'highlighted' : ''}" 
+             data-index="${index}" data-text="${suggestion.text}">
+          <span class="suggestion-icon">${suggestion.icon}</span>
+          <span class="suggestion-text">${suggestion.text}</span>
+          ${suggestion.type === 'history' ? '<span class="suggestion-remove" data-text="' + suggestion.text + '">×</span>' : ''}
+        </div>
+      `).join('');
+      
+      suggestionsContainer.style.display = 'block';
+    }
+    
+    // Hide suggestions
+    function hideSuggestions() {
+      suggestionsContainer.style.display = 'none';
+      currentSuggestionIndex = -1;
+    }
+    
+    // Handle keyboard navigation
+    function handleKeyboardNavigation(e) {
+      const suggestions = suggestionsContainer.querySelectorAll('.suggestion-item');
+      
+      switch(e.key) {
+        case 'ArrowDown':
+          e.preventDefault();
+          currentSuggestionIndex = Math.min(currentSuggestionIndex + 1, suggestions.length - 1);
+          updateSuggestionHighlight();
+          break;
+          
+        case 'ArrowUp':
+          e.preventDefault();
+          currentSuggestionIndex = Math.max(currentSuggestionIndex - 1, -1);
+          updateSuggestionHighlight();
+          break;
+          
+        case 'Enter':
+          e.preventDefault();
+          if (currentSuggestionIndex >= 0 && suggestions[currentSuggestionIndex]) {
+            const selectedText = suggestions[currentSuggestionIndex].getAttribute('data-text');
+            locationSearch.value = selectedText;
+          }
+          performSearch();
+          break;
+          
+        case 'Escape':
+          hideSuggestions();
+          locationSearch.blur();
+          break;
+      }
+    }
+    
+    // Update suggestion highlight
+    function updateSuggestionHighlight() {
+      const suggestions = suggestionsContainer.querySelectorAll('.suggestion-item');
+      suggestions.forEach((item, index) => {
+        item.classList.toggle('highlighted', index === currentSuggestionIndex);
+      });
+    }
+    
+    // Remove item from search history
+    function removeFromHistory(text) {
+      searchHistory = searchHistory.filter(item => item !== text);
+      localStorage.setItem('dealerSearchHistory', JSON.stringify(searchHistory));
+      showSuggestions(locationSearch.value);
     }
     
     function displayResults() {
@@ -277,6 +482,7 @@
       filterCheckboxes.forEach(cb => cb.checked = false);
       filteredLocations = [...allLocations];
       displayResults();
+      hideSuggestions();
     }
     
     function updateMapForCard(card) {
@@ -296,33 +502,68 @@
         }
       } else {
         if (mapIframe) {
-          mapIframe.src = `https://www.google.com/maps/embed/v1/place?key=${apiKey}&q=${encodeURIComponent(mapAddress)}&zoom=14`;
+          mapIframe.src = `https://www.google.com/maps/embed/v1/place?key=${apiKey}&q=${encodeURIComponent(mapAddress)}&zoom=14&language=en&region=US`;
         }
       }
     }
     
     // Event listeners
-    searchBtn.addEventListener('click', performSearch);
+    searchBtn.addEventListener('click', () => performSearch());
     
-    locationSearch.addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') {
+    // Enhanced input event with debouncing and suggestions
+    locationSearch.addEventListener('input', function() {
+      clearTimeout(searchTimeout);
+      currentSuggestionIndex = -1;
+      
+      if (this.value === '') {
+        clearSearch();
+      } else {
+        // Show suggestions immediately
+        showSuggestions(this.value);
+        
+        // Debounced search
+        searchTimeout = setTimeout(() => {
+          performSearch(false); // Don't save to history for auto-search
+        }, 300);
+      }
+    });
+    
+    // Keyboard navigation
+    locationSearch.addEventListener('keydown', handleKeyboardNavigation);
+    
+    // Focus and blur events
+    locationSearch.addEventListener('focus', function() {
+      if (this.value) {
+        showSuggestions(this.value);
+      }
+    });
+    
+    locationSearch.addEventListener('blur', function() {
+      // Delay hiding to allow clicking on suggestions
+      setTimeout(() => hideSuggestions(), 150);
+    });
+    
+    // Suggestion click events
+    suggestionsContainer.addEventListener('click', function(e) {
+      if (e.target.classList.contains('suggestion-remove')) {
+        e.stopPropagation();
+        removeFromHistory(e.target.getAttribute('data-text'));
+      } else if (e.target.closest('.suggestion-item')) {
+        const suggestionItem = e.target.closest('.suggestion-item');
+        const selectedText = suggestionItem.getAttribute('data-text');
+        locationSearch.value = selectedText;
         performSearch();
       }
     });
     
+    // Filter and results change events
     filterCheckboxes.forEach(checkbox => {
-      checkbox.addEventListener('change', performSearch);
+      checkbox.addEventListener('change', () => performSearch(false));
     });
     
     resultsSelect.addEventListener('change', displayResults);
     
-    // Clear search when input is empty
-    locationSearch.addEventListener('input', function() {
-      if (this.value === '') {
-        clearSearch();
-      }
-    });
-    
+    // Location card click events
     locationCards.forEach(function(card) {
       card.addEventListener('click', function() {
         locationCards.forEach(c => c.classList.remove('active'));
@@ -435,7 +676,6 @@
     max-height: 100vh;
   }
   
-  /* New styles for search functionality */
   .dealer-search__title {
     margin: 0 0 1.5rem 0;
     font-size: 1.5rem;
@@ -443,95 +683,500 @@
     color: #333;
   }
   
+   /* Modern dealer search form styles - Clean White Version */
   .dealer-search__form {
-    margin-bottom: 1.5rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid #ddd;
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), 0 4px 16px rgba(0, 0, 0, 0.04);
+    margin-bottom: 2rem;
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.06);
   }
   
+  /* Enhanced search input group - 修复结构 */
   .search-input-group {
-    margin-bottom: 1rem;
+    position: relative;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* 搜索输入框容器 - 独立包装搜索框 */
+  .search-input-wrapper {
+    position: relative;
+    width: 100%;
+    margin-bottom:10px;
   }
   
   .search-input {
     width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
+    padding: 16px 50px 16px 20px;
+    border: 2px solid #e1e5e9;
+    border-radius: 12px;
+    font-size: 16px;
+    background: #ffffff;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+    color: #333;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    box-sizing: border-box;
   }
   
+  .search-input::placeholder {
+    color: #9ca3af;
+    font-weight: 400;
+  }
+  
+  .search-input:focus {
+    border-color: #374151;
+    background: #ffffff;
+    box-shadow: 0 4px 16px rgba(55, 65, 81, 0.1), 0 0 0 4px rgba(55, 65, 81, 0.1);
+    transform: translateY(-1px);
+  }
+  
+  .search-input-wrapper::after {
+    content: '';
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    z-index: 2;
+    opacity: 0.6;
+    pointer-events: none;
+  }
+  
+  /* 移除旧的图标样式 */
+  .search-input-group::before,
+  .search-input-group::after {
+    display: none;
+  }
+  
+  /* Enhanced search controls */
   .search-controls {
-    display: flex;
-    gap: 0.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 1rem;
     align-items: end;
-    flex-wrap: wrap;
   }
   
   .search-control {
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    gap: 0.5rem;
   }
   
   .search-control label {
-    font-size: 0.8rem;
-    color: #666;
-    font-weight: 500;
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+    letter-spacing: 0.3px;
+  }
+  
+  .select-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
   }
   
   .search-select {
-    padding: 0.5rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 0.8rem;
-    min-width: 70px;
-  }
-  
-  .search-button {
-    padding: 0.5rem 1rem;
-    background-color: #000;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 0.8rem;
+    padding: 16px 20px;
+    border: 2px solid #e1e5e9;
+    border-radius: 12px;
+    font-size: 16px;
+    background: #ffffff;
+    color: #333;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    appearance: none;
+    width: 100%;
+    padding-right: 50px;
   }
   
-  .search-button:hover {
-    background-color: #333;
+  .select-arrow {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    color: #666;
+    pointer-events: none;
+    transition: transform 0.3s ease;
   }
   
-  .search-filters {
-    margin-top: 1rem;
-  }
-  
-  .search-filters__title {
-    margin: 0 0 0.75rem 0;
-    font-size: 1rem;
-    font-weight: 600;
+  .select-wrapper:hover .select-arrow {
     color: #333;
   }
   
+  .search-select:focus {
+    border-color: #374151;
+    background: #ffffff;
+    box-shadow: 0 4px 16px rgba(55, 65, 81, 0.1), 0 0 0 4px rgba(55, 65, 81, 0.1);
+    outline: none;
+  }
+  
+  .search-select:hover {
+    border-color: #9ca3af;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+  
+  /* Enhanced search button */
+  .dealer-search-btn {
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #333333 0%, #000000 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .dealer-search-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+  }
+  
+  .dealer-search-btn:hover {
+    background: linear-gradient(135deg, #555555 0%, #222222 100%);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    transform: translateY(-2px);
+  }
+  
+  .dealer-search-btn:hover::before {
+    left: 100%;
+  }
+  
+  .dealer-search-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Enhanced search filters */
+  .search-filters {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e5e7eb;
+  }
+  
+  .search-filters__title {
+    margin: 0 0 1rem 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: #374151;
+    letter-spacing: 0.3px;
+  }
+  
   .filter-options {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
   }
   
   .filter-option {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    font-size: 0.9rem;
+    gap: 0.75rem;
+    padding: 12px 16px;
+    background: #f9fafb;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
     cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .filter-option:hover {
+    border-color: #374151;
+    background: #f3f4f6;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(55, 65, 81, 0.08);
   }
   
   .filter-option input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    cursor: pointer;
+    appearance: none;
+    border: 2px solid #d1d5db;
+    border-radius: 4px;
+    background: #ffffff;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    z-index: 2;
+  }
+  
+  .filter-option input[type="checkbox"]:checked {
+    background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
+    border-color: #374151;
+    box-shadow: 0 2px 8px rgba(55, 65, 81, 0.25);
+  }
+  
+  .filter-option input[type="checkbox"]:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+  }
+  
+  .filter-option input[type="checkbox"]:hover {
+    border-color: #374151;
+    box-shadow: 0 2px 4px rgba(55, 65, 81, 0.1);
+  }
+  
+  .filter-option span {
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+    z-index: 2;
+    position: relative;
+  }
+  
+  /* Enhanced suggestions dropdown - 确保在搜索输入框正下方 */
+  .search-suggestions {
+    position: absolute;
+    top: calc(100% + 2px);
+    left: 0;
+    right: 0;
+    background: white;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    z-index: 1000;
+    max-height: 300px;
+    overflow-y: auto;
     margin: 0;
   }
+  
+  .suggestion-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    cursor: pointer;
+    border-bottom: 1px solid #f3f4f6;
+    transition: background-color 0.2s ease;
+    position: relative;
+  }
+  
+  .suggestion-item:last-child {
+    border-bottom: none;
+  }
+  
+  .suggestion-item:hover,
+  .suggestion-item.highlighted {
+    background-color: #f8fafc;
+  }
+  
+  .suggestion-icon {
+    margin-right: 12px;
+    font-size: 14px;
+    opacity: 0.6;
+  }
+  
+  .suggestion-text {
+    flex: 1;
+    font-size: 14px;
+    color: #374151;
+  }
+  
+  .suggestion-remove {
+    margin-left: auto;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #f3f4f6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: #6b7280;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .suggestion-remove:hover {
+    background: #e5e7eb;
+    color: #374151;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .dealer-search__form {
+      padding: 1.5rem;
+      border-radius: 12px;
+    }
+    
+    .search-controls {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    
+    .search-control {
+      width: 100%;
+    }
+    
+    .search-select {
+      width: 100%;
+    }
+    
+    .dealer-search-btn {
+      width: 100%;
+      padding: 14px 24px;
+    }
+    
+    .filter-options {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .dealer-search__form {
+      padding: 1rem;
+      margin: 0 -1rem 1.5rem -1rem;
+      border-radius: 0;
+    }
+    
+    .search-input {
+      padding: 14px 45px 14px 16px;
+      font-size: 16px;
+    }
+    
+    .search-input-wrapper::after {
+      right: 15px;
+      width: 16px;
+      height: 16px;
+    }
+  }
+  
+  /* Loading animation for white background */
+  @keyframes shimmer {
+    0% {
+      background-position: -200px 0;
+    }
+    100% {
+      background-position: calc(200px + 100%) 0;
+    }
+  }
+  
+  .search-input.loading {
+    background: linear-gradient(90deg, #ffffff 0px, #f8fafc 40px, #ffffff 80px);
+    background-size: 200px 100%;
+    animation: shimmer 1.5s infinite;
+  }
+  
+  /* No results message */
+  .no-results {
+    text-align: center;
+    padding: 2rem;
+    color: #6b7280;
+    font-style: italic;
+  }
+  
+  /* Search stats */
+  .search-stats {
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin-bottom: 1rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #f3f4f6;
+  }
+  
+  /* Enhanced search controls */
+  .search-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 1rem;
+    align-items: end;
+  }
+  
+  .search-control {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .search-control label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+    letter-spacing: 0.3px;
+  }
+  
+  .select-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+  }
+  
+  .search-select {
+    padding: 12px 16px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    font-size: 14px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    appearance: none;
+    width: 100%;
+    padding-right: 40px;
+  }
+  
+  .select-arrow {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    color: #666;
+    pointer-events: none;
+    transition: transform 0.3s ease;
+  }
+  
+  .select-wrapper:hover .select-arrow {
+    color: #333;
+  }
+  
+  .search-select:focus {
+    border-color: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15), 0 0 0 3px rgba(255, 255, 255, 0.3);
+    outline: none;
+  }
+  
+  .search-select:hover {
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-1px);
+  }
+  
+
   
   .location-results {
     flex: 1;
@@ -654,7 +1299,35 @@
     text-decoration: underline;
   }
   
+  /* Responsive design */
   @media (max-width: 768px) {
+    .dealer-search__form {
+      padding: 1.5rem;
+      border-radius: 12px;
+    }
+    
+    .search-controls {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    
+    .search-control {
+      width: 100%;
+    }
+    
+    .search-select {
+      width: 100%;
+    }
+    
+    .dealer-search-btn {
+      width: 100%;
+      padding: 14px 24px;
+    }
+    
+    .filter-options {
+      grid-template-columns: 1fr;
+    }
+    
     .map-section__wrapper {
       grid-template-columns: 1fr;
       grid-template-rows: 50vh 50vh;
@@ -671,18 +1344,42 @@
       height: 50vh;
     }
     
-    .search-controls {
-      flex-direction: column;
-      align-items: stretch;
-    }
-    
-    .search-control {
-      width: 100%;
-    }
-    
-    .search-select {
+    .search-input {
       width: 100%;
       min-width: auto;
+      border-radius: 12px;
+    }
+    
+    .search-suggestions {
+      border-radius: 0 0 8px 8px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .dealer-search__form {
+      padding: 1rem;
+      margin: 0 -1rem 1.5rem -1rem;
+      border-radius: 0;
+    }
+    
+    .search-input {
+      padding: 14px 16px 14px 45px;
+      font-size: 16px;
+    }
+    
+    .search-input-group::before {
+      left: 15px;
+      font-size: 16px;
+    }
+  }
+  
+  /* Loading animation */
+  @keyframes shimmer {
+    0% {
+      background-position: -200px 0;
+    }
+    100% {
+      background-position: calc(200px + 100%) 0;
     }
   }
 </style>
@@ -775,14 +1472,14 @@
           "label": "Embed (free)"
         }
       ],
-      "default": "embed"
+      "default": "dynamic"
     },
     {
       "type": "select",
       "id": "map_style",
       "label": "Map style",
       "info": "Dynamic map only",
-      "default": "silver",
+      "default": "default",
       "options": [
         {
           "label": "Default",
@@ -854,11 +1551,25 @@
           "type": "header",
           "content": "Additional details"
         },
-        {
-          "type": "text",
+                {
+          "type": "select",
           "id": "store_group",
           "label": "Store Group",
-          "default": "Default"
+          "options": [
+            {
+              "value": "dealer",
+              "label": "Dealer"
+            },
+            {
+              "value": "rental",
+              "label": "Rental Station"
+            },
+            {
+              "value": "service",
+              "label": "Service Center"
+            }
+          ],
+          "default": "dealer"
         },
         {
           "type": "select",
