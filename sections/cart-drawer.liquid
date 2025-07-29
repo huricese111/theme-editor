@@ -281,14 +281,12 @@
       <div class="checkout-buttons{% if cart.items == empty %} hidden{% endif %}" data-merge-attributes="checkout-buttons">
         {% if section.settings.enable_direct_cart %}
           <a href="{{ routes.root_url | append: '/checkout' | replace: '//', '/' }}" 
-             class="btn btn--large btn--wide{% if cart.total_price == 0 %} btn--disabled{% endif %}" 
-             {% if cart.total_price == 0 %}onclick="showZeroPriceModal(); return false;"{% endif %}>
+             class="btn btn--large btn--wide">
             {{ 'cart.summary.checkout' | t }}
           </a>
         {% else %}
           <a href="{{ routes.cart_url }}" 
-             class="btn btn--large btn--wide{% if cart.total_price == 0 %} btn--disabled{% endif %}" 
-             {% if cart.total_price == 0 %}onclick="showZeroPriceModal(); return false;"{% endif %}>
+             class="btn btn--large btn--wide">
             {{ 'cart.summary.checkout' | t }}
           </a>
         {% endif %}
@@ -458,6 +456,10 @@
     
     // 零元下单提示功能
     window.showZeroPriceModal = function() {
+      // 检查是否启用了零元限购功能
+      const enableZeroPriceRestriction = {{ section.settings.enable_zero_price_restriction | json }};
+      if (!enableZeroPriceRestriction) return;
+      
       // 如果已有弹窗则不再创建
       if (document.querySelector('.product-limit-modal')) return;
       
@@ -520,6 +522,38 @@
         modal.classList.add('is-active');
       }, 10);
     };
+    
+    // 监听购物车变化并更新结账按钮状态
+    function updateCheckoutButtonState() {
+      // 获取结账按钮
+      const checkoutButtons = document.querySelectorAll('.checkout-buttons .btn');
+      if (!checkoutButtons.length) return;
+      
+      // 按钮始终保持可用状态
+      checkoutButtons.forEach(button => {
+        button.classList.remove('btn--disabled');
+        button.removeAttribute('onclick');
+      });
+    }
+
+    // 监听购物车变化事件
+    document.addEventListener('cart:updated', function(event) {
+      // 获取更新后的购物车数据
+      const cartData = event.detail.cart;
+      const enableZeroPriceRestriction = {{ section.settings.enable_zero_price_restriction | json }};
+      
+      // 获取结账按钮
+      const checkoutButtons = document.querySelectorAll('.checkout-buttons .btn');
+      
+      // 按钮始终保持可用状态
+      checkoutButtons.forEach(button => {
+        button.classList.remove('btn--disabled');
+        button.removeAttribute('onclick');
+      });
+    });
+
+    // 初始化时执行一次
+    updateCheckoutButtonState();
   });
 </script>
 
@@ -671,6 +705,18 @@
     transform: rotate(90deg);
   }
   
+  /* 禁用按钮样式 */
+  .btn--disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+    background-color: #e2e8f0 !important;
+    color: #718096 !important;
+    box-shadow: none !important;
+    transform: none !important;
+    border-color: #e2e8f0 !important;
+  }
+  
   @media (max-width: 640px) {
     .product-limit-modal-body {
       padding: 32px 24px;
@@ -764,6 +810,17 @@
       "id": "limit_message_fi",
       "label": "Limit message (Finnish)",
       "default": "Voit ostaa enintään 2 kappaletta tätä tuotetta."
+    },
+    {
+      "type": "header",
+      "content": "Zero Price Checkout Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_zero_price_restriction",
+      "label": "Enable zero price checkout restriction",
+      "info": "When enabled, prevents checkout when cart total is zero",
+      "default": false
     },
     {
       "type": "header",
