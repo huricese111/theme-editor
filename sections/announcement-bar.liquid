@@ -1,3 +1,38 @@
+{%- comment -%}
+  ANNOUNCEMENT BAR SECTION
+  
+  This section creates a customizable announcement bar that appears at the top of the website.
+  
+  FEATURES:
+  - Multiple announcement blocks with rotation capability
+  - Multilingual support (English, German, French)
+  - Countdown timer functionality
+  - Custom styling with color and gradient options
+  - Social media icons integration
+  - Language and country selector
+  - Responsive design with mobile-specific behavior
+  - Custom announcement buttons with hover effects
+  
+  STRUCTURE:
+  - Left section: Social media icons (desktop only)
+  - Middle section: Announcement text, countdown timer, and action buttons
+  - Right section: Navigation menu and language/country selectors (desktop only)
+  
+  STYLING:
+  - CSS variables for dynamic theming
+  - Flexbox layout for proper alignment
+  - Smooth transitions and hover effects
+  - Mobile-responsive button hiding
+  - Custom SVG arrow icons
+  
+  CUSTOMIZATION:
+  - Background colors and gradients
+  - Text colors and font sizes
+  - Button styling and colors
+  - Countdown timer display options
+  - Social media and menu integration
+{%- endcomment -%}
+
 {% if section.blocks.size > 0 or section.settings.enable_language_selector or section.settings.enable_country_selector or section.settings.menu != blank %}
   {%- liquid
     assign longest_announcement = 0
