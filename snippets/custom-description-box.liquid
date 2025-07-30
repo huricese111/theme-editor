@@ -253,13 +253,20 @@
   {%- assign title_lower = product.title | downcase -%}
   {%- assign should_show_compare = false -%}
 
-  {%- for keyword in keywords -%}
-    {%- assign keyword_lower = keyword | downcase -%}
-    {%- if title_lower contains keyword_lower -%}
-      {%- assign should_show_compare = true -%}
-      {%- break -%}
-    {%- endif -%}
-  {%- endfor -%}
+  {%- assign is_excluded_collection = false -%}
+  {%- if collection.handle == 'used-bikes' or collection.handle == 'e-bike-accessories' -%}
+    {%- assign is_excluded_collection = true -%}
+  {%- endif -%}
+
+  {%- unless is_excluded_collection -%}
+    {%- for keyword in keywords -%}
+      {%- assign keyword_lower = keyword | downcase -%}
+      {%- if title_lower contains keyword_lower -%}
+        {%- assign should_show_compare = true -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endunless -%}
 
   {%- if should_show_compare -%}
     <div class="product-compare-widget">
