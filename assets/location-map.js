@@ -101,13 +101,21 @@ if (!customElements.get('location-map')) {
     }
 
     updateInfoWindow(content) {
-      if (!this.infoWindow || !this.marker) return;
+      if (!this.infoWindow || !this.marker) {
+        console.log('Info window or marker not available');
+        return;
+      }
+      
+      // 清除之前的事件监听器
+      if (this.markerClickListener) {
+        google.maps.event.removeListener(this.markerClickListener);
+      }
       
       this.infoWindow.setContent(content);
       this.infoWindow.open(this.map, this.marker);
       
       // 添加点击标记显示info window的事件
-      this.marker.addListener('click', () => {
+      this.markerClickListener = this.marker.addListener('click', () => {
         this.infoWindow.open(this.map, this.marker);
       });
     }

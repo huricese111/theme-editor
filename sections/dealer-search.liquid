@@ -551,11 +551,15 @@
       if (mapType === 'dynamic') {
         if (window.updateDynamicMap) {
           window.updateDynamicMap(fullAddress);
+          // 增加延迟时间，确保地图加载完成
           setTimeout(() => {
             if (window.updateInfoWindow) {
+              console.log('Updating info window with content:', infoContent);
               window.updateInfoWindow(infoContent);
+            } else {
+              console.error('updateInfoWindow function not available');
             }
-          }, 500);
+          }, 1000); // 增加到1000ms
         }
       } else {
         if (mapIframe) {
@@ -650,14 +654,14 @@
       const province = card.getAttribute('data-province') || '';
       const fax = card.getAttribute('data-fax') || '';
 
-      let content = `<div class="info-window">`;
+      let content = `<div class="info-window" style="max-width: 300px; font-family: Arial, sans-serif;">`;
 
       if (storeName) {
-        content += `<h4>${storeName}</h4>`;
+        content += `<h4 style="margin: 0 0 10px 0; color: #333; font-size: 16px; font-weight: bold;">${storeName}</h4>`;
       }
 
       if (address || city || postalCode) {
-        content += `<p><strong>Address:</strong><br>`;
+        content += `<p style="margin: 5px 0; font-size: 14px; line-height: 1.4;"><strong>Address:</strong><br>`;
         if (address) content += `${address}<br>`;
         if (city) content += `${city} `;
         if (postalCode) content += `${postalCode}<br>`;
@@ -667,27 +671,19 @@
       }
 
       if (phone) {
-        content += `<p><strong>Phone:</strong> ${phone}</p>`;
-      }
-
-      if (fax) {
-        content += `<p><strong>Fax:</strong> ${fax}</p>`;
+        content += `<p style="margin: 5px 0; font-size: 14px; line-height: 1.4;"><strong>Phone:</strong> <a href="tel:${phone}" style="color: #007bff; text-decoration: none;">${phone}</a></p>`;
       }
 
       if (email) {
-        content += `<p><strong>Email:</strong> ${email}</p>`;
+        content += `<p style="margin: 5px 0; font-size: 14px; line-height: 1.4;"><strong>Email:</strong> <a href="mailto:${email}" style="color: #007bff; text-decoration: none;">${email}</a></p>`;
       }
 
       if (website) {
-        content += `<p><strong>Website:</strong> <a href="${website}" target="_blank">${website}</a></p>`;
+        content += `<p style="margin: 5px 0; font-size: 14px; line-height: 1.4;"><strong>Website:</strong> <a href="${website}" target="_blank" style="color: #007bff; text-decoration: none;">${website}</a></p>`;
       }
 
       if (storeType) {
-        content += `<p><strong>Store Type:</strong> ${storeType}</p>`;
-      }
-
-      if (hours) {
-        content += `<p><strong>Hours:</strong><br>${hours.replace(/\n/g, '<br>')}</p>`;
+        content += `<p style="margin: 5px 0; font-size: 14px; line-height: 1.4;"><strong>Store Type:</strong> ${storeType}</p>`;
       }
 
       content += `</div>`;
