@@ -1,0 +1,423 @@
+const i18nLabels = {
+  address: '{{ address_label | escape }}',
+  phone: '{{ phone_label | escape }}',
+  email: '{{ email_label | escape }}',
+  website: '{{ website_label | escape }}',
+  storeType: '{{ store_type_label | escape }}',
+  more: '{{ more_text | escape }}',
+  less: '{{ less_text | escape }}'
+};
+
+document.addEventListener('DOMContentLoaded', function () {
+  const locationCards = document.querySelectorAll('.location-card');
+  const mapContainer = document.getElementById('map-container');
+  const mapIframe = document.getElementById('map-iframe');
+  const searchBtn = document.getElementById('search-btn');
+  const locationSearch = document.getElementById('location-search');
+  const distanceSelect = document.getElementById('distance-select');
+  const resultsSelect = document.getElementById('results-select');
+  const locationResults = document.getElementById('location-results');
+  const filterCheckboxes = document.querySelectorAll('.filter-option input[type="checkbox"]');
+  const moreBtn = document.getElementById('more-btn');
+  const searchAdvanced = document.getElementById('search-advanced');
+  let isAdvancedVisible = false;
+
+  let allLocations = Array.from(locationCards);
+  let filteredLocations = [...allLocations];
+  let searchHistory = JSON.parse(localStorage.getItem('dealerSearchHistory') || '[]');
+  let currentSuggestionIndex = -1;
+  let searchTimeout;
+
+  const suggestionsContainer = document.createElement('div');
+  suggestionsContainer.className = 'search-suggestions';
+  suggestionsContainer.style.display = 'none';
+
+  const searchWrapper = document.createElement('div');
+  searchWrapper.className = 'search-input-wrapper';
+
+  locationSearch.parentNode.insertBefore(searchWrapper, locationSearch);
+  searchWrapper.appendChild(locationSearch);
+  searchWrapper.appendChild(suggestionsContainer);
+
+  moreBtn.addEventListener('click', function() {
+    isAdvancedVisible = !isAdvancedVisible;
+    
+    if (isAdvancedVisible) {
+      searchAdvanced.style.display = 'block';
+      moreBtn.querySelector('.more-btn__text').textContent = i18nLabels.less;
+      moreBtn.classList.add('more-btn--expanded');
+    } else {
+      searchAdvanced.style.display = 'none';
+      moreBtn.querySelector('.more-btn__text').textContent = i18nLabels.more;
+      moreBtn.classList.remove('more-btn--expanded');
+    }
+  });
+
+  if (!mapContainer) return;
+
+  const apiKey = mapContainer.dataset.apiKey;
+  const mapType = mapContainer.dataset.mapType;
+  const mapStyle = mapContainer.dataset.mapStyle;
+
+  function performSearch(saveToHistory = true) {
+    const searchTerm = locationSearch.value.toLowerCase().trim();
+    const selectedFilters = Array.from(filterCheckboxes)
+      .filter((cb) => cb.checked)
+      .map((cb) => cb.value);
+
+    if (saveToHistory && searchTerm && !searchHistory.includes(searchTerm)) {
+      searchHistory.unshift(searchTerm);
+      searchHistory = searchHistory.slice(0, 10);
+      localStorage.setItem('dealerSearchHistory', JSON.stringify(searchHistory));
+    }
+
+    filteredLocations = allLocations.filter((card) => {
+      const storeName = card.getAttribute('data-store-name').toLowerCase();
+      const address = card.getAttribute('data-address').toLowerCase();
+      const city = card.getAttribute('data-city').toLowerCase();
+      const country = card.getAttribute('data-country').toLowerCase();
+
+      const matchesSearch =
+        !searchTerm ||
+        storeName.includes(searchTerm) ||
+        address.includes(searchTerm) ||
+        city.includes(searchTerm) ||
+        country.includes(searchTerm);
+
+      const storeType = card.getAttribute('data-store-type') || '';
+      const matchesFilter =
+        selectedFilters.length === 0 ||
+        selectedFilters.some((filter) => {
+          return storeType === filter;
+        });
+
+      return matchesSearch && matchesFilter;
+    });
+
+    displayResults();
+    hideSuggestions();
+  }
+
+  function generateSuggestions(query) {
+    const suggestions = [];
+
+    const historyMatches = searchHistory
+      .filter((item) => item.toLowerCase().includes(query.toLowerCase()))
+      .slice(0, 3);
+
+    suggestions.push(
+      ...historyMatches.map((item) => ({
+        text: item,
+        type: 'history',
+        icon: '🕒',
+      }))
+    );
+
+    const locationSuggestions = new Set();
+    allLocations.forEach((card) => {
+      const storeName = card.getAttribute('data-store-name');
+      const city = card.getAttribute('data-city');
+      const country = card.getAttribute('data-country');
+
+      [storeName, city, country].forEach((item) => {
+        if (
+          item &&
+          item.toLowerCase().includes(query.toLowerCase()) &&
+          !locationSuggestions.has(item) &&
+          item.toLowerCase() !== query.toLowerCase()
+        ) {
+          locationSuggestions.add(item);
+        }
+      });
+    });
+
+    suggestions.push(
+      ...Array.from(locationSuggestions)
+        .slice(0, 5)
+        .map((item) => ({
+          text: item,
+          type: 'suggestion',
+          icon: '📍',
+        }))
+    );
+
+    return suggestions.slice(0, 8);
+  }
+
+  function showSuggestions(query) {
+    if (!query.trim()) {
+      hideSuggestions();
+      return;
+    }
+
+    const suggestions = generateSuggestions(query);
+
+    if (suggestions.length === 0) {
+      hideSuggestions();
+      return;
+    }
+
+    suggestionsContainer.innerHTML = suggestions
+      .map(
+        (suggestion, index) => `
+      <div class="suggestion-item ${index === currentSuggestionIndex ? 'highlighted' : ''}" 
+           data-index="${index}" data-text="${suggestion.text}">
+        <span class="suggestion-icon">${suggestion.icon}</span>
+        <span class="suggestion-text">${suggestion.text}</span>
+        ${
+          suggestion.type === 'history'
+            ? '<span class="suggestion-remove" data-text="' + suggestion.text + '">×</span>'
+            : ''
+        }
+      </div>
+    `
+      )
+      .join('');
+
+    suggestionsContainer.style.display = 'block';
+  }
+
+  function hideSuggestions() {
+    suggestionsContainer.style.display = 'none';
+    currentSuggestionIndex = -1;
+  }
+
+  function handleKeyboardNavigation(e) {
+    const suggestions = suggestionsContainer.querySelectorAll('.suggestion-item');
+
+    switch (e.key) {
+      case 'ArrowDown':
+        e.preventDefault();
+        currentSuggestionIndex = Math.min(currentSuggestionIndex + 1, suggestions.length - 1);
+        updateSuggestionHighlight();
+        break;
+
+      case 'ArrowUp':
+        e.preventDefault();
+        currentSuggestionIndex = Math.max(currentSuggestionIndex - 1, -1);
+        updateSuggestionHighlight();
+        break;
+
+      case 'Enter':
+        e.preventDefault();
+        if (currentSuggestionIndex >= 0 && suggestions[currentSuggestionIndex]) {
+          const selectedText = suggestions[currentSuggestionIndex].getAttribute('data-text');
+          locationSearch.value = selectedText;
+        }
+        performSearch();
+        break;
+
+      case 'Escape':
+        hideSuggestions();
+        locationSearch.blur();
+        break;
+    }
+  }
+
+  function updateSuggestionHighlight() {
+    const suggestions = suggestionsContainer.querySelectorAll('.suggestion-item');
+    suggestions.forEach((item, index) => {
+      item.classList.toggle('highlighted', index === currentSuggestionIndex);
+    });
+  }
+
+  function removeFromHistory(text) {
+    searchHistory = searchHistory.filter((item) => item !== text);
+    localStorage.setItem('dealerSearchHistory', JSON.stringify(searchHistory));
+    showSuggestions(locationSearch.value);
+  }
+
+  function displayResults() {
+    allLocations.forEach((card) => {
+      card.style.display = 'none';
+    });
+
+    const maxResults = resultsSelect.value === 'all' ? filteredLocations.length : parseInt(resultsSelect.value);
+    const cardsToShow = filteredLocations.slice(0, maxResults);
+
+    cardsToShow.forEach((card) => {
+      card.style.display = 'block';
+    });
+
+    allLocations.forEach((card) => card.classList.remove('active'));
+    if (cardsToShow.length > 0) {
+      cardsToShow[0].classList.add('active');
+      updateMapForCard(cardsToShow[0]);
+    }
+  }
+
+  function clearSearch() {
+    locationSearch.value = '';
+    filterCheckboxes.forEach((cb) => (cb.checked = false));
+    filteredLocations = [...allLocations];
+    displayResults();
+    hideSuggestions();
+  }
+
+  function updateMapForCard(card) {
+    const address = card.getAttribute('data-address');
+    const city = card.getAttribute('data-city');
+    const country = card.getAttribute('data-country');
+
+    let fullAddress = '';
+    if (address) fullAddress += address;
+    if (city) fullAddress += (fullAddress ? ', ' : '') + city;
+    if (country) fullAddress += (fullAddress ? ', ' : '') + country;
+
+    if (!fullAddress) return;
+
+    const infoContent = createInfoWindowContent(card);
+
+    if (mapType === 'dynamic') {
+      if (window.updateDynamicMap) {
+        window.updateDynamicMap(fullAddress);
+        setTimeout(() => {
+          if (window.updateInfoWindow) {
+            console.log('Updating info window with content:', infoContent);
+            window.updateInfoWindow(infoContent);
+          } else {
+            console.error('updateInfoWindow function not available');
+          }
+        }, 1000);
+      }
+    } else {
+      if (mapIframe) {
+        mapIframe.src = `https://www.google.com/maps/embed/v1/place?key=${apiKey}&q=${encodeURIComponent(
+          fullAddress
+        )}&zoom=14&language=en&region=US`;
+      }
+    }
+  }
+
+  searchBtn.addEventListener('click', () => performSearch());
+
+  locationSearch.addEventListener('input', function () {
+    clearTimeout(searchTimeout);
+    currentSuggestionIndex = -1;
+
+    if (this.value === '') {
+      clearSearch();
+    } else {
+      showSuggestions(this.value);
+      searchTimeout = setTimeout(() => {
+        performSearch(false);
+      }, 300);
+    }
+  });
+
+  locationSearch.addEventListener('keydown', handleKeyboardNavigation);
+
+  locationSearch.addEventListener('focus', function () {
+    if (this.value) {
+      showSuggestions(this.value);
+    }
+  });
+
+  locationSearch.addEventListener('blur', function () {
+    setTimeout(() => hideSuggestions(), 150);
+  });
+
+  suggestionsContainer.addEventListener('click', function (e) {
+    if (e.target.classList.contains('suggestion-remove')) {
+      e.stopPropagation();
+      removeFromHistory(e.target.getAttribute('data-text'));
+    } else if (e.target.closest('.suggestion-item')) {
+      const suggestionItem = e.target.closest('.suggestion-item');
+      const selectedText = suggestionItem.getAttribute('data-text');
+      locationSearch.value = selectedText;
+      performSearch();
+    }
+  });
+
+  filterCheckboxes.forEach((checkbox) => {
+    checkbox.addEventListener('change', () => performSearch(false));
+  });
+
+  resultsSelect.addEventListener('change', displayResults);
+
+  locationCards.forEach(function (card) {
+    card.addEventListener('click', function () {
+      locationCards.forEach((c) => c.classList.remove('active'));
+      this.classList.add('active');
+      updateMapForCard(this);
+    });
+  });
+
+  displayResults();
+
+  function createInfoWindowContent(card) {
+    const storeName = card.getAttribute('data-store-name') || '';
+    const address = card.getAttribute('data-address') || '';
+    const city = card.getAttribute('data-city') || '';
+    const country = card.getAttribute('data-country') || '';
+    const postalCode = card.getAttribute('data-postal-code') || '';
+    const phone = card.getAttribute('data-phone') || '';
+    const email = card.getAttribute('data-email') || '';
+    const website = card.getAttribute('data-website') || '';
+    const hours = card.getAttribute('data-hours') || '';
+    const storeType = card.getAttribute('data-store-type') || '';
+    const province = card.getAttribute('data-province') || '';
+
+    let content = `<div class="info-window">`;
+
+    if (storeName) {
+      content += `<h4>${storeName}</h4>`;
+    }
+
+    if (address || city || postalCode || province || country) {
+      content += `<div class="info-section">`;
+      content += `<div class="contact-item">`;
+      content += `<svg class="contact-icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path></svg>`;
+      content += `<div class="address-text">`;
+      
+      let addressParts = [];
+      if (address) addressParts.push(address);
+      if (city && postalCode) {
+        addressParts.push(`${city} ${postalCode}`);
+      } else {
+        if (city) addressParts.push(city);
+        if (postalCode) addressParts.push(postalCode);
+      }
+      if (province) addressParts.push(province);
+      if (country) addressParts.push(country);
+      
+      content += addressParts.join(', ');
+      content += `</div></div></div>`;
+    }
+
+    if (phone || email) {
+      content += `<div class="info-section">`;
+      
+      if (phone) {
+        content += `<div class="contact-item">`;
+        content += `<svg class="contact-icon" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path></svg>`;
+        content += `<div><strong>${i18nLabels.phone}</strong><br><a href="tel:${phone}">${phone}</a></div>`;
+        content += `</div>`;
+      }
+      
+      if (email) {
+        content += `<div class="contact-item">`;
+        content += `<svg class="contact-icon" fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>`;
+        content += `<div><strong>${i18nLabels.email}</strong><br><a href="mailto:${email}">${email}</a></div>`;
+        content += `</div>`;
+      }
+      
+      content += `</div>`;
+    }
+
+    if (website) {
+      content += `<div class="info-section">`;
+      content += `<div class="contact-item">`;
+      content += `<svg class="contact-icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.083 9h1.946c.089-1.546.383-2.97.837-4.118A6.004 6.004 0 004.083 9zM10 2a8 8 0 100 16 8 8 0 000-16zm0 2c-.076 0-.232.032-.465.262-.238.234-.497.623-.737 1.182-.389.907-.673 2.142-.766 3.556h3.936c-.093-1.414-.377-2.649-.766-3.556-.24-.559-.499-.948-.737-1.182C10.232 4.032 10.076 4 10 4zm3.971 5c-.089-1.546-.383-2.97-.837-4.118A6.004 6.004 0 0115.917 9h-1.946zm-2.003 2H8.032c.093 1.414.377 2.649.766 3.556.24.559.499.948.737 1.182.233.23.389.262.465.262.076 0 .232-.032.465-.262.238-.234.497-.623.737-1.182.389-.907.673-2.142.766-3.556zm1.166 4.118c.454-1.148.748-2.572.837-4.118h1.946a6.004 6.004 0 01-2.783 4.118zm-6.268 0C6.412 13.97 6.118 12.546 6.03 11H4.083a6.004 6.004 0 002.783 4.118z" clip-rule="evenodd"></path></svg>`;
+      content += `<div><strong>${i18nLabels.website}</strong><br><a href="${website}" target="_blank">${website}</a></div>`;
+      content += `</div></div>`;
+    }
+
+    if (storeType) {
+      content += `<div class="store-type-badge">${storeType}</div>`;
+    }
+
+    content += `</div>`;
+    return content;
+  }
+});
