@@ -1,9 +1,13 @@
 {% assign display_map = false %}
 {%- assign first_map_address = '' -%}
 {%- for block in section.blocks -%}
-  {%- if block.type == 'location' and block.settings.map_address != blank -%}
+  {%- if block.type == 'location' and block.settings.address != blank -%}
     {%- if first_map_address == blank -%}
-      {%- assign first_map_address = block.settings.map_address -%}
+      {%- capture first_map_address -%}
+        {{ block.settings.address }}
+        {%- if block.settings.city != blank -%}, {{ block.settings.city }}{%- endif -%}
+        {%- if block.settings.country != blank -%}, {{ block.settings.country }}{%- endif -%}
+      {%- endcapture -%}
     {%- endif -%}
   {%- endif -%}
 {%- endfor -%}
@@ -101,7 +105,7 @@
         {% if section_title != blank %}
           <h2 class="dealer-search__title">{{ section_title }}</h2>
         {% endif %}
-        
+
         <!-- Search Form -->
         <div class="dealer-search__form">
           <div class="search-input-group">
@@ -118,7 +122,16 @@
                     <option value="100">100 KM</option>
                     <option value="200">200 KM</option>
                   </select>
-                  <svg class="select-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <svg
+                    class="select-arrow"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
                     <polyline points="6,9 12,15 18,9"></polyline>
                   </svg>
                 </div>
@@ -132,7 +145,16 @@
                     <option value="100">100</option>
                     <option value="all">{{ all_text }}</option>
                   </select>
-                  <svg class="select-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <svg
+                    class="select-arrow"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
                     <polyline points="6,9 12,15 18,9"></polyline>
                   </svg>
                 </div>
@@ -140,7 +162,7 @@
               <button type="button" id="search-btn" class="dealer-search-btn">{{ search_button_text }}</button>
             </div>
           </div>
-          
+
           <!-- Search Filters -->
           <div class="search-filters">
             <h4 class="search-filters__title">{{ search_filters_title }}</h4>
@@ -160,35 +182,33 @@
             </div>
           </div>
         </div>
-        
+
         <!-- Location Results -->
         <div class="location-results" id="location-results">
           {%- for block in section.blocks -%}
             {%- case block.type -%}
               {%- when 'location' -%}
-                <div class="map-section__content map-section__text location-card" 
-                     data-map-address="{{ block.settings.map_address | escape }}"
-                     data-block-id="{{ block.id }}"
-                     data-store-name="{{ block.settings.store_name | escape }}"
-                     data-address="{{ block.settings.address | escape }}"
-                     data-city="{{ block.settings.city | escape }}"
-                     data-country="{{ block.settings.country | escape }}"
-                     data-postal-code="{{ block.settings.postal_code | escape }}"
-                     data-phone="{{ block.settings.phone | escape }}"
-                     data-email="{{ block.settings.email | escape }}"
-                     data-website="{{ block.settings.website | escape }}"
-                     data-hours="{{ block.settings.hours_of_operation | escape }}"
-                     data-store-group="{{ block.settings.store_group | escape }}"
-                     data-province="{{ block.settings.province_state | escape }}"
-                     data-address2="{{ block.settings.address2 | escape }}"
-                     data-fax="{{ block.settings.fax | escape }}"
-                     data-store-type="{{ block.settings.store_type | escape }}"
-                     {{ block.shopify_attributes }}>
-                  
+                <div
+                  class="map-section__content map-section__text location-card"
+                  data-block-id="{{ block.id }}"
+                  data-store-name="{{ block.settings.store_name | escape }}"
+                  data-address="{{ block.settings.address | escape }}"
+                  data-city="{{ block.settings.city | escape }}"
+                  data-country="{{ block.settings.country | escape }}"
+                  data-postal-code="{{ block.settings.postal_code | escape }}"
+                  data-phone="{{ block.settings.phone | escape }}"
+                  data-email="{{ block.settings.email | escape }}"
+                  data-website="{{ block.settings.website | escape }}"
+                  data-hours="{{ block.settings.hours_of_operation | escape }}"
+                  data-province="{{ block.settings.province_state | escape }}"
+                  data-fax="{{ block.settings.fax | escape }}"
+                  data-store-type="{{ block.settings.store_type | escape }}"
+                  {{ block.shopify_attributes }}
+                >
                   {% if block.settings.store_name != blank %}
                     <h3 class="location-card__title">{{ block.settings.store_name | escape }}</h3>
                   {% endif %}
-                  
+
                   {% if block.settings.address != blank %}
                     <div class="location-card__address">
                       {{ block.settings.address | escape }}
@@ -196,23 +216,23 @@
                       {% if block.settings.postal_code != blank %} {{ block.settings.postal_code | escape }}{% endif %}
                     </div>
                   {% endif %}
-                  
+
                   {% if block.settings.phone != blank %}
                     <div class="location-card__phone">
                       <strong>{{ phone_label }}:</strong> {{ block.settings.phone | escape }}
                     </div>
                   {% endif %}
-                  
+
                   {% if block.settings.email != blank %}
                     <div class="location-card__email">
                       <strong>{{ email_label }}:</strong> {{ block.settings.email | escape }}
                     </div>
                   {% endif %}
-                  
-                  {% if block.settings.map_address != blank %}
+
+                  {% if block.settings.address != blank %}
                     <div class="location-card__direction">
                       <a
-                        href="https://maps.google.com?daddr={{ block.settings.map_address | escape }}"
+                        href="https://maps.google.com?daddr={{ block.settings.address | escape }}{% if block.settings.city != blank %}, {{ block.settings.city | escape }}{% endif %}{% if block.settings.country != blank %}, {{ block.settings.country | escape }}{% endif %}"
                         target="_blank"
                         class="btn btn--secondary direction-btn"
                       >
@@ -231,7 +251,12 @@
 
       <div class="map-section__content map-section__map">
         {%- if display_map -%}
-          <div id="map-container" data-api-key="{{ section.settings.api_key }}" data-map-type="{{ section.settings.map_type }}" data-map-style="{{ section.settings.map_style }}">
+          <div
+            id="map-container"
+            data-api-key="{{ section.settings.api_key }}"
+            data-map-type="{{ section.settings.map_type }}"
+            data-map-style="{{ section.settings.map_style }}"
+          >
             {%- if section.settings.map_type == 'dynamic' -%}
               {% render 'location-map',
                 api_key: section.settings.api_key,
@@ -242,7 +267,7 @@
               <iframe
                 id="map-iframe"
                 class="map"
-                src="https://www.google.com/maps/embed/v1/place?key={{ section.settings.api_key }}&q={{ first_map_address }}&zoom=14&language=en&region=US"
+                src="https://www.google.com/maps/embed/v1/place?key={{ section.settings.api_key }}&q={{ first_map_address }}&zoom=14&language={{ request.locale.iso_code }}&region={{ region_code }}"
                 width="100%"
                 height="100%"
                 frameborder="0"
@@ -259,7 +284,7 @@
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function () {
     const locationCards = document.querySelectorAll('.location-card');
     const mapContainer = document.getElementById('map-container');
     const mapIframe = document.getElementById('map-iframe');
@@ -269,161 +294,184 @@
     const resultsSelect = document.getElementById('results-select');
     const locationResults = document.getElementById('location-results');
     const filterCheckboxes = document.querySelectorAll('.filter-option input[type="checkbox"]');
-    
+
     let allLocations = Array.from(locationCards);
     let filteredLocations = [...allLocations];
     let searchHistory = JSON.parse(localStorage.getItem('dealerSearchHistory') || '[]');
     let currentSuggestionIndex = -1;
     let searchTimeout;
-    
+
     const suggestionsContainer = document.createElement('div');
     suggestionsContainer.className = 'search-suggestions';
     suggestionsContainer.style.display = 'none';
-    
+
     // 创建搜索输入框包装器
     const searchWrapper = document.createElement('div');
     searchWrapper.className = 'search-input-wrapper';
-    
+
     // 将搜索输入框移到包装器中
     locationSearch.parentNode.insertBefore(searchWrapper, locationSearch);
     searchWrapper.appendChild(locationSearch);
-    
+
     // 将建议框添加到包装器中
     searchWrapper.appendChild(suggestionsContainer);
-    
+
     if (!mapContainer) return;
-    
+
     const apiKey = mapContainer.dataset.apiKey;
     const mapType = mapContainer.dataset.mapType;
     const mapStyle = mapContainer.dataset.mapStyle;
-    
+
     // Enhanced search functionality
     function performSearch(saveToHistory = true) {
       const searchTerm = locationSearch.value.toLowerCase().trim();
       const selectedFilters = Array.from(filterCheckboxes)
-        .filter(cb => cb.checked)
-        .map(cb => cb.value);
-      
+        .filter((cb) => cb.checked)
+        .map((cb) => cb.value);
+
       // Save to search history
       if (saveToHistory && searchTerm && !searchHistory.includes(searchTerm)) {
         searchHistory.unshift(searchTerm);
         searchHistory = searchHistory.slice(0, 10); // Keep only last 10 searches
         localStorage.setItem('dealerSearchHistory', JSON.stringify(searchHistory));
       }
-      
-      filteredLocations = allLocations.filter(card => {
+
+      filteredLocations = allLocations.filter((card) => {
         // Text search
         const storeName = card.getAttribute('data-store-name').toLowerCase();
         const address = card.getAttribute('data-address').toLowerCase();
         const city = card.getAttribute('data-city').toLowerCase();
         const country = card.getAttribute('data-country').toLowerCase();
-        
-        const matchesSearch = !searchTerm || 
-          storeName.includes(searchTerm) || 
-          address.includes(searchTerm) || 
-          city.includes(searchTerm) || 
+
+        const matchesSearch =
+          !searchTerm ||
+          storeName.includes(searchTerm) ||
+          address.includes(searchTerm) ||
+          city.includes(searchTerm) ||
           country.includes(searchTerm);
-        
+
         // Filter search
         const storeType = card.getAttribute('data-store-type') || '';
-        const matchesFilter = selectedFilters.length === 0 || 
-          selectedFilters.some(filter => storeType.includes(filter));
-        
+        const matchesFilter =
+          selectedFilters.length === 0 ||
+          selectedFilters.some((filter) => {
+            // 直接匹配store_type值
+            return storeType === filter;
+          });
+
         return matchesSearch && matchesFilter;
       });
-      
+
       displayResults();
       hideSuggestions();
     }
-    
+
     // Generate search suggestions
     function generateSuggestions(query) {
       const suggestions = [];
-      
+
       // Add search history
-      const historyMatches = searchHistory.filter(item => 
-        item.toLowerCase().includes(query.toLowerCase())
-      ).slice(0, 3);
-      
-      suggestions.push(...historyMatches.map(item => ({
-        text: item,
-        type: 'history',
-        icon: '🕒'
-      })));
-      
+      const historyMatches = searchHistory
+        .filter((item) => item.toLowerCase().includes(query.toLowerCase()))
+        .slice(0, 3);
+
+      suggestions.push(
+        ...historyMatches.map((item) => ({
+          text: item,
+          type: 'history',
+          icon: '🕒',
+        }))
+      );
+
       // Add location suggestions
       const locationSuggestions = new Set();
-      allLocations.forEach(card => {
+      allLocations.forEach((card) => {
         const storeName = card.getAttribute('data-store-name');
         const city = card.getAttribute('data-city');
         const country = card.getAttribute('data-country');
-        
-        [storeName, city, country].forEach(item => {
-          if (item && item.toLowerCase().includes(query.toLowerCase()) && 
-              !locationSuggestions.has(item) && item.toLowerCase() !== query.toLowerCase()) {
+
+        [storeName, city, country].forEach((item) => {
+          if (
+            item &&
+            item.toLowerCase().includes(query.toLowerCase()) &&
+            !locationSuggestions.has(item) &&
+            item.toLowerCase() !== query.toLowerCase()
+          ) {
             locationSuggestions.add(item);
           }
         });
       });
-      
-      suggestions.push(...Array.from(locationSuggestions).slice(0, 5).map(item => ({
-        text: item,
-        type: 'suggestion',
-        icon: '📍'
-      })));
-      
+
+      suggestions.push(
+        ...Array.from(locationSuggestions)
+          .slice(0, 5)
+          .map((item) => ({
+            text: item,
+            type: 'suggestion',
+            icon: '📍',
+          }))
+      );
+
       return suggestions.slice(0, 8);
     }
-    
+
     // Show search suggestions
     function showSuggestions(query) {
       if (!query.trim()) {
         hideSuggestions();
         return;
       }
-      
+
       const suggestions = generateSuggestions(query);
-      
+
       if (suggestions.length === 0) {
         hideSuggestions();
         return;
       }
-      
-      suggestionsContainer.innerHTML = suggestions.map((suggestion, index) => `
+
+      suggestionsContainer.innerHTML = suggestions
+        .map(
+          (suggestion, index) => `
         <div class="suggestion-item ${index === currentSuggestionIndex ? 'highlighted' : ''}" 
              data-index="${index}" data-text="${suggestion.text}">
           <span class="suggestion-icon">${suggestion.icon}</span>
           <span class="suggestion-text">${suggestion.text}</span>
-          ${suggestion.type === 'history' ? '<span class="suggestion-remove" data-text="' + suggestion.text + '">×</span>' : ''}
+          ${
+            suggestion.type === 'history'
+              ? '<span class="suggestion-remove" data-text="' + suggestion.text + '">×</span>'
+              : ''
+          }
         </div>
-      `).join('');
-      
+      `
+        )
+        .join('');
+
       suggestionsContainer.style.display = 'block';
     }
-    
+
     // Hide suggestions
     function hideSuggestions() {
       suggestionsContainer.style.display = 'none';
       currentSuggestionIndex = -1;
     }
-    
+
     // Handle keyboard navigation
     function handleKeyboardNavigation(e) {
       const suggestions = suggestionsContainer.querySelectorAll('.suggestion-item');
-      
-      switch(e.key) {
+
+      switch (e.key) {
         case 'ArrowDown':
           e.preventDefault();
           currentSuggestionIndex = Math.min(currentSuggestionIndex + 1, suggestions.length - 1);
           updateSuggestionHighlight();
           break;
-          
+
         case 'ArrowUp':
           e.preventDefault();
           currentSuggestionIndex = Math.max(currentSuggestionIndex - 1, -1);
           updateSuggestionHighlight();
           break;
-          
+
         case 'Enter':
           e.preventDefault();
           if (currentSuggestionIndex >= 0 && suggestions[currentSuggestionIndex]) {
@@ -432,14 +480,14 @@
           }
           performSearch();
           break;
-          
+
         case 'Escape':
           hideSuggestions();
           locationSearch.blur();
           break;
       }
     }
-    
+
     // Update suggestion highlight
     function updateSuggestionHighlight() {
       const suggestions = suggestionsContainer.querySelectorAll('.suggestion-item');
@@ -447,53 +495,62 @@
         item.classList.toggle('highlighted', index === currentSuggestionIndex);
       });
     }
-    
+
     // Remove item from search history
     function removeFromHistory(text) {
-      searchHistory = searchHistory.filter(item => item !== text);
+      searchHistory = searchHistory.filter((item) => item !== text);
       localStorage.setItem('dealerSearchHistory', JSON.stringify(searchHistory));
       showSuggestions(locationSearch.value);
     }
-    
+
     function displayResults() {
       // Hide all cards first
-      allLocations.forEach(card => {
+      allLocations.forEach((card) => {
         card.style.display = 'none';
       });
-      
+
       // Show filtered results
       const maxResults = resultsSelect.value === 'all' ? filteredLocations.length : parseInt(resultsSelect.value);
       const cardsToShow = filteredLocations.slice(0, maxResults);
-      
-      cardsToShow.forEach(card => {
+
+      cardsToShow.forEach((card) => {
         card.style.display = 'block';
       });
-      
+
       // Set first visible card as active
-      allLocations.forEach(card => card.classList.remove('active'));
+      allLocations.forEach((card) => card.classList.remove('active'));
       if (cardsToShow.length > 0) {
         cardsToShow[0].classList.add('active');
         updateMapForCard(cardsToShow[0]);
       }
     }
-    
+
     function clearSearch() {
       locationSearch.value = '';
-      filterCheckboxes.forEach(cb => cb.checked = false);
+      filterCheckboxes.forEach((cb) => (cb.checked = false));
       filteredLocations = [...allLocations];
       displayResults();
       hideSuggestions();
     }
-    
+
     function updateMapForCard(card) {
-      const mapAddress = card.getAttribute('data-map-address');
-      if (!mapAddress) return;
-      
+      const address = card.getAttribute('data-address');
+      const city = card.getAttribute('data-city');
+      const country = card.getAttribute('data-country');
+
+      // 构建完整地址
+      let fullAddress = '';
+      if (address) fullAddress += address;
+      if (city) fullAddress += (fullAddress ? ', ' : '') + city;
+      if (country) fullAddress += (fullAddress ? ', ' : '') + country;
+
+      if (!fullAddress) return;
+
       const infoContent = createInfoWindowContent(card);
-      
+
       if (mapType === 'dynamic') {
         if (window.updateDynamicMap) {
-          window.updateDynamicMap(mapAddress);
+          window.updateDynamicMap(fullAddress);
           setTimeout(() => {
             if (window.updateInfoWindow) {
               window.updateInfoWindow(infoContent);
@@ -502,49 +559,51 @@
         }
       } else {
         if (mapIframe) {
-          mapIframe.src = `https://www.google.com/maps/embed/v1/place?key=${apiKey}&q=${encodeURIComponent(mapAddress)}&zoom=14&language=en&region=US`;
+          mapIframe.src = `https://www.google.com/maps/embed/v1/place?key=${apiKey}&q=${encodeURIComponent(
+            fullAddress
+          )}&zoom=14&language=en&region=US`;
         }
       }
     }
-    
+
     // Event listeners
     searchBtn.addEventListener('click', () => performSearch());
-    
+
     // Enhanced input event with debouncing and suggestions
-    locationSearch.addEventListener('input', function() {
+    locationSearch.addEventListener('input', function () {
       clearTimeout(searchTimeout);
       currentSuggestionIndex = -1;
-      
+
       if (this.value === '') {
         clearSearch();
       } else {
         // Show suggestions immediately
         showSuggestions(this.value);
-        
+
         // Debounced search
         searchTimeout = setTimeout(() => {
           performSearch(false); // Don't save to history for auto-search
         }, 300);
       }
     });
-    
+
     // Keyboard navigation
     locationSearch.addEventListener('keydown', handleKeyboardNavigation);
-    
+
     // Focus and blur events
-    locationSearch.addEventListener('focus', function() {
+    locationSearch.addEventListener('focus', function () {
       if (this.value) {
         showSuggestions(this.value);
       }
     });
-    
-    locationSearch.addEventListener('blur', function() {
+
+    locationSearch.addEventListener('blur', function () {
       // Delay hiding to allow clicking on suggestions
       setTimeout(() => hideSuggestions(), 150);
     });
-    
+
     // Suggestion click events
-    suggestionsContainer.addEventListener('click', function(e) {
+    suggestionsContainer.addEventListener('click', function (e) {
       if (e.target.classList.contains('suggestion-remove')) {
         e.stopPropagation();
         removeFromHistory(e.target.getAttribute('data-text'));
@@ -555,26 +614,26 @@
         performSearch();
       }
     });
-    
+
     // Filter and results change events
-    filterCheckboxes.forEach(checkbox => {
+    filterCheckboxes.forEach((checkbox) => {
       checkbox.addEventListener('change', () => performSearch(false));
     });
-    
+
     resultsSelect.addEventListener('change', displayResults);
-    
+
     // Location card click events
-    locationCards.forEach(function(card) {
-      card.addEventListener('click', function() {
-        locationCards.forEach(c => c.classList.remove('active'));
+    locationCards.forEach(function (card) {
+      card.addEventListener('click', function () {
+        locationCards.forEach((c) => c.classList.remove('active'));
         this.classList.add('active');
         updateMapForCard(this);
       });
     });
-    
+
     // Initialize
     displayResults();
-    
+
     // Function to create info window content
     function createInfoWindowContent(card) {
       // 正确的data属性访问方式
@@ -587,54 +646,52 @@
       const email = card.getAttribute('data-email') || '';
       const website = card.getAttribute('data-website') || '';
       const hours = card.getAttribute('data-hours') || '';
-      const storeGroup = card.getAttribute('data-store-group') || '';
+      const storeType = card.getAttribute('data-store-type') || '';
       const province = card.getAttribute('data-province') || '';
-      const address2 = card.getAttribute('data-address2') || '';
       const fax = card.getAttribute('data-fax') || '';
-      
+
       let content = `<div class="info-window">`;
-      
+
       if (storeName) {
         content += `<h4>${storeName}</h4>`;
       }
-      
+
       if (address || city || postalCode) {
         content += `<p><strong>Address:</strong><br>`;
         if (address) content += `${address}<br>`;
-        if (address2) content += `${address2}<br>`;
         if (city) content += `${city} `;
         if (postalCode) content += `${postalCode}<br>`;
         if (province) content += `${province}<br>`;
         if (country) content += `${country}`;
         content += `</p>`;
       }
-      
+
       if (phone) {
         content += `<p><strong>Phone:</strong> ${phone}</p>`;
       }
-      
+
       if (fax) {
         content += `<p><strong>Fax:</strong> ${fax}</p>`;
       }
-      
+
       if (email) {
         content += `<p><strong>Email:</strong> ${email}</p>`;
       }
-      
+
       if (website) {
         content += `<p><strong>Website:</strong> <a href="${website}" target="_blank">${website}</a></p>`;
       }
-      
-      if (storeGroup) {
-        content += `<p><strong>Store Group:</strong> ${storeGroup}</p>`;
+
+      if (storeType) {
+        content += `<p><strong>Store Type:</strong> ${storeType}</p>`;
       }
-      
+
       if (hours) {
         content += `<p><strong>Hours:</strong><br>${hours.replace(/\n/g, '<br>')}</p>`;
       }
-      
+
       content += `</div>`;
-      
+
       return content;
     }
   });
@@ -646,7 +703,7 @@
     display: flex;
     align-items: stretch;
   }
-  
+
   .map-section .container {
     width: 100%;
     height: 100vh;
@@ -654,7 +711,7 @@
     padding: 0;
     margin: 0;
   }
-  
+
   .map-section__wrapper {
     display: grid;
     grid-template-columns: 3fr 7fr;
@@ -662,7 +719,7 @@
     gap: 0;
     position: relative;
   }
-  
+
   .map-section__locations {
     display: flex;
     flex-direction: column;
@@ -675,15 +732,15 @@
     z-index: 10;
     max-height: 100vh;
   }
-  
+
   .dealer-search__title {
     margin: 0 0 1.5rem 0;
     font-size: 1.5rem;
     font-weight: bold;
     color: #333;
   }
-  
-   /* Modern dealer search form styles - Clean White Version */
+
+  /* Modern dealer search form styles - Clean White Version */
   .dealer-search__form {
     background: #ffffff;
     padding: 2rem;
@@ -693,20 +750,20 @@
     position: relative;
     border: 1px solid rgba(0, 0, 0, 0.06);
   }
-  
+
   /* Enhanced search input group - 修复结构 */
   .search-input-group {
     position: relative;
     margin-bottom: 1.5rem;
   }
-  
+
   /* 搜索输入框容器 - 独立包装搜索框 */
   .search-input-wrapper {
     position: relative;
     width: 100%;
-    margin-bottom:10px;
+    margin-bottom: 10px;
   }
-  
+
   .search-input {
     width: 100%;
     padding: 16px 50px 16px 20px;
@@ -720,19 +777,19 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     box-sizing: border-box;
   }
-  
+
   .search-input::placeholder {
     color: #9ca3af;
     font-weight: 400;
   }
-  
+
   .search-input:focus {
     border-color: #374151;
     background: #ffffff;
     box-shadow: 0 4px 16px rgba(55, 65, 81, 0.1), 0 0 0 4px rgba(55, 65, 81, 0.1);
     transform: translateY(-1px);
   }
-  
+
   .search-input-wrapper::after {
     content: '';
     position: absolute;
@@ -749,13 +806,13 @@
     opacity: 0.6;
     pointer-events: none;
   }
-  
+
   /* 移除旧的图标样式 */
   .search-input-group::before,
   .search-input-group::after {
     display: none;
   }
-  
+
   /* Enhanced search controls */
   .search-controls {
     display: grid;
@@ -763,26 +820,26 @@
     gap: 1rem;
     align-items: end;
   }
-  
+
   .search-control {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
   }
-  
+
   .search-control label {
     font-size: 14px;
     font-weight: 600;
     color: #374151;
     letter-spacing: 0.3px;
   }
-  
+
   .select-wrapper {
     position: relative;
     display: inline-block;
     width: 100%;
   }
-  
+
   .search-select {
     padding: 16px 20px;
     border: 2px solid #e1e5e9;
@@ -797,7 +854,7 @@
     width: 100%;
     padding-right: 50px;
   }
-  
+
   .select-arrow {
     position: absolute;
     right: 12px;
@@ -809,23 +866,23 @@
     pointer-events: none;
     transition: transform 0.3s ease;
   }
-  
+
   .select-wrapper:hover .select-arrow {
     color: #333;
   }
-  
+
   .search-select:focus {
     border-color: #374151;
     background: #ffffff;
     box-shadow: 0 4px 16px rgba(55, 65, 81, 0.1), 0 0 0 4px rgba(55, 65, 81, 0.1);
     outline: none;
   }
-  
+
   .search-select:hover {
     border-color: #9ca3af;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   }
-  
+
   /* Enhanced search button */
   .dealer-search-btn {
     padding: 12px 24px;
@@ -843,7 +900,7 @@
     position: relative;
     overflow: hidden;
   }
-  
+
   .dealer-search-btn::before {
     content: '';
     position: absolute;
@@ -851,32 +908,32 @@
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
     transition: left 0.5s;
   }
-  
+
   .dealer-search-btn:hover {
     background: linear-gradient(135deg, #555555 0%, #222222 100%);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
     transform: translateY(-2px);
   }
-  
+
   .dealer-search-btn:hover::before {
     left: 100%;
   }
-  
+
   .dealer-search-btn:active {
     transform: translateY(0);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   }
-  
+
   /* Enhanced search filters */
   .search-filters {
     margin-top: 1.5rem;
     padding-top: 1.5rem;
     border-top: 1px solid #e5e7eb;
   }
-  
+
   .search-filters__title {
     margin: 0 0 1rem 0;
     font-size: 16px;
@@ -884,13 +941,13 @@
     color: #374151;
     letter-spacing: 0.3px;
   }
-  
+
   .filter-options {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 1rem;
   }
-  
+
   .filter-option {
     display: flex;
     align-items: center;
@@ -904,15 +961,15 @@
     position: relative;
     overflow: hidden;
   }
-  
+
   .filter-option:hover {
     border-color: #374151;
     background: #f3f4f6;
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(55, 65, 81, 0.08);
   }
-  
-  .filter-option input[type="checkbox"] {
+
+  .filter-option input[type='checkbox'] {
     width: 18px;
     height: 18px;
     margin: 0;
@@ -925,14 +982,14 @@
     position: relative;
     z-index: 2;
   }
-  
-  .filter-option input[type="checkbox"]:checked {
+
+  .filter-option input[type='checkbox']:checked {
     background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
     border-color: #374151;
     box-shadow: 0 2px 8px rgba(55, 65, 81, 0.25);
   }
-  
-  .filter-option input[type="checkbox"]:checked::after {
+
+  .filter-option input[type='checkbox']:checked::after {
     content: '✓';
     position: absolute;
     top: 50%;
@@ -942,12 +999,12 @@
     font-size: 12px;
     font-weight: bold;
   }
-  
-  .filter-option input[type="checkbox"]:hover {
+
+  .filter-option input[type='checkbox']:hover {
     border-color: #374151;
     box-shadow: 0 2px 4px rgba(55, 65, 81, 0.1);
   }
-  
+
   .filter-option span {
     font-size: 14px;
     font-weight: 500;
@@ -955,7 +1012,7 @@
     z-index: 2;
     position: relative;
   }
-  
+
   /* Enhanced suggestions dropdown - 确保在搜索输入框正下方 */
   .search-suggestions {
     position: absolute;
@@ -965,13 +1022,13 @@
     background: white;
     border: 2px solid #e5e7eb;
     border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
     z-index: 1000;
     max-height: 300px;
     overflow-y: auto;
     margin: 0;
   }
-  
+
   .suggestion-item {
     display: flex;
     align-items: center;
@@ -981,28 +1038,28 @@
     transition: background-color 0.2s ease;
     position: relative;
   }
-  
+
   .suggestion-item:last-child {
     border-bottom: none;
   }
-  
+
   .suggestion-item:hover,
   .suggestion-item.highlighted {
     background-color: #f8fafc;
   }
-  
+
   .suggestion-icon {
     margin-right: 12px;
     font-size: 14px;
     opacity: 0.6;
   }
-  
+
   .suggestion-text {
     flex: 1;
     font-size: 14px;
     color: #374151;
   }
-  
+
   .suggestion-remove {
     margin-left: auto;
     width: 20px;
@@ -1017,61 +1074,61 @@
     cursor: pointer;
     transition: all 0.2s ease;
   }
-  
+
   .suggestion-remove:hover {
     background: #e5e7eb;
     color: #374151;
   }
-  
+
   /* Responsive design */
   @media (max-width: 768px) {
     .dealer-search__form {
       padding: 1.5rem;
       border-radius: 12px;
     }
-    
+
     .search-controls {
       grid-template-columns: 1fr;
       gap: 1rem;
     }
-    
+
     .search-control {
       width: 100%;
     }
-    
+
     .search-select {
       width: 100%;
     }
-    
+
     .dealer-search-btn {
       width: 100%;
       padding: 14px 24px;
     }
-    
+
     .filter-options {
       grid-template-columns: 1fr;
     }
   }
-  
+
   @media (max-width: 480px) {
     .dealer-search__form {
       padding: 1rem;
       margin: 0 -1rem 1.5rem -1rem;
       border-radius: 0;
     }
-    
+
     .search-input {
       padding: 14px 45px 14px 16px;
       font-size: 16px;
     }
-    
+
     .search-input-wrapper::after {
       right: 15px;
       width: 16px;
       height: 16px;
     }
   }
-  
+
   /* Loading animation for white background */
   @keyframes shimmer {
     0% {
@@ -1081,13 +1138,13 @@
       background-position: calc(200px + 100%) 0;
     }
   }
-  
+
   .search-input.loading {
     background: linear-gradient(90deg, #ffffff 0px, #f8fafc 40px, #ffffff 80px);
     background-size: 200px 100%;
     animation: shimmer 1.5s infinite;
   }
-  
+
   /* No results message */
   .no-results {
     text-align: center;
@@ -1095,7 +1152,7 @@
     color: #6b7280;
     font-style: italic;
   }
-  
+
   /* Search stats */
   .search-stats {
     font-size: 0.85rem;
@@ -1104,7 +1161,7 @@
     padding: 0.5rem 0;
     border-bottom: 1px solid #f3f4f6;
   }
-  
+
   /* Enhanced search controls */
   .search-controls {
     display: grid;
@@ -1112,26 +1169,26 @@
     gap: 1rem;
     align-items: end;
   }
-  
+
   .search-control {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
   }
-  
+
   .search-control label {
     font-size: 14px;
     font-weight: 600;
     color: #374151;
     letter-spacing: 0.3px;
   }
-  
+
   .select-wrapper {
     position: relative;
     display: inline-block;
     width: 100%;
   }
-  
+
   .search-select {
     padding: 12px 16px;
     border: 2px solid rgba(255, 255, 255, 0.2);
@@ -1147,7 +1204,7 @@
     width: 100%;
     padding-right: 40px;
   }
-  
+
   .select-arrow {
     position: absolute;
     right: 12px;
@@ -1159,32 +1216,30 @@
     pointer-events: none;
     transition: transform 0.3s ease;
   }
-  
+
   .select-wrapper:hover .select-arrow {
     color: #333;
   }
-  
+
   .search-select:focus {
     border-color: rgba(255, 255, 255, 0.8);
     background: rgba(255, 255, 255, 1);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15), 0 0 0 3px rgba(255, 255, 255, 0.3);
     outline: none;
   }
-  
+
   .search-select:hover {
     border-color: rgba(255, 255, 255, 0.4);
     transform: translateY(-1px);
   }
-  
 
-  
   .location-results {
     flex: 1;
     display: flex;
     flex-direction: column;
     gap: 1rem;
   }
-  
+
   .location-card {
     cursor: pointer;
     padding: 1.5rem;
@@ -1197,26 +1252,26 @@
     min-height: 120px;
     position: relative;
     z-index: 11;
-    flex-shrink: 0; 
+    flex-shrink: 0;
   }
-  
+
   .location-card:hover {
     border-color: #ccc;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
-  
+
   .location-card.active {
     border-color: #007bff;
     background-color: rgba(0, 123, 255, 0.1);
   }
-  
+
   .location-card__title {
     margin: 0 0 0.5rem 0;
     font-size: 1.2rem;
     font-weight: bold;
     color: #333;
   }
-  
+
   .location-card__address,
   .location-card__phone,
   .location-card__email {
@@ -1224,11 +1279,11 @@
     font-size: 0.9rem;
     color: #666;
   }
-  
+
   .location-card__direction {
     margin-top: 1rem;
   }
-  
+
   .direction-btn {
     display: inline-flex;
     align-items: center;
@@ -1240,13 +1295,13 @@
     border-radius: 4px;
     font-size: 0.9rem;
     transition: background-color 0.3s ease;
-    border:none;
+    border: none;
   }
-  
+
   .direction-btn:hover {
     background-color: #0056b3;
   }
-  
+
   .map-section__map {
     width: 100%;
     height: 100vh;
@@ -1255,7 +1310,7 @@
     position: relative;
     z-index: 1;
   }
-  
+
   #map-container {
     width: 100%;
     height: 100%;
@@ -1263,7 +1318,7 @@
     border-radius: 0;
     position: relative;
   }
-  
+
   #map-iframe,
   .map {
     width: 100% !important;
@@ -1272,107 +1327,107 @@
     display: block;
     position: relative;
   }
-  
+
   .info-window {
     max-width: 300px;
     font-family: Arial, sans-serif;
   }
-  
+
   .info-window h4 {
     margin: 0 0 10px 0;
     color: #333;
     font-size: 16px;
   }
-  
+
   .info-window p {
     margin: 5px 0;
     font-size: 14px;
     line-height: 1.4;
   }
-  
+
   .info-window a {
     color: #007bff;
     text-decoration: none;
   }
-  
+
   .info-window a:hover {
     text-decoration: underline;
   }
-  
+
   /* Responsive design */
   @media (max-width: 768px) {
     .dealer-search__form {
       padding: 1.5rem;
       border-radius: 12px;
     }
-    
+
     .search-controls {
       grid-template-columns: 1fr;
       gap: 1rem;
     }
-    
+
     .search-control {
       width: 100%;
     }
-    
+
     .search-select {
       width: 100%;
     }
-    
+
     .dealer-search-btn {
       width: 100%;
       padding: 14px 24px;
     }
-    
+
     .filter-options {
       grid-template-columns: 1fr;
     }
-    
+
     .map-section__wrapper {
       grid-template-columns: 1fr;
       grid-template-rows: 50vh 50vh;
     }
-    
+
     .map-section__locations {
       order: 2;
       min-width: auto;
       max-height: 50vh;
     }
-    
+
     .map-section__map {
       order: 1;
       height: 50vh;
     }
-    
+
     .search-input {
       width: 100%;
       min-width: auto;
       border-radius: 12px;
     }
-    
+
     .search-suggestions {
       border-radius: 0 0 8px 8px;
     }
   }
-  
+
   @media (max-width: 480px) {
     .dealer-search__form {
       padding: 1rem;
       margin: 0 -1rem 1.5rem -1rem;
       border-radius: 0;
     }
-    
+
     .search-input {
       padding: 14px 16px 14px 45px;
       font-size: 16px;
     }
-    
+
     .search-input-group::before {
       left: 15px;
       font-size: 16px;
     }
   }
-  
+
   /* Loading animation */
   @keyframes shimmer {
     0% {
@@ -1515,13 +1570,41 @@
       "settings": [
         {
           "type": "header",
-          "content": "Basic Details"
+          "content": "Basic Information"
         },
         {
           "type": "text",
           "id": "store_name",
           "label": "Store Name",
           "default": "Sportshop Bittner"
+        },
+        {
+          "type": "select",
+          "id": "store_type",
+          "label": "Store Type",
+          "options": [
+            {
+              "value": "dealer",
+              "label": "Dealer"
+            },
+            {
+              "value": "rental",
+              "label": "Rental Station"
+            },
+            {
+              "value": "service",
+              "label": "Service Center"
+            },
+            {
+              "value": "click-collect",
+              "label": "Click and Collect"
+            }
+          ],
+          "default": "dealer"
+        },
+        {
+          "type": "header",
+          "content": "Address Information"
         },
         {
           "type": "text",
@@ -1537,9 +1620,9 @@
         },
         {
           "type": "text",
-          "id": "country",
-          "label": "Country",
-          "default": "Germany"
+          "id": "province_state",
+          "label": "Province/State",
+          "default": "Sachsen"
         },
         {
           "type": "text",
@@ -1548,67 +1631,14 @@
           "default": "4299"
         },
         {
-          "type": "header",
-          "content": "Additional details"
-        },
-                {
-          "type": "select",
-          "id": "store_group",
-          "label": "Store Group",
-          "options": [
-            {
-              "value": "dealer",
-              "label": "Dealer"
-            },
-            {
-              "value": "rental",
-              "label": "Rental Station"
-            },
-            {
-              "value": "service",
-              "label": "Service Center"
-            }
-          ],
-          "default": "dealer"
-        },
-        {
-          "type": "select",
-          "id": "store_type",
-          "label": "Store Type",
-          "options": [
-            {
-              "value": "dealer",
-              "label": "Dealer"
-            },
-            {
-              "value": "click-collect",
-              "label": "Click and Collect"
-            },
-            {
-              "value": "rental",
-              "label": "Rental Station"
-            },
-            {
-              "value": "service",
-              "label": "Service Center"
-            }
-          ],
-          "default": "dealer"
-        },
-        {
           "type": "text",
-          "id": "address2",
-          "label": "Address 2"
-        },
-        {
-          "type": "text",
-          "id": "province_state",
-          "label": "Province/State",
-          "default": "Sachsen"
+          "id": "country",
+          "label": "Country",
+          "default": "Germany"
         },
         {
           "type": "header",
-          "content": "Contact information"
+          "content": "Contact Information"
         },
         {
           "type": "text",
@@ -1635,7 +1665,7 @@
         },
         {
           "type": "header",
-          "content": "Hours of operation"
+          "content": "Business Hours"
         },
         {
           "type": "textarea",
@@ -1646,13 +1676,6 @@
         {
           "type": "header",
           "content": "Map Settings"
-        },
-        {
-          "id": "map_address",
-          "type": "text",
-          "label": "Map address",
-          "info": "Google Maps will find the exact location",
-          "default": "Weißestr. 26, Leipzig, Germany"
         },
         {
           "id": "show_pin",

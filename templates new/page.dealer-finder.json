@@ -1,0 +1,182 @@
+{
+  "sections": {
+    "dealer_search_nNkjCJ": {
+      "type": "dealer-search",
+      "blocks": {
+        "location_001": {
+          "type": "location",
+          "settings": {
+            "store_name": "Sportshop Bittner",
+            "store_type": "dealer",
+            "store_group": "Dealer",
+            "store_address": "Hauptstraße 123",
+            "store_city": "Graz",
+            "store_zip": "8010",
+            "store_country": "Austria",
+            "store_phone": "+43 316 123456",
+            "store_email": "info@sportshop-bittner.at",
+            "store_website": "www.sportshop-bittner.at",
+            "store_latitude": "47.0707",
+            "store_longitude": "15.4395",
+            "monday_open": "09:00",
+            "monday_close": "18:00",
+            "tuesday_open": "09:00",
+            "tuesday_close": "18:00",
+            "wednesday_open": "09:00",
+            "wednesday_close": "18:00",
+            "thursday_open": "09:00",
+            "thursday_close": "18:00",
+            "friday_open": "09:00",
+            "friday_close": "18:00",
+            "saturday_open": "09:00",
+            "saturday_close": "17:00",
+            "sunday_open": "",
+            "sunday_close": ""
+          }
+        },
+        "location_002": {
+          "type": "location",
+          "settings": {
+            "store_name": "Bike World Linz",
+            "store_type": "dealer",
+            "store_group": "Dealer",
+            "store_address": "Landstraße 45",
+            "store_city": "Linz",
+            "store_zip": "4020",
+            "store_country": "Austria",
+            "store_phone": "+43 732 654321",
+            "store_email": "contact@bikeworld-linz.at",
+            "store_website": "www.bikeworld-linz.at",
+            "store_latitude": "48.3069",
+            "store_longitude": "14.2858",
+            "monday_open": "08:30",
+            "monday_close": "18:30",
+            "tuesday_open": "08:30",
+            "tuesday_close": "18:30",
+            "wednesday_open": "08:30",
+            "wednesday_close": "18:30",
+            "thursday_open": "08:30",
+            "thursday_close": "18:30",
+            "friday_open": "08:30",
+            "friday_close": "18:30",
+            "saturday_open": "09:00",
+            "saturday_close": "17:00",
+            "sunday_open": "",
+            "sunday_close": ""
+          }
+        },
+        "location_003": {
+          "type": "location",
+          "settings": {
+            "store_name": "Cycle Center Salzburg",
+            "store_type": "rental_station",
+            "store_group": "Rental Station",
+            "store_address": "Getreidegasse 12",
+            "store_city": "Salzburg",
+            "store_zip": "5020",
+            "store_country": "Austria",
+            "store_phone": "+43 662 987654",
+            "store_email": "info@cyclecenter-salzburg.at",
+            "store_website": "www.cyclecenter-salzburg.at",
+            "store_latitude": "47.8095",
+            "store_longitude": "13.0550",
+            "monday_open": "10:00",
+            "monday_close": "19:00",
+            "tuesday_open": "10:00",
+            "tuesday_close": "19:00",
+            "wednesday_open": "10:00",
+            "wednesday_close": "19:00",
+            "thursday_open": "10:00",
+            "thursday_close": "19:00",
+            "friday_open": "10:00",
+            "friday_close": "19:00",
+            "saturday_open": "10:00",
+            "saturday_close": "18:00",
+            "sunday_open": "11:00",
+            "sunday_close": "17:00"
+          }
+        },
+        "location_004": {
+          "type": "location",
+          "settings": {
+            "store_name": "E-Bike Service Vienna",
+            "store_type": "service_center",
+            "store_group": "Service Center",
+            "store_address": "Mariahilfer Straße 88",
+            "store_city": "Vienna",
+            "store_zip": "1070",
+            "store_country": "Austria",
+            "store_phone": "+43 1 5551234",
+            "store_email": "service@ebike-vienna.at",
+            "store_website": "www.ebike-vienna.at",
+            "store_latitude": "48.2082",
+            "store_longitude": "16.3738",
+            "monday_open": "08:00",
+            "monday_close": "17:00",
+            "tuesday_open": "08:00",
+            "tuesday_close": "17:00",
+            "wednesday_open": "08:00",
+            "wednesday_close": "17:00",
+            "thursday_open": "08:00",
+            "thursday_close": "17:00",
+            "friday_open": "08:00",
+            "friday_close": "17:00",
+            "saturday_open": "",
+            "saturday_close": "",
+            "sunday_open": "",
+            "sunday_close": ""
+          }
+        },
+        "location_005": {
+          "type": "location",
+          "settings": {
+            "store_name": "Click & Collect Innsbruck",
+            "store_type": "click_and_collect",
+            "store_group": "Click and Collect",
+            "store_address": "Maria-Theresien-Straße 31",
+            "store_city": "Innsbruck",
+            "store_zip": "6020",
+            "store_country": "Austria",
+            "store_phone": "+43 512 123789",
+            "store_email": "pickup@innsbruck.at",
+            "store_website": "www.pickup-innsbruck.at",
+            "store_latitude": "47.2692",
+            "store_longitude": "11.4041",
+            "monday_open": "09:00",
+            "monday_close": "18:00",
+            "tuesday_open": "09:00",
+            "tuesday_close": "18:00",
+            "wednesday_open": "09:00",
+            "wednesday_close": "18:00",
+            "thursday_open": "09:00",
+            "thursday_close": "18:00",
+            "friday_open": "09:00",
+            "friday_close": "18:00",
+            "saturday_open": "09:00",
+            "saturday_close": "16:00",
+            "sunday_open": "",
+            "sunday_close": ""
+          }
+        }
+      },
+      "block_order": [
+        "location_001",
+        "location_002",
+        "location_003",
+        "location_004",
+        "location_005"
+      ],
+      "settings": {
+        "heading": "Find a Dealer",
+        "subheading": "Locate authorized Hepha dealers near you",
+        "map_style": "standard",
+        "default_zoom": 10,
+        "show_filters": true,
+        "enable_search": true
+      }
+    }
+  },
+  "order": [
+    "dealer_search_nNkjCJ"
+  ]
+}
