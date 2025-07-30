@@ -54,6 +54,9 @@
 {%- assign all_text = 'All' -%}
 {%- assign phone_label = 'Phone' -%}
 {%- assign email_label = 'Email' -%}
+{%- assign address_label = 'Address' -%}
+{%- assign website_label = 'Website' -%}
+{%- assign store_type_label = 'Store Type' -%}
 
 {%- case request.locale.iso_code -%}
   {%- when 'de' -%}
@@ -68,6 +71,9 @@
     {%- assign all_text = 'Alle' -%}
     {%- assign phone_label = 'Telefon' -%}
     {%- assign email_label = 'E-Mail' -%}
+    {%- assign address_label = 'Adresse' -%}
+    {%- assign website_label = 'Webseite' -%}
+    {%- assign store_type_label = 'Geschäftstyp' -%}
   {%- when 'fr' -%}
     {%- assign placeholder_text = 'Trouver des sites près de' -%}
     {%- assign distance_label = 'Distance' -%}
@@ -80,6 +86,9 @@
     {%- assign all_text = 'Tous' -%}
     {%- assign phone_label = 'Téléphone' -%}
     {%- assign email_label = 'E-mail' -%}
+    {%- assign address_label = 'Adresse' -%}
+    {%- assign website_label = 'Site Web' -%}
+    {%- assign store_type_label = 'Type de Magasin' -%}
   {%- when 'fi' -%}
     {%- assign placeholder_text = 'Löydä sivustoja tämän sijainnin läheltä' -%}
     {%- assign distance_label = 'Etäisyys' -%}
@@ -92,6 +101,9 @@
     {%- assign all_text = 'Kaikki' -%}
     {%- assign phone_label = 'Puhelin' -%}
     {%- assign email_label = 'Sähköposti' -%}
+    {%- assign address_label = 'Osoite' -%}
+    {%- assign website_label = 'Verkkosivusto' -%}
+    {%- assign store_type_label = 'Myymälän Tyyppi' -%}
 {%- endcase -%}
 
 <div
@@ -261,7 +273,9 @@
               {% render 'location-map',
                 api_key: section.settings.api_key,
                 address: first_map_address,
-                map_style: section.settings.map_style
+                map_style: section.settings.map_style,
+                language: request.locale.iso_code,
+                region: region_code
               %}
             {%- else -%}
               <iframe
@@ -284,6 +298,15 @@
 </div>
 
 <script>
+  // Multi-language labels
+  const i18nLabels = {
+    address: '{{ address_label | escape }}',
+    phone: '{{ phone_label | escape }}',
+    email: '{{ email_label | escape }}',
+    website: '{{ website_label | escape }}',
+    storeType: '{{ store_type_label | escape }}'
+  };
+
   document.addEventListener('DOMContentLoaded', function () {
     const locationCards = document.querySelectorAll('.location-card');
     const mapContainer = document.getElementById('map-container');
@@ -640,7 +663,6 @@
 
     // Function to create info window content
     function createInfoWindowContent(card) {
-      // 正确的data属性访问方式
       const storeName = card.getAttribute('data-store-name') || '';
       const address = card.getAttribute('data-address') || '';
       const city = card.getAttribute('data-city') || '';
@@ -661,7 +683,7 @@
       }
 
       if (address || city || postalCode) {
-        content += `<p style="margin: 5px 0; font-size: 14px; line-height: 1.4;"><strong>Address:</strong><br>`;
+        content += `<p style="margin: 5px 0; font-size: 14px; line-height: 1.4;"><strong>${i18nLabels.address}:</strong><br>`;
         if (address) content += `${address}<br>`;
         if (city) content += `${city} `;
         if (postalCode) content += `${postalCode}<br>`;
@@ -671,19 +693,19 @@
       }
 
       if (phone) {
-        content += `<p style="margin: 5px 0; font-size: 14px; line-height: 1.4;"><strong>Phone:</strong> <a href="tel:${phone}" style="color: #007bff; text-decoration: none;">${phone}</a></p>`;
+        content += `<p style="margin: 5px 0; font-size: 14px; line-height: 1.4;"><strong>${i18nLabels.phone}:</strong> <a href="tel:${phone}" style="color: #007bff; text-decoration: none;">${phone}</a></p>`;
       }
 
       if (email) {
-        content += `<p style="margin: 5px 0; font-size: 14px; line-height: 1.4;"><strong>Email:</strong> <a href="mailto:${email}" style="color: #007bff; text-decoration: none;">${email}</a></p>`;
+        content += `<p style="margin: 5px 0; font-size: 14px; line-height: 1.4;"><strong>${i18nLabels.email}:</strong> <a href="mailto:${email}" style="color: #007bff; text-decoration: none;">${email}</a></p>`;
       }
 
       if (website) {
-        content += `<p style="margin: 5px 0; font-size: 14px; line-height: 1.4;"><strong>Website:</strong> <a href="${website}" target="_blank" style="color: #007bff; text-decoration: none;">${website}</a></p>`;
+        content += `<p style="margin: 5px 0; font-size: 14px; line-height: 1.4;"><strong>${i18nLabels.website}:</strong> <a href="${website}" target="_blank" style="color: #007bff; text-decoration: none;">${website}</a></p>`;
       }
 
       if (storeType) {
-        content += `<p style="margin: 5px 0; font-size: 14px; line-height: 1.4;"><strong>Store Type:</strong> ${storeType}</p>`;
+        content += `<p style="margin: 5px 0; font-size: 14px; line-height: 1.4;"><strong>${i18nLabels.storeType}:</strong> ${storeType}</p>`;
       }
 
       content += `</div>`;

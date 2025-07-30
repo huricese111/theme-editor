@@ -39,7 +39,11 @@ if (!customElements.get('location-map')) {
         this.mapOptions.styles = LocationMap.getStyle(this.dataset.mapStyle);
       }
 
-      loadScript(`https://maps.googleapis.com/maps/api/js?key=${this.dataset.apiKey}&language=en&region=US`)
+      // 获取语言和区域设置
+      const language = this.dataset.language || 'en';
+      const region = this.dataset.region || 'US';
+
+      loadScript(`https://maps.googleapis.com/maps/api/js?key=${this.dataset.apiKey}&language=${language}&region=${region}`)
         .then(this.createMap.bind(this));
     }
 
