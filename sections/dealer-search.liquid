@@ -1,5 +1,5 @@
 {{ 'dealer-search.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'dealer-search.js' | asset_url }}" defer></script>
+<script src="{{ 'dealer-search.js' | asset_url }}"></script>
 
 {% assign display_map = false %}
 {%- assign first_map_address = '' -%}
@@ -135,7 +135,7 @@
           <div class="dealer-search__form">
             <div class="search-input-group search-input-group--simple">
               <div class="search-input-wrapper">
-                <input type="text" id="location-search" placeholder="{{ placeholder_text }}" class="search-input">
+                <input type="text" id="location-search" placeholder="{{ placeholder_text }}" class="search-input" style="width:100%;">
               </div>
               <div class="search-simple-controls">
                 <button type="button" id="search-btn" class="dealer-search-btn">{{ search_button_text }}</button>

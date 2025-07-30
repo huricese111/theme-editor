@@ -843,26 +843,26 @@
 }
 
 .gm-style .gm-style-iw-d .info-window {
-  padding: 0 20px 20px 20px;
+  padding: 0 16px 16px 16px;
   background: #ffffff;
   border-radius: 16px;
   max-width: 300px;
-  line-height: 1.5;
+  line-height: 1.3;
 }
 
 .gm-style .gm-style-iw-d .info-window h4 {
-  margin: 0 0 12px 0;
+  margin: 0 0 8px 0;
   color: #1a1a1a;
   font-size: 18px;
   font-weight: 700;
   letter-spacing: -0.02em;
-  line-height: 1.3;
+  line-height: 1.2;
 }
 
 .gm-style .gm-style-iw-d .info-window p {
-  margin: 8px 0;
+  margin: 4px 0;
   font-size: 14px;
-  line-height: 1.5;
+  line-height: 1.3;
   color: #4a5568;
 }
 
@@ -872,7 +872,7 @@
   font-size: 16px;
   letter-spacing: 0.5px;
   display: inline-block;
-  margin-bottom: 2px;
+  margin-bottom: 1px;
 }
 
 .gm-style .gm-style-iw-d .info-window a {
@@ -889,7 +889,6 @@
 }
 
 .gm-style .gm-style-iw-d .info-window .info-section {
-  padding: 8px 0;
   border-bottom: 1px solid #f7fafc;
 }
 
@@ -905,16 +904,16 @@
 .gm-style .gm-style-iw-d .info-window .contact-item {
   display: flex;
   align-items: center;
-  margin: 6px 0;
-  padding: 6px 0;
+  margin: 4px 0;
+  padding: 4px 0;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .gm-style .gm-style-iw-d .info-window .contact-icon {
-  width: 20px;
-  height: 20px;
-  margin-right: 16px;
+  width: 18px;
+  height: 18px;
+  margin-right: 12px;
   opacity: 0.7;
   flex-shrink: 0;
 }
@@ -923,13 +922,38 @@
   display: inline-block;
   background: #667eea;
   color: white;
-  padding: 4px 12px;
+  padding: 3px 10px;
   border-radius: 20px;
   font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  margin-top: 8px;
+  margin-top: 6px;
+}
+
+.gm-style .gm-style-iw-d .info-window .contact-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.gm-style .gm-style-iw-d .info-window .contact-label {
+  font-weight: bold;
+  margin-bottom: 2px;
+  font-size: inherit;
+}
+
+.gm-style .gm-style-iw-d .info-window .contact-value {
+  margin: 0;
+}
+
+.gm-style .gm-style-iw-d .info-window .contact-value a {
+  color: #3182ce;
+  text-decoration: none;
+}
+
+.gm-style .gm-style-iw-d .info-window .contact-value a:hover {
+  color: #2c5aa0;
+  border-bottom-color: #3182ce;
 }
 
 @keyframes slideDown {
@@ -964,6 +988,10 @@
 }
 
 @media (max-width: 768px) {
+  .dealer-search__title {
+    font-size: 1rem;
+  }
+
   .dealer-search__form {
     padding: 1.5rem;
     border-radius: 12px;
@@ -1021,7 +1049,7 @@
   .map-section__wrapper {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 40vh auto;
+    grid-template-rows: 75vh 25vh;
     min-height: 100vh;
     width: 100%;
     position: static;
@@ -1035,7 +1063,7 @@
     display: flex;
     flex-direction: column;
     background-color: #f8f9fa;
-    min-height: 60vh;
+    min-height: 25vh;
     flex: none;
   }
 
@@ -1051,13 +1079,13 @@
     overflow-y: auto;
     background-color: #f8f9fa;
     max-height: 500px;
+    min-height: 50vh;
   }
 
   .map-section__map {
     order: 1;
-    height: 40vh;
+    height: 75vh;
     width: 100%;
-    height: 400px;
   }
 
   .location-card {
@@ -1087,22 +1115,105 @@
     border-radius: 0 0 8px 8px;
   }
 
-  .gm-style .gm-style-iw-c {
-    max-width: 280px;
-    min-width: 250px;
-  }
-
-  .gm-style .gm-style-iw-d .info-window {
-    padding: 16px;
-    max-width: 260px;
-  }
-
-  .gm-style .gm-style-iw-d .info-window h4 {
+  .gm-style .gm-style-iw.gm-style-iw-c {
+    max-width: 300px;
+    min-width: 280px;
     font-size: 16px;
   }
 
-  .gm-style .gm-style-iw-d .info-window p {
+  .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window {
+    padding: 20px 16px 16px 16px;
+    max-width: 280px;
+    line-height: 1.6;
+  }
+
+  .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window h4 {
+    font-size: 18px;
+    line-height: 1.4;
+    margin-bottom: 16px;
+    font-weight: 700;
+  }
+
+  .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window p {
+    font-size: 15px;
+    line-height: 1.6;
+    margin: 10px 0;
+  }
+
+  .gm-style
+    .gm-style-iw.gm-style-iw-c
+    .gm-style-iw-d
+    .info-window
+    .contact-item {
+    margin: 0 !important;
+    padding: 8px 0;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .gm-style
+    .gm-style-iw.gm-style-iw-c
+    .gm-style-iw-d
+    .info-window
+    .contact-icon {
+    width: 22px;
+    height: 22px;
+    margin-right: 12px;
+    flex-shrink: 0;
+  }
+
+  .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window strong {
+    font-size: 15px;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 4px;
+    color: #2d3748;
+  }
+
+  .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window a {
+    font-size: 15px;
+    line-height: 1.5;
+    word-break: break-word;
+  }
+
+  .gm-style
+    .gm-style-iw.gm-style-iw-c
+    .gm-style-iw-d
+    .info-window
+    .info-section {
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .gm-style
+    .gm-style-iw.gm-style-iw-c
+    .gm-style-iw-d
+    .info-window
+    .address-text {
+    font-size: 15px;
+    line-height: 1.6;
+    word-break: break-word;
+  }
+
+  .gm-style
+    .gm-style-iw.gm-style-iw-c
+    .gm-style-iw-d
+    .info-window
+    .store-type-badge {
     font-size: 13px;
+    padding: 6px 14px;
+    margin-top: 12px;
+    line-height: 1.3;
+  }
+
+  .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d {
+    max-height: none;
+    overflow: visible;
+    padding: 5px;
+  }
+
+  .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-t {
+    right: 8px;
+    top: 8px;
   }
 }
 
@@ -1152,10 +1263,11 @@
   .map-section__wrapper {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 35vh auto;
-    min-height: 100vh;
+    grid-template-rows: 60vh 100vh;
+    min-height: 160vh;
     width: 100%;
     position: static;
+    overflow: hidden;
   }
 
   .map-section__locations {
@@ -1164,18 +1276,41 @@
     display: flex;
     flex-direction: column;
     background-color: #f8f9fa;
-    min-height: 65vh;
+    height: 100vh;
+    overflow: hidden;
   }
 
   .dealer-search__scrollable-results {
     flex: 1;
-    overflow-y: auto;
+    overflow-y: scroll;
+    overflow-x: hidden;
     background-color: #f8f9fa;
+    height: calc(100vh - 120px);
+    max-height: calc(100vh - 120px);
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+  }
+
+  .dealer-search__scrollable-results::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .dealer-search__scrollable-results::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .dealer-search__scrollable-results::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 2px;
+  }
+
+  .dealer-search__scrollable-results * {
+    touch-action: pan-y;
   }
 
   .map-section__map {
     order: 1;
-    height: 35vh;
+    height: 60vh;
     width: 100%;
   }
 
@@ -1185,6 +1320,7 @@
     margin-bottom: 0.4rem;
     grid-template-columns: 1fr;
     grid-template-rows: auto auto;
+    flex-shrink: 0;
   }
 
   .location-card__content {
@@ -1220,5 +1356,189 @@
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
+  }
+
+  .gm-style .gm-style-iw.gm-style-iw-c {
+    max-width: 280px;
+    min-width: 250px;
+  }
+
+  .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window {
+    padding: 8px;
+    max-width: 260px;
+    line-height: 1.1;
+  }
+
+  .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window h4 {
+    font-size: 14px;
+    margin-bottom: 4px;
+    line-height: 1.1;
+  }
+
+  .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window p {
+    font-size: 12px;
+    margin: 2px 0;
+    line-height: 1.1;
+  }
+
+  .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window .contact-item {
+    margin: 2px 0 !important;
+    padding: 2px 0;
+    font-size: 12px;
+    line-height: 1.1;
+  }
+
+  .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window .contact-icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 6px;
+  }
+
+  .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window strong {
+    font-size: 12px;
+    margin-bottom: 1px;
+    display: block;
+  }
+
+  .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window a {
+    font-size: 12px;
+    line-height: 1.1;
+  }
+
+  .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window .info-section {
+    padding: 2px 0;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window .address-text {
+    font-size: 12px;
+    line-height: 1.1;
+  }
+
+  .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window .store-type-badge {
+    font-size: 10px;
+    padding: 2px 6px;
+    margin-top: 3px;
+    line-height: 1.1;
+  }
+
+  .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-t {
+    right: 6px;
+    top: 6px;
+    width: 32px !important;
+    height: 32px !important;
+  }
+
+  .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-t > button {
+    width: 32px !important;
+    height: 32px !important;
+  }
+
+  .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-t > button > span {
+    width: 20px !important;
+    height: 20px !important;
+  }
+}
+
+.info-window .contact-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-window .contact-label {
+    font-weight: bold;
+    margin-bottom: 2px;
+    font-size: inherit;
+}
+
+.info-window .contact-value {
+    margin: 0;
+}
+
+.info-window .contact-value a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.info-window .contact-value a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+    .info-window .contact-label {
+        margin-bottom: 1px;
+    }
+}
+
+@media (max-width: 360px) {
+  .gm-style .gm-style-iw.gm-style-iw-c {
+    max-width: 260px;
+    min-width: 240px;
+  }
+
+  .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window {
+    padding: 6px;
+    max-width: 240px;
+    line-height: 1.0;
+  }
+
+  .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window h4 {
+    font-size: 13px;
+    margin-bottom: 3px;
+    line-height: 1.0;
+  }
+
+  .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window p,
+  .gm-style
+    .gm-style-iw.gm-style-iw-c
+    .gm-style-iw-d
+    .info-window
+    .contact-item {
+    font-size: 11px;
+    margin: 1px 0;
+    padding: 1px 0;
+    line-height: 1.0;
+  }
+
+  .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window .contact-icon {
+    width: 14px;
+    height: 14px;
+    margin-right: 4px;
+  }
+
+  .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window strong {
+    font-size: 11px;
+    margin-bottom: 0px;
+  }
+
+  .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window .info-section {
+    padding: 1px 0;
+  }
+
+  .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window .store-type-badge {
+    font-size: 9px;
+    padding: 1px 4px;
+    margin-top: 2px;
+  }
+
+  .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-t {
+    right: 4px;
+    top: 4px;
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-t > button {
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-t > button > span {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  .info-window .contact-label {
+    margin-bottom: 0px;
   }
 }
