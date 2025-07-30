@@ -1,75 +1,91 @@
 {%- comment -%}
 /**
- * Frame Geometry Sheet Component
+ * Frame Geometry Sheet Section
  * 
- * A comprehensive bicycle frame geometry visualization and specification component
- * that displays detailed technical measurements and diagrams for different bike types
- * and frame configurations with multi-language support.
+ * A comprehensive Shopify Liquid section for displaying bicycle frame geometry specifications
+ * with interactive tabbed interface, multi-language support, and responsive design.
  * 
- * FEATURES:
- * - Multi-language support (English, German, French, Finnish)
- * - Interactive tabbed interface for different frame types
- * - Responsive geometry image viewer with touch/swipe support
- * - Detailed specification tables with customizable measurements
- * - Multiple frame type configurations (Step Through, Low Step, High Step, Mountain, Carbon)
- * - Custom image upload support for geometry diagrams
- * - Mobile-optimized layout with horizontal scrolling
- * - Size variant support (S, M, L, XL) with conditional display
+ * CORE FUNCTIONALITY:
+ * - Interactive tabbed interface for different frame types (Step Through, Low Step, High Step, Mountain, Carbon)
+ * - Dynamic frame geometry visualization with customizable images
+ * - Detailed geometry measurements table with size variations (S, M, L, XL)
+ * - Multi-language content support (German, French, Finnish, English)
+ * - Responsive design with mobile-optimized layout
+ * - Touch-friendly swipe navigation for mobile devices
  * 
- * FRAME TYPES:
- * - Step Through: Low-entry frame design with optional S size column
- * - Low Step: Standard low-step frame configuration (M, L sizes)
- * - High Step: Traditional high-step frame with optional XL size
- * - Mountain: Mountain bike specific geometry measurements
- * - Carbon: Carbon frame variant with specialized specifications
+ * TECHNICAL IMPLEMENTATION:
+ * - Uses Liquid templating for dynamic content rendering
+ * - JavaScript for tab switching and mobile responsiveness
+ * - CSS for styling and responsive behavior
+ * - Conditional rendering based on frame type and language
  * 
- * GEOMETRY MEASUREMENTS:
- * - Frame Height, Seat Tube Angle, Fork Offset
- * - Head Tube Length/Angle, Top Tube Horizontal
- * - Chain Stay Length, Bottom Bracket Drop
- * - Wheelbase, Stack, Reach
- * - Standover Height, Seat Height (Min/Max)
+ * SHOPIFY INTEGRATION:
+ * - Section-based architecture compatible with Shopify theme customizer
+ * - Block-based content system for flexible configuration
+ * - Settings schema for admin panel customization
+ * - Multi-language support using Shopify's localization features
  * 
- * RESPONSIVE BEHAVIOR:
- * - Desktop: Side-by-side layout with geometry image and specification table
- * - Mobile: Stacked layout with horizontally scrollable geometry images
- * - Touch-friendly tab navigation with swipe hints
- * - Adaptive table sizing for mobile devices
+ * RELATED FILES:
+ * - snippets/frame-size-table.liquid - Renders geometry measurement tables
+ * - snippets/image.liquid - Handles responsive image rendering (if used)
  * 
- * LOCALIZATION:
- * - Dynamic title switching based on current locale
- * - Localized disclaimer text for legal compliance
- * - Fallback to default language when translations unavailable
+ * LAYOUT OPTIONS:
+ * - Tabbed interface with customizable tab labels
+ * - Two-column layout (image + table) on desktop
+ * - Single-column stacked layout on mobile
+ * - Configurable frame type presets (Trekking, Mountain, City)
+ * - Custom image upload support for each frame type
+ * 
+ * RESPONSIVE DESIGN:
+ * - Desktop: Side-by-side image and table layout
+ * - Mobile: Stacked layout with horizontal scrolling for images
+ * - Touch-optimized navigation with swipe hints
+ * - Adaptive table sizing for mobile screens
+ * 
+ * ACCESSIBILITY:
+ * - Keyboard navigation support for tabs
+ * - Semantic HTML structure
+ * - Screen reader friendly table headers
+ * - Focus management for interactive elements
  * 
  * CUSTOMIZATION OPTIONS:
- * - Selectable frame image types (Trekking, Mountain, City, Custom)
- * - Custom geometry image upload capability
+ * - Multi-language section titles
+ * - Frame type selection (step_through, low_step, high_step, mountain, carbon)
+ * - Custom image uploads for each frame type
  * - Mobile-specific image optimization
- * - Conditional size column display (S, XL)
- * - Configurable measurement values for each frame type
+ * - Geometry measurement customization per size
+ * - Show/hide specific sizes (S, XL) based on frame type
  * 
- * TECHNICAL FEATURES:
- * - Accessible tab interface with ARIA roles
- * - Performance-optimized image loading with lazy loading
- * - Touch-enabled horizontal scrolling for mobile
- * - Responsive CSS Grid and Flexbox layouts
- * - JavaScript-powered tab switching functionality
+ * MULTI-LANGUAGE SUPPORT:
+ * - German (de): Comprehensive geometry terminology
+ * - French (fr): Full translation support
+ * - Finnish (fi): Complete localization
+ * - English (en): Default language support
+ * - Fallback to French for unsupported locales
  * 
- * IMAGE ASSETS:
- * - Default geometry images for different bike types
- * - Support for custom uploaded geometry diagrams
- * - Mobile-optimized image variants
- * - Asset URL generation for theme compatibility
- * 
- * DEPENDENCIES:
- * - frame-size-table snippet for specification rendering
- * - Asset pipeline for default geometry images
- * - Shopify image transformation filters
- * 
- * BROWSER SUPPORT:
+ * BROWSER COMPATIBILITY:
  * - Modern browsers with CSS Grid and Flexbox support
- * - Touch device optimization for mobile/tablet
- * - Progressive enhancement for older browsers
+ * - Touch event support for mobile devices
+ * - Smooth scrolling and animations
+ * - Progressive enhancement approach
+ * 
+ * PERFORMANCE CONSIDERATIONS:
+ * - Lazy loading for images
+ * - Efficient DOM manipulation
+ * - Minimal JavaScript footprint
+ * - Optimized CSS for fast rendering
+ * 
+ * USE CASES:
+ * - E-bike and bicycle product pages
+ * - Technical specification displays
+ * - Product comparison interfaces
+ * - Mobile-first product catalogs
+ * 
+ * DEFAULT PRESETS:
+ * - Includes default geometry data for common frame types
+ * - Pre-configured size variations (S, M, L, XL)
+ * - Standard measurement categories (15 different measurements)
+ * - Responsive image placeholders
  */
 {%- endcomment -%}
 

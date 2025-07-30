@@ -1,62 +1,84 @@
 {%- comment -%}
 /**
- * Go to Top Button Component
+ * Go to Top Section - Scroll-to-Top Button Component
  * 
- * A floating scroll-to-top button that appears when users scroll down the page,
- * providing a convenient way to quickly return to the top of the page with smooth
- * scrolling animation and responsive design.
+ * CORE FUNCTIONALITY:
+ * - Fixed position floating button that appears when user scrolls down
+ * - Smooth scroll animation back to top of page when clicked
+ * - Auto-hide/show based on scroll position threshold
+ * - Responsive design with hover and active state animations
+ * - Accessibility support with proper ARIA labels
  * 
- * FEATURES:
- * - Auto-show/hide based on scroll position
- * - Smooth scroll animation to top
- * - Responsive design with hover effects
- * - Accessible with ARIA labels
- * - Performance-optimized scroll detection
- * - CSS custom properties for easy customization
- * - Fixed positioning with high z-index
+ * TECHNICAL IMPLEMENTATION:
+ * - Pure CSS and vanilla JavaScript implementation
+ * - No external dependencies or framework requirements
+ * - Uses CSS custom properties (variables) for easy customization
+ * - Throttled scroll event handling for performance optimization
+ * - Smooth scrolling behavior using native browser API
  * 
- * BEHAVIOR:
- * - Hidden by default when page loads
- * - Appears when user scrolls down 100px or more
- * - Disappears when user scrolls back to top
- * - Smooth fade-in/fade-out transitions
- * - Scale animation on hover and click
+ * SHOPIFY INTEGRATION:
+ * - Standalone section that can be added to any template
+ * - No Shopify-specific dependencies or liquid logic
+ * - Compatible with all Shopify themes and templates
+ * - Can be easily customized through theme settings
  * 
- * VISUAL DESIGN:
- * - Circular button with arrow icon
- * - Fixed position at bottom-right corner
- * - Black background with white icon (customizable)
- * - Subtle shadow for depth
- * - Smooth transform animations
+ * RELATED FILES:
+ * - No external file dependencies
+ * - Self-contained component with inline styles and scripts
  * 
- * ACCESSIBILITY:
- * - Proper ARIA label for screen readers
- * - Keyboard accessible button element
- * - High contrast color scheme
- * - Focus-friendly design
+ * LAYOUT OPTIONS:
+ * - Fixed positioning in bottom-right corner
+ * - Circular button design with centered arrow icon
+ * - Customizable size, colors, and positioning via CSS variables
  * 
- * PERFORMANCE:
- * - Throttled scroll event handling (50ms delay)
- * - Efficient DOM manipulation
- * - CSS transitions for smooth animations
+ * RESPONSIVE DESIGN:
+ * - Works on all device sizes and screen resolutions
+ * - Touch-friendly button size for mobile devices
+ * - Consistent behavior across different browsers
+ * - Optimized for both desktop and mobile interactions
+ * 
+ * ACCESSIBILITY FEATURES:
+ * - ARIA label for screen reader compatibility
+ * - Keyboard navigation support
+ * - High contrast design for visibility
+ * - Semantic button element for proper interaction
+ * 
+ * CUSTOMIZATION OPTIONS:
+ * - Background color (--bg-color CSS variable)
+ * - Icon color (--icon-color CSS variable)
+ * - Button size (--size CSS variable)
+ * - Position adjustable via CSS
+ * - Scroll threshold configurable in JavaScript
+ * 
+ * ANIMATION FEATURES:
+ * - Fade in/out transition when showing/hiding
+ * - Scale animation on hover and active states
+ * - Smooth transform transitions for visual feedback
+ * - Box shadow effects for depth perception
+ * 
+ * PERFORMANCE CONSIDERATIONS:
+ * - Throttled scroll event listener (50ms delay)
+ * - Efficient DOM manipulation with classList toggle
  * - Minimal JavaScript footprint
+ * - CSS transitions for hardware-accelerated animations
  * 
- * CUSTOMIZATION:
- * - CSS custom properties for colors and size
- * - Configurable scroll threshold
- * - Adjustable positioning
- * - Scalable SVG icon
+ * BROWSER COMPATIBILITY:
+ * - Modern browser support with CSS custom properties
+ * - Fallback-friendly design for older browsers
+ * - Cross-browser scroll behavior support
+ * - Standard web APIs for maximum compatibility
  * 
- * TECHNICAL FEATURES:
- * - Cross-browser compatible scroll detection
- * - Debounced scroll event for performance
- * - Smooth scrolling with native browser API
- * - Self-contained with no external dependencies
+ * USE CASES:
+ * - Long-form content pages (blogs, articles)
+ * - Product listing pages with extensive content
+ * - Any page where users need quick navigation to top
+ * - Improving user experience on mobile devices
  * 
- * BROWSER SUPPORT:
- * - Modern browsers with CSS custom properties
- * - Fallback for older browsers
- * - Touch device optimization
+ * CONFIGURATION:
+ * - Scroll threshold: 100px (configurable in JavaScript)
+ * - Button size: 50px (configurable via CSS variable)
+ * - Position: bottom-right corner (adjustable via CSS)
+ * - Animation duration: 0.3s for opacity, 0.2s for transform
  */
 {%- endcomment -%}
 

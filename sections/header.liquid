@@ -1,65 +1,136 @@
 {%- comment -%}
 /**
- * Header Section - Main Site Navigation and Branding Component
+ * Header Section - Website Navigation and Branding Component
  * 
- * This section provides the primary site header with comprehensive navigation,
- * branding, and user interaction features for Shopify themes.
- * 
- * FEATURES:
- * - Logo display with customizable sizing (desktop and mobile)
- * - Multi-level navigation menu with dropdown support
- * - Transparent header option for homepage
- * - Sticky header functionality
+ * CORE FUNCTIONALITY:
+ * - Website header with logo, navigation menu, search, and user account/cart links
+ * - Responsive design with mobile navigation drawer
+ * - Sticky header option with transparent header support for homepage
+ * - Multi-level dropdown menus with promotional content blocks
  * - Integrated search functionality with recommendations
- * - Shopping cart link with item count
- * - Customer account access
- * - Mobile-responsive navigation drawer
- * - Menu promotions (small and wide layouts)
- * - Featured products in mobile navigation
- * - Countdown timer support in promotions
+ * - Shopping cart display with item count
+ * - Multi-language support for navigation elements
+ * 
+ * TECHNICAL IMPLEMENTATION:
+ * - Uses Shopify Liquid templating with custom web components
+ * - Implements <page-header> and <main-navigation> custom elements
+ * - JavaScript-enhanced search functionality with autocomplete
+ * - CSS-based responsive design with mobile-first approach
+ * - Dynamic logo switching for transparent header mode
+ * - Conditional rendering based on template type and settings
+ * 
+ * SHOPIFY INTEGRATION:
+ * - Integrates with Shopify navigation (linklists)
+ * - Connects to cart object for item count display
+ * - Uses Shopify routes for search functionality
+ * - Supports Shopify's multi-language features
+ * - Integrates with customer account system
+ * 
+ * RELATED FILES:
+ * - snippets/image.liquid - Logo and promotional image rendering
+ * - snippets/animation-attrs.liquid - Animation attribute generation
+ * - snippets/main-nav-links.liquid - Navigation menu link rendering
+ * - snippets/collection-block.liquid - Collection display in search recommendations
+ * - snippets/product-block.liquid - Product display in navigation and search
+ * - snippets/structured-data-header.liquid - SEO structured data
+ * - snippets/icon-menu.liquid - Mobile menu hamburger icon
+ * - snippets/icon-search.liquid - Search icon
+ * - snippets/icon-user.liquid - User account icon
+ * - snippets/icon-basket.liquid - Shopping cart basket icon
+ * - snippets/icon-bag.liquid - Shopping cart bag icon
+ * - snippets/icon-cart.liquid - Shopping cart icon
+ * - snippets/icon-close.liquid - Close button icon
+ * - snippets/icon-chevron-left.liquid - Back navigation arrow
+ * - assets/main-search.js - Search functionality JavaScript
+ * - assets/search-suggestions.js - Search autocomplete JavaScript
+ * - assets/countdown-timer.js - Countdown timer for promotions
  * 
  * LAYOUT OPTIONS:
- * - Inline menu (left/center alignment)
- * - Underneath menu layout
- * - Mobile-specific menu configuration
+ * - Logo positioning (left, center)
+ * - Menu alignment (left, center, underneath)
+ * - Transparent header for homepage
+ * - Sticky header behavior
+ * - Mobile navigation drawer
  * 
- * SEARCH FEATURES:
- * - Quick header search
- * - Search recommendations with collections/products
- * - Autocomplete suggestions
+ * RESPONSIVE DESIGN:
+ * - Mobile-first CSS approach
+ * - Collapsible mobile navigation
+ * - Touch-friendly interface elements
+ * - Responsive logo sizing
+ * - Adaptive menu layouts
  * 
- * CUSTOMIZATION:
- * - Logo image and sizing controls
- * - Transparent header with custom text color
- * - Multiple cart icon styles (bag, basket, cart)
- * - Icon display strategies
+ * ACCESSIBILITY FEATURES:
+ * - ARIA labels for navigation elements
+ * - Keyboard navigation support
+ * - Screen reader friendly structure
+ * - Focus management for mobile menu
+ * - Semantic HTML structure
+ * 
+ * CUSTOMIZATION OPTIONS:
+ * - Logo upload and sizing controls
+ * - Menu selection and layout options
+ * - Icon style selection (bag, basket, cart)
+ * - Color customization for transparent mode
  * - Featured link highlighting
- * - Mobile navigation behavior
+ * - Search recommendations configuration
  * 
- * TECHNICAL FEATURES:
- * - Structured data integration
- * - SEO-optimized H1 logo option
- * - Lazy loading for images
- * - Responsive image handling
- * - JavaScript-enhanced interactions
- * - CSS custom properties for theming
+ * NAVIGATION FEATURES:
+ * - Multi-level dropdown menus
+ * - Featured navigation links
+ * - Mobile-specific menu options
+ * - Menu promotional blocks (small and wide)
+ * - Collection and product showcases in dropdowns
+ * - Carousel layout for mobile promotions
  * 
- * MULTILINGUAL SUPPORT:
+ * SEARCH FUNCTIONALITY:
+ * - Header search with overlay interface
+ * - Quick search with live results
+ * - Search recommendations with images
+ * - Collection and product suggestions
+ * - Autocomplete functionality
+ * 
+ * PROMOTIONAL FEATURES:
+ * - Menu promotion blocks with images
+ * - Countdown timers for sales
+ * - Multi-language promotional content
+ * - Customizable aspect ratios and layouts
+ * - Background color and image fit options
+ * 
+ * MULTI-LANGUAGE SUPPORT:
  * - Localized navigation labels
- * - Multi-language promotion content
- * - Region-specific menu configurations
+ * - Multi-language promotional content
+ * - Language-specific menu configurations
+ * - Translated accessibility labels
  * 
- * DEPENDENCIES:
- * - main-search.js for search functionality
- * - countdown-timer.js for promotion timers
- * - search-suggestions.js for autocomplete
- * - Various icon snippets
- * - Product and collection block snippets
+ * BROWSER COMPATIBILITY:
+ * - Modern browser support with progressive enhancement
+ * - CSS Grid and Flexbox layouts
+ * - Custom element support with fallbacks
+ * - Touch event handling for mobile devices
  * 
- * BROWSER SUPPORT:
- * - Modern browsers with CSS Grid and Flexbox
- * - Progressive enhancement for older browsers
- * - Mobile-first responsive design
+ * PERFORMANCE CONSIDERATIONS:
+ * - Lazy loading for promotional images
+ * - Deferred JavaScript loading
+ * - Optimized CSS delivery
+ * - Minimal DOM manipulation
+ * - Efficient event handling
+ * 
+ * USE CASES:
+ * - E-commerce website headers
+ * - Multi-category product navigation
+ * - Brand showcase with logo prominence
+ * - Mobile-optimized shopping experience
+ * - Search-driven product discovery
+ * 
+ * SCHEMA CONFIGURATION:
+ * - Logo settings (image, width, mobile width)
+ * - Navigation menu selection
+ * - Transparent header options
+ * - Search functionality toggles
+ * - Icon display preferences
+ * - Mobile navigation settings
+ * - Promotional block configurations
+ * - Countdown timer settings
  */
 {%- endcomment -%}
 

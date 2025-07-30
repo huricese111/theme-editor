@@ -1,61 +1,133 @@
 {%- comment -%}
 /**
- * Specification Sheet Section - Product Technical Details Display
+ * Custom Specification Sheet Section - Multi-language Product Specification Display Component
  * 
- * This section provides a comprehensive technical specification display
- * for products, particularly designed for e-bikes and cycling equipment.
+ * CORE FUNCTIONALITY:
+ * This section creates a comprehensive product specification display with organized categories
+ * and multi-language support. It renders product technical specifications in a structured
+ * layout with categorized modules for different bike components and features.
  * 
- * Key Features:
- * - Multilingual specification display (English, German, French, Finnish)
- * - Modular specification categories with organized grouping
- * - Responsive design with mobile-optimized layout
+ * KEY FEATURES:
+ * - Multi-language specification display (English, German, French, Finnish)
+ * - Modular specification categories (E-bike System, Frame, Suspension, etc.)
  * - Dynamic content rendering based on product metafields
- * - Clean tabular presentation of technical data
+ * - Custom accessories specifications with flexible field mapping
+ * - Responsive design with mobile-optimized layout
+ * - Automatic content detection and conditional rendering
  * 
- * Specification Categories:
- * - E-Bike System: Frame, motor, battery, display components
- * - Suspension: Fork and shock specifications
- * - Shifting: Derailleur, shifters, sprocket, cassette details
+ * SPECIFICATION CATEGORIES:
+ * - E-Bike System: Motor, battery, display components
+ * - Frame: Frame specifications and materials
+ * - Suspension: Fork and shock absorber details
+ * - Shifting: Derailleur, shifters, sprocket, cassette information
  * - Brakes: Brake systems, discs, and levers
  * - Wheels: Tires, rims, and hub specifications
  * - Steering & Seating: Handlebar, grips, stem, seat post, saddle
  * - Components: Lighting systems and carrier information
- * - Weight & Class: Total weight, bike weight, and category classification
+ * - Weight & Class: Weight specifications and bike category
+ * - Accessories: Custom specification fields (1-10) for additional components
  * 
- * Layout Features:
- * - Centered container with maximum width constraint
- * - Flexible column layout for specification rows
- * - Responsive mobile design with stacked layout
- * - Consistent spacing and typography hierarchy
- * - Header sections for category organization
+ * TECHNICAL IMPLEMENTATION:
+ * - Uses Shopify product metafields for specification data storage
+ * - Implements conditional rendering to show only populated specifications
+ * - Utilizes CSS Grid and Flexbox for responsive layout
+ * - Includes embedded CSS for component-specific styling
+ * - Supports locale-based content switching
  * 
- * Multilingual Support:
- * - German (DE): "Spezifikation"
- * - French (FR): "Spécifications" 
- * - Finnish (FI): "Tekniset tiedot"
- * - English (Default): "Specification"
+ * MULTI-LANGUAGE SUPPORT:
+ * - English (default): Complete specification labels and categories
+ * - German (de): Translated labels for German market
+ * - French (fr): Translated labels for French market
+ * - Finnish (fi): Translated labels for Finnish market
  * 
- * Technical Implementation:
- * - Uses spec-module snippet for modular rendering
- * - Locale-based language detection and switching
- * - CSS Grid and Flexbox for responsive layout
+ * RESPONSIVE DESIGN:
+ * - Desktop (769px+): Three-column grid layout with organized spacing
+ * - Mobile (768px-): Single-column stacked layout with adjusted margins
+ * - Flexible column system adapts to content availability
+ * 
+ * RELATED FILES:
+ * 
+ * Core Section File:
+ * - sections/specifcation_sheet.liquid - This main section file
+ * 
+ * Asset Dependencies:
+ * - assets/section-basestyles.css - Base styling for custom sections and components
+ * 
+ * Snippet Dependencies:
+ * - snippets/spec-module.liquid - Modular specification rendering component with multi-language support
+ * 
+ * METAFIELD DEPENDENCIES:
+ * The section relies on the following product metafields for content:
+ * 
+ * E-Bike System Fields:
+ * - product.metafields.custom.motor2 - Motor specifications
+ * - product.metafields.custom.battery - Battery information
+ * - product.metafields.custom.display - Display system details
+ * 
+ * Frame & Suspension Fields:
+ * - product.metafields.custom.frame - Frame specifications
+ * - product.metafields.custom.fork - Fork details
+ * - product.metafields.custom.shock - Shock absorber information
+ * 
+ * Drivetrain Fields:
+ * - product.metafields.custom.derailleur - Derailleur specifications
+ * - product.metafields.custom.shifters - Shifter information
+ * - product.metafields.custom.sprocket - Sprocket details
+ * - product.metafields.custom.cassette - Cassette specifications
+ * 
+ * Brake System Fields:
+ * - product.metafields.custom.brake_f_r - Front/rear brake information
+ * - product.metafields.custom.brake_disc_f_r - Brake disc specifications
+ * - product.metafields.custom.brake_levers - Brake lever details
+ * 
+ * Wheel System Fields:
+ * - product.metafields.custom.tires - Tire specifications
+ * - product.metafields.custom.rims - Rim information
+ * - product.metafields.custom.hub_front_f_r - Hub specifications
+ * 
+ * Control & Comfort Fields:
+ * - product.metafields.custom.handlebar - Handlebar specifications
+ * - product.metafields.custom.grips - Grip information
+ * - product.metafields.custom.stem - Stem details
+ * - product.metafields.custom.seat_post - Seat post specifications
+ * - product.metafields.custom.saddle - Saddle information
+ * 
+ * Component Fields:
+ * - product.metafields.custom.front_light - Front lighting system
+ * - product.metafields.custom.rear_light - Rear lighting system
+ * - product.metafields.custom.carrier - Carrier specifications
+ * 
+ * Weight & Classification Fields:
+ * - product.metafields.custom.perm_total_weight - Permitted total weight
+ * - product.metafields.custom.bike_weight - Bike weight
+ * - product.metafields.custom.category - Bike category/class
+ * 
+ * Custom Accessories Fields (Dynamic 1-10):
+ * - product.metafields.custom.specification_name_1 to specification_name_10 - Custom specification names
+ * - product.metafields.custom.specification_value_1 to specification_value_10 - Custom specification values
+ * 
+ * PERFORMANCE CONSIDERATIONS:
+ * - Conditional rendering prevents empty specification modules from displaying
+ * - Efficient metafield access with minimal Liquid processing
+ * - Embedded CSS reduces external file dependencies
  * - Mobile-first responsive design approach
  * 
- * Styling Features:
- * - Clean, professional appearance
- * - Consistent font sizing and spacing
- * - Responsive breakpoints for mobile devices
- * - Structured header and content organization
- * 
- * Dependencies:
- * - spec-module snippet for individual specification rendering
- * - Product metafields for specification data
- * - Locale settings for language detection
- * 
- * Browser Support:
- * - Modern browsers with CSS Flexbox support
+ * BROWSER COMPATIBILITY:
+ * - Modern browsers with CSS Grid and Flexbox support
  * - Progressive enhancement for older browsers
- * - Mobile-responsive design
+ * - Touch-friendly interface for mobile devices
+ * 
+ * CUSTOMIZATION OPTIONS:
+ * - Easy addition of new specification categories via spec-module snippet
+ * - Flexible metafield mapping for custom product types
+ * - Styling customization through embedded CSS or external stylesheets
+ * - Language expansion through case statement modification
+ * 
+ * USAGE SCENARIOS:
+ * - Product detail pages requiring comprehensive technical specifications
+ * - E-bike and bicycle product catalogs
+ * - Technical documentation and comparison features
+ * - Multi-market product presentations with localized content
  */
 {%- endcomment -%}
 

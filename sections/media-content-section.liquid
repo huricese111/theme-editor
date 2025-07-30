@@ -1,80 +1,133 @@
 {%- comment -%}
-  /**
-   * Custom Two Column Banner Section
-   *
-   * A versatile two-column layout component that supports media and content display
-   * with extensive customization options for backgrounds, text, buttons, and interactive elements.
-   *
-   * FEATURES:
-   * - Dual column layout (media column + content column)
-   * - Multiple background options (color, image, video) for both columns
-   * - Responsive design with separate mobile/desktop layouts
-   * - Multi-language support (English, German, French, Finnish)
-   * - Rich content blocks: headings, text, buttons, newsletter, countdown, bike tabs
-   * - Flexible positioning and styling controls
-   * - Custom Liquid content support
-   * - Discount label with customizable shapes and positioning
-   *
-   * RESPONSIVE BEHAVIOR:
-   * - Desktop: Side-by-side column layout
-   * - Mobile: Configurable stacking (media above/below content)
-   * - Adaptive font sizes and spacing
-   * - Touch-friendly interactive elements
-   *
-   * LOCALIZATION:
-   * - Multi-language text support for all content blocks
-   * - Automatic language detection and content switching
-   * - Fallback to default language when translations unavailable
-   *
-   * CUSTOMIZATION OPTIONS:
-   * - Section height control
-   * - Column visibility toggles
-   * - Background media (images, videos) with position/scale controls
-   * - Text alignment and typography settings
-   * - Color schemes for all elements
-   * - Button styling and positioning
-   * - Newsletter subscription integration
-   * - Countdown timer functionality
-   * - Product showcase tabs (bike-specific)
-   * - Feature columns with custom content
-   * - Slide footer with pricing display
-   * - Discount labels with shape options
-   *
-   * CONTENT BLOCKS:
-   * - Heading: Multi-language titles with H1 option
-   * - Text: Rich text content with positioning controls
-   * - Custom Liquid: Advanced content integration
-   * - Newsletter: Subscription form with styling
-   * - Button: Dual button support with custom styling
-   * - Countdown: Timer with completion handling
-   * - Bike Tabs: Product showcase with sub-tabs
-   * - Feature Columns: Multi-column feature display
-   * - Slide Footer: Footer content with pricing
-   * - Discount Label: Promotional badges with positioning
-   *
-   * TECHNICAL FEATURES:
-   * - Liquid template engine integration
-   * - CSS custom properties for dynamic styling
-   * - Responsive image handling
-   * - Video background support
-   * - Form validation and submission
-   * - Timer functionality with completion callbacks
-   * - Tab navigation and content switching
-   *
-   * DEFAULT PRESET:
-   * - Media & Content Section with heading, text, and button blocks
-   * - Pre-configured with sample content and styling
-   *
-   * DEPENDENCIES:
-   * - Shopify Liquid template engine
-   * - Modern CSS (custom properties, flexbox, grid)
-   * - JavaScript for interactive elements
-   *
-   * BROWSER SUPPORT:
-   * - Modern browsers with CSS Grid and Flexbox support
-   * - Progressive enhancement for older browsers
-   * - Mobile-first responsive design
-   */
+/**
+ * Media & Content Section - Flexible Two-Column Layout Component
+ * 
+ * OVERVIEW:
+ * This section creates a flexible two-column layout with a media column and content column.
+ * It supports various content types including images, videos, text, buttons, and interactive elements.
+ * The section is highly customizable with extensive multilingual support (English, German, French, Finnish)
+ * and responsive design capabilities.
+ * 
+ * CORE FUNCTIONALITY:
+ * - Two-column responsive layout (media + content)
+ * - Media column: background images/videos, overlay text, buttons
+ * - Content column: dynamic blocks with various content types
+ * - Multilingual content support with locale-based rendering
+ * - Extensive customization options for styling and positioning
+ * - Mobile-responsive with configurable column ordering
+ * 
+ * TECHNICAL IMPLEMENTATION:
+ * - Liquid templating with dynamic block rendering
+ * - CSS Grid/Flexbox layout system
+ * - Responsive design with separate mobile/desktop settings
+ * - JavaScript integration for interactive elements
+ * - Shopify section schema for admin customization
+ * 
+ * DEPENDENCIES:
+ * 
+ * Required Snippet Files:
+ * - snippets/number-format.liquid - Number formatting utilities
+ * - snippets/media-content-styles.liquid - Section-specific CSS styles
+ * - snippets/media-column.liquid - Media column rendering logic
+ * - snippets/content-column.liquid - Content column rendering logic
+ * 
+ * Block-Specific Snippet Dependencies:
+ * - snippets/block-custom-image.liquid - Custom image block rendering
+ * - snippets/block-heading.liquid - Heading block rendering
+ * - snippets/block-text.liquid - Text block rendering
+ * - snippets/block-newsletter.liquid - Newsletter signup block
+ * - snippets/block-button.liquid - Button block rendering
+ * - snippets/block-countdown.liquid - Countdown timer block
+ * - snippets/block-bike-tab.liquid - Bike tab interface block
+ * - snippets/block-feature-column.liquid - Feature columns block
+ * - snippets/block-slide-footer.liquid - Slide footer block
+ * - snippets/custom-discount-info.liquid - Discount label block
+ * 
+ * Icon and Utility Snippets:
+ * - snippets/icon-location.liquid - Location pin icon
+ * - snippets/icon-highstep.liquid - High step bike icon
+ * - snippets/icon-lowstep.liquid - Low step bike icon
+ * - snippets/icon-stepthrough.liquid - Step through bike icon
+ * - snippets/image.liquid - Image rendering utility
+ * - snippets/localized-value.liquid - Multilingual value rendering
+ * 
+ * LAYOUT OPTIONS:
+ * - Desktop Layout: Media Left/Right positioning
+ * - Mobile Layout: Media Above/Below content
+ * - Full-width section support
+ * - Configurable section margins and heights
+ * - Responsive column heights (desktop/mobile)
+ * 
+ * MEDIA COLUMN FEATURES:
+ * - Background images (desktop/mobile specific)
+ * - Background videos (MP4 support)
+ * - Background colors and gradients
+ * - Image positioning and scaling options
+ * - Overlay text with custom styling
+ * - Dual button support with custom styling
+ * - Text background overlay for readability
+ * 
+ * CONTENT COLUMN FEATURES:
+ * - Dynamic block system with multiple content types
+ * - Custom image blocks with linking and styling
+ * - Heading blocks with H1 option and positioning
+ * - Rich text blocks with custom formatting
+ * - Custom Liquid content blocks
+ * - Newsletter signup with multilingual support
+ * - Button blocks with dual button support
+ * - Countdown timer with customizable styling
+ * - Bike tab interface for product showcasing
+ * - Feature columns for specifications
+ * - Slide footer with pricing information
+ * - Discount labels with custom shapes and positioning
+ * 
+ * MULTILINGUAL SUPPORT:
+ * - English (default)
+ * - German (de)
+ * - French (fr)
+ * - Finnish (fi)
+ * - Automatic locale detection and content switching
+ * - Fallback to default language when translations missing
+ * 
+ * CUSTOMIZATION OPTIONS:
+ * - Extensive color customization for all elements
+ * - Font size controls (desktop/mobile)
+ * - Spacing and margin controls
+ * - Border radius and styling options
+ * - Position controls (relative/absolute positioning)
+ * - Animation and transition support
+ * 
+ * RESPONSIVE DESIGN:
+ * - Mobile-first approach with desktop enhancements
+ * - Separate settings for mobile and desktop layouts
+ * - Configurable column ordering on mobile
+ * - Responsive typography scaling
+ * - Touch-friendly interface elements
+ * 
+ * PERFORMANCE CONSIDERATIONS:
+ * - Lazy loading support for images
+ * - Optimized CSS delivery through separate stylesheet
+ * - Conditional rendering based on content availability
+ * - Efficient Liquid template processing
+ * 
+ * BROWSER COMPATIBILITY:
+ * - Modern browsers with CSS Grid/Flexbox support
+ * - Progressive enhancement for older browsers
+ * - Touch device optimization
+ * - Accessibility features included
+ * 
+ * USAGE SCENARIOS:
+ * - Product showcases with detailed information
+ * - Brand storytelling with rich media
+ * - Feature highlights with specifications
+ * - Newsletter signup campaigns
+ * - Promotional content with countdown timers
+ * - Multi-product comparisons
+ * - Interactive product configurators
+ * - Landing page hero sections
+ * - About us pages with team information
+ * - Service descriptions with visual elements
+ */
 {%- endcomment -%}
 
 {% assign current_locale = request.locale.iso_code | default: 'en' %}

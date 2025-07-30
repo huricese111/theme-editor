@@ -1,3 +1,140 @@
+{%- comment -%}
+/**
+ * Main Article Section
+ * 
+ * A comprehensive Shopify Liquid section for displaying individual blog articles
+ * with featured images, content formatting, social sharing, comments, and navigation.
+ * 
+ * CORE FUNCTIONALITY:
+ * - Featured image display with overlay options and responsive sizing
+ * - Article content rendering with rich typography and formatting
+ * - Article metadata display (date, author, tags)
+ * - Social media sharing integration
+ * - Article navigation (previous/next articles)
+ * - Comments system with form submission
+ * - Responsive design with mobile optimization
+ * - Animation support for enhanced user experience
+ * 
+ * TECHNICAL IMPLEMENTATION:
+ * - Uses Shopify's article object for content rendering
+ * - Liquid templating for dynamic content and conditional rendering
+ * - CSS-in-Liquid for comprehensive styling
+ * - Form handling for comment submissions
+ * - Pagination support for comment lists
+ * - Structured data integration for SEO
+ * 
+ * SHOPIFY INTEGRATION:
+ * - Section-based architecture compatible with Shopify theme customizer
+ * - Settings schema for admin panel customization
+ * - Blog and article object integration
+ * - Comment system integration with Shopify's native commenting
+ * - Social sharing URL generation
+ * - Tag-based navigation support
+ * 
+ * RELATED FILES:
+ * - snippets/image.liquid - Handles responsive image rendering
+ * - snippets/animation-attrs.liquid - Provides animation attributes for elements
+ * - snippets/social-share.liquid - Social media sharing functionality (referenced but not found)
+ * - snippets/pagination-control.liquid - Pagination controls (referenced but not found)
+ * - snippets/form-errors.liquid - Form error handling (referenced but not found)
+ * - snippets/structured-data-article.liquid - SEO structured data (referenced but not found)
+ * 
+ * LAYOUT OPTIONS:
+ * - Featured image with multiple height options (compact, small, medium, large, natural)
+ * - Full-width or contained image display
+ * - Title overlay on featured image with various overlay styles
+ * - Responsive typography scaling
+ * - Two-column and single-column layouts
+ * 
+ * RESPONSIVE DESIGN:
+ * - Desktop: Wide container with optimized typography (up to 1400px)
+ * - Tablet: Medium container with adjusted spacing
+ * - Mobile: Compact layout with stacked navigation
+ * - Progressive font sizing using clamp() function
+ * - Touch-friendly interactive elements
+ * 
+ * ACCESSIBILITY:
+ * - Semantic HTML structure with proper heading hierarchy
+ * - ARIA labels and descriptions for form elements
+ * - Focus management for interactive elements
+ * - Screen reader friendly content structure
+ * - Keyboard navigation support
+ * 
+ * CUSTOMIZATION OPTIONS:
+ * - Show/hide article metadata (date, author, tags)
+ * - Social sharing platform selection (Twitter/X, Facebook, Pinterest)
+ * - Featured image display and sizing options
+ * - Title overlay styles and positioning
+ * - Comment system enable/disable
+ * - Full-width or contained layout options
+ * 
+ * CONTENT FEATURES:
+ * - Rich text content with enhanced typography
+ * - Image optimization and responsive sizing
+ * - Tag-based article categorization
+ * - Article navigation between posts
+ * - Comment threading and moderation support
+ * - Social media sharing with custom URLs
+ * 
+ * STYLING FEATURES:
+ * - Modern sans-serif typography stack
+ * - Consistent color scheme with CSS custom properties
+ * - Smooth transitions and hover effects
+ * - Card-based design for comments and navigation
+ * - Gradient overlays and shadow effects
+ * - Mobile-first responsive breakpoints
+ * 
+ * BROWSER COMPATIBILITY:
+ * - Modern browsers with CSS Grid and Flexbox support
+ * - CSS custom properties (CSS variables)
+ * - CSS clamp() function for responsive typography
+ * - Progressive enhancement approach
+ * - Fallback support for older browsers
+ * 
+ * PERFORMANCE CONSIDERATIONS:
+ * - Eager loading for featured images
+ * - Optimized CSS with minimal specificity
+ * - Efficient DOM structure
+ * - Compressed and minified styles
+ * - Progressive image loading
+ * 
+ * USE CASES:
+ * - Blog article pages
+ * - News and announcement posts
+ * - Product story and feature articles
+ * - Company blog and content marketing
+ * - Editorial and magazine-style content
+ * 
+ * FORM HANDLING:
+ * - Comment submission with validation
+ * - Error handling and success messaging
+ * - Moderation notice display
+ * - Required field validation
+ * - Email format validation
+ * 
+ * SEO FEATURES:
+ * - Structured data integration for articles
+ * - Semantic HTML markup
+ * - Meta information display
+ * - Social sharing optimization
+ * - Tag-based content organization
+ * 
+ * ANIMATION SUPPORT:
+ * - Scroll-triggered animations via animation-attrs snippet
+ * - Staggered animation delays for content sections
+ * - Smooth transitions for interactive elements
+ * - Progressive content reveal
+ * 
+ * MISSING DEPENDENCIES:
+ * Note: The following referenced snippets are not found in the current project:
+ * - snippets/social-share.liquid
+ * - snippets/pagination-control.liquid
+ * - snippets/form-errors.liquid
+ * - snippets/structured-data-article.liquid
+ * These may need to be created or restored for full functionality.
+ */
+{%- endcomment -%}
+
 {% if section.settings.show_featured_image and article.image != blank %}
   <div class="article-hero {% unless section.settings.full_width_image %}container{% endunless %}">
     {% if section.settings.featured_image_height == 'natural' %}

@@ -1,71 +1,124 @@
 {%- comment -%}
   /**
-   * Footer Section Component
+   * ============================================================================
+   * COMPREHENSIVE FOOTER SECTION COMPONENT
+   * ============================================================================
    *
-   * A comprehensive footer section that provides site navigation, content blocks,
-   * and essential site information with multi-language support and responsive design.
+   * DESCRIPTION:
+   * A comprehensive and feature-rich footer section component for Shopify themes
+   * that provides complete site navigation, multi-language content blocks, and
+   * essential site information with responsive design and accessibility features.
+   * This component serves as the primary footer for e-commerce websites with
+   * advanced localization, social media integration, and newsletter functionality.
    *
-   * FEATURES:
-   * - Multi-language content support (English, German, French, Finnish)
-   * - Flexible block-based content system
-   * - Responsive navigation with collapsible menus on mobile
-   * - Social media integration
-   * - Newsletter signup functionality
-   * - Payment method icons display
-   * - Country/region and language selectors
-   * - Custom liquid code support
-   * - App store download links
-   * - Follow on Shop integration
+   * CORE FEATURES:
+   * • Multi-Language Content Support: Full localization for English, German, French, and Finnish
+   * • Flexible Block-Based System: Dynamic content blocks (menu, text, newsletter, custom liquid)
+   * • Responsive Navigation: Collapsible mobile menus with smooth animations
+   * • Social Media Integration: Configurable social media icons with custom sizing
+   * • Newsletter Signup: Email collection with modal success feedback
+   * • Payment Method Display: Shopify payment icons with customizable visibility
+   * • Localization Selectors: Country/region and language switching functionality
+   * • Custom Liquid Support: Advanced customization through liquid code blocks
+   * • App Store Integration: Download links for iOS and Android applications
+   * • Follow on Shop: Shopify's native follow button integration
    *
-   * BLOCK TYPES:
-   * - Menu blocks: Navigation links with collapsible mobile interface
-   * - Text blocks: Rich text content with optional images and social media
-   * - Newsletter blocks: Email signup with social media and app links
-   * - Custom liquid blocks: Custom code injection
-   * - App blocks: Third-party app integration
+   * TECHNICAL IMPLEMENTATION:
+   * • Shopify Liquid Templating: Advanced liquid logic for multi-language content
+   * • CSS Grid & Flexbox: Modern responsive layout system
+   * • CSS Custom Properties: Dynamic styling with CSS variables
+   * • Semantic HTML Structure: Accessible navigation with proper ARIA labels
+   * • Performance Optimization: Conditional rendering and lazy loading
+   * • Mobile-First Design: Progressive enhancement for larger screens
    *
-   * RESPONSIVE BEHAVIOR:
-   * - Desktop: Multi-column layout with expanded menus
-   * - Mobile: Single column with collapsible menu sections
-   * - Touch-friendly toggle buttons for menu expansion
+   * SHOPIFY INTEGRATION:
+   * • Section Settings: Comprehensive admin configuration options
+   * • Block System: Dynamic content blocks with individual settings
+   * • Localization API: Native Shopify multi-language and currency support
+   * • Payment Icons: Automatic payment method detection and display
+   * • Social Media Settings: Integration with theme's social media configuration
+   * • Newsletter Forms: Shopify customer contact form integration
    *
-   * LOCALIZATION:
-   * - Dynamic content switching based on current locale
-   * - Fallback to default language when translations unavailable
-   * - Integrated country/region and language selectors
-   * - Localized copyright and powered-by text
+   * RELATED FILES AND DEPENDENCIES:
+   *
+   * Core Snippet Dependencies:
+   * • snippets/enhanced-language-switcher.liquid - Advanced language/country selector with flag icons
+   * • snippets/localization-form.liquid - Shopify localization form with custom select elements
+   * • snippets/newsletter-signup.liquid - Newsletter subscription form with success modal
+   * • snippets/image.liquid - Responsive image rendering with optimization and lazy loading
+   * • snippets/Download_on_the_App_Store_Badge.liquid - Apple App Store download badge SVG
+   * • snippets/Google_Play_Store_badge.liquid - Google Play Store download badge SVG
+   *
+   * JavaScript Dependencies:
+   * • assets/custom-select.js - Custom select dropdown functionality for localization
+   *
+   * Layout Integration:
+   * • layout/theme.liquid - Main theme layout file that includes this footer section
+   *
+   * Configuration Files:
+   * • config/settings_schema.json - Theme settings for social media and payment configuration
+   * • locales/*.json - Translation files for multi-language support
+   *
+   * LAYOUT OPTIONS:
+   * • Desktop Layout: Multi-column grid with organized content blocks
+   * • Mobile Layout: Stacked layout with collapsible navigation menus
+   * • Block Types: Menu links, rich text content, newsletter signup, custom liquid
+   * • Social Media: Configurable icon sizes (standard/large) with hover effects
+   *
+   * RESPONSIVE DESIGN:
+   * • Breakpoint System: Mobile-first approach with tablet and desktop optimizations
+   * • Flexible Grid: CSS Grid with automatic column adjustment
+   * • Touch-Friendly: Optimized button sizes and spacing for mobile devices
+   * • Performance: Conditional loading and optimized image delivery
+   *
+   * ACCESSIBILITY FEATURES:
+   * • ARIA Labels: Proper labeling for screen readers and assistive technologies
+   * • Keyboard Navigation: Full keyboard accessibility for all interactive elements
+   * • Focus Management: Visible focus indicators and logical tab order
+   * • Semantic HTML: Proper heading hierarchy and landmark elements
+   * • Color Contrast: Accessible color combinations for text and backgrounds
    *
    * CUSTOMIZATION OPTIONS:
-   * - Configurable payment icons display
-   * - Social media icon size options (standard/large)
-   * - Newsletter button styling (primary/secondary)
-   * - Lower footer menu configuration
-   * - Powered by Shopify toggle
-   * - Follow on Shop feature toggle
+   * • Payment Icons: Toggle display of Shopify payment method icons
+   * • Social Media: Configurable icon sizes and visibility settings
+   * • Newsletter Styling: Primary/secondary button style options
+   * • Lower Footer Menu: Additional navigation menu configuration
+   * • Powered by Shopify: Optional branding display toggle
+   * • Follow on Shop: Shopify's native follow feature integration
    *
-   * TECHNICAL FEATURES:
-   * - Accessible navigation with ARIA labels
-   * - Smooth CSS transitions for mobile menu toggles
-   * - Flexible grid system for responsive layout
-   * - SEO-friendly semantic HTML structure
-   * - Performance-optimized image loading
+   * MULTI-LANGUAGE SUPPORT:
+   * • Content Localization: Dynamic text switching based on current locale
+   * • Language Selector: Enhanced language switcher with flag icons
+   * • Country Selector: Region-specific content and currency display
+   * • RTL Support: Right-to-left language compatibility
    *
-   * DEFAULT PRESET:
-   * - "Default footer" with navigation, newsletter, and localization
-   * - Pre-configured menu blocks for About, Explore, Support
-   * - Newsletter block with social media and app links
-   * - Multi-language headings and descriptions
+   * BROWSER COMPATIBILITY:
+   * • Modern Browsers: Full support for CSS Grid, Flexbox, and Custom Properties
+   * • Progressive Enhancement: Graceful degradation for older browsers
+   * • Mobile Browsers: Optimized for iOS Safari and Android Chrome
+   * • Performance: Minimal JavaScript dependencies for fast loading
    *
-   * DEPENDENCIES:
-   * - localization-form snippet for language/country selectors
-   * - newsletter-signup snippet for email collection
-   * - social-media snippet for social icons
-   * - image snippet for optimized image rendering
+   * PERFORMANCE CONSIDERATIONS:
+   * • Conditional Rendering: Only load necessary components based on settings
+   * • Optimized Images: Shopify's responsive image system with lazy loading
+   * • CSS Efficiency: Minimal CSS with reusable utility classes
+   * • JavaScript Optimization: Deferred loading and event delegation
    *
-   * BROWSER SUPPORT:
-   * - Modern browsers with CSS Grid and Flexbox support
-   * - Progressive enhancement for older browsers
-   * - Touch device optimization
+   * USAGE SCENARIOS:
+   * • E-commerce Websites: Complete footer solution for online stores
+   * • Multi-Language Sites: International businesses with localization needs
+   * • Content-Rich Footers: Sites requiring extensive footer navigation
+   * • Social Media Integration: Brands with strong social media presence
+   * • Newsletter Marketing: Businesses focused on email marketing campaigns
+   *
+   * DEFAULT PRESET CONFIGURATION:
+   * • "Default footer" with navigation, newsletter, and localization features
+   * • Pre-configured menu blocks: About, Explore, Support sections
+   * • Newsletter block with social media icons and app download links
+   * • Multi-language headings and descriptions for international markets
+   * • Responsive layout optimized for both desktop and mobile experiences
+   *
+   * ============================================================================
    */
 {%- endcomment -%}
 

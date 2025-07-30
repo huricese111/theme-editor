@@ -1,3 +1,88 @@
+{%- comment -%}
+/*
+ * Map Section - Interactive Location Display Component
+ * 
+ * CORE FUNCTIONALITY:
+ * This section creates an interactive map display for showing store locations, business addresses,
+ * or any geographical points of interest. It supports both Google Maps integration and fallback
+ * placeholder images, with customizable styling and layout options.
+ * 
+ * TECHNICAL IMPLEMENTATION:
+ * - Liquid templating with conditional map rendering based on API key availability
+ * - Google Maps Embed API and Dynamic Maps API integration
+ * - Responsive CSS layout with flexible content arrangement
+ * - JavaScript enhancement for dynamic map functionality
+ * - Shopify image optimization and placeholder system
+ * 
+ * GOOGLE MAPS INTEGRATION:
+ * - Dynamic Maps API for interactive map experience
+ * - Embed Maps API for simple iframe-based maps (free option)
+ * - Customizable map styles (Default, Silver, Retro, Dark, Night, Aubergine)
+ * - Automatic geocoding and location centering
+ * - Google Maps directions link integration
+ * 
+ * RELATED FILES:
+ * 
+ * Core Section File:
+ * - sections/map.liquid - This main section file
+ * 
+ * Snippet Dependencies:
+ * - snippets/animation-attrs.liquid - Animation attributes for scroll-triggered effects
+ * - snippets/icon-location.liquid - Location pin icon for directions button
+ * - snippets/image.liquid - Image rendering with optimization and responsive sizing
+ * - snippets/location-map.liquid - Dynamic map component for interactive Google Maps
+ * 
+ * JavaScript Dependencies:
+ * - assets/location-map.js - Dynamic map functionality and Google Maps API integration
+ * 
+ * LAYOUT OPTIONS:
+ * - Full-width or constrained container layout
+ * - Three-column content arrangement (text, feature image, map)
+ * - Responsive design with mobile-optimized layout
+ * - Color scheme selection with theme integration
+ * 
+ * CONTENT FEATURES:
+ * - Customizable section heading
+ * - Rich text address and hours display
+ * - Google Maps directions button with optional location pin icon
+ * - Optional feature image display with placeholder fallback
+ * - Background image for map placeholder when API key is unavailable
+ * 
+ * MAP CONFIGURATION:
+ * - Google Maps API key integration
+ * - Map address input with automatic geocoding
+ * - Map type selection (Dynamic vs Embed)
+ * - Custom map styling options for dynamic maps
+ * - Zoom level and display controls
+ * 
+ * CUSTOMIZATION OPTIONS:
+ * - Full-width layout toggle
+ * - Color scheme selection (Default, 1, 2)
+ * - Feature image display control
+ * - Location pin icon toggle for directions button
+ * - Placeholder image customization
+ * 
+ * PERFORMANCE CONSIDERATIONS:
+ * - Conditional JavaScript loading based on API key availability
+ * - Deferred script loading for optimal page performance
+ * - Optimized image delivery with responsive sizing
+ * - Fallback placeholder system for offline functionality
+ * 
+ * BROWSER COMPATIBILITY:
+ * - Modern browsers with iframe and JavaScript support
+ * - Google Maps API compatibility requirements
+ * - Progressive enhancement for map functionality
+ * - Accessible markup with proper semantic structure
+ * 
+ * USE CASES:
+ * - Store locator pages
+ * - Contact page location display
+ * - Business address presentation
+ * - Event venue location mapping
+ * - Multi-location business directories
+ */
+{%- endcomment -%}
+
 {% assign display_map = false %}
 {%- if section.settings.api_key != blank and section.settings.map_address -%}
   {% assign display_map = true %}
