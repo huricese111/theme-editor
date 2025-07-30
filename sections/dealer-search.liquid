@@ -1,3 +1,101 @@
+{%- comment -%}
+/**
+ * DEALER SEARCH SECTION
+ * 
+ * This section provides a comprehensive dealer/store locator functionality with interactive map integration.
+ * It allows users to search for nearby dealers, rental stations, and service centers with advanced filtering
+ * and multi-language support.
+ * 
+ * MAIN FEATURES:
+ * - Interactive Google Maps integration with custom markers
+ * - Advanced search with location-based filtering
+ * - Multi-language support (English, German, French, Finnish)
+ * - Store type filtering (Dealer, Rental Station, Service Center)
+ * - Distance and results limit controls
+ * - Responsive design with split-screen layout
+ * - Search suggestions and history
+ * - Custom map styles (Default, Silver, Retro, Dark, Night, Aubergine)
+ * 
+ * DEPENDENCIES AND RELATED FILES:
+ * 
+ * CSS Files:
+ * - /assets/dealer-search.css - Main stylesheet for dealer search functionality
+ * 
+ * JavaScript Files:
+ * - /assets/dealer-search.js - Core search functionality, filtering, and UI interactions
+ * - /assets/location-map.js - Google Maps integration and custom map controls
+ * 
+ * Liquid Snippets:
+ * - /snippets/icon-location.liquid - Location pin icon SVG
+ * - /snippets/location-map.liquid - Google Maps component wrapper
+ * - /snippets/animation-attrs.liquid - Animation attributes for section elements
+  * -/snippets/custom-marker-icon.liquid - Custom marker icon
+ * 
+ * External Dependencies:
+ * - Google Maps JavaScript API - For map rendering and geocoding services
+ * - Google Maps Embed API - For fallback iframe maps
+ * 
+ * CONFIGURATION:
+ * The section supports the following settings:
+ * - Multi-language section titles
+ * - Google Maps API key configuration
+ * - Map type selection (Dynamic/Embed)
+ * - Custom map styling options
+ * - Full-width layout toggle
+ * - Color scheme selection
+ * 
+ * BLOCK STRUCTURE:
+ * Each location is defined as a 'location' block with the following data:
+ * - Store name and type (dealer/rental/service/click-collect)
+ * - Complete address information (street, city, state, postal code, country)
+ * - Contact details (phone, fax, email, website)
+ * - Business hours
+ * - Map pin display settings
+ * 
+ * LOCALIZATION:
+ * Supports 4 languages with complete UI translation:
+ * - English (en) - Default language
+ * - German (de) - Händlersuche
+ * - French (fr) - Recherche de Revendeur  
+ * - Finnish (fi) - Jälleenmyyjähaku
+ * 
+ * SEARCH FUNCTIONALITY:
+ * - Real-time search with autocomplete suggestions
+ * - Search history storage in localStorage
+ * - Filter by store type (dealer, rental, service)
+ * - Distance radius selection (25km, 50km, 100km, 200km)
+ * - Results limit control (25, 50, 100, all)
+ * - Advanced search panel with collapsible interface
+ * 
+ * MAP INTEGRATION:
+ * - Dynamic Google Maps with custom markers per store type
+ * - Fallback to embedded iframe maps
+ * - Custom map styles and themes
+ * - Interactive info windows with store details
+ * - Automatic geocoding and location centering
+ * - Responsive map container with proper aspect ratios
+ * 
+ * RESPONSIVE DESIGN:
+ * - Desktop: Split-screen layout (3:7 ratio) with fixed sidebar
+ * - Mobile: Stacked layout with scrollable results
+ * - Touch-friendly controls and interactions
+ * - Optimized for various screen sizes
+ * 
+ * PERFORMANCE CONSIDERATIONS:
+ * - Lazy loading of Google Maps API
+ * - Efficient DOM manipulation for search results
+ * - Debounced search input for better performance
+ * - Minimal re-renders during filtering operations
+ * 
+ * ACCESSIBILITY:
+ * - Proper ARIA labels and roles
+ * - Keyboard navigation support
+ * - Screen reader compatible
+ * - High contrast support
+ * - Focus management for interactive elements
+ */
+{%- endcomment -%}
+
 {{ 'dealer-search.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'dealer-search.js' | asset_url }}"></script>
 

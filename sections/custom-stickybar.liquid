@@ -1,73 +1,106 @@
 {%- comment -%}
 /**
- * Custom Sticky Navigation Bar Component
+ * Custom Sticky Navigation Bar Section - Product Page Navigation Component
  * 
- * A responsive sticky navigation bar that provides smooth scrolling navigation
- * to different sections of a product page with multi-language support and
- * integrated cart functionality.
+ * This section provides a sticky navigation bar that appears on product pages,
+ * offering quick access to different sections of the product page and a mirrored
+ * add-to-cart button for enhanced user experience.
  * 
- * FEATURES:
- * - Sticky navigation bar that appears when scrolling past header
- * - Multi-language navigation links (English, German, French, Finnish)
- * - Smooth scrolling to anchor sections with offset calculation
- * - Active section highlighting with visual indicators
- * - Integrated cart button mirroring from main product form
+ * CORE FEATURES:
+ * - Sticky positioning that activates after scrolling past the header
+ * - Multi-language navigation links with anchor-based scrolling
+ * - Mirrored add-to-cart button that syncs with the main product button
  * - Responsive design with mobile-first approach
- * - Z-index management for lightbox compatibility
- * - Horizontal scrolling for navigation links on smaller screens
+ * - Smooth scroll highlighting of active sections
+ * - Z-index management for proper lightbox display
+ * - Touch-friendly navigation with horizontal scrolling
+ * - Real-time button state synchronization
  * 
- * RESPONSIVE BEHAVIOR:
- * - Desktop: Full navigation with all links and cart button visible
- * - Tablet: Horizontal scrolling for navigation links when needed
- * - Mobile (≤768px): Hidden on mobile devices for optimal UX
- * - Adaptive title truncation based on screen size
- * 
- * LOCALIZATION:
- * - Supports 4 languages: English (en), German (de), French (fr), Finnish (fi)
- * - Automatic language detection based on request.locale.iso_code
- * - Fallback to English if localized content is not available
- * - Configurable anchor text for each supported language
- * 
- * NAVIGATION FEATURES:
- * - Smooth scrolling to target sections with header offset
- * - Active section highlighting with blue underline indicator
- * - Intersection Observer for automatic active state management
- * - Horizontal scroll for navigation links on overflow
- * - Keyboard accessibility with Escape key support
- * 
- * CART INTEGRATION:
- * - Real-time cart button mirroring from main product form
- * - Synchronized button state (enabled/disabled)
- * - Automatic style inheritance from original button
- * - Click event forwarding to original cart button
- * - Dynamic button text updates and state monitoring
- * 
- * TECHNICAL FEATURES:
- * - Intersection Observer API for section detection
- * - MutationObserver for dynamic content monitoring
+ * TECHNICAL IMPLEMENTATION:
+ * - CSS-based sticky positioning with JavaScript enhancement
+ * - Intersection Observer API for section highlighting
+ * - MutationObserver for button state monitoring
  * - Debounced scroll and resize handlers for performance
- * - CSS animations with fadeInDown effect
- * - Z-index management for modal/lightbox compatibility
- * - Event delegation and cleanup for memory efficiency
+ * - Dynamic header height calculation
+ * - Responsive breakpoints at 768px, 890px, 960px, 1120px, 1280px
  * 
- * DEFAULT PRESET:
- * - Highlights section navigation
- * - Specification section navigation
- * - Frame Geometry section navigation
- * - Review section navigation
+ * SHOPIFY INTEGRATION:
+ * - Block-based navigation link configuration
+ * - Multi-language support (English, German, French, Finnish)
+ * - Product title display integration
+ * - Cart button functionality mirroring
+ * - Locale-aware content switching
  * 
- * DEPENDENCIES:
- * - Modern browser with Intersection Observer support
- * - CSS3 animations and transforms
- * - ES6+ JavaScript features
- * - Shopify Liquid templating engine
+ * RELATED FILES:
  * 
- * BROWSER SUPPORT:
- * - Chrome 58+, Firefox 55+, Safari 12.1+, Edge 79+
- * - Graceful degradation for older browsers
- * - Mobile Safari and Chrome optimization
+ * Core Section File:
+ * - sections/custom-stickybar.liquid - This main section file
  * 
+ * Layout Dependencies:
+ * - layout/theme.liquid - Main theme layout with global settings and scripts
+ * 
+ * Template Usage:
+ * - Used in product templates that require sticky navigation
+ * - Referenced in various product.*.json template files
+ * 
+ * RESPONSIVE BREAKPOINTS:
+ * - Desktop (1280px+): Full navigation with all links visible
+ * - Large tablets (1120px-1279px): Reduced title width
+ * - Medium tablets (960px-1119px): Further title width reduction
+ * - Small tablets (890px-959px): Compact navigation links
+ * - Mobile (768px-889px): Hidden navigation links, title only
+ * - Small mobile (<768px): Completely hidden sticky bar
+ * 
+ * NAVIGATION CONFIGURATION:
+ * - Configurable anchor IDs for section targeting
+ * - Multi-language text support for each navigation link
+ * - Preset configurations for common product page sections
+ * - Smooth scroll behavior with offset calculation
+ * 
+ * BUTTON MIRRORING:
+ * - Real-time synchronization with main add-to-cart button
+ * - State management (enabled/disabled/loading)
+ * - Visual styling consistency
+ * - Click event forwarding to original button
+ * 
+ * BROWSER COMPATIBILITY:
+ * - Modern browsers with Intersection Observer support
+ * - CSS Grid and Flexbox for layout
+ * - CSS Custom Properties for theming
+ * - Progressive enhancement for older browsers
+ * 
+ * PERFORMANCE CONSIDERATIONS:
+ * - Debounced scroll handlers (50ms delay)
+ * - Efficient DOM queries with caching
+ * - Optimized observer patterns
+ * - Conditional rendering based on screen size
+ * 
+ * ACCESSIBILITY:
+ * - Keyboard navigation support
+ * - ARIA-compliant button states
+ * - Screen reader friendly navigation
+ * - Focus management for sticky elements
+ * 
+ * CUSTOMIZATION OPTIONS:
+ * - Configurable scroll offset (default: 30px)
+ * - Adjustable z-index values
+ * - Customizable animation timing
+ * - Flexible navigation link configuration
+ * 
+ * Z-INDEX MANAGEMENT:
+ * - Sticky bar: 999
+ * - Lightbox containers: 1000000
+ * - Automatic lightbox z-index fixing
+ * 
+ * USAGE SCENARIOS:
+ * - Product detail pages with multiple content sections
+ * - Long-form product descriptions requiring navigation
+ * - E-commerce sites with detailed product specifications
+ * - Mobile-optimized product browsing experiences
+ */
 {%- endcomment -%}
+
+// ... existing code ...
 
 {% schema %}
 {

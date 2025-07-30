@@ -3,52 +3,123 @@
   Custom Footer Block Section
   ============================================================================
   
-  Description: A comprehensive custom footer section for Shopify themes with
-  multi-language support and JobRad partnership integration. This component
-  provides flexible footer blocks with customizable call-to-action buttons
-  and localized content.
+  DESCRIPTION:
+  A comprehensive custom footer section for Shopify themes with advanced 
+  multi-language support and JobRad partnership integration. This component 
+  provides flexible footer blocks with customizable call-to-action buttons, 
+  localized content, and geo-targeted partner banners for enhanced user 
+  engagement and conversion optimization.
   
-  Features:
-  - Multi-language support (English, German, French, Finnish)
-  - JobRad partnership banner with geo-targeting (DE/AT)
-  - Up to 3 customizable footer blocks
-  - Responsive design with mobile-optimized layouts
-  - Background image support for each block
-  - Customizable button colors and text
-  - Hover effects and smooth transitions
-  - Grid layout adaptation for mobile devices
+  CORE FEATURES:
+  • Multi-Language Support: Full localization for English, German, French, Finnish
+  • JobRad Partnership Integration: Conditional geo-targeting for Germany/Austria
+  • Flexible Footer Blocks: Up to 3 customizable blocks with unique styling
+  • Responsive Design: Mobile-optimized layouts with adaptive grid system
+  • Background Image Support: Custom or default fallback images for each block
+  • Customizable Button System: Individual colors, text, and URL configuration
+  • Hover Effects: Smooth CSS transitions and interactive elements
+  • Grid Layout Adaptation: Smart mobile layout for optimal user experience
+  • Country-Based Filtering: Conditional content display based on user location
+  • Accessibility Features: ARIA labels and semantic HTML structure
   
-  Block Configuration:
-  - Background Image: Custom or default fallback images
-  - Button Text: Localized text for each supported language
-  - Button URL: Custom link destination
-  - Button Color: Customizable background color
+  BLOCK CONFIGURATION:
+  • Background Images: Custom image picker with default fallbacks
+  • Button Text: Localized text for all supported languages (EN/DE/FR/FI)
+  • Button URLs: Custom link destinations for each block
+  • Button Colors: Customizable background colors with hover effects
+  • Responsive Behavior: Automatic adaptation for mobile devices
   
-  JobRad Integration:
-  - Conditional display based on country (Germany/Austria)
-  - Localized partner text
-  - Custom JobRad icon rendering
-  - Configurable JobRad URL
+  JOBRAD INTEGRATION:
+  • Conditional Display: Based on country detection (Germany/Austria only)
+  • Localized Partner Text: Multi-language support for partnership messaging
+  • Custom JobRad Icon: Dedicated icon rendering with hover animations
+  • Configurable JobRad URL: Customizable link to JobRad partnership pages
+  • Geo-Targeting Logic: Uses Shopify's localization.country.iso_code
   
-  Responsive Behavior:
-  - Desktop: Horizontal layout with equal-width blocks
-  - Mobile: Adaptive grid layout for 3 blocks (first block full width, others split)
-  - Flexible button sizing with clamp() for optimal readability
+  RESPONSIVE BEHAVIOR:
+  • Desktop Layout: Horizontal layout with equal-width blocks (flex: 1)
+  • Mobile Layout: Adaptive grid system for optimal mobile experience
+  • 3-Block Mobile Grid: First block full width, remaining blocks split 50/50
+  • Flexible Button Sizing: CSS clamp() for optimal readability across devices
+  • Height Adaptation: Variable heights (500px desktop, 400px mobile)
   
-  Default Presets:
-  - "Need help choosing?" - Contact form block
-  - "Book a test ride" - Test ride booking block
-  - "Find a dealer" - Dealer locator block
+  DEFAULT PRESETS:
+  1. "Need help choosing?" - Contact form block with orange button (#f2a112)
+  2. "Book a test ride" - Test ride booking block with blue button (#2b7dde)
+  3. "Find a dealer" - Dealer locator block with red button (#fa6959)
   
-  Dependencies:
-  - icon-jobrad snippet for JobRad logo rendering
-  - Default background images (HEPHA-contact-form.jpg, etc.)
+  TECHNICAL IMPLEMENTATION:
+  • CSS Custom Properties: Maintainable styling with CSS variables
+  • Conditional Liquid Rendering: Locale-based content switching
+  • Country-Based Content Filtering: Geo-targeted feature display
+  • Optimized Image Loading: Shopify's img_url filter with size optimization
+  • Semantic HTML Structure: Proper accessibility and SEO optimization
+  • Smooth Animations: CSS transitions for enhanced user experience
   
-  Technical Notes:
-  - Uses CSS custom properties for maintainable styling
-  - Implements conditional rendering based on locale
-  - Supports country-based content filtering
-  - Optimized image loading with Shopify's img_url filter
+  DEPENDENCIES AND RELATED FILES:
+  
+  Snippet Dependencies:
+  • snippets\icon-jobrad.liquid - JobRad logo SVG rendering with custom styling
+  
+  Related Snippet Files:
+  • snippets\leasing-partner.liquid - Partner integration (jobrad,bikeleasing,deutsche,businessbike)
+  
+  Theme Structure Files:
+  • layout\theme.liquid - Main theme layout with global configurations
+  • sections\footer.liquid - Standard footer section (separate from custom footer)
+  
+  SCHEMA CONFIGURATION:
+  • Section Name: "Custom footer block"
+  • Category: "Custom"
+  • Max Blocks: 3 footer blocks maximum
+  • Settings: JobRad banner toggle, JobRad URL, multi-language partner text
+  • Block Settings: Background image picker, multi-language button text, button URL, button color
+  • Default Preset: Complete 3-block setup with localized content
+  
+  STYLING FEATURES:
+  • CSS Custom Properties: --banner-height (500px), --mobile-banner-height (400px), --jobrad-icon-width (120px)
+  • Responsive Grid System: Flexible layout adaptation for mobile devices
+  • Hover Animations: Transform effects and box-shadow enhancements
+  • Color Customization: Individual button color configuration
+  • Typography: Clamp-based font sizing for optimal readability
+  • Overlay Effects: Semi-transparent overlays for better text readability
+  
+  BROWSER SUPPORT:
+  • Modern browsers with CSS Grid and Flexbox support
+  • CSS Custom Properties (CSS Variables) compatibility
+  • CSS clamp() function for responsive typography
+  • Transform and transition animations
+  • Shopify Liquid templating engine
+  
+  PERFORMANCE CONSIDERATIONS:
+  • Optimized image loading with Shopify's img_url filter
+  • Conditional rendering to reduce unnecessary DOM elements
+  • CSS-only animations for smooth performance
+  • Minimal JavaScript dependencies (none required)
+  • Efficient Liquid logic for locale detection
+  
+  ACCESSIBILITY FEATURES:
+  • Semantic HTML structure with proper heading hierarchy
+  • ARIA labels for interactive elements
+  • Keyboard navigation support
+  • Screen reader compatibility
+  • High contrast button designs
+  • Focus indicators for interactive elements
+  
+  LOCALIZATION SUPPORT:
+  • English (EN): Default language with fallback support
+  • German (DE): Full localization for German market
+  • French (FR): Complete French language support
+  • Finnish (FI): Finnish market localization
+  • Automatic locale detection via request.locale.iso_code
+  • Country-based feature toggling via localization.country.iso_code
+  
+  USAGE EXAMPLES:
+  • E-commerce footer with call-to-action blocks
+  • Partnership banner integration (JobRad)
+  • Multi-language website footer sections
+  • Conversion-optimized footer layouts
+  • Mobile-first responsive footer designs
   
   ============================================================================
 {% endcomment %}

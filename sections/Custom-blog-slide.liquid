@@ -1,76 +1,100 @@
-{% comment %}
-  ============================================================================
-  Custom Blog Carousel Section
-  ============================================================================
-  
-  Description: A responsive blog article carousel component for Shopify themes
-  with multi-language support and touch-friendly navigation. This section
-  displays selected blog articles in an interactive sliding carousel format
-  with customizable styling and localized content.
-  
-  Features:
-  - Multi-language support (English, German, French, Finnish)
-  - Responsive carousel with adaptive slide counts
-  - Touch/swipe navigation for mobile devices
-  - Customizable image aspect ratios
-  - Hover effects and smooth animations
-  - Article selection via blocks
-  - Customizable button styling with hover states
-  - Automatic image optimization and lazy loading
-  - Fallback placeholder for articles without images
-  
-  Responsive Behavior:
-  - Desktop (>1200px): 3 slides visible
-  - Tablet (769-1200px): 2 slides visible
-  - Mobile (<769px): 1 slide visible
-  - Touch navigation enabled on all devices
-  
-  Localization:
-  - Section titles localized for each supported language
-  - Button text localized with fallback to default
-  - Automatic locale detection via request.locale.iso_code
-  
-  Customization Options:
-  - Section title (multi-language)
-  - Image aspect ratio (16:9, 3:4, 1:1, Natural)
-  - Button text (multi-language)
-  - Button colors (background, text, hover states)
-  - Article selection via blocks
-  
-  Article Display:
-  - Article featured image with hover zoom effect
-  - Publication date formatting
-  - Article title with truncation (2 lines max)
-  - Article excerpt with 120 character limit
-  - Call-to-action button linking to full article
-  
-  Navigation Controls:
-  - Previous/Next arrow buttons with SVG icons
-  - Touch/swipe gestures for mobile navigation
-  - Automatic arrow visibility based on content
-  - Smooth transitions and animations
-  
-  Technical Features:
-  - CSS custom properties for dynamic styling
-  - JavaScript carousel functionality with touch support
-  - Responsive image loading with proper alt attributes
-  - Accessibility-friendly navigation controls
-  - Performance optimized with will-change and transform
-  
-  Dependencies:
-  - Shopify's img_url filter for image optimization
-  - Shopify's placeholder_svg_tag for fallback images
-  - CSS Grid and Flexbox for responsive layouts
-  - Touch event handling for mobile interaction
-  
-  Browser Support:
-  - Modern browsers with CSS Grid and Flexbox support
-  - Touch event support for mobile devices
-  - CSS custom properties (CSS variables)
-  - ES6 JavaScript features
-  
-  ============================================================================
-{% endcomment %}
+{%- comment -%}
+/**
+ * Custom Blog Slide Section - Interactive Blog Article Carousel
+ * 
+ * DESCRIPTION:
+ * A responsive, touch-enabled carousel component that displays blog articles in an interactive slideshow format.
+ * Features multi-language support, customizable styling, and smooth navigation with arrow controls and touch gestures.
+ * Designed for showcasing featured blog posts, news articles, and content highlights across the website.
+ * 
+ * CORE FEATURES:
+ * - Responsive carousel with 3-column desktop, 2-column tablet, 1-column mobile layout
+ * - Multi-language support for 4 locales (English, German, French, Finnish)
+ * - Touch/swipe navigation with momentum and gesture recognition
+ * - Customizable button colors and hover states via CSS custom properties
+ * - Lazy loading for images with eager loading for first 3 articles
+ * - Configurable image aspect ratios (16:9, 3:4, 1:1, natural)
+ * - Article excerpt truncation with fallback to content
+ * - Navigation arrows with SVG icons and accessibility features
+ * - Smooth CSS transitions and hover effects
+ * - Auto-responsive breakpoints for optimal viewing
+ * 
+ * TECHNICAL IMPLEMENTATION:
+ * - Pure JavaScript carousel with no external dependencies
+ * - CSS Grid and Flexbox for responsive layouts
+ * - CSS custom properties for dynamic theming
+ * - Touch event handling for mobile devices
+ * - Intersection-based visibility management
+ * - Performance-optimized with will-change properties
+ * 
+ * SHOPIFY INTEGRATION:
+ * - Uses Shopify's article picker for content selection
+ * - Integrates with Shopify's image transformation API
+ * - Supports Shopify's localization system
+ * - Compatible with Shopify's schema system for theme customization
+ * 
+ * RELATED FILES AND DEPENDENCIES:
+ * 
+ * Core Template Files:
+ * - layout/theme.liquid - Main theme layout with global scripts and styles
+ * - sections/main-blog.liquid - Main blog listing page with similar article display patterns
+ * - sections/main-article.liquid - Individual article page template
+ * 
+ * Utility Snippets:
+ * - snippets/animation-attrs.liquid - Animation attribute helper for scroll-triggered animations
+ * - snippets/image.liquid - Image rendering utilities (if used for fallbacks)
+ * 
+ * Asset Dependencies:
+ * - assets/section-basestyles.css - Base styling framework for sections
+ * - No external JavaScript dependencies (self-contained)
+ * 
+ * Schema Configuration:
+ * - Supports article block selection via Shopify admin
+ * - Multi-language text settings for titles and buttons
+ * - Color customization for buttons and hover states
+ * - Image aspect ratio configuration options
+ * 
+ * RESPONSIVE BREAKPOINTS:
+ * - Desktop (1201px+): 3 slides visible
+ * - Tablet (769px-1200px): 2 slides visible  
+ * - Mobile (768px and below): 1 slide visible
+ * - Touch devices: Swipe navigation enabled
+ * 
+ * BROWSER COMPATIBILITY:
+ * - Modern browsers with CSS Grid support
+ * - Touch event support for mobile devices
+ * - CSS custom properties support required
+ * - Flexbox support required
+ * 
+ * PERFORMANCE CONSIDERATIONS:
+ * - Lazy loading for images beyond first 3
+ * - CSS will-change properties for smooth animations
+ * - Optimized touch event handling
+ * - Minimal DOM manipulation for better performance
+ * 
+ * ACCESSIBILITY FEATURES:
+ * - Keyboard navigation support
+ * - Screen reader friendly markup
+ * - Alt text support for images
+ * - Semantic HTML structure
+ * - Focus management for interactive elements
+ * 
+ * CUSTOMIZATION OPTIONS:
+ * - Section title in 4 languages
+ * - Button text in 4 languages
+ * - Button background and text colors
+ * - Button hover state colors
+ * - Image aspect ratio selection
+ * - Article selection per block
+ * 
+ * USAGE EXAMPLES:
+ * - Homepage featured articles section
+ * - News and updates carousel
+ * - Blog highlights on landing pages
+ * - Content marketing showcases
+ * - Related articles sections
+ */
+{%- endcomment -%}
 
 {% assign locale_prefix = request.locale.iso_code | slice: 0, 2 | downcase %}
 

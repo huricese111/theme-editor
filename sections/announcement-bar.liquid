@@ -1,36 +1,104 @@
 {%- comment -%}
   ANNOUNCEMENT BAR SECTION
   
-  This section creates a customizable announcement bar that appears at the top of the website.
+  This section creates a customizable announcement bar that appears at the top of the website,
+  providing dynamic content rotation, multilingual support, and interactive features.
   
-  FEATURES:
-  - Multiple announcement blocks with rotation capability
-  - Multilingual support (English, German, French)
-  - Countdown timer functionality
-  - Custom styling with color and gradient options
+  MAIN FEATURES:
+  - Multiple announcement blocks with automatic rotation capability
+  - Comprehensive multilingual support (English, German, French)
+  - Interactive countdown timer functionality with customizable display
+  - Advanced styling with color and gradient options
   - Social media icons integration
-  - Language and country selector
+  - Language and country selector with enhanced UI
   - Responsive design with mobile-specific behavior
-  - Custom announcement buttons with hover effects
+  - Custom announcement buttons with hover effects and animations
+  - Navigation controls for manual announcement switching
+  - Dynamic background switching for different announcements
   
-  STRUCTURE:
+  LAYOUT STRUCTURE:
   - Left section: Social media icons (desktop only)
   - Middle section: Announcement text, countdown timer, and action buttons
   - Right section: Navigation menu and language/country selectors (desktop only)
   
-  STYLING:
-  - CSS variables for dynamic theming
-  - Flexbox layout for proper alignment
-  - Smooth transitions and hover effects
-  - Mobile-responsive button hiding
-  - Custom SVG arrow icons
+  STYLING FEATURES:
+  - CSS variables for dynamic theming and color management
+  - Flexbox layout for proper alignment and responsive behavior
+  - Smooth transitions and hover effects for interactive elements
+  - Mobile-responsive button hiding and layout adjustments
+  - Custom SVG arrow icons with transform animations
+  - Gradient background support with opacity controls
   
-  CUSTOMIZATION:
-  - Background colors and gradients
-  - Text colors and font sizes
-  - Button styling and colors
-  - Countdown timer display options
-  - Social media and menu integration
+  CUSTOMIZATION OPTIONS:
+  - Background colors and gradients (global and per-block)
+  - Text colors and font sizes with responsive scaling
+  - Button styling, colors, and hover states
+  - Countdown timer display options and separator styles
+  - Social media and menu integration settings
+  - Animation and transition controls
+  
+  MULTILINGUAL SUPPORT:
+  - Dynamic text switching based on locale (English, German, French)
+  - Localized button text and announcement content
+  - Country-specific flag displays in language switcher
+  - Fallback content for unsupported languages
+  
+  COUNTDOWN TIMER FEATURES:
+  - Configurable end date and time
+  - Multiple separator styles (box, dash, dot, space)
+  - Font selection (base or heading font)
+  - Auto-hide functionality when timer expires
+  - Real-time updates with JavaScript integration
+  
+  RESPONSIVE DESIGN:
+  - Mobile-first approach with progressive enhancement
+  - Tablet-specific layout adjustments for long announcements
+  - Desktop-only elements (social icons, language switcher)
+  - Adaptive font sizes and spacing
+  
+  PERFORMANCE CONSIDERATIONS:
+  - Deferred JavaScript loading for countdown functionality
+  - CSS-only animations for better performance
+  - Conditional rendering to reduce DOM complexity
+  - Optimized asset loading
+  
+  ACCESSIBILITY FEATURES:
+  - ARIA labels for navigation buttons
+  - Semantic HTML structure
+  - Keyboard navigation support
+  - Screen reader friendly content
+  
+  RELATED FILES AND DEPENDENCIES:
+  
+  JavaScript Assets:
+  - assets/countdown-timer.js - Countdown timer functionality and real-time updates
+  
+  Liquid Snippets:
+  - snippets/animation-attrs.liquid - Animation attribute management for sections
+  - snippets/enhanced-language-switcher.liquid - Advanced language and country selector with flag icons
+  - snippets/sharing-block.liquid - Social sharing functionality (contains social-share rendering)
+  
+  Note: The following snippets are referenced but may be defined inline or in theme core:
+  - 'social-media' - Social media icons rendering (referenced but file not found in snippets)
+  - 'icon-chevron-left' - Left navigation arrow icon (referenced but file not found in snippets)
+  - 'icon-chevron-right' - Right navigation arrow icon (referenced but file not found in snippets)
+  - 'countdown-timer' - Countdown display component (referenced but file not found in snippets)
+  
+  Layout Dependencies:
+  - layout/theme.liquid - Contains doc-head-social rendering for social meta tags
+  
+  External Dependencies:
+  - Shopify theme settings (social media configuration, language settings)
+  - Shopify localization system for country/language detection
+  - Shopify link lists for navigation menu integration
+  - Browser localStorage for potential announcement state management
+  
+  Schema Configuration:
+  - Section-level settings for colors, fonts, and display options
+  - Block-level settings for individual announcements
+  - Multilingual text fields for each supported language
+  - Countdown timer configuration options
+  - Social media and navigation integration settings
 {%- endcomment -%}
 
 {% if section.blocks.size > 0 or section.settings.enable_language_selector or section.settings.enable_country_selector or section.settings.menu != blank %}

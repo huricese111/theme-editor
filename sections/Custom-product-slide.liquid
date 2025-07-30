@@ -1,55 +1,105 @@
-{% comment %}
-  ============================================================================
-  Custom Product Carousel Section
-  ============================================================================
-
-  Description: A responsive product carousel component for Shopify themes
-  with multi-language support and touch-friendly navigation. This section
-  displays selected products in an interactive sliding carousel format
-  with customizable styling and localized content.
-
-  Features:
-  - Multi-language support (English, German, French, Finnish)
-  - Responsive carousel with adaptive slide counts
-  - Touch/swipe navigation for mobile devices
-  - Customizable image aspect ratios
-  - Hover effects and smooth animations
-  - Product selection via blocks (single product, collection, related products)
-  - Customizable button styling with hover states
-  - Automatic image optimization and lazy loading
-
-  Responsive Behavior:
-  - Desktop (>1200px): 3 slides visible
-  - Tablet (769-1200px): 2 slides visible
-  - Mobile (<769px): 1 slide visible
-  - Touch navigation enabled on all devices
-
-  Localization:
-  - Section titles localized for each supported language
-  - Button text localized with fallback to default
-  - Automatic locale detection via request.locale.iso_code
-
-  Customization Options:
-  - Section title (multi-language)
-  - Image aspect ratio (16:9, 3:4, 1:1, Natural)
-  - Button text (multi-language)
-  - Button colors (background, text, hover states)
-  - Product selection via blocks
-
-  Product Display:
-  - Product featured image with hover zoom effect
-  - Product title
-  - Product price
-  - Call-to-action button linking to product page
-
-  Navigation Controls:
-  - Previous/Next arrow buttons with SVG icons
-  - Touch/swipe gestures for mobile navigation
-  - Automatic arrow visibility based on content
-  - Smooth transitions and animations
-
-  ============================================================================
-{% endcomment %}
+{%- comment -%}
+/**
+ * Custom Product Slide Section
+ * 
+ * DESCRIPTION:
+ * A dynamic and responsive product carousel section for Shopify themes that displays
+ * products in an interactive sliding interface. This section supports multiple content
+ * types including single products, collection products, and related products with
+ * comprehensive multi-language support and customizable styling options.
+ * 
+ * CORE FEATURES:
+ * - Responsive product carousel with touch/swipe navigation
+ * - Multiple content types: single product, collection products, related products
+ * - Multi-language support (English, German, French, Finnish)
+ * - Customizable button styling with hover effects
+ * - Configurable image aspect ratios (16:9, 3:4, 1:1, natural)
+ * - Touch-friendly mobile navigation
+ * - Dynamic section ID-based styling for multiple instances
+ * - Product metafield integration for detailed product information
+ * - Responsive breakpoints for optimal display across devices
+ * 
+ * TECHNICAL IMPLEMENTATION:
+ * - CSS Grid and Flexbox for responsive layout
+ * - JavaScript-powered carousel with touch event handling
+ * - CSS custom properties for dynamic theming
+ * - Section-specific CSS classes to prevent style conflicts
+ * - Smooth CSS transitions and animations
+ * - Performance-optimized touch event handling
+ * 
+ * SHOPIFY INTEGRATION:
+ * - Shopify section schema with block-based content management
+ * - Product and collection picker integration
+ * - Shopify metafields for product specifications
+ * - Shopify localization system integration
+ * - Related products via custom metafields
+ * 
+ * RELATED FILES:
+ * 
+ * Core Section File:
+ * - sections/Custom-product-slide.liquid - This main section file
+ * 
+ * Asset Dependencies:
+ * - assets/section-basestyles.css - Base styling for custom sections
+ * 
+ * Snippet Dependencies:
+ * - snippets/product-block.liquid - Product card rendering component
+ * 
+ * Layout Dependencies:
+ * - layout/theme.liquid - Main theme layout with global settings
+ * 
+ * RESPONSIVE BREAKPOINTS:
+ * - Desktop (>1200px): 3 products visible
+ * - Tablet (769px-1200px): 2 products visible
+ * - Mobile (≤768px): 1 product visible
+ * - Small mobile (≤480px): Navigation arrows hidden
+ * 
+ * CONTENT TYPES:
+ * 1. Single Product: Display individually selected products
+ * 2. Collection Products: Display products from a selected collection
+ * 3. Related Products: Display products related via custom metafields
+ * 
+ * BROWSER COMPATIBILITY:
+ * - Modern browsers with CSS Grid and Flexbox support
+ * - Touch event support for mobile devices
+ * - CSS custom properties support
+ * - ES6+ JavaScript features
+ * 
+ * PERFORMANCE CONSIDERATIONS:
+ * - Section-specific CSS to avoid global style conflicts
+ * - Efficient DOM manipulation and event handling
+ * - Touch event debouncing for smooth interaction
+ * - Optimized carousel positioning calculations
+ * 
+ * ACCESSIBILITY FEATURES:
+ * - Semantic HTML structure
+ * - Keyboard navigation support
+ * - Screen reader friendly content
+ * - High contrast hover states
+ * 
+ * CUSTOMIZATION OPTIONS:
+ * - Section title with multi-language variants
+ * - Image aspect ratio selection
+ * - Button styling (colors, hover effects)
+ * - Product limit configuration for collections
+ * - Content type selection per block
+ * 
+ * METAFIELD INTEGRATION:
+ * The section integrates with various product metafields including:
+ * - Motor specifications (torque, model)
+ * - Battery information (capacity, model)
+ * - Display details (size, type)
+ * - Frame and component specifications
+ * - Brake and drivetrain information
+ * 
+ * USAGE SCENARIOS:
+ * - Product recommendation sections
+ * - Featured product showcases
+ * - Related product displays
+ * - Collection highlights
+ * - Cross-selling opportunities
+ */
+{%- endcomment -%}
 
 {{ 'section-basestyles.css' | asset_url | stylesheet_tag }}
 

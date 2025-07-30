@@ -1,25 +1,104 @@
-<!-- 
-  Custom Slideshow Component
-  
-  Features:
-  - Responsive multi-layout slideshow with 4 positioning options (image-top, image-bottom, image-left, image-right)
-  - Multi-language support for 4 locales (English, German, French, Finnish) with dynamic content switching
-  - Customizable sales tags system (up to 3 tags per slide) with localized text
-  - Interactive navigation controls: previous/next buttons, dot pagination, and auto-play functionality
-  - Fully responsive design with mobile-optimized layouts and touch-friendly controls
-  - Configurable styling options: background colors, button colors, and text colors
-  - WebP image optimization with responsive srcset for performance
-  - Accessibility features with proper alt text and keyboard navigation
-  - Auto-play with 5-second intervals and user interaction pause/resume
-  - Mobile-first approach with stacked layouts and hidden navigation on small screens
-  
-  Technical Implementation:
-  - Liquid templating with dynamic schema configuration
-  - CSS Grid and Flexbox for responsive layouts
-  - Vanilla JavaScript for slideshow functionality
-  - CSS transitions and transforms for smooth animations
-  - Media queries for mobile responsiveness (768px breakpoint)
--->
+{%- comment -%}
+/**
+ * CUSTOM SLIDESHOW SECTION
+ * 
+ * A comprehensive and responsive slideshow component that displays promotional content
+ * in an interactive carousel format. This section supports multiple layout configurations,
+ * multi-language content, and advanced customization options for creating engaging
+ * hero banners and promotional displays.
+ * 
+ * CORE FEATURES:
+ * - Multi-layout slideshow with 4 layout options (image-right, image-left, image-top, image-bottom)
+ * - Auto-playing carousel with manual navigation controls
+ * - Multi-language support (English, German, French, Finnish)
+ * - Customizable sales tags with localized content
+ * - Responsive design with mobile-optimized layouts
+ * - Touch/swipe navigation for mobile devices
+ * - Pagination dots and arrow navigation
+ * - Customizable typography and color schemes
+ * - Background color customization per slide
+ * 
+ * TECHNICAL IMPLEMENTATION:
+ * - CSS-based slide transitions with opacity animations
+ * - JavaScript-powered carousel functionality with autoplay
+ * - Responsive image handling with srcset and WebP format support
+ * - Mobile-first responsive design with breakpoint at 768px
+ * - CSS Grid and Flexbox layouts for different screen sizes
+ * - Touch event handling for mobile swipe gestures
+ * 
+ * SHOPIFY INTEGRATION:
+ * - Shopify Liquid templating with block-based architecture
+ * - Image picker integration with Shopify's image transformation API
+ * - Multi-language locale detection and content switching
+ * - URL picker for button links with Shopify URL handling
+ * - Rich text editor support for descriptions
+ * - Color picker integration for styling customization
+ * 
+ * RELATED FILES:
+ * 
+ * Core Section File:
+ * - sections/custom-slideshow.liquid - This main section file
+ * 
+ * Layout Dependencies:
+ * - layout/theme.liquid - Main theme layout with global settings and scripts
+ * 
+ * RESPONSIVE BREAKPOINTS:
+ * - Desktop (769px+): Full carousel functionality with navigation controls
+ * - Mobile (768px-): Stacked layout with disabled navigation, vertical scrolling
+ * 
+ * LAYOUT CONFIGURATIONS:
+ * - image-right: Text content on left, image on right (default)
+ * - image-left: Image on left, text content on right
+ * - image-top: Image above text content
+ * - image-bottom: Text content above image
+ * 
+ * BROWSER COMPATIBILITY:
+ * - Modern browsers with CSS Grid and Flexbox support
+ * - Touch device support for mobile navigation
+ * - Progressive enhancement for older browsers
+ * - WebP image format support with fallbacks
+ * 
+ * PERFORMANCE CONSIDERATIONS:
+ * - Lazy loading support for slide images
+ * - WebP format optimization for faster loading
+ * - Responsive image srcset for optimal bandwidth usage
+ * - Hardware-accelerated CSS transitions
+ * - Efficient JavaScript with event delegation
+ * - Automatic cleanup of event listeners on resize
+ * 
+ * ACCESSIBILITY:
+ * - Semantic HTML structure with proper heading hierarchy
+ * - Alt text support for all images
+ * - Keyboard navigation support for controls
+ * - Focus management for interactive elements
+ * - Screen reader friendly content structure
+ * 
+ * CUSTOMIZATION OPTIONS:
+ * - Unlimited slides with individual configuration
+ * - Layout selection per slide
+ * - Background color customization per slide
+ * - Typography controls (font size, weight, color)
+ * - Mobile-specific font size settings
+ * - Button styling (text color, background color)
+ * - Sales tag configuration with multi-language support
+ * - Image upload and positioning
+ * - Link destination configuration
+ * 
+ * AUTOPLAY FUNCTIONALITY:
+ * - 5-second interval between slides
+ * - Automatic pause on user interaction
+ * - Resume autoplay after user interaction
+ * - Disabled on mobile devices for better UX
+ * 
+ * USAGE SCENARIOS:
+ * - Homepage hero banners
+ * - Product promotional displays
+ * - Seasonal campaign showcases
+ * - Multi-product feature highlights
+ * - Brand storytelling presentations
+ */
+{%- endcomment -%}
+
 <div class="slideshow-container">
   {% for slide in section.blocks %}
     <div

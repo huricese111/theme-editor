@@ -292,23 +292,25 @@ document.addEventListener('DOMContentLoaded', function () {
     hideSuggestions();
   }
 
+  // 在updateMapForCard函数中添加store_type参数
   function updateMapForCard(card) {
     const address = card.getAttribute('data-address');
     const city = card.getAttribute('data-city');
     const country = card.getAttribute('data-country');
-
+    const storeType = card.getAttribute('data-store-type') || 'dealer'; // 获取store_type
+  
     let fullAddress = '';
     if (address) fullAddress += address;
     if (city) fullAddress += (fullAddress ? ', ' : '') + city;
     if (country) fullAddress += (fullAddress ? ', ' : '') + country;
-
+  
     if (!fullAddress) return;
-
+  
     const infoContent = createInfoWindowContent(card);
-
+  
     if (mapType === 'dynamic') {
       if (window.updateDynamicMap) {
-        window.updateDynamicMap(fullAddress);
+        window.updateDynamicMap(fullAddress, storeType); // 传递storeType
         setTimeout(() => {
           if (window.updateInfoWindow) {
             console.log('Updating info window with content:', infoContent);

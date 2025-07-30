@@ -1,41 +1,117 @@
-{% comment %}
-  ============================================================================
-  Cart Drawer Section
-  ============================================================================
-  
-  Description: A slide-out shopping cart drawer component for Shopify themes.
-  This section provides a comprehensive cart experience with item management,
-  cross-selling functionality, and customizable announcements. Only renders
-  when cart type is set to drawer (not page or when on cart template).
-  
-  Features:
-  - Slide-out drawer interface with smooth animations
-  - Real-time cart item management (add, remove, update quantities)
-  - Cross-sell product recommendations (manual or automatic)
-  - Customizable announcement messages with positioning options
-  - Free shipping progress bar integration
-  - Order notes functionality
-  - Discount code display and management
-  - Responsive design optimized for mobile and desktop
-  - AJAX-powered updates without page refresh
-  
-  Components:
-  - Cart header with item count and close button
-  - Cart item list with quantity controls
-  - Cross-sell product carousel
-  - Subtotal and checkout section
-  - Announcement blocks (configurable positioning)
-  - Custom liquid content area
-  
-  Dependencies:
-  - cart-drawer.js (main functionality)
-  - cart-note.js (order notes, conditional)
-  - Various icon snippets
-  - Cart item snippet
-  - Product block snippet for cross-sells
-  
-  ============================================================================
-{% endcomment %}
+{%- comment -%}
+/**
+ * Cart Drawer Section - Slide-out Shopping Cart Component
+ * 
+ * This section provides a comprehensive slide-out shopping cart drawer with advanced
+ * e-commerce functionality, real-time cart management, and multi-language support.
+ * 
+ * CORE FEATURES:
+ * - Slide-out cart drawer with smooth animations
+ * - Real-time cart item management (add, remove, update quantities)
+ * - Cross-selling product recommendations with carousel
+ * - Free shipping progress bar integration
+ * - Customizable announcement banners
+ * - Order notes functionality with toggle interface
+ * - Discount code display and management
+ * - Product quantity limit enforcement with modal warnings
+ * - Zero-price checkout restriction system
+ * - Empty cart state with customizable content
+ * - Responsive design with mobile optimization
+ * 
+ * MULTILINGUAL SUPPORT:
+ * - Product quantity limit messages (English, German, French, Finnish)
+ * - Zero-price restriction messages (English, German, French, Finnish)
+ * - Localized cart labels and interface text
+ * - Multi-language announcement content
+ * 
+ * CART MANAGEMENT:
+ * - Dynamic cart item rendering with product details
+ * - Quantity controls with increase/decrease buttons
+ * - Line item discount display
+ * - Subtotal and tax calculations
+ * - Terms and conditions checkbox integration
+ * - Direct checkout functionality
+ * 
+ * CROSS-SELLING FEATURES:
+ * - Recommended products carousel
+ * - Manual product selection or automatic recommendations
+ * - Configurable color schemes for product blocks
+ * - Product block integration with detailed metadata
+ * 
+ * CUSTOMIZATION OPTIONS:
+ * - Show/hide order notes functionality
+ * - Tax and shipping information display
+ * - Direct checkout enablement
+ * - Terms and conditions linking
+ * - Backorder text display
+ * - Product quantity limits configuration
+ * - Inventory notice settings (never, low stock, always)
+ * - Announcement banner customization (text, icons, styling)
+ * - Empty cart state customization (icon, text, button, colors)
+ * - Recommended products configuration
+ * 
+ * TECHNICAL FEATURES:
+ * - Custom web components (cart-drawer, cart-form, cart-note)
+ * - JavaScript-driven interactivity and AJAX updates
+ * - CSS animations and transitions
+ * - Accessible navigation with ARIA labels
+ * - Modal dialogs for user notifications
+ * - Event-driven cart updates and synchronization
+ * 
+ * DEPENDENCIES:
+ * 
+ * JavaScript Assets:
+ * - assets/cart-drawer.js - Main cart drawer functionality and event handling
+ * - assets/cart-note.js - Order notes functionality (conditional loading)
+ * 
+ * Liquid Snippets:
+ * - snippets/cart-item.liquid - Individual cart item rendering with quantity controls
+ * - snippets/product-block.liquid - Product recommendation blocks with detailed metadata
+ * - snippets/free-shipping-bar.liquid - Free shipping progress indicator (referenced but file not found)
+ * 
+ * Icon Snippets (referenced but may be inline or in theme core):
+ * - 'icon-close' - Close button icons for drawer and modals
+ * - 'icon-chevron-left' - Left navigation arrow for carousel
+ * - 'icon-chevron-right' - Right navigation arrow for carousel
+ * - 'icon-label' - Discount label icon
+ * - 'icon-basket' - Basket cart icon option
+ * - 'icon-bag' - Bag cart icon option
+ * - 'icon-cart' - Cart icon option
+ * 
+ * Layout Dependencies:
+ * - layout/theme.liquid - Contains cart routes and localization strings
+ * 
+ * Template Dependencies:
+ * - templates/cart.json - Main cart page template configuration
+ * 
+ * External Dependencies:
+ * - Shopify Cart API for real-time updates
+ * - Shopify theme settings for configuration options
+ * - Shopify localization system for multi-language support
+ * - CSS custom properties for theming
+ * - Intersection Observer API for performance optimization
+ * 
+ * BROWSER SUPPORT:
+ * - Modern browsers with ES6+ support
+ * - Custom Elements API for web components
+ * - CSS Grid and Flexbox for layout
+ * - Progressive enhancement for older browsers
+ * 
+ * PERFORMANCE CONSIDERATIONS:
+ * - Lazy loading for product images
+ * - Deferred JavaScript loading
+ * - Optimized CSS animations
+ * - Event delegation for dynamic content
+ * - Minimal DOM manipulation
+ * 
+ * ACCESSIBILITY FEATURES:
+ * - ARIA labels and roles for screen readers
+ * - Keyboard navigation support
+ * - Focus management for modal dialogs
+ * - Semantic HTML structure
+ * - High contrast support
+ */
+{%- endcomment -%}
 
 {%- unless template.name == 'cart' or settings.cart_type == 'page' -%}
 {%- capture announcement -%}

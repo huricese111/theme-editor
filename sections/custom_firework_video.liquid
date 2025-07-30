@@ -3,38 +3,85 @@
   Custom Firework Video Playlist Section
   ============================================================================
   
-  Description: A versatile Shopify section for integrating Firework video
-  playlists with multiple display modes. This component allows merchants to
-  showcase video content in various formats to enhance user engagement.
+  DESCRIPTION:
+  A comprehensive Shopify section for integrating Firework video playlists 
+  with multiple display modes and responsive design. This component enables 
+  merchants to showcase video content in various formats to enhance user 
+  engagement and product demonstrations across the Hepha e-bike website.
   
-  Features:
-  - Multiple display modes: Story Block, Floating Player, Grid, Carousel, Hero Unit
-  - Dynamic playlist integration via Firework CDN
-  - Responsive design with adaptive styling
-  - Autoplay functionality for enhanced user experience
-  - Customizable player placement and video limits
-  - Seamless integration with Firework's embed system
+  CORE FEATURES:
+  • Multiple Display Modes: Story Block, Floating Player, Grid, Carousel, Hero Unit
+  • Dynamic Playlist Integration: Via Firework CDN with real-time content updates
+  • Responsive Design: Adaptive styling for all device types and screen sizes
+  • Autoplay Functionality: Enhanced user experience with automatic video playback
+  • Customizable Player Placement: Flexible positioning and video limit controls
+  • Seamless Firework Integration: Native embed system compatibility
+  • Channel Branding: Configured for 'hepha' brand consistency
+  • Smooth Transitions: CSS-based animations for mode switching
   
-  Display Modes:
-  - Story Block (default): Standard story-style video presentation
-  - Floating Player (pinned): Minimized floating video player
-  - Grid: Grid layout for multiple video thumbnails
-  - Carousel (row): Horizontal scrolling video carousel
-  - Hero Unit: Large featured video display
+  DISPLAY MODES:
+  1. Story Block (default): Standard story-style video presentation
+  2. Floating Player (pinned): Minimized floating video player with zero padding
+  3. Grid: Grid layout for multiple video thumbnails with embed-feed
+  4. Carousel (row): Horizontal scrolling video carousel with embed-feed
+  5. Hero Unit: Large featured video display with herounit component
   
-  Configuration:
-  - Playlist ID: Firework playlist identifier
-  - Mode Selection: Choose from 5 different display formats
-  - Channel: Set to 'hepha' for brand consistency
+  CONFIGURATION OPTIONS:
+  • Playlist ID: Firework playlist identifier for content source
+  • Mode Selection: Choose from 5 different display formats
+  • Channel: Set to 'hepha' for brand consistency
+  • Autoplay: Enabled by default for enhanced engagement
+  • Player Placement: Bottom-right positioning for grid and carousel modes
+  • Max Videos: Unlimited (set to 0) for comprehensive content display
   
-  Dependencies:
-  - Firework CDN scripts (storyblock.js, embed-feed.js, fwn.js)
-  - Custom CSS for mode-specific styling
+  TECHNICAL IMPLEMENTATION:
+  • Conditional Liquid Logic: Mode-specific rendering with if/elsif statements
+  • Custom CSS Styling: Inline styles for videoblock container and transitions
+  • External Script Loading: Asynchronous loading of Firework CDN scripts
+  • Web Components: Uses fw-storyblock, fw-embed-feed, and fw-herounit elements
+  • Responsive Container: .videoblock class with adaptive padding and transitions
   
-  Technical Notes:
-  - Uses conditional Liquid logic for mode-specific rendering
-  - Implements smooth transitions for pinned mode
-  - Supports both embed-feed and storyblock components
+  DEPENDENCIES AND RELATED FILES:
+  
+  External CDN Scripts:
+  • //asset.fwcdn3.com/js/storyblock.js - Story block and pinned mode functionality
+  • //asset.fwcdn3.com/js/embed-feed.js - Grid and carousel mode functionality  
+  • //asset.fwcdn3.com/js/fwn.js - Hero unit mode functionality
+  
+  CUSTOM CSS OVERRIDES:
+  Many template implementations include custom CSS:
+  • .videoblock {padding: 0;} - Removes default padding for specific layouts
+  
+  SCHEMA CONFIGURATION:
+  • Section Name: "Custom Playlist"
+  • Category: "Custom"
+  • Settings: Mode selector (5 options) and Playlist ID text input
+  • Default Mode: "row" (Carousel)
+  • Preset: Available in Shopify theme customizer
+  
+  BROWSER SUPPORT:
+  • Modern browsers with Custom Elements API support
+  • Asynchronous script loading compatibility
+  • CSS transitions and transform support
+  • Responsive design with mobile optimization
+  
+  PERFORMANCE CONSIDERATIONS:
+  • Asynchronous script loading prevents render blocking
+  • Conditional script loading based on selected mode
+  • CSS transitions for smooth user experience
+  • Optimized for mobile and desktop performance
+  
+  ACCESSIBILITY FEATURES:
+  • Semantic HTML structure with proper video elements
+  • Keyboard navigation support through Firework components
+  • Screen reader compatibility via native video controls
+  • Responsive design for various accessibility needs
+  
+  USAGE EXAMPLES:
+  • Homepage hero video (pinned mode)
+  • Product demonstration galleries (grid/carousel modes)
+  • Promotional campaign videos (story block mode)
+  • Featured content showcases (hero unit mode)
   
   ============================================================================
 {% endcomment %}

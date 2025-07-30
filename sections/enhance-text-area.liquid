@@ -2,83 +2,140 @@
 /**
  * Enhanced Text Area Section
  * 
- * A flexible content section that combines rich text content with customizable
- * icon-based list items, supporting multiple layout options and comprehensive
+ * A comprehensive content section that combines rich text content with customizable
+ * icon-based list items, supporting multiple layout configurations and extensive
  * multi-language functionality for creating engaging informational content.
  * 
- * FEATURES:
- * - Rich text content with HTML support
- * - Customizable icon-based list items
- * - Multiple layout configurations
- * - Multi-language support (English, German, French, Finnish)
- * - Responsive design with mobile optimization
- * - Typography customization (font sizes, colors)
- * - Icon selection and styling options
- * - Flexible content positioning
+ * CORE FEATURES:
+ * • Rich text content with HTML formatting support
+ * • Customizable icon-based list items with 5 icon options
+ * • Two distinct layout configurations (title above/left)
+ * • Multi-language support (EN, DE, FR, FI) with automatic detection
+ * • Responsive design with mobile-optimized typography
+ * • Typography customization (font sizes, colors)
+ * • Icon selection and color styling
+ * • Flexible content positioning and spacing
+ * • Block-based list item management
+ * • Mobile-specific font size controls
+ * 
+ * TECHNICAL IMPLEMENTATION:
+ * • Liquid templating with language detection logic
+ * • CSS Grid and Flexbox for responsive layouts
+ * • CSS custom properties for dynamic styling
+ * • Semantic HTML structure with proper heading hierarchy
+ * • SVG icon system with scalable rendering
+ * • Mobile-first responsive design approach
+ * • Shopify block attributes integration
+ * 
+ * SHOPIFY INTEGRATION:
+ * • Section schema with comprehensive settings
+ * • Multi-language field support for all text elements
+ * • Block-based content management for list items
+ * • Color picker integration for styling
+ * • Range sliders for typography controls
+ * • Preset configuration for quick setup
+ * • Category classification as "Content" section
+ * 
+ * RELATED FILES:
+ * • sections/enhance-text-area.liquid (this file)
+ * • snippets/list-icon.liquid (icon rendering component)
+ * • layout/theme.liquid (main theme layout)
+ * • templates/page.city-collection.json (City collection page)
+ * • templates/page.trekking-collection.json (Trekking collection page)
+ * • templates/page.mountain-collection.json (Mountain collection page)
+ * • templates/page.mountain-carbon-collection.json (Mountain Carbon collection page)
+ * • templates/product.trekking-7-2024-pr.json (Trekking 7 2024 PR product)
+ * • templates/product.trekking-7-2024-model.json (Trekking 7 2024 model product)
  * 
  * LAYOUT OPTIONS:
- * 1. Title Above Layout:
- *    - Title at the top
- *    - Description and list items side by side
- *    - Responsive stacking on mobile
+ * 1. Title Above Layout (title_above):
+ *    • Section title positioned at the top
+ *    • Description and list items displayed side by side
+ *    • Responsive stacking on mobile devices
+ *    • Optimal for balanced content distribution
  * 
- * 2. Title Left Layout:
- *    - Title on the left
- *    - Description and list items in right column
- *    - Vertical stacking on mobile
+ * 2. Title Left Layout (title_left):
+ *    • Section title positioned on the left side
+ *    • Description and list items in right column
+ *    • Vertical stacking on mobile devices
+ *    • Ideal for prominent title emphasis
  * 
- * RESPONSIVE BEHAVIOR:
- * - Desktop: Flexible grid layout with side-by-side content
- * - Mobile: Vertical stacking for optimal readability
- * - Adaptive spacing and typography
- * - Touch-friendly interface elements
- * 
- * LOCALIZATION:
- * - Multi-language text support for all content elements
- * - Automatic language detection based on request locale
- * - Fallback to default language when translations unavailable
- * - Supported languages: EN, DE, FR, FI
- * 
- * CUSTOMIZATION OPTIONS:
- * - Section title with multi-language variants
- * - Rich text description with HTML formatting
- * - Typography controls (font sizes for title, text, items)
- * - Color customization (title, text, icons)
- * - List item visibility toggle
- * - Icon selection (arrow, checkmark, star, info, solid dot)
- * - Layout selection between two predefined options
- * 
- * CONTENT BLOCKS:
- * - List Item Block: Multi-language text with icon display
- * - Unlimited list items can be added
- * - Individual language variants for each item
+ * RESPONSIVE BREAKPOINTS:
+ * • Desktop (769px+): Grid layouts with side-by-side content
+ * • Mobile (768px-): Vertical stacking with optimized spacing
+ * • Mobile typography: Separate font size controls
+ * • Adaptive icon sizing based on text size
  * 
  * ICON SYSTEM:
- * - Five predefined icon options
- * - Customizable icon colors
- * - Consistent sizing and alignment
- * - Rendered via 'list-icon' snippet
+ * • Arrow: Directional indicator with stroke styling
+ * • Checkmark: Circular checkmark for completed items
+ * • Star: Filled star shape for featured content
+ * • Info: Information circle with dot and line
+ * • Solid Dot: Simple filled circle (default)
+ * • Scalable SVG rendering with color customization
+ * • Consistent sizing and alignment across all icons
  * 
- * TECHNICAL FEATURES:
- * - Liquid template language processing
- * - CSS custom properties for dynamic styling
- * - Responsive CSS Grid and Flexbox layouts
- * - Semantic HTML structure
- * - Shopify block attributes support
+ * MULTI-LANGUAGE SUPPORT:
+ * • English (default/fallback language)
+ * • German (DE) with complete translation support
+ * • French (FR) with complete translation support
+ * • Finnish (FI) with complete translation support
+ * • Automatic locale detection via request.locale.iso_code
+ * • Graceful fallback to default language when translations unavailable
+ * • Individual language variants for all text elements
+ * 
+ * BROWSER COMPATIBILITY:
+ * • Modern browsers with CSS Grid and Flexbox support
+ * • SVG rendering capabilities required
+ * • CSS custom properties support
+ * • Progressive enhancement for older browsers
+ * • Touch-friendly interface for mobile devices
+ * 
+ * PERFORMANCE CONSIDERATIONS:
+ * • Efficient CSS with scoped styling per section
+ * • Minimal DOM manipulation with pure CSS layouts
+ * • Optimized SVG icons with minimal markup
+ * • Responsive images and typography scaling
+ * • Liquid template caching for language detection
+ * 
+ * ACCESSIBILITY FEATURES:
+ * • Semantic HTML structure with proper heading hierarchy
+ * • ARIA-hidden attributes for decorative icons
+ * • High contrast color options
+ * • Keyboard navigation support
+ * • Screen reader friendly content structure
+ * • Scalable typography for visual accessibility
+ * 
+ * CUSTOMIZATION OPTIONS:
+ * • Section title with multi-language variants
+ * • Rich text description with HTML formatting support
+ * • Typography controls (desktop and mobile font sizes)
+ * • Color customization (title, text, icons)
+ * • List item visibility toggle
+ * • Icon selection from 5 predefined options
+ * • Layout selection between two configurations
+ * • Individual list items with multi-language support
+ * 
+ * CONTENT BLOCKS:
+ * • List Item Block: Multi-language text with icon display
+ * • Unlimited list items can be added via Shopify admin
+ * • Individual language variants for each list item
+ * • Block-level Shopify attributes support
+ * • Dynamic rendering based on content availability
  * 
  * DEFAULT PRESET:
- * - "Enhanced Text Area" in Content category
- * - Pre-configured with sample content
+ * • Pre-configured "Enhanced Text Area" in Content category
+ * • Sample content for immediate use
+ * • Optimized default settings for common use cases
  * 
- * DEPENDENCIES:
- * - Shopify Liquid template engine
- * - 'list-icon' snippet for icon rendering
- * - Modern CSS (Flexbox, responsive design)
- * 
- * BROWSER SUPPORT:
- * - Modern browsers with Flexbox support
- * - Progressive enhancement for older browsers
- * - Mobile-first responsive design
+ * USE CASES:
+ * • Product feature listings with icons
+ * • Service descriptions with bullet points
+ * • FAQ sections with structured content
+ * • About us pages with company highlights
+ * • Landing pages with key benefits
+ * • Multi-language content presentation
+ * • Informational sections with visual hierarchy
  */
 {%- endcomment -%}
 

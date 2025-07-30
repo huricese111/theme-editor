@@ -1,21 +1,106 @@
 {% comment %}
   ============================================================================
-  Adaptive Content Grid Section
+  Adaptive Content Grid Section - Enhanced Documentation
   ============================================================================
   
-  Description: A flexible and responsive content grid component for Shopify themes.
-  This section creates a customizable grid layout that adapts to different screen
-  sizes and content types, featuring configurable columns, image aspect ratios,
-  and text sizing options.
+  DESCRIPTION:
+  A comprehensive and flexible content grid component for Shopify themes that
+  creates responsive, customizable grid layouts. This section supports multiple
+  content types including products, collections, custom content, related products,
+  and advertisement blocks with extensive customization options.
   
-  Features:
-  - Responsive grid layout (1-5 columns on desktop, 1-2 on mobile)
-  - Multiple image aspect ratio options (natural, square, landscape, portrait)
-  - Flexible content layout arrangements (image top/bottom/left/right)
-  - Customizable text sizes for titles and descriptions
-  - Border and padding controls
-  - Mobile-optimized responsive design
-  - Section title and subtitle with multi-language support
+  KEY FEATURES:
+  • Responsive Grid System: 1-5 columns on desktop, 1-2 columns on mobile
+  • Multiple Content Types: Products, collections, custom content, related products, advertisements
+  • Image Aspect Ratios: Natural, square (1:1), landscape (16:9), standard (4:3), portrait (3:4)
+  • Content Layout Options: Image top/bottom/left/right arrangements
+  • Multi-language Support: English, German, French, Finnish with automatic locale detection
+  • Typography Controls: Customizable font sizes for titles, subtitles, and descriptions
+  • Visual Customization: Border controls, padding, background colors, text alignment
+  • Mobile Optimization: Responsive design with separate mobile settings
+  • Section Container: Optional max-width container with customizable width
+  • Buy Button Integration: Configurable purchase buttons for product blocks
+  
+  BLOCK TYPES:
+  1. Single Product Block: Display individual products with buy buttons
+  2. Collection Products Block: Show multiple products from a selected collection
+  3. Custom Content Block: Flexible content with images, text, and buttons
+  4. Related Products Block: Display products related via metafields
+  5. Advertisement Block: Promotional content with background images and CTAs
+  
+  CONFIGURATION OPTIONS:
+  • Section Heading: Multilingual titles and subtitles with size/color controls
+  • Layout Settings: Grid columns, image ratios, content arrangement, padding, borders
+  • Text Sizing: Separate desktop/mobile font sizes for all text elements
+  • General Settings: Section width, container options, buy button visibility
+  
+  LOCALIZATION:
+  • Automatic language detection based on request.locale.iso_code
+  • Fallback to English for unsupported languages
+  • Supported languages: English (default), German (de), French (fr), Finnish (fi)
+  • Localized buy button text with language-specific translations
+  
+  RESPONSIVE DESIGN:
+  • Desktop: 1-5 column grid with customizable gaps and sizing
+  • Mobile: 1-2 column grid with optimized spacing and typography
+  • Flexible image sizing with multiple object-fit options
+  • Adaptive content ordering for different screen sizes
+  
+  PERFORMANCE CONSIDERATIONS:
+  • Lazy loading for images with optimized image URLs
+  • CSS Grid for efficient layout rendering
+  • Minimal JavaScript dependencies
+  • Optimized image delivery with Shopify's image transformation
+  
+  ACCESSIBILITY:
+  • Semantic HTML structure with proper heading hierarchy
+  • Alt text support for images
+  • Keyboard navigation support
+  • Screen reader friendly markup
+  
+  RELATED FILES:
+  ============================================================================
+  
+  CSS Dependencies:
+  • assets/section-basestyles.css
+    - Base container styles and responsive utilities
+    - Section title and subtitle styling
+    - Mobile breakpoint definitions
+  
+  Liquid Snippets:
+  • snippets/product-block.liquid
+    - Product display component with image galleries
+    - Product metadata and pricing display
+    - Hover effects and image transitions
+    - Product comparison data attributes
+  
+  • snippets/localized-value.liquid
+    - Universal localization utility
+    - Automatic language detection
+    - Fallback value handling
+    - Multi-source value retrieval (settings/section/block)
+  
+  External Dependencies:
+  • Shopify Liquid templating engine
+  • CSS Grid and Flexbox browser support
+  • Shopify image transformation API
+  • Browser support for CSS custom properties
+  
+  Template Integration:
+  • Can be used on any Shopify template
+  • Supports product page context for related products
+  • Collection context for within-collection URLs
+  • Compatible with Shopify's section groups
+  
+  Metafield Dependencies:
+  • custom.related_products (for related products block)
+  • Various product metafields for specifications
+  • Collection metafields for enhanced product data
+  
+  Browser Compatibility:
+  • Modern browsers with CSS Grid support
+  • Fallback styles for older browsers
+  • Progressive enhancement approach
   
   ============================================================================
 {% endcomment %}

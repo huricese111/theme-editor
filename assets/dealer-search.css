@@ -1542,3 +1542,61 @@
     margin-bottom: 0px;
   }
 }
+
+/* Custom Marker Styles */
+.custom-marker {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.custom-marker:hover {
+  transform: scale(1.1);
+}
+
+/* Store Type Specific Styles */
+.location-card[data-store-type="dealer"] {
+  border-left: 4px solid #2563eb;
+}
+
+.location-card[data-store-type="rental"] {
+  border-left: 4px solid #059669;
+}
+
+.location-card[data-store-type="service"] {
+  border-left: 4px solid #dc2626;
+}
+
+.location-card[data-store-type="click-collect"] {
+  border-left: 4px solid #7c3aed;
+}
+
+/* Store Type Badge */
+.store-type-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  margin-top: 8px;
+}
+
+.location-card[data-store-type="dealer"] .store-type-badge {
+  background-color: #dbeafe;
+  color: #1d4ed8;
+}
+
+.location-card[data-store-type="rental"] .store-type-badge {
+  background-color: #d1fae5;
+  color: #047857;
+}
+
+.location-card[data-store-type="service"] .store-type-badge {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.location-card[data-store-type="click-collect"] .store-type-badge {
+  background-color: #ede9fe;
+  color: #6d28d9;
+}

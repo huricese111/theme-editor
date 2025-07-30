@@ -1,42 +1,111 @@
-{% comment %}
-  ============================================================================
-  Enhanced Collapsible Tabs Section
-  ============================================================================
-  
-  Description: An enhanced collapsible tabs/accordion component for Shopify themes
-  with multi-language support. This section creates expandable content areas
-  perfect for FAQs, product information, or any content that benefits from
-  organized, space-saving presentation.
-  
-  Features:
-  - Multi-language support (German, French, Finnish)
-  - Dynamic language suffix detection based on locale
-  - Multiple block types: content, button, and question/answer
-  - Responsive accordion-style interface
-  - Image support within content blocks
-  - Custom liquid content integration
-  - Smooth animations and transitions
-  - Accessibility-compliant with ARIA attributes
-  - Customizable styling with CSS variables
-  
-  Block Types:
-  - Content: Static text/HTML content with optional images
-  - Button: Call-to-action buttons with custom links
-  - Question: Expandable Q&A sections with dual answer support
-  
-  Language Support:
-  - Automatically detects current locale (de, fr, fi)
-  - Falls back to default content if localized version unavailable
-  - Supports localized titles, content, and answers
-  
-  Dependencies:
-  - details-disclosure custom element
-  - responsive-image snippet
-  - animation-attrs snippet
-  - localized-value snippet
-  
-  ============================================================================
-{% endcomment %}
+{%- comment -%}
+/**
+ * Enhanced Collapsible Tabs Section - Multi-Language Accordion Component
+ * 
+ * This section provides a comprehensive collapsible tabs/accordion component with advanced
+ * multi-language support, perfect for FAQs, product information, or any content that
+ * benefits from organized, space-saving presentation.
+ * 
+ * CORE FEATURES:
+ * - Multi-language accordion/tabs interface
+ * - Dynamic language detection and content switching
+ * - Multiple block types (content, button, question/answer)
+ * - Responsive accordion-style interface
+ * - Image support within content blocks
+ * - Custom Liquid content integration
+ * - Smooth animations and transitions
+ * - Accessibility-compliant with ARIA attributes
+ * - Customizable styling with CSS variables
+ * 
+ * MULTILINGUAL SUPPORT:
+ * - Automatic locale detection (German, French, Finnish)
+ * - Dynamic language suffix generation (_de, _fr, _fi)
+ * - Fallback to default content if localized version unavailable
+ * - Localized titles, content, and answers for all block types
+ * - Multi-language section headings
+ * 
+ * BLOCK TYPES:
+ * - Content Block: Static text/HTML content with optional images and custom Liquid
+ * - Button Block: Call-to-action buttons with custom links and styling
+ * - Question Block: Expandable Q&A sections with dual answer support and images
+ * 
+ * CONTENT MANAGEMENT:
+ * - Rich text editor support for all content fields
+ * - Custom Liquid code integration for dynamic content
+ * - Image picker support with responsive rendering
+ * - Dual answer support for complex Q&A scenarios
+ * - Additional image support for enhanced visual content
+ * 
+ * TECHNICAL FEATURES:
+ * - Custom web component (details-disclosure) for enhanced functionality
+ * - Semantic HTML structure with proper ARIA roles and attributes
+ * - CSS animations with motion-safe considerations
+ * - Responsive design with mobile-first approach
+ * - Accessible keyboard navigation
+ * - Focus management for screen readers
+ * 
+ * CUSTOMIZATION OPTIONS:
+ * - Configurable section headings with multi-language support
+ * - Flexible block ordering and arrangement
+ * - Custom styling through CSS variables
+ * - Responsive image handling
+ * - Animation control through theme settings
+ * 
+ * DEPENDENCIES:
+ * 
+ * Liquid Snippets:
+ * - snippets/animation-attrs.liquid - Animation attribute management for sections
+ * - snippets/image.liquid - Responsive image rendering with optimization
+ * 
+ * Note: The following snippets are referenced but may be defined inline or in theme core:
+ * - 'responsive-image' - Referenced but file not found (likely using 'image' snippet instead)
+ * - 'localized-value' - Referenced but not actively used in current implementation
+ * 
+ * Custom Elements:
+ * - details-disclosure - Custom web component for enhanced disclosure functionality
+ *   (Implementation likely in theme's main JavaScript or inline)
+ * 
+ * Layout Dependencies:
+ * - layout/theme.liquid - Contains animation settings and theme configuration
+ * 
+ * Template Dependencies:
+ * - Used in various page templates including FAQ pages and product information sections
+ * 
+ * External Dependencies:
+ * - Shopify Liquid templating engine
+ * - CSS custom properties for theming
+ * - Modern browser support for custom elements
+ * - Intersection Observer API for animations (via animation-attrs)
+ * 
+ * BROWSER SUPPORT:
+ * - Modern browsers with Custom Elements API support
+ * - CSS Grid and Flexbox for layout
+ * - Progressive enhancement for older browsers
+ * - Accessible navigation with keyboard support
+ * 
+ * PERFORMANCE CONSIDERATIONS:
+ * - Lazy loading for images
+ * - Conditional animation loading based on theme settings
+ * - Minimal DOM manipulation
+ * - Efficient language detection and content switching
+ * - Optimized CSS with minimal specificity
+ * 
+ * ACCESSIBILITY FEATURES:
+ * - ARIA labels and roles for screen readers
+ * - Keyboard navigation support (Enter, Space, Arrow keys)
+ * - Focus management for disclosure panels
+ * - Semantic HTML structure with proper heading hierarchy
+ * - High contrast support
+ * - Motion-safe animations
+ * 
+ * USAGE EXAMPLES:
+ * - FAQ sections with multi-language support
+ * - Product information accordions
+ * - Help documentation with expandable sections
+ * - Terms and conditions with organized content
+ * - Multi-step processes with collapsible instructions
+ */
+{%- endcomment -%}
 
 {%- assign locale_code = request.locale.iso_code -%}
 {%- assign lang_map = 'de,fr,fi' | split: ',' -%}

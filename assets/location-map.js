@@ -78,30 +78,76 @@ if (!customElements.get('location-map')) {
         });
     }
 
-    updateMap(address) {
-      if (!this.geocoder || !this.map) return;
+    // 在createMap方法中添加自定义marker函数
+    createCustomMarker(storeType, position) {
+    // 创建自定义marker图标
+    const markerIcon = {
+    url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(this.getMarkerSVG(storeType))}`,
+    scaledSize: new google.maps.Size(40, 50),
+    anchor: new google.maps.Point(20, 50)
+    };
+    
+    return new google.maps.Marker({
+    map: this.map,
+    position: position,
+    icon: markerIcon,
+    clickable: true
+    });
+    }
+    
+    getMarkerSVG(storeType) {
+    const colors = {
+    dealer: { primary: '#2563eb', secondary: '#1d4ed8' },
+    rental: { primary: '#059669', secondary: '#047857' },
+    service: { primary: '#dc2626', secondary: '#b91c1c' },
+    'click-collect': { primary: '#7c3aed', secondary: '#6d28d9' }
+    };
+    
+    const color = colors[storeType] || colors.dealer;
+    
+    return `<svg width="40" height="50" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+    <linearGradient id="marker-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%" style="stop-color:${color.primary};stop-opacity:1" />
+    <stop offset="100%" style="stop-color:${color.secondary};stop-opacity:1" />
+    </linearGradient>
+    <filter id="marker-shadow" x="-20%" y="-20%" width="140%" height="140%">
+    <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.3"/>
+    </filter>
+    </defs>
+    <path d="M20 48C20 48 38 22 38 17C38 9 31 2 20 2C9 2 2 9 2 17C2 22 20 48 20 48Z" 
+          fill="url(#marker-gradient)" 
+          filter="url(#marker-shadow)" 
+          stroke="#ffffff" 
+          stroke-width="1"/>
+    <circle cx="20" cy="17" r="12" fill="rgba(255,255,255,0.2)"/>
+    <g transform="translate(10, 7) scale(0.023)">
+      <path d="M812.803 390.655C811.283 388.196 807.846 387.804 805.784 389.828C770.081 425.234 506.872 686.252 506.809 686.314C469.336 723.476 408.575 723.476 371.101 686.314C333.628 649.153 333.628 588.897 371.101 551.736C371.101 551.736 482.73 441.14 553.531 370.989C590.005 334.84 610.522 285.801 610.522 234.675L610.585 4.47674C610.585 0.489988 605.731 -1.49306 602.899 1.31626L350.646 251.345C347.813 254.155 342.96 252.172 342.96 248.185V109.31C342.96 105.323 338.107 103.40 335.274 106.149L124.869 314.865H124.994C-43.3964 485.696 -41.6467 759.894 130.243 928.597C301.591 1096.72 580.027 1095.65 750.105 926.263C896.249 780.736 917.141 558.222 812.803 390.655Z" fill="#ffffff"/>
+    </g>
+  </svg>`;
+    }
 
-      this.geocoder.geocode({ address: address })
-        .then(({ results }) => {
-          if (results[0]) {
-            this.map.setCenter(results[0].geometry.location);
-            
-            // 移除旧标记
-            if (this.marker) {
-              this.marker.setMap(null);
-            }
-            
-            // 创建新标记
-            this.marker = new google.maps.Marker({
-              map: this.map,
-              position: results[0].geometry.location,
-              clickable: true
-            });
-          }
-        })
-        .catch((error) => {
-          console.error('Geocoding failed:', error);
-        });
+    // 修改updateMap方法
+    updateMap(address, storeType = 'dealer') {
+    if (!this.geocoder || !this.map) return;
+    
+    this.geocoder.geocode({ address: address })
+    .then(({ results }) => {
+    if (results[0]) {
+    this.map.setCenter(results[0].geometry.location);
+    
+    // 移除旧标记
+    if (this.marker) {
+    this.marker.setMap(null);
+    }
+    
+    // 创建自定义标记
+    this.marker = this.createCustomMarker(storeType, results[0].geometry.location);
+    }
+    })
+    .catch((error) => {
+    console.error('Geocoding failed:', error);
+    });
     }
 
     updateInfoWindow(content) {

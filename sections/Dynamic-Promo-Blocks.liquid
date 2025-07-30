@@ -1,90 +1,101 @@
 {%- comment -%}
-  /**
-   * Dynamic Promo Blocks Section
-   *
-   * A flexible promotional banner system featuring asymmetric grid layout
-   * with one large left module and three smaller right modules for showcasing
-   * products, offers, and promotional content with rich customization options.
-   *
-   * FEATURES:
-   * - Asymmetric grid layout (1 large + 3 small modules)
-   * - Responsive design with separate desktop/mobile layouts
-   * - Multi-language support (English, German, French, Finnish)
-   * - Individual background images for desktop and mobile
-   * - Customizable content positioning within each module
-   * - Tag/badge system for promotional labels
-   * - Call-to-action buttons with custom styling
-   * - Background image controls (size, position)
-   * - Typography customization (size, color)
-   *
-   * LAYOUT STRUCTURE:
-   * Desktop:
-   * - Left: 1 large promotional module (50% width)
-   * - Right: 3 smaller modules in 2x2 grid (50% width)
-   *   - Top: 1 medium module (full width)
-   *   - Bottom: 2 small modules (side by side)
-   *
-   * Mobile:
-   * - Stacked vertical layout
-   * - Left module displayed first
-   * - Only first right module shown (modules 2&3 hidden)
-   *
-   * RESPONSIVE BEHAVIOR:
-   * - Desktop: CSS Grid layout with asymmetric columns
-   * - Mobile: Vertical stacking with simplified content
-   * - Adaptive font sizes and spacing
-   * - Separate mobile background images
-   * - Content repositioning for mobile optimization
-   *
-   * LOCALIZATION:
-   * - Multi-language text support for all content elements
-   * - Automatic language detection based on request locale
-   * - Fallback to default language when translations unavailable
-   * - Supported languages: EN, DE, FR, FI
-   *
-   * CUSTOMIZATION OPTIONS:
-   * - Section height control (desktop/mobile)
-   * - Background images (desktop/mobile variants)
-   * - Background size and positioning
-   * - Content vertical positioning (top/center/bottom)
-   * - Tag/badge text and styling
-   * - Title text with custom typography
-   * - Button text, URLs, and color schemes
-   * - Background colors for each module
-   *
-   * MODULE CONFIGURATION:
-   * - Left Module: Large promotional space with prominent title
-   * - Right Module 1: Medium-sized featured content
-   * - Right Module 2: Small promotional block
-   * - Right Module 3: Small promotional block
-   *
-   * CONTENT ELEMENTS:
-   * - Promotional tags/badges with custom styling
-   * - Multi-language titles with responsive typography
-   * - Call-to-action buttons with hover effects
-   * - Background overlays for text readability
-   *
-   * TECHNICAL FEATURES:
-   * - CSS custom properties for dynamic styling
-   * - Liquid template variables for localization
-   * - Responsive image handling with multiple sizes
-   * - CSS Grid and Flexbox for layout control
-   * - Hover effects and transitions
-   *
-   * DEFAULT PRESET:
-   * - "Dynamic Promo Blocks" with sample content
-   * - Pre-configured layout and styling
-   *
-   * DEPENDENCIES:
-   * - Shopify Liquid template engine
-   * - Modern CSS (Grid, Flexbox, Custom Properties)
-   * - Responsive image processing
-   *
-   * BROWSER SUPPORT:
-   * - Modern browsers with CSS Grid support
-   * - Progressive enhancement for older browsers
-   * - Mobile-first responsive design
-   */
+/**
+ * Dynamic Promo Blocks Component
+ * 
+ * A comprehensive promotional blocks section that creates flexible marketing layouts
+ * with configurable modules supporting multi-language content, responsive design,
+ * and customizable styling options.
+ * 
+ * CORE FEATURES:
+ * • Multi-module layout (1 large left module + 3 smaller right modules)
+ * • Responsive design with separate desktop and mobile configurations
+ * • Multi-language support (EN, DE, FR, FI)
+ * • Customizable background images and colors
+ * • Flexible content positioning
+ * • Configurable typography and button styling
+ * • Touch-friendly mobile interface
+ * • SEO-optimized structure
+ * 
+ * TECHNICAL IMPLEMENTATION:
+ * • CSS Grid layout for responsive module arrangement
+ * • CSS custom properties for dynamic styling
+ * • Liquid templating for multi-language content
+ * • Responsive breakpoints at 768px and 890px
+ * • Background image optimization for different screen sizes
+ * • Flexible content positioning system
+ * 
+ * SHOPIFY INTEGRATION:
+ * • Section schema with comprehensive settings
+ * • Multi-language field support
+ * • Image picker integration
+ * • Color picker integration
+ * • URL picker for button links
+ * • Range sliders for sizing controls
+ * 
+ * RELATED FILES:
+ * • sections/dynamic-Promo-Blocks.liquid (this file)
+ * • layout/theme.liquid (main theme layout)
+ * • templates/index.json (homepage template configuration)
+ * • templates/index.context.finland.json (Finland market context)
+ * 
+ * RESPONSIVE BREAKPOINTS:
+ * • Desktop: > 890px (full grid layout)
+ * • Tablet: 768px - 890px (adjusted spacing)
+ * • Mobile: < 768px (stacked layout, optimized images)
+ * 
+ * MODULE CONFIGURATION:
+ * • Left Module: Large promotional area with background image
+ * • Right Module 1: Smaller promotional block
+ * • Right Module 2: Medium promotional block
+ * • Right Module 3: Small promotional block
+ * 
+ * MULTI-LANGUAGE SUPPORT:
+ * • English (default)
+ * • German (DE)
+ * • French (FR)
+ * • Finnish (FI)
+ * • Automatic locale detection and content switching
+ * 
+ * BROWSER COMPATIBILITY:
+ * • Modern browsers with CSS Grid support
+ * • Fallback layouts for older browsers
+ * • Touch event support for mobile devices
+ * 
+ * PERFORMANCE CONSIDERATIONS:
+ * • Optimized CSS with minimal specificity
+ * • Efficient image loading with responsive images
+ * • Minimal JavaScript dependencies
+ * • CSS custom properties for dynamic theming
+ * 
+ * ACCESSIBILITY FEATURES:
+ * • Semantic HTML structure
+ * • Proper heading hierarchy
+ * • Keyboard navigation support
+ * • Screen reader friendly content
+ * • High contrast color options
+ * 
+ * CUSTOMIZATION OPTIONS:
+ * • Module heights (desktop and mobile)
+ * • Background images and colors
+ * • Content positioning (9-point grid system)
+ * • Typography sizing and colors
+ * • Button styling and colors
+ * • Background image sizing and positioning
+ * 
+ * CONTENT MANAGEMENT:
+ * • Visual section editor in Shopify admin
+ * • Real-time preview capabilities
+ * • Bulk content management
+ * • Template inheritance support
+ * 
+ * USE CASES:
+ * • Homepage promotional sections
+ * • Product category highlights
+ * • Seasonal campaign displays
+ * • Brand storytelling layouts
+ * • Call-to-action sections
+ * • Multi-product showcases
+ */
 {%- endcomment -%}
 
 {% schema %}
