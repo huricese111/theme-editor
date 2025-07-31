@@ -55,8 +55,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const mapIframe = document.getElementById('map-iframe');
   const searchBtn = document.getElementById('search-btn');
   const locationSearch = document.getElementById('location-search');
-  const distanceSelect = document.getElementById('distance-select');
-  const resultsSelect = document.getElementById('results-select');
   const locationResults = document.getElementById('location-results');
   const filterCheckboxes = document.querySelectorAll('.filter-option input[type="checkbox"]');
   const moreBtn = document.getElementById('more-btn');
@@ -180,12 +178,24 @@ document.addEventListener('DOMContentLoaded', function () {
       .filter((cb) => cb.checked)
       .map((cb) => cb.value);
   
+    // 首先根据过滤器筛选位置（无论是否有搜索词）
+    if (selectedFilters.length > 0) {
+      filteredLocations = allLocations.filter(card => {
+        const storeType = card.getAttribute('data-store-type');
+        return selectedFilters.includes(storeType);
+      });
+    } else {
+      filteredLocations = [...allLocations];
+    }
+  
+    // 如果有搜索词，保存到历史记录
     if (saveToHistory && searchTerm && !searchHistory.includes(searchTerm)) {
       searchHistory.unshift(searchTerm);
       searchHistory = searchHistory.slice(0, 10);
       localStorage.setItem('dealerSearchHistory', JSON.stringify(searchHistory));
     }
   
+    // 如果有搜索词，进行地理编码和距离计算
     if (searchTerm && window.google && window.google.maps) {
       showLoadingState();
       
@@ -193,14 +203,48 @@ document.addEventListener('DOMContentLoaded', function () {
         if (userLocation) {
           updateDistancesAndSort(userLocation);
         } else {
+          // 如果地理编码失败，则进行文本搜索
+          filteredLocations = filteredLocations.filter(card => {
+            const storeName = card.getAttribute('data-store-name')?.toLowerCase() || '';
+            const city = card.getAttribute('data-city')?.toLowerCase() || '';
+            const country = card.getAttribute('data-country')?.toLowerCase() || '';
+            const address = card.getAttribute('data-address')?.toLowerCase() || '';
+            const province = card.getAttribute('data-province')?.toLowerCase() || '';
+            const postalCode = card.getAttribute('data-postal-code')?.toLowerCase() || '';
+            
+            return storeName.includes(searchTerm) ||
+                   city.includes(searchTerm) ||
+                   country.includes(searchTerm) ||
+                   address.includes(searchTerm) ||
+                   province.includes(searchTerm) ||
+                   postalCode.includes(searchTerm);
+          });
           hideLoadingState();
           displayResults();
         }
       });
-    } else {
+    } else if (searchTerm) {
+      // 如果没有Google Maps API，只进行文本搜索
+      filteredLocations = filteredLocations.filter(card => {
+        const storeName = card.getAttribute('data-store-name')?.toLowerCase() || '';
+        const city = card.getAttribute('data-city')?.toLowerCase() || '';
+        const country = card.getAttribute('data-country')?.toLowerCase() || '';
+        const address = card.getAttribute('data-address')?.toLowerCase() || '';
+        const province = card.getAttribute('data-province')?.toLowerCase() || '';
+        const postalCode = card.getAttribute('data-postal-code')?.toLowerCase() || '';
+        
+        return storeName.includes(searchTerm) ||
+               city.includes(searchTerm) ||
+               country.includes(searchTerm) ||
+               address.includes(searchTerm) ||
+               province.includes(searchTerm) ||
+               postalCode.includes(searchTerm);
+      });
       displayResults();
-    }
-  
+    } else {
+    displayResults();
+  }
+
     hideSuggestions();
   }
   
@@ -450,8 +494,7 @@ document.addEventListener('DOMContentLoaded', function () {
       card.classList.add('hidden');
     });
 
-    const maxResults = resultsSelect.value === 'all' ? filteredLocations.length : parseInt(resultsSelect.value);
-    const cardsToShow = filteredLocations.slice(0, maxResults);
+    const cardsToShow = filteredLocations;
 
     cardsToShow.forEach((card) => {
       card.classList.remove('hidden');
@@ -552,8 +595,6 @@ document.addEventListener('DOMContentLoaded', function () {
   filterCheckboxes.forEach((checkbox) => {
     checkbox.addEventListener('change', () => performSearch(false));
   });
-
-  resultsSelect.addEventListener('change', displayResults);
 
   locationCards.forEach(function (card) {
     card.addEventListener('click', function () {
