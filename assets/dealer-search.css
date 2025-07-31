@@ -630,8 +630,6 @@
 }
 
 .location-card {
-  display: grid;
-  grid-template-columns: 1fr auto;
   gap: 1rem;
   align-items: center;
   cursor: pointer;
@@ -646,19 +644,72 @@
   position: relative;
   z-index: 1;
   flex-shrink: 0;
+  display: flex;
+}
+
+/* 添加新的隐藏样式 */
+.location-card[style*="display: none"] {
+  display: none !important;
+}
+
+.location-card__marker {
+  grid-column: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: auto;
+}
+
+.location-card__marker .custom-marker {
+  width: 32px;
+  height: auto;
 }
 
 .location-card__content {
-  grid-column: 1;
+  grid-column: 2;
   display: flex;
   flex-direction: column;
   min-width: 0;
+  flex: 1;
+}
+
+.location-card__actions {
+  grid-column: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+  justify-self: end;
+  align-self: center;
+}
+
+.location-card__distance {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #666;
+  text-align: right;
+  padding: 0.25rem 0.5rem;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  border: 1px solid #e9ecef;
+  min-width: 60px;
+}
+
+.location-card__distance.has-distance {
+  color: #333;
+  background-color: #e8f5e8;
+  border-color: #c3e6c3;
+}
+
+.distance-value {
+  font-weight: 700;
+  color: #2d5a2d;
 }
 
 .location-card__direction {
-  grid-column: 2;
-  justify-self: end;
-  align-self: center;
+  flex-shrink: 0;
 }
 
 .location-card:hover {
@@ -987,6 +1038,37 @@
   }
 }
 
+.search-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid #e1e5e9;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  color: #6c757d;
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.loading-spinner {
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid #f0f0f0;
+  border-top: 1.5px solid #007bff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 @media (max-width: 768px) {
   .dealer-search__title {
     font-size: 1rem;
@@ -1046,6 +1128,17 @@
     flex: 1;
   }
 
+  .search-loading {
+    padding: 10px 14px;
+    font-size: 12px;
+  }
+  
+  .loading-spinner {
+    width: 12px;
+    height: 12px;
+    margin-right: 6px;
+  }
+
   .map-section__wrapper {
     display: grid;
     grid-template-columns: 1fr;
@@ -1090,19 +1183,43 @@
 
   .location-card {
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto;
+    grid-template-rows: auto auto auto;
+  }
+
+  .location-card__marker {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: start;
+    width: 30px;
+    height: 40px;
+  }
+
+  .location-card__marker .custom-marker {
+    width: 24px;
+    height: 30px;
   }
 
   .location-card__content {
     grid-column: 1;
-    grid-row: 1;
+    grid-row: 2;
+  }
+
+  .location-card__actions {
+    grid-column: 1;
+    grid-row: 3;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.5rem;
   }
 
   .location-card__direction {
-    grid-column: 1;
-    grid-row: 2;
-    justify-self: start;
-    margin-top: 0.5rem;
+    order: 2;
+  }
+
+  .location-card__distance {
+    order: 1;
+    align-self: flex-start;
   }
 
   .search-input {
@@ -1319,13 +1436,26 @@
     min-height: 70px;
     margin-bottom: 0.4rem;
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto;
+    grid-template-rows: auto auto auto;
     flex-shrink: 0;
+  }
+
+  .location-card__marker {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: start;
+    width: 25px;
+    height: 35px;
+  }
+
+  .location-card__marker .custom-marker {
+    width: 20px;
+    height: 25px;
   }
 
   .location-card__content {
     grid-column: 1;
-    grid-row: 1;
+    grid-row: 2;
   }
 
   .location-card__title {
@@ -1340,11 +1470,25 @@
     margin-bottom: 0.1rem;
   }
 
-  .location-card__direction {
+  .location-card__actions {
     grid-column: 1;
-    grid-row: 2;
-    justify-self: start;
+    grid-row: 3;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     margin-top: 0.5rem;
+  }
+
+  .location-card__direction {
+    order: 2;
+  }
+
+  .location-card__distance {
+    order: 1;
+    align-self: flex-start;
+    font-size: 0.7rem;
+    padding: 0.2rem 0.4rem;
+    min-width: 50px;
   }
 
   .direction-btn {
@@ -1599,4 +1743,8 @@
 .location-card[data-store-type="click-collect"] .store-type-badge {
   background-color: #ede9fe;
   color: #6d28d9;
+}
+
+.location-card.hidden {
+  display: none !important;
 }

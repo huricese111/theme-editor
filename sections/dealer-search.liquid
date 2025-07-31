@@ -305,6 +305,11 @@
               {%- case block.type -%}
                 {%- when 'location' -%}
                   <div class="map-section__content map-section__text location-card" data-block-id="{{ block.id }}" data-store-name="{{ block.settings.store_name | escape }}" data-address="{{ block.settings.address | escape }}" data-city="{{ block.settings.city | escape }}" data-country="{{ block.settings.country | escape }}" data-postal-code="{{ block.settings.postal_code | escape }}" data-phone="{{ block.settings.phone | escape }}" data-email="{{ block.settings.email | escape }}" data-website="{{ block.settings.website | escape }}" data-hours="{{ block.settings.hours_of_operation | escape }}" data-province="{{ block.settings.province_state | escape }}" data-fax="{{ block.settings.fax | escape }}" data-store-type="{{ block.settings.store_type | escape }}">
+                    <!-- 左侧 Marker Icon -->
+                    <div class="location-card__marker">
+                      {% render 'custom-marker-icon', store_type: block.settings.store_type, size: 'large' %}
+                    </div>
+                    
                     <div class="location-card__content">
                       {% if block.settings.store_name != blank %}
                         <h3 class="location-card__title">{{ block.settings.store_name | escape }}</h3>
@@ -331,16 +336,23 @@
                       {% endif %}
                     </div>
 
-                    {% if block.settings.address != blank %}
-                      <div class="location-card__direction">
-                        <a href="https://maps.google.com?daddr={{ block.settings.address | escape }}{% if block.settings.city != blank %}, {{ block.settings.city | escape }}{% endif %}{% if block.settings.country != blank %}, {{ block.settings.country | escape }}{% endif %}" target="_blank" class="btn btn--secondary direction-btn">
-                          {% if block.settings.show_pin %}
-                            <span class="icon">{% render 'icon-location' %}</span>
-                          {% endif %}
-                          <span>{{ direction_text }}</span>
-                        </a>
+                    <!-- 右侧距离和方向按钮 -->
+                    <div class="location-card__actions">
+                      <div class="location-card__distance" style="display: none;">
+                        <span class="distance-value">-- KM</span>
                       </div>
-                    {% endif %}
+                      
+                      {% if block.settings.address != blank %}
+                        <div class="location-card__direction">
+                          <a href="https://maps.google.com?daddr={{ block.settings.address | escape }}{% if block.settings.city != blank %}, {{ block.settings.city | escape }}{% endif %}{% if block.settings.country != blank %}, {{ block.settings.country | escape }}{% endif %}" target="_blank" class="btn btn--secondary direction-btn">
+                            {% if block.settings.show_pin %}
+                              <span class="icon">{% render 'icon-location' %}</span>
+                            {% endif %}
+                            <span>{{ direction_text }}</span>
+                          </a>
+                        </div>
+                      {% endif %}
+                    </div>
                   </div>
               {%- endcase -%}
             {%- endfor -%}

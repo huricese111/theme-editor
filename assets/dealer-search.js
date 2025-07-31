@@ -11,7 +11,8 @@ const translations = {
     website: 'Website',
     storeType: 'Store Type',
     more: 'More',
-    less: 'Less'
+    less: 'Less',
+    calculatingDistance: 'Calculating distance...'
   },
   de: {
     address: 'Adresse',
@@ -20,7 +21,8 @@ const translations = {
     website: 'Webseite',
     storeType: 'Geschäftstyp',
     more: 'Mehr',
-    less: 'Weniger'
+    less: 'Weniger',
+    calculatingDistance: 'Entfernung wird berechnet...'
   },
   fr: {
     address: 'Adresse',
@@ -29,7 +31,8 @@ const translations = {
     website: 'Site Web',
     storeType: 'Type de Magasin',
     more: 'Plus',
-    less: 'Moins'
+    less: 'Moins',
+    calculatingDistance: 'Calcul de la distance...'
   },
   fi: {
     address: 'Osoite',
@@ -38,11 +41,11 @@ const translations = {
     website: 'Verkkosivusto',
     storeType: 'Myymälän Tyyppi',
     more: 'Lisää',
-    less: 'Vähemmän'
+    less: 'Vähemmän',
+    calculatingDistance: 'Lasketaan etäisyyttä...'
   }
 };
 
-// 获取当前语言的翻译
 const currentLang = getCurrentLanguage();
 const i18nLabels = translations[currentLang] || translations.en;
 
@@ -97,52 +100,211 @@ document.addEventListener('DOMContentLoaded', function () {
   const mapType = mapContainer.dataset.mapType;
   const mapStyle = mapContainer.dataset.mapStyle;
 
+  function calculateDistance(lat1, lon1, lat2, lon2) {
+    const R = 6371; // 地球半径（公里）
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = 
+      Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
+      Math.sin(dLon/2) * Math.sin(dLon/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    const distance = R * c;
+    return distance;
+  }
+  
+  // 地理编码函数
+  function geocodeAddress(address, callback) {
+    if (!window.google || !window.google.maps) {
+      console.error('Google Maps API not loaded');
+      return;
+    }
+    
+    const geocoder = new google.maps.Geocoder();
+    geocoder.geocode({ address: address }, function(results, status) {
+      if (status === 'OK' && results[0]) {
+        const location = results[0].geometry.location;
+        callback({
+          lat: location.lat(),
+          lng: location.lng()
+        });
+      } else {
+        console.error('Geocoding failed: ' + status);
+        callback(null);
+      }
+    });
+  }
+  
+  // 更新距离显示函数
+  function updateDistances(userLocation) {
+    if (!userLocation) return;
+    
+    allLocations.forEach(card => {
+      const address = card.getAttribute('data-address');
+      const city = card.getAttribute('data-city');
+      const country = card.getAttribute('data-country');
+      
+      let fullAddress = '';
+      if (address) fullAddress += address;
+      if (city) fullAddress += (fullAddress ? ', ' : '') + city;
+      if (country) fullAddress += (fullAddress ? ', ' : '') + country;
+      
+      if (fullAddress) {
+        geocodeAddress(fullAddress, function(storeLocation) {
+          if (storeLocation) {
+            const distance = calculateDistance(
+              userLocation.lat, userLocation.lng,
+              storeLocation.lat, storeLocation.lng
+            );
+            
+            const distanceElement = card.querySelector('.location-card__distance');
+            const distanceValue = card.querySelector('.distance-value');
+            
+            if (distanceElement && distanceValue) {
+              distanceValue.textContent = distance.toFixed(1) + ' KM';
+              distanceElement.style.display = 'block';
+              distanceElement.classList.add('has-distance');
+              
+              // 存储距离数据用于排序
+              card.setAttribute('data-distance', distance.toFixed(1));
+            }
+          }
+        });
+      }
+    });
+  }
+  
   function performSearch(saveToHistory = true) {
     const searchTerm = locationSearch.value.toLowerCase().trim();
     const selectedFilters = Array.from(filterCheckboxes)
       .filter((cb) => cb.checked)
       .map((cb) => cb.value);
-
+  
     if (saveToHistory && searchTerm && !searchHistory.includes(searchTerm)) {
       searchHistory.unshift(searchTerm);
       searchHistory = searchHistory.slice(0, 10);
       localStorage.setItem('dealerSearchHistory', JSON.stringify(searchHistory));
     }
-
-    filteredLocations = allLocations.filter((card) => {
-      const storeName = card.getAttribute('data-store-name').toLowerCase();
-      const address = card.getAttribute('data-address').toLowerCase();
-      const city = card.getAttribute('data-city').toLowerCase();
-      const country = card.getAttribute('data-country').toLowerCase();
-
-      const matchesSearch =
-        !searchTerm ||
-        storeName.includes(searchTerm) ||
-        address.includes(searchTerm) ||
-        city.includes(searchTerm) ||
-        country.includes(searchTerm);
-
-      const storeType = card.getAttribute('data-store-type') || '';
-      const matchesFilter =
-        selectedFilters.length === 0 ||
-        selectedFilters.some((filter) => {
-          return storeType === filter;
-        });
-
-      return matchesSearch && matchesFilter;
-    });
-
-    displayResults();
+  
+    if (searchTerm && window.google && window.google.maps) {
+      showLoadingState();
+      
+      geocodeAddress(searchTerm, function(userLocation) {
+        if (userLocation) {
+          updateDistancesAndSort(userLocation);
+        } else {
+          hideLoadingState();
+          displayResults();
+        }
+      });
+    } else {
+      displayResults();
+    }
+  
     hideSuggestions();
   }
-
+  
+  function showLoadingState() {
+    const loadingIndicator = document.createElement('div');
+    loadingIndicator.id = 'search-loading';
+    loadingIndicator.className = 'search-loading';
+    loadingIndicator.innerHTML = `<div class="loading-spinner"></div><span>${i18nLabels.calculatingDistance}</span>`;
+    
+    const existingLoading = document.getElementById('search-loading');
+    if (existingLoading) {
+      existingLoading.remove();
+    }
+    
+    locationResults.insertBefore(loadingIndicator, locationResults.firstChild);
+  }
+  
+  function hideLoadingState() {
+    const loadingIndicator = document.getElementById('search-loading');
+    if (loadingIndicator) {
+      loadingIndicator.remove();
+    }
+  }
+  
+  function updateDistancesAndSort(userLocation) {
+    if (!userLocation) {
+      hideLoadingState();
+      displayResults();
+      return;
+    }
+    
+    let completedRequests = 0;
+    const totalRequests = filteredLocations.length;
+    
+    if (totalRequests === 0) {
+      hideLoadingState();
+      displayResults();
+      return;
+    }
+    
+    filteredLocations.forEach(card => {
+      const address = card.getAttribute('data-address');
+      const city = card.getAttribute('data-city');
+      const country = card.getAttribute('data-country');
+      const postalCode = card.getAttribute('data-postal-code');
+      const province = card.getAttribute('data-province');
+      
+      let fullAddress = '';
+      if (address) fullAddress += address;
+      if (postalCode) fullAddress += (fullAddress ? ', ' : '') + postalCode;
+      if (city) fullAddress += (fullAddress ? ', ' : '') + city;
+      if (province) fullAddress += (fullAddress ? ', ' : '') + province;
+      if (country) fullAddress += (fullAddress ? ', ' : '') + country;
+      
+      if (fullAddress) {
+        geocodeAddress(fullAddress, function(storeLocation) {
+          completedRequests++;
+          
+          if (storeLocation) {
+            const distance = calculateDistance(
+              userLocation.lat, userLocation.lng,
+              storeLocation.lat, storeLocation.lng
+            );
+            
+            const distanceElement = card.querySelector('.location-card__distance');
+            const distanceValue = card.querySelector('.distance-value');
+            
+            if (distanceElement && distanceValue) {
+              distanceValue.textContent = distance.toFixed(1) + ' KM';
+              distanceElement.style.display = 'block';
+              distanceElement.classList.add('has-distance');
+              
+              card.setAttribute('data-distance', distance.toFixed(1));
+            }
+          }
+          
+          if (completedRequests === totalRequests) {
+            filteredLocations.sort((a, b) => {
+              const distanceA = parseFloat(a.getAttribute('data-distance')) || Infinity;
+              const distanceB = parseFloat(b.getAttribute('data-distance')) || Infinity;
+              return distanceA - distanceB;
+            });
+            
+            hideLoadingState();
+            displayResults();
+          }
+        });
+      } else {
+        completedRequests++;
+        if (completedRequests === totalRequests) {
+          hideLoadingState();
+          displayResults();
+        }
+      }
+    });
+  }
+  
   function generateSuggestions(query) {
     const suggestions = [];
-
+  
     const historyMatches = searchHistory
       .filter((item) => item.toLowerCase().includes(query.toLowerCase()))
       .slice(0, 3);
-
+  
     suggestions.push(
       ...historyMatches.map((item) => ({
         text: item,
@@ -150,14 +312,17 @@ document.addEventListener('DOMContentLoaded', function () {
         icon: '🕒',
       }))
     );
-
+  
     const locationSuggestions = new Set();
     allLocations.forEach((card) => {
       const storeName = card.getAttribute('data-store-name');
       const city = card.getAttribute('data-city');
       const country = card.getAttribute('data-country');
-
-      [storeName, city, country].forEach((item) => {
+      const address = card.getAttribute('data-address');
+      const postalCode = card.getAttribute('data-postal-code');
+      const province = card.getAttribute('data-province');
+  
+      [storeName, city, country, province, postalCode].forEach((item) => {
         if (
           item &&
           item.toLowerCase().includes(query.toLowerCase()) &&
@@ -167,8 +332,23 @@ document.addEventListener('DOMContentLoaded', function () {
           locationSuggestions.add(item);
         }
       });
+      
+      if (address) {
+        const addressParts = address.split(/[,\s]+/);
+        addressParts.forEach(part => {
+          if (
+            part &&
+            part.length > 2 &&
+            part.toLowerCase().includes(query.toLowerCase()) &&
+            !locationSuggestions.has(part) &&
+            part.toLowerCase() !== query.toLowerCase()
+          ) {
+            locationSuggestions.add(part);
+          }
+        });
+      }
     });
-
+  
     suggestions.push(
       ...Array.from(locationSuggestions)
         .slice(0, 5)
@@ -178,7 +358,7 @@ document.addEventListener('DOMContentLoaded', function () {
           icon: '📍',
         }))
     );
-
+  
     return suggestions.slice(0, 8);
   }
 
@@ -267,14 +447,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function displayResults() {
     allLocations.forEach((card) => {
-      card.style.display = 'none';
+      card.classList.add('hidden');
     });
 
     const maxResults = resultsSelect.value === 'all' ? filteredLocations.length : parseInt(resultsSelect.value);
     const cardsToShow = filteredLocations.slice(0, maxResults);
 
     cardsToShow.forEach((card) => {
-      card.style.display = 'block';
+      card.classList.remove('hidden');
     });
 
     allLocations.forEach((card) => card.classList.remove('active'));
