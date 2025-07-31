@@ -1961,7 +1961,7 @@
 
 /* Hide items not on current page */
 .location-card.pagination-hidden {
-  display: none !important;
+  display: none;
 }
 
 /* Map Legend Styles */

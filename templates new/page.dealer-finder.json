@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "dealer_search_nNkjCJ": {
@@ -30,11 +21,390 @@
             "hours_of_operation": "Open:\nMonday - Friday 10:00 - 18:00\nThursday 10:00 - 19:00\nSaturday 09:00 - 13:00\n\n(+49)34159097850\n------------------------------------------------",
             "show_pin": true
           }
-        }
+        },
+        "location_002": {
+          "type": "location",
+          "name": "Hepha Factory",
+          "settings": {
+            "store_name": "Hepha Factory",
+            "store_type": "service_center",
+            "address": "Lise-Meitner-Str. 7a",
+            "city": "Maisach",
+            "province_state": "Bayern",
+            "postal_code": "82216",
+            "country": "DE",
+            "phone": "+49 (0) 8142 2844480",
+            "fax": "",
+            "email": "service@hepha.com",
+            "website": "https://hepha.com/",
+            "hours_of_operation": "Service time: Mo.-Fr.: 09:00-15:00\n------------------------------------------------\nThis is our factory. No access without booking",
+            "show_pin": true
+          }
+        },
+        "location_003": {
+          "type": "location",
+          "name": "Haslinger Hof - Fahrradverleih Arwin Krämer",
+          "settings": {
+            "store_name": "Haslinger Hof - Fahrradverleih Arwin Krämer",
+            "store_type": "rental_station",
+            "address": "Ed 1",
+            "city": "Kirchham",
+            "province_state": "Bayern",
+            "postal_code": "94148",
+            "country": "DE",
+            "phone": "+49 8531 2954941",
+            "fax": "",
+            "email": "info@haslinger-hof.de",
+            "website": "",
+            "hours_of_operation": "",
+            "show_pin": true
+          }
+        },
+        "location_004": {
+          "type": "location",
+          "name": "HANN-BIKES",
+          "settings": {
+            "store_name": "HANN-BIKES",
+            "store_type": "dealer",
+            "address": "Roseneck 1",
+            "city": "Hüllhorst",
+            "province_state": "Nordrhein-Westfalen",
+            "postal_code": "32609",
+            "country": "DE",
+            "phone": "+49 57412506301",
+            "fax": "",
+            "email": "service@e-bike-schrauber.de",
+            "website": "",
+            "hours_of_operation": "",
+            "show_pin": true
+          }
+        },
+        "location_005": {
+          "type": "location",
+          "name": "Radl-ladl",
+          "settings": {
+            "store_name": "Radl-ladl",
+            "store_type": "dealer",
+            "address": "Frabertshamerstr.9a",
+            "city": "Amerang",
+            "province_state": "Bayern",
+            "postal_code": "83123",
+            "country": "DE",
+            "phone": "08075 1698",
+            "fax": "",
+            "email": "service@radl-ladl.de",
+            "website": "https://www.radl-ladl.de/",
+            "hours_of_operation": "Montag, Dienstag, Donnerstag & Freitag: 9:00 - 12.00 Uhr & 13:00 - 18:00 Uhr\nMittwoch & Samstag: 9:00 - 12:00 Uhr",
+            "show_pin": true
+          }
+        },
+        "location_006": {
+          "type": "location",
+          "name": "Switchbike Bornemann OHG",
+          "settings": {
+            "store_name": "Switchbike Bornemann OHG",
+            "store_type": "dealer",
+            "address": "Katharinengasse 14",
+            "city": "Gießen",
+            "province_state": "Hessen",
+            "postal_code": "35390",
+            "country": "DE",
+            "phone": "+49 (0)641-34393",
+            "fax": "",
+            "email": "info@switchbike.de",
+            "website": "https://www.switchbike.de/",
+            "hours_of_operation": "Montag, Dienstag, Mittwoch & Freitag: 10:00 - 18:00 Uhr\nDonnerstag: geschlossen\nSamstag: 10:00 - 16:00 Uhr",
+            "show_pin": true
+          }
+        },
+        "location_007": {
+          "type": "location",
+          "name": "Pott GmbH",
+          "settings": {
+            "store_name": "Pott GmbH",
+            "store_type": "dealer",
+            "address": "Heideweg, 12",
+            "city": "Bad Laer",
+            "province_state": "",
+            "postal_code": "49196",
+            "country": "DE",
+            "phone": "+49 (0)05424 - 22 170",
+            "fax": "",
+            "email": "info@pott-gmbh.de",
+            "website": "",
+            "hours_of_operation": "",
+            "show_pin": true
+          }
+        },
+        "location_008": {
+          "type": "location",
+          "name": "Fahrwerk Timmer Lingen",
+          "settings": {
+            "store_name": "Fahrwerk Timmer Lingen",
+            "store_type": "dealer",
+            "address": "Meppener Str. 104",
+            "city": "Lingen",
+            "province_state": "",
+            "postal_code": "49808",
+            "country": "DE",
+            "phone": "+49 (0)591 32 17 44-23",
+            "fax": "",
+            "email": "lingen@fahrwerk.me",
+            "website": "https://fahrwerk.me/",
+            "hours_of_operation": "Montag - Freitag: 9:30 - 13:00 Uhr & 14:00 - 18:30 Uhr\nSamstag: 9:30 - 14:00 Uhr",
+            "show_pin": true
+          }
+        },
+        "location_009": {
+          "type": "location",
+          "name": "Mr.Bike",
+          "settings": {
+            "store_name": "Mr.Bike",
+            "store_type": "dealer",
+            "address": "Rechenauerstraße 20B",
+            "city": "Rosenheim",
+            "province_state": "",
+            "postal_code": "83022",
+            "country": "DE",
+            "phone": "+49 (0)173 1588506",
+            "fax": "",
+            "email": "info@mr-bike.com",
+            "website": "",
+            "hours_of_operation": "",
+            "show_pin": true
+          }
+        },
+        "location_010": {
+          "type": "location",
+          "name": "Schnellrad by Zweirad Schnell UG",
+          "settings": {
+            "store_name": "Schnellrad by Zweirad Schnell UG",
+            "store_type": "dealer",
+            "address": "Koblenzer Str. 38a",
+            "city": "Hachenburg",
+            "province_state": "",
+            "postal_code": "57627",
+            "country": "DE",
+            "phone": "+49 (0)2662/9319770",
+            "fax": "",
+            "email": "info@schnellrad.de",
+            "website": "",
+            "hours_of_operation": "Montag, Dienstag, Donnerstag & Freitag: 13.00 - 18:30 Uhr\nSamstag: 9:00 - 13:00 Uhr",
+            "show_pin": true
+          }
+        },
+        "location_011": {
+          "type": "location",
+          "name": "Hupfer GmbH",
+          "settings": {
+            "store_name": "Hupfer GmbH",
+            "store_type": "dealer",
+            "address": "Bundesstr. 14",
+            "city": "Lauchringen",
+            "province_state": "",
+            "postal_code": "",
+            "country": "DE",
+            "phone": "+49 (0)7741/3289",
+            "fax": "",
+            "email": "afathi@hupfer-fahrradladen.de",
+            "website": "",
+            "hours_of_operation": "",
+            "show_pin": true
+          }
+        },
+        "location_012": {
+          "type": "location",
+          "name": "Zwoo GmbH/Fahrradladen Essen",
+          "settings": {
+            "store_name": "Zwoo GmbH/Fahrradladen Essen",
+            "store_type": "dealer",
+            "address": "Huyssenallee 95",
+            "city": "Essen",
+            "province_state": "North Rhine-Westphalia",
+            "postal_code": "45128",
+            "country": "DE",
+            "phone": "+49 (0)201/36036960",
+            "fax": "",
+            "email": "info@fahrradladen-essen.de",
+            "website": "https://fahrradladen-essen.de",
+            "hours_of_operation": "Montag - Freitag: 10:00 - 18:00 Uhr\nSamstag: 10:00 - 16:00 Uhr",
+            "show_pin": true
+          }
+        },
+        "location_013": {
+          "type": "location",
+          "name": "Bikes for friends GmbH",
+          "settings": {
+            "store_name": "Bikes for friends GmbH",
+            "store_type": "dealer",
+            "address": "Dorfstraße. 20",
+            "city": "Geiersthal",
+            "province_state": "",
+            "postal_code": "94244",
+            "country": "DE",
+            "phone": "+49 (0)1707475196",
+            "fax": "",
+            "email": "bikesforfriends@posteo.de",
+            "website": "",
+            "hours_of_operation": "",
+            "show_pin": true
+          }
+        },
+        "location_014": {
+          "type": "location",
+          "name": "OLEK'S RADSPORT GMBH",
+          "settings": {
+            "store_name": "OLEK'S RADSPORT GMBH",
+            "store_type": "dealer",
+            "address": "Mathildenstrasse 54",
+            "city": "Einhausen",
+            "province_state": "",
+            "postal_code": "64683",
+            "country": "DE",
+            "phone": "+49 (0)625/153039",
+            "fax": "",
+            "email": "info@oleks-radsport.de",
+            "website": "https://www.oleks-radsport.de/",
+            "hours_of_operation": "Montag, Dienstag, Donnerstag & Freitag: 9:00 - 12:30 Uhr & 14:30 Uhr - 18:00 Uhr\nMittwoch: 9:00 - 12:30 Uhr\nSamstag: 9:00 - 13:00 Uhr",
+            "show_pin": true
+          }
+        },
+        "location_015": {
+          "type": "location",
+          "name": "Total Normal Bikes GmbH",
+          "settings": {
+            "store_name": "Total Normal Bikes GmbH",
+            "store_type": "dealer",
+            "address": "Kaiserstraße 331",
+            "city": "Sankt Ingbert",
+            "province_state": "Saarland",
+            "postal_code": "66386",
+            "country": "DE",
+            "phone": "+49 (0) 6894 - 87530",
+            "fax": "",
+            "email": "info@total-normal.com",
+            "website": "https://total-normal.com/",
+            "hours_of_operation": "Montag, Mittwoch & Donnerstag: 13:30 – 18:00 Uhr\nDienstag & Freitag: 10:00 – 12:00 & 13:30 – 18:00 Uhr\nSamstag: 9:30 – 13:00 Uhr",
+            "show_pin": true
+          }
+        },
+        "location_016": {
+          "type": "location",
+          "name": "ebike-saar GmbH",
+          "settings": {
+            "store_name": "ebike-saar GmbH",
+            "store_type": "dealer",
+            "address": "Mainzer Straße 269",
+            "city": "Saarbrücken",
+            "province_state": "",
+            "postal_code": "66121",
+            "country": "DE",
+            "phone": "0681 96868911",
+            "fax": "",
+            "email": "info@ebike-saar.com",
+            "website": "https://www.ebike-saar.com/",
+            "hours_of_operation": "Montag - Freitag: 14:00 - 18:00 Uhr\nSamstag: 10:00 - 14:00 Uhr",
+            "show_pin": true
+          }
+        },
+        "location_017": {
+          "type": "location",
+          "name": "Pulssport Blieskastel",
+          "settings": {
+            "store_name": "Pulssport Blieskastel",
+            "store_type": "dealer",
+            "address": "Von-der-Leyen-Straße 7",
+            "city": "Blieskastel",
+            "province_state": "",
+            "postal_code": "66440",
+            "country": "DE",
+            "phone": "+49 6842 946533",
+            "fax": "",
+            "email": "info@puls-sport.de",
+            "website": "https://www.puls-sport.com/",
+            "hours_of_operation": "Montag, Dienstag, Donnerstag & Freitag: 13:00 - 18:00 Uhr\nSamstag: 9:00 - 12:00 Uhr",
+            "show_pin": true
+          }
+        },
+        "location_018": {
+          "type": "location",
+          "name": "Zweirad Service Dorfrad",
+          "settings": {
+            "store_name": "Zweirad Service Dorfrad",
+            "store_type": "dealer",
+            "address": "Grünstrasse 1",
+            "city": "Kabelsketal-Naundorf",
+            "province_state": "",
+            "postal_code": "6184",
+            "country": "DE",
+            "phone": "+49 179 2938403",
+            "fax": "",
+            "email": "enrico-hartmann@web.de",
+            "website": "https://www.dorfrad.de",
+            "hours_of_operation": "Montag - Freitag: 12.00 - 19:00 Uhr\nund nach Vereinbarung",
+            "show_pin": true
+          }
+        },
+        "location_019": {
+          "type": "location",
+          "name": "Karls Bike Shop",
+          "settings": {
+            "store_name": "Karls Bike Shop",
+            "store_type": "dealer",
+            "address": "Kaigartenallee 12",
+            "city": "Waghäusel",
+            "province_state": "",
+            "postal_code": "68753",
+            "country": "DE",
+            "phone": "+49 (0)72549583180",
+            "fax": "",
+            "email": "info@karls-bike-shop.de",
+            "website": "",
+            "hours_of_operation": "",
+            "show_pin": true
+          }
+        },
+        "location_020": {
+          "type": "location",
+          "name": "Vineyard-bikes",
+          "settings": {
+            "store_name": "Vineyard-bikes",
+            "store_type": "dealer",
+            "address": "Weinberggasse 25",
+            "city": "Balzheim",
+            "province_state": "",
+            "postal_code": "88481",
+            "country": "DE",
+            "phone": "+49 7347 920698",
+            "fax": "",
+            "email": "vineyard-bikes@t-online.de",
+            "website": "http://vineyard-bikes.de",
+            "hours_of_operation": "",
+            "show_pin": true
+          }
         }
       },
       "block_order": [
-        "location_001"
+        "location_001",
+        "location_002",
+        "location_003",
+        "location_004",
+        "location_005",
+        "location_006",
+        "location_007",
+        "location_008",
+        "location_009",
+        "location_010",
+        "location_011",
+        "location_012",
+        "location_013",
+        "location_014",
+        "location_015",
+        "location_016",
+        "location_017",
+        "location_018",
+        "location_019",
+        "location_020"
       ],
       "name": "Find a dealer",
       "settings": {
@@ -43,7 +413,6 @@
         "section_title_fr": "Recherche de Revendeur",
         "section_title_fi": "Jälleenmyyjähaku",
         "full_width": true,
-        "color_scheme": "1",
         "api_key": "AIzaSyBo8kZy19ByPFrx0XR0jrTR5Z6PO5mlaCU",
         "map_type": "dynamic",
         "map_style": "default"

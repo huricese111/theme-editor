@@ -524,30 +524,33 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // 统一的displayResults函数（支持分页）
   function displayResults() {
-    // 隐藏所有卡片
-    allLocations.forEach((card) => {
-      card.classList.add('pagination-hidden');
-      card.classList.remove('active');
-    });
-  
-    // 更新分页信息
-    updatePagination();
-  
     // 计算当前页面要显示的项目
     const startIndex = (currentPage - 1) * pageSize;
     const endIndex = startIndex + pageSize;
     const cardsToShow = filteredLocations.slice(startIndex, endIndex);
-  
-    // 显示当前页面的卡片
-    cardsToShow.forEach((card) => {
-      card.classList.remove('pagination-hidden');
+    
+    // 使用requestAnimationFrame确保DOM更新的正确时序
+    requestAnimationFrame(() => {
+      // 隐藏所有卡片
+      allLocations.forEach((card) => {
+        card.classList.add('pagination-hidden');
+        card.classList.remove('active');
+      });
+      
+      // 立即显示当前页面的卡片
+      cardsToShow.forEach((card) => {
+        card.classList.remove('pagination-hidden');
+      });
+      
+      // 激活第一个卡片并更新地图
+      if (cardsToShow.length > 0) {
+        cardsToShow[0].classList.add('active');
+        updateMapForCard(cardsToShow[0]);
+      }
     });
-  
-    // 激活第一个卡片并更新地图
-    if (cardsToShow.length > 0) {
-      cardsToShow[0].classList.add('active');
-      updateMapForCard(cardsToShow[0]);
-    }
+    
+    // 更新分页信息
+    updatePagination();
   }
 
   // 统一的performSearch函数
@@ -1165,14 +1168,43 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     if (website) {
-      content += `<div class="info-section">`;
-      content += `<div class="contact-item">`;
-      content += `<svg class="contact-icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.083 9h1.946c.089-1.546.383-2.97.837-4.118A6.004 6.004 0 004.083 9zM10 2a8 8 0 100 16 8 8 0 000-16zm0 2c-.076 0-.232.032-.465.262-.238.234-.497.623-.737 1.182-.389.907-.673 2.142-.766 3.556h3.936c-.093-1.414-.377-2.649-.766-3.556-.24-.559-.499-.948-.737-1.182C10.232 4.032 10.076 4 10 4zm3.971 5c-.089-1.546-.383-2.97-.837-4.118A6.004 6.004 0 0115.917 9h-1.946zm-2.003 2H8.032c.093 1.414.377 2.649.766 3.556.24.559.499.948.737 1.182.233.23.389.262.465.262.076 0 .232-.032.465-.262.238-.234.497-.623.737-1.182.389-.907.673-2.142.766-3.556zm1.166 4.118c.454-1.148.748-2.572.837-4.118h1.946a6.004 6.004 0 01-2.783 4.118zm-6.268 0C6.412 13.97 6.118 12.546 6.03 11H4.083a6.004 6.004 0 002.783 4.118z" clip-rule="evenodd"></path></svg>`;
-      content += `<div class="contact-content">`;
-      content += `<div class="contact-label">${i18nLabels.website}</div>`;
-      content += `<div class="contact-value"><a href="${website}" target="_blank">${website}</a></div>`;
-      content += `</div></div></div>`;
+    content += `<div class="info-section">`;
+    content += `<div class="contact-item">`;
+    content += `<svg class="contact-icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.083 9h1.946c.089-1.546.383-2.97.837-4.118A6.004 6.004 0 004.083 9zM10 2a8 8 0 100 16 8 8 0 000-16zm0 2c-.076 0-.232.032-.465.262-.238.234-.497.623-.737 1.182-.389.907-.673 2.142-.766 3.556h3.936c-.093-1.414-.377-2.649-.766-3.556-.24-.559-.499-.948-.737-1.182C10.232 4.032 10.076 4 10 4zm3.971 5c-.089-1.546-.383-2.97-.837-4.118A6.004 6.004 0 0115.917 9h-1.946zm-2.003 2H8.032c.093 1.414.377 2.649.766 3.556.24.559.499.948.737 1.182.233.23.389.262.465.262.076 0 .232-.032.465-.262.238-.234.497-.623.737-1.182.389-.907.673-2.142.766-3.556zm1.166 4.118c.454-1.148.748-2.572.837-4.118h1.946a6.004 6.004 0 01-2.783 4.118zm-6.268 0C6.412 13.97 6.118 12.546 6.03 11H4.083a6.004 6.004 0 002.783 4.118z" clip-rule="evenodd"></path></svg>`;
+    content += `<div class="contact-content">`;
+    content += `<div class="contact-label">${i18nLabels.website}</div>`;
+    content += `<div class="contact-value"><a href="${website}" target="_blank">${website}</a></div>`;
+    content += `</div></div></div>`;
+  }
+
+  // 添加 Hours of Operations 显示
+  if (hours) {
+    content += `<div class="info-section">`;
+    content += `<div class="contact-item">`;
+    content += `<svg class="contact-icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path></svg>`;
+    content += `<div class="contact-content">`;
+    
+    // 根据当前语言设置Hours of Operations标签
+    let hoursLabel = 'Hours of Operations';
+    const currentLang = getCurrentLanguage();
+    switch(currentLang) {
+      case 'de':
+        hoursLabel = 'Öffnungszeiten';
+        break;
+      case 'fr':
+        hoursLabel = 'Heures d\'ouverture';
+        break;
+      case 'fi':
+        hoursLabel = 'Aukioloajat';
+        break;
+      default:
+        hoursLabel = 'Hours of Operations';
     }
+    
+    content += `<div class="contact-label">${hoursLabel}</div>`;
+    content += `<div class="contact-value">${hours.replace(/\n/g, '<br>')}</div>`;
+    content += `</div></div></div>`;
+  }
 
     if (storeType) {
       const translatedStoreType = i18nLabels[storeType] || storeType;
