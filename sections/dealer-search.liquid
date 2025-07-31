@@ -371,13 +371,13 @@
 
                       {% if block.settings.phone != blank %}
                         <div class="location-card__phone">
-                          <strong>{{ phone_label }}:</strong> {{ block.settings.phone | escape }}
+                          <strong>{{ phone_label }}:</strong> <a href="tel:{{ block.settings.phone | escape }}" class="location-card__phone-link">{{ block.settings.phone | escape }}</a>
                         </div>
                       {% endif %}
 
                       {% if block.settings.email != blank %}
                         <div class="location-card__email">
-                          <strong>{{ email_label }}:</strong> {{ block.settings.email | escape }}
+                          <strong>{{ email_label }}:</strong> <a href="mailto:{{ block.settings.email | escape }}" class="location-card__email-link">{{ block.settings.email | escape }}</a>
                         </div>
                       {% endif %}
                     </div>
