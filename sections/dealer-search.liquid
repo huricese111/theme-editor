@@ -327,6 +327,47 @@
               {%- endcase -%}
             {%- endfor -%}
           </div>
+          
+          <!-- Pagination Component -->
+          <div class="pagination-container" id="pagination-container">
+            <div class="pagination-info">
+              <span class="pagination-stats" id="pagination-stats"></span>
+            </div>
+            
+            <div class="pagination-controls">
+              <div class="pagination-size-selector">
+                <label for="page-size-select" class="page-size-label"></label>
+                <select id="page-size-select" class="page-size-select">
+                  <option value="10" selected>10</option>
+                  <option value="30">30</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+              </div>
+              
+              <div class="pagination-navigation">
+                <button class="pagination-btn pagination-btn--prev" id="prev-page" disabled>
+                  <svg class="pagination-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <polyline points="15,18 9,12 15,6"></polyline>
+                  </svg>
+                  <span class="prev-text"></span>
+                </button>
+                
+                <div class="pagination-pages">
+                  <input type="number" class="page-input" id="page-input" value="1" min="1">
+                  <span class="page-separator">/</span>
+                  <span class="total-pages" id="total-pages">1</span>
+                </div>
+                
+                <button class="pagination-btn pagination-btn--next" id="next-page">
+                  <span class="next-text"></span>
+                  <svg class="pagination-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <polyline points="9,18 15,12 9,6"></polyline>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 

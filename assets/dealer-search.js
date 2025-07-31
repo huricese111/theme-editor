@@ -12,7 +12,11 @@ const translations = {
     storeType: 'Store Type',
     more: 'More',
     less: 'Less',
-    calculatingDistance: 'Calculating distance...'
+    calculatingDistance: 'Calculating distance...',
+    perPage: 'Per page',
+    previousPage: 'Previous',
+    nextPage: 'Next',
+    showingResults: 'Showing {start}-{end} of {total} results'
   },
   de: {
     address: 'Adresse',
@@ -22,7 +26,11 @@ const translations = {
     storeType: 'Geschäftstyp',
     more: 'Mehr',
     less: 'Weniger',
-    calculatingDistance: 'Entfernung wird berechnet...'
+    calculatingDistance: 'Entfernung wird berechnet...',
+    perPage: 'Pro Seite',
+    previousPage: 'Zurück',
+    nextPage: 'Weiter',
+    showingResults: 'Zeige {start}-{end} von {total} Ergebnissen'
   },
   fr: {
     address: 'Adresse',
@@ -32,7 +40,11 @@ const translations = {
     storeType: 'Type de Magasin',
     more: 'Plus',
     less: 'Moins',
-    calculatingDistance: 'Calcul de la distance...'
+    calculatingDistance: 'Calcul de la distance...',
+    perPage: 'Par page',
+    previousPage: 'Précédent',
+    nextPage: 'Suivant',
+    showingResults: 'Affichage de {start}-{end} sur {total} résultats'
   },
   fi: {
     address: 'Osoite',
@@ -42,7 +54,11 @@ const translations = {
     storeType: 'Myymälän Tyyppi',
     more: 'Lisää',
     less: 'Vähemmän',
-    calculatingDistance: 'Lasketaan etäisyyttä...'
+    calculatingDistance: 'Lasketaan etäisyyttä...',
+    perPage: 'Per sivu',
+    previousPage: 'Edellinen',
+    nextPage: 'Seuraava',
+    showingResults: 'Näytetään {start}-{end} / {total} tulosta'
   }
 };
 
@@ -66,6 +82,24 @@ document.addEventListener('DOMContentLoaded', function () {
   let searchHistory = JSON.parse(localStorage.getItem('dealerSearchHistory') || '[]');
   let currentSuggestionIndex = -1;
   let searchTimeout;
+
+  // 分页变量
+  let currentPage = 1;
+  let pageSize = 10;
+  let totalItems = 0;
+  let totalPages = 1;
+  
+  // 分页元素
+  const paginationContainer = document.getElementById('pagination-container');
+  const paginationStats = document.getElementById('pagination-stats');
+  const pageSizeSelect = document.getElementById('page-size-select');
+  const prevPageBtn = document.getElementById('prev-page');
+  const nextPageBtn = document.getElementById('next-page');
+  const pageInput = document.getElementById('page-input');
+  const totalPagesSpan = document.getElementById('total-pages');
+  const pageSizeLabel = document.querySelector('.page-size-label');
+  const prevText = document.querySelector('.prev-text');
+  const nextText = document.querySelector('.next-text');
 
   const suggestionsContainer = document.createElement('div');
   suggestionsContainer.className = 'search-suggestions';
@@ -489,21 +523,480 @@ document.addEventListener('DOMContentLoaded', function () {
     showSuggestions(locationSearch.value);
   }
 
+  // 统一的displayResults函数（支持分页）
   function displayResults() {
+    // 隐藏所有卡片
     allLocations.forEach((card) => {
-      card.classList.add('hidden');
+      card.classList.add('pagination-hidden');
+      card.classList.remove('active');
     });
-
-    const cardsToShow = filteredLocations;
-
+  
+    // 更新分页信息
+    updatePagination();
+  
+    // 计算当前页面要显示的项目
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    const cardsToShow = filteredLocations.slice(startIndex, endIndex);
+  
+    // 显示当前页面的卡片
     cardsToShow.forEach((card) => {
-      card.classList.remove('hidden');
+      card.classList.remove('pagination-hidden');
     });
-
-    allLocations.forEach((card) => card.classList.remove('active'));
+  
+    // 激活第一个卡片并更新地图
     if (cardsToShow.length > 0) {
       cardsToShow[0].classList.add('active');
       updateMapForCard(cardsToShow[0]);
+    }
+  }
+
+  // 统一的performSearch函数
+  function performSearch(saveToHistory = true) {
+    // 重置到第一页
+    currentPage = 1;
+    
+    const searchTerm = locationSearch.value.toLowerCase().trim();
+    const selectedFilters = Array.from(filterCheckboxes)
+      .filter((cb) => cb.checked)
+      .map((cb) => cb.value);
+  
+    // 首先根据过滤器筛选位置
+    if (selectedFilters.length > 0) {
+      filteredLocations = allLocations.filter(card => {
+        const storeType = card.getAttribute('data-store-type');
+        return selectedFilters.includes(storeType);
+      });
+    } else {
+      filteredLocations = [...allLocations];
+    }
+  
+    // 如果有搜索词，保存到历史记录
+    if (saveToHistory && searchTerm && !searchHistory.includes(searchTerm)) {
+      searchHistory.unshift(searchTerm);
+      searchHistory = searchHistory.slice(0, 10);
+      localStorage.setItem('dealerSearchHistory', JSON.stringify(searchHistory));
+    }
+  
+    // 如果有搜索词，进行地理编码和距离计算
+    if (searchTerm && window.google && window.google.maps) {
+      showLoadingState();
+      
+      geocodeAddress(searchTerm, function(userLocation) {
+        if (userLocation) {
+          updateDistancesAndSort(userLocation);
+        } else {
+          // 如果地理编码失败，则进行文本搜索
+          filteredLocations = filteredLocations.filter(card => {
+            const storeName = card.getAttribute('data-store-name')?.toLowerCase() || '';
+            const city = card.getAttribute('data-city')?.toLowerCase() || '';
+            const country = card.getAttribute('data-country')?.toLowerCase() || '';
+            const address = card.getAttribute('data-address')?.toLowerCase() || '';
+            const province = card.getAttribute('data-province')?.toLowerCase() || '';
+            const postalCode = card.getAttribute('data-postal-code')?.toLowerCase() || '';
+            
+            return storeName.includes(searchTerm) ||
+                   city.includes(searchTerm) ||
+                   country.includes(searchTerm) ||
+                   address.includes(searchTerm) ||
+                   province.includes(searchTerm) ||
+                   postalCode.includes(searchTerm);
+          });
+          hideLoadingState();
+          displayResults();
+        }
+      });
+    } else if (searchTerm) {
+      // 如果没有Google Maps API，只进行文本搜索
+      filteredLocations = filteredLocations.filter(card => {
+        const storeName = card.getAttribute('data-store-name')?.toLowerCase() || '';
+        const city = card.getAttribute('data-city')?.toLowerCase() || '';
+        const country = card.getAttribute('data-country')?.toLowerCase() || '';
+        const address = card.getAttribute('data-address')?.toLowerCase() || '';
+        const province = card.getAttribute('data-province')?.toLowerCase() || '';
+        const postalCode = card.getAttribute('data-postal-code')?.toLowerCase() || '';
+        
+        return storeName.includes(searchTerm) ||
+               city.includes(searchTerm) ||
+               country.includes(searchTerm) ||
+               address.includes(searchTerm) ||
+               province.includes(searchTerm) ||
+               postalCode.includes(searchTerm);
+      });
+      displayResults();
+    } else {
+      displayResults();
+    }
+  
+    hideSuggestions();
+  }
+  
+  function showLoadingState() {
+    const loadingIndicator = document.createElement('div');
+    loadingIndicator.id = 'search-loading';
+    loadingIndicator.className = 'search-loading';
+    loadingIndicator.innerHTML = `<div class="loading-spinner"></div><span>${i18nLabels.calculatingDistance}</span>`;
+    
+    const existingLoading = document.getElementById('search-loading');
+    if (existingLoading) {
+      existingLoading.remove();
+    }
+    
+    locationResults.insertBefore(loadingIndicator, locationResults.firstChild);
+  }
+  
+  function hideLoadingState() {
+    const loadingIndicator = document.getElementById('search-loading');
+    if (loadingIndicator) {
+      loadingIndicator.remove();
+    }
+  }
+  
+  function updateDistancesAndSort(userLocation) {
+    if (!userLocation) {
+      hideLoadingState();
+      displayResults();
+      return;
+    }
+    
+    let completedRequests = 0;
+    const totalRequests = filteredLocations.length;
+    
+    if (totalRequests === 0) {
+      hideLoadingState();
+      displayResults();
+      return;
+    }
+    
+    filteredLocations.forEach(card => {
+      const address = card.getAttribute('data-address');
+      const city = card.getAttribute('data-city');
+      const country = card.getAttribute('data-country');
+      const postalCode = card.getAttribute('data-postal-code');
+      const province = card.getAttribute('data-province');
+      
+      let fullAddress = '';
+      if (address) fullAddress += address;
+      if (postalCode) fullAddress += (fullAddress ? ', ' : '') + postalCode;
+      if (city) fullAddress += (fullAddress ? ', ' : '') + city;
+      if (province) fullAddress += (fullAddress ? ', ' : '') + province;
+      if (country) fullAddress += (fullAddress ? ', ' : '') + country;
+      
+      if (fullAddress) {
+        geocodeAddress(fullAddress, function(storeLocation) {
+          completedRequests++;
+          
+          if (storeLocation) {
+            const distance = calculateDistance(
+              userLocation.lat, userLocation.lng,
+              storeLocation.lat, storeLocation.lng
+            );
+            
+            const distanceElement = card.querySelector('.location-card__distance');
+            const distanceValue = card.querySelector('.distance-value');
+            
+            if (distanceElement && distanceValue) {
+              distanceValue.textContent = distance.toFixed(1) + ' KM';
+              distanceElement.style.display = 'block';
+              distanceElement.classList.add('has-distance');
+              
+              card.setAttribute('data-distance', distance.toFixed(1));
+            }
+          }
+          
+          if (completedRequests === totalRequests) {
+            filteredLocations.sort((a, b) => {
+              const distanceA = parseFloat(a.getAttribute('data-distance')) || Infinity;
+              const distanceB = parseFloat(b.getAttribute('data-distance')) || Infinity;
+              return distanceA - distanceB;
+            });
+            
+            hideLoadingState();
+            displayResults();
+          }
+        });
+      } else {
+        completedRequests++;
+        if (completedRequests === totalRequests) {
+          hideLoadingState();
+          displayResults();
+        }
+      }
+    });
+  }
+  
+  function generateSuggestions(query) {
+    const suggestions = [];
+  
+    const historyMatches = searchHistory
+      .filter((item) => item.toLowerCase().includes(query.toLowerCase()))
+      .slice(0, 3);
+  
+    suggestions.push(
+      ...historyMatches.map((item) => ({
+        text: item,
+        type: 'history',
+        icon: '🕒',
+      }))
+    );
+  
+    const locationSuggestions = new Set();
+    allLocations.forEach((card) => {
+      const storeName = card.getAttribute('data-store-name');
+      const city = card.getAttribute('data-city');
+      const country = card.getAttribute('data-country');
+      const address = card.getAttribute('data-address');
+      const postalCode = card.getAttribute('data-postal-code');
+      const province = card.getAttribute('data-province');
+  
+      [storeName, city, country, province, postalCode].forEach((item) => {
+        if (
+          item &&
+          item.toLowerCase().includes(query.toLowerCase()) &&
+          !locationSuggestions.has(item) &&
+          item.toLowerCase() !== query.toLowerCase()
+        ) {
+          locationSuggestions.add(item);
+        }
+      });
+      
+      if (address) {
+        const addressParts = address.split(/[,\s]+/);
+        addressParts.forEach(part => {
+          if (
+            part &&
+            part.length > 2 &&
+            part.toLowerCase().includes(query.toLowerCase()) &&
+            !locationSuggestions.has(part) &&
+            part.toLowerCase() !== query.toLowerCase()
+          ) {
+            locationSuggestions.add(part);
+          }
+        });
+      }
+    });
+  
+    suggestions.push(
+      ...Array.from(locationSuggestions)
+        .slice(0, 5)
+        .map((item) => ({
+          text: item,
+          type: 'suggestion',
+          icon: '📍',
+        }))
+    );
+  
+    return suggestions.slice(0, 8);
+  }
+
+  function showSuggestions(query) {
+    if (!query.trim()) {
+      hideSuggestions();
+      return;
+    }
+
+    const suggestions = generateSuggestions(query);
+
+    if (suggestions.length === 0) {
+      hideSuggestions();
+      return;
+    }
+
+    suggestionsContainer.innerHTML = suggestions
+      .map(
+        (suggestion, index) => `
+      <div class="suggestion-item ${index === currentSuggestionIndex ? 'highlighted' : ''}" 
+           data-index="${index}" data-text="${suggestion.text}">
+        <span class="suggestion-icon">${suggestion.icon}</span>
+        <span class="suggestion-text">${suggestion.text}</span>
+        ${
+          suggestion.type === 'history'
+            ? '<span class="suggestion-remove" data-text="' + suggestion.text + '">×</span>'
+            : ''
+        }
+      </div>
+    `
+      )
+      .join('');
+
+    suggestionsContainer.style.display = 'block';
+  }
+
+  function hideSuggestions() {
+    suggestionsContainer.style.display = 'none';
+    currentSuggestionIndex = -1;
+  }
+
+  function handleKeyboardNavigation(e) {
+    const suggestions = suggestionsContainer.querySelectorAll('.suggestion-item');
+
+    switch (e.key) {
+      case 'ArrowDown':
+        e.preventDefault();
+        currentSuggestionIndex = Math.min(currentSuggestionIndex + 1, suggestions.length - 1);
+        updateSuggestionHighlight();
+        break;
+
+      case 'ArrowUp':
+        e.preventDefault();
+        currentSuggestionIndex = Math.max(currentSuggestionIndex - 1, -1);
+        updateSuggestionHighlight();
+        break;
+
+      case 'Enter':
+        e.preventDefault();
+        if (currentSuggestionIndex >= 0 && suggestions[currentSuggestionIndex]) {
+          const selectedText = suggestions[currentSuggestionIndex].getAttribute('data-text');
+          locationSearch.value = selectedText;
+        }
+        performSearch();
+        break;
+
+      case 'Escape':
+        hideSuggestions();
+        locationSearch.blur();
+        break;
+    }
+  }
+
+  function updateSuggestionHighlight() {
+    const suggestions = suggestionsContainer.querySelectorAll('.suggestion-item');
+    suggestions.forEach((item, index) => {
+      item.classList.toggle('highlighted', index === currentSuggestionIndex);
+    });
+  }
+
+  function removeFromHistory(text) {
+    searchHistory = searchHistory.filter((item) => item !== text);
+    localStorage.setItem('dealerSearchHistory', JSON.stringify(searchHistory));
+    showSuggestions(locationSearch.value);
+  }
+
+  // 初始化分页功能
+  function initializePagination() {
+    if (!paginationContainer) return;
+  
+    // 设置初始文本内容
+    updatePaginationTexts();
+  
+    // 页面大小选择器
+    if (pageSizeSelect) {
+      pageSizeSelect.addEventListener('change', function() {
+        pageSize = parseInt(this.value);
+        currentPage = 1;
+        displayResults();
+      });
+    }
+  
+    // 上一页按钮
+    if (prevPageBtn) {
+      prevPageBtn.addEventListener('click', function() {
+        if (currentPage > 1) {
+          currentPage--;
+          displayResults();
+          scrollToTop();
+        }
+      });
+    }
+  
+    // 下一页按钮
+    if (nextPageBtn) {
+      nextPageBtn.addEventListener('click', function() {
+        if (currentPage < totalPages) {
+          currentPage++;
+          displayResults();
+          scrollToTop();
+        }
+      });
+    }
+  
+    // 页面输入
+    if (pageInput) {
+      pageInput.addEventListener('change', function() {
+        const newPage = parseInt(this.value);
+        if (newPage >= 1 && newPage <= totalPages) {
+          currentPage = newPage;
+          displayResults();
+          scrollToTop();
+        } else {
+          this.value = currentPage;
+        }
+      });
+  
+      pageInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          this.blur();
+        }
+      });
+    }
+  }
+  
+  // 更新分页文本
+  function updatePaginationTexts() {
+    if (pageSizeLabel) {
+      pageSizeLabel.textContent = i18nLabels.perPage;
+    }
+    if (prevText) {
+      prevText.textContent = i18nLabels.previousPage;
+    }
+    if (nextText) {
+      nextText.textContent = i18nLabels.nextPage;
+    }
+  }
+  
+  // 更新分页信息
+  function updatePagination() {
+    totalItems = filteredLocations.length;
+    totalPages = Math.ceil(totalItems / pageSize) || 1;
+    
+    // 确保当前页面在有效范围内
+    if (currentPage > totalPages) {
+      currentPage = totalPages;
+    }
+    if (currentPage < 1) {
+      currentPage = 1;
+    }
+  
+    // 更新统计信息
+    const startItem = totalItems === 0 ? 0 : (currentPage - 1) * pageSize + 1;
+    const endItem = Math.min(currentPage * pageSize, totalItems);
+    
+    if (paginationStats) {
+      const statsText = i18nLabels.showingResults
+        .replace('{start}', startItem)
+        .replace('{end}', endItem)
+        .replace('{total}', totalItems);
+      paginationStats.textContent = statsText;
+    }
+  
+    // 更新页面信息
+    if (pageInput) {
+      pageInput.value = currentPage;
+      pageInput.max = totalPages;
+    }
+    if (totalPagesSpan) {
+      totalPagesSpan.textContent = totalPages;
+    }
+  
+    // 更新按钮状态
+    if (prevPageBtn) {
+      prevPageBtn.disabled = currentPage <= 1;
+    }
+    if (nextPageBtn) {
+      nextPageBtn.disabled = currentPage >= totalPages;
+    }
+  
+    // 显示/隐藏分页容器
+    if (paginationContainer) {
+      paginationContainer.style.display = totalItems > 0 ? 'block' : 'none';
+    }
+  }
+  
+  // 滚动到顶部
+  function scrollToTop() {
+    const scrollableResults = document.querySelector('.dealer-search__scrollable-results');
+    if (scrollableResults) {
+      scrollableResults.scrollTop = 0;
     }
   }
 
@@ -604,6 +1097,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
+  // 初始化
+  initializePagination();
   displayResults();
 
   function createInfoWindowContent(card) {
