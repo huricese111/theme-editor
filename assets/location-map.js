@@ -83,8 +83,8 @@ if (!customElements.get('location-map')) {
     // 创建自定义marker图标
     const markerIcon = {
     url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(this.getMarkerSVG(storeType))}`,
-    scaledSize: new google.maps.Size(44, 56), // 更新尺寸以匹配新设计
-    anchor: new google.maps.Point(22, 56) // 更新锚点位置
+    scaledSize: new google.maps.Size(40, 50),
+    anchor: new google.maps.Point(20, 50)
     };
     
     return new google.maps.Marker({

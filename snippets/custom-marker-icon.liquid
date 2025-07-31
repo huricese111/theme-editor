@@ -7,6 +7,7 @@
 
 {%- assign store_type = store_type | default: 'dealer' -%}
 {%- assign size = size | default: 'medium' -%}
+{%- assign unique_id = store_type | append: '-' | append: size -%}
 
 {%- case size -%}
   {%- when 'small' -%}
@@ -46,18 +47,18 @@
 
 <svg width="{{ width }}" height="{{ height }}" viewBox="0 0 {{ width }} {{ height }}" fill="none" xmlns="http://www.w3.org/2000/svg" class="custom-marker custom-marker--{{ store_type }}">
   <defs>
-    <linearGradient id="marker-gradient-{{ store_type }}" x1="0%" y1="0%" x2="0%" y2="100%">
+    <linearGradient id="marker-gradient-{{ unique_id }}" x1="0%" y1="0%" x2="0%" y2="100%">
       <stop offset="0%" style="stop-color:{{ primary_color }};stop-opacity:1" />
       <stop offset="100%" style="stop-color:{{ secondary_color }};stop-opacity:1" />
     </linearGradient>
-    <filter id="marker-shadow-{{ store_type }}" x="-20%" y="-20%" width="140%" height="140%">
+    <filter id="marker-shadow-{{ unique_id }}" x="-20%" y="-20%" width="140%" height="140%">
       <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.3"/>
     </filter>
   </defs>
   
   <path d="M{{ width | divided_by: 2 }} {{ height | minus: 2 }}C{{ width | divided_by: 2 }} {{ height | minus: 2 }} {{ width | minus: 2 }} {{ circle_center_y | plus: 5 }} {{ width | minus: 2 }} {{ circle_center_y }}C{{ width | minus: 2 }} {{ circle_center_y | minus: 8 }} {{ width | divided_by: 2 | plus: 8 }} 2 {{ width | divided_by: 2 }} 2C{{ width | divided_by: 2 | minus: 8 }} 2 2 {{ circle_center_y | minus: 8 }} 2 {{ circle_center_y }}C2 {{ circle_center_y | plus: 5 }} {{ width | divided_by: 2 }} {{ height | minus: 2 }} {{ width | divided_by: 2 }} {{ height | minus: 2 }}Z" 
-        fill="url(#marker-gradient-{{ store_type }})" 
-        filter="url(#marker-shadow-{{ store_type }})" 
+        fill="url(#marker-gradient-{{ unique_id }})" 
+        filter="url(#marker-shadow-{{ unique_id }})" 
         stroke="#ffffff" 
         stroke-width="1"/>
   

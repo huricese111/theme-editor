@@ -99,6 +99,90 @@
 {{ 'dealer-search.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'dealer-search.js' | asset_url }}"></script>
 
+{% style %}
+  :root {
+    --header-height: 70px;
+    --announcement-height: 45px;
+  }
+  
+  .no-announcement {
+    --announcement-height: 0px;
+  }
+  
+  .dynamic-heights {
+    --actual-header-height: var(--theme-header-height, 70px);
+    --actual-announcement-height: var(--announcement-bar-height, 45px);
+  }
+{% endstyle %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    function isDesktop() {
+      return window.innerWidth > 768;
+    }
+    
+    function updateHeights() {
+      if (!isDesktop()) {
+        updateMobileSectionHeight();
+        return;
+      }
+      
+      const headerElement = document.querySelector('.section-header, .pageheader');
+      const announcementElement = document.querySelector('.announcement-bar, .section-announcement-bar');
+      
+      let headerHeight = 70; 
+      let announcementHeight = 0; 
+      
+      if (headerElement) {
+        headerHeight = headerElement.offsetHeight;
+        document.documentElement.style.setProperty('--actual-header-height', headerHeight + 'px');
+      }
+      
+      if (announcementElement && announcementElement.offsetHeight > 0) {
+        announcementHeight = announcementElement.offsetHeight;
+        document.documentElement.style.setProperty('--actual-announcement-height', announcementHeight + 'px');
+      } else {
+        document.documentElement.style.setProperty('--actual-announcement-height', '0px');
+      }
+      
+      const totalTopHeight = headerHeight + announcementHeight;
+      document.documentElement.style.setProperty('--total-top-height', totalTopHeight + 'px');
+    }
+    
+    function updateMobileSectionHeight() {
+      const mapSection = document.querySelector('.map-section');
+      const mapSectionLocations = document.querySelector('.map-section__locations');
+      const mapSectionMap = document.querySelector('.map-section__map');
+      
+      if (mapSection && mapSectionLocations && mapSectionMap) {
+        setTimeout(() => {
+          const locationsHeight = mapSectionLocations.offsetHeight;
+          const mapHeight = mapSectionMap.offsetHeight;
+          const totalHeight = locationsHeight + mapHeight;
+          
+          mapSection.style.height = totalHeight + 'px';
+          mapSection.style.minHeight = totalHeight + 'px';
+        }, 100);
+      }
+    }
+    
+    if (isDesktop()) {
+      updateHeights();
+    } else {
+      updateMobileSectionHeight();
+    }
+    
+    window.addEventListener('resize', function() {
+      updateHeights();
+    });
+    
+    if (window.Shopify && window.Shopify.designMode) {
+      document.addEventListener('shopify:section:load', updateHeights);
+      document.addEventListener('shopify:section:reorder', updateHeights);
+    }
+  });
+</script>
+
 {% assign display_map = false %}
 {%- assign first_map_address = '' -%}
 {%- for block in section.blocks -%}
@@ -166,7 +250,7 @@
     {%- assign search_button_text = 'Suchen' -%}
     {%- assign search_filters_title = 'Such-Filter' -%}
     {%- assign dealer_text = 'Händler' -%}
-    {%- assign rental_station_text = 'Rental Station' -%}
+    {%- assign rental_station_text = 'Verleihstation' -%}
     {%- assign service_center_text = 'Servicezentrum' -%}
     {%- assign all_text = 'Alle' -%}
     {%- assign phone_label = 'Telefon' -%}
@@ -181,7 +265,7 @@
     {%- assign search_button_text = 'Recherche' -%}
     {%- assign search_filters_title = 'Filtres de recherche' -%}
     {%- assign dealer_text = 'Revendeur' -%}
-    {%- assign rental_station_text = 'Rental Station' -%}
+    {%- assign rental_station_text = 'Point de location' -%}
     {%- assign service_center_text = 'Centre de service' -%}
     {%- assign all_text = 'Tous' -%}
     {%- assign phone_label = 'Téléphone' -%}
@@ -221,7 +305,7 @@
     {%- assign less_text = 'Less' -%}
 {%- endcase -%}
 
-<div class="section-id-{{ section.id }} map-section use-color-scheme use-color-scheme--{{ section.settings.color_scheme }}{% unless section.settings.full_width %} map-section--map-constrained{% endunless %}{% if display_map %} map-section--display-map{% endif %}" {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
+<div class="section-id-{{ section.id }} map-section {% unless section.settings.full_width %} map-section--map-constrained{% endunless %}{% if display_map %} map-section--display-map{% endif %}" {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
   <div class="container">
     <div class="map-section__wrapper">
       <div class="map-section__locations">
@@ -237,33 +321,25 @@
               </div>
               <div class="search-simple-controls">
                 <button type="button" id="search-btn" class="dealer-search-btn">{{ search_button_text }}</button>
-                <button type="button" id="more-btn" class="more-btn">
-                  <span class="more-btn__text">{{ more_text }}</span>
-                  <svg class="more-btn__arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="6,9 12,15 18,9"></polyline>
-                  </svg>
-                </button>
               </div>
             </div>
+          </div>
 
-            <div class="search-advanced" id="search-advanced" style="display: none;">
-              
-              <div class="search-filters">
-                <h4 class="search-filters__title">{{ search_filters_title }}</h4>
-                <div class="filter-options">
-                  <label class="filter-option">
-                    <input type="checkbox" id="filter-dealer" value="dealer">
-                    <span>{{ dealer_text }}</span>
-                  </label>
-                  <label class="filter-option">
-                    <input type="checkbox" id="filter-rental" value="rental">
-                    <span>{{ rental_station_text }}</span>
-                  </label>
-                  <label class="filter-option">
-                    <input type="checkbox" id="filter-service" value="service">
-                    <span>{{ service_center_text }}</span>
-                  </label>
-                </div>
+          <div class="search-advanced" id="search-advanced">
+            <div class="search-filters">
+              <div class="filter-options">
+                <label class="filter-option">
+                  <input type="checkbox" id="filter-dealer" value="dealer">
+                  <span>{{ dealer_text }}</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" id="filter-rental" value="rental">
+                  <span>{{ rental_station_text }}</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" id="filter-service" value="service">
+                  <span>{{ service_center_text }}</span>
+                </label>
               </div>
             </div>
           </div>
@@ -379,6 +455,80 @@
             {%- else -%}
               <iframe id="map-iframe" class="map" src="https://www.google.com/maps/embed/v1/place?key={{ section.settings.api_key }}&q={{ first_map_address }}&zoom=14&language={{ request.locale.iso_code }}&region={{ region_code }}" width="100%" height="100%" frameborder="0" style="border:0" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
             {%- endif -%}
+            
+            <!-- Map Legend -->
+            <div class="map-legend">
+              <div class="map-legend__items">
+                <div class="map-legend__item">
+                  <div class="map-legend__icon">
+                    {% render 'custom-marker-icon', store_type: 'dealer', size: 'small' %}
+                  </div>
+                  <span class="map-legend__label">
+                    {%- case request.locale.iso_code -%}
+                      {%- when 'de' -%}
+                        Händler
+                      {%- when 'fr' -%}
+                        Revendeur
+                      {%- when 'fi' -%}
+                        Jälleenmyyjä
+                      {%- else -%}
+                        Dealer
+                    {%- endcase -%}
+                  </span>
+                </div>
+                <div class="map-legend__item">
+                  <div class="map-legend__icon">
+                    {% render 'custom-marker-icon', store_type: 'rental', size: 'small' %}
+                  </div>
+                  <span class="map-legend__label">
+                    {%- case request.locale.iso_code -%}
+                      {%- when 'de' -%}
+                        Verleihstation
+                      {%- when 'fr' -%}
+                        Station de Location
+                      {%- when 'fi' -%}
+                        Vuokrauspiste
+                      {%- else -%}
+                        Rental Station
+                    {%- endcase -%}
+                  </span>
+                </div>
+                <div class="map-legend__item">
+                  <div class="map-legend__icon">
+                    {% render 'custom-marker-icon', store_type: 'service', size: 'small' %}
+                  </div>
+                  <span class="map-legend__label">
+                    {%- case request.locale.iso_code -%}
+                      {%- when 'de' -%}
+                        Servicezentrum
+                      {%- when 'fr' -%}
+                        Centre de Service
+                      {%- when 'fi' -%}
+                        Huoltokeskus
+                      {%- else -%}
+                        Service Center
+                    {%- endcase -%}
+                  </span>
+                </div>
+                {% comment %} <div class="map-legend__item">
+                  <div class="map-legend__icon">
+                    {% render 'custom-marker-icon', store_type: 'click-collect', size: 'small' %}
+                  </div>
+                  <span class="map-legend__label">
+                    {%- case request.locale.iso_code -%}
+                      {%- when 'de' -%}
+                        Click & Collect
+                      {%- when 'fr' -%}
+                        Click & Collect
+                      {%- when 'fi' -%}
+                        Click & Collect
+                      {%- else -%}
+                        Click & Collect
+                    {%- endcase -%}
+                  </span>
+                </div> {% endcomment %}
+              </div>
+            </div>
           </div>
         {%- endif -%}
       </div>

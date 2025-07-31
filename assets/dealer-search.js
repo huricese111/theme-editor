@@ -16,7 +16,11 @@ const translations = {
     perPage: 'Per page',
     previousPage: 'Previous',
     nextPage: 'Next',
-    showingResults: 'Showing {start}-{end} of {total} results'
+    showingResults: 'Showing {start}-{end} of {total} results',
+    dealer: 'Dealer',
+    rental: 'Rental Station',
+    service: 'Service Center',
+    'click-collect': 'Click & Collect'
   },
   de: {
     address: 'Adresse',
@@ -30,7 +34,11 @@ const translations = {
     perPage: 'Pro Seite',
     previousPage: 'Zurück',
     nextPage: 'Weiter',
-    showingResults: 'Zeige {start}-{end} von {total} Ergebnissen'
+    showingResults: 'Zeige {start}-{end} von {total} Ergebnissen',
+    dealer: 'Händler',
+    rental: 'Rental Station',
+    service: 'Servicezentrum',
+    'click-collect': 'Click & Collect'
   },
   fr: {
     address: 'Adresse',
@@ -44,7 +52,11 @@ const translations = {
     perPage: 'Par page',
     previousPage: 'Précédent',
     nextPage: 'Suivant',
-    showingResults: 'Affichage de {start}-{end} sur {total} résultats'
+    showingResults: 'Affichage de {start}-{end} sur {total} résultats',
+    dealer: 'Revendeur',
+    rental: 'Rental Station',
+    service: 'Centre de service',
+    'click-collect': 'Click & Collect'
   },
   fi: {
     address: 'Osoite',
@@ -58,7 +70,11 @@ const translations = {
     perPage: 'Per sivu',
     previousPage: 'Edellinen',
     nextPage: 'Seuraava',
-    showingResults: 'Näytetään {start}-{end} / {total} tulosta'
+    showingResults: 'Näytetään {start}-{end} / {total} tulosta',
+    dealer: 'Jälleenmyyjä',
+    rental: 'Vuokraamo',
+    service: 'Huoltokeskus',
+    'click-collect': 'Click & Collect'
   }
 };
 
@@ -73,9 +89,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const locationSearch = document.getElementById('location-search');
   const locationResults = document.getElementById('location-results');
   const filterCheckboxes = document.querySelectorAll('.filter-option input[type="checkbox"]');
-  const moreBtn = document.getElementById('more-btn');
-  const searchAdvanced = document.getElementById('search-advanced');
-  let isAdvancedVisible = false;
 
   let allLocations = Array.from(locationCards);
   let filteredLocations = [...allLocations];
@@ -111,20 +124,6 @@ document.addEventListener('DOMContentLoaded', function () {
   locationSearch.parentNode.insertBefore(searchWrapper, locationSearch);
   searchWrapper.appendChild(locationSearch);
   searchWrapper.appendChild(suggestionsContainer);
-
-  moreBtn.addEventListener('click', function() {
-    isAdvancedVisible = !isAdvancedVisible;
-    
-    if (isAdvancedVisible) {
-      searchAdvanced.style.display = 'block';
-      moreBtn.querySelector('.more-btn__text').textContent = i18nLabels.less;
-      moreBtn.classList.add('more-btn--expanded');
-    } else {
-      searchAdvanced.style.display = 'none';
-      moreBtn.querySelector('.more-btn__text').textContent = i18nLabels.more;
-      moreBtn.classList.remove('more-btn--expanded');
-    }
-  });
 
   if (!mapContainer) return;
 
@@ -1176,7 +1175,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     if (storeType) {
-      content += `<div class="store-type-badge">${storeType}</div>`;
+      const translatedStoreType = i18nLabels[storeType] || storeType;
+      content += `<div class="store-type-badge">${translatedStoreType}</div>`;
     }
 
     content += `</div>`;
