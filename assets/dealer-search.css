@@ -1394,45 +1394,14 @@
   }
 
   .dealer-search__scrollable-results::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.2);
     border-radius: 2px;
   }
 
-  .dealer-search__scrollable-results * {
-    touch-action: pan-y;
-  }
-
-  .map-section__map {
-    order: 1;
-    height: 60vh;
-    width: 100%;
-  }
-
   .location-card {
+    margin-bottom: 0.5rem;
     padding: 0.5rem;
-    min-height: 70px;
-    margin-bottom: 0.4rem;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto;
-    flex-shrink: 0;
-  }
-
-  .location-card__marker {
-    grid-column: 1;
-    grid-row: 1;
-    justify-self: start;
-    width: 25px;
-    height: 35px;
-  }
-
-  .location-card__marker .custom-marker {
-    width: 20px;
-    height: 25px;
-  }
-
-  .location-card__content {
-    grid-column: 1;
-    grid-row: 2;
+    min-height: 60px;
   }
 
   .location-card__title {
@@ -1447,22 +1416,7 @@
     margin-bottom: 0.1rem;
   }
 
-  .location-card__actions {
-    grid-column: 1;
-    grid-row: 3;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 0.5rem;
-  }
-
-  .location-card__direction {
-    order: 2;
-  }
-
   .location-card__distance {
-    order: 1;
-    align-self: flex-start;
     font-size: 0.7rem;
     padding: 0.2rem 0.4rem;
     min-width: 50px;
@@ -1480,85 +1434,95 @@
   }
 
   .gm-style .gm-style-iw.gm-style-iw-c {
-    max-width: 280px;
-    min-width: 250px;
+    max-width: 75vw !important;
+    min-width: 240px !important;
+  }
+
+  .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d {
+    max-height: 40vh !important;
+    overflow: visible !important;
   }
 
   .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window {
-    padding: 8px;
-    max-width: 260px;
-    line-height: 1.1;
+    padding: 8px !important;
+    max-width: none !important;
+    max-height: 35vh !important;
+    overflow-y: auto !important;
+    line-height: 1.3 !important;
+    word-wrap: break-word !important;
+    word-break: break-word !important;
+    font-size: 12px !important;
   }
 
   .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window h4 {
-    font-size: 14px;
-    margin-bottom: 4px;
-    line-height: 1.1;
+    font-size: 14px !important;
+    margin-bottom: 4px !important;
+    line-height: 1.2 !important;
   }
 
   .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window p {
-    font-size: 12px;
-    margin: 2px 0;
-    line-height: 1.1;
+    font-size: 12px !important;
+    margin: 3px 0 !important;
+    line-height: 1.3 !important;
   }
 
   .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window .contact-item {
-    margin: 2px 0 !important;
-    padding: 2px 0;
-    font-size: 12px;
-    line-height: 1.1;
+    margin: 3px 0 !important;
+    padding: 2px 0 !important;
+    font-size: 12px !important;
+    line-height: 1.3 !important;
   }
 
   .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window .contact-icon {
-    width: 16px;
-    height: 16px;
-    margin-right: 6px;
+    width: 14px !important;
+    height: 14px !important;
+    margin-right: 4px !important;
   }
 
   .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window strong {
-    font-size: 12px;
-    margin-bottom: 1px;
-    display: block;
+    font-size: 12px !important;
+    margin-bottom: 1px !important;
+    display: block !important;
   }
 
   .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window a {
-    font-size: 12px;
-    line-height: 1.1;
+    font-size: 12px !important;
+    line-height: 1.3 !important;
   }
 
   .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window .info-section {
-    padding: 2px 0;
-    border-bottom: 1px solid #f1f5f9;
+    padding: 2px 0 !important;
+    border-bottom: 1px solid #f1f5f9 !important;
   }
 
   .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window .address-text {
-    font-size: 12px;
-    line-height: 1.1;
+    font-size: 12px !important;
+    line-height: 1.3 !important;
+    word-break: break-word !important;
   }
 
   .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window .store-type-badge {
-    font-size: 10px;
-    padding: 2px 6px;
-    margin-top: 3px;
-    line-height: 1.1;
-    text-transform: capitalize;
+    font-size: 10px !important;
+    padding: 2px 4px !important;
+    margin-top: 2px !important;
+    line-height: 1.2 !important;
   }
 
   .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-t {
-    right: 6px;
-    top: 6px;
-    width: 32px !important;
-    height: 32px !important;
+    right: 4px !important;
+    top: 4px !important;
+    width: 24px !important;
+    height: 24px !important;
   }
 
   .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-t > button {
-    width: 32px !important;
-    height: 32px !important;
+    width: 24px !important;
+    height: 24px !important;
   }
 
   .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-t > button > span {
-    width: 20px !important;
-    height: 20px !important;
+    width: 16px !important;
+    height: 16px !important;
   }
 }
 
@@ -1594,20 +1558,23 @@
 
 @media (max-width: 360px) {
   .gm-style .gm-style-iw.gm-style-iw-c {
-    max-width: 260px;
-    min-width: 240px;
+    max-width: 80vw !important;
+    min-width: 220px !important;
+  }
+
+  .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d {
+    max-height: 35vh !important;
   }
 
   .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window {
-    padding: 6px;
-    max-width: 240px;
-    line-height: 1.0;
+    padding: 6px !important;
+    max-height: 30vh !important;
+    font-size: 11px !important;
   }
 
   .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window h4 {
-    font-size: 13px;
-    margin-bottom: 3px;
-    line-height: 1.0;
+    font-size: 13px !important;
+    margin-bottom: 3px !important;
   }
 
   .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window p,
@@ -1616,21 +1583,19 @@
     .gm-style-iw-d
     .info-window
     .contact-item {
-    font-size: 11px;
-    margin: 1px 0;
-    padding: 1px 0;
-    line-height: 1.0;
+    font-size: 11px !important;
+    line-height: 1.2 !important;
+    margin: 2px 0 !important;
   }
 
   .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window .contact-icon {
-    width: 14px;
-    height: 14px;
-    margin-right: 4px;
+    width: 12px !important;
+    height: 12px !important;
+    margin-right: 3px !important;
   }
 
   .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window strong {
-    font-size: 11px;
-    margin-bottom: 0px;
+    font-size: 11px !important;
   }
 
   .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window .info-section {
@@ -1638,8 +1603,8 @@
   }
 
   .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window .store-type-badge {
-    font-size: 9px;
-    padding: 1px 4px;
+    font-size: 9px !important;
+    padding: 1px 3px !important;
     margin-top: 2px;
     text-transform: capitalize;
   }
@@ -1647,18 +1612,18 @@
   .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-t {
     right: 4px;
     top: 4px;
-    width: 28px !important;
-    height: 28px !important;
+    width: 20px !important;
+    height: 20px !important;
   }
 
   .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-t > button {
-    width: 28px !important;
-    height: 28px !important;
+    width: 20px !important;
+    height: 20px !important;
   }
 
   .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-t > button > span {
-    width: 18px !important;
-    height: 18px !important;
+    width: 14px !important;
+    height: 14px !important;
   }
 
   .info-window .contact-label {
@@ -1676,23 +1641,6 @@
   transform: scale(1.1);
 }
 
-/* Store Type Specific Styles */
-.location-card[data-store-type="dealer"] {
-  border-left: 4px solid #2563eb;
-}
-
-.location-card[data-store-type="rental"] {
-  border-left: 4px solid #059669;
-}
-
-.location-card[data-store-type="service"] {
-  border-left: 4px solid #dc2626;
-}
-
-.location-card[data-store-type="click-collect"] {
-  border-left: 4px solid #7c3aed;
-}
-
 /* Store Type Badge */
 .store-type-badge {
   display: inline-block;
@@ -1707,23 +1655,23 @@
 }
 
 .location-card[data-store-type="dealer"] .store-type-badge {
-  background-color: #dbeafe;
-  color: #1d4ed8;
+  background-color: rgba(54, 153, 255, 0.1);
+  color: #3699FF;
 }
 
 .location-card[data-store-type="rental"] .store-type-badge {
-  background-color: #d1fae5;
-  color: #047857;
+  background-color: rgba(81, 187, 168, 0.1);
+  color: #51BBA8;
 }
 
 .location-card[data-store-type="service"] .store-type-badge {
-  background-color: #fee2e2;
-  color: #b91c1c;
+  background-color: rgba(237, 85, 113, 0.1);
+  color: #ED5571;
 }
 
 .location-card[data-store-type="click-collect"] .store-type-badge {
-  background-color: #ede9fe;
-  color: #6d28d9;
+  background-color: rgba(255, 153, 51, 0.1);
+  color: #FF9933;
 }
 
 .location-card.hidden {
@@ -1933,13 +1881,32 @@
   }
 }
 
-/* Info window 中的 store-type-badge 样式 */
 .gm-style .gm-style-iw-d .info-window .store-type-badge {
   font-size: 13px;
   padding: 6px 14px;
   margin-top: 12px;
   line-height: 1.3;
   text-transform: capitalize;
+}
+
+.gm-style .gm-style-iw-d .info-window .store-type-badge[data-store-type="dealer"] {
+  background-color: rgba(54, 153, 255, 0.1);
+  color: #3699FF;
+}
+
+.gm-style .gm-style-iw-d .info-window .store-type-badge[data-store-type="rental"] {
+  background-color: rgba(81, 187, 168, 0.1);
+  color: #51BBA8;
+}
+
+.gm-style .gm-style-iw-d .info-window .store-type-badge[data-store-type="service"] {
+  background-color: rgba(237, 85, 113, 0.1);
+  color: #ED5571;
+}
+
+.gm-style .gm-style-iw-d .info-window .store-type-badge[data-store-type="click-collect"] {
+  background-color: rgba(255, 153, 51, 0.1);
+  color: #FF9933;
 }
 
 /* 移动端样式调整 */

@@ -1208,7 +1208,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (storeType) {
       const translatedStoreType = i18nLabels[storeType] || storeType;
-      content += `<div class="store-type-badge">${translatedStoreType}</div>`;
+      content += `<div class="store-type-badge" data-store-type="${storeType}">${translatedStoreType}</div>`;
     }
 
     content += `</div>`;

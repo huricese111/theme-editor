@@ -96,38 +96,33 @@ if (!customElements.get('location-map')) {
     }
     
     getMarkerSVG(storeType) {
+    // 严格按照Frame SVG样式定义颜色
     const colors = {
-    dealer: { primary: '#2563eb', secondary: '#1d4ed8' },
-    rental: { primary: '#059669', secondary: '#047857' },
-    service: { primary: '#dc2626', secondary: '#b91c1c' },
-    'click-collect': { primary: '#7c3aed', secondary: '#6d28d9' }
+    dealer: '#3699FF',       
+    rental: '#51BBA8',      
+    service: '#ED5571',       
+    'click-collect': '#FF9933' 
     };
     
     const color = colors[storeType] || colors.dealer;
     
+    const uniqueId = `map-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    const clipId = `clip-${uniqueId}`;
+    
     return `<svg width="40" height="50" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg">
     <defs>
-    <linearGradient id="marker-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-    <stop offset="0%" style="stop-color:${color.primary};stop-opacity:1" />
-    <stop offset="100%" style="stop-color:${color.secondary};stop-opacity:1" />
-    </linearGradient>
-    <filter id="marker-shadow" x="-20%" y="-20%" width="140%" height="140%">
-    <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.3"/>
-    </filter>
+    <clipPath id="${clipId}">
+    <rect width="40" height="50" fill="white"/>
+    </clipPath>
     </defs>
-    <path d="M20 48C20 48 38 22 38 17C38 9 31 2 20 2C9 2 2 9 2 17C2 22 20 48 20 48Z" 
-          fill="url(#marker-gradient)" 
-          filter="url(#marker-shadow)" 
-          stroke="#ffffff" 
-          stroke-width="1"/>
-    <circle cx="20" cy="17" r="12" fill="rgba(255,255,255,0.2)"/>
-    <g transform="translate(10, 7) scale(0.023)">
-      <path d="M812.803 390.655C811.283 388.196 807.846 387.804 805.784 389.828C770.081 425.234 506.872 686.252 506.809 686.314C469.336 723.476 408.575 723.476 371.101 686.314C333.628 649.153 333.628 588.897 371.101 551.736C371.101 551.736 482.73 441.14 553.531 370.989C590.005 334.84 610.522 285.801 610.522 234.675L610.585 4.47674C610.585 0.489988 605.731 -1.49306 602.899 1.31626L350.646 251.345C347.813 254.155 342.96 252.172 342.96 248.185V109.31C342.96 105.323 338.107 103.40 335.274 106.149L124.869 314.865H124.994C-43.3964 485.696 -41.6467 759.894 130.243 928.597C301.591 1096.72 580.027 1095.65 750.105 926.263C896.249 780.736 917.141 558.222 812.803 390.655Z" fill="#ffffff"/>
+    <g clip-path="url(#${clipId})">
+    <path d="M34.4 13.3C33.6 6.1 27.4 0.6 20 0.6C12.6 0.6 6.4 6.1 5.6 13.3C5.5 13.9 5.4 14.5 5.4 15.0C5.3 17.5 6.0 20.0 7.1 22.3C7.6 23.3 8.2 24.3 8.8 25.3L17.9 38.9C18.5 39.6 19.2 40.0 20.0 40.0C20.8 40.0 21.5 39.6 22.1 38.9L31.2 25.3C31.8 24.3 32.4 23.3 32.9 22.3C34.9 19.5 35.1 16.4 34.4 13.3Z" fill="${color}"/>
+    
+    <path d="M27.1 12.6C27.0 12.5 26.9 12.5 26.9 12.5C25.9 13.3 21.2 18.2 21.2 18.2C20.5 18.9 19.3 18.9 18.6 18.2C17.9 17.5 17.9 16.4 18.6 15.7C18.6 15.7 20.7 13.6 22.1 12.2C22.8 11.5 23.2 10.6 23.2 9.6L23.2 5.3C23.2 5.2 23.1 5.1 23.0 5.2L18.2 10.0C18.1 10.1 18.0 10.0 18.0 9.9V7.3C18.0 7.2 17.9 7.1 17.8 7.2L13.9 11.2H13.9C10.7 14.4 10.8 19.6 14.0 22.8C17.2 26.0 22.6 25.9 25.8 22.8C28.7 20.0 29.1 15.8 27.1 12.6Z" fill="white"/>
     </g>
-  </svg>`;
+    </svg>`;
     }
 
-    // 修改updateMap方法
     updateMap(address, storeType = 'dealer') {
     if (!this.geocoder || !this.map) return;
     

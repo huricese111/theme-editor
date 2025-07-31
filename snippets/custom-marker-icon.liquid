@@ -11,54 +11,45 @@
 {%- case size -%}
   {%- when 'small' -%}
     {%- assign width = 32 -%}
-    {%- assign height = 40 -%}
-    {%- assign circle_center_y = 16 -%}
-    {%- assign scale_factor = 0.018 -%}
+    {%- assign height = 32 -%}
+    {%- assign scale_factor = 0.112 -%}
   {%- when 'large' -%}
     {%- assign width = 44 -%}
-    {%- assign height = 56 -%}
-    {%- assign circle_center_y = 22 -%}
-    {%- assign scale_factor = 0.025 -%}
+    {%- assign height = 44 -%}
+    {%- assign scale_factor = 0.154 -%}
   {%- else -%}
     {%- assign width = 40 -%}
-    {%- assign height = 50 -%}
-    {%- assign circle_center_y = 20 -%}
-    {%- assign scale_factor = 0.023 -%}
+    {%- assign height = 40 -%}
+    {%- assign scale_factor = 0.140 -%}
 {%- endcase -%}
 
 {%- case store_type -%}
   {%- when 'dealer' -%}
-    {%- assign primary_color = '#2563eb' -%}
-    {%- assign secondary_color = '#1d4ed8' -%}
+    {%- assign marker_color = '#3699FF' -%}
   {%- when 'rental' -%}
-    {%- assign primary_color = '#059669' -%}
-    {%- assign secondary_color = '#047857' -%}
+    {%- assign marker_color = '#51BBA8' -%}
   {%- when 'service' -%}
-    {%- assign primary_color = '#dc2626' -%}
-    {%- assign secondary_color = '#b91c1c' -%}
+    {%- assign marker_color = '#ED5571' -%}
   {%- when 'click-collect' -%}
-    {%- assign primary_color = '#7c3aed' -%}
-    {%- assign secondary_color = '#6d28d9' -%}
+    {%- assign marker_color = '#FF9933' -%}
   {%- else -%}
-    {%- assign primary_color = '#2563eb' -%}
-    {%- assign secondary_color = '#1d4ed8' -%}
+    {%- assign marker_color = '#3699FF' -%}
 {%- endcase -%}
 
-<div class="custom-marker-wrapper custom-marker-wrapper--{{ store_type }}" style="width: {{ width }}px; height: {{ height }}px; position: relative; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.3));">
-  <svg width="{{ width }}" height="{{ height }}" viewBox="0 0 {{ width }} {{ height }}" fill="none" xmlns="http://www.w3.org/2000/svg" class="custom-marker custom-marker--{{ store_type }}" style="position: absolute; top: 0; left: 0;">
-    <path d="M{{ width | divided_by: 2 }} {{ height | minus: 2 }}C{{ width | divided_by: 2 }} {{ height | minus: 2 }} {{ width | minus: 2 }} {{ circle_center_y | plus: 5 }} {{ width | minus: 2 }} {{ circle_center_y }}C{{ width | minus: 2 }} {{ circle_center_y | minus: 8 }} {{ width | divided_by: 2 | plus: 8 }} 2 {{ width | divided_by: 2 }} 2C{{ width | divided_by: 2 | minus: 8 }} 2 2 {{ circle_center_y | minus: 8 }} 2 {{ circle_center_y }}C2 {{ circle_center_y | plus: 5 }} {{ width | divided_by: 2 }} {{ height | minus: 2 }} {{ width | divided_by: 2 }} {{ height | minus: 2 }}Z" 
-          fill="{{ primary_color }}" 
-          stroke="#ffffff" 
-          stroke-width="1"/>
+{%- assign unique_id = store_type | append: '-' | append: size | append: '-' | append: 'now' | date: '%s' -%}
+
+<svg width="{{ width }}" height="{{ height }}" viewBox="0 0 {{ width }} {{ height }}" fill="none" xmlns="http://www.w3.org/2000/svg" class="custom-marker custom-marker--{{ store_type }}">
+  <g clip-path="url(#clip{{ unique_id }})">
+    <!-- 主体路径 -->
+    <path d="M{{ width | times: 0.861 | round: 3 }} {{ height | times: 0.332 | round: 3 }}C{{ width | times: 0.841 | round: 3 }} {{ height | times: 0.151 | round: 3 }} {{ width | times: 0.686 | round: 3 }} {{ height | times: 0.014 | round: 3 }} {{ width | times: 0.5 | round: 3 }} {{ height | times: 0.014 | round: 3 }}C{{ width | times: 0.314 | round: 3 }} {{ height | times: 0.014 | round: 3 }} {{ width | times: 0.158 | round: 3 }} {{ height | times: 0.151 | round: 3 }} {{ width | times: 0.139 | round: 3 }} {{ height | times: 0.332 | round: 3 }}C{{ width | times: 0.137 | round: 3 }} {{ height | times: 0.346 | round: 3 }} {{ width | times: 0.136 | round: 3 }} {{ height | times: 0.360 | round: 3 }} {{ width | times: 0.136 | round: 3 }} {{ height | times: 0.375 | round: 3 }}C{{ width | times: 0.136 | round: 3 }} {{ height | times: 0.438 | round: 3 }} {{ width | times: 0.150 | round: 3 }} {{ height | times: 0.500 | round: 3 }} {{ width | times: 0.178 | round: 3 }} {{ height | times: 0.558 | round: 3 }}C{{ width | times: 0.190 | round: 3 }} {{ height | times: 0.583 | round: 3 }} {{ width | times: 0.204 | round: 3 }} {{ height | times: 0.608 | round: 3 }} {{ width | times: 0.220 | round: 3 }} {{ height | times: 0.632 | round: 3 }}L{{ width | times: 0.448 | round: 3 }} {{ height | times: 0.971 | round: 3 }}C{{ width | times: 0.459 | round: 3 }} {{ height | times: 0.988 | round: 3 }} {{ width | times: 0.478 | round: 3 }} {{ height | times: 0.999 | round: 3 }} {{ width | times: 0.499 | round: 3 }} {{ height | times: 0.999 | round: 3 }}C{{ width | times: 0.521 | round: 3 }} {{ height | times: 0.999 | round: 3 }} {{ width | times: 0.540 | round: 3 }} {{ height | times: 0.988 | round: 3 }} {{ width | times: 0.551 | round: 3 }} {{ height | times: 0.971 | round: 3 }}L{{ width | times: 0.780 | round: 3 }} {{ height | times: 0.633 | round: 3 }}C{{ width | times: 0.796 | round: 3 }} {{ height | times: 0.608 | round: 3 }} {{ width | times: 0.810 | round: 3 }} {{ height | times: 0.583 | round: 3 }} {{ width | times: 0.822 | round: 3 }} {{ height | times: 0.557 | round: 3 }}C{{ width | times: 0.857 | round: 3 }} {{ height | times: 0.487 | round: 3 }} {{ width | times: 0.870 | round: 3 }} {{ height | times: 0.409 | round: 3 }} {{ width | times: 0.861 | round: 3 }} {{ height | times: 0.332 | round: 3 }}Z" fill="{{ marker_color }}"/>
     
-    <circle cx="{{ width | divided_by: 2 }}" cy="{{ circle_center_y }}" r="{{ width | divided_by: 2 | minus: 5 }}" fill="rgba(255,255,255,0.2)"/>
-    
-    {% comment %} Hepha icon {% endcomment %}
-    <g transform="translate({{ width | divided_by: 2 }}, {{ circle_center_y }}) scale({{ scale_factor }}) translate(-439, -466)">
-      <path d="M812.803 390.655C811.283 388.196 807.846 387.804 805.784 389.828C770.081 425.234 506.872 686.252 506.809 686.314C469.336 723.476 408.575 723.476 371.101 686.314C333.628 649.153 333.628 588.897 371.101 551.736C371.101 551.736 482.73 441.14 553.531 370.989C590.005 334.84 610.522 285.801 610.522 234.675L610.585 4.47674C610.585 0.489988 605.731 -1.49306 602.899 1.31626L350.646 251.345C347.813 254.155 342.96 252.172 342.96 248.185V109.31C342.96 105.323 338.107 103.34 335.274 106.149L124.869 314.865H124.994C-43.3964 485.696 -41.6467 759.894 130.243 928.597C301.591 1096.72 580.027 1095.65 750.105 926.263C896.249 780.736 917.141 558.222 812.803 390.655Z" fill="#ffffff"/>
-    </g>
-  </svg>
+    <!-- Hepha图标 -->
+    <path d="M{{ width | times: 0.677 | round: 3 }} {{ width | times: 0.316 | round: 3 }}C{{ width | times: 0.677 | round: 3 }} {{ width | times: 0.315 | round: 3 }} {{ width | times: 0.675 | round: 3 }} {{ width | times: 0.314 | round: 3 }} {{ width | times: 0.674 | round: 3 }} {{ width | times: 0.315 | round: 3 }}C{{ width | times: 0.657 | round: 3 }} {{ width | times: 0.332 | round: 3 }} {{ width | times: 0.531 | round: 3 }} {{ width | times: 0.456 | round: 3 }} {{ width | times: 0.531 | round: 3 }} {{ width | times: 0.456 | round: 3 }}C{{ width | times: 0.513 | round: 3 }} {{ width | times: 0.474 | round: 3 }} {{ width | times: 0.484 | round: 3 }} {{ width | times: 0.474 | round: 3 }} {{ width | times: 0.466 | round: 3 }} {{ width | times: 0.456 | round: 3 }}C{{ width | times: 0.448 | round: 3 }} {{ width | times: 0.439 | round: 3 }} {{ width | times: 0.448 | round: 3 }} {{ width | times: 0.410 | round: 3 }} {{ width | times: 0.466 | round: 3 }} {{ width | times: 0.392 | round: 3 }}C{{ width | times: 0.466 | round: 3 }} {{ width | times: 0.392 | round: 3 }} {{ width | times: 0.519 | round: 3 }} {{ width | times: 0.340 | round: 3 }} {{ width | times: 0.553 | round: 3 }} {{ width | times: 0.306 | round: 3 }}C{{ width | times: 0.570 | round: 3 }} {{ width | times: 0.289 | round: 3 }} {{ width | times: 0.581 | round: 3 }} {{ width | times: 0.266 | round: 3 }} {{ width | times: 0.581 | round: 3 }} {{ width | times: 0.242 | round: 3 }}L{{ width | times: 0.581 | round: 3 }} {{ width | times: 0.132 | round: 3 }}C{{ width | times: 0.581 | round: 3 }} {{ width | times: 0.130 | round: 3 }} {{ width | times: 0.579 | round: 3 }} {{ width | times: 0.129 | round: 3 }} {{ width | times: 0.577 | round: 3 }} {{ width | times: 0.130 | round: 3 }}L{{ width | times: 0.456 | round: 3 }} {{ width | times: 0.249 | round: 3 }}C{{ width | times: 0.454 | round: 3 }} {{ width | times: 0.251 | round: 3 }} {{ width | times: 0.452 | round: 3 }} {{ width | times: 0.249 | round: 3 }} {{ width | times: 0.452 | round: 3 }} {{ width | times: 0.248 | round: 3 }}V{{ width | times: 0.182 | round: 3 }}C{{ width | times: 0.452 | round: 3 }} {{ width | times: 0.180 | round: 3 }} {{ width | times: 0.450 | round: 3 }} {{ width | times: 0.179 | round: 3 }} {{ width | times: 0.449 | round: 3 }} {{ width | times: 0.180 | round: 3 }}L{{ width | times: 0.347 | round: 3 }} {{ width | times: 0.280 | round: 3 }}H{{ width | times: 0.348 | round: 3 }}C{{ width | times: 0.267 | round: 3 }} {{ width | times: 0.361 | round: 3 }} {{ width | times: 0.268 | round: 3 }} {{ width | times: 0.491 | round: 3 }} {{ width | times: 0.350 | round: 3 }} {{ width | times: 0.572 | round: 3 }}C{{ width | times: 0.432 | round: 3 }} {{ width | times: 0.652 | round: 3 }} {{ width | times: 0.566 | round: 3 }} {{ width | times: 0.651 | round: 3 }} {{ width | times: 0.647 | round: 3 }} {{ width | times: 0.571 | round: 3 }}C{{ width | times: 0.718 | round: 3 }} {{ width | times: 0.501 | round: 3 }} {{ width | times: 0.728 | round: 3 }} {{ width | times: 0.395 | round: 3 }} {{ width | times: 0.677 | round: 3 }} {{ width | times: 0.316 | round: 3 }}Z" fill="white"/>
+  </g>
   
-  <!-- 渐变覆盖层 -->
-  <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, {{ primary_color }}, {{ secondary_color }}); clip-path: path('M{{ width | divided_by: 2 }} {{ height | minus: 2 }}C{{ width | divided_by: 2 }} {{ height | minus: 2 }} {{ width | minus: 2 }} {{ circle_center_y | plus: 5 }} {{ width | minus: 2 }} {{ circle_center_y }}C{{ width | minus: 2 }} {{ circle_center_y | minus: 8 }} {{ width | divided_by: 2 | plus: 8 }} 2 {{ width | divided_by: 2 }} 2C{{ width | divided_by: 2 | minus: 8 }} 2 2 {{ circle_center_y | minus: 8 }} 2 {{ circle_center_y }}C2 {{ circle_center_y | plus: 5 }} {{ width | divided_by: 2 }} {{ height | minus: 2 }} {{ width | divided_by: 2 }} {{ height | minus: 2 }}Z'); pointer-events: none;"></div>
-</div>
+  <defs>
+    <clipPath id="clip{{ unique_id }}">
+      <rect width="{{ width }}" height="{{ height }}" fill="white"/>
+    </clipPath>
+  </defs>
+</svg>
