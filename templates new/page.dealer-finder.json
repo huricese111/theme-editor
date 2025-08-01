@@ -804,84 +804,69 @@
           }
         },
         "location_051": {
-          "type": "location",
-          "settings": {
-            "store_name": "Cycles Passion",
-            "address": "18 PLACE LOUIS LUMIERE",
-            "city": "Boulogne Sur Mer",
-            "province_state": "",
-            "country": "FR",
-            "postal_code": "62200",
-            "phone": "+33 3 21 31 34 41",
-            "email": "cyclespassion.bike@gmail.com",
-            "website": "http:// www.cyclespassion.bike",
-            "hours_of_operation": "Monday: closed Tuesday: 9h00 12h00 // 14h00 19h00 Wednesday: 9h00 12h00 // 14h00 19h00 Thursday: 9h00 12h00 // 14h00 19h00 Friday: 9h00 12h00 // 14h00 19h00 Saturday:",
-            "store_type": "service"
-          }
+          "store_name": "Cycles Passion",
+          "address": "18 PLACE LOUIS LUMIERE",
+          "city": "Boulogne Sur Mer",
+          "state": "",
+          "country": "FR",
+          "postal_code": "62200",
+          "phone": "+33 3 21 31 34 41",
+          "email": "cyclespassion.bike@gmail.com",
+          "website": "http:// www.cyclespassion.bike",
+          "hours_of_operation": "Monday: closed Tuesday: 9h00 12h00 // 14h00 19h00 Wednesday: 9h00 12h00 // 14h00 19h00 Thursday: 9h00 12h00 // 14h00 19h00 Friday: 9h00 12h00 // 14h00 19h00 Saturday:",
+          "store_type": "service"
         },
         "location_052": {
-          "type": "location",
-          "settings": {
-            "store_name": "Citibike La Rochelle",
-            "address": "12, Rue saint Nicolas",
-            "city": "La Rochelle",
-            "province_state": "",
-            "country": "FR",
-            "postal_code": "17000",
-            "phone": "+33 9 54 57 65 68",
-            "email": "larochelle@citibike.fr",
-            "website": "http://www.citibike.fr",
-            "hours_of_operation": "Monday: 14h00 19h00 Tuesday: 10h00 19h00 Wednesday: 10h00 19h00 Thursday: 10h00 19h00 Friday: 10h00 19h00 Saturday: 10h00 19h00",
-            "store_type": "service"
-          }
+          "store_name": "Citibike La Rochelle",
+          "address": "12, Rue saint Nicolas",
+          "city": "La Rochelle",
+          "state": "",
+          "country": "FR",
+          "postal_code": "17000",
+          "phone": "+33 9 54 57 65 68",
+          "email": "larochelle@citibike.fr",
+          "website": "http://www.citibike.fr",
+          "hours_of_operation": "Monday: 14h00 19h00 Tuesday: 10h00 19h00 Wednesday: 10h00 19h00 Thursday: 10h00 19h00 Friday: 10h00 19h00 Saturday: 10h00 19h00",
+          "store_type": "service"
         },
         "location_053": {
-          "type": "location",
-          "settings": {
-            "store_name": "Cycles Expert City",
-            "address": "1 Rue Chicogné",
-            "city": "RENNES",
-            "province_state": "Bretagne",
-            "country": "FR",
-            "postal_code": "35000",
-            "phone": "+33 2 99 69 59 82",
-            "email": "contact@cyclexperts-ecity.com",
-            "website": "https://www.cyclexperts-ecity.com/",
-            "hours_of_operation": "Monday: 10h00 13h00 // 14h00 19h00 Tuesday: 10h00 13h00 // 14h00 19h00 Wednesday: 10h00 13h00 // 14h00 19h00 Thursday: 10h00 13h00 // 14h00 19h00 Friday: 10h00 13h00 // 14h00 19h00 Saturday: 10h00 18h00",
-            "store_type": "service"
-          }
+          "store_name": "Cycles Expert City",
+          "address": "1 Rue Chicogné",
+          "city": "RENNES",
+          "state": "Bretagne",
+          "country": "FR",
+          "postal_code": "35000",
+          "phone": "+33 2 99 69 59 82",
+          "email": "contact@cyclexperts-ecity.com",
+          "website": "https://www.cyclexperts-ecity.com/",
+          "hours_of_operation": "Monday: 10h00 13h00 // 14h00 19h00 Tuesday: 10h00 13h00 // 14h00 19h00 Wednesday: 10h00 13h00 // 14h00 19h00 Thursday: 10h00 13h00 // 14h00 19h00 Friday: 10h00 13h00 // 14h00 19h00 Saturday: 10h00 18h00",
+          "store_type": "service"
         },
         "location_054": {
-          "type": "location",
-          "settings": {
-            "store_name": "2RADFABRIK Fürth GmbH & Co. KG",
-            "address": "Gründlacherstraße 303",
-            "city": "Fürth",
-            "province_state": "Bavaria",
-            "country": "DE",
-            "postal_code": "90765",
-            "phone": "+49 911 30088033",
-            "email": "fuerth@2radfabrik.de",
-            "website": "http://www.2radfabrik.de",
-            "hours_of_operation": "Montag Samstag: 10 19 Uhr Achtung: November bis Februar abweichende Öffnungszeiten: Montag geschlossen Dienstag Freitag: 10 19 Uhr Samstag: 10 16 Uhr",
-            "store_type": "service"
-          }
+          "store_name": "2RADFABRIK Fürth GmbH & Co. KG",
+          "address": "Gründlacherstraße 303",
+          "city": "Fürth",
+          "state": "Bavaria",
+          "country": "DE",
+          "postal_code": "90765",
+          "phone": "+49 911 30088033",
+          "email": "fuerth@2radfabrik.de",
+          "website": "http://www.2radfabrik.de",
+          "hours_of_operation": "Montag Samstag: 10 19 Uhr Achtung: November bis Februar abweichende Öffnungszeiten: Montag geschlossen Dienstag Freitag: 10 19 Uhr Samstag: 10 16 Uhr",
+          "store_type": "service"
         },
         "location_055": {
-          "type": "location",
-          "settings": {
-            "store_name": "Rabl GmbH & Co. KG",
-            "address": "Gewerbestr. 22",
-            "city": "Markt Indersdorf",
-            "province_state": "Bavaria",
-            "country": "DE",
-            "postal_code": "85229",
-            "phone": "+49 8136 89 32 03",
-            "email": "mail@rabl-gmbh.de",
-            "website": "https://rabl-gmbh.de/",
-            "hours_of_operation": "Montag: 13:00 18:00 Uhr Dienstag Freitag: 9:00 18:00 Uhr Samstag: 9:00 13:00 Uhr",
-            "store_type": "service"
-          }
+          "store_name": "Rabl GmbH & Co. KG",
+          "address": "Gewerbestr. 22",
+          "city": "Markt Indersdorf",
+          "state": "Bavaria",
+          "country": "DE",
+          "postal_code": "85229",
+          "phone": "+49 8136 89 32 03",
+          "email": "mail@rabl-gmbh.de",
+          "website": "https://rabl-gmbh.de/",
+          "hours_of_operation": "Montag: 13:00 18:00 Uhr Dienstag Freitag: 9:00 18:00 Uhr Samstag: 9:00 13:00 Uhr",
+          "store_type": "service"
         },
         "location_056": {
           "store_name": "Radsport Riedmann",
