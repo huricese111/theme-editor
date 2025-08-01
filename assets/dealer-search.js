@@ -37,7 +37,7 @@ const translations = {
     nextPage: 'Weiter',
     showingResults: 'Zeige {start}-{end} von {total} Ergebnissen',
     dealer: 'Händler',
-    rental: 'Rental Station',
+    rental: 'Verleihstation',
     service: 'Servicezentrum',
     'click-collect': 'Click & Collect',
     directions: 'Wegbeschreibung'
@@ -56,7 +56,7 @@ const translations = {
     nextPage: 'Suivant',
     showingResults: 'Affichage de {start}-{end} sur {total} résultats',
     dealer: 'Revendeur',
-    rental: 'Rental Station',
+    rental: 'Point de location',
     service: 'Centre de service',
     'click-collect': 'Click & Collect',
     directions: 'Itinéraire'
