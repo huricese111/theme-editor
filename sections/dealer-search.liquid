@@ -97,7 +97,7 @@
 {%- endcomment -%}
 
 {{ 'dealer-search.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'dealer-search.js' | asset_url }}"></script>
+<script src="{{ 'dealer-search.js' | asset_url }}" defer></script>
 
 {% style %}
   :root {
@@ -184,21 +184,9 @@
 </script>
 
 {% assign display_map = false %}
-{%- assign first_map_address = '' -%}
-{%- for block in section.blocks -%}
-  {%- if block.type == 'location' and block.settings.address != blank -%}
-    {%- if first_map_address == blank -%}
-      {%- capture first_map_address -%}
-        {{ block.settings.address }}
-        {%- if block.settings.city != blank -%}, {{ block.settings.city }}{%- endif -%}
-        {%- if block.settings.country != blank -%}, {{ block.settings.country }}{%- endif -%}
-      {%- endcapture -%}
-    {%- endif -%}
-  {%- endif -%}
-{%- endfor -%}
-{%- if section.settings.api_key != blank and first_map_address != blank -%}
-  {% assign display_map = true %}
-  <script src="{{ 'location-map.js' | asset_url }}" defer></script>
+{%- if section.settings.api_key != blank -%}
+{% assign display_map = true %}
+<script src="{{ 'location-map.js' | asset_url }}" defer></script>
 {%- endif -%}
 
 {%- assign section_title = section.settings.section_title_en -%}
@@ -347,61 +335,6 @@
 
         <div class="dealer-search__scrollable-results">
           <div class="location-results" id="location-results">
-            {%- for block in section.blocks -%}
-              {%- case block.type -%}
-                {%- when 'location' -%}
-                  <div class="map-section__content map-section__text location-card" data-block-id="{{ block.id }}" data-store-name="{{ block.settings.store_name | escape }}" data-address="{{ block.settings.address | escape }}" data-city="{{ block.settings.city | escape }}" data-country="{{ block.settings.country | escape }}" data-postal-code="{{ block.settings.postal_code | escape }}" data-phone="{{ block.settings.phone | escape }}" data-email="{{ block.settings.email | escape }}" data-website="{{ block.settings.website | escape }}" data-hours="{{ block.settings.hours_of_operation | escape }}" data-province="{{ block.settings.province_state | escape }}" data-fax="{{ block.settings.fax | escape }}" data-store-type="{{ block.settings.store_type | escape }}">
-                    <!-- 左侧 Marker Icon -->
-                    <div class="location-card__marker">
-                      {% render 'custom-marker-icon', store_type: block.settings.store_type, size: 'large' %}
-                    </div>
-                    
-                    <div class="location-card__content">
-                      {% if block.settings.store_name != blank %}
-                        <h3 class="location-card__title">{{ block.settings.store_name | escape }}</h3>
-                      {% endif %}
-
-                      {% if block.settings.address != blank %}
-                        <div class="location-card__address">
-                          {{ block.settings.address | escape }}
-                          {% if block.settings.city != blank %}, {{ block.settings.city | escape }}{% endif %}
-                          {% if block.settings.postal_code != blank %} {{ block.settings.postal_code | escape }}{% endif %}
-                        </div>
-                      {% endif %}
-
-                      {% if block.settings.phone != blank %}
-                        <div class="location-card__phone">
-                          <strong>{{ phone_label }}:</strong> <a href="tel:{{ block.settings.phone | escape }}" class="location-card__phone-link">{{ block.settings.phone | escape }}</a>
-                        </div>
-                      {% endif %}
-
-                      {% if block.settings.email != blank %}
-                        <div class="location-card__email">
-                          <strong>{{ email_label }}:</strong> <a href="mailto:{{ block.settings.email | escape }}" class="location-card__email-link">{{ block.settings.email | escape }}</a>
-                        </div>
-                      {% endif %}
-                    </div>
-
-                    <!-- 右侧距离和方向按钮 -->
-                    <div class="location-card__actions">
-                      <div class="location-card__distance" style="display: none;">
-                        <span class="distance-value">-- KM</span>
-                      </div>
-                      
-                      {% if block.settings.address != blank %}
-                        <div class="location-card__direction">
-                          <a href="https://maps.google.com?daddr={{ block.settings.address | escape }}{% if block.settings.city != blank %}, {{ block.settings.city | escape }}{% endif %}{% if block.settings.country != blank %}, {{ block.settings.country | escape }}{% endif %}" target="_blank" class="btn btn--secondary direction-btn">
-                            {% if block.settings.show_pin %}
-                              <span class="icon">{% render 'icon-location' %}</span>
-                            {% endif %}
-                            <span>{{ direction_text }}</span>
-                          </a>
-                        </div>
-                      {% endif %}
-                    </div>
-                  </div>
-              {%- endcase -%}
-            {%- endfor -%}
           </div>
           
           <!-- Pagination Component -->
@@ -449,9 +382,9 @@
 
       <div class="map-section__content map-section__map">
         {%- if display_map -%}
-          <div id="map-container" data-api-key="{{ section.settings.api_key }}" data-map-type="{{ section.settings.map_type }}" data-map-style="{{ section.settings.map_style }}">
+          <div id="map-container" data-api-key="{{ section.settings.api_key }}" data-map-type="{{ section.settings.map_type }}" data-map-style="{{ section.settings.map_style }}" data-dealers-url="{{ 'dealers-data.json' | asset_url }}">
             {%- if section.settings.map_type == 'dynamic' -%}
-              {% render 'location-map', api_key: section.settings.api_key, address: first_map_address, map_style: section.settings.map_style, language: request.locale.iso_code, region: region_code %}
+              {% render 'location-map', api_key: section.settings.api_key, address: 'Germany', map_style: section.settings.map_style, language: request.locale.iso_code, region: region_code %}
             {%- else -%}
               <iframe id="map-iframe" class="map" src="https://www.google.com/maps/embed/v1/place?key={{ section.settings.api_key }}&q={{ first_map_address }}&zoom=14&language={{ request.locale.iso_code }}&region={{ region_code }}" width="100%" height="100%" frameborder="0" style="border:0" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
             {%- endif -%}
@@ -510,23 +443,6 @@
                     {%- endcase -%}
                   </span>
                 </div>
-                {% comment %} <div class="map-legend__item">
-                  <div class="map-legend__icon">
-                    {% render 'custom-marker-icon', store_type: 'click-collect', size: 'small' %}
-                  </div>
-                  <span class="map-legend__label">
-                    {%- case request.locale.iso_code -%}
-                      {%- when 'de' -%}
-                        Click & Collect
-                      {%- when 'fr' -%}
-                        Click & Collect
-                      {%- when 'fi' -%}
-                        Click & Collect
-                      {%- else -%}
-                        Click & Collect
-                    {%- endcase -%}
-                  </span>
-                </div> {% endcomment %}
               </div>
             </div>
           </div>

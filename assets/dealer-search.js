@@ -20,7 +20,8 @@ const translations = {
     dealer: 'Dealer',
     rental: 'Rental Station',
     service: 'Service Center',
-    'click-collect': 'Click & Collect'
+    'click-collect': 'Click & Collect',
+    directions: 'Directions'
   },
   de: {
     address: 'Adresse',
@@ -38,7 +39,8 @@ const translations = {
     dealer: 'Händler',
     rental: 'Rental Station',
     service: 'Servicezentrum',
-    'click-collect': 'Click & Collect'
+    'click-collect': 'Click & Collect',
+    directions: 'Wegbeschreibung'
   },
   fr: {
     address: 'Adresse',
@@ -56,7 +58,8 @@ const translations = {
     dealer: 'Revendeur',
     rental: 'Rental Station',
     service: 'Centre de service',
-    'click-collect': 'Click & Collect'
+    'click-collect': 'Click & Collect',
+    directions: 'Itinéraire'
   },
   fi: {
     address: 'Osoite',
@@ -74,7 +77,8 @@ const translations = {
     dealer: 'Jälleenmyyjä',
     rental: 'Vuokraamo',
     service: 'Huoltokeskus',
-    'click-collect': 'Click & Collect'
+    'click-collect': 'Click & Collect',
+    directions: 'Reittiohjeet'
   }
 };
 
@@ -82,7 +86,6 @@ const currentLang = getCurrentLanguage();
 const i18nLabels = translations[currentLang] || translations.en;
 
 document.addEventListener('DOMContentLoaded', function () {
-  const locationCards = document.querySelectorAll('.location-card');
   const mapContainer = document.getElementById('map-container');
   const mapIframe = document.getElementById('map-iframe');
   const searchBtn = document.getElementById('search-btn');
@@ -90,8 +93,8 @@ document.addEventListener('DOMContentLoaded', function () {
   const locationResults = document.getElementById('location-results');
   const filterCheckboxes = document.querySelectorAll('.filter-option input[type="checkbox"]');
 
-  let allLocations = Array.from(locationCards);
-  let filteredLocations = [...allLocations];
+  let allLocations = [];
+  let filteredLocations = [];
   let searchHistory = JSON.parse(localStorage.getItem('dealerSearchHistory') || '[]');
   let currentSuggestionIndex = -1;
   let searchTimeout;
@@ -130,6 +133,240 @@ document.addEventListener('DOMContentLoaded', function () {
   const apiKey = mapContainer.dataset.apiKey;
   const mapType = mapContainer.dataset.mapType;
   const mapStyle = mapContainer.dataset.mapStyle;
+  const dealersUrl = mapContainer.dataset.dealersUrl;
+
+  // 加载dealer数据
+  async function loadDealersData() {
+    try {
+      const response = await fetch(dealersUrl);
+      const data = await response.json();
+      return data.dealers || [];
+    } catch (error) {
+      console.error('Error loading dealers data:', error);
+      return [];
+    }
+  }
+
+  // 创建location card HTML
+  function createLocationCard(dealer) {
+    const directionText = i18nLabels.directions || 'Directions';
+    const phoneLabel = i18nLabels.phone || 'Phone';
+    const emailLabel = i18nLabels.email || 'Email';
+    
+    return `
+      <div class="map-section__content map-section__text location-card" 
+           data-block-id="${dealer.id}" 
+           data-store-name="${dealer.store_name || ''}" 
+           data-address="${dealer.address || ''}" 
+           data-city="${dealer.city || ''}" 
+           data-country="${dealer.country || ''}" 
+           data-postal-code="${dealer.postal_code || ''}" 
+           data-phone="${dealer.phone || ''}" 
+           data-email="${dealer.email || ''}" 
+           data-website="${dealer.website || ''}" 
+           data-hours="${dealer.hours_of_operation || ''}" 
+           data-province="${dealer.province_state || ''}" 
+           data-fax="${dealer.fax || ''}" 
+           data-store-type="${dealer.store_type || 'dealer'}">
+        
+        <!-- 左侧 Marker Icon -->
+        <div class="location-card__marker">
+          ${getMarkerIcon(dealer.store_type, 'large')}
+        </div>
+        
+        <div class="location-card__content">
+          ${dealer.store_name ? `<h3 class="location-card__title">${dealer.store_name}</h3>` : ''}
+          
+          ${dealer.address ? `
+            <div class="location-card__address">
+              ${dealer.address}${dealer.city ? ', ' + dealer.city : ''}${dealer.postal_code ? ' ' + dealer.postal_code : ''}
+            </div>
+          ` : ''}
+          
+          ${dealer.phone ? `
+            <div class="location-card__phone">
+              <strong>${phoneLabel}:</strong> <a href="tel:${dealer.phone}" class="location-card__phone-link">${dealer.phone}</a>
+            </div>
+          ` : ''}
+          
+          ${dealer.email ? `
+            <div class="location-card__email">
+              <strong>${emailLabel}:</strong> <a href="mailto:${dealer.email}" class="location-card__email-link">${dealer.email}</a>
+            </div>
+          ` : ''}
+        </div>
+
+        <!-- 右侧距离和方向按钮 -->
+        <div class="location-card__actions">
+          <div class="location-card__distance" style="display: none;">
+            <span class="distance-value">-- KM</span>
+          </div>
+          
+          ${dealer.address ? `
+            <div class="location-card__direction">
+              <a href="https://maps.google.com?daddr=${dealer.address}${dealer.city ? ', ' + dealer.city : ''}${dealer.country ? ', ' + dealer.country : ''}" target="_blank" class="btn btn--secondary direction-btn">
+                ${dealer.show_pin !== false ? '<span class="icon">' + getLocationIcon() + '</span>' : ''}
+                <span>${directionText}</span>
+              </a>
+            </div>
+          ` : ''}
+        </div>
+      </div>
+    `;
+  }
+
+  // 获取marker图标
+  function getMarkerIcon(storeType, size = 'medium') {
+    // 根据尺寸设置宽高
+    let width, height, scaleFactor;
+    switch (size) {
+      case 'small':
+        width = 32;
+        height = 32;
+        scaleFactor = 0.112;
+        break;
+      case 'large':
+        width = 44;
+        height = 44;
+        scaleFactor = 0.154;
+        break;
+      default: // medium
+        width = 40;
+        height = 40;
+        scaleFactor = 0.140;
+        break;
+    }
+
+    // 根据店铺类型设置颜色
+    let markerColor;
+    switch (storeType) {
+      case 'dealer':
+        markerColor = '#3699FF';
+        break;
+      case 'rental':
+        markerColor = '#51BBA8';
+        break;
+      case 'service':
+        markerColor = '#ED5571';
+        break;
+      case 'click-collect':
+        markerColor = '#FF9933';
+        break;
+      default:
+        markerColor = '#3699FF';
+        break;
+    }
+
+    // 生成唯一ID
+    const uniqueId = `${storeType}-${size}-${Date.now()}`;
+
+    // 计算路径坐标
+    const coords = {
+      // 主体路径坐标计算
+      mainPath: {
+        start: { x: (width * 0.861).toFixed(3), y: (height * 0.332).toFixed(3) },
+        c1: { x1: (width * 0.841).toFixed(3), y1: (height * 0.151).toFixed(3), x2: (width * 0.686).toFixed(3), y2: (height * 0.014).toFixed(3), x: (width * 0.5).toFixed(3), y: (height * 0.014).toFixed(3) },
+        c2: { x1: (width * 0.314).toFixed(3), y1: (height * 0.014).toFixed(3), x2: (width * 0.158).toFixed(3), y2: (height * 0.151).toFixed(3), x: (width * 0.139).toFixed(3), y: (height * 0.332).toFixed(3) },
+        c3: { x1: (width * 0.137).toFixed(3), y1: (height * 0.346).toFixed(3), x2: (width * 0.136).toFixed(3), y2: (height * 0.360).toFixed(3), x: (width * 0.136).toFixed(3), y: (height * 0.375).toFixed(3) },
+        c4: { x1: (width * 0.136).toFixed(3), y1: (height * 0.438).toFixed(3), x2: (width * 0.150).toFixed(3), y2: (height * 0.500).toFixed(3), x: (width * 0.178).toFixed(3), y: (height * 0.558).toFixed(3) },
+        c5: { x1: (width * 0.190).toFixed(3), y1: (height * 0.583).toFixed(3), x2: (width * 0.204).toFixed(3), y2: (height * 0.608).toFixed(3), x: (width * 0.220).toFixed(3), y: (height * 0.632).toFixed(3) },
+        l1: { x: (width * 0.448).toFixed(3), y: (height * 0.971).toFixed(3) },
+        c6: { x1: (width * 0.459).toFixed(3), y1: (height * 0.988).toFixed(3), x2: (width * 0.478).toFixed(3), y2: (height * 0.999).toFixed(3), x: (width * 0.499).toFixed(3), y: (height * 0.999).toFixed(3) },
+        c7: { x1: (width * 0.521).toFixed(3), y1: (height * 0.999).toFixed(3), x2: (width * 0.540).toFixed(3), y2: (height * 0.988).toFixed(3), x: (width * 0.551).toFixed(3), y: (height * 0.971).toFixed(3) },
+        l2: { x: (width * 0.780).toFixed(3), y: (height * 0.633).toFixed(3) },
+        c8: { x1: (width * 0.796).toFixed(3), y1: (height * 0.608).toFixed(3), x2: (width * 0.810).toFixed(3), y2: (height * 0.583).toFixed(3), x: (width * 0.822).toFixed(3), y: (height * 0.557).toFixed(3) },
+        c9: { x1: (width * 0.857).toFixed(3), y1: (height * 0.487).toFixed(3), x2: (width * 0.870).toFixed(3), y2: (height * 0.409).toFixed(3), x: (width * 0.861).toFixed(3), y: (height * 0.332).toFixed(3) }
+      },
+      // Hepha图标路径坐标
+      iconPath: {
+        start: { x: (width * 0.677).toFixed(3), y: (width * 0.316).toFixed(3) },
+        // 简化的Hepha图标路径
+        points: [
+          `M${(width * 0.677).toFixed(3)} ${(width * 0.316).toFixed(3)}`,
+          `C${(width * 0.677).toFixed(3)} ${(width * 0.315).toFixed(3)} ${(width * 0.675).toFixed(3)} ${(width * 0.314).toFixed(3)} ${(width * 0.674).toFixed(3)} ${(width * 0.315).toFixed(3)}`,
+          `C${(width * 0.657).toFixed(3)} ${(width * 0.332).toFixed(3)} ${(width * 0.531).toFixed(3)} ${(width * 0.456).toFixed(3)} ${(width * 0.531).toFixed(3)} ${(width * 0.456).toFixed(3)}`,
+          `C${(width * 0.513).toFixed(3)} ${(width * 0.474).toFixed(3)} ${(width * 0.484).toFixed(3)} ${(width * 0.474).toFixed(3)} ${(width * 0.466).toFixed(3)} ${(width * 0.456).toFixed(3)}`,
+          `C${(width * 0.448).toFixed(3)} ${(width * 0.439).toFixed(3)} ${(width * 0.448).toFixed(3)} ${(width * 0.410).toFixed(3)} ${(width * 0.466).toFixed(3)} ${(width * 0.392).toFixed(3)}`,
+          `C${(width * 0.466).toFixed(3)} ${(width * 0.392).toFixed(3)} ${(width * 0.519).toFixed(3)} ${(width * 0.340).toFixed(3)} ${(width * 0.553).toFixed(3)} ${(width * 0.306).toFixed(3)}`,
+          `C${(width * 0.570).toFixed(3)} ${(width * 0.289).toFixed(3)} ${(width * 0.581).toFixed(3)} ${(width * 0.266).toFixed(3)} ${(width * 0.581).toFixed(3)} ${(width * 0.242).toFixed(3)}`,
+          `L${(width * 0.581).toFixed(3)} ${(width * 0.132).toFixed(3)}`,
+          `C${(width * 0.581).toFixed(3)} ${(width * 0.130).toFixed(3)} ${(width * 0.579).toFixed(3)} ${(width * 0.129).toFixed(3)} ${(width * 0.577).toFixed(3)} ${(width * 0.130).toFixed(3)}`,
+          `L${(width * 0.456).toFixed(3)} ${(width * 0.249).toFixed(3)}`,
+          `C${(width * 0.454).toFixed(3)} ${(width * 0.251).toFixed(3)} ${(width * 0.452).toFixed(3)} ${(width * 0.249).toFixed(3)} ${(width * 0.452).toFixed(3)} ${(width * 0.248).toFixed(3)}`,
+          `V${(width * 0.182).toFixed(3)}`,
+          `C${(width * 0.452).toFixed(3)} ${(width * 0.180).toFixed(3)} ${(width * 0.450).toFixed(3)} ${(width * 0.179).toFixed(3)} ${(width * 0.449).toFixed(3)} ${(width * 0.180).toFixed(3)}`,
+          `L${(width * 0.347).toFixed(3)} ${(width * 0.280).toFixed(3)}`,
+          `H${(width * 0.348).toFixed(3)}`,
+          `C${(width * 0.267).toFixed(3)} ${(width * 0.361).toFixed(3)} ${(width * 0.268).toFixed(3)} ${(width * 0.491).toFixed(3)} ${(width * 0.350).toFixed(3)} ${(width * 0.572).toFixed(3)}`,
+          `C${(width * 0.432).toFixed(3)} ${(width * 0.652).toFixed(3)} ${(width * 0.566).toFixed(3)} ${(width * 0.651).toFixed(3)} ${(width * 0.647).toFixed(3)} ${(width * 0.571).toFixed(3)}`,
+          `C${(width * 0.718).toFixed(3)} ${(width * 0.501).toFixed(3)} ${(width * 0.728).toFixed(3)} ${(width * 0.395).toFixed(3)} ${(width * 0.677).toFixed(3)} ${(width * 0.316).toFixed(3)}`,
+          'Z'
+        ].join(' ')
+      }
+    };
+
+    // 构建主体路径
+    const mainPath = [
+      `M${coords.mainPath.start.x} ${coords.mainPath.start.y}`,
+      `C${coords.mainPath.c1.x1} ${coords.mainPath.c1.y1} ${coords.mainPath.c1.x2} ${coords.mainPath.c1.y2} ${coords.mainPath.c1.x} ${coords.mainPath.c1.y}`,
+      `C${coords.mainPath.c2.x1} ${coords.mainPath.c2.y1} ${coords.mainPath.c2.x2} ${coords.mainPath.c2.y2} ${coords.mainPath.c2.x} ${coords.mainPath.c2.y}`,
+      `C${coords.mainPath.c3.x1} ${coords.mainPath.c3.y1} ${coords.mainPath.c3.x2} ${coords.mainPath.c3.y2} ${coords.mainPath.c3.x} ${coords.mainPath.c3.y}`,
+      `C${coords.mainPath.c4.x1} ${coords.mainPath.c4.y1} ${coords.mainPath.c4.x2} ${coords.mainPath.c4.y2} ${coords.mainPath.c4.x} ${coords.mainPath.c4.y}`,
+      `C${coords.mainPath.c5.x1} ${coords.mainPath.c5.y1} ${coords.mainPath.c5.x2} ${coords.mainPath.c5.y2} ${coords.mainPath.c5.x} ${coords.mainPath.c5.y}`,
+      `L${coords.mainPath.l1.x} ${coords.mainPath.l1.y}`,
+      `C${coords.mainPath.c6.x1} ${coords.mainPath.c6.y1} ${coords.mainPath.c6.x2} ${coords.mainPath.c6.y2} ${coords.mainPath.c6.x} ${coords.mainPath.c6.y}`,
+      `C${coords.mainPath.c7.x1} ${coords.mainPath.c7.y1} ${coords.mainPath.c7.x2} ${coords.mainPath.c7.y2} ${coords.mainPath.c7.x} ${coords.mainPath.c7.y}`,
+      `L${coords.mainPath.l2.x} ${coords.mainPath.l2.y}`,
+      `C${coords.mainPath.c8.x1} ${coords.mainPath.c8.y1} ${coords.mainPath.c8.x2} ${coords.mainPath.c8.y2} ${coords.mainPath.c8.x} ${coords.mainPath.c8.y}`,
+      `C${coords.mainPath.c9.x1} ${coords.mainPath.c9.y1} ${coords.mainPath.c9.x2} ${coords.mainPath.c9.y2} ${coords.mainPath.c9.x} ${coords.mainPath.c9.y}`,
+      'Z'
+    ].join(' ');
+
+    return `
+      <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" fill="none" xmlns="http://www.w3.org/2000/svg" class="custom-marker custom-marker--${storeType}">
+        <g clip-path="url(#clip${uniqueId})">
+          <!-- 主体路径 -->
+          <path d="${mainPath}" fill="${markerColor}"/>
+          
+          <!-- Hepha图标 -->
+          <path d="${coords.iconPath.points}" fill="white"/>
+        </g>
+        
+        <defs>
+          <clipPath id="clip${uniqueId}">
+            <rect width="${width}" height="${height}" fill="white"/>
+          </clipPath>
+        </defs>
+      </svg>
+    `;
+  }
+
+  // 获取location图标
+  function getLocationIcon() {
+    return '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>';
+  }
+
+  // 渲染locations
+  function renderLocations(dealers) {
+    const html = dealers.map(dealer => createLocationCard(dealer)).join('');
+    locationResults.innerHTML = html;
+    
+    // 重新获取所有location cards
+    allLocations = Array.from(document.querySelectorAll('.location-card'));
+    filteredLocations = [...allLocations];
+    
+    // 初始化分页
+    displayResults();
+  }
+
+  // 初始化
+  async function init() {
+    const dealers = await loadDealersData();
+    renderLocations(dealers);
+    
+    // 初始化事件监听器
+    initEventListeners();
+  }
 
   function calculateDistance(lat1, lon1, lat2, lon2) {
     const R = 6371; // 地球半径（公里）
@@ -1091,17 +1328,23 @@ document.addEventListener('DOMContentLoaded', function () {
     checkbox.addEventListener('change', () => performSearch(false));
   });
 
-  locationCards.forEach(function (card) {
-    card.addEventListener('click', function () {
-      locationCards.forEach((c) => c.classList.remove('active'));
-      this.classList.add('active');
-      updateMapForCard(this);
+  function initEventListeners() {
+    const locationCards = document.querySelectorAll('.location-card');
+    
+    locationCards.forEach(function (card) {
+      card.addEventListener('click', function () {
+        locationCards.forEach((c) => c.classList.remove('active'));
+        this.classList.add('active');
+        updateMapForCard(this);
+      });
     });
-  });
 
-  // 初始化
-  initializePagination();
-  displayResults();
+    // 初始化分页
+    initializePagination();
+  }
+
+  // 启动应用
+  init();
 
   function createInfoWindowContent(card) {
     const storeName = card.getAttribute('data-store-name') || '';
