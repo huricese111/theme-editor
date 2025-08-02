@@ -143,6 +143,18 @@ label {
   font-size: 0.875rem;
 }
 
+.required-asterisk {
+  color: #dc2626 !important; 
+  font-weight: bold;
+  margin-left: 2px;
+}
+
+.enhanced-form-label .required-asterisk {
+  color: #dc2626 !important;
+  font-weight: bold;
+  margin-left: 2px;
+}
+
 /* Enhanced Form Inputs */
 .enhanced-form-section .enhanced-form-input,
 .enhanced-form-section .enhanced-form-select,

@@ -127,7 +127,7 @@
                       assign label_text = block.settings.label_fi
                     endif
                   -%}
-                  <label class="enhanced-form-label" for="contact_first_name">{{ label_text | escape }}{% if block.settings.required %}*{% endif %}</label>
+                  <label class="enhanced-form-label" for="contact_first_name">{{ label_text | escape }}{% if block.settings.required %}<span class="required-asterisk">*</span>{% endif %}</label>
                   <input
                     class="enhanced-form-input"
                     type="text"
@@ -154,7 +154,7 @@
                       assign label_text = block.settings.label_fi
                     endif
                   -%}
-                  <label class="enhanced-form-label" for="contact_last_name">{{ label_text | escape }}{% if block.settings.required %}*{% endif %}</label>
+                  <label class="enhanced-form-label" for="contact_last_name">{{ label_text | escape }}{% if block.settings.required %}<span class="required-asterisk">*</span>{% endif %}</label>
                   <input
                     class="enhanced-form-input"
                     type="text"
@@ -181,7 +181,7 @@
                       assign label_text = block.settings.label_fi
                     endif
                   -%}
-                  <label class="enhanced-form-label" for="contact_email">{{ label_text | escape }}*</label>
+                  <label class="enhanced-form-label" for="contact_email">{{ label_text | escape }}<span class="required-asterisk">*</span></label>
                   <input
                     class="enhanced-form-input email"
                     type="email"
@@ -214,7 +214,7 @@
                       assign label_text = block.settings.label_fi
                     endif
                   -%}
-                  <label class="enhanced-form-label" for="contact_phone">{{ label_text | escape }}{% if block.settings.required %}*{% endif %}</label>
+                  <label class="enhanced-form-label" for="contact_phone">{{ label_text | escape }}{% if block.settings.required %}<span class="required-asterisk">*</span>{% endif %}</label>
                   <input
                     class="enhanced-form-input"
                     type="tel"
@@ -241,7 +241,7 @@
                       assign label_text = block.settings.label_fi
                     endif
                   -%}
-                  <label class="enhanced-form-label" for="contact_company">{{ label_text | escape }}{% if block.settings.required %}*{% endif %}</label>
+                  <label class="enhanced-form-label" for="contact_company">{{ label_text | escape }}{% if block.settings.required %}<span class="required-asterisk">*</span>{% endif %}</label>
                   <input
                     class="enhanced-form-input"
                     type="text"
@@ -268,7 +268,7 @@
                       assign label_text = block.settings.label_fi
                     endif
                   -%}
-                  <label class="enhanced-form-label" for="contact_street_address">{{ label_text | escape }}{% if block.settings.required %}*{% endif %}</label>
+                  <label class="enhanced-form-label" for="contact_street_address">{{ label_text | escape }}{% if block.settings.required %}<span class="required-asterisk">*</span>{% endif %}</label>
                   <input
                     class="enhanced-form-input"
                     type="text"
@@ -295,7 +295,7 @@
                       assign label_text = block.settings.label_fi
                     endif
                   -%}
-                  <label class="enhanced-form-label" for="contact_address_line_2">{{ label_text | escape }}{% if block.settings.required %}*{% endif %}</label>
+                  <label class="enhanced-form-label" for="contact_address_line_2">{{ label_text | escape }}{% if block.settings.required %}<span class="required-asterisk">*</span>{% endif %}</label>
                   <input
                     class="enhanced-form-input"
                     type="text"
@@ -322,7 +322,7 @@
                       assign label_text = block.settings.label_fi
                     endif
                   -%}
-                  <label class="enhanced-form-label" for="contact_city">{{ label_text | escape }}{% if block.settings.required %}*{% endif %}</label>
+                  <label class="enhanced-form-label" for="contact_city">{{ label_text | escape }}{% if block.settings.required %}<span class="required-asterisk">*</span>{% endif %}</label>
                   <input
                     class="enhanced-form-input"
                     type="text"
@@ -349,7 +349,7 @@
                       assign label_text = block.settings.label_fi
                     endif
                   -%}
-                  <label class="enhanced-form-label" for="contact_state_province">{{ label_text | escape }}{% if block.settings.required %}*{% endif %}</label>
+                  <label class="enhanced-form-label" for="contact_state_province">{{ label_text | escape }}{% if block.settings.required %}<span class="required-asterisk">*</span>{% endif %}</label>
                   <input
                     class="enhanced-form-input"
                     type="text"
@@ -376,7 +376,7 @@
                       assign label_text = block.settings.label_fi
                     endif
                   -%}
-                  <label class="enhanced-form-label" for="contact_postal_code">{{ label_text | escape }}{% if block.settings.required %}*{% endif %}</label>
+                  <label class="enhanced-form-label" for="contact_postal_code">{{ label_text | escape }}{% if block.settings.required %}<span class="required-asterisk">*</span>{% endif %}</label>
                   <input
                     class="enhanced-form-input"
                     type="text"
@@ -451,7 +451,7 @@
                       for="{{ block.settings.field_name }}"
                       class="form-label{% if block.settings.required %} required{% endif %}"
                     >
-                      {{ label_text }}
+                      {{ label_text }}{% if block.settings.required %}<span class="required-asterisk">*</span>{% endif %}
                     </label>
 
                     <!-- Current Selection Display -->
@@ -549,7 +549,7 @@
                       assign label_text = block.settings.label_fi
                     endif
                   -%}
-                  <label for="contact_{{ block.settings.field_name | handle }}">{{ label_text | escape }}</label>
+                  <label for="contact_{{ block.settings.field_name | handle }}">{{ label_text | escape }}{% if block.settings.required %}<span class="required-asterisk">*</span>{% endif %}</label>
                   {% assign field_handle = block.settings.field_name | handle %}
                   <div class="custom-date-input-wrapper">
                     <input
@@ -585,7 +585,7 @@
                       assign label_text = block.settings.label_fi
                     endif
                   -%}
-                  <label for="contact_{{ block.settings.field_name | handle }}">{{ label_text | escape }}</label>
+                  <label for="contact_{{ block.settings.field_name | handle }}">{{ label_text | escape }}{% if block.settings.required %}<span class="required-asterisk">*</span>{% endif %}</label>
                   {% assign field_handle = block.settings.field_name | handle %}
                   <div class="custom-time-input-wrapper">
                     <input
@@ -615,7 +615,7 @@
                       assign label_text = block.settings.label_fi
                     endif
                   -%}
-                  <label for="contact_{{ block.settings.field_name | handle }}">{{ label_text | escape }}</label>
+                  <label for="contact_{{ block.settings.field_name | handle }}">{{ label_text | escape }}{% if block.settings.required %}<span class="required-asterisk">*</span>{% endif %}</label>
                   {% assign field_handle = block.settings.field_name | handle %}
                   <div class="custom-datetime-input-wrapper">
                     <input
@@ -645,7 +645,7 @@
                       assign label_text = block.settings.label_fi
                     endif
                   -%}
-                  <label for="contact_{{ block.settings.field_name | handle }}">{{ label_text | escape }}</label>
+                  <label for="contact_{{ block.settings.field_name | handle }}">{{ label_text | escape }}{% if block.settings.required %}<span class="required-asterisk">*</span>{% endif %}</label>
                   {% assign field_handle = block.settings.field_name | handle %}
                   <input
                     type="number"
@@ -680,7 +680,7 @@
                       assign label_text = block.settings.label_fi
                     endif
                   -%}
-                  <label for="contact_{{ block.settings.field_name | handle }}">{{ label_text | escape }}</label>
+                  <label for="contact_{{ block.settings.field_name | handle }}">{{ label_text | escape }}{% if block.settings.required %}<span class="required-asterisk">*</span>{% endif %}</label>
                   {% assign field_handle = block.settings.field_name | handle %}
                   <input
                     type="url"
@@ -706,7 +706,7 @@
                       assign label_text = block.settings.label_fi
                     endif
                   -%}
-                  <label>{{ label_text | escape }}</label>
+                  <label>{{ label_text | escape }}{% if block.settings.required %}<span class="required-asterisk">*</span>{% endif %}</label>
                   {%- assign field_handle = block.settings.field_name | handle -%}
                   <div class="rating-input {{ block.settings.rating_style | default: 'stars' }}" data-rating="{{ form[field_handle] | default: 0 }}">
                     {% for i in (1..5) %}
@@ -783,7 +783,7 @@
                     endif
                   -%}
                   <fieldset class="{% if block.settings.two_column_layout %}checkbox-group-two-columns{% endif %}">
-                    <legend>{{ label_text | escape }}</legend>
+                    <legend>{{ label_text | escape }}{% if block.settings.required %}<span class="required-asterisk">*</span>{% endif %}</legend>
                     {%- assign checkbox_options = block.settings.checkbox_options
                       | newline_to_br
                       | strip_newlines
@@ -819,7 +819,7 @@
                     endif
                   -%}
                   <fieldset class="{% if block.settings.two_column_layout %}radio-group-two-columns{% endif %}">
-                    <legend>{{ label_text | escape }}</legend>
+                    <legend>{{ label_text | escape }}{% if block.settings.required %}<span class="required-asterisk">*</span>{% endif %}</legend>
                     {%- assign radio_options = block.settings.radio_options
                       | newline_to_br
                       | strip_newlines
@@ -857,7 +857,7 @@
                       assign label_text = block.settings.label_fi
                     endif
                   -%}
-                  <label for="message">{{ label_text | escape }}</label>
+                  <label for="message">{{ label_text | escape }}{% if block.settings.required %}<span class="required-asterisk">*</span>{% endif %}</label>
                   <textarea
                     id="message"
                     name="contact[body]"
