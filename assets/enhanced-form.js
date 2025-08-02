@@ -12,6 +12,9 @@ class FiveLevelDropdown {
     this.currentLevel = 1;
     this.maxLevels = 5; // 支持5级
     
+    // 将实例保存到wrapper元素上，以便后续访问
+    this.wrapper.fiveLevelDropdownInstance = this;
+    
     this.init();
   }
   
@@ -267,6 +270,29 @@ class FiveLevelDropdown {
     } else {
       this.breadcrumb.textContent = this.selectedPath.join(' > ');
     }
+  }
+  
+  // 添加恢复选择状态的方法
+  restoreSelection(selectedPath) {
+    if (!selectedPath || selectedPath.length === 0) return;
+    
+    this.selectedPath = selectedPath;
+    
+    // 更新显示文本
+    const selectedText = selectedPath.join(' > ');
+    const placeholder = this.selectionDisplay.querySelector('.placeholder');
+    if (placeholder) {
+      placeholder.textContent = selectedText;
+      placeholder.classList.add('has-selection');
+    }
+    
+    // 更新隐藏输入的值
+    if (this.hiddenInput) {
+      this.hiddenInput.value = selectedPath.join('|');
+    }
+    
+    // 更新面包屑
+    this.updateBreadcrumb();
   }
 }
 
