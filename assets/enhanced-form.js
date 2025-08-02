@@ -270,7 +270,7 @@ class FiveLevelDropdown {
   }
 }
 
-// 自定义日期选择器功能
+// 改进的自定义日期选择器功能
 class CustomDatePicker {
   constructor(input, options = {}) {
     this.input = input;
@@ -283,6 +283,7 @@ class CustomDatePicker {
     this.currentDate = new Date();
     this.selectedDate = null;
     this.isOpen = false;
+    this.viewMode = 'days'; // 'days', 'months', 'years'
     
     // 获取当前语言设置
     this.locale = this.getLocale();
@@ -301,6 +302,8 @@ class CustomDatePicker {
       en: {
         monthNames: ['January', 'February', 'March', 'April', 'May', 'June',
                     'July', 'August', 'September', 'October', 'November', 'December'],
+        monthNamesShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                          'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
         dayNames: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
         clear: 'Clear',
         today: 'Today',
@@ -309,6 +312,8 @@ class CustomDatePicker {
       de: {
         monthNames: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni',
                     'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+        monthNamesShort: ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun',
+                          'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'],
         dayNames: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
         clear: 'Löschen',
         today: 'Heute',
@@ -317,6 +322,8 @@ class CustomDatePicker {
       fr: {
         monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
                     'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+        monthNamesShort: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun',
+                          'Jul', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc'],
         dayNames: ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'],
         clear: 'Effacer',
         today: 'Aujourd\'hui',
@@ -325,6 +332,8 @@ class CustomDatePicker {
       fi: {
         monthNames: ['Tammikuu', 'Helmikuu', 'Maaliskuu', 'Huhtikuu', 'Toukokuu', 'Kesäkuu',
                     'Heinäkuu', 'Elokuu', 'Syyskuu', 'Lokakuu', 'Marraskuu', 'Joulukuu'],
+        monthNamesShort: ['Tam', 'Hel', 'Maa', 'Huh', 'Tou', 'Kes',
+                          'Hei', 'Elo', 'Syy', 'Lok', 'Mar', 'Jou'],
         dayNames: ['Su', 'Ma', 'Ti', 'Ke', 'To', 'Pe', 'La'],
         clear: 'Tyhjennä',
         today: 'Tänään',
@@ -371,6 +380,7 @@ class CustomDatePicker {
     if (!this.isOpen) {
       this.isOpen = true;
       this.picker.style.display = 'block';
+      this.viewMode = 'days';
       this.render();
     }
   }
@@ -384,6 +394,17 @@ class CustomDatePicker {
   
   render() {
     const localizedText = this.getLocalizedText();
+    
+    if (this.viewMode === 'days') {
+      this.renderDaysView(localizedText);
+    } else if (this.viewMode === 'months') {
+      this.renderMonthsView(localizedText);
+    } else if (this.viewMode === 'years') {
+      this.renderYearsView(localizedText);
+    }
+  }
+  
+  renderDaysView(localizedText) {
     const monthNames = localizedText.monthNames;
     const dayNames = localizedText.dayNames;
     
@@ -393,7 +414,16 @@ class CustomDatePicker {
     let html = `
       <div class="custom-date-picker-header">
         <button type="button" class="custom-date-picker-nav" data-action="prev-month">‹</button>
-        <div class="custom-date-picker-month-year">${monthNames[month]} ${year}</div>
+        <div class="custom-date-picker-month-year-selector">
+          <select class="month-dropdown" data-action="change-month">
+            ${monthNames.map((name, index) => 
+              `<option value="${index}" ${index === month ? 'selected' : ''}>${name}</option>`
+            ).join('')}
+          </select>
+          <select class="year-dropdown" data-action="change-year">
+            ${this.generateYearOptions(year)}
+          </select>
+        </div>
         <button type="button" class="custom-date-picker-nav" data-action="next-month">›</button>
       </div>
       <div class="custom-date-picker-grid">
@@ -418,13 +448,15 @@ class CustomDatePicker {
       const isCurrentMonth = date.getMonth() === month;
       const isToday = this.isToday(date);
       const isSelected = this.selectedDate && this.isSameDate(date, this.selectedDate);
+      const isDisabled = this.isDateDisabled(date);
       
       let classes = 'custom-date-picker-day';
       if (!isCurrentMonth) classes += ' other-month';
       if (isToday) classes += ' today';
       if (isSelected) classes += ' selected';
+      if (isDisabled) classes += ' disabled';
       
-      html += `<div class="${classes}" data-date="${this.formatDate(date)}">${date.getDate()}</div>`;
+      html += `<div class="${classes}" data-date="${this.formatDate(date)}" ${isDisabled ? '' : 'data-action="select-date"'}>${date.getDate()}</div>`;
     }
     
     html += `
@@ -440,33 +472,191 @@ class CustomDatePicker {
     this.bindEvents();
   }
   
+  renderMonthsView(localizedText) {
+    const monthNames = localizedText.monthNames;
+    const year = this.currentDate.getFullYear();
+    
+    let html = `
+      <div class="custom-date-picker-header">
+        <button type="button" class="custom-date-picker-nav" data-action="prev-year">‹</button>
+        <div class="custom-date-picker-year-title">
+          <button type="button" class="year-selector" data-action="show-years">${year}</button>
+        </div>
+        <button type="button" class="custom-date-picker-nav" data-action="next-year">›</button>
+      </div>
+      <div class="custom-date-picker-months-grid">
+    `;
+    
+    monthNames.forEach((monthName, index) => {
+      const isCurrentMonth = index === this.currentDate.getMonth();
+      const classes = `custom-date-picker-month ${isCurrentMonth ? 'current' : ''}`;
+      html += `<div class="${classes}" data-month="${index}" data-action="select-month">${monthName}</div>`;
+    });
+    
+    html += `
+      </div>
+      <div class="custom-date-picker-actions">
+        <button type="button" class="custom-date-picker-btn" data-action="back-to-days">Back</button>
+      </div>
+    `;
+    
+    this.picker.innerHTML = html;
+    this.bindEvents();
+  }
+  
+  renderYearsView(localizedText) {
+    const currentYear = this.currentDate.getFullYear();
+    const startYear = Math.floor(currentYear / 10) * 10;
+    
+    let html = `
+      <div class="custom-date-picker-header">
+        <button type="button" class="custom-date-picker-nav" data-action="prev-decade">‹</button>
+        <div class="custom-date-picker-decade-title">${startYear} - ${startYear + 9}</div>
+        <button type="button" class="custom-date-picker-nav" data-action="next-decade">›</button>
+      </div>
+      <div class="custom-date-picker-years-grid">
+    `;
+    
+    for (let i = 0; i < 10; i++) {
+      const year = startYear + i;
+      const isCurrentYear = year === currentYear;
+      const classes = `custom-date-picker-year ${isCurrentYear ? 'current' : ''}`;
+      html += `<div class="${classes}" data-year="${year}" data-action="select-year">${year}</div>`;
+    }
+    
+    html += `
+      </div>
+      <div class="custom-date-picker-actions">
+        <button type="button" class="custom-date-picker-btn" data-action="back-to-months">Back</button>
+      </div>
+    `;
+    
+    this.picker.innerHTML = html;
+    this.bindEvents();
+  }
+  
+  generateYearOptions(currentYear) {
+    const startYear = currentYear - 50;
+    const endYear = currentYear + 50;
+    let options = '';
+    
+    for (let year = startYear; year <= endYear; year++) {
+      const selected = year === currentYear ? 'selected' : '';
+      options += `<option value="${year}" ${selected}>${year}</option>`;
+    }
+    
+    return options;
+  }
+  
   bindEvents() {
     this.picker.addEventListener('click', (e) => {
       const action = e.target.dataset.action;
       const date = e.target.dataset.date;
+      const month = e.target.dataset.month;
+      const year = e.target.dataset.year;
       
-      if (action === 'prev-month') {
-        this.currentDate.setMonth(this.currentDate.getMonth() - 1);
+      switch (action) {
+        case 'prev-month':
+          this.currentDate.setMonth(this.currentDate.getMonth() - 1);
+          this.render();
+          break;
+        case 'next-month':
+          this.currentDate.setMonth(this.currentDate.getMonth() + 1);
+          this.render();
+          break;
+        case 'prev-year':
+          this.currentDate.setFullYear(this.currentDate.getFullYear() - 1);
+          this.render();
+          break;
+        case 'next-year':
+          this.currentDate.setFullYear(this.currentDate.getFullYear() + 1);
+          this.render();
+          break;
+        case 'prev-decade':
+          this.currentDate.setFullYear(this.currentDate.getFullYear() - 10);
+          this.render();
+          break;
+        case 'next-decade':
+          this.currentDate.setFullYear(this.currentDate.getFullYear() + 10);
+          this.render();
+          break;
+        case 'show-months':
+          this.viewMode = 'months';
+          this.render();
+          break;
+        case 'show-years':
+          this.viewMode = 'years';
+          this.render();
+          break;
+        case 'select-month':
+          this.currentDate.setMonth(parseInt(month));
+          this.viewMode = 'days';
+          this.render();
+          break;
+        case 'select-year':
+          this.currentDate.setFullYear(parseInt(year));
+          this.viewMode = 'months';
+          this.render();
+          break;
+        case 'back-to-days':
+          this.viewMode = 'days';
+          this.render();
+          break;
+        case 'back-to-months':
+          this.viewMode = 'months';
+          this.render();
+          break;
+        case 'select-date':
+          if (date && !e.target.classList.contains('disabled')) {
+            this.selectedDate = new Date(date);
+            this.input.value = this.formatDate(this.selectedDate);
+            this.render();
+          }
+          break;
+        case 'clear':
+          this.selectedDate = null;
+          this.input.value = '';
+          this.close();
+          break;
+        case 'today':
+          this.selectedDate = new Date();
+          this.currentDate = new Date();
+          this.input.value = this.formatDate(this.selectedDate);
+          this.viewMode = 'days';
+          this.render();
+          break;
+        case 'close':
+          this.close();
+          break;
+      }
+    });
+    
+    // 添加下拉框的change事件监听
+    this.picker.addEventListener('change', (e) => {
+      const action = e.target.dataset.action;
+      
+      if (action === 'change-month') {
+        this.currentDate.setMonth(parseInt(e.target.value));
         this.render();
-      } else if (action === 'next-month') {
-        this.currentDate.setMonth(this.currentDate.getMonth() + 1);
-        this.render();
-      } else if (action === 'clear') {
-        this.selectedDate = null;
-        this.input.value = '';
-        this.close();
-      } else if (action === 'today') {
-        this.selectedDate = new Date();
-        this.input.value = this.formatDate(this.selectedDate);
-        this.close();
-      } else if (action === 'close') {
-        this.close();
-      } else if (date) {
-        this.selectedDate = new Date(date);
-        this.input.value = this.formatDate(this.selectedDate);
+      } else if (action === 'change-year') {
+        this.currentDate.setFullYear(parseInt(e.target.value));
         this.render();
       }
     });
+  }
+  
+  isDateDisabled(date) {
+    if (this.options.minDate) {
+      const minDate = new Date(this.options.minDate);
+      if (date < minDate) return true;
+    }
+    
+    if (this.options.maxDate) {
+      const maxDate = new Date(this.options.maxDate);
+      if (date > maxDate) return true;
+    }
+    
+    return false;
   }
   
   formatDate(date) {
