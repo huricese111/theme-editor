@@ -827,20 +827,54 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   function showSuccessModal() {
+    // 获取页面语言
+    const locale = document.documentElement.lang || 'en';
+    
+    // 多语言文本配置
+    const translations = {
+      en: {
+        title: '✅ Thank you!',
+        message: 'Your form has been submitted successfully.',
+        notification: 'A notification has been sent to our team.',
+        button: 'OK'
+      },
+      de: {
+        title: '✅ Vielen Dank!',
+        message: 'Ihr Formular wurde erfolgreich übermittelt.',
+        notification: 'Eine Benachrichtigung wurde an unser Team gesendet.',
+        button: 'OK'
+      },
+      fr: {
+        title: '✅ Merci !',
+        message: 'Votre formulaire a été soumis avec succès.',
+        notification: 'Une notification a été envoyée à notre équipe.',
+        button: 'OK'
+      },
+      fi: {
+        title: '✅ Kiitos!',
+        message: 'Lomakkeesi on lähetetty onnistuneesti.',
+        notification: 'Ilmoitus on lähetetty tiimillemme.',
+        button: 'OK'
+      }
+    };
+    
+    // 获取当前语言的文本，如果找不到则使用英语
+    const texts = translations[locale.toLowerCase()] || translations.en;
+    
     const modal = document.createElement('div');
     modal.className = 'success-modal';
     modal.innerHTML = `
       <div class="modal-overlay">
         <div class="modal-content">
           <div class="modal-header">
-            <h3>✅ Thank you!</h3>
+            <h3>${texts.title}</h3>
           </div>
           <div class="modal-body">
-            <p>Your form has been submitted successfully.</p>
-            <p class="email-notification-info">A notification has been sent to our team.</p>
+            <p>${texts.message}</p>
+            <p class="email-notification-info">${texts.notification}</p>
           </div>
           <div class="modal-footer">
-            <button class="btn btn--primary" onclick="this.closest('.success-modal').remove()">OK</button>
+            <button class="btn btn--primary" onclick="this.closest('.success-modal').remove()">${texts.button}</button>
           </div>
         </div>
       </div>
