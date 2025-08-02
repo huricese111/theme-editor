@@ -12,8 +12,6 @@ class FiveLevelDropdown {
     this.currentLevel = 1;
     this.maxLevels = 5; // 支持5级
     
-    wrapper.fiveLevelDropdownInstance = this;
-    
     this.init();
   }
   
@@ -269,29 +267,6 @@ class FiveLevelDropdown {
     } else {
       this.breadcrumb.textContent = this.selectedPath.join(' > ');
     }
-  }
-  
-  // 添加恢复选择状态的方法
-  restoreSelection(selectedPath) {
-    if (!selectedPath || selectedPath.length === 0) return;
-    
-    this.selectedPath = [...selectedPath];
-    
-    // 更新显示文本
-    const selectedText = this.selectedPath.join(' > ');
-    const placeholder = this.selectionDisplay.querySelector('.placeholder');
-    if (placeholder) {
-      placeholder.textContent = selectedText;
-      placeholder.classList.add('selected');
-    }
-    
-    // 更新hidden input的值
-    if (this.hiddenInput) {
-      this.hiddenInput.value = this.selectedPath.join('|');
-    }
-    
-    // 更新面包屑导航
-    this.updateBreadcrumb();
   }
 }
 
@@ -809,40 +784,26 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 恢复表单数据
     if (contactForm && Object.keys(savedFormData).length > 0) {
-    // 从localStorage获取保存的数据
-    const storedData = localStorage.getItem('formData');
-    if (storedData) {
-    const parsedData = JSON.parse(storedData);
-    
-    // 恢复表单字段值
-    Object.keys(parsedData).forEach(key => {
-    const field = contactForm.querySelector(`[name="${key}"]`);
-    if (field) {
-    if (field.type === 'checkbox' || field.type === 'radio') {
-    field.checked = parsedData[key] === field.value;
-    } else {
-    field.value = parsedData[key];
-    
-    // 特殊处理multilevel_dropdown
-    if (field.type === 'hidden' && key.includes('contact[') && parsedData[key]) {
-    const fieldName = key.replace('contact[', '').replace(']', '');
-    const dropdownWrapper = document.querySelector(`[data-field-name="${fieldName}"]`);
-    
-    if (dropdownWrapper && dropdownWrapper.classList.contains('multilevel-dropdown-wrapper')) {
-    // 恢复multilevel dropdown的显示状态
-    const dropdown = dropdownWrapper.fiveLevelDropdownInstance;
-    if (dropdown && parsedData[key]) {
-    const selectedPath = parsedData[key].split('|');
-    dropdown.restoreSelection(selectedPath);
-    }
-    }
-    }
-    }
-    });
-    
-    // 清除localStorage中的数据
-    localStorage.removeItem('formData');
-    }
+      // 从localStorage获取保存的数据
+      const storedData = localStorage.getItem('formData');
+      if (storedData) {
+        const parsedData = JSON.parse(storedData);
+        
+        // 恢复表单字段值
+        Object.keys(parsedData).forEach(key => {
+          const field = contactForm.querySelector(`[name="${key}"]`);
+          if (field) {
+            if (field.type === 'checkbox' || field.type === 'radio') {
+              field.checked = parsedData[key] === field.value;
+            } else {
+              field.value = parsedData[key];
+            }
+          }
+        });
+        
+        // 清除localStorage中的数据
+        localStorage.removeItem('formData');
+      }
     }
     
     // 确保表单保持可见
