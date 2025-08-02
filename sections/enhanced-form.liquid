@@ -1,52 +1,94 @@
 {{ 'enhanced-form.css' | asset_url | stylesheet_tag }}
 
-<div class="enhanced-form-container" {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
-  {% if section.settings.show_page_title %}
-    <div class="enhanced-form-header">
-      <h1 class="enhanced-form-title">{{ section.settings.form_title | default: 'Enhanced Form' | escape }}</h1>
-    </div>
-  {% endif %}
-
-  <div class="{% if section.settings.use_columns %}use-columns{% endif %}">
-    {% if section.settings.form_description != blank %}
-      <div class="enhanced-form-description">
-        {{ section.settings.form_description }}
+<section class="enhanced-form-section" id="enhanced-form-{{ section.id }}">
+  <div class="enhanced-form-container" {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
+    {% if section.settings.show_page_title %}
+      <div class="enhanced-form-header">
+        {%- liquid
+          assign form_title_text = section.settings.form_title_en | default: 'Enhanced form'
+          if section.settings.form_title_de != blank and request.locale.iso_code == 'de'
+            assign form_title_text = section.settings.form_title_de
+          elsif section.settings.form_title_fr != blank and request.locale.iso_code == 'fr'
+            assign form_title_text = section.settings.form_title_fr
+          elsif section.settings.form_title_fi != blank and request.locale.iso_code == 'fi'
+            assign form_title_text = section.settings.form_title_fi
+          endif
+        -%}
+        <h1 class="enhanced-form-title">{{ form_title_text | escape }}</h1>
       </div>
     {% endif %}
 
-    <div class="account-form">
-      {% form 'contact', novalidate: true %}
+    <div class="{% if section.settings.use_columns %}use-columns{% endif %}">
+    {% if section.settings.form_description_en != blank
+      or section.settings.form_description_de != blank
+      or section.settings.form_description_fr != blank
+      or section.settings.form_description_fi != blank
+    %}
+      <div class="enhanced-form-description">
+        {%- liquid
+          assign form_description_text = section.settings.form_description_en
+          if section.settings.form_description_de != blank and request.locale.iso_code == 'de'
+            assign form_description_text = section.settings.form_description_de
+          elsif section.settings.form_description_fr != blank and request.locale.iso_code == 'fr'
+            assign form_description_text = section.settings.form_description_fr
+          elsif section.settings.form_description_fi != blank and request.locale.iso_code == 'fi'
+            assign form_description_text = section.settings.form_description_fi
+          endif
+        -%}
+        {{ form_description_text }}
+      </div>
+    {% endif %}
+
+      <div class="account-form">
+        {% form 'contact', novalidate: true %}
         <!-- Add recipient email routing -->
         {% if section.settings.recipient_email != blank %}
           <input type="hidden" name="contact[recipient]" value="{{ section.settings.recipient_email }}">
         {% endif %}
-        
+
         <!-- Add email subject with form identifier -->
-        <input type="hidden" name="contact[subject]" value="[{{ section.settings.form_title | default: 'Enhanced Form' | upcase }}] {{ section.settings.form_title | default: 'Enhanced Form' }} - {{ shop.name }}">
-        
+        <input
+          type="hidden"
+          name="contact[subject]"
+          value="[{{ form_title_text | default: 'Enhanced Form' | upcase }}] {{ form_title_text | default: 'Enhanced Form' }} - {{ shop.name }}"
+        >
+
         <!-- Add formatted message intro -->
-        <input type="hidden" name="contact[message_intro]" value="You have received a new form submission with the following details:">
-        
+        <input
+          type="hidden"
+          name="contact[message_intro]"
+          value="You have received a new form submission with the following details:"
+        >
+
         {% if form.posted_successfully? %}
           <div class="form-success-message" style="display: none;">
-            <h3>{{ section.settings.success_title | default: 'Thank you!' | escape }}</h3>
-            <p>{{ section.settings.success_message | default: 'Your form has been submitted successfully.' | escape }}</p>
+            {%- liquid
+              assign success_title_text = section.settings.success_title_en | default: 'Thank you!'
+              if section.settings.success_title_de != blank and request.locale.iso_code == 'de'
+                assign success_title_text = section.settings.success_title_de
+              elsif section.settings.success_title_fr != blank and request.locale.iso_code == 'fr'
+                assign success_title_text = section.settings.success_title_fr
+              elsif section.settings.success_title_fi != blank and request.locale.iso_code == 'fi'
+                assign success_title_text = section.settings.success_title_fi
+              endif
+
+              assign success_message_text = section.settings.success_message_en | default: 'Your form has been submitted successfully.'
+              if section.settings.success_message_de != blank and request.locale.iso_code == 'de'
+                assign success_message_text = section.settings.success_message_de
+              elsif section.settings.success_message_fr != blank and request.locale.iso_code == 'fr'
+                assign success_message_text = section.settings.success_message_fr
+              elsif section.settings.success_message_fi != blank and request.locale.iso_code == 'fi'
+                assign success_message_text = section.settings.success_message_fi
+              endif
+            -%}
+            <h3>{{ success_title_text | escape }}</h3>
+            <p>{{ success_message_text | escape }}</p>
             {% if section.settings.recipient_email != blank %}
-              <p class="email-notification-info">A notification has been sent to {{ section.settings.recipient_email }}.</p>
+              <p class="email-notification-info">
+                A notification has been sent to {{ section.settings.recipient_email }}.
+              </p>
             {% else %}
               <p class="email-notification-info">A notification has been sent to our team.</p>
-            {% endif %}
-          </div>
-        {% endif %}
-
-        {% if section.settings.form_heading != blank or section.settings.form_intro != blank %}
-          <div class="lightish-spaced-row">
-            {% if section.settings.form_heading != blank %}
-              <h2>{{ section.settings.form_heading | escape }}</h2>
-            {% endif %}
-
-            {% if section.settings.form_intro != blank %}
-              <div class="rte">{{ section.settings.form_intro }}</div>
             {% endif %}
           </div>
         {% endif %}
@@ -67,398 +109,748 @@
           {%- endif -%}
         {%- endif -%}
 
-        <div class="flexible-layout flexible-layout--form">
+          <div class="flexible-layout flexible-layout--form">
             {% for block in section.blocks %}
               <div
                 class="column column--{% if block.settings.half_width %}half{% else %}full{% endif %}"
                 {{ block.shopify_attributes }}
               >
-                {% case block.type %}
-
-                  {% when 'first_name_input' %}
-                    <label for="contact_first_name">{{ block.settings.label | default: 'First Name' | escape }}</label>
-                    <input
-                      type="text"
-                      autocomplete="given-name"
-                      {% if block.settings.required %}required{% endif %}
-                      id="contact_first_name"
-                      name="contact[first_name]"
-                      value="{{ form.first_name }}"
-                      {% if block.settings.placeholder != blank %}placeholder="{{ block.settings.placeholder | escape }}"{% endif %}
-                    >
-
-                  {% when 'last_name_input' %}
-                    <label for="contact_last_name">{{ block.settings.label | default: 'Last Name' | escape }}</label>
-                    <input
-                      type="text"
-                      autocomplete="family-name"
-                      {% if block.settings.required %}required{% endif %}
-                      id="contact_last_name"
-                      name="contact[last_name]"
-                      value="{{ form.last_name }}"
-                      {% if block.settings.placeholder != blank %}placeholder="{{ block.settings.placeholder | escape }}"{% endif %}
-                    >
-
-                  {% when 'email_input' %}
-                    <label for="contact_email">{{ block.settings.label | default: 'Email' | escape }}</label>
-                    <input
-                      type="email"
+              {% case block.type %}
+                {% when 'first_name_input' %}
+                  {%- liquid
+                    assign label_text = block.settings.label_en | default: 'First name'
+                    if block.settings.label_de != blank and request.locale.iso_code == 'de'
+                      assign label_text = block.settings.label_de
+                    elsif block.settings.label_fr != blank and request.locale.iso_code == 'fr'
+                      assign label_text = block.settings.label_fr
+                    elsif block.settings.label_fi != blank and request.locale.iso_code == 'fi'
+                      assign label_text = block.settings.label_fi
+                    endif
+                  -%}
+                  <label class="enhanced-form-label" for="contact_first_name">{{ label_text | escape }}{% if block.settings.required %}*{% endif %}</label>
+                  <input
+                    class="enhanced-form-input"
+                    type="text"
+                    autocomplete="given-name"
+                    {% if block.settings.required %}
                       required
-                      id="contact_email"
-                      class="email"
-                      name="contact[email]"
-                      autocomplete="email"
-                      spellcheck="false"
-                      autocapitalize="off"
-                      value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
-                      {% if block.settings.placeholder != blank %}placeholder="{{ block.settings.placeholder | escape }}"{% endif %}
-                    >
-                    <!-- Ensure this email is also used as sender for notifications -->
-                    <input type="hidden" name="contact[sender_email]" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}">
-
-                  {% when 'phone_input' %}
-                    <label for="contact_phone">{{ block.settings.label | default: 'Phone' | escape }}</label>
-                    <input
-                      type="tel"
-                      id="contact_phone"
-                      autocomplete="tel"
-                      name="contact[phone]"
-                      {% if block.settings.required %}required{% endif %}
-                      value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
-                      {% if block.settings.placeholder != blank %}placeholder="{{ block.settings.placeholder | escape }}"{% endif %}
-                    >
-
-                  {% when 'company_input' %}
-                    <label for="contact_company">{{ block.settings.label | default: 'Company' | escape }}</label>
-                    <input
-                      type="text"
-                      id="contact_company"
-                      autocomplete="organization"
-                      name="contact[company]"
-                      {% if block.settings.required %}required{% endif %}
-                      value="{{ form.company }}"
-                      {% if block.settings.placeholder != blank %}placeholder="{{ block.settings.placeholder | escape }}"{% endif %}
-                    >
-
-                  {% when 'address_section' %}
-                    <div class="form-section-divider">
-                      <h3 class="form-section-title">{{ block.settings.section_title | default: 'Address Information' | escape }}</h3>
-                    </div>
-
-                  {% when 'street_address_input' %}
-                    <label for="contact_street_address">{{ block.settings.label | default: 'Street Address' | escape }}</label>
-                    <input
-                      type="text"
-                      id="contact_street_address"
-                      autocomplete="street-address"
-                      name="contact[street_address]"
-                      {% if block.settings.required %}required{% endif %}
-                      value="{{ form.street_address }}"
-                      {% if block.settings.placeholder != blank %}placeholder="{{ block.settings.placeholder | escape }}"{% endif %}
-                    >
-
-                  {% when 'address_line_2_input' %}
-                    <label for="contact_address_line_2">{{ block.settings.label | default: 'Address Line 2' | escape }}</label>
-                    <input
-                      type="text"
-                      id="contact_address_line_2"
-                      autocomplete="address-line2"
-                      name="contact[address_line_2]"
-                      {% if block.settings.required %}required{% endif %}
-                      value="{{ form.address_line_2 }}"
-                      {% if block.settings.placeholder != blank %}placeholder="{{ block.settings.placeholder | escape }}"{% endif %}
-                    >
-
-                  {% when 'city_input' %}
-                    <label for="contact_city">{{ block.settings.label | default: 'City' | escape }}</label>
-                    <input
-                      type="text"
-                      id="contact_city"
-                      autocomplete="address-level2"
-                      name="contact[city]"
-                      {% if block.settings.required %}required{% endif %}
-                      value="{{ form.city }}"
-                      {% if block.settings.placeholder != blank %}placeholder="{{ block.settings.placeholder | escape }}"{% endif %}
-                    >
-
-                  {% when 'state_province_input' %}
-                    <label for="contact_state_province">{{ block.settings.label | default: 'State/Province' | escape }}</label>
-                    <input
-                      type="text"
-                      id="contact_state_province"
-                      autocomplete="address-level1"
-                      name="contact[state_province]"
-                      {% if block.settings.required %}required{% endif %}
-                      value="{{ form.state_province }}"
-                      {% if block.settings.placeholder != blank %}placeholder="{{ block.settings.placeholder | escape }}"{% endif %}
-                    >
-
-                  {% when 'postal_code_input' %}
-                    <label for="contact_postal_code">{{ block.settings.label | default: 'Postal Code' | escape }}</label>
-                    <input
-                      type="text"
-                      id="contact_postal_code"
-                      autocomplete="postal-code"
-                      name="contact[postal_code]"
-                      {% if block.settings.required %}required{% endif %}
-                      value="{{ form.postal_code }}"
-                      {% if block.settings.placeholder != blank %}placeholder="{{ block.settings.placeholder | escape }}"{% endif %}
-                    >
-
-                  {% when 'country_dropdown' %}
-                    {%- liquid
-                      assign title_handle = 'country'
-                      assign custom_options = block.settings.country_options | newline_to_br | strip_newlines | split: '<br />'
-                      assign input_id = title_handle | prepend: 'contact_'
-                      assign input_name = title_handle | prepend: 'contact[' | append: ']'
-                    -%}
-                    <div class="option-selector" data-selector-type="dropdown">
-                      <script src="{{ 'custom-select.js' | asset_url }}" defer></script>
-                      {% render 'custom-select',
-                        id: input_id,
-                        label: block.settings.label | default: 'Country',
-                        option_values: custom_options,
-                        selected_value: custom_options.first,
-                        include_native: true,
-                        native_name: input_name
-                      %}
-                    </div>
-
-                  {% when 'multilevel_dropdown' %}
-                    <div class="multilevel-dropdown-wrapper" data-field-name="{{ block.settings.field_name }}">
-                      <label for="{{ block.settings.field_name }}" class="form-label{% if block.settings.required %} required{% endif %}">
-                        {{ block.settings.label }}
-                      </label>
-                      
-                      <!-- Current Selection Display -->
-                      <div class="current-selection" id="selection-display-{{ block.settings.field_name }}">
-                        <span class="placeholder">{{ block.settings.placeholder | default: 'Browse for your category' }}</span>
-                        <span class="dropdown-arrow">
-                          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                          </svg>
-                        </span>
-                      </div>
-                      
-                      <!-- Dropdown Panel -->
-                      <div class="dropdown-panel" id="panel-{{ block.settings.field_name }}" style="display: none;">
-                        <!-- Breadcrumb -->
-                        <div class="breadcrumb-nav" id="breadcrumb-{{ block.settings.field_name }}">
-                          <span class="breadcrumb-text">Browse for your category</span>
-                        </div>
-                        
-                        <!-- Five Column Layout -->
-          <div class="five-column-container">
-            <!-- Level 1 Column -->
-            <div class="category-column level-1-column">
-              <div class="column-content" id="level-1-{{ block.settings.field_name }}">
-                <!-- Level 1 options will be populated here -->
-              </div>
-            </div>
-            
-            <!-- Level 2 Column -->
-            <div class="category-column level-2-column" style="display: none;">
-              <div class="column-content" id="level-2-{{ block.settings.field_name }}">
-                <!-- Level 2 options will be populated here -->
-              </div>
-            </div>
-            
-            <!-- Level 3 Column -->
-            <div class="category-column level-3-column" style="display: none;">
-              <div class="column-content" id="level-3-{{ block.settings.field_name }}">
-                <!-- Level 3 options will be populated here -->
-              </div>
-            </div>
-            
-            <!-- Level 4 Column -->
-            <div class="category-column level-4-column" style="display: none;">
-              <div class="column-content" id="level-4-{{ block.settings.field_name }}">
-                <!-- Level 4 options will be populated here -->
-              </div>
-            </div>
-            
-            <!-- Level 5 Column -->
-            <div class="category-column level-5-column" style="display: none;">
-              <div class="column-content" id="level-5-{{ block.settings.field_name }}">
-                <!-- Level 5 options will be populated here -->
-              </div>
-            </div>
-          </div>
-                        
-                        <!-- Action Buttons -->
-                        <div class="dropdown-actions">
-                          <button type="button" class="btn-cancel">Cancel</button>
-                        </div>
-                      </div>
-                      
-                      <!-- Hidden Input -->
-                      <input type="hidden" name="contact[{{ block.settings.field_name }}]" id="{{ block.settings.field_name }}" value=""{% if block.settings.required %} required{% endif %}>
-                      
-                      <!-- Hidden Data for JavaScript -->
-          <script type="application/json" id="data-{{ block.settings.field_name }}">
-          {
-            "level1": {{ block.settings.options_level_1 | split: '\n' | json }},
-            "level2": {{ block.settings.options_level_2 | split: '\n' | json }},
-            "level3": {{ block.settings.options_level_3 | split: '\n' | json }},
-            "level4": {{ block.settings.options_level_4 | split: '\n' | json }},
-            "level5": {{ block.settings.options_level_5 | split: '\n' | json }}
-          }
-          </script>
-                    </div>
-
-                  {% when 'date_input' %}
-                    <label for="contact_{{ block.settings.field_name | handle }}">{{ block.settings.label | escape }}</label>
-                    {% assign field_handle = block.settings.field_name | handle %}
-                    <input
-                      type="date"
-                      id="contact_{{ block.settings.field_name | handle }}"
-                      name="contact[{{ block.settings.field_name | handle }}]"
-                      {% if block.settings.required %}required{% endif %}
-                      {% if block.settings.min_date != blank %}min="{{ block.settings.min_date }}"{% endif %}
-                      {% if block.settings.max_date != blank %}max="{{ block.settings.max_date }}"{% endif %}
-                      value="{{ form[field_handle] }}"
-                    >
-
-                  {% when 'time_input' %}
-                    <label for="contact_{{ block.settings.field_name | handle }}">{{ block.settings.label | escape }}</label>
-                    {% assign field_handle = block.settings.field_name | handle %}
-                    <input
-                      type="time"
-                      id="contact_{{ block.settings.field_name | handle }}"
-                      name="contact[{{ block.settings.field_name | handle }}]"
-                      {% if block.settings.required %}required{% endif %}
-                      value="{{ form[field_handle] }}"
-                    >
-
-                  {% when 'datetime_input' %}
-                    <label for="contact_{{ block.settings.field_name | handle }}">{{ block.settings.label | escape }}</label>
-                    {% assign field_handle = block.settings.field_name | handle %}
-                    <input
-                      type="datetime-local"
-                      id="contact_{{ block.settings.field_name | handle }}"
-                      name="contact[{{ block.settings.field_name | handle }}]"
-                      {% if block.settings.required %}required{% endif %}
-                      value="{{ form[field_handle] }}"
-                    >
-
-                  {% when 'number_input' %}
-                    <label for="contact_{{ block.settings.field_name | handle }}">{{ block.settings.label | escape }}</label>
-                    {% assign field_handle = block.settings.field_name | handle %}
-                    <input
-                      type="number"
-                      id="contact_{{ block.settings.field_name | handle }}"
-                      name="contact[{{ block.settings.field_name | handle }}]"
-                      {% if block.settings.required %}required{% endif %}
-                      {% if block.settings.min_value != blank %}min="{{ block.settings.min_value }}"{% endif %}
-                      {% if block.settings.max_value != blank %}max="{{ block.settings.max_value }}"{% endif %}
-                      {% if block.settings.step_value != blank %}step="{{ block.settings.step_value }}"{% endif %}
-                      value="{{ form[field_handle] }}"
-                      {% if block.settings.placeholder != blank %}placeholder="{{ block.settings.placeholder | escape }}"{% endif %}
-                    >
-
-                  {% when 'url_input' %}
-                    <label for="contact_{{ block.settings.field_name | handle }}">{{ block.settings.label | escape }}</label>
-                    {% assign field_handle = block.settings.field_name | handle %}
-                    <input
-                      type="url"
-                      id="contact_{{ block.settings.field_name | handle }}"
-                      name="contact[{{ block.settings.field_name | handle }}]"
-                      {% if block.settings.required %}required{% endif %}
-                      value="{{ form[field_handle] }}"
-                      {% if block.settings.placeholder != blank %}placeholder="{{ block.settings.placeholder | escape }}"{% endif %}
-                    >
-
-                  {% when 'rating_input' %}
-                    <label>{{ block.settings.label | escape }}</label>
-                    {%- assign field_handle = block.settings.field_name | handle -%}
-                    <div class="rating-input" data-rating="{{ form[field_handle] | default: 0 }}">
-                      {% for i in (1..5) %}
-                        <input type="radio" id="rating_{{ field_handle }}_{{ i }}" name="contact[{{ field_handle }}]" value="{{ i }}" {% if form[field_handle] == i %}checked{% endif %}>
-                        <label for="rating_{{ field_handle }}_{{ i }}" class="star">★</label>
-                      {% endfor %}
-                    </div>
-
-                  {% when 'checkbox_group' %}
-                    <fieldset>
-                      <legend>{{ block.settings.label | escape }}</legend>
-                      {%- assign checkbox_options = block.settings.checkbox_options | newline_to_br | strip_newlines | split: '<br />' -%}
-                      {%- assign field_handle = block.settings.field_name | handle -%}
-                      {% for option in checkbox_options %}
-                        <label class="checkbox-label">
-                          <input
-                            type="checkbox"
-                            name="contact[{{ field_handle }}][]"
-                            value="{{ option | escape }}"
-                            {% if form[field_handle] contains option %}checked{% endif %}
-                          >
-                          {{ option | escape }}
-                        </label>
-                      {% endfor %}
-                    </fieldset>
-
-                  {% when 'radio_group' %}
-                    <fieldset>
-                      <legend>{{ block.settings.label | escape }}</legend>
-                      {%- assign radio_options = block.settings.radio_options | newline_to_br | strip_newlines | split: '<br />' -%}
-                      {%- assign field_handle = block.settings.field_name | handle -%}
-                      {% for option in radio_options %}
-                        <label class="radio-label">
-                          <input
-                            type="radio"
-                            name="contact[{{ field_handle }}]"
-                            value="{{ option | escape }}"
-                            {% if block.settings.required %}required{% endif %}
-                            {% if form[field_handle] == option %}checked{% endif %}
-                          >
-                          {{ option | escape }}
-                        </label>
-                      {% endfor %}
-                    </fieldset>
-
-                  {% when 'message_input' %}
-                    <label for="message">{{ block.settings.label | default: 'Message' | escape }}</label>
-                    <textarea
-                      id="message"
-                      name="contact[body]"
-                      {% if block.settings.required %}required{% endif %}
-                      rows="{{ block.settings.rows | default: 5 }}"
-                      {% if block.settings.max_length != blank %}maxlength="{{ block.settings.max_length }}"{% endif %}
-                      {% if block.settings.placeholder != blank %}placeholder="{{ block.settings.placeholder | escape }}"{% endif %}
-                    >{{ form.body }}</textarea>
-                    {% if block.settings.max_length != blank %}
-                      <small class="character-count">0/{{ block.settings.max_length }} characters</small>
                     {% endif %}
+                    id="contact_first_name"
+                    name="contact[first_name]"
+                    value="{{ form.first_name }}"
+                    {% if block.settings.placeholder != blank %}
+                      placeholder="{{ block.settings.placeholder | escape }}"
+                    {% endif %}
+                  >
 
-  
-                  {% when 'text' %}
-                    <div class="rte">{{ block.settings.text }}</div>
+                {% when 'last_name_input' %}
+                  {%- liquid
+                    assign label_text = block.settings.label_en | default: 'Last name'
+                    if block.settings.label_de != blank and request.locale.iso_code == 'de'
+                      assign label_text = block.settings.label_de
+                    elsif block.settings.label_fr != blank and request.locale.iso_code == 'fr'
+                      assign label_text = block.settings.label_fr
+                    elsif block.settings.label_fi != blank and request.locale.iso_code == 'fi'
+                      assign label_text = block.settings.label_fi
+                    endif
+                  -%}
+                  <label class="enhanced-form-label" for="contact_last_name">{{ label_text | escape }}{% if block.settings.required %}*{% endif %}</label>
+                  <input
+                    class="enhanced-form-input"
+                    type="text"
+                    autocomplete="family-name"
+                    {% if block.settings.required %}
+                      required
+                    {% endif %}
+                    id="contact_last_name"
+                    name="contact[last_name]"
+                    value="{{ form.last_name }}"
+                    {% if block.settings.placeholder != blank %}
+                      placeholder="{{ block.settings.placeholder | escape }}"
+                    {% endif %}
+                  >
 
-                  {% when 'divider' %}
-                    <hr class="form-divider" style="border-color: {{ block.settings.divider_color | default: '#e0e0e0' }};">
+                {% when 'email_input' %}
+                  {%- liquid
+                    assign label_text = block.settings.label_en | default: 'Email'
+                    if block.settings.label_de != blank and request.locale.iso_code == 'de'
+                      assign label_text = block.settings.label_de
+                    elsif block.settings.label_fr != blank and request.locale.iso_code == 'fr'
+                      assign label_text = block.settings.label_fr
+                    elsif block.settings.label_fi != blank and request.locale.iso_code == 'fi'
+                      assign label_text = block.settings.label_fi
+                    endif
+                  -%}
+                  <label class="enhanced-form-label" for="contact_email">{{ label_text | escape }}*</label>
+                  <input
+                    class="enhanced-form-input email"
+                    type="email"
+                    required
+                    id="contact_email"
+                    name="contact[email]"
+                    autocomplete="email"
+                    spellcheck="false"
+                    autocapitalize="off"
+                    value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+                    {% if block.settings.placeholder != blank %}
+                      placeholder="{{ block.settings.placeholder | escape }}"
+                    {% endif %}
+                  >
+                  <!-- Ensure this email is also used as sender for notifications -->
+                  <input
+                    type="hidden"
+                    name="contact[sender_email]"
+                    value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+                  >
 
-                  {% when 'spacer' %}
-                    <div class="form-spacer" style="height: {{ block.settings.spacer_height | default: 20 }}px;"></div>
+                {% when 'phone_input' %}
+                  {%- liquid
+                    assign label_text = block.settings.label_en | default: 'Phone'
+                    if block.settings.label_de != blank and request.locale.iso_code == 'de'
+                      assign label_text = block.settings.label_de
+                    elsif block.settings.label_fr != blank and request.locale.iso_code == 'fr'
+                      assign label_text = block.settings.label_fr
+                    elsif block.settings.label_fi != blank and request.locale.iso_code == 'fi'
+                      assign label_text = block.settings.label_fi
+                    endif
+                  -%}
+                  <label class="enhanced-form-label" for="contact_phone">{{ label_text | escape }}{% if block.settings.required %}*{% endif %}</label>
+                  <input
+                    class="enhanced-form-input"
+                    type="tel"
+                    id="contact_phone"
+                    autocomplete="tel"
+                    name="contact[phone]"
+                    {% if block.settings.required %}
+                      required
+                    {% endif %}
+                    value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+                    {% if block.settings.placeholder != blank %}
+                      placeholder="{{ block.settings.placeholder | escape }}"
+                    {% endif %}
+                  >
 
-                {% endcase %}
-              </div>
-            {% endfor %}
+                {% when 'company_input' %}
+                  {%- liquid
+                    assign label_text = block.settings.label_en | default: 'Company'
+                    if block.settings.label_de != blank and request.locale.iso_code == 'de'
+                      assign label_text = block.settings.label_de
+                    elsif block.settings.label_fr != blank and request.locale.iso_code == 'fr'
+                      assign label_text = block.settings.label_fr
+                    elsif block.settings.label_fi != blank and request.locale.iso_code == 'fi'
+                      assign label_text = block.settings.label_fi
+                    endif
+                  -%}
+                  <label class="enhanced-form-label" for="contact_company">{{ label_text | escape }}{% if block.settings.required %}*{% endif %}</label>
+                  <input
+                    class="enhanced-form-input"
+                    type="text"
+                    id="contact_company"
+                    autocomplete="organization"
+                    name="contact[company]"
+                    {% if block.settings.required %}
+                      required
+                    {% endif %}
+                    value="{{ form.company }}"
+                    {% if block.settings.placeholder != blank %}
+                      placeholder="{{ block.settings.placeholder | escape }}"
+                    {% endif %}
+                  >
+
+                {% when 'street_address_input' %}
+                  {%- liquid
+                    assign label_text = block.settings.label_en | default: 'Street Address'
+                    if block.settings.label_de != blank and request.locale.iso_code == 'de'
+                      assign label_text = block.settings.label_de
+                    elsif block.settings.label_fr != blank and request.locale.iso_code == 'fr'
+                      assign label_text = block.settings.label_fr
+                    elsif block.settings.label_fi != blank and request.locale.iso_code == 'fi'
+                      assign label_text = block.settings.label_fi
+                    endif
+                  -%}
+                  <label for="contact_street_address">{{ label_text | escape }}</label>
+                  <input
+                    type="text"
+                    id="contact_street_address"
+                    autocomplete="street-address"
+                    name="contact[street_address]"
+                    {% if block.settings.required %}
+                      required
+                    {% endif %}
+                    value="{{ form.street_address }}"
+                    {% if block.settings.placeholder != blank %}
+                      placeholder="{{ block.settings.placeholder | escape }}"
+                    {% endif %}
+                  >
+
+                {% when 'address_line_2_input' %}
+                  {%- liquid
+                    assign label_text = block.settings.label_en | default: 'Address Line 2'
+                    if block.settings.label_de != blank and request.locale.iso_code == 'de'
+                      assign label_text = block.settings.label_de
+                    elsif block.settings.label_fr != blank and request.locale.iso_code == 'fr'
+                      assign label_text = block.settings.label_fr
+                    elsif block.settings.label_fi != blank and request.locale.iso_code == 'fi'
+                      assign label_text = block.settings.label_fi
+                    endif
+                  -%}
+                  <label for="contact_address_line_2">{{ label_text | escape }}</label>
+                  <input
+                    type="text"
+                    id="contact_address_line_2"
+                    autocomplete="address-line2"
+                    name="contact[address_line_2]"
+                    {% if block.settings.required %}
+                      required
+                    {% endif %}
+                    value="{{ form.address_line_2 }}"
+                    {% if block.settings.placeholder != blank %}
+                      placeholder="{{ block.settings.placeholder | escape }}"
+                    {% endif %}
+                  >
+
+                {% when 'city_input' %}
+                  {%- liquid
+                    assign label_text = block.settings.label_en | default: 'City'
+                    if block.settings.label_de != blank and request.locale.iso_code == 'de'
+                      assign label_text = block.settings.label_de
+                    elsif block.settings.label_fr != blank and request.locale.iso_code == 'fr'
+                      assign label_text = block.settings.label_fr
+                    elsif block.settings.label_fi != blank and request.locale.iso_code == 'fi'
+                      assign label_text = block.settings.label_fi
+                    endif
+                  -%}
+                  <label for="contact_city">{{ label_text | escape }}</label>
+                  <input
+                    type="text"
+                    id="contact_city"
+                    autocomplete="address-level2"
+                    name="contact[city]"
+                    {% if block.settings.required %}
+                      required
+                    {% endif %}
+                    value="{{ form.city }}"
+                    {% if block.settings.placeholder != blank %}
+                      placeholder="{{ block.settings.placeholder | escape }}"
+                    {% endif %}
+                  >
+
+                {% when 'state_province_input' %}
+                  {%- liquid
+                    assign label_text = block.settings.label_en | default: 'State/Province'
+                    if block.settings.label_de != blank and request.locale.iso_code == 'de'
+                      assign label_text = block.settings.label_de
+                    elsif block.settings.label_fr != blank and request.locale.iso_code == 'fr'
+                      assign label_text = block.settings.label_fr
+                    elsif block.settings.label_fi != blank and request.locale.iso_code == 'fi'
+                      assign label_text = block.settings.label_fi
+                    endif
+                  -%}
+                  <label for="contact_state_province">{{ label_text | escape }}</label>
+                  <input
+                    type="text"
+                    id="contact_state_province"
+                    autocomplete="address-level1"
+                    name="contact[state_province]"
+                    {% if block.settings.required %}
+                      required
+                    {% endif %}
+                    value="{{ form.state_province }}"
+                    {% if block.settings.placeholder != blank %}
+                      placeholder="{{ block.settings.placeholder | escape }}"
+                    {% endif %}
+                  >
+
+                {% when 'postal_code_input' %}
+                  {%- liquid
+                    assign label_text = block.settings.label_en | default: 'Postal Code'
+                    if block.settings.label_de != blank and request.locale.iso_code == 'de'
+                      assign label_text = block.settings.label_de
+                    elsif block.settings.label_fr != blank and request.locale.iso_code == 'fr'
+                      assign label_text = block.settings.label_fr
+                    elsif block.settings.label_fi != blank and request.locale.iso_code == 'fi'
+                      assign label_text = block.settings.label_fi
+                    endif
+                  -%}
+                  <label for="contact_postal_code">{{ label_text | escape }}</label>
+                  <input
+                    type="text"
+                    id="contact_postal_code"
+                    autocomplete="postal-code"
+                    name="contact[postal_code]"
+                    {% if block.settings.required %}
+                      required
+                    {% endif %}
+                    value="{{ form.postal_code }}"
+                    {% if block.settings.placeholder != blank %}
+                      placeholder="{{ block.settings.placeholder | escape }}"
+                    {% endif %}
+                  >
+
+                {% when 'country_dropdown' %}
+                  {%- liquid
+                    assign title_handle = 'country'
+                    assign custom_options = block.settings.country_options | newline_to_br | strip_newlines | split: '<br />'
+                    assign input_id = title_handle | prepend: 'contact_'
+                    assign input_name = title_handle | prepend: 'contact[' | append: ']'
+                    assign label_text = block.settings.label_en | default: 'Country'
+                    if block.settings.label_de != blank and request.locale.iso_code == 'de'
+                      assign label_text = block.settings.label_de
+                    elsif block.settings.label_fr != blank and request.locale.iso_code == 'fr'
+                      assign label_text = block.settings.label_fr
+                    elsif block.settings.label_fi != blank and request.locale.iso_code == 'fi'
+                      assign label_text = block.settings.label_fi
+                    endif
+                  -%}
+                  <div class="option-selector" data-selector-type="dropdown">
+                    <script src="{{ 'custom-select.js' | asset_url }}" defer></script>
+                    {% render 'custom-select',
+                      id: input_id,
+                      label: label_text,
+                      option_values: custom_options,
+                      selected_value: custom_options.first,
+                      include_native: true,
+                      native_name: input_name
+                    %}
+                  </div>
+
+                {% when 'multilevel_dropdown' %}
+                  {%- liquid
+                    assign label_text = block.settings.label_en | default: 'Select Category'
+                    if block.settings.label_de != blank and request.locale.iso_code == 'de'
+                      assign label_text = block.settings.label_de
+                    elsif block.settings.label_fr != blank and request.locale.iso_code == 'fr'
+                      assign label_text = block.settings.label_fr
+                    elsif block.settings.label_fi != blank and request.locale.iso_code == 'fi'
+                      assign label_text = block.settings.label_fi
+                    endif
+                    assign placeholder_text = block.settings.placeholder_en | default: 'Browse For Your Category'
+                    if block.settings.placeholder_de != blank and request.locale.iso_code == 'de'
+                      assign placeholder_text = block.settings.placeholder_de
+                    elsif block.settings.placeholder_fr != blank and request.locale.iso_code == 'fr'
+                      assign placeholder_text = block.settings.placeholder_fr
+                    elsif block.settings.placeholder_fi != blank and request.locale.iso_code == 'fi'
+                      assign placeholder_text = block.settings.placeholder_fi
+                    endif
+                    assign cancel_text = block.settings.cancel_text_en | default: 'Cancel'
+                    if block.settings.cancel_text_de != blank and request.locale.iso_code == 'de'
+                      assign cancel_text = block.settings.cancel_text_de
+                    elsif block.settings.cancel_text_fr != blank and request.locale.iso_code == 'fr'
+                      assign cancel_text = block.settings.cancel_text_fr
+                    elsif block.settings.cancel_text_fi != blank and request.locale.iso_code == 'fi'
+                      assign cancel_text = block.settings.cancel_text_fi
+                    endif
+                  -%}
+                  <div class="multilevel-dropdown-wrapper" data-field-name="{{ block.settings.field_name }}">
+                    <label
+                      for="{{ block.settings.field_name }}"
+                      class="form-label{% if block.settings.required %} required{% endif %}"
+                    >
+                      {{ label_text }}
+                    </label>
+
+                    <!-- Current Selection Display -->
+                    <div class="current-selection" id="selection-display-{{ block.settings.field_name }}">
+                      <span class="placeholder">{{ placeholder_text }}</span>
+                      <span class="dropdown-arrow">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </span>
+                    </div>
+
+                    <!-- Dropdown Panel -->
+                    <div class="dropdown-panel" id="panel-{{ block.settings.field_name }}" style="display: none;">
+                      <!-- Breadcrumb -->
+                      <div class="breadcrumb-nav" id="breadcrumb-{{ block.settings.field_name }}">
+                        <span class="breadcrumb-text">{{ placeholder_text }}</span>
+                      </div>
+
+                      <!-- Five Column Layout -->
+                      <div class="five-column-container">
+                        <!-- Level 1 Column -->
+                        <div class="category-column level-1-column">
+                          <div class="column-content" id="level-1-{{ block.settings.field_name }}">
+                            <!-- Level 1 options will be populated here -->
+                          </div>
+                        </div>
+
+                        <!-- Level 2 Column -->
+                        <div class="category-column level-2-column" style="display: none;">
+                          <div class="column-content" id="level-2-{{ block.settings.field_name }}">
+                            <!-- Level 2 options will be populated here -->
+                          </div>
+                        </div>
+
+                        <!-- Level 3 Column -->
+                        <div class="category-column level-3-column" style="display: none;">
+                          <div class="column-content" id="level-3-{{ block.settings.field_name }}">
+                            <!-- Level 3 options will be populated here -->
+                          </div>
+                        </div>
+
+                        <!-- Level 4 Column -->
+                        <div class="category-column level-4-column" style="display: none;">
+                          <div class="column-content" id="level-4-{{ block.settings.field_name }}">
+                            <!-- Level 4 options will be populated here -->
+                          </div>
+                        </div>
+
+                        <!-- Level 5 Column -->
+                        <div class="category-column level-5-column" style="display: none;">
+                          <div class="column-content" id="level-5-{{ block.settings.field_name }}">
+                            <!-- Level 5 options will be populated here -->
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Action Buttons -->
+                      <div class="dropdown-actions">
+                        <button type="button" class="btn-cancel">{{ cancel_text }}</button>
+                      </div>
+                    </div>
+
+                    <!-- Hidden Input -->
+                    <input
+                      type="hidden"
+                      name="contact[{{ block.settings.field_name }}]"
+                      id="{{ block.settings.field_name }}"
+                      value=""
+                      {% if block.settings.required %}
+                        required
+                      {% endif %}
+                    >
+
+                    <!-- Hidden Data for JavaScript -->
+                    <script type="application/json" id="data-{{ block.settings.field_name }}">
+                      {
+                        "level1": {{ block.settings.options_level_1 | split: '\n' | json }},
+                        "level2": {{ block.settings.options_level_2 | split: '\n' | json }},
+                        "level3": {{ block.settings.options_level_3 | split: '\n' | json }},
+                        "level4": {{ block.settings.options_level_4 | split: '\n' | json }},
+                        "level5": {{ block.settings.options_level_5 | split: '\n' | json }}
+                      }
+                    </script>
+                  </div>
+
+                {% when 'date_input' %}
+                  {%- liquid
+                    assign label_text = block.settings.label_en | default: 'Date'
+                    if block.settings.label_de != blank and request.locale.iso_code == 'de'
+                      assign label_text = block.settings.label_de
+                    elsif block.settings.label_fr != blank and request.locale.iso_code == 'fr'
+                      assign label_text = block.settings.label_fr
+                    elsif block.settings.label_fi != blank and request.locale.iso_code == 'fi'
+                      assign label_text = block.settings.label_fi
+                    endif
+                  -%}
+                  <label for="contact_{{ block.settings.field_name | handle }}">{{ label_text | escape }}</label>
+                  {% assign field_handle = block.settings.field_name | handle %}
+                  <input
+                    type="date"
+                    id="contact_{{ block.settings.field_name | handle }}"
+                    name="contact[{{ block.settings.field_name | handle }}]"
+                    {% if block.settings.required %}
+                      required
+                    {% endif %}
+                    {% if block.settings.min_date != blank %}
+                      min="{{ block.settings.min_date }}"
+                    {% endif %}
+                    {% if block.settings.max_date != blank %}
+                      max="{{ block.settings.max_date }}"
+                    {% endif %}
+                    value="{{ form[field_handle] }}"
+                  >
+
+                {% when 'time_input' %}
+                  {%- liquid
+                    assign label_text = block.settings.label_en | default: 'Time'
+                    if block.settings.label_de != blank and request.locale.iso_code == 'de'
+                      assign label_text = block.settings.label_de
+                    elsif block.settings.label_fr != blank and request.locale.iso_code == 'fr'
+                      assign label_text = block.settings.label_fr
+                    elsif block.settings.label_fi != blank and request.locale.iso_code == 'fi'
+                      assign label_text = block.settings.label_fi
+                    endif
+                  -%}
+                  <label for="contact_{{ block.settings.field_name | handle }}">{{ label_text | escape }}</label>
+                  {% assign field_handle = block.settings.field_name | handle %}
+                  <input
+                    type="time"
+                    id="contact_{{ block.settings.field_name | handle }}"
+                    name="contact[{{ block.settings.field_name | handle }}]"
+                    {% if block.settings.required %}
+                      required
+                    {% endif %}
+                    value="{{ form[field_handle] }}"
+                  >
+
+                {% when 'datetime_input' %}
+                  {%- liquid
+                    assign label_text = block.settings.label_en | default: 'Date & Time'
+                    if block.settings.label_de != blank and request.locale.iso_code == 'de'
+                      assign label_text = block.settings.label_de
+                    elsif block.settings.label_fr != blank and request.locale.iso_code == 'fr'
+                      assign label_text = block.settings.label_fr
+                    elsif block.settings.label_fi != blank and request.locale.iso_code == 'fi'
+                      assign label_text = block.settings.label_fi
+                    endif
+                  -%}
+                  <label for="contact_{{ block.settings.field_name | handle }}">{{ label_text | escape }}</label>
+                  {% assign field_handle = block.settings.field_name | handle %}
+                  <input
+                    type="datetime-local"
+                    id="contact_{{ block.settings.field_name | handle }}"
+                    name="contact[{{ block.settings.field_name | handle }}]"
+                    {% if block.settings.required %}
+                      required
+                    {% endif %}
+                    value="{{ form[field_handle] }}"
+                  >
+
+                {% when 'number_input' %}
+                  {%- liquid
+                    assign label_text = block.settings.label_en | default: 'Number'
+                    if block.settings.label_de != blank and request.locale.iso_code == 'de'
+                      assign label_text = block.settings.label_de
+                    elsif block.settings.label_fr != blank and request.locale.iso_code == 'fr'
+                      assign label_text = block.settings.label_fr
+                    elsif block.settings.label_fi != blank and request.locale.iso_code == 'fi'
+                      assign label_text = block.settings.label_fi
+                    endif
+                  -%}
+                  <label for="contact_{{ block.settings.field_name | handle }}">{{ label_text | escape }}</label>
+                  {% assign field_handle = block.settings.field_name | handle %}
+                  <input
+                    type="number"
+                    id="contact_{{ block.settings.field_name | handle }}"
+                    name="contact[{{ block.settings.field_name | handle }}]"
+                    {% if block.settings.required %}
+                      required
+                    {% endif %}
+                    {% if block.settings.min_value != blank %}
+                      min="{{ block.settings.min_value }}"
+                    {% endif %}
+                    {% if block.settings.max_value != blank %}
+                      max="{{ block.settings.max_value }}"
+                    {% endif %}
+                    {% if block.settings.step_value != blank %}
+                      step="{{ block.settings.step_value }}"
+                    {% endif %}
+                    value="{{ form[field_handle] }}"
+                    {% if block.settings.placeholder != blank %}
+                      placeholder="{{ block.settings.placeholder | escape }}"
+                    {% endif %}
+                  >
+
+                {% when 'url_input' %}
+                  {%- liquid
+                    assign label_text = block.settings.label_en | default: 'Website'
+                    if block.settings.label_de != blank and request.locale.iso_code == 'de'
+                      assign label_text = block.settings.label_de
+                    elsif block.settings.label_fr != blank and request.locale.iso_code == 'fr'
+                      assign label_text = block.settings.label_fr
+                    elsif block.settings.label_fi != blank and request.locale.iso_code == 'fi'
+                      assign label_text = block.settings.label_fi
+                    endif
+                  -%}
+                  <label for="contact_{{ block.settings.field_name | handle }}">{{ label_text | escape }}</label>
+                  {% assign field_handle = block.settings.field_name | handle %}
+                  <input
+                    type="url"
+                    id="contact_{{ block.settings.field_name | handle }}"
+                    name="contact[{{ block.settings.field_name | handle }}]"
+                    {% if block.settings.required %}
+                      required
+                    {% endif %}
+                    value="{{ form[field_handle] }}"
+                    {% if block.settings.placeholder != blank %}
+                      placeholder="{{ block.settings.placeholder | escape }}"
+                    {% endif %}
+                  >
+
+                {% when 'rating_input' %}
+                  {%- liquid
+                    assign label_text = block.settings.label_en | default: 'Rating'
+                    if block.settings.label_de != blank and request.locale.iso_code == 'de'
+                      assign label_text = block.settings.label_de
+                    elsif block.settings.label_fr != blank and request.locale.iso_code == 'fr'
+                      assign label_text = block.settings.label_fr
+                    elsif block.settings.label_fi != blank and request.locale.iso_code == 'fi'
+                      assign label_text = block.settings.label_fi
+                    endif
+                  -%}
+                  <label>{{ label_text | escape }}</label>
+                  {%- assign field_handle = block.settings.field_name | handle -%}
+                  <div class="rating-input" data-rating="{{ form[field_handle] | default: 0 }}">
+                    {% for i in (1..5) %}
+                      <input
+                        type="radio"
+                        id="rating_{{ field_handle }}_{{ i }}"
+                        name="contact[{{ field_handle }}]"
+                        value="{{ i }}"
+                        {% if form[field_handle] == i %}
+                          checked
+                        {% endif %}
+                      >
+                      <label for="rating_{{ field_handle }}_{{ i }}" class="star">★</label>
+                    {% endfor %}
+                  </div>
+
+                {% when 'checkbox_group' %}
+                  {%- liquid
+                    assign label_text = block.settings.label_en | default: 'Interests'
+                    if block.settings.label_de != blank and request.locale.iso_code == 'de'
+                      assign label_text = block.settings.label_de
+                    elsif block.settings.label_fr != blank and request.locale.iso_code == 'fr'
+                      assign label_text = block.settings.label_fr
+                    elsif block.settings.label_fi != blank and request.locale.iso_code == 'fi'
+                      assign label_text = block.settings.label_fi
+                    endif
+                  -%}
+                  <fieldset>
+                    <legend>{{ label_text | escape }}</legend>
+                    {%- assign checkbox_options = block.settings.checkbox_options
+                      | newline_to_br
+                      | strip_newlines
+                      | split: '<br />'
+                    -%}
+                    {%- assign field_handle = block.settings.field_name | handle -%}
+                    {% for option in checkbox_options %}
+                      <label class="checkbox-label">
+                        <input
+                          type="checkbox"
+                          name="contact[{{ field_handle }}][]"
+                          value="{{ option | escape }}"
+                          {% if form[field_handle] contains option %}
+                            checked
+                          {% endif %}
+                        >
+                        {{ option | escape }}
+                      </label>
+                    {% endfor %}
+                  </fieldset>
+
+                {% when 'radio_group' %}
+                  {%- liquid
+                    assign label_text = block.settings.label_en | default: 'Preference'
+                    if block.settings.label_de != blank and request.locale.iso_code == 'de'
+                      assign label_text = block.settings.label_de
+                    elsif block.settings.label_fr != blank and request.locale.iso_code == 'fr'
+                      assign label_text = block.settings.label_fr
+                    elsif block.settings.label_fi != blank and request.locale.iso_code == 'fi'
+                      assign label_text = block.settings.label_fi
+                    endif
+                  -%}
+                  <fieldset>
+                    <legend>{{ label_text | escape }}</legend>
+                    {%- assign radio_options = block.settings.radio_options
+                      | newline_to_br
+                      | strip_newlines
+                      | split: '<br />'
+                    -%}
+                    {%- assign field_handle = block.settings.field_name | handle -%}
+                    {% for option in radio_options %}
+                      <label class="radio-label">
+                        <input
+                          type="radio"
+                          name="contact[{{ field_handle }}]"
+                          value="{{ option | escape }}"
+                          {% if block.settings.required %}
+                            required
+                          {% endif %}
+                          {% if form[field_handle] == option %}
+                            checked
+                          {% endif %}
+                        >
+                        {{ option | escape }}
+                      </label>
+                    {% endfor %}
+                  </fieldset>
+
+                {% when 'message_input' %}
+                  {%- liquid
+                    assign label_text = block.settings.label_en | default: 'Message'
+                    if block.settings.label_de != blank and request.locale.iso_code == 'de'
+                      assign label_text = block.settings.label_de
+                    elsif block.settings.label_fr != blank and request.locale.iso_code == 'fr'
+                      assign label_text = block.settings.label_fr
+                    elsif block.settings.label_fi != blank and request.locale.iso_code == 'fi'
+                      assign label_text = block.settings.label_fi
+                    endif
+                  -%}
+                  <label for="message">{{ label_text | escape }}</label>
+                  <textarea
+                    id="message"
+                    name="contact[body]"
+                    {% if block.settings.required %}
+                      required
+                    {% endif %}
+                    rows="{{ block.settings.rows | default: 5 }}"
+                    {% if block.settings.max_length != blank %}
+                      maxlength="{{ block.settings.max_length }}"
+                    {% endif %}
+                    {% if block.settings.placeholder != blank %}
+                      placeholder="{{ block.settings.placeholder | escape }}"
+                    {% endif %}
+                  >{{ form.body }}</textarea>
+                  {% if block.settings.max_length != blank %}
+                    <small class="character-count">0/{{ block.settings.max_length }} characters</small>
+                  {% endif %}
+
+                {% when 'text' %}
+                  <div class="rte">{{ block.settings.text }}</div>
+
+                {% when 'divider' %}
+                  <hr
+                    class="form-divider"
+                    style="border-color: {{ block.settings.divider_color | default: '#e0e0e0' }};"
+                  >
+
+                {% when 'spacer' %}
+                  <div class="form-spacer" style="height: {{ block.settings.spacer_height | default: 20 }}px;"></div>
+              {% endcase %}
+            </div>
+          {% endfor %}
         </div>
 
-        <div class="lightly-spaced-row">
-          <button class="btn btn--{{ section.settings.button_style | default: 'primary' }}" type="submit">
-            {{ section.settings.submit_button_text | default: 'Submit Form' | escape }}
-          </button>
-        </div>
-      {% endform %}
+          <div class="form-actions">
+            {%- liquid
+              assign submit_text = section.settings.submit_button_text_en | default: 'Submit form'
+              if section.settings.submit_button_text_de != blank and request.locale.iso_code == 'de'
+                assign submit_text = section.settings.submit_button_text_de
+              elsif section.settings.submit_button_text_fr != blank and request.locale.iso_code == 'fr'
+                assign submit_text = section.settings.submit_button_text_fr
+              elsif section.settings.submit_button_text_fi != blank and request.locale.iso_code == 'fi'
+                assign submit_text = section.settings.submit_button_text_fi
+              endif
+            -%}
+            <button
+              class="enhanced-form-submit-btn btn btn--{{ section.settings.button_style | default: 'primary' }}"
+              type="submit"
+              {% if section.settings.custom_button_color != blank %}
+                style="background: linear-gradient(135deg, {{ section.settings.custom_button_color }} 0%, {{ section.settings.custom_button_color | color_darken: 20 }} 100%);"
+              {% endif %}
+            >
+              {{ submit_text | escape }}
+            </button>
+          </div>
+        {% endform %}
+      </div>
     </div>
   </div>
-</div>
+</section>
 
 {{ 'enhanced-form.js' | asset_url | script_tag }}
 
 {% schema %}
 {
-  "name": "Enhanced Form",
+  "name": {
+    "en": "Enhanced Form",
+    "de": "Erweiterte Form",
+    "fr": "Formulaire Amélioré",
+    "fi": "Parannettu Lomake"
+  },
   "class": "page-section-spacing",
   "settings": [
     {
@@ -473,9 +865,27 @@
     },
     {
       "type": "text",
-      "id": "form_title",
-      "label": "Form title",
-      "default": "Enhanced Form"
+      "id": "form_title_en",
+      "label": "Form title (English)",
+      "default": "Enhanced form"
+    },
+    {
+      "type": "text",
+      "id": "form_title_de",
+      "label": "Form title (German)",
+      "default": "Erweitertes formular"
+    },
+    {
+      "type": "text",
+      "id": "form_title_fr",
+      "label": "Form title (French)",
+      "default": "Formulaire amélioré"
+    },
+    {
+      "type": "text",
+      "id": "form_title_fi",
+      "label": "Form title (Finnish)",
+      "default": "Parannettu lomake"
     },
     {
       "type": "text",
@@ -490,36 +900,75 @@
       "default": true
     },
     {
-      "type": "text",
-      "id": "form_heading",
-      "label": "Form heading",
-      "default": "Get in touch"
+      "type": "richtext",
+      "id": "form_description_en",
+      "label": "Form description (English)"
     },
     {
       "type": "richtext",
-      "id": "form_intro",
-      "label": "Form introduction"
+      "id": "form_description_de",
+      "label": "Form description (German)"
     },
     {
       "type": "richtext",
-      "id": "form_description",
-      "label": "Form description"
+      "id": "form_description_fr",
+      "label": "Form description (French)"
     },
     {
-      "type": "header",
+      "type": "richtext",
+      "id": "form_description_fi",
+      "label": "Form description (Finnish)"
+    },
+    {"type": "header",
       "content": "Success Message"
     },
     {
       "type": "text",
-      "id": "success_title",
-      "label": "Success title",
+      "id": "success_title_en",
+      "label": "Success title (English)",
       "default": "Thank you!"
     },
     {
+      "type": "text",
+      "id": "success_title_de",
+      "label": "Success title (German)",
+      "default": "Vielen dank!"
+    },
+    {
+      "type": "text",
+      "id": "success_title_fr",
+      "label": "Success title (French)",
+      "default": "Merci!"
+    },
+    {
+      "type": "text",
+      "id": "success_title_fi",
+      "label": "Success title (Finnish)",
+      "default": "Kiitos!"
+    },
+    {
       "type": "textarea",
-      "id": "success_message",
-      "label": "Success message",
+      "id": "success_message_en",
+      "label": "Success message (English)",
       "default": "Your form has been submitted successfully."
+    },
+    {
+      "type": "textarea",
+      "id": "success_message_de",
+      "label": "Success message (German)",
+      "default": "Ihr formular wurde erfolgreich übermittelt."
+    },
+    {
+      "type": "textarea",
+      "id": "success_message_fr",
+      "label": "Success message (French)",
+      "default": "Votre formulaire a été soumis avec succès."
+    },
+    {
+      "type": "textarea",
+      "id": "success_message_fi",
+      "label": "Success message (Finnish)",
+      "default": "Lomakkeesi on lähetetty onnistuneesti."
     },
     {
       "type": "header",
@@ -527,9 +976,27 @@
     },
     {
       "type": "text",
-      "id": "submit_button_text",
-      "label": "Submit button text",
-      "default": "Submit Form"
+      "id": "submit_button_text_en",
+      "label": "Submit button text (English)",
+      "default": "Submit"
+    },
+    {
+      "type": "text",
+      "id": "submit_button_text_de",
+      "label": "Submit button text (German)",
+      "default": "Absenden"
+    },
+    {
+      "type": "text",
+      "id": "submit_button_text_fr",
+      "label": "Submit button text (French)",
+      "default": "Soumettre"
+    },
+    {
+      "type": "text",
+      "id": "submit_button_text_fi",
+      "label": "Submit button text (Finnish)",
+      "default": "Lähetä lomake"
     },
     {
       "type": "select",
@@ -550,6 +1017,23 @@
           "label": "Outline"
         }
       ]
+    },
+    {
+      "type": "color",
+      "id": "custom_button_color",
+      "label": {
+        "en": "Custom Submit Button Color",
+        "de": "Benutzerdefinierte Senden-Button-Farbe",
+        "fr": "Couleur Personnalisée du Bouton Envoyer",
+        "fi": "Mukautettu Lähetä-painikkeen Väri"
+      },
+      "default": "#2d3748",
+      "info": {
+        "en": "Default is black gradient. Leave empty to use theme default.",
+        "de": "Standard ist schwarzer Verlauf. Leer lassen für Theme-Standard.",
+        "fr": "Par défaut, dégradé noir. Laisser vide pour utiliser le thème par défaut.",
+        "fi": "Oletus on musta liukuväri. Jätä tyhjäksi käyttääksesi teeman oletusta."
+      }
     }
   ],
   "blocks": [
@@ -559,9 +1043,27 @@
       "settings": [
         {
           "type": "text",
-          "id": "label",
-          "label": "Label",
-          "default": "First Name"
+          "id": "label_en",
+          "label": "Label (English)",
+          "default": "First name"
+        },
+        {
+          "type": "text",
+          "id": "label_de",
+          "label": "Label (German)",
+          "default": "Vorname"
+        },
+        {
+          "type": "text",
+          "id": "label_fr",
+          "label": "Label (French)",
+          "default": "Prénom"
+        },
+        {
+          "type": "text",
+          "id": "label_fi",
+          "label": "Label (Finnish)",
+          "default": "Etunimi"
         },
         {
           "type": "text",
@@ -588,9 +1090,27 @@
       "settings": [
         {
           "type": "text",
-          "id": "label",
-          "label": "Label",
+          "id": "label_en",
+          "label": "Label (English)",
           "default": "Last Name"
+        },
+        {
+          "type": "text",
+          "id": "label_de",
+          "label": "Label (German)",
+          "default": "Nachname"
+        },
+        {
+          "type": "text",
+          "id": "label_fr",
+          "label": "Label (French)",
+          "default": "Nom De Famille"
+        },
+        {
+          "type": "text",
+          "id": "label_fi",
+          "label": "Label (Finnish)",
+          "default": "Sukunimi"
         },
         {
           "type": "text",
@@ -622,9 +1142,27 @@
         },
         {
           "type": "text",
-          "id": "label",
-          "label": "Label",
+          "id": "label_en",
+          "label": "Label (English)",
           "default": "Email"
+        },
+        {
+          "type": "text",
+          "id": "label_de",
+          "label": "Label (German)",
+          "default": "E-Mail"
+        },
+        {
+          "type": "text",
+          "id": "label_fr",
+          "label": "Label (French)",
+          "default": "E-Mail"
+        },
+        {
+          "type": "text",
+          "id": "label_fi",
+          "label": "Label (Finnish)",
+          "default": "Sähköposti"
         },
         {
           "type": "text",
@@ -645,9 +1183,27 @@
       "settings": [
         {
           "type": "text",
-          "id": "label",
-          "label": "Label",
+          "id": "label_en",
+          "label": "Label (English)",
           "default": "Phone"
+        },
+        {
+          "type": "text",
+          "id": "label_de",
+          "label": "Label (German)",
+          "default": "Telefon"
+        },
+        {
+          "type": "text",
+          "id": "label_fr",
+          "label": "Label (French)",
+          "default": "Téléphone"
+        },
+        {
+          "type": "text",
+          "id": "label_fi",
+          "label": "Label (Finnish)",
+          "default": "Puhelin"
         },
         {
           "type": "text",
@@ -674,9 +1230,27 @@
       "settings": [
         {
           "type": "text",
-          "id": "label",
-          "label": "Label",
+          "id": "label_en",
+          "label": "Label (English)",
           "default": "Company"
+        },
+        {
+          "type": "text",
+          "id": "label_de",
+          "label": "Label (German)",
+          "default": "Unternehmen"
+        },
+        {
+          "type": "text",
+          "id": "label_fr",
+          "label": "Label (French)",
+          "default": "Entreprise"
+        },
+        {
+          "type": "text",
+          "id": "label_fi",
+          "label": "Label (Finnish)",
+          "default": "Yritys"
         },
         {
           "type": "text",
@@ -703,9 +1277,27 @@
       "settings": [
         {
           "type": "text",
-          "id": "label",
-          "label": "Label",
+          "id": "label_en",
+          "label": "Label (English)",
           "default": "Street Address"
+        },
+        {
+          "type": "text",
+          "id": "label_de",
+          "label": "Label (German)",
+          "default": "Straßenadresse"
+        },
+        {
+          "type": "text",
+          "id": "label_fr",
+          "label": "Label (French)",
+          "default": "Adresse De Rue"
+        },
+        {
+          "type": "text",
+          "id": "label_fi",
+          "label": "Label (Finnish)",
+          "default": "Katuosoite"
         },
         {
           "type": "text",
@@ -732,9 +1324,27 @@
       "settings": [
         {
           "type": "text",
-          "id": "label",
-          "label": "Label",
+          "id": "label_en",
+          "label": "Label (English)",
           "default": "Address Line 2"
+        },
+        {
+          "type": "text",
+          "id": "label_de",
+          "label": "Label (German)",
+          "default": "Adresszeile 2"
+        },
+        {
+          "type": "text",
+          "id": "label_fr",
+          "label": "Label (French)",
+          "default": "Ligne D'Adresse 2"
+        },
+        {
+          "type": "text",
+          "id": "label_fi",
+          "label": "Label (Finnish)",
+          "default": "Osoiterivi 2"
         },
         {
           "type": "text",
@@ -761,9 +1371,27 @@
       "settings": [
         {
           "type": "text",
-          "id": "label",
-          "label": "Label",
+          "id": "label_en",
+          "label": "Label (English)",
           "default": "City"
+        },
+        {
+          "type": "text",
+          "id": "label_de",
+          "label": "Label (German)",
+          "default": "Stadt"
+        },
+        {
+          "type": "text",
+          "id": "label_fr",
+          "label": "Label (French)",
+          "default": "Ville"
+        },
+        {
+          "type": "text",
+          "id": "label_fi",
+          "label": "Label (Finnish)",
+          "default": "Kaupunki"
         },
         {
           "type": "text",
@@ -790,9 +1418,27 @@
       "settings": [
         {
           "type": "text",
-          "id": "label",
-          "label": "Label",
+          "id": "label_en",
+          "label": "Label (English)",
           "default": "State/Province"
+        },
+        {
+          "type": "text",
+          "id": "label_de",
+          "label": "Label (German)",
+          "default": "Bundesland/Provinz"
+        },
+        {
+          "type": "text",
+          "id": "label_fr",
+          "label": "Label (French)",
+          "default": "État/Province"
+        },
+        {
+          "type": "text",
+          "id": "label_fi",
+          "label": "Label (Finnish)",
+          "default": "Osavaltio/Maakunta"
         },
         {
           "type": "text",
@@ -819,9 +1465,27 @@
       "settings": [
         {
           "type": "text",
-          "id": "label",
-          "label": "Label",
+          "id": "label_en",
+          "label": "Label (English)",
           "default": "Postal Code"
+        },
+        {
+          "type": "text",
+          "id": "label_de",
+          "label": "Label (German)",
+          "default": "Postleitzahl"
+        },
+        {
+          "type": "text",
+          "id": "label_fr",
+          "label": "Label (French)",
+          "default": "Code Postal"
+        },
+        {
+          "type": "text",
+          "id": "label_fi",
+          "label": "Label (Finnish)",
+          "default": "Postinumero"
         },
         {
           "type": "text",
@@ -848,9 +1512,27 @@
       "settings": [
         {
           "type": "text",
-          "id": "label",
-          "label": "Label",
+          "id": "label_en",
+          "label": "Label (English)",
           "default": "Country"
+        },
+        {
+          "type": "text",
+          "id": "label_de",
+          "label": "Label (German)",
+          "default": "Land"
+        },
+        {
+          "type": "text",
+          "id": "label_fr",
+          "label": "Label (French)",
+          "default": "Pays"
+        },
+        {
+          "type": "text",
+          "id": "label_fi",
+          "label": "Label (Finnish)",
+          "default": "Maa"
         },
         {
           "type": "textarea",
@@ -885,9 +1567,27 @@
         },
         {
           "type": "text",
-          "id": "label",
-          "label": "Label",
+          "id": "label_en",
+          "label": "Label (English)",
           "default": "Select Category"
+        },
+        {
+          "type": "text",
+          "id": "label_de",
+          "label": "Label (German)",
+          "default": "Kategorie Auswählen"
+        },
+        {
+          "type": "text",
+          "id": "label_fr",
+          "label": "Label (French)",
+          "default": "Sélectionner Une Catégorie"
+        },
+        {
+          "type": "text",
+          "id": "label_fi",
+          "label": "Label (Finnish)",
+          "default": "Valitse Kategoria"
         },
         {
           "type": "checkbox",
@@ -970,9 +1670,27 @@
         },
         {
           "type": "text",
-          "id": "label",
-          "label": "Label",
+          "id": "label_en",
+          "label": "Label (English)",
           "default": "Date"
+        },
+        {
+          "type": "text",
+          "id": "label_de",
+          "label": "Label (German)",
+          "default": "Datum"
+        },
+        {
+          "type": "text",
+          "id": "label_fr",
+          "label": "Label (French)",
+          "default": "Date"
+        },
+        {
+          "type": "text",
+          "id": "label_fi",
+          "label": "Label (Finnish)",
+          "default": "Päivämäärä"
         },
         {
           "type": "text",
@@ -1010,9 +1728,27 @@
         },
         {
           "type": "text",
-          "id": "label",
-          "label": "Label",
+          "id": "label_en",
+          "label": "Label (English)",
           "default": "Time"
+        },
+        {
+          "type": "text",
+          "id": "label_de",
+          "label": "Label (German)",
+          "default": "Zeit"
+        },
+        {
+          "type": "text",
+          "id": "label_fr",
+          "label": "Label (French)",
+          "default": "Heure"
+        },
+        {
+          "type": "text",
+          "id": "label_fi",
+          "label": "Label (Finnish)",
+          "default": "Aika"
         },
         {
           "type": "checkbox",
@@ -1040,9 +1776,27 @@
         },
         {
           "type": "text",
-          "id": "label",
-          "label": "Label",
+          "id": "label_en",
+          "label": "Label (English)",
           "default": "Date & Time"
+        },
+        {
+          "type": "text",
+          "id": "label_de",
+          "label": "Label (German)",
+          "default": "Datum & Zeit"
+        },
+        {
+          "type": "text",
+          "id": "label_fr",
+          "label": "Label (French)",
+          "default": "Date Et Heure"
+        },
+        {
+          "type": "text",
+          "id": "label_fi",
+          "label": "Label (Finnish)",
+          "default": "Päivämäärä Ja Aika"
         },
         {
           "type": "checkbox",
@@ -1070,9 +1824,27 @@
         },
         {
           "type": "text",
-          "id": "label",
-          "label": "Label",
+          "id": "label_en",
+          "label": "Label (English)",
           "default": "Number"
+        },
+        {
+          "type": "text",
+          "id": "label_de",
+          "label": "Label (German)",
+          "default": "Nummer"
+        },
+        {
+          "type": "text",
+          "id": "label_fr",
+          "label": "Label (French)",
+          "default": "Numéro"
+        },
+        {
+          "type": "text",
+          "id": "label_fi",
+          "label": "Label (Finnish)",
+          "default": "Numero"
         },
         {
           "type": "text",
@@ -1121,9 +1893,27 @@
         },
         {
           "type": "text",
-          "id": "label",
-          "label": "Label",
+          "id": "label_en",
+          "label": "Label (English)",
           "default": "Website"
+        },
+        {
+          "type": "text",
+          "id": "label_de",
+          "label": "Label (German)",
+          "default": "Webseite"
+        },
+        {
+          "type": "text",
+          "id": "label_fr",
+          "label": "Label (French)",
+          "default": "Site Web"
+        },
+        {
+          "type": "text",
+          "id": "label_fi",
+          "label": "Label (Finnish)",
+          "default": "Verkkosivusto"
         },
         {
           "type": "text",
@@ -1157,9 +1947,27 @@
         },
         {
           "type": "text",
-          "id": "label",
-          "label": "Label",
+          "id": "label_en",
+          "label": "Label (English)",
           "default": "Rating"
+        },
+        {
+          "type": "text",
+          "id": "label_de",
+          "label": "Label (German)",
+          "default": "Bewertung"
+        },
+        {
+          "type": "text",
+          "id": "label_fr",
+          "label": "Label (French)",
+          "default": "Évaluation"
+        },
+        {
+          "type": "text",
+          "id": "label_fi",
+          "label": "Label (Finnish)",
+          "default": "Arviointi"
         },
         {
           "type": "checkbox",
@@ -1181,9 +1989,27 @@
         },
         {
           "type": "text",
-          "id": "label",
-          "label": "Label",
+          "id": "label_en",
+          "label": "Label (English)",
           "default": "Interests"
+        },
+        {
+          "type": "text",
+          "id": "label_de",
+          "label": "Label (German)",
+          "default": "Interessen"
+        },
+        {
+          "type": "text",
+          "id": "label_fr",
+          "label": "Label (French)",
+          "default": "Intérêts"
+        },
+        {
+          "type": "text",
+          "id": "label_fi",
+          "label": "Label (Finnish)",
+          "default": "Kiinnostuksen Kohteet"
         },
         {
           "type": "textarea",
@@ -1212,9 +2038,27 @@
         },
         {
           "type": "text",
-          "id": "label",
-          "label": "Label",
+          "id": "label_en",
+          "label": "Label (English)",
           "default": "Preference"
+        },
+        {
+          "type": "text",
+          "id": "label_de",
+          "label": "Label (German)",
+          "default": "Präferenz"
+        },
+        {
+          "type": "text",
+          "id": "label_fr",
+          "label": "Label (French)",
+          "default": "Préférence"
+        },
+        {
+          "type": "text",
+          "id": "label_fi",
+          "label": "Label (Finnish)",
+          "default": "Mieltymys"
         },
         {
           "type": "textarea",
@@ -1244,9 +2088,27 @@
       "settings": [
         {
           "type": "text",
-          "id": "label",
-          "label": "Label",
+          "id": "label_en",
+          "label": "Label (English)",
           "default": "Message"
+        },
+        {
+          "type": "text",
+          "id": "label_de",
+          "label": "Label (German)",
+          "default": "Nachricht"
+        },
+        {
+          "type": "text",
+          "id": "label_fr",
+          "label": "Label (French)",
+          "default": "Message"
+        },
+        {
+          "type": "text",
+          "id": "label_fi",
+          "label": "Label (Finnish)",
+          "default": "Viesti"
         },
         {
           "type": "text",
@@ -1286,13 +2148,52 @@
           "default": false
         }
       ]
+    },
+    {
+      "type": "text",
+      "name": "📝 Text",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Add some text here</p>"
+        }
+      ]
+    },
+    {
+      "type": "divider",
+      "name": "➖ Divider",
+      "settings": [
+        {
+          "type": "color",
+          "id": "divider_color",
+          "label": "Divider color",
+          "default": "#e0e0e0"
+        }
+      ]
+    },
+    {
+      "type": "spacer",
+      "name": "⬜ Spacer",
+      "settings": [
+        {
+          "type": "range",
+          "id": "spacer_height",
+          "label": "Spacer height (px)",
+          "min": 10,
+          "max": 100,
+          "step": 5,
+          "default": 20
+        }
+      ]
     }
   ],
   "presets": [
     {
       "name": "Enhanced form",
       "category": "custom"
-}
+    }
   ]
 }
 {% endschema %}
