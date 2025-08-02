@@ -15,7 +15,7 @@
     {% endif %}
 
     <div class="account-form">
-      {% form 'contact' %}
+      {% form 'contact', novalidate: true %}
         <!-- Add recipient email routing -->
         {% if section.settings.recipient_email != blank %}
           <input type="hidden" name="contact[recipient]" value="{{ section.settings.recipient_email }}">
@@ -28,7 +28,7 @@
         <input type="hidden" name="contact[message_intro]" value="You have received a new form submission with the following details:">
         
         {% if form.posted_successfully? %}
-          <div class="form-success-message">
+          <div class="form-success-message" style="display: none;">
             <h3>{{ section.settings.success_title | default: 'Thank you!' | escape }}</h3>
             <p>{{ section.settings.success_message | default: 'Your form has been submitted successfully.' | escape }}</p>
             {% if section.settings.recipient_email != blank %}
@@ -37,49 +37,43 @@
               <p class="email-notification-info">A notification has been sent to our team.</p>
             {% endif %}
           </div>
-        {% else %}
-          {% if section.settings.form_heading != blank or section.settings.form_intro != blank %}
-            <div class="lightish-spaced-row">
-              {% if section.settings.form_heading != blank %}
-                <h2>{{ section.settings.form_heading | escape }}</h2>
-              {% endif %}
+        {% endif %}
 
-              {% if section.settings.form_intro != blank %}
-                <div class="rte">{{ section.settings.form_intro }}</div>
-              {% endif %}
-            </div>
-          {% endif %}
+        {% if section.settings.form_heading != blank or section.settings.form_intro != blank %}
+          <div class="lightish-spaced-row">
+            {% if section.settings.form_heading != blank %}
+              <h2>{{ section.settings.form_heading | escape }}</h2>
+            {% endif %}
 
-          {%- render 'form-errors', form: form -%}
+            {% if section.settings.form_intro != blank %}
+              <div class="rte">{{ section.settings.form_intro }}</div>
+            {% endif %}
+          </div>
+        {% endif %}
 
-          {%- if request.design_mode -%}
-            {%- liquid
-              assign email_exists = false
-              for block in section.blocks
-                if block.type == 'email_input'
-                  assign email_exists = true
-                endif
-              endfor
-            -%}
-            {%- if email_exists == false -%}
-              <div class="errors">You must include the 'Email input' block for the form to work correctly.</div>
-            {%- endif -%}
+        {%- render 'form-errors', form: form -%}
+
+        {%- if request.design_mode -%}
+          {%- liquid
+            assign email_exists = false
+            for block in section.blocks
+              if block.type == 'email_input'
+                assign email_exists = true
+              endif
+            endfor
+          -%}
+          {%- if email_exists == false -%}
+            <div class="errors">You must include the 'Email input' block for the form to work correctly.</div>
           {%- endif -%}
+        {%- endif -%}
 
-          <div class="flexible-layout flexible-layout--form">
+        <div class="flexible-layout flexible-layout--form">
             {% for block in section.blocks %}
               <div
                 class="column column--{% if block.settings.half_width %}half{% else %}full{% endif %}"
                 {{ block.shopify_attributes }}
               >
                 {% case block.type %}
-                  {% when 'personal_info_section' %}
-                    <div class="form-section-divider">
-                      <h3 class="form-section-title">{{ block.settings.section_title | default: 'Personal Information' | escape }}</h3>
-                      {% if block.settings.section_description != blank %}
-                        <p class="form-section-description">{{ block.settings.section_description | escape }}</p>
-                      {% endif %}
-                    </div>
 
                   {% when 'first_name_input' %}
                     <label for="contact_first_name">{{ block.settings.label | default: 'First Name' | escape }}</label>
@@ -143,18 +137,6 @@
                       name="contact[company]"
                       {% if block.settings.required %}required{% endif %}
                       value="{{ form.company }}"
-                      {% if block.settings.placeholder != blank %}placeholder="{{ block.settings.placeholder | escape }}"{% endif %}
-                    >
-
-                  {% when 'job_title_input' %}
-                    <label for="contact_job_title">{{ block.settings.label | default: 'Job Title' | escape }}</label>
-                    <input
-                      type="text"
-                      id="contact_job_title"
-                      autocomplete="organization-title"
-                      name="contact[job_title]"
-                      {% if block.settings.required %}required{% endif %}
-                      value="{{ form.job_title }}"
                       {% if block.settings.placeholder != blank %}placeholder="{{ block.settings.placeholder | escape }}"{% endif %}
                     >
 
@@ -386,48 +368,6 @@
                       {% if block.settings.placeholder != blank %}placeholder="{{ block.settings.placeholder | escape }}"{% endif %}
                     >
 
-                  {% when 'file_upload' %}
-                    <label for="contact_{{ block.settings.field_name | handle }}">{{ block.settings.label | escape }}</label>
-                    <input
-                      type="file"
-                      id="contact_{{ block.settings.field_name | handle }}"
-                      name="contact[{{ block.settings.field_name | handle }}]"
-                      {% if block.settings.required %}required{% endif %}
-                      {% if block.settings.accept_types != blank %}accept="{{ block.settings.accept_types }}"{% endif %}
-                      {% if block.settings.multiple %}multiple{% endif %}
-                    >
-                    {% if block.settings.file_description != blank %}
-                      <small class="file-description">{{ block.settings.file_description | escape }}</small>
-                    {% endif %}
-
-                  {% when 'range_slider' %}
-                    <label for="contact_{{ block.settings.field_name | handle }}">{{ block.settings.label | escape }}</label>
-                    {% assign field_handle = block.settings.field_name | handle %}
-                    <div class="range-slider-container">
-                      <input
-                        type="range"
-                        id="contact_{{ block.settings.field_name | handle }}"
-                        name="contact[{{ block.settings.field_name | handle }}]"
-                        min="{{ block.settings.min_value | default: 0 }}"
-                        max="{{ block.settings.max_value | default: 100 }}"
-                        step="{{ block.settings.step_value | default: 1 }}"
-                        value="{{ form[field_handle] | default: block.settings.default_value }}"
-                        oninput="this.nextElementSibling.value = this.value"
-                      >
-                      <output>{{ form[field_handle] | default: block.settings.default_value }}</output>
-                    </div>
-
-                  {% when 'color_picker' %}
-                    <label for="contact_{{ block.settings.field_name | handle }}">{{ block.settings.label | escape }}</label>
-                    {%- assign field_handle = block.settings.field_name | handle -%}
-                    <input
-                      type="color"
-                      id="contact_{{ field_handle }}"
-                      name="contact[{{ field_handle }}]"
-                      {% if block.settings.required %}required{% endif %}
-                      value="{{ form[field_handle] | default: block.settings.default_color }}"
-                    >
-
                   {% when 'rating_input' %}
                     <label>{{ block.settings.label | escape }}</label>
                     {%- assign field_handle = block.settings.field_name | handle -%}
@@ -489,103 +429,7 @@
                       <small class="character-count">0/{{ block.settings.max_length }} characters</small>
                     {% endif %}
 
-                  {% when 'custom_input' %}
-                    {% if block.settings.title != blank %}
-                      {%- assign title_handle = block.settings.title | handle -%}
-                      <label for="contact_{{ title_handle }}">{{ block.settings.title | escape }}</label>
-                      {% if block.settings.type == 'textarea' %}
-                        <textarea
-                          id="contact_{{ title_handle }}"
-                          name="contact[{{ title_handle }}]"
-                          {% if block.settings.required %}required{% endif %}
-                          {% if block.settings.placeholder != blank %}placeholder="{{ block.settings.placeholder | escape }}"{% endif %}
-                        >{{ form[title_handle] }}</textarea>
-                      {% else %}
-                        <input
-                          type="{{ block.settings.type }}"
-                          id="contact_{{ title_handle }}"
-                          name="contact[{{ title_handle }}]"
-                          value="{{ form[title_handle] }}"
-                          {% if block.settings.required %}required{% endif %}
-                          {% if block.settings.placeholder != blank %}placeholder="{{ block.settings.placeholder | escape }}"{% endif %}
-                        >
-                      {% endif %}
-                    {% endif %}
-
-                  {% when 'custom_dropdown' %}
-                    {% if block.settings.title != blank %}
-                      {%- liquid
-                        assign title_handle = block.settings.title | handle
-                        assign custom_options = block.settings.multiple_options | newline_to_br | strip_newlines | split: '<br />'
-                        assign input_id = title_handle | prepend: 'contact_'
-                        assign input_name = title_handle | prepend: 'contact[' | append: ']'
-                      -%}
-                      <div class="option-selector" data-selector-type="dropdown">
-                        <script src="{{ 'custom-select.js' | asset_url }}" defer></script>
-                        {% render 'custom-select',
-                          id: input_id,
-                          label: block.settings.title,
-                          option_values: custom_options,
-                          selected_value: custom_options.first,
-                          include_native: true,
-                          native_name: input_name
-                        %}
-                      </div>
-                    {% endif %}
-
-                  {% when 'custom_checkbox' %}
-                    {% if block.settings.title != blank %}
-                      {%- assign title_handle = block.settings.title | handle -%}
-                      <input
-                        type="hidden"
-                        name="contact[{{ title_handle }}]"
-                        value="{{ block.settings.value_no | escape }}"
-                      >
-                      <label class="checkbox-label">
-                        <input
-                          type="checkbox"
-                          id="contact_{{ title_handle }}"
-                          name="contact[{{ title_handle }}]"
-                          value="{{ block.settings.value_yes | escape }}"
-                          {% if block.settings.required %}required{% endif %}
-                          {% if form[title_handle] == block.settings.value_yes %}checked{% endif %}
-                        >
-                        {{ block.settings.title | escape }}
-                      </label>
-                    {% endif %}
-
-                  {% when 'gdpr_consent' %}
-                    <div class="gdpr-consent">
-                      <label class="checkbox-label">
-                        <input
-                          type="checkbox"
-                          id="gdpr_consent"
-                          name="contact[gdpr_consent]"
-                          value="yes"
-                          required
-                        >
-                        {{ block.settings.consent_text | default: 'I agree to the processing of my personal data' | escape }}
-                      </label>
-                      {% if block.settings.privacy_policy_url != blank %}
-                        <a href="{{ block.settings.privacy_policy_url }}" target="_blank" class="privacy-link">
-                          {{ block.settings.privacy_link_text | default: 'Privacy Policy' | escape }}
-                        </a>
-                      {% endif %}
-                    </div>
-
-                  {% when 'marketing_consent' %}
-                    <div class="marketing-consent">
-                      <label class="checkbox-label">
-                        <input
-                          type="checkbox"
-                          id="marketing_consent"
-                          name="contact[marketing_consent]"
-                          value="yes"
-                        >
-                        {{ block.settings.marketing_text | default: 'I would like to receive marketing communications' | escape }}
-                      </label>
-                    </div>
-
+  
                   {% when 'text' %}
                     <div class="rte">{{ block.settings.text }}</div>
 
@@ -598,14 +442,13 @@
                 {% endcase %}
               </div>
             {% endfor %}
-          </div>
+        </div>
 
-          <div class="lightly-spaced-row">
-            <button class="btn btn--{{ section.settings.button_style | default: 'primary' }}" type="submit">
-              {{ section.settings.submit_button_text | default: 'Submit Form' | escape }}
-            </button>
-          </div>
-        {% endif %}
+        <div class="lightly-spaced-row">
+          <button class="btn btn--{{ section.settings.button_style | default: 'primary' }}" type="submit">
+            {{ section.settings.submit_button_text | default: 'Submit Form' | escape }}
+          </button>
+        </div>
       {% endform %}
     </div>
   </div>
@@ -710,23 +553,6 @@
     }
   ],
   "blocks": [
-    {
-      "type": "personal_info_section",
-      "name": "📋 Personal Info Section",
-      "settings": [
-        {
-          "type": "text",
-          "id": "section_title",
-          "label": "Section title",
-          "default": "Personal Information"
-        },
-        {
-          "type": "textarea",
-          "id": "section_description",
-          "label": "Section description"
-        }
-      ]
-    },
     {
       "type": "first_name_input",
       "name": "👤 First Name",
@@ -868,47 +694,6 @@
           "id": "half_width",
           "label": "Half width",
           "default": true
-        }
-      ]
-    },
-    {
-      "type": "job_title_input",
-      "name": "💼 Job Title",
-      "settings": [
-        {
-          "type": "text",
-          "id": "label",
-          "label": "Label",
-          "default": "Job Title"
-        },
-        {
-          "type": "text",
-          "id": "placeholder",
-          "label": "Placeholder"
-        },
-        {
-          "type": "checkbox",
-          "id": "required",
-          "label": "Required",
-          "default": false
-        },
-        {
-          "type": "checkbox",
-          "id": "half_width",
-          "label": "Half width",
-          "default": true
-        }
-      ]
-    },
-    {
-      "type": "address_section",
-      "name": "🏠 Address Section",
-      "settings": [
-        {
-          "type": "text",
-          "id": "section_title",
-          "label": "Section title",
-          "default": "Address Information"
         }
       ]
     },
@@ -1357,139 +1142,6 @@
           "id": "half_width",
           "label": "Half width",
           "default": false
-        }
-      ]
-    },
-    {
-      "type": "file_upload",
-      "name": "📎 File Upload",
-      "settings": [
-        {
-          "type": "text",
-          "id": "field_name",
-          "label": "Field name",
-          "default": "file"
-        },
-        {
-          "type": "text",
-          "id": "label",
-          "label": "Label",
-          "default": "Upload File"
-        },
-        {
-          "type": "text",
-          "id": "accept_types",
-          "label": "Accepted file types",
-          "default": ".pdf,.doc,.docx,.jpg,.png",
-          "info": "Example: .pdf,.doc,.docx,.jpg,.png"
-        },
-        {
-          "type": "checkbox",
-          "id": "multiple",
-          "label": "Allow multiple files",
-          "default": false
-        },
-        {
-          "type": "text",
-          "id": "file_description",
-          "label": "File description",
-          "default": "Max file size: 10MB"
-        },
-        {
-          "type": "checkbox",
-          "id": "required",
-          "label": "Required",
-          "default": false
-        },
-        {
-          "type": "checkbox",
-          "id": "half_width",
-          "label": "Half width",
-          "default": false
-        }
-      ]
-    },
-    {
-      "type": "range_slider",
-      "name": "🎚️ Range Slider",
-      "settings": [
-        {
-          "type": "text",
-          "id": "field_name",
-          "label": "Field name",
-          "default": "range"
-        },
-        {
-          "type": "text",
-          "id": "label",
-          "label": "Label",
-          "default": "Range"
-        },
-        {
-          "type": "number",
-          "id": "min_value",
-          "label": "Minimum value",
-          "default": 0
-        },
-        {
-          "type": "number",
-          "id": "max_value",
-          "label": "Maximum value",
-          "default": 100
-        },
-        {
-          "type": "number",
-          "id": "step_value",
-          "label": "Step value",
-          "default": 1
-        },
-        {
-          "type": "number",
-          "id": "default_value",
-          "label": "Default value",
-          "default": 50
-        },
-        {
-          "type": "checkbox",
-          "id": "half_width",
-          "label": "Half width",
-          "default": true
-        }
-      ]
-    },
-    {
-      "type": "color_picker",
-      "name": "🎨 Color Picker",
-      "settings": [
-        {
-          "type": "text",
-          "id": "field_name",
-          "label": "Field name",
-          "default": "color"
-        },
-        {
-          "type": "text",
-          "id": "label",
-          "label": "Label",
-          "default": "Color"
-        },
-        {
-          "type": "color",
-          "id": "default_color",
-          "label": "Default color",
-          "default": "#000000"
-        },
-        {
-          "type": "checkbox",
-          "id": "required",
-          "label": "Required",
-          "default": false
-        },
-        {
-          "type": "checkbox",
-          "id": "half_width",
-          "label": "Half width",
-          "default": true
         }
       ]
     },

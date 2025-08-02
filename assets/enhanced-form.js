@@ -265,7 +265,6 @@ class FiveLevelDropdown {
   }
 }
 
-// 修复初始化代码 - 移除重复和错误的初始化
 document.addEventListener('DOMContentLoaded', function() {
   const dropdowns = document.querySelectorAll('.multilevel-dropdown-wrapper');
   console.log('Found five-level dropdowns:', dropdowns.length);
@@ -274,48 +273,75 @@ document.addEventListener('DOMContentLoaded', function() {
     new FiveLevelDropdown(dropdown);
   });
   
-  // Handle form submission
+  // 在页面加载时保存表单数据
   const contactForm = document.querySelector('form[action*="contact"]');
+  let savedFormData = {};
+  
   if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-      e.preventDefault();
+    // 保存当前表单数据
+    const formData = new FormData(contactForm);
+    for (let [key, value] of formData.entries()) {
+      savedFormData[key] = value;
+    }
+  }
+  
+  // 检查URL参数，如果表单提交成功则显示弹窗
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('contact_posted') === 'true') {
+    // 不要隐藏表单，只隐藏页面上的成功消息
+    const successMessage = document.querySelector('.form-success-message');
+    if (successMessage) {
+      successMessage.style.display = 'none';
+    }
+    
+    // 显示成功弹窗
+    showSuccessModal();
+    
+    // 清理URL参数，避免刷新页面时重复显示弹窗
+    const newUrl = window.location.pathname + window.location.hash;
+    window.history.replaceState({}, document.title, newUrl);
+    
+    // 恢复表单数据
+    if (contactForm && Object.keys(savedFormData).length > 0) {
+      // 从localStorage获取保存的数据
+      const storedData = localStorage.getItem('formData');
+      if (storedData) {
+        const parsedData = JSON.parse(storedData);
+        
+        // 恢复表单字段值
+        Object.keys(parsedData).forEach(key => {
+          const field = contactForm.querySelector(`[name="${key}"]`);
+          if (field) {
+            if (field.type === 'checkbox' || field.type === 'radio') {
+              field.checked = parsedData[key] === field.value;
+            } else {
+              field.value = parsedData[key];
+            }
+          }
+        });
+        
+        // 清除localStorage中的数据
+        localStorage.removeItem('formData');
+      }
+    }
+    
+    // 确保表单保持可见
+    if (contactForm) {
+      contactForm.style.display = 'block';
+    }
+  }
+  
+  // 在表单提交前保存数据到localStorage
+  if (contactForm) {
+    contactForm.addEventListener('submit', function() {
+      const formData = new FormData(contactForm);
+      const dataToSave = {};
       
-      const formData = new FormData(this);
-      const submitBtn = this.querySelector('button[type="submit"]');
-      const originalText = submitBtn.textContent;
+      for (let [key, value] of formData.entries()) {
+        dataToSave[key] = value;
+      }
       
-      // Show loading state
-      submitBtn.textContent = 'Submitting...';
-      submitBtn.disabled = true;
-      
-      // Submit form using fetch
-      fetch(this.action, {
-        method: 'POST',
-        body: formData,
-        headers: {
-          'Accept': 'application/json'
-        }
-      })
-      .then(response => {
-        if (response.ok) {
-          showSuccessModal();
-          this.reset();
-          // 可选：更新URL以反映成功状态
-          window.history.pushState({}, '', window.location.pathname + '?contact_posted=true#contact_form');
-        } else {
-          return response.text().then(text => {
-            throw new Error(`HTTP ${response.status}: ${text}`);
-          });
-        }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        showErrorModal();
-      })
-      .finally(() => {
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
-      });
+      localStorage.setItem('formData', JSON.stringify(dataToSave));
     });
   }
   
@@ -326,10 +352,11 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="modal-overlay">
         <div class="modal-content">
           <div class="modal-header">
-            <h3>✅ Success!</h3>
+            <h3>✅ Thank you!</h3>
           </div>
           <div class="modal-body">
-            <p>Your form has been submitted successfully. We will contact you soon.</p>
+            <p>Your form has been submitted successfully.</p>
+            <p class="email-notification-info">A notification has been sent to our team.</p>
           </div>
           <div class="modal-footer">
             <button class="btn btn--primary" onclick="this.closest('.success-modal').remove()">OK</button>
@@ -345,30 +372,10 @@ document.addEventListener('DOMContentLoaded', function() {
         modal.remove();
       }
     });
-  }
-  
-  function showErrorModal() {
-    const modal = document.createElement('div');
-    modal.className = 'error-modal';
-    modal.innerHTML = `
-      <div class="modal-overlay">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h3>❌ Error</h3>
-          </div>
-          <div class="modal-body">
-            <p>Sorry, form submission failed. Please try again later.</p>
-          </div>
-          <div class="modal-footer">
-            <button class="btn btn--primary" onclick="this.closest('.error-modal').remove()">OK</button>
-          </div>
-        </div>
-      </div>
-    `;
-    document.body.appendChild(modal);
     
-    modal.querySelector('.modal-overlay').addEventListener('click', function(e) {
-      if (e.target === this) {
+    // Close on Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
         modal.remove();
       }
     });
