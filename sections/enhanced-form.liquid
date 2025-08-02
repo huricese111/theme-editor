@@ -1,0 +1,1646 @@
+{{ 'enhanced-form.css' | asset_url | stylesheet_tag }}
+
+<div class="enhanced-form-container" {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
+  {% if section.settings.show_page_title %}
+    <div class="enhanced-form-header">
+      <h1 class="enhanced-form-title">{{ section.settings.form_title | default: 'Enhanced Form' | escape }}</h1>
+    </div>
+  {% endif %}
+
+  <div class="{% if section.settings.use_columns %}use-columns{% endif %}">
+    {% if section.settings.form_description != blank %}
+      <div class="enhanced-form-description">
+        {{ section.settings.form_description }}
+      </div>
+    {% endif %}
+
+    <div class="account-form">
+      {% form 'contact' %}
+        <!-- Add recipient email routing -->
+        {% if section.settings.recipient_email != blank %}
+          <input type="hidden" name="contact[recipient]" value="{{ section.settings.recipient_email }}">
+        {% endif %}
+        
+        <!-- Add email subject with form identifier -->
+        <input type="hidden" name="contact[subject]" value="[{{ section.settings.form_title | default: 'Enhanced Form' | upcase }}] {{ section.settings.form_title | default: 'Enhanced Form' }} - {{ shop.name }}">
+        
+        <!-- Add formatted message intro -->
+        <input type="hidden" name="contact[message_intro]" value="You have received a new form submission with the following details:">
+        
+        {% if form.posted_successfully? %}
+          <div class="form-success-message">
+            <h3>{{ section.settings.success_title | default: 'Thank you!' | escape }}</h3>
+            <p>{{ section.settings.success_message | default: 'Your form has been submitted successfully.' | escape }}</p>
+            {% if section.settings.recipient_email != blank %}
+              <p class="email-notification-info">A notification has been sent to {{ section.settings.recipient_email }}.</p>
+            {% else %}
+              <p class="email-notification-info">A notification has been sent to our team.</p>
+            {% endif %}
+          </div>
+        {% else %}
+          {% if section.settings.form_heading != blank or section.settings.form_intro != blank %}
+            <div class="lightish-spaced-row">
+              {% if section.settings.form_heading != blank %}
+                <h2>{{ section.settings.form_heading | escape }}</h2>
+              {% endif %}
+
+              {% if section.settings.form_intro != blank %}
+                <div class="rte">{{ section.settings.form_intro }}</div>
+              {% endif %}
+            </div>
+          {% endif %}
+
+          {%- render 'form-errors', form: form -%}
+
+          {%- if request.design_mode -%}
+            {%- liquid
+              assign email_exists = false
+              for block in section.blocks
+                if block.type == 'email_input'
+                  assign email_exists = true
+                endif
+              endfor
+            -%}
+            {%- if email_exists == false -%}
+              <div class="errors">You must include the 'Email input' block for the form to work correctly.</div>
+            {%- endif -%}
+          {%- endif -%}
+
+          <div class="flexible-layout flexible-layout--form">
+            {% for block in section.blocks %}
+              <div
+                class="column column--{% if block.settings.half_width %}half{% else %}full{% endif %}"
+                {{ block.shopify_attributes }}
+              >
+                {% case block.type %}
+                  {% when 'personal_info_section' %}
+                    <div class="form-section-divider">
+                      <h3 class="form-section-title">{{ block.settings.section_title | default: 'Personal Information' | escape }}</h3>
+                      {% if block.settings.section_description != blank %}
+                        <p class="form-section-description">{{ block.settings.section_description | escape }}</p>
+                      {% endif %}
+                    </div>
+
+                  {% when 'first_name_input' %}
+                    <label for="contact_first_name">{{ block.settings.label | default: 'First Name' | escape }}</label>
+                    <input
+                      type="text"
+                      autocomplete="given-name"
+                      {% if block.settings.required %}required{% endif %}
+                      id="contact_first_name"
+                      name="contact[first_name]"
+                      value="{{ form.first_name }}"
+                      {% if block.settings.placeholder != blank %}placeholder="{{ block.settings.placeholder | escape }}"{% endif %}
+                    >
+
+                  {% when 'last_name_input' %}
+                    <label for="contact_last_name">{{ block.settings.label | default: 'Last Name' | escape }}</label>
+                    <input
+                      type="text"
+                      autocomplete="family-name"
+                      {% if block.settings.required %}required{% endif %}
+                      id="contact_last_name"
+                      name="contact[last_name]"
+                      value="{{ form.last_name }}"
+                      {% if block.settings.placeholder != blank %}placeholder="{{ block.settings.placeholder | escape }}"{% endif %}
+                    >
+
+                  {% when 'email_input' %}
+                    <label for="contact_email">{{ block.settings.label | default: 'Email' | escape }}</label>
+                    <input
+                      type="email"
+                      required
+                      id="contact_email"
+                      class="email"
+                      name="contact[email]"
+                      autocomplete="email"
+                      spellcheck="false"
+                      autocapitalize="off"
+                      value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+                      {% if block.settings.placeholder != blank %}placeholder="{{ block.settings.placeholder | escape }}"{% endif %}
+                    >
+                    <!-- Ensure this email is also used as sender for notifications -->
+                    <input type="hidden" name="contact[sender_email]" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}">
+
+                  {% when 'phone_input' %}
+                    <label for="contact_phone">{{ block.settings.label | default: 'Phone' | escape }}</label>
+                    <input
+                      type="tel"
+                      id="contact_phone"
+                      autocomplete="tel"
+                      name="contact[phone]"
+                      {% if block.settings.required %}required{% endif %}
+                      value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+                      {% if block.settings.placeholder != blank %}placeholder="{{ block.settings.placeholder | escape }}"{% endif %}
+                    >
+
+                  {% when 'company_input' %}
+                    <label for="contact_company">{{ block.settings.label | default: 'Company' | escape }}</label>
+                    <input
+                      type="text"
+                      id="contact_company"
+                      autocomplete="organization"
+                      name="contact[company]"
+                      {% if block.settings.required %}required{% endif %}
+                      value="{{ form.company }}"
+                      {% if block.settings.placeholder != blank %}placeholder="{{ block.settings.placeholder | escape }}"{% endif %}
+                    >
+
+                  {% when 'job_title_input' %}
+                    <label for="contact_job_title">{{ block.settings.label | default: 'Job Title' | escape }}</label>
+                    <input
+                      type="text"
+                      id="contact_job_title"
+                      autocomplete="organization-title"
+                      name="contact[job_title]"
+                      {% if block.settings.required %}required{% endif %}
+                      value="{{ form.job_title }}"
+                      {% if block.settings.placeholder != blank %}placeholder="{{ block.settings.placeholder | escape }}"{% endif %}
+                    >
+
+                  {% when 'address_section' %}
+                    <div class="form-section-divider">
+                      <h3 class="form-section-title">{{ block.settings.section_title | default: 'Address Information' | escape }}</h3>
+                    </div>
+
+                  {% when 'street_address_input' %}
+                    <label for="contact_street_address">{{ block.settings.label | default: 'Street Address' | escape }}</label>
+                    <input
+                      type="text"
+                      id="contact_street_address"
+                      autocomplete="street-address"
+                      name="contact[street_address]"
+                      {% if block.settings.required %}required{% endif %}
+                      value="{{ form.street_address }}"
+                      {% if block.settings.placeholder != blank %}placeholder="{{ block.settings.placeholder | escape }}"{% endif %}
+                    >
+
+                  {% when 'address_line_2_input' %}
+                    <label for="contact_address_line_2">{{ block.settings.label | default: 'Address Line 2' | escape }}</label>
+                    <input
+                      type="text"
+                      id="contact_address_line_2"
+                      autocomplete="address-line2"
+                      name="contact[address_line_2]"
+                      {% if block.settings.required %}required{% endif %}
+                      value="{{ form.address_line_2 }}"
+                      {% if block.settings.placeholder != blank %}placeholder="{{ block.settings.placeholder | escape }}"{% endif %}
+                    >
+
+                  {% when 'city_input' %}
+                    <label for="contact_city">{{ block.settings.label | default: 'City' | escape }}</label>
+                    <input
+                      type="text"
+                      id="contact_city"
+                      autocomplete="address-level2"
+                      name="contact[city]"
+                      {% if block.settings.required %}required{% endif %}
+                      value="{{ form.city }}"
+                      {% if block.settings.placeholder != blank %}placeholder="{{ block.settings.placeholder | escape }}"{% endif %}
+                    >
+
+                  {% when 'state_province_input' %}
+                    <label for="contact_state_province">{{ block.settings.label | default: 'State/Province' | escape }}</label>
+                    <input
+                      type="text"
+                      id="contact_state_province"
+                      autocomplete="address-level1"
+                      name="contact[state_province]"
+                      {% if block.settings.required %}required{% endif %}
+                      value="{{ form.state_province }}"
+                      {% if block.settings.placeholder != blank %}placeholder="{{ block.settings.placeholder | escape }}"{% endif %}
+                    >
+
+                  {% when 'postal_code_input' %}
+                    <label for="contact_postal_code">{{ block.settings.label | default: 'Postal Code' | escape }}</label>
+                    <input
+                      type="text"
+                      id="contact_postal_code"
+                      autocomplete="postal-code"
+                      name="contact[postal_code]"
+                      {% if block.settings.required %}required{% endif %}
+                      value="{{ form.postal_code }}"
+                      {% if block.settings.placeholder != blank %}placeholder="{{ block.settings.placeholder | escape }}"{% endif %}
+                    >
+
+                  {% when 'country_dropdown' %}
+                    {%- liquid
+                      assign title_handle = 'country'
+                      assign custom_options = block.settings.country_options | newline_to_br | strip_newlines | split: '<br />'
+                      assign input_id = title_handle | prepend: 'contact_'
+                      assign input_name = title_handle | prepend: 'contact[' | append: ']'
+                    -%}
+                    <div class="option-selector" data-selector-type="dropdown">
+                      <script src="{{ 'custom-select.js' | asset_url }}" defer></script>
+                      {% render 'custom-select',
+                        id: input_id,
+                        label: block.settings.label | default: 'Country',
+                        option_values: custom_options,
+                        selected_value: custom_options.first,
+                        include_native: true,
+                        native_name: input_name
+                      %}
+                    </div>
+
+                  {% when 'multilevel_dropdown' %}
+                    <div class="multilevel-dropdown-wrapper" data-field-name="{{ block.settings.field_name }}">
+                      <label for="{{ block.settings.field_name }}" class="form-label{% if block.settings.required %} required{% endif %}">
+                        {{ block.settings.label }}
+                      </label>
+                      
+                      <!-- Current Selection Display -->
+                      <div class="current-selection" id="selection-display-{{ block.settings.field_name }}">
+                        <span class="placeholder">{{ block.settings.placeholder | default: 'Browse for your category' }}</span>
+                        <span class="dropdown-arrow">
+                          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                          </svg>
+                        </span>
+                      </div>
+                      
+                      <!-- Dropdown Panel -->
+                      <div class="dropdown-panel" id="panel-{{ block.settings.field_name }}" style="display: none;">
+                        <!-- Breadcrumb -->
+                        <div class="breadcrumb-nav" id="breadcrumb-{{ block.settings.field_name }}">
+                          <span class="breadcrumb-text">Browse for your category</span>
+                        </div>
+                        
+                        <!-- Five Column Layout -->
+          <div class="five-column-container">
+            <!-- Level 1 Column -->
+            <div class="category-column level-1-column">
+              <div class="column-content" id="level-1-{{ block.settings.field_name }}">
+                <!-- Level 1 options will be populated here -->
+              </div>
+            </div>
+            
+            <!-- Level 2 Column -->
+            <div class="category-column level-2-column" style="display: none;">
+              <div class="column-content" id="level-2-{{ block.settings.field_name }}">
+                <!-- Level 2 options will be populated here -->
+              </div>
+            </div>
+            
+            <!-- Level 3 Column -->
+            <div class="category-column level-3-column" style="display: none;">
+              <div class="column-content" id="level-3-{{ block.settings.field_name }}">
+                <!-- Level 3 options will be populated here -->
+              </div>
+            </div>
+            
+            <!-- Level 4 Column -->
+            <div class="category-column level-4-column" style="display: none;">
+              <div class="column-content" id="level-4-{{ block.settings.field_name }}">
+                <!-- Level 4 options will be populated here -->
+              </div>
+            </div>
+            
+            <!-- Level 5 Column -->
+            <div class="category-column level-5-column" style="display: none;">
+              <div class="column-content" id="level-5-{{ block.settings.field_name }}">
+                <!-- Level 5 options will be populated here -->
+              </div>
+            </div>
+          </div>
+                        
+                        <!-- Action Buttons -->
+                        <div class="dropdown-actions">
+                          <button type="button" class="btn-cancel">Cancel</button>
+                        </div>
+                      </div>
+                      
+                      <!-- Hidden Input -->
+                      <input type="hidden" name="contact[{{ block.settings.field_name }}]" id="{{ block.settings.field_name }}" value=""{% if block.settings.required %} required{% endif %}>
+                      
+                      <!-- Hidden Data for JavaScript -->
+          <script type="application/json" id="data-{{ block.settings.field_name }}">
+          {
+            "level1": {{ block.settings.options_level_1 | split: '\n' | json }},
+            "level2": {{ block.settings.options_level_2 | split: '\n' | json }},
+            "level3": {{ block.settings.options_level_3 | split: '\n' | json }},
+            "level4": {{ block.settings.options_level_4 | split: '\n' | json }},
+            "level5": {{ block.settings.options_level_5 | split: '\n' | json }}
+          }
+          </script>
+                    </div>
+
+                  {% when 'date_input' %}
+                    <label for="contact_{{ block.settings.field_name | handle }}">{{ block.settings.label | escape }}</label>
+                    {% assign field_handle = block.settings.field_name | handle %}
+                    <input
+                      type="date"
+                      id="contact_{{ block.settings.field_name | handle }}"
+                      name="contact[{{ block.settings.field_name | handle }}]"
+                      {% if block.settings.required %}required{% endif %}
+                      {% if block.settings.min_date != blank %}min="{{ block.settings.min_date }}"{% endif %}
+                      {% if block.settings.max_date != blank %}max="{{ block.settings.max_date }}"{% endif %}
+                      value="{{ form[field_handle] }}"
+                    >
+
+                  {% when 'time_input' %}
+                    <label for="contact_{{ block.settings.field_name | handle }}">{{ block.settings.label | escape }}</label>
+                    {% assign field_handle = block.settings.field_name | handle %}
+                    <input
+                      type="time"
+                      id="contact_{{ block.settings.field_name | handle }}"
+                      name="contact[{{ block.settings.field_name | handle }}]"
+                      {% if block.settings.required %}required{% endif %}
+                      value="{{ form[field_handle] }}"
+                    >
+
+                  {% when 'datetime_input' %}
+                    <label for="contact_{{ block.settings.field_name | handle }}">{{ block.settings.label | escape }}</label>
+                    {% assign field_handle = block.settings.field_name | handle %}
+                    <input
+                      type="datetime-local"
+                      id="contact_{{ block.settings.field_name | handle }}"
+                      name="contact[{{ block.settings.field_name | handle }}]"
+                      {% if block.settings.required %}required{% endif %}
+                      value="{{ form[field_handle] }}"
+                    >
+
+                  {% when 'number_input' %}
+                    <label for="contact_{{ block.settings.field_name | handle }}">{{ block.settings.label | escape }}</label>
+                    {% assign field_handle = block.settings.field_name | handle %}
+                    <input
+                      type="number"
+                      id="contact_{{ block.settings.field_name | handle }}"
+                      name="contact[{{ block.settings.field_name | handle }}]"
+                      {% if block.settings.required %}required{% endif %}
+                      {% if block.settings.min_value != blank %}min="{{ block.settings.min_value }}"{% endif %}
+                      {% if block.settings.max_value != blank %}max="{{ block.settings.max_value }}"{% endif %}
+                      {% if block.settings.step_value != blank %}step="{{ block.settings.step_value }}"{% endif %}
+                      value="{{ form[field_handle] }}"
+                      {% if block.settings.placeholder != blank %}placeholder="{{ block.settings.placeholder | escape }}"{% endif %}
+                    >
+
+                  {% when 'url_input' %}
+                    <label for="contact_{{ block.settings.field_name | handle }}">{{ block.settings.label | escape }}</label>
+                    {% assign field_handle = block.settings.field_name | handle %}
+                    <input
+                      type="url"
+                      id="contact_{{ block.settings.field_name | handle }}"
+                      name="contact[{{ block.settings.field_name | handle }}]"
+                      {% if block.settings.required %}required{% endif %}
+                      value="{{ form[field_handle] }}"
+                      {% if block.settings.placeholder != blank %}placeholder="{{ block.settings.placeholder | escape }}"{% endif %}
+                    >
+
+                  {% when 'file_upload' %}
+                    <label for="contact_{{ block.settings.field_name | handle }}">{{ block.settings.label | escape }}</label>
+                    <input
+                      type="file"
+                      id="contact_{{ block.settings.field_name | handle }}"
+                      name="contact[{{ block.settings.field_name | handle }}]"
+                      {% if block.settings.required %}required{% endif %}
+                      {% if block.settings.accept_types != blank %}accept="{{ block.settings.accept_types }}"{% endif %}
+                      {% if block.settings.multiple %}multiple{% endif %}
+                    >
+                    {% if block.settings.file_description != blank %}
+                      <small class="file-description">{{ block.settings.file_description | escape }}</small>
+                    {% endif %}
+
+                  {% when 'range_slider' %}
+                    <label for="contact_{{ block.settings.field_name | handle }}">{{ block.settings.label | escape }}</label>
+                    {% assign field_handle = block.settings.field_name | handle %}
+                    <div class="range-slider-container">
+                      <input
+                        type="range"
+                        id="contact_{{ block.settings.field_name | handle }}"
+                        name="contact[{{ block.settings.field_name | handle }}]"
+                        min="{{ block.settings.min_value | default: 0 }}"
+                        max="{{ block.settings.max_value | default: 100 }}"
+                        step="{{ block.settings.step_value | default: 1 }}"
+                        value="{{ form[field_handle] | default: block.settings.default_value }}"
+                        oninput="this.nextElementSibling.value = this.value"
+                      >
+                      <output>{{ form[field_handle] | default: block.settings.default_value }}</output>
+                    </div>
+
+                  {% when 'color_picker' %}
+                    <label for="contact_{{ block.settings.field_name | handle }}">{{ block.settings.label | escape }}</label>
+                    {%- assign field_handle = block.settings.field_name | handle -%}
+                    <input
+                      type="color"
+                      id="contact_{{ field_handle }}"
+                      name="contact[{{ field_handle }}]"
+                      {% if block.settings.required %}required{% endif %}
+                      value="{{ form[field_handle] | default: block.settings.default_color }}"
+                    >
+
+                  {% when 'rating_input' %}
+                    <label>{{ block.settings.label | escape }}</label>
+                    {%- assign field_handle = block.settings.field_name | handle -%}
+                    <div class="rating-input" data-rating="{{ form[field_handle] | default: 0 }}">
+                      {% for i in (1..5) %}
+                        <input type="radio" id="rating_{{ field_handle }}_{{ i }}" name="contact[{{ field_handle }}]" value="{{ i }}" {% if form[field_handle] == i %}checked{% endif %}>
+                        <label for="rating_{{ field_handle }}_{{ i }}" class="star">★</label>
+                      {% endfor %}
+                    </div>
+
+                  {% when 'checkbox_group' %}
+                    <fieldset>
+                      <legend>{{ block.settings.label | escape }}</legend>
+                      {%- assign checkbox_options = block.settings.checkbox_options | newline_to_br | strip_newlines | split: '<br />' -%}
+                      {%- assign field_handle = block.settings.field_name | handle -%}
+                      {% for option in checkbox_options %}
+                        <label class="checkbox-label">
+                          <input
+                            type="checkbox"
+                            name="contact[{{ field_handle }}][]"
+                            value="{{ option | escape }}"
+                            {% if form[field_handle] contains option %}checked{% endif %}
+                          >
+                          {{ option | escape }}
+                        </label>
+                      {% endfor %}
+                    </fieldset>
+
+                  {% when 'radio_group' %}
+                    <fieldset>
+                      <legend>{{ block.settings.label | escape }}</legend>
+                      {%- assign radio_options = block.settings.radio_options | newline_to_br | strip_newlines | split: '<br />' -%}
+                      {%- assign field_handle = block.settings.field_name | handle -%}
+                      {% for option in radio_options %}
+                        <label class="radio-label">
+                          <input
+                            type="radio"
+                            name="contact[{{ field_handle }}]"
+                            value="{{ option | escape }}"
+                            {% if block.settings.required %}required{% endif %}
+                            {% if form[field_handle] == option %}checked{% endif %}
+                          >
+                          {{ option | escape }}
+                        </label>
+                      {% endfor %}
+                    </fieldset>
+
+                  {% when 'message_input' %}
+                    <label for="message">{{ block.settings.label | default: 'Message' | escape }}</label>
+                    <textarea
+                      id="message"
+                      name="contact[body]"
+                      {% if block.settings.required %}required{% endif %}
+                      rows="{{ block.settings.rows | default: 5 }}"
+                      {% if block.settings.max_length != blank %}maxlength="{{ block.settings.max_length }}"{% endif %}
+                      {% if block.settings.placeholder != blank %}placeholder="{{ block.settings.placeholder | escape }}"{% endif %}
+                    >{{ form.body }}</textarea>
+                    {% if block.settings.max_length != blank %}
+                      <small class="character-count">0/{{ block.settings.max_length }} characters</small>
+                    {% endif %}
+
+                  {% when 'custom_input' %}
+                    {% if block.settings.title != blank %}
+                      {%- assign title_handle = block.settings.title | handle -%}
+                      <label for="contact_{{ title_handle }}">{{ block.settings.title | escape }}</label>
+                      {% if block.settings.type == 'textarea' %}
+                        <textarea
+                          id="contact_{{ title_handle }}"
+                          name="contact[{{ title_handle }}]"
+                          {% if block.settings.required %}required{% endif %}
+                          {% if block.settings.placeholder != blank %}placeholder="{{ block.settings.placeholder | escape }}"{% endif %}
+                        >{{ form[title_handle] }}</textarea>
+                      {% else %}
+                        <input
+                          type="{{ block.settings.type }}"
+                          id="contact_{{ title_handle }}"
+                          name="contact[{{ title_handle }}]"
+                          value="{{ form[title_handle] }}"
+                          {% if block.settings.required %}required{% endif %}
+                          {% if block.settings.placeholder != blank %}placeholder="{{ block.settings.placeholder | escape }}"{% endif %}
+                        >
+                      {% endif %}
+                    {% endif %}
+
+                  {% when 'custom_dropdown' %}
+                    {% if block.settings.title != blank %}
+                      {%- liquid
+                        assign title_handle = block.settings.title | handle
+                        assign custom_options = block.settings.multiple_options | newline_to_br | strip_newlines | split: '<br />'
+                        assign input_id = title_handle | prepend: 'contact_'
+                        assign input_name = title_handle | prepend: 'contact[' | append: ']'
+                      -%}
+                      <div class="option-selector" data-selector-type="dropdown">
+                        <script src="{{ 'custom-select.js' | asset_url }}" defer></script>
+                        {% render 'custom-select',
+                          id: input_id,
+                          label: block.settings.title,
+                          option_values: custom_options,
+                          selected_value: custom_options.first,
+                          include_native: true,
+                          native_name: input_name
+                        %}
+                      </div>
+                    {% endif %}
+
+                  {% when 'custom_checkbox' %}
+                    {% if block.settings.title != blank %}
+                      {%- assign title_handle = block.settings.title | handle -%}
+                      <input
+                        type="hidden"
+                        name="contact[{{ title_handle }}]"
+                        value="{{ block.settings.value_no | escape }}"
+                      >
+                      <label class="checkbox-label">
+                        <input
+                          type="checkbox"
+                          id="contact_{{ title_handle }}"
+                          name="contact[{{ title_handle }}]"
+                          value="{{ block.settings.value_yes | escape }}"
+                          {% if block.settings.required %}required{% endif %}
+                          {% if form[title_handle] == block.settings.value_yes %}checked{% endif %}
+                        >
+                        {{ block.settings.title | escape }}
+                      </label>
+                    {% endif %}
+
+                  {% when 'gdpr_consent' %}
+                    <div class="gdpr-consent">
+                      <label class="checkbox-label">
+                        <input
+                          type="checkbox"
+                          id="gdpr_consent"
+                          name="contact[gdpr_consent]"
+                          value="yes"
+                          required
+                        >
+                        {{ block.settings.consent_text | default: 'I agree to the processing of my personal data' | escape }}
+                      </label>
+                      {% if block.settings.privacy_policy_url != blank %}
+                        <a href="{{ block.settings.privacy_policy_url }}" target="_blank" class="privacy-link">
+                          {{ block.settings.privacy_link_text | default: 'Privacy Policy' | escape }}
+                        </a>
+                      {% endif %}
+                    </div>
+
+                  {% when 'marketing_consent' %}
+                    <div class="marketing-consent">
+                      <label class="checkbox-label">
+                        <input
+                          type="checkbox"
+                          id="marketing_consent"
+                          name="contact[marketing_consent]"
+                          value="yes"
+                        >
+                        {{ block.settings.marketing_text | default: 'I would like to receive marketing communications' | escape }}
+                      </label>
+                    </div>
+
+                  {% when 'text' %}
+                    <div class="rte">{{ block.settings.text }}</div>
+
+                  {% when 'divider' %}
+                    <hr class="form-divider" style="border-color: {{ block.settings.divider_color | default: '#e0e0e0' }};">
+
+                  {% when 'spacer' %}
+                    <div class="form-spacer" style="height: {{ block.settings.spacer_height | default: 20 }}px;"></div>
+
+                {% endcase %}
+              </div>
+            {% endfor %}
+          </div>
+
+          <div class="lightly-spaced-row">
+            <button class="btn btn--{{ section.settings.button_style | default: 'primary' }}" type="submit">
+              {{ section.settings.submit_button_text | default: 'Submit Form' | escape }}
+            </button>
+          </div>
+        {% endif %}
+      {% endform %}
+    </div>
+  </div>
+</div>
+
+{{ 'enhanced-form.js' | asset_url | script_tag }}
+
+{% schema %}
+{
+  "name": "Enhanced Form",
+  "class": "page-section-spacing",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Form Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_page_title",
+      "label": "Show page title",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "form_title",
+      "label": "Form title",
+      "default": "Enhanced Form"
+    },
+    {
+      "type": "text",
+      "id": "recipient_email",
+      "label": "Recipient Email Address",
+      "info": "Email address to receive form submissions. Leave blank to use store email."
+    },
+    {
+      "type": "checkbox",
+      "id": "use_columns",
+      "label": "Two column layout",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "form_heading",
+      "label": "Form heading",
+      "default": "Get in touch"
+    },
+    {
+      "type": "richtext",
+      "id": "form_intro",
+      "label": "Form introduction"
+    },
+    {
+      "type": "richtext",
+      "id": "form_description",
+      "label": "Form description"
+    },
+    {
+      "type": "header",
+      "content": "Success Message"
+    },
+    {
+      "type": "text",
+      "id": "success_title",
+      "label": "Success title",
+      "default": "Thank you!"
+    },
+    {
+      "type": "textarea",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "Your form has been submitted successfully."
+    },
+    {
+      "type": "header",
+      "content": "Submit Button"
+    },
+    {
+      "type": "text",
+      "id": "submit_button_text",
+      "label": "Submit button text",
+      "default": "Submit Form"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button style",
+      "default": "primary",
+      "options": [
+        {
+          "value": "primary",
+          "label": "Primary"
+        },
+        {
+          "value": "secondary",
+          "label": "Secondary"
+        },
+        {
+          "value": "outline",
+          "label": "Outline"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "type": "personal_info_section",
+      "name": "📋 Personal Info Section",
+      "settings": [
+        {
+          "type": "text",
+          "id": "section_title",
+          "label": "Section title",
+          "default": "Personal Information"
+        },
+        {
+          "type": "textarea",
+          "id": "section_description",
+          "label": "Section description"
+        }
+      ]
+    },
+    {
+      "type": "first_name_input",
+      "name": "👤 First Name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "First Name"
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Placeholder"
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "half_width",
+          "label": "Half width",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "last_name_input",
+      "name": "👤 Last Name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Last Name"
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Placeholder"
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "half_width",
+          "label": "Half width",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "email_input",
+      "name": "📧 Email",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "REQUIRED - Contact form will not work if this block is removed."
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Email"
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Placeholder"
+        },
+        {
+          "type": "checkbox",
+          "id": "half_width",
+          "label": "Half width",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "phone_input",
+      "name": "📞 Phone",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Phone"
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Placeholder"
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "half_width",
+          "label": "Half width",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "company_input",
+      "name": "🏢 Company",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Company"
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Placeholder"
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "half_width",
+          "label": "Half width",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "job_title_input",
+      "name": "💼 Job Title",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Job Title"
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Placeholder"
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "half_width",
+          "label": "Half width",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "address_section",
+      "name": "🏠 Address Section",
+      "settings": [
+        {
+          "type": "text",
+          "id": "section_title",
+          "label": "Section title",
+          "default": "Address Information"
+        }
+      ]
+    },
+    {
+      "type": "street_address_input",
+      "name": "🏠 Street Address",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Street Address"
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Placeholder"
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "half_width",
+          "label": "Half width",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "address_line_2_input",
+      "name": "🏠 Address Line 2",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Address Line 2"
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Placeholder"
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "half_width",
+          "label": "Half width",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "city_input",
+      "name": "🏙️ City",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "City"
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Placeholder"
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "half_width",
+          "label": "Half width",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "state_province_input",
+      "name": "🗺️ State/Province",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "State/Province"
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Placeholder"
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "half_width",
+          "label": "Half width",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "postal_code_input",
+      "name": "📮 Postal Code",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Postal Code"
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Placeholder"
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "half_width",
+          "label": "Half width",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "country_dropdown",
+      "name": "🌍 Country Dropdown",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Country"
+        },
+        {
+          "type": "textarea",
+          "id": "country_options",
+          "label": "Country options",
+          "default": "United States\nCanada\nUnited Kingdom\nGermany\nFrance\nAustralia\nJapan",
+          "info": "One country on each line"
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "half_width",
+          "label": "Half width",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "multilevel_dropdown",
+      "name": "Multi-Level Dropdown",
+      "settings": [
+        {
+          "type": "text",
+          "id": "field_name",
+          "label": "Field Name",
+          "default": "category_selection"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Select Category"
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Placeholder Text",
+          "default": "Click to select"
+        },
+        {
+          "type": "header",
+          "content": "First Level Options"
+        },
+        {
+          "type": "textarea",
+          "id": "options_level_1",
+          "label": "Level 1 Options",
+          "info": "One option per line. Add '>' for sub-options",
+          "default": "System\nStation\nInvoice"
+        },
+        {
+          "type": "header",
+          "content": "Second Level Options"
+        },
+        {
+          "type": "textarea",
+          "id": "options_level_2",
+          "label": "Level 2 Options",
+          "info": "Format: ParentOption>ChildOption",
+          "default": "System>Dictionary Management\nSystem>User Management\nSystem>Settings"
+        },
+        {
+          "type": "header",
+          "content": "Third Level Options"
+        },
+        {
+          "type": "textarea",
+          "id": "options_level_3",
+          "label": "Level 3 Options",
+          "info": "Format: ParentOption>ChildOption",
+          "default": "Dictionary Management>Add Dictionary\nDictionary Management>Edit Dictionary\nDictionary Management>Delete Dictionary"
+        },
+        {
+          "type": "header",
+          "content": "Fourth Level Options"
+        },
+        {
+          "type": "textarea",
+          "id": "options_level_4",
+          "label": "Level 4 Options",
+          "info": "Format: ParentOption>ChildOption",
+          "default": "Add Dictionary>Basic Info\nAdd Dictionary>Advanced Settings\nEdit Dictionary>Modify Entries"
+        },
+        {
+          "type": "header",
+          "content": "Fifth Level Options"
+        },
+        {
+          "type": "textarea",
+          "id": "options_level_5",
+          "label": "Level 5 Options",
+          "info": "Format: ParentOption>ChildOption",
+          "default": "Basic Info>Name Settings\nBasic Info>Description Settings\nAdvanced Settings>Permission Settings"
+        }
+      ]
+    },
+    {
+      "type": "date_input",
+      "name": "📅 Date Input",
+      "settings": [
+        {
+          "type": "text",
+          "id": "field_name",
+          "label": "Field name",
+          "default": "date"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Date"
+        },
+        {
+          "type": "text",
+          "id": "min_date",
+          "label": "Minimum date (YYYY-MM-DD)"
+        },
+        {
+          "type": "text",
+          "id": "max_date",
+          "label": "Maximum date (YYYY-MM-DD)"
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "half_width",
+          "label": "Half width",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "time_input",
+      "name": "🕐 Time Input",
+      "settings": [
+        {
+          "type": "text",
+          "id": "field_name",
+          "label": "Field name",
+          "default": "time"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Time"
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "half_width",
+          "label": "Half width",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "datetime_input",
+      "name": "📅🕐 Date & Time Input",
+      "settings": [
+        {
+          "type": "text",
+          "id": "field_name",
+          "label": "Field name",
+          "default": "datetime"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Date & Time"
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "half_width",
+          "label": "Half width",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "number_input",
+      "name": "🔢 Number Input",
+      "settings": [
+        {
+          "type": "text",
+          "id": "field_name",
+          "label": "Field name",
+          "default": "number"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Number"
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Placeholder"
+        },
+        {
+          "type": "number",
+          "id": "min_value",
+          "label": "Minimum value"
+        },
+        {
+          "type": "number",
+          "id": "max_value",
+          "label": "Maximum value"
+        },
+        {
+          "type": "text",
+          "id": "step_value",
+          "label": "Step value",
+          "default": "1"
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "half_width",
+          "label": "Half width",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "url_input",
+      "name": "🔗 URL Input",
+      "settings": [
+        {
+          "type": "text",
+          "id": "field_name",
+          "label": "Field name",
+          "default": "website"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Website"
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Placeholder",
+          "default": "https://example.com"
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "half_width",
+          "label": "Half width",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "file_upload",
+      "name": "📎 File Upload",
+      "settings": [
+        {
+          "type": "text",
+          "id": "field_name",
+          "label": "Field name",
+          "default": "file"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Upload File"
+        },
+        {
+          "type": "text",
+          "id": "accept_types",
+          "label": "Accepted file types",
+          "default": ".pdf,.doc,.docx,.jpg,.png",
+          "info": "Example: .pdf,.doc,.docx,.jpg,.png"
+        },
+        {
+          "type": "checkbox",
+          "id": "multiple",
+          "label": "Allow multiple files",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "file_description",
+          "label": "File description",
+          "default": "Max file size: 10MB"
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "half_width",
+          "label": "Half width",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "range_slider",
+      "name": "🎚️ Range Slider",
+      "settings": [
+        {
+          "type": "text",
+          "id": "field_name",
+          "label": "Field name",
+          "default": "range"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Range"
+        },
+        {
+          "type": "number",
+          "id": "min_value",
+          "label": "Minimum value",
+          "default": 0
+        },
+        {
+          "type": "number",
+          "id": "max_value",
+          "label": "Maximum value",
+          "default": 100
+        },
+        {
+          "type": "number",
+          "id": "step_value",
+          "label": "Step value",
+          "default": 1
+        },
+        {
+          "type": "number",
+          "id": "default_value",
+          "label": "Default value",
+          "default": 50
+        },
+        {
+          "type": "checkbox",
+          "id": "half_width",
+          "label": "Half width",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "color_picker",
+      "name": "🎨 Color Picker",
+      "settings": [
+        {
+          "type": "text",
+          "id": "field_name",
+          "label": "Field name",
+          "default": "color"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Color"
+        },
+        {
+          "type": "color",
+          "id": "default_color",
+          "label": "Default color",
+          "default": "#000000"
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "half_width",
+          "label": "Half width",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "rating_input",
+      "name": "⭐ Rating Input",
+      "settings": [
+        {
+          "type": "text",
+          "id": "field_name",
+          "label": "Field name",
+          "default": "rating"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Rating"
+        },
+        {
+          "type": "checkbox",
+          "id": "half_width",
+          "label": "Half width",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "checkbox_group",
+      "name": "☑️ Checkbox Group",
+      "settings": [
+        {
+          "type": "text",
+          "id": "field_name",
+          "label": "Field name",
+          "default": "interests"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Interests"
+        },
+        {
+          "type": "textarea",
+          "id": "checkbox_options",
+          "label": "Checkbox options",
+          "default": "Technology\nSports\nMusic\nTravel\nFood",
+          "info": "One option on each line"
+        },
+        {
+          "type": "checkbox",
+          "id": "half_width",
+          "label": "Half width",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "radio_group",
+      "name": "🔘 Radio Group",
+      "settings": [
+        {
+          "type": "text",
+          "id": "field_name",
+          "label": "Field name",
+          "default": "preference"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Preference"
+        },
+        {
+          "type": "textarea",
+          "id": "radio_options",
+          "label": "Radio options",
+          "default": "Option 1\nOption 2\nOption 3",
+          "info": "One option on each line"
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "half_width",
+          "label": "Half width",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "message_input",
+      "name": "💬 Message Input",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Message"
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Placeholder Text",
+          "default": "Enter your message here..."
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required Field",
+          "default": true
+        },
+        {
+          "type": "number",
+          "id": "min_length",
+          "label": "Minimum Character Length",
+          "default": 10
+        },
+        {
+          "type": "number",
+          "id": "max_length",
+          "label": "Maximum Character Length",
+          "default": 1000
+        },
+        {
+          "type": "number",
+          "id": "rows",
+          "label": "Number of Rows",
+          "default": 5,
+          "info": "Height of the textarea"
+        },
+        {
+          "type": "checkbox",
+          "id": "half_width",
+          "label": "Half Width",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Enhanced form",
+      "category": "custom"
+}
+  ]
+}
+{% endschema %}
