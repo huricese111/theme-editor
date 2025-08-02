@@ -270,7 +270,6 @@ class FiveLevelDropdown {
   }
 }
 
-// 改进的自定义日期选择器功能
 class CustomDatePicker {
   constructor(input, options = {}) {
     this.input = input;
@@ -287,6 +286,10 @@ class CustomDatePicker {
     
     // 获取当前语言设置
     this.locale = this.getLocale();
+    
+    // 绑定事件处理函数到实例
+    this.handleClick = this.handleClick.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     
     this.init();
   }
@@ -549,100 +552,114 @@ class CustomDatePicker {
   }
   
   bindEvents() {
-    this.picker.addEventListener('click', (e) => {
-      const action = e.target.dataset.action;
-      const date = e.target.dataset.date;
-      const month = e.target.dataset.month;
-      const year = e.target.dataset.year;
-      
-      switch (action) {
-        case 'prev-month':
-          this.currentDate.setMonth(this.currentDate.getMonth() - 1);
-          this.render();
-          break;
-        case 'next-month':
-          this.currentDate.setMonth(this.currentDate.getMonth() + 1);
-          this.render();
-          break;
-        case 'prev-year':
-          this.currentDate.setFullYear(this.currentDate.getFullYear() - 1);
-          this.render();
-          break;
-        case 'next-year':
-          this.currentDate.setFullYear(this.currentDate.getFullYear() + 1);
-          this.render();
-          break;
-        case 'prev-decade':
-          this.currentDate.setFullYear(this.currentDate.getFullYear() - 10);
-          this.render();
-          break;
-        case 'next-decade':
-          this.currentDate.setFullYear(this.currentDate.getFullYear() + 10);
-          this.render();
-          break;
-        case 'show-months':
-          this.viewMode = 'months';
-          this.render();
-          break;
-        case 'show-years':
-          this.viewMode = 'years';
-          this.render();
-          break;
-        case 'select-month':
-          this.currentDate.setMonth(parseInt(month));
-          this.viewMode = 'days';
-          this.render();
-          break;
-        case 'select-year':
-          this.currentDate.setFullYear(parseInt(year));
-          this.viewMode = 'months';
-          this.render();
-          break;
-        case 'back-to-days':
-          this.viewMode = 'days';
-          this.render();
-          break;
-        case 'back-to-months':
-          this.viewMode = 'months';
-          this.render();
-          break;
-        case 'select-date':
-          if (date && !e.target.classList.contains('disabled')) {
-            this.selectedDate = new Date(date);
-            this.input.value = this.formatDate(this.selectedDate);
-            this.render();
-          }
-          break;
-        case 'clear':
-          this.selectedDate = null;
-          this.input.value = '';
-          this.close();
-          break;
-        case 'today':
-          this.selectedDate = new Date();
-          this.currentDate = new Date();
-          this.input.value = this.formatDate(this.selectedDate);
-          this.viewMode = 'days';
-          this.render();
-          break;
-        case 'close':
-          this.close();
-          break;
-      }
-    });
+    // 移除之前的事件监听器
+    this.picker.removeEventListener('click', this.handleClick);
+    this.picker.removeEventListener('change', this.handleChange);
     
-    // 添加下拉框的change事件监听
-    this.picker.addEventListener('change', (e) => {
-      const action = e.target.dataset.action;
-      
-      if (action === 'change-month') {
-        this.currentDate.setMonth(parseInt(e.target.value));
+    // 重新绑定事件监听器
+    this.picker.addEventListener('click', this.handleClick);
+    this.picker.addEventListener('change', this.handleChange);
+  }
+  
+  handleClick(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const action = e.target.dataset.action;
+    const date = e.target.dataset.date;
+    const month = e.target.dataset.month;
+    const year = e.target.dataset.year;
+    
+    console.log('Click detected:', action, e.target); // 调试日志
+    
+    switch (action) {
+      case 'prev-month':
+        console.log('Previous month clicked');
+        this.currentDate.setMonth(this.currentDate.getMonth() - 1);
         this.render();
-      } else if (action === 'change-year') {
-        this.currentDate.setFullYear(parseInt(e.target.value));
+        break;
+      case 'next-month':
+        console.log('Next month clicked');
+        this.currentDate.setMonth(this.currentDate.getMonth() + 1);
         this.render();
-      }
-    });
+        break;
+      case 'prev-year':
+        this.currentDate.setFullYear(this.currentDate.getFullYear() - 1);
+        this.render();
+        break;
+      case 'next-year':
+        this.currentDate.setFullYear(this.currentDate.getFullYear() + 1);
+        this.render();
+        break;
+      case 'prev-decade':
+        this.currentDate.setFullYear(this.currentDate.getFullYear() - 10);
+        this.render();
+        break;
+      case 'next-decade':
+        this.currentDate.setFullYear(this.currentDate.getFullYear() + 10);
+        this.render();
+        break;
+      case 'show-months':
+        this.viewMode = 'months';
+        this.render();
+        break;
+      case 'show-years':
+        this.viewMode = 'years';
+        this.render();
+        break;
+      case 'select-month':
+        this.currentDate.setMonth(parseInt(month));
+        this.viewMode = 'days';
+        this.render();
+        break;
+      case 'select-year':
+        this.currentDate.setFullYear(parseInt(year));
+        this.viewMode = 'months';
+        this.render();
+        break;
+      case 'back-to-days':
+        this.viewMode = 'days';
+        this.render();
+        break;
+      case 'back-to-months':
+        this.viewMode = 'months';
+        this.render();
+        break;
+      case 'select-date':
+        if (date && !e.target.classList.contains('disabled')) {
+          this.selectedDate = new Date(date);
+          this.input.value = this.formatDate(this.selectedDate);
+          this.render();
+        }
+        break;
+      case 'clear':
+        this.selectedDate = null;
+        this.input.value = '';
+        this.close();
+        break;
+      case 'today':
+        this.selectedDate = new Date();
+        this.currentDate = new Date();
+        this.input.value = this.formatDate(this.selectedDate);
+        this.viewMode = 'days';
+        this.render();
+        break;
+      case 'close':
+        this.close();
+        break;
+    }
+  }
+  
+  handleChange(e) {
+    const action = e.target.dataset.action;
+    
+    if (action === 'change-month') {
+      this.currentDate.setMonth(parseInt(e.target.value));
+      this.render();
+    } else if (action === 'change-year') {
+      this.currentDate.setFullYear(parseInt(e.target.value));
+      this.render();
+    }
   }
   
   isDateDisabled(date) {
