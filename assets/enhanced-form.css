@@ -66,7 +66,7 @@
 .use-columns .flexible-layout--form {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  gap: 16px;
   align-items: start;
 }
 
@@ -76,6 +76,7 @@
 
 .use-columns .column--half {
   grid-column: span 1;
+  width: 100%; 
 }
 
 /* 确保某些元素始终占满宽度 */
@@ -89,6 +90,7 @@
 @media (max-width: 768px) {
   .use-columns .flexible-layout--form {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
   
   .use-columns .column--half {
@@ -98,11 +100,29 @@
 
 /* 表单元素在两栏布局中的间距调整 */
 .use-columns .flexible-layout--form > .column {
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem; /* 减少底部间距 */
 }
 
 .use-columns .flexible-layout--form > .column:last-child {
   margin-bottom: 0;
+}
+
+/* 优化输入框在两栏布局中的显示 */
+.use-columns .enhanced-form-input,
+.use-columns .enhanced-form-select,
+.use-columns .enhanced-form-textarea,
+.use-columns input[type="text"],
+.use-columns input[type="email"],
+.use-columns input[type="tel"],
+.use-columns input[type="url"],
+.use-columns input[type="number"],
+.use-columns input[type="date"],
+.use-columns input[type="time"],
+.use-columns input[type="datetime-local"],
+.use-columns select,
+.use-columns textarea {
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Enhanced Form Labels - 首字母大写 */
@@ -257,12 +277,19 @@ select {
   color: #374151;
 }
 
-.checkbox-label:hover,
+.checkbox-label:hover {
+  border-color: #3b82f6;
+  background: #f8fafc;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
 .radio-label:hover {
   border-color: #3b82f6;
   background: #f8fafc;
   transform: translateY(-1px);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
 }
 
 input[type="checkbox"],
@@ -272,7 +299,40 @@ input[type="radio"] {
   accent-color: #3b82f6;
 }
 
-/* Rating Input */
+input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #3b82f6;
+  border-radius: 50%; 
+  transition: box-shadow 0.3s ease;
+  appearance: none;  
+  border: 2px solid #d1d5db;
+  background: white;
+  position: relative;
+}
+
+input[type="radio"]:checked {
+  background: #3b82f6;
+  border-color: #3b82f6;
+}
+
+input[type="radio"]:checked::after {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+input[type="radio"]:hover {
+  box-shadow: 0 0 0 8px rgba(59, 130, 246, 0.1); 
+  border-color: #3b82f6;
+}
+
 .rating-input {
   display: flex;
   gap: 0.5rem;
@@ -379,14 +439,13 @@ input[type="file"]:hover {
   color: white;
   border: none;
   padding: 1rem 2rem;
-  border-radius: 12px;
+  border-radius: 6px;
   font-size: 1.125rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(45, 55, 72, 0.3);
   text-transform: capitalize;
-  letter-spacing: 0.025em;
   min-width: 200px;
 }
 
@@ -501,6 +560,38 @@ input[type="file"]:hover {
   opacity: 0.5;
   cursor: not-allowed;
   background: #f1f5f9;
+}
+
+/* Checkbox和Radio组的两栏布局 */
+.checkbox-options-container.two-columns,
+.radio-options-container.two-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+/* 响应式设计 - 在小屏幕上恢复单栏 */
+@media (max-width: 768px) {
+  .checkbox-options-container.two-columns,
+  .radio-options-container.two-columns {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 确保fieldset在两栏布局中的样式 */
+.checkbox-group-two-columns,
+.radio-group-two-columns {
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1rem;
+  margin: 0;
+}
+
+.checkbox-group-two-columns legend,
+.radio-group-two-columns legend {
+  padding: 0 0.5rem;
+  font-weight: 600;
+  color: #374151;
 }
 
 /* 移除所有原生验证样式 */
@@ -636,7 +727,13 @@ select {
   color: #374151;
 }
 
-.checkbox-label:hover,
+.checkbox-label:hover {
+  border-color: #3b82f6;
+  background: #f8fafc;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
 .radio-label:hover {
   border-color: #3b82f6;
   background: #f8fafc;
@@ -677,6 +774,51 @@ input[type="radio"] {
 .rating-input input[type="radio"]:checked ~ .star {
   color: #fbbf24;
   transform: scale(1.1);
+}
+
+.rating-input.emoji {
+  display: flex;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 2px solid #e2e8f0;
+  justify-content: center;
+}
+
+.rating-input.emoji input[type="radio"] {
+  display: none;
+}
+
+.rating-input.emoji .emoji-rating {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  transform: scale(1);
+}
+
+.rating-input.emoji .emoji-rating:hover {
+  transform: scale(1.2);
+}
+
+.rating-input.emoji input[type="radio"]:checked + .emoji-rating {
+  transform: scale(1.3);
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+/* 未选中状态的表情变灰 */
+.rating-input.emoji .emoji-rating .emoji-svg {
+  opacity: 0.3;
+  transition: opacity 0.3s ease;
+}
+
+.rating-input.emoji input[type="radio"]:checked + .emoji-rating .emoji-svg,
+.rating-input.emoji .emoji-rating:hover .emoji-svg {
+  opacity: 1;
+}
+
+/* 选中状态下，前面的表情也要显示 */
+.rating-input.emoji input[type="radio"]:checked ~ input[type="radio"] + .emoji-rating .emoji-svg {
+  opacity: 1;
 }
 
 /* Range Slider */
@@ -1224,6 +1366,205 @@ input[type="file"]:hover {
   to {
     opacity: 1;
     transform: translateX(0);
+  }
+}
+
+/* 自定义日期选择器样式 */
+.custom-date-input-wrapper,
+.custom-time-input-wrapper,
+.custom-datetime-input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.custom-date-input,
+.custom-time-input,
+.custom-datetime-input {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 1rem;
+  color: #1e293b;
+  background: #ffffff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.custom-date-input:focus,
+.custom-time-input:focus,
+.custom-datetime-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1), 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+/* 自定义日期选择器面板 */
+.custom-date-picker,
+.custom-time-picker,
+.custom-datetime-picker {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  padding: 1rem;
+  margin-top: 4px;
+  max-width: 320px;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.custom-date-picker-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e2e8f0;
+  /* 确保头部不溢出 */
+  min-height: 40px;
+}
+
+.custom-date-picker-nav {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.custom-date-picker-nav:hover {
+  background-color: #f1f5f9;
+}
+
+.custom-date-picker-month-year {
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.custom-date-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  /* 确保网格不溢出 */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.custom-date-picker-day-header {
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #64748b;
+  padding: 0.5rem 0.25rem;
+  /* 调整内边距防止溢出 */
+  min-height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-date-picker-day {
+  text-align: center;
+  padding: 0.5rem 0.25rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s;
+  font-size: 0.875rem;
+  /* 确保日期单元格不溢出 */
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.custom-date-picker-day:hover {
+  background-color: #e0f2fe;
+}
+
+.custom-date-picker-day.selected {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.custom-date-picker-day.other-month {
+  color: #cbd5e1;
+}
+
+.custom-date-picker-day.today {
+  background-color: #fef3c7;
+  font-weight: 600;
+}
+
+.custom-date-picker-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #e2e8f0;
+  /* 确保按钮区域不溢出 */
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.custom-date-picker-btn {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: white;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: all 0.2s;
+  /* 确保按钮适应容器 */
+  flex: 1;
+  min-width: 60px;
+  white-space: nowrap;
+}
+
+.custom-date-picker-btn:hover {
+  background-color: #f9fafb;
+}
+
+.custom-date-picker-btn.primary {
+  background-color: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+}
+
+.custom-date-picker-btn.primary:hover {
+  background-color: #2563eb;
+}
+
+/* 响应式调整 */
+@media (max-width: 480px) {
+  .custom-date-picker,
+  .custom-time-picker,
+  .custom-datetime-picker {
+    left: -10px;
+    right: -10px;
+    max-width: none;
+  }
+  
+  .custom-date-picker-day-header,
+  .custom-date-picker-day {
+    font-size: 0.75rem;
+    padding: 0.25rem;
+  }
+  
+  .custom-date-picker-btn {
+    font-size: 0.75rem;
+    padding: 0.375rem 0.5rem;
   }
 }
 

@@ -268,8 +268,9 @@
                       assign label_text = block.settings.label_fi
                     endif
                   -%}
-                  <label for="contact_street_address">{{ label_text | escape }}</label>
+                  <label class="enhanced-form-label" for="contact_street_address">{{ label_text | escape }}{% if block.settings.required %}*{% endif %}</label>
                   <input
+                    class="enhanced-form-input"
                     type="text"
                     id="contact_street_address"
                     autocomplete="street-address"
@@ -294,8 +295,9 @@
                       assign label_text = block.settings.label_fi
                     endif
                   -%}
-                  <label for="contact_address_line_2">{{ label_text | escape }}</label>
+                  <label class="enhanced-form-label" for="contact_address_line_2">{{ label_text | escape }}{% if block.settings.required %}*{% endif %}</label>
                   <input
+                    class="enhanced-form-input"
                     type="text"
                     id="contact_address_line_2"
                     autocomplete="address-line2"
@@ -320,8 +322,9 @@
                       assign label_text = block.settings.label_fi
                     endif
                   -%}
-                  <label for="contact_city">{{ label_text | escape }}</label>
+                  <label class="enhanced-form-label" for="contact_city">{{ label_text | escape }}{% if block.settings.required %}*{% endif %}</label>
                   <input
+                    class="enhanced-form-input"
                     type="text"
                     id="contact_city"
                     autocomplete="address-level2"
@@ -346,8 +349,9 @@
                       assign label_text = block.settings.label_fi
                     endif
                   -%}
-                  <label for="contact_state_province">{{ label_text | escape }}</label>
+                  <label class="enhanced-form-label" for="contact_state_province">{{ label_text | escape }}{% if block.settings.required %}*{% endif %}</label>
                   <input
+                    class="enhanced-form-input"
                     type="text"
                     id="contact_state_province"
                     autocomplete="address-level1"
@@ -372,8 +376,9 @@
                       assign label_text = block.settings.label_fi
                     endif
                   -%}
-                  <label for="contact_postal_code">{{ label_text | escape }}</label>
+                  <label class="enhanced-form-label" for="contact_postal_code">{{ label_text | escape }}{% if block.settings.required %}*{% endif %}</label>
                   <input
+                    class="enhanced-form-input"
                     type="text"
                     id="contact_postal_code"
                     autocomplete="postal-code"
@@ -546,21 +551,28 @@
                   -%}
                   <label for="contact_{{ block.settings.field_name | handle }}">{{ label_text | escape }}</label>
                   {% assign field_handle = block.settings.field_name | handle %}
-                  <input
-                    type="date"
-                    id="contact_{{ block.settings.field_name | handle }}"
-                    name="contact[{{ block.settings.field_name | handle }}]"
-                    {% if block.settings.required %}
-                      required
-                    {% endif %}
-                    {% if block.settings.min_date != blank %}
-                      min="{{ block.settings.min_date }}"
-                    {% endif %}
-                    {% if block.settings.max_date != blank %}
-                      max="{{ block.settings.max_date }}"
-                    {% endif %}
-                    value="{{ form[field_handle] }}"
-                  >
+                  <div class="custom-date-input-wrapper">
+                    <input
+                      type="text"
+                      id="contact_{{ block.settings.field_name | handle }}"
+                      name="contact[{{ block.settings.field_name | handle }}]"
+                      class="custom-date-input"
+                      placeholder="YYYY-MM-DD"
+                      pattern="\d{4}-\d{2}-\d{2}"
+                      {% if block.settings.required %}
+                        required
+                      {% endif %}
+                      {% if block.settings.min_date != blank %}
+                        data-min-date="{{ block.settings.min_date }}"
+                      {% endif %}
+                      {% if block.settings.max_date != blank %}
+                        data-max-date="{{ block.settings.max_date }}"
+                      {% endif %}
+                      value="{{ form[field_handle] }}"
+                      readonly
+                    >
+                    <div class="custom-date-picker" id="picker_{{ block.settings.field_name | handle }}" style="display: none;"></div>
+                  </div>
 
                 {% when 'time_input' %}
                   {%- liquid
@@ -575,15 +587,22 @@
                   -%}
                   <label for="contact_{{ block.settings.field_name | handle }}">{{ label_text | escape }}</label>
                   {% assign field_handle = block.settings.field_name | handle %}
-                  <input
-                    type="time"
-                    id="contact_{{ block.settings.field_name | handle }}"
-                    name="contact[{{ block.settings.field_name | handle }}]"
-                    {% if block.settings.required %}
-                      required
-                    {% endif %}
-                    value="{{ form[field_handle] }}"
-                  >
+                  <div class="custom-time-input-wrapper">
+                    <input
+                      type="text"
+                      id="contact_{{ block.settings.field_name | handle }}"
+                      name="contact[{{ block.settings.field_name | handle }}]"
+                      class="custom-time-input"
+                      placeholder="HH:MM"
+                      pattern="\d{2}:\d{2}"
+                      {% if block.settings.required %}
+                        required
+                      {% endif %}
+                      value="{{ form[field_handle] }}"
+                      readonly
+                    >
+                    <div class="custom-time-picker" id="time_picker_{{ block.settings.field_name | handle }}" style="display: none;"></div>
+                  </div>
 
                 {% when 'datetime_input' %}
                   {%- liquid
@@ -598,15 +617,22 @@
                   -%}
                   <label for="contact_{{ block.settings.field_name | handle }}">{{ label_text | escape }}</label>
                   {% assign field_handle = block.settings.field_name | handle %}
-                  <input
-                    type="datetime-local"
-                    id="contact_{{ block.settings.field_name | handle }}"
-                    name="contact[{{ block.settings.field_name | handle }}]"
-                    {% if block.settings.required %}
-                      required
-                    {% endif %}
-                    value="{{ form[field_handle] }}"
-                  >
+                  <div class="custom-datetime-input-wrapper">
+                    <input
+                      type="text"
+                      id="contact_{{ block.settings.field_name | handle }}"
+                      name="contact[{{ block.settings.field_name | handle }}]"
+                      class="custom-datetime-input"
+                      placeholder="YYYY-MM-DD HH:MM"
+                      pattern="\d{4}-\d{2}-\d{2} \d{2}:\d{2}"
+                      {% if block.settings.required %}
+                        required
+                      {% endif %}
+                      value="{{ form[field_handle] }}"
+                      readonly
+                    >
+                    <div class="custom-datetime-picker" id="datetime_picker_{{ block.settings.field_name | handle }}" style="display: none;"></div>
+                  </div>
 
                 {% when 'number_input' %}
                   {%- liquid
@@ -682,7 +708,7 @@
                   -%}
                   <label>{{ label_text | escape }}</label>
                   {%- assign field_handle = block.settings.field_name | handle -%}
-                  <div class="rating-input" data-rating="{{ form[field_handle] | default: 0 }}">
+                  <div class="rating-input {{ block.settings.rating_style | default: 'stars' }}" data-rating="{{ form[field_handle] | default: 0 }}">
                     {% for i in (1..5) %}
                       <input
                         type="radio"
@@ -693,7 +719,55 @@
                           checked
                         {% endif %}
                       >
-                      <label for="rating_{{ field_handle }}_{{ i }}" class="star">★</label>
+                      {% if block.settings.rating_style == 'emoji' %}
+                        <label for="rating_{{ field_handle }}_{{ i }}" class="emoji-rating" data-value="{{ i }}">
+                          {% case i %}
+                            {% when 1 %}
+                              <svg width="32" height="32" viewBox="0 0 32 32" class="emoji-svg">
+                                <circle cx="16" cy="16" r="15" fill="#FF6B6B" stroke="#E55555" stroke-width="2"/>
+                                <!-- Angry expression -->
+                                <path d="M10 12 L14 10 L10 8" stroke="#8B0000" stroke-width="2" fill="none"/>
+                                <path d="M22 12 L18 10 L22 8" stroke="#8B0000" stroke-width="2" fill="none"/>
+                                <path d="M12 22 Q16 18 20 22" stroke="#8B0000" stroke-width="2" fill="none"/>
+                              </svg>
+                            {% when 2 %}
+                              <svg width="32" height="32" viewBox="0 0 32 32" class="emoji-svg">
+                                <circle cx="16" cy="16" r="15" fill="#FFB347" stroke="#FF9500" stroke-width="2"/>
+                                <!-- Sad expression -->
+                                <circle cx="11" cy="13" r="2" fill="#8B4513"/>
+                                <circle cx="21" cy="13" r="2" fill="#8B4513"/>
+                                <path d="M12 23 Q16 19 20 23" stroke="#8B4513" stroke-width="2" fill="none"/>
+                              </svg>
+                            {% when 3 %}
+                              <svg width="32" height="32" viewBox="0 0 32 32" class="emoji-svg">
+                                <circle cx="16" cy="16" r="15" fill="#FFD93D" stroke="#FFC107" stroke-width="2"/>
+                                <!-- Neutral expression -->
+                                <circle cx="11" cy="13" r="2" fill="#8B4513"/>
+                                <circle cx="21" cy="13" r="2" fill="#8B4513"/>
+                                <line x1="12" y1="21" x2="20" y2="21" stroke="#8B4513" stroke-width="2"/>
+                              </svg>
+                            {% when 4 %}
+                              <svg width="32" height="32" viewBox="0 0 32 32" class="emoji-svg">
+                                <circle cx="16" cy="16" r="15" fill="#6BCF7F" stroke="#4CAF50" stroke-width="2"/>
+                                <!-- Happy expression -->
+                                <circle cx="11" cy="13" r="2" fill="#2E7D32"/>
+                                <circle cx="21" cy="13" r="2" fill="#2E7D32"/>
+                                <path d="M12 19 Q16 23 20 19" stroke="#2E7D32" stroke-width="2" fill="none"/>
+                              </svg>
+                            {% when 5 %}
+                              <svg width="32" height="32" viewBox="0 0 32 32" class="emoji-svg">
+                                <circle cx="16" cy="16" r="15" fill="#FF69B4" stroke="#E91E63" stroke-width="2"/>
+                                <!-- Very happy expression -->
+                                <path d="M8 13 Q11 10 14 13" stroke="#8B008B" stroke-width="2" fill="none"/>
+                                <path d="M18 13 Q21 10 24 13" stroke="#8B008B" stroke-width="2" fill="none"/>
+                                <path d="M10 19 Q16 25 22 19" stroke="#8B008B" stroke-width="2" fill="none"/>
+                                <circle cx="16" cy="21" r="1" fill="#8B008B"/>
+                              </svg>
+                          {% endcase %}
+                        </label>
+                      {% else %}
+                        <label for="rating_{{ field_handle }}_{{ i }}" class="star">★</label>
+                      {% endif %}
                     {% endfor %}
                   </div>
 
@@ -708,7 +782,7 @@
                       assign label_text = block.settings.label_fi
                     endif
                   -%}
-                  <fieldset>
+                  <fieldset class="{% if block.settings.two_column_layout %}checkbox-group-two-columns{% endif %}">
                     <legend>{{ label_text | escape }}</legend>
                     {%- assign checkbox_options = block.settings.checkbox_options
                       | newline_to_br
@@ -716,19 +790,21 @@
                       | split: '<br />'
                     -%}
                     {%- assign field_handle = block.settings.field_name | handle -%}
-                    {% for option in checkbox_options %}
-                      <label class="checkbox-label">
-                        <input
-                          type="checkbox"
-                          name="contact[{{ field_handle }}][]"
-                          value="{{ option | escape }}"
-                          {% if form[field_handle] contains option %}
-                            checked
-                          {% endif %}
-                        >
-                        {{ option | escape }}
-                      </label>
-                    {% endfor %}
+                    <div class="checkbox-options-container{% if block.settings.two_column_layout %} two-columns{% endif %}">
+                      {% for option in checkbox_options %}
+                        <label class="checkbox-label">
+                          <input
+                            type="checkbox"
+                            name="contact[{{ field_handle }}][]"
+                            value="{{ option | escape }}"
+                            {% if form[field_handle] contains option %}
+                              checked
+                            {% endif %}
+                          >
+                          {{ option | escape }}
+                        </label>
+                      {% endfor %}
+                    </div>
                   </fieldset>
 
                 {% when 'radio_group' %}
@@ -742,7 +818,7 @@
                       assign label_text = block.settings.label_fi
                     endif
                   -%}
-                  <fieldset>
+                  <fieldset class="{% if block.settings.two_column_layout %}radio-group-two-columns{% endif %}">
                     <legend>{{ label_text | escape }}</legend>
                     {%- assign radio_options = block.settings.radio_options
                       | newline_to_br
@@ -750,22 +826,24 @@
                       | split: '<br />'
                     -%}
                     {%- assign field_handle = block.settings.field_name | handle -%}
-                    {% for option in radio_options %}
-                      <label class="radio-label">
-                        <input
-                          type="radio"
-                          name="contact[{{ field_handle }}]"
-                          value="{{ option | escape }}"
-                          {% if block.settings.required %}
-                            required
-                          {% endif %}
-                          {% if form[field_handle] == option %}
-                            checked
-                          {% endif %}
-                        >
-                        {{ option | escape }}
-                      </label>
-                    {% endfor %}
+                    <div class="radio-options-container{% if block.settings.two_column_layout %} two-columns{% endif %}">
+                      {% for option in radio_options %}
+                        <label class="radio-label">
+                          <input
+                            type="radio"
+                            name="contact[{{ field_handle }}]"
+                            value="{{ option | escape }}"
+                            {% if block.settings.required %}
+                              required
+                            {% endif %}
+                            {% if form[field_handle] == option %}
+                              checked
+                            {% endif %}
+                          >
+                          {{ option | escape }}
+                        </label>
+                      {% endfor %}
+                    </div>
                   </fieldset>
 
                 {% when 'message_input' %}
@@ -1557,7 +1635,7 @@
     },
     {
       "type": "multilevel_dropdown",
-      "name": "Multi-Level Dropdown",
+      "name": "📋 Multi-Level Dropdown",
       "settings": [
         {
           "type": "text",
@@ -1610,7 +1688,7 @@
           "id": "options_level_1",
           "label": "Level 1 Options",
           "info": "One option per line. Add '>' for sub-options",
-          "default": "System\nStation\nInvoice"
+          "default": "Trekking 7 LTD\nTrekking 7 SE\nTrekking 7\nMountain 7\nMountain 7 Carbon\nCity 7"
         },
         {
           "type": "header",
@@ -1621,7 +1699,7 @@
           "id": "options_level_2",
           "label": "Level 2 Options",
           "info": "Format: ParentOption>ChildOption",
-          "default": "System>Dictionary Management\nSystem>User Management\nSystem>Settings"
+          "default": "Trekking 7 LTD>Long Range\nTrekking 7 LTD>Performance\nTrekking 7 LTD>Ultra\nTrekking 7 SE>Long Range\nTrekking 7 SE>Performance\nTrekking 7 SE>Ultra\nTrekking 7>Long Range\nTrekking 7>Performance\nTrekking 7>Ultra\nTrekking 7>Ultra+\nMountain 7>Long Range\nMountain 7>Performance\nMountain 7>Ultra\nMountain 7 Carbon>Long Range\nMountain 7 Carbon>Performance\nMountain 7 Carbon>Ultra\nCity 7>Long Range\nCity 7>Performance\nCity 7>Ultra"
         },
         {
           "type": "header",
@@ -1632,7 +1710,7 @@
           "id": "options_level_3",
           "label": "Level 3 Options",
           "info": "Format: ParentOption>ChildOption",
-          "default": "Dictionary Management>Add Dictionary\nDictionary Management>Edit Dictionary\nDictionary Management>Delete Dictionary"
+          "default": "Long Range>High step\nLong Range>Low step\nLong Range>Step through\nPerformance>High step\nPerformance>Low step\nPerformance>Step through\nUltra>High step\nUltra>Low step\nUltra>Step through\nUltra+>High step\nUltra+>Low step\nUltra+>Step through"
         },
         {
           "type": "header",
@@ -1643,7 +1721,7 @@
           "id": "options_level_4",
           "label": "Level 4 Options",
           "info": "Format: ParentOption>ChildOption",
-          "default": "Add Dictionary>Basic Info\nAdd Dictionary>Advanced Settings\nEdit Dictionary>Modify Entries"
+          "default": "High step>M\nHigh step>L\nHigh step>XL\nLow step>M\nLow step>L\nStep through>S\nStep through>M\nStep through>L"
         },
         {
           "type": "header",
@@ -1654,7 +1732,7 @@
           "id": "options_level_5",
           "label": "Level 5 Options",
           "info": "Format: ParentOption>ChildOption",
-          "default": "Basic Info>Name Settings\nBasic Info>Description Settings\nAdvanced Settings>Permission Settings"
+          "default": "M>Light Grey\nM>Black\nM>Dark Grey\nM>Sand\nM>Moss\nM>Anthracite\nM>Warm Grey\nM>Grey\nM>Dark Blue\nM>Olive\nM>Mint\nM>Blue Grey\nL>Light Grey\nL>Black\nL>Dark Grey\nL>Sand\nL>Moss\nL>Anthracite\nL>Warm Grey\nL>Grey\nL>Dark Blue\nL>Olive\nL>Mint\nL>Blue Grey\nXL>Light Grey\nXL>Black\nXL>Dark Grey\nXL>Sand\nXL>Moss\nXL>Anthracite\nXL>Warm Grey\nXL>Grey\nXL>Dark Blue\nXL>Olive\nXL>Mint\nXL>Blue Grey\nS>Light Grey\nS>Black\nS>Dark Grey\nS>Sand\nS>Moss\nS>Anthracite\nS>Warm Grey\nS>Grey\nS>Dark Blue\nS>Olive\nS>Mint\nS>Blue Grey"
         }
       ]
     },
@@ -1946,6 +2024,34 @@
           "default": "rating"
         },
         {
+          "type": "select",
+          "id": "rating_style",
+          "label": {
+            "en": "Rating Style",
+            "de": "Bewertungsstil",
+            "fr": "Style d'évaluation"
+          },
+          "options": [
+            {
+              "value": "stars",
+              "label": {
+                "en": "Classic Stars",
+                "de": "Klassische Sterne",
+                "fr": "Étoiles classiques"
+              }
+            },
+            {
+              "value": "emoji",
+              "label": {
+                "en": "Modern Emoji",
+                "de": "Moderne Emoji",
+                "fr": "Emoji moderne"
+              }
+            }
+          ],
+          "default": "stars"
+        },
+        {
           "type": "text",
           "id": "label_en",
           "label": "Label (English)",
@@ -2018,11 +2124,11 @@
           "default": "Technology\nSports\nMusic\nTravel\nFood",
           "info": "One option on each line"
         },
-        {
+         {
           "type": "checkbox",
-          "id": "half_width",
-          "label": "Half width",
-          "default": false
+          "id": "two_column_layout",
+          "label": "Two column layout",
+          "default": true
         }
       ]
     },
@@ -2075,9 +2181,9 @@
         },
         {
           "type": "checkbox",
-          "id": "half_width",
-          "label": "Half width",
-          "default": false
+          "id": "two_column_layout",
+          "label": "Two column layout",
+          "default": true
         }
       ]
     },
@@ -2145,7 +2251,7 @@
           "type": "checkbox",
           "id": "half_width",
           "label": "Half Width",
-          "default": false
+          "default": true
         }
       ]
     },

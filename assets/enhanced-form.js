@@ -211,7 +211,6 @@ class FiveLevelDropdown {
     });
   }
   
-  // 添加缺少的方法
   updateSelectedStates(level, selectedValue) {
     // 清除所有列的选中状态
     for (let i = 1; i <= this.maxLevels; i++) {
@@ -222,15 +221,21 @@ class FiveLevelDropdown {
       }
     }
     
-    // 设置当前选中项的状态
-    const currentColumn = this.wrapper.querySelector(`.level-${level}-column`);
-    if (currentColumn) {
-      const items = currentColumn.querySelectorAll('.category-item');
-      items.forEach(item => {
-        if (item.querySelector('.category-name').textContent === selectedValue) {
-          item.classList.add('selected');
-        }
-      });
+    // 高亮整个选择路径上的所有项目
+    for (let i = 0; i < this.selectedPath.length; i++) {
+      const levelNum = i + 1;
+      const selectedValueAtLevel = this.selectedPath[i];
+      const column = this.wrapper.querySelector(`.level-${levelNum}-column`);
+      
+      if (column) {
+        const items = column.querySelectorAll('.category-item');
+        items.forEach(item => {
+          const categoryName = item.querySelector('.category-name');
+          if (categoryName && categoryName.textContent === selectedValueAtLevel) {
+            item.classList.add('selected');
+          }
+        });
+      }
     }
   }
   
@@ -264,6 +269,275 @@ class FiveLevelDropdown {
     }
   }
 }
+
+// 自定义日期选择器功能
+class CustomDatePicker {
+  constructor(input, options = {}) {
+    this.input = input;
+    this.picker = input.parentElement.querySelector('.custom-date-picker');
+    this.options = {
+      minDate: options.minDate || null,
+      maxDate: options.maxDate || null,
+      ...options
+    };
+    this.currentDate = new Date();
+    this.selectedDate = null;
+    this.isOpen = false;
+    
+    // 获取当前语言设置
+    this.locale = this.getLocale();
+    
+    this.init();
+  }
+  
+  getLocale() {
+    // 从HTML lang属性或其他方式获取语言设置
+    const htmlLang = document.documentElement.lang || 'en';
+    return htmlLang.toLowerCase();
+  }
+  
+  getLocalizedText() {
+    const texts = {
+      en: {
+        monthNames: ['January', 'February', 'March', 'April', 'May', 'June',
+                    'July', 'August', 'September', 'October', 'November', 'December'],
+        dayNames: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+        clear: 'Clear',
+        today: 'Today',
+        ok: 'OK'
+      },
+      de: {
+        monthNames: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni',
+                    'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+        dayNames: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
+        clear: 'Löschen',
+        today: 'Heute',
+        ok: 'OK'
+      },
+      fr: {
+        monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
+                    'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+        dayNames: ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'],
+        clear: 'Effacer',
+        today: 'Aujourd\'hui',
+        ok: 'OK'
+      },
+      fi: {
+        monthNames: ['Tammikuu', 'Helmikuu', 'Maaliskuu', 'Huhtikuu', 'Toukokuu', 'Kesäkuu',
+                    'Heinäkuu', 'Elokuu', 'Syyskuu', 'Lokakuu', 'Marraskuu', 'Joulukuu'],
+        dayNames: ['Su', 'Ma', 'Ti', 'Ke', 'To', 'Pe', 'La'],
+        clear: 'Tyhjennä',
+        today: 'Tänään',
+        ok: 'OK'
+      }
+    };
+    
+    return texts[this.locale] || texts.en;
+  }
+  
+  init() {
+    this.input.addEventListener('click', (e) => {
+      e.preventDefault();
+      this.toggle();
+    });
+    
+    this.input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        this.toggle();
+      } else if (e.key === 'Escape') {
+        this.close();
+      }
+    });
+    
+    document.addEventListener('click', (e) => {
+      if (!this.input.parentElement.contains(e.target)) {
+        this.close();
+      }
+    });
+    
+    this.render();
+  }
+  
+  toggle() {
+    if (this.isOpen) {
+      this.close();
+    } else {
+      this.open();
+    }
+  }
+  
+  open() {
+    if (!this.isOpen) {
+      this.isOpen = true;
+      this.picker.style.display = 'block';
+      this.render();
+    }
+  }
+  
+  close() {
+    if (this.isOpen) {
+      this.isOpen = false;
+      this.picker.style.display = 'none';
+    }
+  }
+  
+  render() {
+    const localizedText = this.getLocalizedText();
+    const monthNames = localizedText.monthNames;
+    const dayNames = localizedText.dayNames;
+    
+    const year = this.currentDate.getFullYear();
+    const month = this.currentDate.getMonth();
+    
+    let html = `
+      <div class="custom-date-picker-header">
+        <button type="button" class="custom-date-picker-nav" data-action="prev-month">‹</button>
+        <div class="custom-date-picker-month-year">${monthNames[month]} ${year}</div>
+        <button type="button" class="custom-date-picker-nav" data-action="next-month">›</button>
+      </div>
+      <div class="custom-date-picker-grid">
+    `;
+    
+    // 添加星期标题
+    dayNames.forEach(day => {
+      html += `<div class="custom-date-picker-day-header">${day}</div>`;
+    });
+    
+    // 获取当月第一天和最后一天
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const startDate = new Date(firstDay);
+    startDate.setDate(startDate.getDate() - firstDay.getDay());
+    
+    // 生成日期网格
+    for (let i = 0; i < 42; i++) {
+      const date = new Date(startDate);
+      date.setDate(startDate.getDate() + i);
+      
+      const isCurrentMonth = date.getMonth() === month;
+      const isToday = this.isToday(date);
+      const isSelected = this.selectedDate && this.isSameDate(date, this.selectedDate);
+      
+      let classes = 'custom-date-picker-day';
+      if (!isCurrentMonth) classes += ' other-month';
+      if (isToday) classes += ' today';
+      if (isSelected) classes += ' selected';
+      
+      html += `<div class="${classes}" data-date="${this.formatDate(date)}">${date.getDate()}</div>`;
+    }
+    
+    html += `
+      </div>
+      <div class="custom-date-picker-actions">
+        <button type="button" class="custom-date-picker-btn" data-action="clear">${localizedText.clear}</button>
+        <button type="button" class="custom-date-picker-btn" data-action="today">${localizedText.today}</button>
+        <button type="button" class="custom-date-picker-btn primary" data-action="close">${localizedText.ok}</button>
+      </div>
+    `;
+    
+    this.picker.innerHTML = html;
+    this.bindEvents();
+  }
+  
+  bindEvents() {
+    this.picker.addEventListener('click', (e) => {
+      const action = e.target.dataset.action;
+      const date = e.target.dataset.date;
+      
+      if (action === 'prev-month') {
+        this.currentDate.setMonth(this.currentDate.getMonth() - 1);
+        this.render();
+      } else if (action === 'next-month') {
+        this.currentDate.setMonth(this.currentDate.getMonth() + 1);
+        this.render();
+      } else if (action === 'clear') {
+        this.selectedDate = null;
+        this.input.value = '';
+        this.close();
+      } else if (action === 'today') {
+        this.selectedDate = new Date();
+        this.input.value = this.formatDate(this.selectedDate);
+        this.close();
+      } else if (action === 'close') {
+        this.close();
+      } else if (date) {
+        this.selectedDate = new Date(date);
+        this.input.value = this.formatDate(this.selectedDate);
+        this.render();
+      }
+    });
+  }
+  
+  formatDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+  
+  isToday(date) {
+    const today = new Date();
+    return this.isSameDate(date, today);
+  }
+  
+  isSameDate(date1, date2) {
+    return date1.getFullYear() === date2.getFullYear() &&
+           date1.getMonth() === date2.getMonth() &&
+           date1.getDate() === date2.getDate();
+  }
+}
+
+// 初始化自定义日期选择器
+document.addEventListener('DOMContentLoaded', function() {
+  // 初始化日期输入框
+  document.querySelectorAll('.custom-date-input').forEach(input => {
+    const wrapper = input.parentElement;
+    const minDate = input.dataset.minDate;
+    const maxDate = input.dataset.maxDate;
+    
+    new CustomDatePicker(input, {
+      minDate: minDate,
+      maxDate: maxDate
+    });
+  });
+  
+  document.querySelectorAll('.custom-time-input').forEach(input => {
+    input.addEventListener('click', function() {
+      const locale = document.documentElement.lang || 'en';
+      const prompts = {
+        en: 'Please enter time (HH:MM):',
+        de: 'Bitte geben Sie die Zeit ein (HH:MM):',
+        fr: 'Veuillez saisir l\'heure (HH:MM):',
+        fi: 'Anna aika (HH:MM):'
+      };
+      
+      const prompt_text = prompts[locale.toLowerCase()] || prompts.en;
+      const time = prompt(prompt_text, this.value || '12:00');
+      if (time && /^\d{2}:\d{2}$/.test(time)) {
+        this.value = time;
+      }
+    });
+  });
+
+  document.querySelectorAll('.custom-datetime-input').forEach(input => {
+    input.addEventListener('click', function() {
+      const locale = document.documentElement.lang || 'en';
+      const prompts = {
+        en: 'Please enter date and time (YYYY-MM-DD HH:MM):',
+        de: 'Bitte geben Sie Datum und Zeit ein (YYYY-MM-DD HH:MM):',
+        fr: 'Veuillez saisir la date et l\'heure (YYYY-MM-DD HH:MM):',
+        fi: 'Anna päivämäärä ja aika (YYYY-MM-DD HH:MM):'
+      };
+      
+      const prompt_text = prompts[locale.toLowerCase()] || prompts.en;
+      const datetime = prompt(prompt_text, this.value || '2025-01-01 12:00');
+      if (datetime && /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/.test(datetime)) {
+        this.value = datetime;
+      }
+    });
+  });
+});
 
 document.addEventListener('DOMContentLoaded', function() {
   const dropdowns = document.querySelectorAll('.multilevel-dropdown-wrapper');
