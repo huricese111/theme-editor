@@ -291,14 +291,21 @@ document.addEventListener('DOMContentLoaded', function() {
       // Submit form using fetch
       fetch(this.action, {
         method: 'POST',
-        body: formData
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
       })
       .then(response => {
         if (response.ok) {
           showSuccessModal();
           this.reset();
+          // 可选：更新URL以反映成功状态
+          window.history.pushState({}, '', window.location.pathname + '?contact_posted=true#contact_form');
         } else {
-          throw new Error('Submission failed');
+          return response.text().then(text => {
+            throw new Error(`HTTP ${response.status}: ${text}`);
+          });
         }
       })
       .catch(error => {
