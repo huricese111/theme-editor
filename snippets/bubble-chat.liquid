@@ -170,20 +170,121 @@
     margin-bottom: 0.5rem;
     font-weight: 600;
     color: #374151;
-    font-size: 1.1rem;
+    font-size: 1rem;
+    text-transform: capitalize;
   }
 
   .required-asterisk {
-    color: #dc2626;
+    color: #dc2626 !important;
+    font-weight: bold;
     margin-left: 2px;
+  }
+
+  /* 统一所有input和textarea样式，与enhanced-form.css保持一致 */
+  #feedback-form input[type="email"],
+  #feedback-form textarea {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    border: 2px solid #e2e8f0 !important;
+    border-radius: 12px;
+    font-size: 1rem;
+    color: #1e293b;
+    background: #ffffff;
+    transition: all 0.3s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+    box-sizing: border-box;
+  }
+
+  /* 移除原生验证样式，防止必填项显示红色边框 */
+  #feedback-form input:invalid,
+  #feedback-form textarea:invalid {
+    border-color: #e2e8f0 !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+  }
+
+  #feedback-form input[type="email"]:focus,
+  #feedback-form textarea:focus {
+    outline: none;
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1), 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+    transform: translateY(-1px);
+  }
+
+  #feedback-form input::placeholder,
+  #feedback-form textarea::placeholder {
+    color: #94a3b8;
+    font-style: italic;
+  }
+
+  #feedback-form textarea {
+    resize: vertical;
+    min-height: 120px;
+    font-family: inherit;
+  }
+
+  /* 只有在表单提交后才显示错误状态 */
+  .form-submitted #feedback-form input.error,
+  .form-submitted #feedback-form textarea.error {
+    border-color: #ef4444 !important;
+  }
+
+  .form-submitted #feedback-form input.error:focus,
+  .form-submitted #feedback-form textarea.error:focus {
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+  }
+
+  .error-message {
+    display: none;
+    color: #ef4444;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+  }
+
+  .error-message.show {
+    display: block;
+  }
+
+  /* 统一submit按钮样式，与enhanced-form.css保持一致 */
+  .feedback-submit-btn {
+    background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 6px;
+    font-size: 1.125rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(45, 55, 72, 0.3);
+    text-transform: capitalize;
+    min-width: 200px;
+    width: 100%;
+  }
+
+  .feedback-submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(45, 55, 72, 0.4);
+    background: linear-gradient(135deg, #1a202c 0%, #171923 100%);
+  }
+
+  .feedback-submit-btn:active {
+    transform: translateY(0);
+  }
+
+  .feedback-submit-btn:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
   }
 
   .rating-input.emoji {
     display: flex;
     gap: 0.5rem;
     padding: 1rem;
-    background-color: #f8f9fa;
-    border-radius: 8px;
+    background: #ffffff;
+    border-radius: 12px;
+    border: 2px solid #e2e8f0;
     justify-content: center;
   }
 
@@ -195,162 +296,75 @@
     cursor: pointer;
     transition: transform 0.2s ease;
     display: block;
+    width: 45px;
+    height: 45px;
   }
 
   .rating-input.emoji .emoji-rating:hover {
-    transform: scale(1.1);
+    transform: scale(0.95);
   }
 
   .rating-input.emoji input[type="radio"]:checked + .emoji-rating {
     transform: scale(1.2);
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.15));
+    animation: bounce 0.6s ease;
   }
 
-  .rating-input.emoji .emoji-svg {
-    width: 50px;
-    height: 50px;
-    display: block;
-  }
-
-  .feedback-form-container input[type="email"],
-  .feedback-form-container textarea {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-family: inherit;
-    font-size: 1rem;
-    transition: border-color 0.2s ease;
-  }
-
-  .feedback-form-container input[type="email"]:focus,
-  .feedback-form-container textarea:focus {
-    outline: none;
-    border-color: #007bff;
-    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
-  }
-
-  .feedback-form-container textarea {
-    min-height: 100px;
-    resize: vertical;
-  }
-
-  .feedback-submit-btn {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.2s ease;
-    position: relative;
-  }
-
-  .feedback-submit-btn:hover {
-    background-color: #0056b3;
-  }
-
-  .feedback-submit-btn:disabled {
-    background-color: #6c757d;
-    cursor: not-allowed;
-  }
-
-  .feedback-submit-btn.loading {
-    color: transparent;
-  }
-
-  .feedback-submit-btn.loading::after {
-    content: '';
-    position: absolute;
-    width: 16px;
-    height: 16px;
-    top: 50%;
-    left: 50%;
-    margin-left: -8px;
-    margin-top: -8px;
-    border: 2px solid #ffffff;
-    border-radius: 50%;
-    border-top-color: transparent;
-    animation: spin 1s linear infinite;
-  }
-
-  @keyframes spin {
-    to {
-      transform: rotate(360deg);
+  @keyframes bounce {
+    0%, 20%, 53%, 80%, 100% {
+      transform: scale(1.2);
+    }
+    40%, 43% {
+      transform: scale(1.3);
+    }
+    70% {
+      transform: scale(1.25);
+    }
+    90% {
+      transform: scale(1.22);
     }
   }
 
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  .rating-input.emoji .emoji-rating .emoji-svg {
+    opacity: 0.3;
+    filter: grayscale(0.7);
+    transition: all 0.3s ease;
+    width: 45px;
+    height: 45px;
   }
 
-  .error-message {
-    color: #dc3545;
-    font-size: 0.875rem;
-    margin-top: 0.25rem;
-    display: none;
+  .rating-input.emoji input[type="radio"]:checked + .emoji-rating .emoji-svg,
+  .rating-input.emoji .emoji-rating:hover .emoji-svg {
+    opacity: 1;
+    filter: grayscale(0);
   }
 
-  .error-message.show {
-    display: block;
+  .rating-input.emoji input[type="radio"]:checked ~ input[type="radio"] + .emoji-rating .emoji-svg {
+    opacity: 0.6;
+    filter: grayscale(0.3);
   }
 
-  /* 移动端适配 */
   @media (max-width: 768px) {
-    .feedback-button-black {
-      bottom: 10px;
-      left: 10px;
-      width: 45px;
-      height: 45px;
-    }
-    
-    .modal__window {
-      max-width: calc(100vw - 20px);
-      margin: 10px;
-    }
-    
-    .modal__content {
-      padding: 2rem 1rem 1rem;
-    }
-
     .rating-input.emoji {
       gap: 0.25rem;
       padding: 1rem;
     }
     
-    .rating-input.emoji .emoji-svg {
+    .rating-input.emoji .emoji-rating,
+    .rating-input.emoji .emoji-rating .emoji-svg {
       width: 40px;
       height: 40px;
     }
   }
 
   @media (max-width: 480px) {
-    .modal__content {
-      padding: 1.5rem 0.75rem 0.75rem;
-    }
-    
-    .modal__close-btn {
-      top: 5px;
-      right: 5px;
-      font-size: 20px;
-      width: 36px;
-      height: 36px;
-    }
-
     .rating-input.emoji {
       gap: 0.125rem;
       padding: 0.75rem;
     }
     
-    .rating-input.emoji .emoji-svg {
+    .rating-input.emoji .emoji-rating,
+    .rating-input.emoji .emoji-rating .emoji-svg {
       width: 35px;
       height: 35px;
     }
@@ -482,8 +496,8 @@
                     value="{{ i }}"
                     required
                   >
-                  <label for="feedback_rating_{{ i }}" class="emoji-rating" data-value="{{ i }}">
-                    {% case i %}
+                  <label for="feedback_rating_{{ i }}" class="emoji-rating" data-value="{{ i }}">                 
+                      {% case i %}
                             {% when 1 %}
                               <svg t="1754143057557" class="icon emoji-svg" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2045" xmlns:xlink="http://www.w3.org/1999/xlink" width="70" height="70">
                                 <path d="M514.389333 522.069333m-486.741333 0a486.741333 486.741333 0 1 0 973.482667 0 486.741333 486.741333 0 1 0-973.482667 0Z" fill="#040000" p-id="2046"></path>
@@ -503,7 +517,7 @@
                                 <path d="M116.224 614.570667c0-252.245333 204.458667-456.704 456.704-456.704 97.792 0 188.416 30.890667 262.656 83.285333C756.394667 151.893333 640.853333 95.402667 512 95.402667c-238.762667 0-432.298667 193.536-432.298667 432.298666 0 74.752 19.114667 145.237333 52.565334 206.677334-10.410667-38.229333-16.042667-78.336-16.042667-119.808z" fill="#F6D85E" p-id="2204"></path>
                                 <path d="M334.506667 421.205333m-63.317334 0a63.317333 63.317333 0 1 0 126.634667 0 63.317333 63.317333 0 1 0-126.634667 0Z" fill="#040000" p-id="2205"></path>
                                 <path d="M674.304 421.205333m-63.317333 0a63.317333 63.317333 0 1 0 126.634666 0 63.317333 63.317333 0 1 0-126.634666 0Z" fill="#040000" p-id="2206"></path>
-                                <path d="M537.941333 622.08c-110.250667 0-205.994667 62.464-253.781333 153.770667l41.130667 19.114666c40.618667-75.946667 120.490667-127.829333 212.650666-127.829333 88.746667 0 165.888 47.957333 207.872 119.296l38.741333-23.552c-50.005333-84.138667-141.653333-140.8-246.613334-140.8z" fill="#040000" p-id="2207"></path>
+                                <path d="M537.941333 622.08c-110.250667 0-205.994667 62.464-253.781333 153.770667l41.130667 19.114666c40.618667-75.946667 120.490667-127.829333 212.650666-127.829333 88.746667 0 165.888 47.957333 207.872 119.296l38.741334-23.552c-50.005333-84.138667-141.653333-140.8-246.613334-140.8z" fill="#040000" p-id="2207"></path>
                                 <path d="M446.805333 714.752c0-68.096-112.128-166.570667-112.128-166.570667s-112.128 98.474667-112.128 166.570667 50.176 123.392 112.128 123.392c61.781333 0 112.128-55.296 112.128-123.392z" fill="#4ABECD" p-id="2208"></path>
                                 <path d="M334.506667 855.210667c-71.338667 0-129.194667-62.976-129.194667-140.458667 0-32.426667 20.309333-72.704 60.074667-119.808 28.501333-33.621333 56.661333-58.538667 57.856-59.562667l11.264-9.898666 11.264 9.898666c1.194667 1.024 29.354667 25.770667 57.856 59.562667 39.936 47.104 60.074667 87.381333 60.074666 119.808 0.170667 77.482667-57.856 140.458667-129.194666 140.458667z m0-283.989334c-34.304 32.426667-95.061333 99.328-95.061334 143.530667 0 58.709333 42.666667 106.325333 95.061334 106.325333s95.061333-47.786667 95.061333-106.325333c0.170667-44.202667-60.757333-111.104-95.061333-143.530667z" fill="#040000" p-id="2209"></path>
                               </svg>
@@ -535,7 +549,7 @@
                                 <path d="M271.36 605.354667c18.090667 128.170667 127.829333 226.816 260.949333 226.816s242.858667-98.645333 260.949334-226.816H271.36z" fill="#FFFFFF" p-id="2975"></path>
                                 <path d="M532.309333 849.237333c-68.096 0-133.802667-24.746667-184.832-69.632-50.517333-44.373333-83.626667-105.472-93.013333-171.861333l-2.730667-19.456h561.322667l-2.730667 19.456c-9.386667 66.389333-42.325333 127.488-93.013333 171.861333-51.2 44.885333-116.906667 69.632-185.002667 69.632zM291.84 622.421333c24.917333 111.104 125.098667 192.682667 240.469333 192.682667s215.552-81.578667 240.469334-192.682667H291.84z" fill="#080103" p-id="2976"></path>
                               </svg>
-                          {% endcase %}
+                          {% endcase %}     
                   </label>
                 {% endfor %}
               </div>
