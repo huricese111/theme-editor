@@ -51,7 +51,7 @@
     visibility: hidden;
     z-index: 8002;
     transition: visibility 0s 0.4s, background-color 0.3s ease 0.1s;
-    background-color: rgba(var(--modal-overlay-color)/0);
+    background-color: rgba(var(--modal-overlay-color) / 0);
     position: fixed;
     top: 0;
     left: 0;
@@ -61,11 +61,11 @@
     justify-content: center;
     align-items: center;
   }
-  
+
   .modal[open] {
     visibility: visible;
     transition-delay: 0s;
-    background-color: rgba(var(--modal-overlay-color)/var(--modal-overlay-opacity));
+    background-color: rgba(var(--modal-overlay-color) / var(--modal-overlay-opacity));
   }
 
   .modal__window {
@@ -83,7 +83,7 @@
     background-color: white;
     position: relative;
   }
-  
+
   .modal[open] .modal__window {
     transform: scale(1);
     transition: transform 0.15s ease-out 0.1s, opacity 0.15s 0.1s;
@@ -117,8 +117,13 @@
   .feedback-success-message {
     display: none;
     text-align: center;
-    padding: 2rem;
-    animation: fadeIn 0.3s ease-in;
+    padding: 3rem 2.5rem;
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid #f1f5f9;
+    position: relative;
+    overflow: hidden;
+    animation: fadeInScale 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
   .feedback-success-message.show {
@@ -127,29 +132,92 @@
 
   .feedback-success-message h3 {
     margin: 0 0 1rem 0;
-    color: #28a745;
+    color: #10b981;
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    position: relative;
+  }
+
+  .feedback-success-message h3::before {
+    content: '✓';
+    display: inline-block;
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #10b981, #34d399);
+    color: white;
+    border-radius: 50%;
+    line-height: 48px;
     font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    margin-right: 0.5rem;
+    box-shadow: 0 8px 16px rgba(16, 185, 129, 0.2);
   }
 
   .feedback-success-message p {
-    margin: 0 0 1.5rem 0;
-    color: #666;
-    line-height: 1.5;
+    margin: 0 0 2rem 0;
+    color: #64748b;
+    line-height: 1.6;
+    font-size: 1.1rem;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .feedback-success-close {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: 4px;
-    cursor: pointer;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    color: #475569;
+    border: 2px solid #e2e8f0;
+    padding: 0.875rem 2rem;
+    border-radius: 12px;
     font-size: 1rem;
-    transition: background-color 0.2s ease;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-transform: capitalize;
+    min-width: 140px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .feedback-success-close::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.5s;
   }
 
   .feedback-success-close:hover {
-    background-color: #0056b3;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    border-color: #cbd5e1;
+    color: #334155;
+  }
+
+  .feedback-success-close:hover::before {
+    left: 100%;
+  }
+
+  .feedback-success-close:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  @keyframes fadeInScale {
+    0% {
+      opacity: 0;
+      transform: scale(0.9) translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
   }
 
   .feedback-form-title {
@@ -181,7 +249,7 @@
   }
 
   /* 统一所有input和textarea样式，与enhanced-form.css保持一致 */
-  #feedback-form input[type="email"],
+  #feedback-form input[type='email'],
   #feedback-form textarea {
     width: 100%;
     padding: 0.875rem 1rem;
@@ -202,7 +270,7 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
   }
 
-  #feedback-form input[type="email"]:focus,
+  #feedback-form input[type='email']:focus,
   #feedback-form textarea:focus {
     outline: none;
     border-color: #3b82f6 !important;
@@ -244,7 +312,6 @@
     display: block;
   }
 
-  /* 统一submit按钮样式，与enhanced-form.css保持一致 */
   .feedback-submit-btn {
     background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
     color: white;
@@ -258,7 +325,6 @@
     box-shadow: 0 4px 12px rgba(45, 55, 72, 0.3);
     text-transform: capitalize;
     min-width: 200px;
-    width: 100%;
   }
 
   .feedback-submit-btn:hover {
@@ -288,7 +354,7 @@
     justify-content: center;
   }
 
-  .rating-input.emoji input[type="radio"] {
+  .rating-input.emoji input[type='radio'] {
     display: none;
   }
 
@@ -304,17 +370,22 @@
     transform: scale(0.95);
   }
 
-  .rating-input.emoji input[type="radio"]:checked + .emoji-rating {
+  .rating-input.emoji input[type='radio']:checked + .emoji-rating {
     transform: scale(1.2);
     filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.15));
     animation: bounce 0.6s ease;
   }
 
   @keyframes bounce {
-    0%, 20%, 53%, 80%, 100% {
+    0%,
+    20%,
+    53%,
+    80%,
+    100% {
       transform: scale(1.2);
     }
-    40%, 43% {
+    40%,
+    43% {
       transform: scale(1.3);
     }
     70% {
@@ -333,13 +404,13 @@
     height: 45px;
   }
 
-  .rating-input.emoji input[type="radio"]:checked + .emoji-rating .emoji-svg,
+  .rating-input.emoji input[type='radio']:checked + .emoji-rating .emoji-svg,
   .rating-input.emoji .emoji-rating:hover .emoji-svg {
     opacity: 1;
     filter: grayscale(0);
   }
 
-  .rating-input.emoji input[type="radio"]:checked ~ input[type="radio"] + .emoji-rating .emoji-svg {
+  .rating-input.emoji input[type='radio']:checked ~ input[type='radio'] + .emoji-rating .emoji-svg {
     opacity: 0.6;
     filter: grayscale(0.3);
   }
@@ -349,7 +420,7 @@
       gap: 0.25rem;
       padding: 1rem;
     }
-    
+
     .rating-input.emoji .emoji-rating,
     .rating-input.emoji .emoji-rating .emoji-svg {
       width: 40px;
@@ -362,7 +433,7 @@
       gap: 0.125rem;
       padding: 0.75rem;
     }
-    
+
     .rating-input.emoji .emoji-rating,
     .rating-input.emoji .emoji-rating .emoji-svg {
       width: 35px;
@@ -378,18 +449,31 @@
     .feedback-submit-btn {
       transition: none;
     }
-    
+
     .feedback-success-message {
       animation: none;
+    }
+
+    @keyframes fadeInScale {
+      0% {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
     }
   }
 </style>
 
-<button class="feedback-button-black" 
-        id="feedbackButton"
-        aria-label="Open feedback form"
-        role="button"
-        tabindex="0">
+<button
+  class="feedback-button-black"
+  id="feedbackButton"
+  aria-label="Open feedback form"
+  role="button"
+  tabindex="0"
+>
   <svg
     t="1750229384481"
     class="icon"
@@ -400,21 +484,27 @@
     xmlns:xlink="http://www.w3.org/1999/xlink"
     width="200"
     height="200"
-    aria-hidden="true">
+    aria-hidden="true"
+  >
      <path d="M512 42.666667C252.8 42.666667 42.666667 252.8 42.666667 512c0 113.578667 40.362667 217.770667 107.52 298.922667L55.466667 981.333333H512c259.2 0 469.333333-210.133333 469.333333-469.333333S771.2 42.666667 512 42.666667zM355.541333 580.266667a170.709333 170.709333 0 0 0 312.96 0l17.066667-39.125334 78.208 34.176-17.066667 39.082667a256.042667 256.042667 0 0 1-469.376 0l-17.066666-39.082667 78.165333-34.133333 17.066667 39.082667z" p-id="26691" fill="#ffffff"></path>
     <circle cx="400" cy="400" r="40" fill="#000000" />
      <circle cx="624" cy="400" r="40" fill="#000000" />
   </svg>
 </button>
 
-<modal-dialog class="modal" 
-              id="feedbackModal" 
-              role="dialog" 
-              aria-modal="true" 
-              aria-labelledby="feedback-title">
+<modal-dialog
+  class="modal"
+  id="feedbackModal"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="feedback-title"
+>
   <div class="modal__window">
-    <button type="button" class="modal__close-btn js-close-modal" 
-            aria-label="Close feedback form">
+    <button
+      type="button"
+      class="modal__close-btn js-close-modal"
+      aria-label="Close feedback form"
+    >
       &times;
     </button>
 
@@ -424,18 +514,18 @@
           assign success_title_text = 'Thank you!'
           assign success_message_text = 'Your feedback has been submitted successfully. We appreciate your input and will use it to improve our services.'
           assign close_text = 'Close'
-          
+
           if request.locale.iso_code == 'de'
             assign success_title_text = 'Vielen Dank!'
             assign success_message_text = 'Ihr Feedback wurde erfolgreich übermittelt. Wir schätzen Ihre Eingabe und werden sie nutzen, um unsere Dienstleistungen zu verbessern.'
             assign close_text = 'Schließen'
           elsif request.locale.iso_code == 'fr'
             assign success_title_text = 'Merci!'
-            assign success_message_text = 'Vos commentaires ont été soumis avec succès. Nous apprécions votre contribution et l\'utiliserons pour améliorer nos services.'
+            assign success_message_text = 'Vos commentaires ont ete soumis avec succes. Nous apprecions votre contribution et nous utiliserons cela pour ameliorer nos services.'
             assign close_text = 'Fermer'
           elsif request.locale.iso_code == 'fi'
             assign success_title_text = 'Kiitos!'
-            assign success_message_text = 'Palautteesi on lähetetty onnistuneesti. Arvostamme palautettasi ja käytämme sitä palveluidemme parantamiseen.'
+            assign success_message_text = 'Palautteesi on l&auml;hetetty onnistuneesti. Arvostamme palautettasi ja k&auml;yt&auml;mme sit&auml; palveluidemme parantamiseen.'
             assign close_text = 'Sulje'
           endif
         -%}
@@ -452,7 +542,7 @@
           assign email_label_text = 'E-mail'
           assign submit_text = 'Submit'
           assign message_placeholder = 'Please type here...'
-          
+
           if request.locale.iso_code == 'de'
             assign form_title_text = 'Wie würden Sie Ihre Erfahrung bewerten?'
             assign rating_label_text = 'Bewertung'
@@ -476,17 +566,20 @@
             assign message_placeholder = 'Kirjoita tähän...'
           endif
         -%}
-        
+
         <h2 id="feedback-title" class="feedback-form-title">{{ form_title_text | escape }}</h2>
-        
+
         {% form 'contact', novalidate: true, id: 'feedback-form' %}
           <input type="hidden" name="contact[subject]" value="[FEEDBACK] User Experience Feedback - {{ shop.name }}">
           <input type="hidden" name="contact[tags]" value="feedback,user-experience">
-          
+
           <div class="feedback-form-container">
             <!-- Rating Input -->
             <div>
-              <label class="enhanced-form-label">{{ rating_label_text | escape }}<span class="required-asterisk">*</span></label>
+              <label class="enhanced-form-label">
+                {{- rating_label_text | escape -}}
+                <span class="required-asterisk">*</span></label
+              >
               <div class="rating-input emoji" data-rating="0">
                 {% for i in (1..5) %}
                   <input
@@ -496,60 +589,110 @@
                     value="{{ i }}"
                     required
                   >
-                  <label for="feedback_rating_{{ i }}" class="emoji-rating" data-value="{{ i }}">                 
-                      {% case i %}
-                            {% when 1 %}
-                              <svg t="1754143057557" class="icon emoji-svg" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2045" xmlns:xlink="http://www.w3.org/1999/xlink" width="70" height="70">
-                                <path d="M514.389333 522.069333m-486.741333 0a486.741333 486.741333 0 1 0 973.482667 0 486.741333 486.741333 0 1 0-973.482667 0Z" fill="#040000" p-id="2046"></path>
-                                <path d="M514.389333 522.069333m-444.245333 0a444.245333 444.245333 0 1 0 888.490667 0 444.245333 444.245333 0 1 0-888.490667 0Z" fill="#F3C81E" p-id="2047"></path>
-                                <path d="M360.618667 713.898667c22.698667-68.778667 87.381333-118.442667 163.669333-118.442667 71.509333 0 132.778667 43.52 158.890667 105.472 12.629333 2.218667 25.088 4.778667 37.034666 7.509333-25.429333-84.138667-103.594667-145.408-195.925333-145.408-98.474667 0-180.736 69.461333-200.362667 162.133334 11.946667-4.096 24.064-7.850667 36.693334-11.264z" fill="#040000" p-id="2048"></path>
-                                <path d="M384.512 958.805333l-94.549333-53.077333V426.666667h94.549333z" fill="#4ABECD" p-id="2049"></path>
-                                <path d="M401.578667 987.989333l-128.682667-72.192V409.6h128.682667v578.389333z m-94.549334-92.330666l60.416 33.962666V443.733333h-60.416v451.925334z" fill="#040000" p-id="2050"></path>
-                                <path d="M745.130667 905.728l-94.549334 49.664V426.666667h94.549334z" fill="#4ABECD" p-id="2051"></path>
-                                <path d="M633.514667 983.552V409.6h128.682666v506.368l-128.682666 67.584z m34.133333-539.818667v483.498667l60.416-31.744V443.733333h-60.416zM443.562667 437.248H224.085333c-1.024 0-1.877333-0.853333-1.877333-1.877333v-31.232c0-1.024 0.853333-1.877333 1.877333-1.877334h219.477334c1.024 0 1.877333 0.853333 1.877333 1.877334v31.232c0 1.194667-0.853333 1.877333-1.877333 1.877333z" fill="#040000" p-id="2052"></path>
-                                <path d="M804.522667 437.248H585.045333c-1.024 0-1.877333-0.853333-1.877333-1.877333v-31.232c0-1.024 0.853333-1.877333 1.877333-1.877334h219.477334c1.024 0 1.877333 0.853333 1.877333 1.877334v31.232c0 1.194667-0.853333 1.877333-1.877333 1.877333z" fill="#040000" p-id="2053"></path>
-                                <path d="M107.690667 611.157333C107.690667 352.085333 317.781333 141.994667 576.853333 141.994667c100.522667 0 193.536 31.744 269.994667 85.504-81.408-91.818667-200.192-149.674667-332.458667-149.674667-245.248 0-444.245333 198.826667-444.245333 444.245333 0 76.970667 19.626667 149.162667 53.930667 212.309334-10.581333-39.253333-16.384-80.554667-16.384-123.221334z" fill="#F6D85E" p-id="2054"></path>
-                              </svg>
-                            {% when 2 %}
-                              <svg t="1754143679176" class="icon emoji-svg" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2201" xmlns:xlink="http://www.w3.org/1999/xlink" width="70" height="70">
-                                <path d="M512 527.701333m-473.770667 0a473.770667 473.770667 0 1 0 947.541334 0 473.770667 473.770667 0 1 0-947.541334 0Z" fill="#040000" p-id="2202"></path>
-                                <path d="M512 527.701333m-432.298667 0a432.298667 432.298667 0 1 0 864.597334 0 432.298667 432.298667 0 1 0-864.597334 0Z" fill="#F3C81E" p-id="2203"></path>
-                                <path d="M116.224 614.570667c0-252.245333 204.458667-456.704 456.704-456.704 97.792 0 188.416 30.890667 262.656 83.285333C756.394667 151.893333 640.853333 95.402667 512 95.402667c-238.762667 0-432.298667 193.536-432.298667 432.298666 0 74.752 19.114667 145.237333 52.565334 206.677334-10.410667-38.229333-16.042667-78.336-16.042667-119.808z" fill="#F6D85E" p-id="2204"></path>
-                                <path d="M334.506667 421.205333m-63.317334 0a63.317333 63.317333 0 1 0 126.634667 0 63.317333 63.317333 0 1 0-126.634667 0Z" fill="#040000" p-id="2205"></path>
-                                <path d="M674.304 421.205333m-63.317333 0a63.317333 63.317333 0 1 0 126.634666 0 63.317333 63.317333 0 1 0-126.634666 0Z" fill="#040000" p-id="2206"></path>
-                                <path d="M537.941333 622.08c-110.250667 0-205.994667 62.464-253.781333 153.770667l41.130667 19.114666c40.618667-75.946667 120.490667-127.829333 212.650666-127.829333 88.746667 0 165.888 47.957333 207.872 119.296l38.741334-23.552c-50.005333-84.138667-141.653333-140.8-246.613334-140.8z" fill="#040000" p-id="2207"></path>
-                                <path d="M446.805333 714.752c0-68.096-112.128-166.570667-112.128-166.570667s-112.128 98.474667-112.128 166.570667 50.176 123.392 112.128 123.392c61.781333 0 112.128-55.296 112.128-123.392z" fill="#4ABECD" p-id="2208"></path>
-                                <path d="M334.506667 855.210667c-71.338667 0-129.194667-62.976-129.194667-140.458667 0-32.426667 20.309333-72.704 60.074667-119.808 28.501333-33.621333 56.661333-58.538667 57.856-59.562667l11.264-9.898666 11.264 9.898666c1.194667 1.024 29.354667 25.770667 57.856 59.562667 39.936 47.104 60.074667 87.381333 60.074666 119.808 0.170667 77.482667-57.856 140.458667-129.194666 140.458667z m0-283.989334c-34.304 32.426667-95.061333 99.328-95.061334 143.530667 0 58.709333 42.666667 106.325333 95.061334 106.325333s95.061333-47.786667 95.061333-106.325333c0.170667-44.202667-60.757333-111.104-95.061333-143.530667z" fill="#040000" p-id="2209"></path>
-                              </svg>
-                            {% when 3 %}
-                              <svg t="1754143766830" class="icon emoji-svg" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2663" xmlns:xlink="http://www.w3.org/1999/xlink" width="70" height="70">
-                                <path d="M499.712 532.821333m-464.042667 0a464.042667 464.042667 0 1 0 928.085334 0 464.042667 464.042667 0 1 0-928.085334 0Z" fill="#040000" p-id="2664"></path>
-                                <path d="M499.712 532.821333m-423.424 0a423.424 423.424 0 1 0 846.848 0 423.424 423.424 0 1 0-846.848 0Z" fill="#F3C81E" p-id="2665"></path>
-                                <path d="M112.128 617.984C112.128 371.029333 312.32 170.666667 559.274667 170.666667c95.744 0 184.490667 30.208 257.365333 81.578666C738.986667 164.693333 625.834667 109.568 499.712 109.568c-233.813333 0-423.424 189.610667-423.424 423.424 0 73.386667 18.602667 142.165333 51.370667 202.410667-10.069333-37.546667-15.530667-76.8-15.530667-117.418667z" fill="#F6D85E" p-id="2666"></path>
-                                <path d="M314.368 395.434667c-41.472 0-75.093333 33.621333-75.093333 75.093333H213.333333c0-55.808 45.226667-101.034667 101.034667-101.034667s101.034667 45.226667 101.034667 101.034667h-25.941334c0-41.472-33.621333-75.093333-75.093333-75.093333zM651.946667 393.216c-41.472 0-75.093333 33.621333-75.093334 75.093333h-25.941333c0-55.808 45.226667-101.034667 101.034667-101.034666s101.034667 45.226667 101.034666 101.034666H727.04c0-41.472-33.621333-75.093333-75.093333-75.093333z" fill="#040000" p-id="2667"></path>
-                                <path d="M308.053333 610.133333c13.312 103.253333 93.866667 182.784 191.658667 182.784S678.058667 713.386667 691.370667 610.133333H308.053333z" fill="#FFFFFF" p-id="2668"></path>
-                                <path d="M499.712 809.984c-51.370667 0-100.864-20.48-139.264-57.514667-37.717333-36.352-62.293333-86.016-69.290667-140.288l-2.56-19.285333h422.058667l-2.56 19.285333c-6.997333 54.101333-31.573333 103.936-69.290667 140.288-38.229333 37.205333-87.722667 57.514667-139.093333 57.514667zM328.362667 627.2c19.285333 86.016 89.941333 148.650667 171.349333 148.650667s152.064-62.634667 171.349333-148.650667H328.362667z" fill="#080103" p-id="2669"></path>
-                                <path d="M988.330667 344.234667c0-65.024-107.008-158.890667-107.008-158.890667s-107.008 93.866667-107.008 158.890667 47.957333 117.76 107.008 117.76 107.008-52.736 107.008-117.76z" fill="#4ABECD" p-id="2670"></path>
-                                <path d="M881.322667 479.061333c-68.437333 0-124.074667-60.416-124.074667-134.826666 0-31.061333 19.285333-69.802667 57.514667-114.858667 27.306667-32.256 54.101333-55.808 55.296-56.832l11.264-9.898667 11.264 9.898667c1.194667 1.024 27.989333 24.746667 55.296 56.832 38.229333 45.056 57.514667 83.797333 57.514666 114.858667 0 74.410667-55.637333 134.826667-124.074666 134.826666z m0-270.506666c-32.597333 31.061333-89.941333 94.208-89.941334 135.68 0 55.466667 40.277333 100.693333 89.941334 100.693333s89.941333-45.226667 89.941333-100.693333c0-41.472-57.344-104.618667-89.941333-135.68z" fill="#040000" p-id="2671"></path>
-                              </svg>
-                            {% when 4 %}
-                              <svg t="1754143799149" class="icon emoji-svg" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2818" xmlns:xlink="http://www.w3.org/1999/xlink" width="70" height="70">
-                                <path d="M512 524.288m-480.597333 0a480.597333 480.597333 0 1 0 961.194666 0 480.597333 480.597333 0 1 0-961.194666 0Z" fill="#040000" p-id="2819"></path>
-                                <path d="M512 524.288m-438.613333 0a438.613333 438.613333 0 1 0 877.226666 0 438.613333 438.613333 0 1 0-877.226666 0Z" fill="#F3C81E" p-id="2820"></path>
-                                <path d="M110.421333 612.352c0-255.829333 207.36-463.36 463.36-463.36 99.328 0 191.146667 31.232 266.581334 84.48C759.978667 142.848 642.730667 85.674667 512 85.674667c-242.176 0-438.613333 196.437333-438.613333 438.613333 0 75.946667 19.285333 147.285333 53.248 209.578667-10.410667-38.741333-16.213333-79.36-16.213334-121.514667z" fill="#F6D85E" p-id="2821"></path>
-                                <path d="M315.904 384.341333c-43.008 0-77.824 34.816-77.824 77.824h-26.965333c0-57.856 46.933333-104.789333 104.789333-104.789333s104.789333 46.933333 104.789333 104.789333h-26.965333c0-43.008-34.816-77.824-77.824-77.824zM673.621333 384.341333c-43.008 0-77.824 34.816-77.824 77.824h-26.965333c0-57.856 46.933333-104.789333 104.789333-104.789333s104.789333 46.933333 104.789334 104.789333h-26.965334c0-43.008-34.816-77.824-77.824-77.824zM515.754667 805.546667c-111.957333 0-209.066667-63.317333-257.536-155.989334l41.813333-19.456c41.301333 77.141333 122.197333 129.706667 215.722667 129.706667 89.941333 0 168.277333-48.64 210.773333-121.002667l39.253333 23.893334c-50.517333 85.504-143.530667 142.848-250.026666 142.848z" fill="#040000" p-id="2822"></path>
-                              </svg>
-                            {% when 5 %}
-                              <svg t="1754143802527" class="icon emoji-svg" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2969" xmlns:xlink="http://www.w3.org/1999/xlink" width="70" height="70">
-                                <path d="M521.728 512m-474.112 0a474.112 474.112 0 1 0 948.224 0 474.112 474.112 0 1 0-948.224 0Z" fill="#040000" p-id="2970"></path>
-                                <path d="M521.728 512m-432.64 0a432.64 432.64 0 1 0 865.28 0 432.64 432.64 0 1 0-865.28 0Z" fill="#F3C81E" p-id="2971"></path>
-                                <path d="M125.610667 598.869333C125.610667 346.453333 330.24 141.824 582.656 141.824c97.962667 0 188.586667 30.890667 262.997333 83.285333C766.293333 135.68 650.752 79.36 521.728 79.36 282.794667 79.36 89.088 273.066667 89.088 512c0 74.922667 19.114667 145.408 52.565333 206.848-10.410667-38.229333-16.042667-78.506667-16.042666-119.978667z" fill="#F6D85E" p-id="2972"></path>
-                                <path d="M351.744 391.338667m-63.488 0a63.488 63.488 0 1 0 126.976 0 63.488 63.488 0 1 0-126.976 0Z" fill="#040000" p-id="2973"></path>
-                                <path d="M691.712 391.338667m-63.488 0a63.488 63.488 0 1 0 126.976 0 63.488 63.488 0 1 0-126.976 0Z" fill="#040000" p-id="2974"></path>
-                                <path d="M271.36 605.354667c18.090667 128.170667 127.829333 226.816 260.949333 226.816s242.858667-98.645333 260.949334-226.816H271.36z" fill="#FFFFFF" p-id="2975"></path>
-                                <path d="M532.309333 849.237333c-68.096 0-133.802667-24.746667-184.832-69.632-50.517333-44.373333-83.626667-105.472-93.013333-171.861333l-2.730667-19.456h561.322667l-2.730667 19.456c-9.386667 66.389333-42.325333 127.488-93.013333 171.861333-51.2 44.885333-116.906667 69.632-185.002667 69.632zM291.84 622.421333c24.917333 111.104 125.098667 192.682667 240.469333 192.682667s215.552-81.578667 240.469334-192.682667H291.84z" fill="#080103" p-id="2976"></path>
-                              </svg>
-                          {% endcase %}     
+                  <label for="feedback_rating_{{ i }}" class="emoji-rating" data-value="{{ i }}">
+                    {% case i %}
+                      {% when 1 %}
+                        <svg
+                          t="1754143057557"
+                          class="icon emoji-svg"
+                          viewBox="0 0 1024 1024"
+                          version="1.1"
+                          xmlns="http://www.w3.org/2000/svg"
+                          p-id="2045"
+                          xmlns:xlink="http://www.w3.org/1999/xlink"
+                          width="70"
+                          height="70"
+                        >
+                          <path d="M514.389333 522.069333m-486.741333 0a486.741333 486.741333 0 1 0 973.482667 0 486.741333 486.741333 0 1 0-973.482667 0Z" fill="#040000" p-id="2046"></path>
+                          <path d="M514.389333 522.069333m-444.245333 0a444.245333 444.245333 0 1 0 888.490667 0 444.245333 444.245333 0 1 0-888.490667 0Z" fill="#F3C81E" p-id="2047"></path>
+                          <path d="M360.618667 713.898667c22.698667-68.778667 87.381333-118.442667 163.669333-118.442667 71.509333 0 132.778667 43.52 158.890667 105.472 12.629333 2.218667 25.088 4.778667 37.034666 7.509333-25.429333-84.138667-103.594667-145.408-195.925333-145.408-98.474667 0-180.736 69.461333-200.362667 162.133334 11.946667-4.096 24.064-7.850667 36.693334-11.264z" fill="#040000" p-id="2048"></path>
+                          <path d="M384.512 958.805333l-94.549333-53.077333V426.666667h94.549333z" fill="#4ABECD" p-id="2049"></path>
+                          <path d="M401.578667 987.989333l-128.682667-72.192V409.6h128.682667v578.389333z m-94.549334-92.330666l60.416 33.962666V443.733333h-60.416v451.925334z" fill="#040000" p-id="2050"></path>
+                          <path d="M745.130667 905.728l-94.549334 49.664V426.666667h94.549334z" fill="#4ABECD" p-id="2051"></path>
+                          <path d="M633.514667 983.552V409.6h128.682666v506.368l-128.682666 67.584z m34.133333-539.818667v483.498667l60.416-31.744V443.733333h-60.416zM443.562667 437.248H224.085333c-1.024 0-1.877333-0.853333-1.877333-1.877333v-31.232c0-1.024 0.853333-1.877333 1.877333-1.877334h219.477334c1.024 0 1.877333 0.853333 1.877333 1.877334v31.232c0 1.194667-0.853333 1.877333-1.877333 1.877333z" fill="#040000" p-id="2052"></path>
+                          <path d="M804.522667 437.248H585.045333c-1.024 0-1.877333-0.853333-1.877333-1.877333v-31.232c0-1.024 0.853333-1.877333 1.877333-1.877334h219.477334c1.024 0 1.877333 0.853333 1.877333 1.877334v31.232c0 1.194667-0.853333 1.877333-1.877333 1.877333z" fill="#040000" p-id="2053"></path>
+                          <path d="M107.690667 611.157333C107.690667 352.085333 317.781333 141.994667 576.853333 141.994667c100.522667 0 193.536 31.744 269.994667 85.504-81.408-91.818667-200.192-149.674667-332.458667-149.674667-245.248 0-444.245333 198.826667-444.245333 444.245333 0 76.970667 19.626667 149.162667 53.930667 212.309334-10.581333-39.253333-16.384-80.554667-16.384-123.221334z" fill="#F6D85E" p-id="2054"></path>
+                        </svg>
+                      {% when 2 %}
+                        <svg
+                          t="1754143679176"
+                          class="icon emoji-svg"
+                          viewBox="0 0 1024 1024"
+                          version="1.1"
+                          xmlns="http://www.w3.org/2000/svg"
+                          p-id="2201"
+                          xmlns:xlink="http://www.w3.org/1999/xlink"
+                          width="70"
+                          height="70"
+                        >
+                          <path d="M512 527.701333m-473.770667 0a473.770667 473.770667 0 1 0 947.541334 0 473.770667 473.770667 0 1 0-947.541334 0Z" fill="#040000" p-id="2202"></path>
+                          <path d="M512 527.701333m-432.298667 0a432.298667 432.298667 0 1 0 864.597334 0 432.298667 432.298667 0 1 0-864.597334 0Z" fill="#F3C81E" p-id="2203"></path>
+                          <path d="M116.224 614.570667c0-252.245333 204.458667-456.704 456.704-456.704 97.792 0 188.416 30.890667 262.656 83.285333C756.394667 151.893333 640.853333 95.402667 512 95.402667c-238.762667 0-432.298667 193.536-432.298667 432.298666 0 74.752 19.114667 145.237333 52.565334 206.677334-10.410667-38.229333-16.042667-78.336-16.042667-119.808z" fill="#F6D85E" p-id="2204"></path>
+                          <path d="M334.506667 421.205333m-63.317334 0a63.317333 63.317333 0 1 0 126.634667 0 63.317333 63.317333 0 1 0-126.634667 0Z" fill="#040000" p-id="2205"></path>
+                          <path d="M674.304 421.205333m-63.317333 0a63.317333 63.317333 0 1 0 126.634666 0 63.317333 63.317333 0 1 0-126.634666 0Z" fill="#040000" p-id="2206"></path>
+                          <path d="M537.941333 622.08c-110.250667 0-205.994667 62.464-253.781333 153.770667l41.130667 19.114666c40.618667-75.946667 120.490667-127.829333 212.650666-127.829333 88.746667 0 165.888 47.957333 207.872 119.296l38.741334-23.552c-50.005333-84.138667-141.653333-140.8-246.613334-140.8z" fill="#040000" p-id="2207"></path>
+                          <path d="M446.805333 714.752c0-68.096-112.128-166.570667-112.128-166.570667s-112.128 98.474667-112.128 166.570667 50.176 123.392 112.128 123.392c61.781333 0 112.128-55.296 112.128-123.392z" fill="#4ABECD" p-id="2208"></path>
+                          <path d="M334.506667 855.210667c-71.338667 0-129.194667-62.976-129.194667-140.458667 0-32.426667 20.309333-72.704 60.074667-119.808 28.501333-33.621333 56.661333-58.538667 57.856-59.562667l11.264-9.898666 11.264 9.898666c1.194667 1.024 29.354667 25.770667 57.856 59.562667 39.936 47.104 60.074667 87.381333 60.074666 119.808 0.170667 77.482667-57.856 140.458667-129.194666 140.458667z m0-283.989334c-34.304 32.426667-95.061333 99.328-95.061334 143.530667 0 58.709333 42.666667 106.325333 95.061334 106.325333s95.061333-47.786667 95.061333-106.325333c0.170667-44.202667-60.757333-111.104-95.061333-143.530667z" fill="#040000" p-id="2209"></path>
+                        </svg>
+                      {% when 3 %}
+                        <svg
+                          t="1754143766830"
+                          class="icon emoji-svg"
+                          viewBox="0 0 1024 1024"
+                          version="1.1"
+                          xmlns="http://www.w3.org/2000/svg"
+                          p-id="2663"
+                          xmlns:xlink="http://www.w3.org/1999/xlink"
+                          width="70"
+                          height="70"
+                        >
+                          <path d="M499.712 532.821333m-464.042667 0a464.042667 464.042667 0 1 0 928.085334 0 464.042667 464.042667 0 1 0-928.085334 0Z" fill="#040000" p-id="2664"></path>
+                          <path d="M499.712 532.821333m-423.424 0a423.424 423.424 0 1 0 846.848 0 423.424 423.424 0 1 0-846.848 0Z" fill="#F3C81E" p-id="2665"></path>
+                          <path d="M112.128 617.984C112.128 371.029333 312.32 170.666667 559.274667 170.666667c95.744 0 184.490667 30.208 257.365333 81.578666C738.986667 164.693333 625.834667 109.568 499.712 109.568c-233.813333 0-423.424 189.610667-423.424 423.424 0 73.386667 18.602667 142.165333 51.370667 202.410667-10.069333-37.546667-15.530667-76.8-15.530667-117.418667z" fill="#F6D85E" p-id="2666"></path>
+                          <path d="M314.368 395.434667c-41.472 0-75.093333 33.621333-75.093333 75.093333H213.333333c0-55.808 45.226667-101.034667 101.034667-101.034667s101.034667 45.226667 101.034667 101.034667h-25.941334c0-41.472-33.621333-75.093333-75.093333-75.093333zM651.946667 393.216c-41.472 0-75.093333 33.621333-75.093334 75.093333h-25.941333c0-55.808 45.226667-101.034667 101.034667-101.034666s101.034667 45.226667 101.034666 101.034666H727.04c0-41.472-33.621333-75.093333-75.093333-75.093333z" fill="#040000" p-id="2667"></path>
+                          <path d="M308.053333 610.133333c13.312 103.253333 93.866667 182.784 191.658667 182.784S678.058667 713.386667 691.370667 610.133333H308.053333z" fill="#FFFFFF" p-id="2668"></path>
+                          <path d="M499.712 809.984c-51.370667 0-100.864-20.48-139.264-57.514667-37.717333-36.352-62.293333-86.016-69.290667-140.288l-2.56-19.285333h422.058667l-2.56 19.285333c-6.997333 54.101333-31.573333 103.936-69.290667 140.288-38.229333 37.205333-87.722667 57.514667-139.093333 57.514667zM328.362667 627.2c19.285333 86.016 89.941333 148.650667 171.349333 148.650667s152.064-62.634667 171.349333-148.650667H328.362667z" fill="#080103" p-id="2669"></path>
+                          <path d="M988.330667 344.234667c0-65.024-107.008-158.890667-107.008-158.890667s-107.008 93.866667-107.008 158.890667 47.957333 117.76 107.008 117.76 107.008-52.736 107.008-117.76z" fill="#4ABECD" p-id="2670"></path>
+                          <path d="M881.322667 479.061333c-68.437333 0-124.074667-60.416-124.074667-134.826666 0-31.061333 19.285333-69.802667 57.514667-114.858667 27.306667-32.256 54.101333-55.808 55.296-56.832l11.264-9.898667 11.264 9.898667c1.194667 1.024 27.989333 24.746667 55.296 56.832 38.229333 45.056 57.514667 83.797333 57.514666 114.858667 0 74.410667-55.637333 134.826667-124.074666 134.826666z m0-270.506666c-32.597333 31.061333-89.941333 94.208-89.941334 135.68 0 55.466667 40.277333 100.693333 89.941334 100.693333s89.941333-45.226667 89.941333-100.693333c0-41.472-57.344-104.618667-89.941333-135.68z" fill="#040000" p-id="2671"></path>
+                        </svg>
+                      {% when 4 %}
+                        <svg
+                          t="1754143799149"
+                          class="icon emoji-svg"
+                          viewBox="0 0 1024 1024"
+                          version="1.1"
+                          xmlns="http://www.w3.org/2000/svg"
+                          p-id="2818"
+                          xmlns:xlink="http://www.w3.org/1999/xlink"
+                          width="70"
+                          height="70"
+                        >
+                          <path d="M512 524.288m-480.597333 0a480.597333 480.597333 0 1 0 961.194666 0 480.597333 480.597333 0 1 0-961.194666 0Z" fill="#040000" p-id="2819"></path>
+                          <path d="M512 524.288m-438.613333 0a438.613333 438.613333 0 1 0 877.226666 0 438.613333 438.613333 0 1 0-877.226666 0Z" fill="#F3C81E" p-id="2820"></path>
+                          <path d="M110.421333 612.352c0-255.829333 207.36-463.36 463.36-463.36 99.328 0 191.146667 31.232 266.581334 84.48C759.978667 142.848 642.730667 85.674667 512 85.674667c-242.176 0-438.613333 196.437333-438.613333 438.613333 0 75.946667 19.285333 147.285333 53.248 209.578667-10.410667-38.741333-16.213333-79.36-16.213334-121.514667z" fill="#F6D85E" p-id="2821"></path>
+                          <path d="M315.904 384.341333c-43.008 0-77.824 34.816-77.824 77.824h-26.965333c0-57.856 46.933333-104.789333 104.789333-104.789333s104.789333 46.933333 104.789333 104.789333h-26.965333c0-43.008-34.816-77.824-77.824-77.824zM673.621333 384.341333c-43.008 0-77.824 34.816-77.824 77.824h-26.965333c0-57.856 46.933333-104.789333 104.789333-104.789333s104.789333 46.933333 104.789334 104.789333h-26.965334c0-43.008-34.816-77.824-77.824-77.824zM515.754667 805.546667c-111.957333 0-209.066667-63.317333-257.536-155.989334l41.813333-19.456c41.301333 77.141333 122.197333 129.706667 215.722667 129.706667 89.941333 0 168.277333-48.64 210.773333-121.002667l39.253333 23.893334c-50.517333 85.504-143.530667 142.848-250.026666 142.848z" fill="#040000" p-id="2822"></path>
+                        </svg>
+                      {% when 5 %}
+                        <svg
+                          t="1754143802527"
+                          class="icon emoji-svg"
+                          viewBox="0 0 1024 1024"
+                          version="1.1"
+                          xmlns="http://www.w3.org/2000/svg"
+                          p-id="2969"
+                          xmlns:xlink="http://www.w3.org/1999/xlink"
+                          width="70"
+                          height="70"
+                        >
+                          <path d="M521.728 512m-474.112 0a474.112 474.112 0 1 0 948.224 0 474.112 474.112 0 1 0-948.224 0Z" fill="#040000" p-id="2970"></path>
+                          <path d="M521.728 512m-432.64 0a432.64 432.64 0 1 0 865.28 0 432.64 432.64 0 1 0-865.28 0Z" fill="#F3C81E" p-id="2971"></path>
+                          <path d="M125.610667 598.869333C125.610667 346.453333 330.24 141.824 582.656 141.824c97.962667 0 188.586667 30.890667 262.997333 83.285333C766.293333 135.68 650.752 79.36 521.728 79.36 282.794667 79.36 89.088 273.066667 89.088 512c0 74.922667 19.114667 145.408 52.565333 206.848-10.410667-38.229333-16.042667-78.506667-16.042666-119.978667z" fill="#F6D85E" p-id="2972"></path>
+                          <path d="M351.744 391.338667m-63.488 0a63.488 63.488 0 1 0 126.976 0 63.488 63.488 0 1 0-126.976 0Z" fill="#040000" p-id="2973"></path>
+                          <path d="M691.712 391.338667m-63.488 0a63.488 63.488 0 1 0 126.976 0 63.488 63.488 0 1 0-126.976 0Z" fill="#040000" p-id="2974"></path>
+                          <path d="M271.36 605.354667c18.090667 128.170667 127.829333 226.816 260.949333 226.816s242.858667-98.645333 260.949334-226.816H271.36z" fill="#FFFFFF" p-id="2975"></path>
+                          <path d="M532.309333 849.237333c-68.096 0-133.802667-24.746667-184.832-69.632-50.517333-44.373333-83.626667-105.472-93.013333-171.861333l-2.730667-19.456h561.322667l-2.730667 19.456c-9.386667 66.389333-42.325333 127.488-93.013333 171.861333-51.2 44.885333-116.906667 69.632-185.002667 69.632zM291.84 622.421333c24.917333 111.104 125.098667 192.682667 240.469333 192.682667s215.552-81.578667 240.469334-192.682667H291.84z" fill="#080103" p-id="2976"></path>
+                        </svg>
+                    {% endcase %}
                   </label>
                 {% endfor %}
               </div>
@@ -569,7 +712,10 @@
 
             <!-- Email Input -->
             <div>
-              <label for="feedback_email" class="enhanced-form-label">{{ email_label_text | escape }}<span class="required-asterisk">*</span></label>
+              <label for="feedback_email" class="enhanced-form-label">
+                {{- email_label_text | escape -}}
+                <span class="required-asterisk">*</span></label
+              >
               <input
                 type="email"
                 id="feedback_email"
@@ -594,7 +740,7 @@
     formContainer: null,
     form: null,
     submitBtn: null,
-    
+
     // Initialize
     init() {
       this.modal = document.getElementById('feedbackModal');
@@ -602,38 +748,43 @@
       this.formContainer = document.getElementById('feedback-form-container');
       this.form = document.getElementById('feedback-form');
       this.submitBtn = document.getElementById('feedback-submit');
-      
+
       this.bindEvents();
-      
+
       // Check if form was just submitted
       this.checkSubmissionStatus();
     },
-    
+
     // Check submission status
     checkSubmissionStatus() {
       // Method 1: Check URL parameters
       const urlParams = new URLSearchParams(window.location.search);
       const contactFormSubmitted = urlParams.get('contact_posted');
-      
+
       // Method 2: Check localStorage flag
       const feedbackSubmitted = localStorage.getItem('feedback_form_submitted');
-      
+
       // Method 3: Check if page has Shopify success message
-      const shopifySuccessMessage = document.querySelector('.form-success, [data-form-success], .contact-form .success');
-      
+      const shopifySuccessMessage = document.querySelector(
+        '.form-success, [data-form-success], .contact-form .success'
+      );
+
       // New: Check if on verification or error page
       const isVerificationPage = this.isVerificationOrErrorPage();
-      
+
       // Only show popup if not on verification page and actually successful
-      if (!isVerificationPage && (contactFormSubmitted === 'true' || feedbackSubmitted === 'true' || shopifySuccessMessage)) {
+      if (
+        !isVerificationPage &&
+        (contactFormSubmitted === 'true' || feedbackSubmitted === 'true' || shopifySuccessMessage)
+      ) {
         // Delay showing success popup to ensure page is fully loaded
         setTimeout(() => {
           this.showSubmissionSuccess();
         }, 500);
-        
+
         // Clear localStorage flag
         localStorage.removeItem('feedback_form_submitted');
-        
+
         // Clear URL parameter (optional)
         if (contactFormSubmitted === 'true') {
           const newUrl = window.location.pathname + window.location.hash;
@@ -641,24 +792,30 @@
         }
       }
     },
-    
+
     // Check if on verification or error page
     isVerificationOrErrorPage() {
       // Check page title or URL for verification-related keywords
       const pageTitle = document.title.toLowerCase();
       const currentUrl = window.location.href.toLowerCase();
-      
+
       // More specific verification page identifiers
       const verificationKeywords = [
-        'verify', 'verification', 'captcha', 'recaptcha', 'challenge',
-        'security', 'robot', 'human'
+        'verify',
+        'verification',
+        'captcha',
+        'recaptcha',
+        'challenge',
+        'security',
+        'robot',
+        'human',
       ];
-      
+
       // Check if contains verification keywords
-      const hasVerificationKeywords = verificationKeywords.some(keyword => 
-        pageTitle.includes(keyword) || currentUrl.includes(keyword)
+      const hasVerificationKeywords = verificationKeywords.some(
+        (keyword) => pageTitle.includes(keyword) || currentUrl.includes(keyword)
       );
-      
+
       // Check if has verification-related DOM elements
       const hasVerificationElements = !!(
         document.querySelector('.g-recaptcha') ||
@@ -669,25 +826,25 @@
         document.querySelector('iframe[src*="recaptcha"]') ||
         document.querySelector('iframe[src*="captcha"]')
       );
-      
+
       // Check if has visible error messages (not hidden form validation errors)
       const visibleErrorMessages = Array.from(
         document.querySelectorAll('.form-errors, .error-message, .contact-form .errors, [data-form-errors]')
-      ).some(el => {
+      ).some((el) => {
         const style = window.getComputedStyle(el);
         return style.display !== 'none' && style.visibility !== 'hidden' && el.offsetHeight > 0;
       });
-      
+
       // Only return true if we have strong evidence of verification/error page
       return hasVerificationKeywords || hasVerificationElements || visibleErrorMessages;
     },
-    
+
     // Show submission success popup
     showSubmissionSuccess() {
       this.open();
       this.showSuccess();
     },
-    
+
     // Bind events
     bindEvents() {
       // Feedback button click event
@@ -695,13 +852,13 @@
       if (feedbackButton) {
         feedbackButton.addEventListener('click', () => this.open());
       }
-      
+
       // Close button event
       const closeBtn = this.modal?.querySelector('.modal__close-btn');
       if (closeBtn) {
         closeBtn.addEventListener('click', () => this.close());
       }
-      
+
       // Click background to close
       if (this.modal) {
         this.modal.addEventListener('click', (e) => {
@@ -710,7 +867,7 @@
           }
         });
       }
-      
+
       // Form submit event
       if (this.form) {
         this.form.addEventListener('submit', (e) => {
@@ -718,33 +875,33 @@
             e.preventDefault();
             return false;
           }
-          
+
           // If validation passes, prepare form data and allow native submission
           this.prepareFormSubmission();
           this.setLoadingState(true);
-          
+
           // Set localStorage flag indicating form is about to be submitted
           localStorage.setItem('feedback_form_submitted', 'true');
-          
+
           // Allow form to submit normally to Shopify contact endpoint
           return true;
         });
       }
-      
+
       // Rating selection event
       const ratingInputs = this.form?.querySelectorAll('input[name="contact[rating]"]');
       if (ratingInputs) {
-        ratingInputs.forEach(input => {
+        ratingInputs.forEach((input) => {
           input.addEventListener('change', () => this.clearError('rating-error'));
         });
       }
-      
+
       // Email input event
       const emailInput = document.getElementById('feedback_email');
       if (emailInput) {
         emailInput.addEventListener('input', () => this.clearError('email-error'));
       }
-      
+
       // ESC key to close
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && this.modal?.hasAttribute('open')) {
@@ -752,14 +909,14 @@
         }
       });
     },
-    
+
     // Open modal
     open() {
       if (this.modal) {
         this.modal.setAttribute('open', '');
         this.hideSuccess();
         this.clearAllErrors();
-        
+
         // Focus on first input element
         setTimeout(() => {
           const firstInput = this.form?.querySelector('input[type="radio"]');
@@ -769,55 +926,55 @@
         }, 200);
       }
     },
-    
+
     // Close modal
     close() {
       if (this.modal) {
         this.modal.removeAttribute('open');
       }
     },
-    
+
     // Validate form
     validateForm() {
       let isValid = true;
-      
+
       // Validate rating
       const ratingSelected = this.form?.querySelector('input[name="contact[rating]"]:checked');
       if (!ratingSelected) {
         this.showError('rating-error');
         isValid = false;
       }
-      
+
       // Validate email
       const emailInput = document.getElementById('feedback_email');
       if (emailInput) {
         const emailValue = emailInput.value.trim();
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        
+
         if (!emailValue || !emailRegex.test(emailValue)) {
           this.showError('email-error');
           isValid = false;
         }
       }
-      
+
       return isValid;
     },
-    
+
     // Prepare form submission data
     prepareFormSubmission() {
       const rating = this.form?.querySelector('input[name="contact[rating]"]:checked')?.value;
       const message = document.getElementById('feedback_message')?.value || '';
       const email = document.getElementById('feedback_email')?.value;
-      
+
       // Build complete message content
       const fullMessage = this.buildEmailMessage(rating, message, email);
-      
+
       // Update hidden fields and message field
       let subjectField = this.form.querySelector('input[name="contact[subject]"]');
       if (subjectField) {
         subjectField.value = `[FEEDBACK] User Experience Feedback - ${window.location.hostname}`;
       }
-      
+
       // Create or update body field (Shopify contact form uses body instead of message)
       let bodyField = this.form.querySelector('input[name="contact[body]"]');
       if (!bodyField) {
@@ -827,7 +984,7 @@
         this.form.appendChild(bodyField);
       }
       bodyField.value = fullMessage;
-      
+
       // Ensure name field exists (required by Shopify)
       let nameField = this.form.querySelector('input[name="contact[name]"]');
       if (!nameField) {
@@ -837,7 +994,7 @@
         nameField.value = 'Website Feedback User';
         this.form.appendChild(nameField);
       }
-      
+
       // Add success redirect parameter
       let redirectField = this.form.querySelector('input[name="return_to"]');
       if (!redirectField) {
@@ -849,7 +1006,7 @@
       // Redirect to current page with success parameter
       redirectField.value = window.location.pathname + '?contact_posted=true' + window.location.hash;
     },
-    
+
     // Show error message
     showError(errorId) {
       const errorElement = document.getElementById(errorId);
@@ -857,7 +1014,7 @@
         errorElement.classList.add('show');
       }
     },
-    
+
     // Clear error message
     clearError(errorId) {
       const errorElement = document.getElementById(errorId);
@@ -865,55 +1022,55 @@
         errorElement.classList.remove('show');
       }
     },
-    
+
     // Clear all error messages
     clearAllErrors() {
       const errorElements = this.form?.querySelectorAll('.error-message');
       if (errorElements) {
-        errorElements.forEach(element => {
+        errorElements.forEach((element) => {
           element.classList.remove('show');
         });
       }
     },
-    
+
     // Build email message content
     buildEmailMessage(rating, userMessage, email) {
       const ratingText = this.getRatingText(rating);
       const timestamp = new Date().toLocaleString();
       const currentUrl = window.location.href;
-      
+
       let message = `User Experience Feedback\n\n`;
       message += `Rating: ${rating}/5 (${ratingText})\n`;
       message += `User Email: ${email}\n`;
       message += `Submission Time: ${timestamp}\n`;
       message += `Page URL: ${currentUrl}\n\n`;
-      
+
       if (userMessage.trim()) {
         message += `User Message:\n${userMessage}\n\n`;
       }
-      
+
       message += `---\nThis email was automatically sent by the website feedback system`;
-      
+
       return message;
     },
-    
+
     // Get rating text
     getRatingText(rating) {
       const ratingTexts = {
-        '1': 'Very Dissatisfied',
-        '2': 'Dissatisfied', 
-        '3': 'Neutral',
-        '4': 'Satisfied',
-        '5': 'Very Satisfied'
+        1: 'Very Dissatisfied',
+        2: 'Dissatisfied',
+        3: 'Neutral',
+        4: 'Satisfied',
+        5: 'Very Satisfied',
       };
       return ratingTexts[rating] || 'Unknown';
     },
-    
+
     // Set loading state
     setLoadingState(isLoading, originalText = '') {
       if (this.submitBtn) {
         this.submitBtn.disabled = isLoading;
-        
+
         if (isLoading) {
           this.submitBtn.classList.add('loading');
           this.submitBtn.textContent = 'Submitting...';
@@ -923,13 +1080,13 @@
         }
       }
     },
-    
+
     // Show success message
     showSuccess() {
       if (this.successMessage && this.formContainer) {
         this.successMessage.classList.add('show');
         this.formContainer.style.display = 'none';
-        
+
         setTimeout(() => {
           const closeBtn = this.successMessage.querySelector('.feedback-success-close');
           if (closeBtn) {
@@ -938,7 +1095,7 @@
         }, 100);
       }
     },
-    
+
     // Hide success message
     hideSuccess() {
       if (this.successMessage && this.formContainer) {
@@ -946,7 +1103,7 @@
         this.formContainer.style.display = 'block';
       }
     },
-    
+
     // Reset form
     resetForm() {
       if (this.form) {
@@ -954,20 +1111,20 @@
         this.clearAllErrors();
       }
     },
-    
+
     // Close success message
     closeSuccess() {
       this.close();
-    }
+    },
   };
-  
+
   // Ensure initialization after DOM is loaded
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => FeedbackModal.init());
   } else {
     FeedbackModal.init();
   }
-  
+
   // Export to global scope
   window.FeedbackModal = FeedbackModal;
 </script>

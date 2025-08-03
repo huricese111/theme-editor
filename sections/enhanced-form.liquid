@@ -1,3 +1,43 @@
+{%- comment -%}
+  Enhanced Form Section
+  
+  This is a comprehensive, multilingual contact form component for Shopify themes.
+  
+  Features:
+  - Multi-language support (English, German, French, Finnish)
+  - Flexible form field types including:
+    * Personal information (first name, last name, email, phone)
+    * Address fields (street, city, state/province, postal code, country)
+    * Company information
+    * Custom text inputs and textareas
+    * Dropdown selectors with custom options
+    * Checkbox groups and radio button groups
+    * Date and time pickers
+    * File upload capabilities
+  - Responsive layout with column options
+  - Form validation and error handling
+  - Success message display
+  - Email routing to custom recipients
+  - Automatic email notifications
+  - Customizable styling and animations
+  - Admin-configurable field requirements
+  - Support for placeholder text and labels
+  
+  Dependencies:
+  - enhanced-form.css (stylesheet)
+  - enhanced-form.js (JavaScript functionality)
+  - animation-attrs snippet (for animations)
+  - form-errors snippet (for error display)
+  
+  Usage:
+  This section can be added to any page template and configured through
+  the Shopify theme customizer. Form submissions are processed through
+  Shopify's contact form system.
+  
+  Author: Hepha Theme
+  Version: Enhanced Form v2.0
+{%- endcomment -%}
+
 {{ 'enhanced-form.css' | asset_url | stylesheet_tag }}
 
 <section class="enhanced-form-section" id="enhanced-form-{{ section.id }}">
