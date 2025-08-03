@@ -8,6 +8,11 @@
     --feedback-z-index-modal: 9999;
     --feedback-z-index-success: 10000;
     --feedback-transition: all 0.3s ease;
+    --modal-overlay-color: 0, 0, 0;
+    --modal-overlay-opacity: 0.5;
+    --modal-border-radius: 8px;
+    --gutter: 20px;
+    --btn-border-radius: 4px;
   }
 
   .feedback-button-black {
@@ -42,59 +47,233 @@
     outline-offset: 2px;
   }
 
-  .modal-feedback {
-    display: none;
+  /* 使用原生模态框样式 */
+  .modal {
+    visibility: hidden;
+    z-index: 8002;
+    transition: visibility 0s 0.4s, background-color 0.3s ease 0.1s;
+    background-color: rgba(var(--modal-overlay-color)/0);
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: var(--feedback-modal-bg);
+    display: flex;
     justify-content: center;
     align-items: center;
-    z-index: var(--feedback-z-index-modal);
+  }
+  
+  .modal[open] {
+    visibility: visible;
+    transition-delay: 0s;
+    background-color: rgba(var(--modal-overlay-color)/var(--modal-overlay-opacity));
+  }
+
+  .modal__window {
+    width: 100%;
+    max-width: 540px;
+    min-height: 240px;
+    max-height: calc(100dvh - var(--gutter) * 2);
+    margin: var(--gutter);
+    overflow: auto;
+    transform: scale(0.8);
+    transition: transform 0.15s ease-in 0s, opacity 0.15s 0s;
+    border-radius: var(--modal-border-radius);
     opacity: 0;
-    transition: opacity 0.3s ease;
-    padding: 20px;
-    box-sizing: border-box;
-  }
-
-  .modal-content-feedback {
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
     background-color: white;
-    padding: 20px;
-    border-radius: var(--feedback-border-radius);
-    width: 540px;
-    max-width: 90vw;
-    text-align: left;
     position: relative;
-    transform: translateY(-20px);
-    transition: transform 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    height: auto;
-    min-height: 200px;
-    max-height: 90vh;
-    overflow: hidden;
+  }
+  
+  .modal[open] .modal__window {
+    transform: scale(1);
+    transition: transform 0.15s ease-out 0.1s, opacity 0.15s 0.1s;
+    opacity: 1;
   }
 
-  .pifyform {
-    margin: 0;
-    flex: 1;
+  .modal__close-btn {
+    z-index: 1;
+    top: 10px;
+    right: 10px;
+    padding: 10px;
+    border-radius: var(--btn-border-radius);
+    background-color: transparent;
+    color: currentColor;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    font-size: 24px;
+    line-height: 1;
+    width: 44px;
+    height: 44px;
     display: flex;
-    flex-direction: column;
-    min-height: 300px;
+    align-items: center;
+    justify-content: center;
   }
 
-  .pifyform iframe {
-    width: 100% !important;
-    border: none !important;
+  .modal__content {
+    padding: 64px var(--gutter) var(--gutter);
+  }
+
+  .feedback-success-message {
+    display: none;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .feedback-success-message.show {
     display: block;
-    height: 400px;
-    min-height: 300px;
   }
 
-  /* 移动端适配 */
+  .feedback-success-message h3 {
+    margin: 0 0 1rem 0;
+    color: #28a745;
+  }
+
+  .feedback-success-message p {
+    margin: 0 0 1.5rem 0;
+  }
+
+  .feedback-success-close {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .feedback-form-title {
+    margin: 0 0 1.5rem 0;
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  .feedback-form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .enhanced-form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+
+  .required-asterisk {
+    color: #dc3545;
+    margin-left: 2px;
+  }
+
+
+.bubble-chat-modal label {
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: .8rem;
+  font-size: 1rem;
+}
+
+  .modal .feedback-form-container .enhanced-form-label {
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: .5rem;
+    font-size: 1.1rem; 
+    display: block;
+  }
+  
+  .modal .feedback-form-container .enhanced-form-label .required-asterisk {
+    color: #dc2626;
+    margin-left: 2px;
+  }
+  
+  .modal .feedback-form-container .enhanced-form-label {
+    line-height: 1.5;
+  }
+}
+
+  .rating-input.emoji {
+    display: flex;
+    gap: 0.5rem;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    justify-content: center;
+  }
+
+  .rating-input.emoji input[type="radio"] {
+    display: none;
+  }
+
+  .rating-input.emoji .emoji-rating {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    display: block;
+  }
+
+  .rating-input.emoji .emoji-rating:hover {
+    transform: scale(1.1);
+  }
+
+  .rating-input.emoji input[type="radio"]:checked + .emoji-rating {
+    transform: scale(1.2);
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+  }
+
+  .rating-input.emoji .emoji-svg {
+    width: 50px;
+    height: 50px;
+    display: block;
+  }
+
+  .feedback-form-container input[type="email"],
+  .feedback-form-container textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 1rem;
+  }
+
+  .feedback-form-container textarea {
+    min-height: 100px;
+    resize: vertical;
+  }
+
+.modal .feedback-form-container .feedback-submit-btn {
+  background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 6px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(45, 55, 72, 0.3);
+  text-transform: capitalize;
+  min-width: 200px;
+  width: 100%;
+}
+
+.modal .feedback-form-container .feedback-submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(45, 55, 72, 0.4);
+  background: linear-gradient(135deg, #1a202c 0%, #171923 100%);
+}
+
+.modal .feedback-form-container .feedback-submit-btn:active {
+  transform: translateY(0);
+}
+
+.modal .feedback-form-container .feedback-submit-btn:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
   @media (max-width: 768px) {
     .feedback-button-black {
       bottom: 10px;
@@ -103,154 +282,63 @@
       height: 45px;
     }
     
-    .modal-feedback {
-      padding: 10px;
+    .modal__window {
+      max-width: calc(100vw - 20px);
+      margin: 10px;
     }
     
-    .modal-content-feedback {
-      width: calc(100vw - 20px);
-      padding: 0;
-      max-height: 85vh;
+    .modal__content {
+      padding: 2rem 1rem 1rem;
+    }
+
+    .rating-input.emoji {
+      gap: 0.25rem;
+      padding: 1rem;
+    }
+    
+    .rating-input.emoji .emoji-svg {
+      width: 40px;
+      height: 40px;
     }
   }
 
   @media (max-width: 480px) {
-    .modal-feedback {
-      padding: 5px;
+    .modal__content {
+      padding: 1.5rem 0.75rem 0.75rem;
     }
     
-    .modal-content-feedback {
-      width: calc(100vw - 10px);
-      padding: 0;
-      max-height: 80vh;
-    }
-    
-    .close-button {
+    .modal__close-btn {
       top: 5px;
       right: 5px;
       font-size: 20px;
+      width: 36px;
+      height: 36px;
     }
-  }
 
-  .modal-feedback.show {
-    opacity: 1;
-  }
-
-  .modal-feedback.show .modal-content-feedback {
-    transform: translateY(0);
-  }
-
-  .modal-content-feedback p {
-    font-weight: bold;
-    font-size: 18px;
-    margin: 0 0 10px 0;
-  }
-
-  .modal-content-feedback .selecting {
-    font-size: 30px;
-  }
-
-  .close-button {
-    cursor: pointer;
-    color: var(--feedback-primary-color);
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 24px;
-    padding: 5px;
-    min-width: 44px;
-    min-height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    transition: var(--feedback-transition);
-    z-index: 1;
-  }
-
-  .close-button:hover {
-    background-color: #f0f0f0;
-  }
-
-  .close-button:focus {
-    outline: 2px solid var(--feedback-primary-color);
-    outline-offset: 2px;
-  }
-
-  .success-message {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 20px;
-    border-radius: var(--feedback-border-radius);
-    text-align: center;
-    z-index: var(--feedback-z-index-success);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  }
-
-  .success-message button {
-    background-color: var(--feedback-primary-color);
-    color: var(--feedback-text-color);
-    border: none;
-    padding: 10px 20px;
-    border-radius: var(--feedback-border-radius);
-    cursor: pointer;
-    transition: var(--feedback-transition);
-  }
-
-  .success-message button:hover {
-    background-color: #333;
-  }
-
-  .feedback-error {
-    background-color: #fee;
-    color: #c33;
-    padding: 10px;
-    border-radius: var(--feedback-border-radius);
-    margin: 10px 0;
-    border: 1px solid #fcc;
-  }
-
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
-
-  .pifyform.formloading iframe {
-    visibility: hidden !important;
-  }
-  
-  .pifyform.formloading {
-    background-image: url(https://form-builder.pifyapp.com/assets/images/loading.gif?v=4.6);
-    background-position: center 30px;
-    background-size: 30px 30px;
-    background-repeat: no-repeat;
-    min-height: 100px;
+    .rating-input.emoji {
+      gap: 0.125rem;
+      padding: 0.75rem;
+    }
+    
+    .rating-input.emoji .emoji-svg {
+      width: 35px;
+      height: 35px;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
     .feedback-button-black,
-    .modal-feedback,
-    .modal-content-feedback,
-    .close-button,
-    .success-message button {
+    .modal,
+    .modal__window,
+    .modal__close-btn,
+    .feedback-submit-btn {
       transition: none;
     }
   }
 </style>
 
 <button class="feedback-button-black" 
-        onclick="FeedbackModal.open()" 
+        id="feedbackButton"
         aria-label="Open feedback form"
         role="button"
         tabindex="0">
@@ -271,296 +359,280 @@
   </svg>
 </button>
 
-<div class="modal-feedback" 
-     id="feedbackModal" 
-     role="dialog" 
-     aria-modal="true" 
-     aria-labelledby="feedback-title">
-  <div class="modal-content-feedback">
-    <h2 id="feedback-title" class="sr-only">User Feedback Form</h2>
-    <span class="close-button" 
-          onclick="FeedbackModal.close()" 
-          aria-label="Close feedback form"
-          role="button"
-          tabindex="0">&times;</span>
+<modal-dialog class="modal" 
+              id="feedbackModal" 
+              role="dialog" 
+              aria-modal="true" 
+              aria-labelledby="feedback-title">
+  <div class="modal__window">
+    <button type="button" class="modal__close-btn js-close-modal" 
+            aria-label="Close feedback form">
+      &times;
+    </button>
 
-    <div id="feedback-form-container">
-      {% if request.locale.iso_code == 'de' %}
-        <div id="pifyform-11904" class="pifyform"></div>
-      {% elsif request.locale.iso_code == 'fr' %}
-        <div id="pifyform-11905" class="pifyform"></div>
-      {% elsif request.locale.iso_code == 'fi' %}
-        <div id="pifyform-11906" class="pifyform"></div>
-      {% else %}
-        <div id="pifyform-11903" class="pifyform"></div>
-      {% endif %}
+    <div class="modal__content">
+      <div class="feedback-success-message" id="feedbackSuccessMessage">
+        {%- liquid
+          assign success_title_text = 'Thank you!'
+          assign success_message_text = 'Your feedback has been submitted successfully.'
+          assign close_text = 'Close'
+          
+          if request.locale.iso_code == 'de'
+            assign success_title_text = 'Vielen Dank!'
+            assign success_message_text = 'Ihr Feedback wurde erfolgreich übermittelt.'
+            assign close_text = 'Schließen'
+          elsif request.locale.iso_code == 'fr'
+            assign success_title_text = 'Merci!'
+            assign success_message_text = 'Vos commentaires ont été soumis avec succès.'
+            assign close_text = 'Fermer'
+          elsif request.locale.iso_code == 'fi'
+            assign success_title_text = 'Kiitos!'
+            assign success_message_text = 'Palautteesi on lähetetty onnistuneesti.'
+            assign close_text = 'Sulje'
+          endif
+        -%}
+        <h3>{{ success_title_text | escape }}</h3>
+        <p>{{ success_message_text | escape }}</p>
+        <button class="feedback-success-close" onclick="FeedbackModal.closeSuccess()">{{ close_text }}</button>
+      </div>
+
+      <div id="feedback-form-container">
+        {%- liquid
+          assign form_title_text = 'How would you rate your experience?'
+          assign rating_label_text = 'Rating'
+          assign message_label_text = 'Tell us about your experience'
+          assign email_label_text = 'E-mail'
+          assign submit_text = 'Submit'
+          assign message_placeholder = 'Please type here...'
+          
+          if request.locale.iso_code == 'de'
+            assign form_title_text = 'Wie würden Sie Ihre Erfahrung bewerten?'
+            assign rating_label_text = 'Bewertung'
+            assign message_label_text = 'Erzählen Sie uns von Ihrer Erfahrung'
+            assign email_label_text = 'E-Mail'
+            assign submit_text = 'Senden'
+            assign message_placeholder = 'Bitte hier eingeben...'
+          elsif request.locale.iso_code == 'fr'
+            assign form_title_text = 'Comment évalueriez-vous votre expérience?'
+            assign rating_label_text = 'Évaluation'
+            assign message_label_text = 'Parlez-nous de votre expérience'
+            assign email_label_text = 'E-mail'
+            assign submit_text = 'Soumettre'
+            assign message_placeholder = 'Veuillez taper ici...'
+          elsif request.locale.iso_code == 'fi'
+            assign form_title_text = 'Miten arvioisit kokemuksesi?'
+            assign rating_label_text = 'Arvosana'
+            assign message_label_text = 'Kerro meille kokemuksestasi'
+            assign email_label_text = 'Sähköposti'
+            assign submit_text = 'Lähetä'
+            assign message_placeholder = 'Kirjoita tähän...'
+          endif
+        -%}
+        
+        <h2 id="feedback-title" class="feedback-form-title">{{ form_title_text | escape }}</h2>
+        
+        {% form 'contact', novalidate: true, id: 'feedback-form' %}
+          <input type="hidden" name="contact[subject]" value="[FEEDBACK] User Experience Feedback - {{ shop.name }}">
+          <input type="hidden" name="contact[message_intro]" value="You have received new user feedback with the following details:">
+          
+          <div class="feedback-form-container">
+            <!-- Rating Input -->
+            <div>
+              <label class="enhanced-form-label">{{ rating_label_text | escape }}<span class="required-asterisk">*</span></label>
+              <div class="rating-input emoji" data-rating="0">
+                {% for i in (1..5) %}
+                  <input
+                    type="radio"
+                    id="feedback_rating_{{ i }}"
+                    name="contact[rating]"
+                    value="{{ i }}"
+                    required
+                  >
+                  <label for="feedback_rating_{{ i }}" class="emoji-rating" data-value="{{ i }}">
+                    {% case i %}
+                            {% when 1 %}
+                              <svg t="1754143057557" class="icon emoji-svg" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2045" xmlns:xlink="http://www.w3.org/1999/xlink" width="70" height="70">
+                                <path d="M514.389333 522.069333m-486.741333 0a486.741333 486.741333 0 1 0 973.482667 0 486.741333 486.741333 0 1 0-973.482667 0Z" fill="#040000" p-id="2046"></path>
+                                <path d="M514.389333 522.069333m-444.245333 0a444.245333 444.245333 0 1 0 888.490667 0 444.245333 444.245333 0 1 0-888.490667 0Z" fill="#F3C81E" p-id="2047"></path>
+                                <path d="M360.618667 713.898667c22.698667-68.778667 87.381333-118.442667 163.669333-118.442667 71.509333 0 132.778667 43.52 158.890667 105.472 12.629333 2.218667 25.088 4.778667 37.034666 7.509333-25.429333-84.138667-103.594667-145.408-195.925333-145.408-98.474667 0-180.736 69.461333-200.362667 162.133334 11.946667-4.096 24.064-7.850667 36.693334-11.264z" fill="#040000" p-id="2048"></path>
+                                <path d="M384.512 958.805333l-94.549333-53.077333V426.666667h94.549333z" fill="#4ABECD" p-id="2049"></path>
+                                <path d="M401.578667 987.989333l-128.682667-72.192V409.6h128.682667v578.389333z m-94.549334-92.330666l60.416 33.962666V443.733333h-60.416v451.925334z" fill="#040000" p-id="2050"></path>
+                                <path d="M745.130667 905.728l-94.549334 49.664V426.666667h94.549334z" fill="#4ABECD" p-id="2051"></path>
+                                <path d="M633.514667 983.552V409.6h128.682666v506.368l-128.682666 67.584z m34.133333-539.818667v483.498667l60.416-31.744V443.733333h-60.416zM443.562667 437.248H224.085333c-1.024 0-1.877333-0.853333-1.877333-1.877333v-31.232c0-1.024 0.853333-1.877333 1.877333-1.877334h219.477334c1.024 0 1.877333 0.853333 1.877333 1.877334v31.232c0 1.194667-0.853333 1.877333-1.877333 1.877333z" fill="#040000" p-id="2052"></path>
+                                <path d="M804.522667 437.248H585.045333c-1.024 0-1.877333-0.853333-1.877333-1.877333v-31.232c0-1.024 0.853333-1.877333 1.877333-1.877334h219.477334c1.024 0 1.877333 0.853333 1.877333 1.877334v31.232c0 1.194667-0.853333 1.877333-1.877333 1.877333z" fill="#040000" p-id="2053"></path>
+                                <path d="M107.690667 611.157333C107.690667 352.085333 317.781333 141.994667 576.853333 141.994667c100.522667 0 193.536 31.744 269.994667 85.504-81.408-91.818667-200.192-149.674667-332.458667-149.674667-245.248 0-444.245333 198.826667-444.245333 444.245333 0 76.970667 19.626667 149.162667 53.930667 212.309334-10.581333-39.253333-16.384-80.554667-16.384-123.221334z" fill="#F6D85E" p-id="2054"></path>
+                              </svg>
+                            {% when 2 %}
+                              <svg t="1754143679176" class="icon emoji-svg" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2201" xmlns:xlink="http://www.w3.org/1999/xlink" width="70" height="70">
+                                <path d="M512 527.701333m-473.770667 0a473.770667 473.770667 0 1 0 947.541334 0 473.770667 473.770667 0 1 0-947.541334 0Z" fill="#040000" p-id="2202"></path>
+                                <path d="M512 527.701333m-432.298667 0a432.298667 432.298667 0 1 0 864.597334 0 432.298667 432.298667 0 1 0-864.597334 0Z" fill="#F3C81E" p-id="2203"></path>
+                                <path d="M116.224 614.570667c0-252.245333 204.458667-456.704 456.704-456.704 97.792 0 188.416 30.890667 262.656 83.285333C756.394667 151.893333 640.853333 95.402667 512 95.402667c-238.762667 0-432.298667 193.536-432.298667 432.298666 0 74.752 19.114667 145.237333 52.565334 206.677334-10.410667-38.229333-16.042667-78.336-16.042667-119.808z" fill="#F6D85E" p-id="2204"></path>
+                                <path d="M334.506667 421.205333m-63.317334 0a63.317333 63.317333 0 1 0 126.634667 0 63.317333 63.317333 0 1 0-126.634667 0Z" fill="#040000" p-id="2205"></path>
+                                <path d="M674.304 421.205333m-63.317333 0a63.317333 63.317333 0 1 0 126.634666 0 63.317333 63.317333 0 1 0-126.634666 0Z" fill="#040000" p-id="2206"></path>
+                                <path d="M537.941333 622.08c-110.250667 0-205.994667 62.464-253.781333 153.770667l41.130667 19.114666c40.618667-75.946667 120.490667-127.829333 212.650666-127.829333 88.746667 0 165.888 47.957333 207.872 119.296l38.741334-23.552c-50.005333-84.138667-141.653333-140.8-246.613334-140.8z" fill="#040000" p-id="2207"></path>
+                                <path d="M446.805333 714.752c0-68.096-112.128-166.570667-112.128-166.570667s-112.128 98.474667-112.128 166.570667 50.176 123.392 112.128 123.392c61.781333 0 112.128-55.296 112.128-123.392z" fill="#4ABECD" p-id="2208"></path>
+                                <path d="M334.506667 855.210667c-71.338667 0-129.194667-62.976-129.194667-140.458667 0-32.426667 20.309333-72.704 60.074667-119.808 28.501333-33.621333 56.661333-58.538667 57.856-59.562667l11.264-9.898666 11.264 9.898666c1.194667 1.024 29.354667 25.770667 57.856 59.562667 39.936 47.104 60.074667 87.381333 60.074666 119.808 0.170667 77.482667-57.856 140.458667-129.194666 140.458667z m0-283.989334c-34.304 32.426667-95.061333 99.328-95.061334 143.530667 0 58.709333 42.666667 106.325333 95.061334 106.325333s95.061333-47.786667 95.061333-106.325333c0.170667-44.202667-60.757333-111.104-95.061333-143.530667z" fill="#040000" p-id="2209"></path>
+                              </svg>
+                            {% when 3 %}
+                              <svg t="1754143766830" class="icon emoji-svg" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2663" xmlns:xlink="http://www.w3.org/1999/xlink" width="70" height="70">
+                                <path d="M499.712 532.821333m-464.042667 0a464.042667 464.042667 0 1 0 928.085334 0 464.042667 464.042667 0 1 0-928.085334 0Z" fill="#040000" p-id="2664"></path>
+                                <path d="M499.712 532.821333m-423.424 0a423.424 423.424 0 1 0 846.848 0 423.424 423.424 0 1 0-846.848 0Z" fill="#F3C81E" p-id="2665"></path>
+                                <path d="M112.128 617.984C112.128 371.029333 312.32 170.666667 559.274667 170.666667c95.744 0 184.490667 30.208 257.365333 81.578666C738.986667 164.693333 625.834667 109.568 499.712 109.568c-233.813333 0-423.424 189.610667-423.424 423.424 0 73.386667 18.602667 142.165333 51.370667 202.410667-10.069333-37.546667-15.530667-76.8-15.530667-117.418667z" fill="#F6D85E" p-id="2666"></path>
+                                <path d="M314.368 395.434667c-41.472 0-75.093333 33.621333-75.093333 75.093333H213.333333c0-55.808 45.226667-101.034667 101.034667-101.034667s101.034667 45.226667 101.034667 101.034667h-25.941334c0-41.472-33.621333-75.093333-75.093333-75.093333zM651.946667 393.216c-41.472 0-75.093333 33.621333-75.093334 75.093333h-25.941333c0-55.808 45.226667-101.034667 101.034667-101.034666s101.034667 45.226667 101.034666 101.034666H727.04c0-41.472-33.621333-75.093333-75.093333-75.093333z" fill="#040000" p-id="2667"></path>
+                                <path d="M308.053333 610.133333c13.312 103.253333 93.866667 182.784 191.658667 182.784S678.058667 713.386667 691.370667 610.133333H308.053333z" fill="#FFFFFF" p-id="2668"></path>
+                                <path d="M499.712 809.984c-51.370667 0-100.864-20.48-139.264-57.514667-37.717333-36.352-62.293333-86.016-69.290667-140.288l-2.56-19.285333h422.058667l-2.56 19.285333c-6.997333 54.101333-31.573333 103.936-69.290667 140.288-38.229333 37.205333-87.722667 57.514667-139.093333 57.514667zM328.362667 627.2c19.285333 86.016 89.941333 148.650667 171.349333 148.650667s152.064-62.634667 171.349333-148.650667H328.362667z" fill="#080103" p-id="2669"></path>
+                                <path d="M988.330667 344.234667c0-65.024-107.008-158.890667-107.008-158.890667s-107.008 93.866667-107.008 158.890667 47.957333 117.76 107.008 117.76 107.008-52.736 107.008-117.76z" fill="#4ABECD" p-id="2670"></path>
+                                <path d="M881.322667 479.061333c-68.437333 0-124.074667-60.416-124.074667-134.826666 0-31.061333 19.285333-69.802667 57.514667-114.858667 27.306667-32.256 54.101333-55.808 55.296-56.832l11.264-9.898667 11.264 9.898667c1.194667 1.024 27.989333 24.746667 55.296 56.832 38.229333 45.056 57.514667 83.797333 57.514666 114.858667 0 74.410667-55.637333 134.826667-124.074666 134.826666z m0-270.506666c-32.597333 31.061333-89.941333 94.208-89.941334 135.68 0 55.466667 40.277333 100.693333 89.941334 100.693333s89.941333-45.226667 89.941333-100.693333c0-41.472-57.344-104.618667-89.941333-135.68z" fill="#040000" p-id="2671"></path>
+                              </svg>
+                            {% when 4 %}
+                              <svg t="1754143799149" class="icon emoji-svg" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2818" xmlns:xlink="http://www.w3.org/1999/xlink" width="70" height="70">
+                                <path d="M512 524.288m-480.597333 0a480.597333 480.597333 0 1 0 961.194666 0 480.597333 480.597333 0 1 0-961.194666 0Z" fill="#040000" p-id="2819"></path>
+                                <path d="M512 524.288m-438.613333 0a438.613333 438.613333 0 1 0 877.226666 0 438.613333 438.613333 0 1 0-877.226666 0Z" fill="#F3C81E" p-id="2820"></path>
+                                <path d="M110.421333 612.352c0-255.829333 207.36-463.36 463.36-463.36 99.328 0 191.146667 31.232 266.581334 84.48C759.978667 142.848 642.730667 85.674667 512 85.674667c-242.176 0-438.613333 196.437333-438.613333 438.613333 0 75.946667 19.285333 147.285333 53.248 209.578667-10.410667-38.741333-16.213333-79.36-16.213334-121.514667z" fill="#F6D85E" p-id="2821"></path>
+                                <path d="M315.904 384.341333c-43.008 0-77.824 34.816-77.824 77.824h-26.965333c0-57.856 46.933333-104.789333 104.789333-104.789333s104.789333 46.933333 104.789333 104.789333h-26.965333c0-43.008-34.816-77.824-77.824-77.824zM673.621333 384.341333c-43.008 0-77.824 34.816-77.824 77.824h-26.965333c0-57.856 46.933333-104.789333 104.789333-104.789333s104.789333 46.933333 104.789334 104.789333h-26.965334c0-43.008-34.816-77.824-77.824-77.824zM515.754667 805.546667c-111.957333 0-209.066667-63.317333-257.536-155.989334l41.813333-19.456c41.301333 77.141333 122.197333 129.706667 215.722667 129.706667 89.941333 0 168.277333-48.64 210.773333-121.002667l39.253333 23.893334c-50.517333 85.504-143.530667 142.848-250.026666 142.848z" fill="#040000" p-id="2822"></path>
+                              </svg>
+                            {% when 5 %}
+                              <svg t="1754143802527" class="icon emoji-svg" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2969" xmlns:xlink="http://www.w3.org/1999/xlink" width="70" height="70">
+                                <path d="M521.728 512m-474.112 0a474.112 474.112 0 1 0 948.224 0 474.112 474.112 0 1 0-948.224 0Z" fill="#040000" p-id="2970"></path>
+                                <path d="M521.728 512m-432.64 0a432.64 432.64 0 1 0 865.28 0 432.64 432.64 0 1 0-865.28 0Z" fill="#F3C81E" p-id="2971"></path>
+                                <path d="M125.610667 598.869333C125.610667 346.453333 330.24 141.824 582.656 141.824c97.962667 0 188.586667 30.890667 262.997333 83.285333C766.293333 135.68 650.752 79.36 521.728 79.36 282.794667 79.36 89.088 273.066667 89.088 512c0 74.922667 19.114667 145.408 52.565333 206.848-10.410667-38.229333-16.042667-78.506667-16.042666-119.978667z" fill="#F6D85E" p-id="2972"></path>
+                                <path d="M351.744 391.338667m-63.488 0a63.488 63.488 0 1 0 126.976 0 63.488 63.488 0 1 0-126.976 0Z" fill="#040000" p-id="2973"></path>
+                                <path d="M691.712 391.338667m-63.488 0a63.488 63.488 0 1 0 126.976 0 63.488 63.488 0 1 0-126.976 0Z" fill="#040000" p-id="2974"></path>
+                                <path d="M271.36 605.354667c18.090667 128.170667 127.829333 226.816 260.949333 226.816s242.858667-98.645333 260.949334-226.816H271.36z" fill="#FFFFFF" p-id="2975"></path>
+                                <path d="M532.309333 849.237333c-68.096 0-133.802667-24.746667-184.832-69.632-50.517333-44.373333-83.626667-105.472-93.013333-171.861333l-2.730667-19.456h561.322667l-2.730667 19.456c-9.386667 66.389333-42.325333 127.488-93.013333 171.861333-51.2 44.885333-116.906667 69.632-185.002667 69.632zM291.84 622.421333c24.917333 111.104 125.098667 192.682667 240.469333 192.682667s215.552-81.578667 240.469334-192.682667H291.84z" fill="#080103" p-id="2976"></path>
+                              </svg>
+                          {% endcase %}
+                  </label>
+                {% endfor %}
+              </div>
+            </div>
+
+            <!-- Message Input -->
+            <div>
+              <label for="feedback_message" class="enhanced-form-label">{{ message_label_text | escape }}</label>
+              <textarea
+                id="feedback_message"
+                name="contact[message]"
+                placeholder="{{ message_placeholder | escape }}"
+                rows="4"
+              ></textarea>
+            </div>
+
+            <!-- Email Input -->
+            <div>
+              <label for="feedback_email" class="enhanced-form-label">{{ email_label_text | escape }}</label>
+              <input
+                type="email"
+                id="feedback_email"
+                name="contact[email]"
+                required
+              >
+            </div>
+
+            <button type="submit" class="feedback-submit-btn">{{ submit_text | escape }}</button>
+          </div>
+        {% endform %}
+      </div>
     </div>
   </div>
-</div>
-
-<div class="success-message" id="successMessage">
-  <p>Thank you for your feedback!</p>
-  <button onclick="FeedbackModal.closeSuccess()">Close</button>
-</div>
+</modal-dialog>
 
 <script>
+  // 使用原生模态框系统
   const FeedbackModal = {
-    config: {
-      formIds: {
-        'de': '11904',
-        'fr': '11905',
-        'fi': '11906',
-        'default': '11903'
-      },
-      selectors: {
-        modal: '#feedbackModal',
-        modalContent: '.modal-content-feedback',
-        button: '.feedback-button-black',
-        closeBtn: '.close-button',
-        successMsg: '#successMessage',
-        formContainer: '#feedback-form-container'
-      },
-      loadTimeout: 10000,
-      modalPadding: 40 // modal高度 = iframe高度 + 40px
-    },
-    
-    formLoaded: false,
-    currentLocale: '{{ request.locale.iso_code }}',
-    resizeObserver: null,
+    modal: null,
+    successMessage: null,
+    formContainer: null,
+    form: null,
     
     init() {
-      this.bindEvents();
-      this.setupKeyboardNavigation();
-      this.setupResizeObserver();
-    },
-    
-    setupResizeObserver() {
-      if ('ResizeObserver' in window) {
-        this.resizeObserver = new ResizeObserver((entries) => {
-          this.debounce(() => {
-            this.adjustModalHeight();
-          }, 100)();
-        });
-      }
-    },
-    
-    adjustModalHeight() {
-      const modalContent = document.querySelector(this.config.selectors.modalContent);
-      const pifyform = document.querySelector('.pifyform');
-      const iframe = pifyform ? pifyform.querySelector('iframe') : null;
+      this.modal = document.getElementById('feedbackModal');
+      this.successMessage = document.getElementById('feedbackSuccessMessage');
+      this.formContainer = document.getElementById('feedback-form-container');
+      this.form = document.getElementById('feedback-form');
       
-      if (!modalContent || !iframe) return;
-      
-      try {
-        const isMobile = window.innerWidth <= 768;
-        const viewportHeight = window.innerHeight;
-        
-        // 移动端使用更小的padding
-        const modalPadding = isMobile ? 20 : 40; // 移动端减少padding
-        
-        let iframeContentHeight = 400;
-        
-        try {
-          const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-          if (iframeDoc && iframeDoc.body) {
-            const bodyHeight = iframeDoc.body.scrollHeight;
-            const htmlHeight = iframeDoc.documentElement.scrollHeight;
-            iframeContentHeight = Math.max(bodyHeight, htmlHeight, isMobile ? 280 : 300);
-          }
-        } catch (e) {
-          iframeContentHeight = iframe.offsetHeight || (isMobile ? 350 : 400);
-        }
-        
-        iframe.style.height = iframeContentHeight + 'px';
-        
-        const finalModalHeight = iframeContentHeight + modalPadding;
-        const maxHeight = viewportHeight * (isMobile ? 0.8 : 0.9); // 移动端降低最大高度比例
-        
-        if (finalModalHeight <= maxHeight) {
-          modalContent.style.height = finalModalHeight + 'px';
-          modalContent.style.overflowY = 'hidden';
-        } else {
-          modalContent.style.height = maxHeight + 'px';
-          modalContent.style.overflowY = 'auto';
-          
-          const availableHeight = maxHeight - modalPadding;
-          iframe.style.height = Math.max(isMobile ? 250 : 300, availableHeight) + 'px';
-        }
-        
-      } catch (error) {
-        console.error('Error adjusting modal height:', error);
-        modalContent.style.height = isMobile ? '400px' : '500px';
-        if (iframe) {
-          iframe.style.height = isMobile ? '360px' : '460px';
-        }
-      }
-    },
-    
-    bindEvents() {
-      const modal = document.querySelector(this.config.selectors.modal);
-      if (modal) {
-        modal.addEventListener('click', (e) => {
-          if (e.target === modal) {
-            this.close();
-          }
-        });
+      // 绑定按钮事件
+      const feedbackButton = document.getElementById('feedbackButton');
+      if (feedbackButton) {
+        feedbackButton.addEventListener('click', () => this.open());
       }
       
-      window.addEventListener('resize', this.debounce(() => {
-        this.adjustModalHeight();
-      }, 250));
-    },
-    
-    setupKeyboardNavigation() {
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-          const modal = document.querySelector(this.config.selectors.modal);
-          if (modal && modal.style.display === 'flex') {
-            this.close();
-          }
-        }
-      });
-    },
-    
-    debounce(func, wait) {
-      let timeout;
-      return function executedFunction(...args) {
-        const later = () => {
-          clearTimeout(timeout);
-          func.apply(this, args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-      };
+      // 绑定表单提交事件
+      if (this.form) {
+        this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+      }
+      
+      // 绑定成功消息关闭事件
+      const successCloseBtn = this.successMessage?.querySelector('.feedback-success-close');
+      if (successCloseBtn) {
+        successCloseBtn.addEventListener('click', () => this.closeSuccess());
+      }
     },
     
     open() {
-      const modal = document.querySelector(this.config.selectors.modal);
-      if (!modal) return;
-      
-      modal.style.display = 'flex';
-      
-      setTimeout(() => {
-        modal.classList.add('show');
-      }, 10);
-      
-      const closeBtn = document.querySelector(this.config.selectors.closeBtn);
-      if (closeBtn) {
-        closeBtn.focus();
-      }
-      
-      if (!this.formLoaded) {
-        this.loadFeedbackForm();
-        this.formLoaded = true;
-      } else {
-        // 如果表单已加载，直接调整高度
-        setTimeout(() => {
-          this.adjustModalHeight();
-        }, 100);
+      if (this.modal) {
+        this.modal.setAttribute('open', '');
+        this.hideSuccess();
       }
     },
     
     close() {
-      const modal = document.querySelector(this.config.selectors.modal);
-      if (!modal) return;
+      if (this.modal) {
+        this.modal.removeAttribute('open');
+      }
+    },
+    
+    async handleSubmit(e) {
+      e.preventDefault();
       
-      modal.classList.remove('show');
+      const submitBtn = this.form.querySelector('.feedback-submit-btn');
+      const originalText = submitBtn.textContent;
       
-      setTimeout(() => {
-        modal.style.display = 'none';
-      }, 300);
+      try {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Submitting...';
+        
+        const formData = new FormData(this.form);
+        
+        const response = await fetch(this.form.action, {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
+        
+        if (response.ok) {
+          this.showSuccess();
+          this.form.reset();
+        } else {
+          throw new Error('Submission failed');
+        }
+      } catch (error) {
+        console.error('Form submission error:', error);
+        alert('There was an error submitting your feedback. Please try again.');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+      }
+    },
+    
+    showSuccess() {
+      if (this.successMessage && this.formContainer) {
+        this.successMessage.classList.add('show');
+        this.formContainer.style.display = 'none';
+      }
+    },
+    
+    hideSuccess() {
+      if (this.successMessage && this.formContainer) {
+        this.successMessage.classList.remove('show');
+        this.formContainer.style.display = 'block';
+      }
     },
     
     closeSuccess() {
-      const successMsg = document.querySelector(this.config.selectors.successMsg);
-      if (successMsg) {
-        successMsg.style.display = 'none';
-      }
-    },
-    
-    getFormId() {
-      return this.config.formIds[this.currentLocale] || this.config.formIds.default;
-    },
-    
-    loadFeedbackForm() {
-      try {
-        const formId = this.getFormId();
-        const containerId = `pifyform-${formId}`;
-        const container = document.getElementById(containerId);
-        
-        if (!container) {
-          console.error('Form container not found');
-          return;
-        }
-        
-        container.classList.add('formloading');
-        
-        this.createFormIframe(formId, container);
-        
-      } catch (error) {
-        console.error('Form loading error:', error);
-      }
-    },
-    
-    createFormIframe(formId, container) {
-      const iframe = document.createElement('iframe');
-      const iframeId = `form-iframe-${formId}`;
-      
-      iframe.src = `https://form-builder-an.pifyapp.com/form/s/${formId}`;
-      iframe.id = iframeId;
-      iframe.frameBorder = 0;
-      iframe.scrolling = 'no';
-      iframe.style.cssText = `
-        display: block;
-        width: 100%;
-        border: none;
-        overflow: hidden;
-        height: 400px;
-      `;
-      
-      iframe.onload = () => {
-        container.classList.remove('formloading');
-        
-        // 表单加载完成后调整高度
-        setTimeout(() => {
-          this.adjustModalHeight();
-          
-          // 开始监听iframe尺寸变化
-          if (this.resizeObserver) {
-            this.resizeObserver.observe(iframe);
-          }
-        }, 500);
-      };
-      
-      this.setupMessageListener(container, iframe, formId);
-      
-      container.appendChild(iframe);
-    },
-    
-    setupMessageListener(container, iframe, formId) {
-      const messageHandler = (event) => {
-        if (event.data && typeof event.data === 'string') {
-          let data = null;
-          try {
-            data = JSON.parse(event.data);
-          } catch (e) {
-            return;
-          }
-          
-          // 处理来自iframe的高度信息
-          if (data && data.height !== undefined) {
-            if (data.formId === undefined || `pifyform-${data.formId}` === container.id) {
-              iframe.style.height = data.height + 'px';
-              // 收到高度信息后立即调整modal高度
-              setTimeout(() => {
-                this.adjustModalHeight();
-              }, 50);
-            }
-          }
-        }
-      };
-      
-      window.addEventListener('message', messageHandler);
+      this.close();
     }
   };
   
@@ -569,11 +641,9 @@
     FeedbackModal.init();
   });
   
-  // 如果DOM已经加载完成
+  // 确保在页面加载后也能工作
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      FeedbackModal.init();
-    });
+    document.addEventListener('DOMContentLoaded', () => FeedbackModal.init());
   } else {
     FeedbackModal.init();
   }
