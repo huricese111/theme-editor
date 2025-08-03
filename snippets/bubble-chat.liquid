@@ -47,7 +47,6 @@
     outline-offset: 2px;
   }
 
-  /* 使用原生模态框样式 */
   .modal {
     visibility: hidden;
     z-index: 8002;
@@ -119,6 +118,7 @@
     display: none;
     text-align: center;
     padding: 2rem;
+    animation: fadeIn 0.3s ease-in;
   }
 
   .feedback-success-message.show {
@@ -128,25 +128,35 @@
   .feedback-success-message h3 {
     margin: 0 0 1rem 0;
     color: #28a745;
+    font-size: 1.5rem;
   }
 
   .feedback-success-message p {
     margin: 0 0 1.5rem 0;
+    color: #666;
+    line-height: 1.5;
   }
 
   .feedback-success-close {
     background-color: #007bff;
     color: white;
     border: none;
-    padding: 0.5rem 1rem;
+    padding: 0.75rem 1.5rem;
     border-radius: 4px;
     cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s ease;
+  }
+
+  .feedback-success-close:hover {
+    background-color: #0056b3;
   }
 
   .feedback-form-title {
     margin: 0 0 1.5rem 0;
     font-size: 1.5rem;
     text-align: center;
+    color: #333;
   }
 
   .feedback-form-container {
@@ -158,39 +168,15 @@
   .enhanced-form-label {
     display: block;
     margin-bottom: 0.5rem;
-    font-weight: 500;
+    font-weight: 600;
+    color: #374151;
+    font-size: 1.1rem;
   }
 
   .required-asterisk {
-    color: #dc3545;
-    margin-left: 2px;
-  }
-
-
-.bubble-chat-modal label {
-  font-weight: 600;
-  color: #374151;
-  margin-bottom: .8rem;
-  font-size: 1rem;
-}
-
-  .modal .feedback-form-container .enhanced-form-label {
-    font-weight: 600;
-    color: #374151;
-    margin-bottom: .5rem;
-    font-size: 1.1rem; 
-    display: block;
-  }
-  
-  .modal .feedback-form-container .enhanced-form-label .required-asterisk {
     color: #dc2626;
     margin-left: 2px;
   }
-  
-  .modal .feedback-form-container .enhanced-form-label {
-    line-height: 1.5;
-  }
-}
 
   .rating-input.emoji {
     display: flex;
@@ -234,6 +220,14 @@
     border-radius: 4px;
     font-family: inherit;
     font-size: 1rem;
+    transition: border-color 0.2s ease;
+  }
+
+  .feedback-form-container input[type="email"]:focus,
+  .feedback-form-container textarea:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
   }
 
   .feedback-form-container textarea {
@@ -241,39 +235,75 @@
     resize: vertical;
   }
 
-.modal .feedback-form-container .feedback-submit-btn {
-  background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
-  color: white;
-  border: none;
-  padding: 1rem 2rem;
-  border-radius: 6px;
-  font-size: 1.125rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(45, 55, 72, 0.3);
-  text-transform: capitalize;
-  min-width: 200px;
-  width: 100%;
-}
+  .feedback-submit-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s ease;
+    position: relative;
+  }
 
-.modal .feedback-form-container .feedback-submit-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(45, 55, 72, 0.4);
-  background: linear-gradient(135deg, #1a202c 0%, #171923 100%);
-}
+  .feedback-submit-btn:hover {
+    background-color: #0056b3;
+  }
 
-.modal .feedback-form-container .feedback-submit-btn:active {
-  transform: translateY(0);
-}
+  .feedback-submit-btn:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+  }
 
-.modal .feedback-form-container .feedback-submit-btn:disabled {
-  background: #6c757d;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-}
+  .feedback-submit-btn.loading {
+    color: transparent;
+  }
 
+  .feedback-submit-btn.loading::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 50%;
+    left: 50%;
+    margin-left: -8px;
+    margin-top: -8px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .error-message {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: none;
+  }
+
+  .error-message.show {
+    display: block;
+  }
+
+  /* 移动端适配 */
   @media (max-width: 768px) {
     .feedback-button-black {
       bottom: 10px;
@@ -334,6 +364,10 @@
     .feedback-submit-btn {
       transition: none;
     }
+    
+    .feedback-success-message {
+      animation: none;
+    }
   }
 </style>
 
@@ -374,20 +408,20 @@
       <div class="feedback-success-message" id="feedbackSuccessMessage">
         {%- liquid
           assign success_title_text = 'Thank you!'
-          assign success_message_text = 'Your feedback has been submitted successfully.'
+          assign success_message_text = 'Your feedback has been submitted successfully. We appreciate your input and will use it to improve our services.'
           assign close_text = 'Close'
           
           if request.locale.iso_code == 'de'
             assign success_title_text = 'Vielen Dank!'
-            assign success_message_text = 'Ihr Feedback wurde erfolgreich übermittelt.'
+            assign success_message_text = 'Ihr Feedback wurde erfolgreich übermittelt. Wir schätzen Ihre Eingabe und werden sie nutzen, um unsere Dienstleistungen zu verbessern.'
             assign close_text = 'Schließen'
           elsif request.locale.iso_code == 'fr'
             assign success_title_text = 'Merci!'
-            assign success_message_text = 'Vos commentaires ont été soumis avec succès.'
+            assign success_message_text = 'Vos commentaires ont été soumis avec succès. Nous apprécions votre contribution et l\'utiliserons pour améliorer nos services.'
             assign close_text = 'Fermer'
           elsif request.locale.iso_code == 'fi'
             assign success_title_text = 'Kiitos!'
-            assign success_message_text = 'Palautteesi on lähetetty onnistuneesti.'
+            assign success_message_text = 'Palautteesi on lähetetty onnistuneesti. Arvostamme palautettasi ja käytämme sitä palveluidemme parantamiseen.'
             assign close_text = 'Sulje'
           endif
         -%}
@@ -433,7 +467,7 @@
         
         {% form 'contact', novalidate: true, id: 'feedback-form' %}
           <input type="hidden" name="contact[subject]" value="[FEEDBACK] User Experience Feedback - {{ shop.name }}">
-          <input type="hidden" name="contact[message_intro]" value="You have received new user feedback with the following details:">
+          <input type="hidden" name="contact[tags]" value="feedback,user-experience">
           
           <div class="feedback-form-container">
             <!-- Rating Input -->
@@ -469,7 +503,7 @@
                                 <path d="M116.224 614.570667c0-252.245333 204.458667-456.704 456.704-456.704 97.792 0 188.416 30.890667 262.656 83.285333C756.394667 151.893333 640.853333 95.402667 512 95.402667c-238.762667 0-432.298667 193.536-432.298667 432.298666 0 74.752 19.114667 145.237333 52.565334 206.677334-10.410667-38.229333-16.042667-78.336-16.042667-119.808z" fill="#F6D85E" p-id="2204"></path>
                                 <path d="M334.506667 421.205333m-63.317334 0a63.317333 63.317333 0 1 0 126.634667 0 63.317333 63.317333 0 1 0-126.634667 0Z" fill="#040000" p-id="2205"></path>
                                 <path d="M674.304 421.205333m-63.317333 0a63.317333 63.317333 0 1 0 126.634666 0 63.317333 63.317333 0 1 0-126.634666 0Z" fill="#040000" p-id="2206"></path>
-                                <path d="M537.941333 622.08c-110.250667 0-205.994667 62.464-253.781333 153.770667l41.130667 19.114666c40.618667-75.946667 120.490667-127.829333 212.650666-127.829333 88.746667 0 165.888 47.957333 207.872 119.296l38.741334-23.552c-50.005333-84.138667-141.653333-140.8-246.613334-140.8z" fill="#040000" p-id="2207"></path>
+                                <path d="M537.941333 622.08c-110.250667 0-205.994667 62.464-253.781333 153.770667l41.130667 19.114666c40.618667-75.946667 120.490667-127.829333 212.650666-127.829333 88.746667 0 165.888 47.957333 207.872 119.296l38.741333-23.552c-50.005333-84.138667-141.653333-140.8-246.613334-140.8z" fill="#040000" p-id="2207"></path>
                                 <path d="M446.805333 714.752c0-68.096-112.128-166.570667-112.128-166.570667s-112.128 98.474667-112.128 166.570667 50.176 123.392 112.128 123.392c61.781333 0 112.128-55.296 112.128-123.392z" fill="#4ABECD" p-id="2208"></path>
                                 <path d="M334.506667 855.210667c-71.338667 0-129.194667-62.976-129.194667-140.458667 0-32.426667 20.309333-72.704 60.074667-119.808 28.501333-33.621333 56.661333-58.538667 57.856-59.562667l11.264-9.898666 11.264 9.898666c1.194667 1.024 29.354667 25.770667 57.856 59.562667 39.936 47.104 60.074667 87.381333 60.074666 119.808 0.170667 77.482667-57.856 140.458667-129.194666 140.458667z m0-283.989334c-34.304 32.426667-95.061333 99.328-95.061334 143.530667 0 58.709333 42.666667 106.325333 95.061334 106.325333s95.061333-47.786667 95.061333-106.325333c0.170667-44.202667-60.757333-111.104-95.061333-143.530667z" fill="#040000" p-id="2209"></path>
                               </svg>
@@ -505,6 +539,7 @@
                   </label>
                 {% endfor %}
               </div>
+              <div class="error-message" id="rating-error">Please select a rating</div>
             </div>
 
             <!-- Message Input -->
@@ -520,16 +555,17 @@
 
             <!-- Email Input -->
             <div>
-              <label for="feedback_email" class="enhanced-form-label">{{ email_label_text | escape }}</label>
+              <label for="feedback_email" class="enhanced-form-label">{{ email_label_text | escape }}<span class="required-asterisk">*</span></label>
               <input
                 type="email"
                 id="feedback_email"
                 name="contact[email]"
                 required
               >
+              <div class="error-message" id="email-error">Please enter a valid email address</div>
             </div>
 
-            <button type="submit" class="feedback-submit-btn">{{ submit_text | escape }}</button>
+            <button type="submit" class="feedback-submit-btn" id="feedback-submit">{{ submit_text | escape }}</button>
           </div>
         {% endform %}
       </div>
@@ -538,92 +574,358 @@
 </modal-dialog>
 
 <script>
-  // 使用原生模态框系统
   const FeedbackModal = {
     modal: null,
     successMessage: null,
     formContainer: null,
     form: null,
+    submitBtn: null,
     
+    // Initialize
     init() {
       this.modal = document.getElementById('feedbackModal');
       this.successMessage = document.getElementById('feedbackSuccessMessage');
       this.formContainer = document.getElementById('feedback-form-container');
       this.form = document.getElementById('feedback-form');
+      this.submitBtn = document.getElementById('feedback-submit');
       
-      // 绑定按钮事件
+      this.bindEvents();
+      
+      // Check if form was just submitted
+      this.checkSubmissionStatus();
+    },
+    
+    // Check submission status
+    checkSubmissionStatus() {
+      // Method 1: Check URL parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      const contactFormSubmitted = urlParams.get('contact_posted');
+      
+      // Method 2: Check localStorage flag
+      const feedbackSubmitted = localStorage.getItem('feedback_form_submitted');
+      
+      // Method 3: Check if page has Shopify success message
+      const shopifySuccessMessage = document.querySelector('.form-success, [data-form-success], .contact-form .success');
+      
+      // New: Check if on verification or error page
+      const isVerificationPage = this.isVerificationOrErrorPage();
+      
+      // Only show popup if not on verification page and actually successful
+      if (!isVerificationPage && (contactFormSubmitted === 'true' || feedbackSubmitted === 'true' || shopifySuccessMessage)) {
+        // Delay showing success popup to ensure page is fully loaded
+        setTimeout(() => {
+          this.showSubmissionSuccess();
+        }, 500);
+        
+        // Clear localStorage flag
+        localStorage.removeItem('feedback_form_submitted');
+        
+        // Clear URL parameter (optional)
+        if (contactFormSubmitted === 'true') {
+          const newUrl = window.location.pathname + window.location.hash;
+          window.history.replaceState({}, document.title, newUrl);
+        }
+      }
+    },
+    
+    // Check if on verification or error page
+    isVerificationOrErrorPage() {
+      // Check page title or URL for verification-related keywords
+      const pageTitle = document.title.toLowerCase();
+      const currentUrl = window.location.href.toLowerCase();
+      
+      // More specific verification page identifiers
+      const verificationKeywords = [
+        'verify', 'verification', 'captcha', 'recaptcha', 'challenge',
+        'security', 'robot', 'human'
+      ];
+      
+      // Check if contains verification keywords
+      const hasVerificationKeywords = verificationKeywords.some(keyword => 
+        pageTitle.includes(keyword) || currentUrl.includes(keyword)
+      );
+      
+      // Check if has verification-related DOM elements
+      const hasVerificationElements = !!(
+        document.querySelector('.g-recaptcha') ||
+        document.querySelector('[data-sitekey]') ||
+        document.querySelector('.captcha') ||
+        document.querySelector('.verification') ||
+        document.querySelector('.challenge') ||
+        document.querySelector('iframe[src*="recaptcha"]') ||
+        document.querySelector('iframe[src*="captcha"]')
+      );
+      
+      // Check if has visible error messages (not hidden form validation errors)
+      const visibleErrorMessages = Array.from(
+        document.querySelectorAll('.form-errors, .error-message, .contact-form .errors, [data-form-errors]')
+      ).some(el => {
+        const style = window.getComputedStyle(el);
+        return style.display !== 'none' && style.visibility !== 'hidden' && el.offsetHeight > 0;
+      });
+      
+      // Only return true if we have strong evidence of verification/error page
+      return hasVerificationKeywords || hasVerificationElements || visibleErrorMessages;
+    },
+    
+    // Show submission success popup
+    showSubmissionSuccess() {
+      this.open();
+      this.showSuccess();
+    },
+    
+    // Bind events
+    bindEvents() {
+      // Feedback button click event
       const feedbackButton = document.getElementById('feedbackButton');
       if (feedbackButton) {
         feedbackButton.addEventListener('click', () => this.open());
       }
       
-      // 绑定表单提交事件
-      if (this.form) {
-        this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+      // Close button event
+      const closeBtn = this.modal?.querySelector('.modal__close-btn');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', () => this.close());
       }
       
-      // 绑定成功消息关闭事件
-      const successCloseBtn = this.successMessage?.querySelector('.feedback-success-close');
-      if (successCloseBtn) {
-        successCloseBtn.addEventListener('click', () => this.closeSuccess());
+      // Click background to close
+      if (this.modal) {
+        this.modal.addEventListener('click', (e) => {
+          if (e.target === this.modal) {
+            this.close();
+          }
+        });
       }
+      
+      // Form submit event
+      if (this.form) {
+        this.form.addEventListener('submit', (e) => {
+          if (!this.validateForm()) {
+            e.preventDefault();
+            return false;
+          }
+          
+          // If validation passes, prepare form data and allow native submission
+          this.prepareFormSubmission();
+          this.setLoadingState(true);
+          
+          // Set localStorage flag indicating form is about to be submitted
+          localStorage.setItem('feedback_form_submitted', 'true');
+          
+          // Allow form to submit normally to Shopify contact endpoint
+          return true;
+        });
+      }
+      
+      // Rating selection event
+      const ratingInputs = this.form?.querySelectorAll('input[name="contact[rating]"]');
+      if (ratingInputs) {
+        ratingInputs.forEach(input => {
+          input.addEventListener('change', () => this.clearError('rating-error'));
+        });
+      }
+      
+      // Email input event
+      const emailInput = document.getElementById('feedback_email');
+      if (emailInput) {
+        emailInput.addEventListener('input', () => this.clearError('email-error'));
+      }
+      
+      // ESC key to close
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && this.modal?.hasAttribute('open')) {
+          this.close();
+        }
+      });
     },
     
+    // Open modal
     open() {
       if (this.modal) {
         this.modal.setAttribute('open', '');
         this.hideSuccess();
+        this.clearAllErrors();
+        
+        // Focus on first input element
+        setTimeout(() => {
+          const firstInput = this.form?.querySelector('input[type="radio"]');
+          if (firstInput) {
+            firstInput.focus();
+          }
+        }, 200);
       }
     },
     
+    // Close modal
     close() {
       if (this.modal) {
         this.modal.removeAttribute('open');
       }
     },
     
-    async handleSubmit(e) {
-      e.preventDefault();
+    // Validate form
+    validateForm() {
+      let isValid = true;
       
-      const submitBtn = this.form.querySelector('.feedback-submit-btn');
-      const originalText = submitBtn.textContent;
+      // Validate rating
+      const ratingSelected = this.form?.querySelector('input[name="contact[rating]"]:checked');
+      if (!ratingSelected) {
+        this.showError('rating-error');
+        isValid = false;
+      }
       
-      try {
-        submitBtn.disabled = true;
-        submitBtn.textContent = 'Submitting...';
+      // Validate email
+      const emailInput = document.getElementById('feedback_email');
+      if (emailInput) {
+        const emailValue = emailInput.value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         
-        const formData = new FormData(this.form);
-        
-        const response = await fetch(this.form.action, {
-          method: 'POST',
-          body: formData,
-          headers: {
-            'Accept': 'application/json'
-          }
-        });
-        
-        if (response.ok) {
-          this.showSuccess();
-          this.form.reset();
-        } else {
-          throw new Error('Submission failed');
+        if (!emailValue || !emailRegex.test(emailValue)) {
+          this.showError('email-error');
+          isValid = false;
         }
-      } catch (error) {
-        console.error('Form submission error:', error);
-        alert('There was an error submitting your feedback. Please try again.');
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = originalText;
+      }
+      
+      return isValid;
+    },
+    
+    // Prepare form submission data
+    prepareFormSubmission() {
+      const rating = this.form?.querySelector('input[name="contact[rating]"]:checked')?.value;
+      const message = document.getElementById('feedback_message')?.value || '';
+      const email = document.getElementById('feedback_email')?.value;
+      
+      // Build complete message content
+      const fullMessage = this.buildEmailMessage(rating, message, email);
+      
+      // Update hidden fields and message field
+      let subjectField = this.form.querySelector('input[name="contact[subject]"]');
+      if (subjectField) {
+        subjectField.value = `[FEEDBACK] User Experience Feedback - ${window.location.hostname}`;
+      }
+      
+      // Create or update body field (Shopify contact form uses body instead of message)
+      let bodyField = this.form.querySelector('input[name="contact[body]"]');
+      if (!bodyField) {
+        bodyField = document.createElement('input');
+        bodyField.type = 'hidden';
+        bodyField.name = 'contact[body]';
+        this.form.appendChild(bodyField);
+      }
+      bodyField.value = fullMessage;
+      
+      // Ensure name field exists (required by Shopify)
+      let nameField = this.form.querySelector('input[name="contact[name]"]');
+      if (!nameField) {
+        nameField = document.createElement('input');
+        nameField.type = 'hidden';
+        nameField.name = 'contact[name]';
+        nameField.value = 'Website Feedback User';
+        this.form.appendChild(nameField);
+      }
+      
+      // Add success redirect parameter
+      let redirectField = this.form.querySelector('input[name="return_to"]');
+      if (!redirectField) {
+        redirectField = document.createElement('input');
+        redirectField.type = 'hidden';
+        redirectField.name = 'return_to';
+        this.form.appendChild(redirectField);
+      }
+      // Redirect to current page with success parameter
+      redirectField.value = window.location.pathname + '?contact_posted=true' + window.location.hash;
+    },
+    
+    // Show error message
+    showError(errorId) {
+      const errorElement = document.getElementById(errorId);
+      if (errorElement) {
+        errorElement.classList.add('show');
       }
     },
     
+    // Clear error message
+    clearError(errorId) {
+      const errorElement = document.getElementById(errorId);
+      if (errorElement) {
+        errorElement.classList.remove('show');
+      }
+    },
+    
+    // Clear all error messages
+    clearAllErrors() {
+      const errorElements = this.form?.querySelectorAll('.error-message');
+      if (errorElements) {
+        errorElements.forEach(element => {
+          element.classList.remove('show');
+        });
+      }
+    },
+    
+    // Build email message content
+    buildEmailMessage(rating, userMessage, email) {
+      const ratingText = this.getRatingText(rating);
+      const timestamp = new Date().toLocaleString();
+      const currentUrl = window.location.href;
+      
+      let message = `User Experience Feedback\n\n`;
+      message += `Rating: ${rating}/5 (${ratingText})\n`;
+      message += `User Email: ${email}\n`;
+      message += `Submission Time: ${timestamp}\n`;
+      message += `Page URL: ${currentUrl}\n\n`;
+      
+      if (userMessage.trim()) {
+        message += `User Message:\n${userMessage}\n\n`;
+      }
+      
+      message += `---\nThis email was automatically sent by the website feedback system`;
+      
+      return message;
+    },
+    
+    // Get rating text
+    getRatingText(rating) {
+      const ratingTexts = {
+        '1': 'Very Dissatisfied',
+        '2': 'Dissatisfied', 
+        '3': 'Neutral',
+        '4': 'Satisfied',
+        '5': 'Very Satisfied'
+      };
+      return ratingTexts[rating] || 'Unknown';
+    },
+    
+    // Set loading state
+    setLoadingState(isLoading, originalText = '') {
+      if (this.submitBtn) {
+        this.submitBtn.disabled = isLoading;
+        
+        if (isLoading) {
+          this.submitBtn.classList.add('loading');
+          this.submitBtn.textContent = 'Submitting...';
+        } else {
+          this.submitBtn.classList.remove('loading');
+          this.submitBtn.textContent = originalText || 'Submit';
+        }
+      }
+    },
+    
+    // Show success message
     showSuccess() {
       if (this.successMessage && this.formContainer) {
         this.successMessage.classList.add('show');
         this.formContainer.style.display = 'none';
+        
+        setTimeout(() => {
+          const closeBtn = this.successMessage.querySelector('.feedback-success-close');
+          if (closeBtn) {
+            closeBtn.focus();
+          }
+        }, 100);
       }
     },
     
+    // Hide success message
     hideSuccess() {
       if (this.successMessage && this.formContainer) {
         this.successMessage.classList.remove('show');
@@ -631,20 +933,27 @@
       }
     },
     
+    // Reset form
+    resetForm() {
+      if (this.form) {
+        this.form.reset();
+        this.clearAllErrors();
+      }
+    },
+    
+    // Close success message
     closeSuccess() {
       this.close();
     }
   };
   
-  // 初始化
-  document.addEventListener('DOMContentLoaded', () => {
-    FeedbackModal.init();
-  });
-  
-  // 确保在页面加载后也能工作
+  // Ensure initialization after DOM is loaded
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => FeedbackModal.init());
   } else {
     FeedbackModal.init();
   }
+  
+  // Export to global scope
+  window.FeedbackModal = FeedbackModal;
 </script>
