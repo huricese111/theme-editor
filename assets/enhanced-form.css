@@ -62,7 +62,7 @@
   grid-template-columns: 1fr;
 }
 
-/* 两栏布局样式 */
+/* Two-column layout styles */
 .use-columns .flexible-layout--form {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -79,14 +79,14 @@
   width: 100%; 
 }
 
-/* 确保某些元素始终占满宽度 */
+/* Ensure certain elements always span full width */
 .use-columns .form-section-divider,
 .use-columns .multilevel-dropdown-wrapper,
 .use-columns .lightly-spaced-row {
   grid-column: 1 / -1;
 }
 
-/* 响应式设计 */
+/* Responsive design */
 @media (max-width: 768px) {
   .use-columns .flexible-layout--form {
     grid-template-columns: 1fr;
@@ -98,16 +98,16 @@
   }
 }
 
-/* 表单元素在两栏布局中的间距调整 */
+/* Form element spacing adjustment in two-column layout */
 .use-columns .flexible-layout--form > .column {
-  margin-bottom: 0.75rem; /* 减少底部间距 */
+  margin-bottom: 0.75rem; /* Reduce bottom spacing */
 }
 
 .use-columns .flexible-layout--form > .column:last-child {
   margin-bottom: 0;
 }
 
-/* 优化输入框在两栏布局中的显示 */
+/* Optimize input display in two-column layout */
 .use-columns .enhanced-form-input,
 .use-columns .enhanced-form-select,
 .use-columns .enhanced-form-textarea,
@@ -125,7 +125,7 @@
   box-sizing: border-box;
 }
 
-/* Enhanced Form Labels - 首字母大写 */
+/* Enhanced Form Labels - Capitalize first letter */
 .enhanced-form-section .enhanced-form-label {
   display: block;
   font-weight: 600;
@@ -574,7 +574,7 @@ input[type="file"]:hover {
   background: #f1f5f9;
 }
 
-/* Checkbox和Radio组的两栏布局 */
+/* Two-column layout for Checkbox and Radio groups */
 .checkbox-options-container.two-columns,
 .radio-options-container.two-columns {
   display: grid;
@@ -582,7 +582,7 @@ input[type="file"]:hover {
   gap: 0.5rem;
 }
 
-/* 响应式设计 - 在小屏幕上恢复单栏 */
+/* Responsive design - restore single column on small screens */
 @media (max-width: 768px) {
   .checkbox-options-container.two-columns,
   .radio-options-container.two-columns {
@@ -590,7 +590,7 @@ input[type="file"]:hover {
   }
 }
 
-/* 确保fieldset在两栏布局中的样式 */
+/* Ensure fieldset styles in two-column layout */
 .checkbox-group-two-columns,
 .radio-group-two-columns {
   border: 2px solid #e2e8f0;
@@ -606,7 +606,7 @@ input[type="file"]:hover {
   color: #374151;
 }
 
-/* 移除所有原生验证样式 */
+/* Remove all native validation styles */
 input:invalid,
 select:invalid,
 textarea:invalid {
@@ -614,7 +614,7 @@ textarea:invalid {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
 }
 
-/* 确保所有输入框初始状态一致 */
+/* Ensure consistent initial state for all input fields */
 input[type="text"],
 input[type="email"],
 input[type="tel"],
@@ -639,7 +639,7 @@ textarea {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
 }
 
-/* 聚焦状态 */
+/* Focus state */
 input:focus,
 select:focus,
 textarea:focus {
@@ -673,7 +673,7 @@ select {
   appearance: none;
 }
 
-/* 只有在表单提交后才显示错误状态 */
+/* Only show error state after form submission */
 .form-submitted input.error,
 .form-submitted select.error,
 .form-submitted textarea.error {
@@ -853,7 +853,7 @@ input[type="radio"] {
   }
 }
 
-/* 未选中状态的表情变灰 */
+/* Unselected emojis are grayed out */
 .rating-input.emoji .emoji-rating .emoji-svg {
   opacity: 0.3;
   filter: grayscale(0.7);
@@ -866,13 +866,13 @@ input[type="radio"] {
   filter: grayscale(0);
 }
 
-/* 选中状态下，前面的表情也要显示但稍微透明 */
+/* In selected state, previous emojis should also be displayed but slightly transparent */
 .rating-input.emoji input[type="radio"]:checked ~ input[type="radio"] + .emoji-rating .emoji-svg {
   opacity: 0.6;
   filter: grayscale(0.3);
 }
 
-/* 响应式设计 */
+/* Responsive design */
 @media (max-width: 768px) {
   .rating-input.emoji {
     gap: 0.25rem;
@@ -1324,9 +1324,46 @@ input[type="file"]:hover {
   padding: 16px 20px;
   background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
   border-top: 1px solid #e2e8f0;
-  text-align: right;
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
 }
 
+.btn-clear,
+.btn-ok {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  min-width: 80px;
+}
+
+.btn-clear {
+  background: #6b7280;
+  color: #ffffff;
+}
+
+.btn-clear:hover {
+  background: #4b5563;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-ok {
+  background: #3b82f6;
+  color: #ffffff;
+}
+
+.btn-ok:hover {
+  background: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(59, 130, 246, 0.2);
+}
+
+/* 保留原有的btn-cancel样式以兼容 */
 .btn-cancel {
   padding: 10px 20px;
   background: #6b7280;
@@ -1363,7 +1400,7 @@ input[type="file"]:hover {
   background: #94a3b8;
 }
 
-/* 响应式设计 */
+/* 响应式设计 - 移动端优化 */
 @media (max-width: 1024px) {
   .five-column-container {
     height: 350px;
@@ -1374,36 +1411,468 @@ input[type="file"]:hover {
   }
 }
 
+/* 移动端样式修正 - 替换现有的移动端样式部分 */
 @media (max-width: 768px) {
-  .dropdown-panel {
+  /* 确保dropdown-panel在移动端正确显示 */
+  .multilevel-dropdown-wrapper {
+    position: relative;
+    width: 100%;
+  }
+  
+  .multilevel-dropdown-wrapper .dropdown-panel {
     position: fixed;
-    top: 50%;
-    left: 16px;
-    right: 16px;
-    transform: translateY(-50%);
-    max-height: 80vh;
-    border-radius: 20px;
-  }
-  
-  .five-column-container {
+    top: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 50vh; 
+    max-height: 500px; 
+    min-height: 300px; 
+    background: #ffffff;
+    border: none;
+    border-radius: 16px 16px 0 0; 
+    box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.12), 0 -2px 8px rgba(0, 0, 0, 0.08);
+    z-index: 9999;
+    display: flex;
     flex-direction: column;
-    height: auto;
-    max-height: 60vh;
+    overflow: hidden;
+    animation: slideUpFromBottom 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* 移动端头部样式 */
+  .dropdown-panel .mobile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    position: sticky;
+    top: 0;
+    z-index: 10;
   }
   
-  .category-column {
+  .dropdown-panel .mobile-back-btn,
+  .dropdown-panel .mobile-close-btn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 12px;
+    background: transparent;
+    border: none;
+    color: #3b82f6;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+  }
+  
+  .dropdown-panel .mobile-back-btn:hover,
+  .dropdown-panel .mobile-close-btn:hover {
+    background: #f1f5f9;
+  }
+  
+  .dropdown-panel .mobile-back-btn svg,
+  .dropdown-panel .mobile-close-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .dropdown-panel .mobile-header-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e293b;
+    text-align: center;
+    flex: 1;
+  }
+  
+  /* 确保移动端面板占据合适的高度 */
+  .dropdown-panel {
+    max-height: 50vh;
+    min-height: 200px;
+    border-radius: 16px 16px 0 0;
+    overflow: hidden;
+  }
+  
+  /* 移动端内容区域 */
+  .dropdown-panel .five-column-container {
+    max-height: calc(50vh - 120px); /* 减去头部和按钮区域的高度 */
+    overflow-y: auto;
+  }
+
+  .dropdown-panel::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 36px;
+    height: 4px;
+    background: #c7c7cc;
+    border-radius: 2px;
+    z-index: 10;
+  }
+
+  /* 显示five-column-container但调整为移动端友好 */
+  .dropdown-panel .five-column-container {
+    display: flex !important;
+    flex: 1;
+    overflow: hidden;
+    background: #ffffff;
+  }
+
+  /* 调整栏目样式为移动端单页显示 */
+  .five-column-container .category-column {
+    flex: 1;
     border-right: none;
-    border-bottom: 1px solid #e2e8f0;
-    max-height: 200px;
-    min-height: 150px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    background: #ffffff;
+    display: none; /* 默认隐藏所有栏目 */
   }
-  
-  .category-column:last-child {
+
+  /* 只显示第一个栏目 */
+  .five-column-container .category-column.level-1-column {
+    display: block;
+    width: 100%;
+  }
+
+  /* 当有选择时显示对应的栏目 */
+  .five-column-container .category-column.active {
+    display: block;
+    width: 100%;
+  }
+
+  /* 移动端分类项目样式 - iOS风格 */
+  .category-column .category-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    min-height: 44px;
+    border-bottom: 0.5px solid #e5e7eb;
+    background: #ffffff;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+    font-size: 17px;
+    color: #1d1d1f;
+    position: relative;
+    border-radius: 0;
+    margin: 0;
+  }
+
+  .category-column .category-item:last-child {
     border-bottom: none;
+  }
+
+  .category-column .category-item:active {
+    background: #f2f2f7;
+  }
+
+  .category-column .category-item:hover {
+    background: #f8fafc;
+    transform: none;
+  }
+
+  /* 选中状态 */
+  .category-column .category-item.selected {
+    background: #f0f9ff;
+    color: #0369a1;
+    box-shadow: none;
+  }
+
+  .category-column .category-item.selected::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: #0369a1;
+  }
+
+  /* 分类名称 */
+  .category-column .category-name {
+    flex: 1;
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 1.3;
+  }
+
+  /* 有子项的分类项目箭头 */
+  .category-column .category-item.has-children::after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid #c7c7cc;
+    border-bottom: 2px solid #c7c7cc;
+    transform: rotate(-45deg);
+    transition: all 0.2s ease;
+    margin-left: 8px;
+  }
+
+  .category-column .category-item.has-children:hover::after {
+    border-color: #6b7280;
+    transform: rotate(-45deg);
+  }
+
+  .category-column .category-item.has-children.selected::after {
+    border-color: #0369a1;
+  }
+
+  /* 面包屑导航调整 */
+  .dropdown-panel .breadcrumb-nav {
+    display: block;
+    position: sticky;
+    top: 0;
+    background: #ffffff;
+    border-bottom: 0.5px solid #e5e7eb;
+    padding: 12px 16px 8px 16px;
+    font-size: 15px;
+    color: #6b7280;
+    z-index: 100;
+    flex-shrink: 0;
+  }
+
+  /* 底部按钮区域 */
+  .dropdown-panel .dropdown-actions {
+    display: flex;
+    position: sticky;
+    bottom: 0;
+    background: #ffffff;
+    border-top: 0.5px solid #e5e7eb;
+    padding: 12px 16px;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+    gap: 12px;
+    z-index: 100;
+    flex-shrink: 0;
+    box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  /* 按钮样式 */
+  .dropdown-actions .btn-clear,
+  .dropdown-actions .btn-ok {
+    flex: 1;
+    padding: 12px 16px;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    text-align: center;
+    min-height: 44px;
+  }
+
+  .dropdown-actions .btn-clear {
+    background: #ffffff;
+    color: #007AFF;
+    border: 1px solid #007AFF;
+  }
+
+  .dropdown-actions .btn-clear:active {
+    background: #f2f2f7;
+  }
+
+  .dropdown-actions .btn-ok {
+    background: #007AFF;
+    color: #ffffff;
+  }
+
+  .dropdown-actions .btn-ok:active {
+    background: #0056b3;
+    transform: scale(0.98);
+  }
+
+  /* 滚动条样式 */
+  .category-column::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  .category-column::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .category-column::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
+  }
+
+  .category-column::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+  }
+
+  /* 动画定义 */
+  @keyframes slideUpFromBottom {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  /* 空状态样式 */
+  .mobile-empty-state {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    color: #6b7280;
+    font-size: 16px;
   }
 }
 
-/* 加载状态 */
+/* 小屏幕优化 */
+@media (max-width: 480px) {
+  .multilevel-dropdown-wrapper .dropdown-panel {
+    height: 60vh !important;
+    max-height: 400px !important;
+  }
+
+  .category-column .category-item {
+    padding: 14px 16px;
+    min-height: 48px;
+  }
+
+  .category-column .category-name {
+    font-size: 16px;
+  }
+}
+
+/* 横屏模式优化 */
+@media (max-width: 768px) and (orientation: landscape) {
+  .multilevel-dropdown-wrapper .dropdown-panel {
+    height: 70vh !important;
+    max-height: 350px !important;
+  }
+}
+
+/* 确保非移动端的按钮正常显示 */
+@media (min-width: 769px) {
+  .multilevel-dropdown-wrapper .dropdown-panel .dropdown-actions {
+    display: flex;
+  }
+}
+
+/* Support safe area - adapt to iPhone X and other devices */
+@media (max-width: 768px) {
+  .dropdown-actions {
+    padding-bottom: calc(16px + env(safe-area-inset-bottom));
+  }
+}
+
+/* 移动端独立面板样式 */
+#mobile-dropdown-panel .mobile-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+#mobile-dropdown-panel .mobile-panel-content {
+    position: relative;
+    width: 100%;
+    max-height: 80vh;
+    min-height: 400px;
+    background: #ffffff;
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    animation: slideUpFromBottom 0.3s ease;
+}
+
+#mobile-dropdown-panel .mobile-drag-indicator {
+    width: 36px;
+    height: 4px;
+    background: #c7c7cc;
+    border-radius: 2px;
+    margin: 8px auto 0;
+}
+
+#mobile-dropdown-panel .mobile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+#mobile-dropdown-panel .mobile-content {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+#mobile-dropdown-panel .mobile-category-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    border-bottom: 1px solid #f1f5f9;
+    cursor: pointer;
+}
+
+#mobile-dropdown-panel .mobile-category-item:hover {
+    background: #f8fafc;
+}
+
+#mobile-dropdown-panel .mobile-actions {
+    display: flex;
+    gap: 12px;
+    padding: 16px;
+    border-top: 1px solid #e5e7eb;
+}
+
+#mobile-dropdown-panel .mobile-actions button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#mobile-dropdown-panel .btn-clear {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+#mobile-dropdown-panel .btn-ok {
+    background: #3b82f6;
+    color: white;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+/* Reduce animations to improve performance */
+@media (prefers-reduced-motion: reduce) {
+  .dropdown-panel,
+  .category-item,
+  .btn-clear,
+  .btn-ok,
+  .btn-cancel {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* Loading state */
 .category-column.loading {
   opacity: 0.6;
   pointer-events: none;
@@ -1429,7 +1898,7 @@ input[type="file"]:hover {
   100% { transform: rotate(360deg); }
 }
 
-/* 栏目显示动画 */
+/* Column display animation */
 .category-column {
   animation: slideInFromRight 0.3s ease-out;
 }
@@ -1445,7 +1914,7 @@ input[type="file"]:hover {
   }
 }
 
-/* 自定义日期选择器样式 */
+/* Custom date picker styles */
 .custom-date-input-wrapper,
 .custom-time-input-wrapper,
 .custom-datetime-input-wrapper {
@@ -1477,7 +1946,7 @@ input[type="file"]:hover {
   transform: translateY(-1px);
 }
 
-/* 日历选择器样式改进 */
+/* Calendar picker style improvements */
 .custom-date-picker {
   position: absolute;
   top: 100%;
@@ -1730,7 +2199,7 @@ input[type="file"]:hover {
   overflow: hidden;
 }
 
-/* 响应式调整 */
+/* Responsive adjustments */
 @media (max-width: 480px) {
   .custom-date-picker,
   .custom-time-picker,

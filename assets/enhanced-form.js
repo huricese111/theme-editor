@@ -84,11 +84,27 @@ class FiveLevelDropdown {
       }
     });
     
-    // Cancel button
+    // Cancel button 
     const cancelBtn = this.panel.querySelector('.btn-cancel');
     if (cancelBtn) {
       cancelBtn.addEventListener('click', () => {
         this.closeDropdown();
+      });
+    }
+    
+    // Clear button - 清除选择
+    const clearBtn = this.panel.querySelector('.btn-clear');
+    if (clearBtn) {
+      clearBtn.addEventListener('click', () => {
+        this.clearSelection();
+      });
+    }
+    
+    // OK button - 确认选择
+    const okBtn = this.panel.querySelector('.btn-ok');
+    if (okBtn) {
+      okBtn.addEventListener('click', () => {
+        this.confirmSelection();
       });
     }
   }
@@ -100,21 +116,783 @@ class FiveLevelDropdown {
       this.closeDropdown();
     }
   }
-  
-  openDropdown() {
-    this.panel.style.display = 'block';
-    this.selectionDisplay.classList.add('active');
+    
+  // Check if mobile view
+  isMobile() {
+    return window.innerWidth <= 768;
   }
   
+  // Modify openDropdown method
+  openDropdown() {
+    this.selectionDisplay.classList.add('active');
+    
+    if (this.isMobile()) {
+      this.panel.style.display = 'block';
+      this.initMobileColumnView();
+      this.bindMobileButtons();
+      this.addMobileHeaderButtons();
+    } else {
+      this.panel.style.display = 'block';
+      this.showLevel1();
+    }
+    
+    // 绑定点击外部关闭事件
+    this.bindOutsideClickClose();
+  }
+  
+  // 新增移动端按钮事件绑定方法
+  bindMobileButtons() {
+    // 清除按钮事件绑定
+    const clearBtn = this.panel.querySelector('.btn-clear');
+    if (clearBtn && !clearBtn.hasAttribute('data-bound')) {
+      clearBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        this.clearSelection();
+      });
+      clearBtn.setAttribute('data-bound', 'true');
+    }
+    
+    // 确定按钮事件绑定
+    const okBtn = this.panel.querySelector('.btn-ok');
+    if (okBtn && !okBtn.hasAttribute('data-bound')) {
+      okBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        this.confirmSelection();
+      });
+      okBtn.setAttribute('data-bound', 'true');
+    }
+  }
+  
+  // 新增移动端头部按钮功能
+  addMobileHeaderButtons() {
+    // 如果移动端头部不存在，创建它
+    if (!this.panel.querySelector('.mobile-header')) {
+      const mobileHeader = document.createElement('div');
+      mobileHeader.className = 'mobile-header';
+      mobileHeader.innerHTML = `
+        <button type="button" class="mobile-back-btn" style="display: none;">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
+            <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Back
+        </button>
+        <div class="mobile-header-title">Select Category</div>
+        <button type="button" class="mobile-close-btn">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
+            <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      `;
+      
+      // 插入到面板顶部
+      this.panel.insertBefore(mobileHeader, this.panel.firstChild);
+    }
+    
+    // 绑定返回按钮事件
+    const backBtn = this.panel.querySelector('.mobile-back-btn');
+    if (backBtn && !backBtn.hasAttribute('data-bound')) {
+      backBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        this.goBackLevel();
+      });
+      backBtn.setAttribute('data-bound', 'true');
+    }
+    
+    // 绑定关闭按钮事件
+    const closeBtn = this.panel.querySelector('.mobile-close-btn');
+    if (closeBtn && !closeBtn.hasAttribute('data-bound')) {
+      closeBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        this.closeDropdown();
+      });
+      closeBtn.setAttribute('data-bound', 'true');
+    }
+  }
+  
+  // 新增返回上一级功能
+  goBackLevel() {
+    if (this.selectedPath.length > 0) {
+      // 移除最后一级选择
+      this.selectedPath.pop();
+      
+      // 显示上一级
+      const currentLevel = this.selectedPath.length + 1;
+      if (currentLevel > 1) {
+        const parentValue = this.selectedPath[currentLevel - 2];
+        this.showLevel(currentLevel, parentValue);
+      } else {
+        this.showLevel(1);
+      }
+      
+      // 更新返回按钮显示状态
+      this.updateBackButtonVisibility();
+    }
+  }
+  
+  // 更新返回按钮显示状态
+  updateBackButtonVisibility() {
+    const backBtn = this.panel.querySelector('.mobile-back-btn');
+    if (backBtn) {
+      if (this.selectedPath.length > 0) {
+        backBtn.style.display = 'flex';
+      } else {
+        backBtn.style.display = 'none';
+      }
+    }
+  }
+  
+  // 绑定点击外部关闭事件
+  bindOutsideClickClose() {
+    // 移除之前的事件监听器（如果存在）
+    if (this.outsideClickHandler) {
+      document.removeEventListener('click', this.outsideClickHandler);
+    }
+    
+    // 创建新的事件处理器
+    this.outsideClickHandler = (e) => {
+      if (!this.wrapper.contains(e.target) && !this.panel.contains(e.target)) {
+        this.closeDropdown();
+      }
+    };
+    
+    // 延迟绑定，避免立即触发
+    setTimeout(() => {
+      document.addEventListener('click', this.outsideClickHandler);
+    }, 100);
+  }
+  
+  // 新增移动端栏目视图初始化方法
+  initMobileColumnView() {
+    // 隐藏所有栏目
+    const columns = this.panel.querySelectorAll('.category-column');
+    columns.forEach(col => {
+      col.classList.remove('active');
+      col.style.display = 'none';
+    });
+    
+    // 显示第一级栏目
+    const level1Column = this.panel.querySelector('.level-1-column');
+    if (level1Column) {
+      level1Column.style.display = 'block';
+      level1Column.classList.add('active');
+    }
+    
+    // 确保显示第一级数据
+    this.showLevel1();
+  }
+
+  // 修改showLevel方法以支持移动端单栏显示
+  showLevel(level, parentValue = null) {
+    if (this.isMobile()) {
+      this.showMobileLevel(level, parentValue);
+    } else {
+      this.showDesktopLevel(level, parentValue);
+    }
+  }
+
+  // 移动端显示指定级别
+  showMobileLevel(level, parentValue = null) {
+    // 隐藏所有栏目
+    const columns = this.panel.querySelectorAll('.category-column');
+    columns.forEach(col => {
+      col.classList.remove('active');
+      col.style.display = 'none';
+    });
+    
+    // 显示指定级别的栏目
+    const targetColumn = this.panel.querySelector(`.level-${level}-column`);
+    if (targetColumn) {
+      targetColumn.style.display = 'block';
+      targetColumn.classList.add('active');
+      
+      // 填充数据
+      this.populateColumn(level, parentValue);
+    }
+  }
+
+  // 桌面端显示指定级别（保持原有逻辑）
+  showDesktopLevel(level, parentValue = null) {
+    // 原有的桌面端逻辑
+    this.populateColumn(level, parentValue);
+    
+    // 显示对应的栏目
+    for (let i = 1; i <= this.maxLevels; i++) {
+      const column = this.panel.querySelector(`.level-${i}-column`);
+      if (column) {
+        if (i <= level) {
+          column.style.display = 'block';
+        } else {
+          column.style.display = 'none';
+        }
+      }
+    }
+  }
+
+  // 填充栏目数据的通用方法
+  populateColumn(level, parentValue = null) {
+    if (level === 1) {
+      this.showLevel1();
+    } else {
+      this.showNextLevel(parentValue, level - 1);
+    }
+  }
+  
+  // 创建独立的移动端面板
+  createMobilePanel() {
+    // 移除已存在的移动端面板
+    const existingPanel = document.getElementById('mobile-dropdown-panel');
+    if (existingPanel) {
+        existingPanel.remove();
+    }
+    
+    // 创建新的移动端面板
+    const mobilePanel = document.createElement('div');
+    mobilePanel.id = 'mobile-dropdown-panel';
+    mobilePanel.innerHTML = `
+        <div class="mobile-overlay"></div>
+        <div class="mobile-panel-content">
+            <div class="mobile-drag-indicator"></div>
+            <div class="mobile-header">
+                <button type="button" class="mobile-back-btn" style="display: none;">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <div class="mobile-header-title">Select Category</div>
+                <button type="button" class="mobile-close-btn">Done</button>
+            </div>
+            <div class="mobile-content">
+                <div class="mobile-page-container"></div>
+            </div>
+            <div class="mobile-actions">
+                <button type="button" class="btn-clear">Clear</button>
+                <button type="button" class="btn-ok">OK</button>
+            </div>
+        </div>
+    `;
+    
+    // 添加样式
+    mobilePanel.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 10000;
+        display: flex;
+        align-items: flex-end;
+        animation: fadeIn 0.3s ease;
+    `;
+    
+    // 添加到 body
+    document.body.appendChild(mobilePanel);
+    
+    // 绑定事件
+    this.bindMobilePanelEvents(mobilePanel);
+    
+    // 初始化内容
+    this.initMobilePanelContent(mobilePanel);
+    
+    // 存储引用
+    this.mobilePanel = mobilePanel;
+  }
+  
+  // 绑定移动端面板事件
+  bindMobilePanelEvents(panel) {
+    const overlay = panel.querySelector('.mobile-overlay');
+    const closeBtn = panel.querySelector('.mobile-close-btn');
+    const clearBtn = panel.querySelector('.btn-clear');
+    const okBtn = panel.querySelector('.btn-ok');
+    
+    // 点击遮罩关闭
+    overlay.addEventListener('click', () => {
+        this.closeMobilePanel();
+    });
+    
+    // 关闭按钮
+    closeBtn.addEventListener('click', () => {
+        this.closeMobilePanel();
+    });
+    
+    // 清除按钮
+    clearBtn.addEventListener('click', () => {
+        this.clearSelection();
+        this.closeMobilePanel();
+    });
+    
+    // 确认按钮
+    okBtn.addEventListener('click', () => {
+        this.closeMobilePanel();
+    });
+  }
+  
+  // 关闭移动端面板
+  closeMobilePanel() {
+    if (this.mobilePanel) {
+        this.mobilePanel.style.animation = 'fadeOut 0.3s ease';
+        setTimeout(() => {
+            if (this.mobilePanel) {
+                this.mobilePanel.remove();
+                this.mobilePanel = null;
+            }
+        }, 300);
+    }
+    this.selectionDisplay.classList.remove('active');
+  }
+  
+  // 初始化移动端面板内容
+  initMobilePanelContent(panel) {
+    const pageContainer = panel.querySelector('.mobile-page-container');
+    
+    // 获取数据
+    const level1Data = this.data.level1 || [];
+    
+    if (level1Data.length > 0) {
+        this.renderMobilePage(pageContainer, level1Data, 1);
+    } else {
+        pageContainer.innerHTML = '<div class="mobile-empty-state">No options available</div>';
+    }
+  }
+  
+  // 渲染移动端页面
+  renderMobilePage(container, options, level) {
+    const page = document.createElement('div');
+    page.className = 'mobile-page';
+    
+    options.forEach(option => {
+        const item = document.createElement('div');
+        item.className = 'mobile-category-item';
+        item.innerHTML = `
+            <div class="mobile-item-content">
+                <div class="mobile-item-name">${option}</div>
+            </div>
+            <div class="mobile-item-arrow">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+        `;
+        
+        item.addEventListener('click', () => {
+            this.selectMobileOption(option, level);
+        });
+        
+        page.appendChild(item);
+    });
+    
+    container.innerHTML = '';
+    container.appendChild(page);
+  }
+  
+  // 选择移动端选项
+  selectMobileOption(option, level) {
+    // 更新选择路径
+    this.selectedPath[level - 1] = option;
+    
+    // 更新显示
+    this.updateSelectionDisplay();
+    
+    // 关闭面板
+    this.closeMobilePanel();
+  }
+  
+  // Initialize mobile view - 修改为显示面板
+  initMobileView() {
+    this.panel.style.display = 'block';
+    
+    // 创建移动端结构
+    this.createMobileStructure();
+    
+    // 初始化页面栈
+    this.pageStack = [];
+    this.currentPageLevel = 1;
+    
+    // 显示第一页
+    const level1Data = this.data.level1 || [];
+    
+    if (level1Data.length > 0) {
+      this.showMobilePage(1, level1Data, 'Select Category');
+    } else {
+      this.showEmptyState();
+    }
+  }
+  
+  // Create mobile HTML structure
+  createMobileStructure() {
+    // 如果移动端结构已创建，清空内容并返回
+    if (this.panel.querySelector('.mobile-page-container')) {
+      const existingContainer = this.panel.querySelector('.mobile-page-container');
+      existingContainer.innerHTML = '';
+      this.mobilePageContainer = existingContainer;
+      return;
+    }
+    
+    // 创建移动端头部
+    const mobileHeader = document.createElement('div');
+    mobileHeader.className = 'mobile-header';
+    mobileHeader.innerHTML = `
+      <button type="button" class="mobile-back-btn" style="display: none;">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Back
+      </button>
+      <div class="mobile-header-title">Select Category</div>
+      <button type="button" class="mobile-close-btn">Done</button>
+    `;
+    
+    // 创建页面容器
+    const pageContainer = document.createElement('div');
+    pageContainer.className = 'mobile-page-container';
+    
+    // 在面板开头插入移动端头部
+    this.panel.insertBefore(mobileHeader, this.panel.firstChild);
+    
+    // 在five-column-container之前插入页面容器
+    const fiveColumnContainer = this.panel.querySelector('.five-column-container');
+    this.panel.insertBefore(pageContainer, fiveColumnContainer);
+    
+    // 绑定事件
+    const backBtn = mobileHeader.querySelector('.mobile-back-btn');
+    const closeBtn = mobileHeader.querySelector('.mobile-close-btn');
+    
+    backBtn.addEventListener('click', () => {
+      this.goBackMobilePage();
+    });
+    
+    closeBtn.addEventListener('click', () => {
+      this.closeDropdown();
+    });
+    
+    // 存储引用
+    this.mobileHeader = mobileHeader;
+    this.mobilePageContainer = pageContainer;
+    this.mobileBackBtn = backBtn;
+    this.mobileTitle = mobileHeader.querySelector('.mobile-header-title');
+  }
+  
+  // Add empty state method
+  showEmptyState() {
+    if (!this.mobilePageContainer) {
+      console.error('Mobile page container not found for empty state');
+      return;
+    }
+    
+    const page = document.createElement('div');
+    page.className = 'mobile-page active';
+    
+    const emptyItem = document.createElement('div');
+    emptyItem.className = 'mobile-category-item';
+    emptyItem.innerHTML = `
+      <div class="mobile-item-content">
+        <div class="mobile-item-name">No options available</div>
+        <div class="mobile-item-subtitle">Please check the configuration</div>
+      </div>
+    `;
+    
+    page.appendChild(emptyItem);
+    this.mobilePageContainer.appendChild(page);
+    
+    // Update page stack
+    this.pageStack.push({
+      level: 1,
+      title: 'No Data',
+      page: page
+    });
+    
+    // Update header
+    this.updateMobileHeader();
+  }
+  
+  // Show mobile page with better error handling
+  showMobilePage(level, options, title = null) {
+    if (!this.mobilePageContainer) {
+      console.error('Mobile page container not found');
+      return;
+    }
+    
+    const pageContainer = this.mobilePageContainer;
+    
+    // Create new page
+    const page = document.createElement('div');
+    page.className = 'mobile-page';
+    page.dataset.level = level;
+    
+    // Add debug info
+    console.log('Creating mobile page for level:', level, 'with options:', options);
+    
+    // Render options
+    if (options && options.length > 0) {
+      options.forEach((option, index) => {
+        if (option && typeof option === 'string' && option.trim()) {
+          const hasChildren = this.hasChildrenForOption(option, level);
+          const isSelected = this.selectedPath[level - 1] === option;
+          
+          const item = document.createElement('div');
+          item.className = `mobile-category-item ${isSelected ? 'selected' : ''}`;
+          
+          item.innerHTML = `
+            <div class="mobile-item-content">
+              <div class="mobile-item-name">${option}</div>
+            </div>
+            ${hasChildren ? `
+              <div class="mobile-item-arrow">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            ` : `
+              <div class="mobile-item-check">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            `}
+          `;
+          
+          item.addEventListener('click', () => {
+            this.selectMobileOption(option, level, hasChildren);
+          });
+          
+          page.appendChild(item);
+          console.log(`Added item ${index + 1}: ${option}`);
+        }
+      });
+    } else {
+      // Show empty state
+      const emptyItem = document.createElement('div');
+      emptyItem.className = 'mobile-category-item';
+      emptyItem.innerHTML = `
+        <div class="mobile-item-content">
+          <div class="mobile-item-name">No options available</div>
+        </div>
+      `;
+      page.appendChild(emptyItem);
+      console.log('Added empty state item');
+    }
+    
+    // Add to container
+    pageContainer.appendChild(page);
+    console.log('Page added to container');
+    
+    // Update page stack
+    this.pageStack.push({
+      level: level,
+      title: title || this.getLevelTitle(level),
+      page: page
+    });
+    
+    // Show page with animation
+    setTimeout(() => {
+      // Hide previous pages
+      const prevPages = pageContainer.querySelectorAll('.mobile-page.active');
+      prevPages.forEach(p => {
+        p.classList.remove('active');
+        p.classList.add('prev');
+      });
+      
+      // Show new page
+      page.classList.add('active');
+      console.log('Page activated with class:', page.className);
+    }, 10);
+    
+    // Update header
+    this.updateMobileHeader();
+  }
+  
+  // Select mobile option
+  selectMobileOption(value, level, hasChildren) {
+    // 更新选择路径
+    this.selectedPath[level - 1] = value;
+    
+    // 清除后续级别的选择
+    for (let i = level; i < this.maxLevels; i++) {
+      this.selectedPath[i] = undefined;
+    }
+    
+    // 更新显示
+    this.updateSelectionDisplay();
+    
+    if (hasChildren && level < this.maxLevels) {
+      // 获取下一级数据
+      const nextLevelData = this.getChildOptions(value, level);
+      if (nextLevelData && nextLevelData.length > 0) {
+        this.showMobilePage(level + 1, nextLevelData, value);
+      }
+    } else {
+      // 没有子级，关闭面板
+      this.closeDropdown();
+    }
+  }
+  
+  // Go back to previous page
+  goBackMobilePage() {
+    if (this.pageStack.length <= 1) return;
+    
+    // 移除当前页
+    const currentPageData = this.pageStack.pop();
+    if (currentPageData && currentPageData.page) {
+      currentPageData.page.remove();
+    }
+    
+    // 显示上一页
+    const prevPageData = this.pageStack[this.pageStack.length - 1];
+    if (prevPageData && prevPageData.page) {
+      prevPageData.page.classList.remove('prev');
+      prevPageData.page.classList.add('active');
+    }
+    
+    // 更新头部
+    this.updateMobileHeader();
+  }
+  
+  // Update mobile header
+  updateMobileHeader() {
+    if (!this.mobileTitle || !this.mobileBackBtn) return;
+    
+    const currentPage = this.pageStack[this.pageStack.length - 1];
+    if (currentPage) {
+      this.mobileTitle.textContent = currentPage.title;
+      
+      // 显示/隐藏返回按钮
+      if (this.pageStack.length > 1) {
+        this.mobileBackBtn.style.display = 'flex';
+      } else {
+        this.mobileBackBtn.style.display = 'none';
+      }
+    }
+  }
+  
+  // Get child options
+  getChildOptions(parentValue, currentLevel) {
+  const nextLevel = currentLevel + 1;
+  if (nextLevel > this.maxLevels) return [];
+
+  const nextLevelData = this.data[`level${nextLevel}`] || [];
+  const childOptions = [];
+
+  nextLevelData.forEach(item => {
+    if (typeof item === 'string' && item.includes('>')) {
+      const parts = item.split('>');
+      const parentPart = parts[0].trim();
+      const childPart = parts[1].trim();
+      if (parentPart === parentValue) {
+        if (childPart && !childOptions.includes(childPart)) {
+          childOptions.push(childPart);
+        }
+      }
+    }
+  });
+
+  return childOptions;
+}
+  
+  // Get level title
+  getLevelTitle(level) {
+    const titles = {
+      1: 'Select Category',
+      2: 'Select Subcategory',
+      3: 'Select Details',
+      4: 'Select Model',
+      5: 'Select Option'
+    };
+    return titles[level] || `Level ${level} Selection`;
+  }
+  
+  // Update selection display
+  updateSelectionDisplay() {
+    if (this.selectedPath.length > 0) {
+      const selectedText = this.selectedPath.join(' > ');
+      const placeholder = this.selectionDisplay.querySelector('.placeholder');
+      if (placeholder) {
+        placeholder.textContent = selectedText;
+        placeholder.classList.add('has-selection');
+      }
+      
+      // Update hidden input
+      if (this.hiddenInput) {
+        this.hiddenInput.value = this.selectedPath.join('|');
+      }
+    }
+  }
+  
+  // Modify clearSelection method to support mobile
+  clearSelection() {
+    this.selectedPath = [];
+    
+    const placeholder = this.selectionDisplay.querySelector('.placeholder');
+    if (placeholder) {
+      const originalPlaceholder = this.wrapper.querySelector('.current-selection').dataset.placeholder || 'Select an option';
+      placeholder.textContent = originalPlaceholder;
+      placeholder.classList.remove('has-selection');
+    }
+    
+    if (this.hiddenInput) {
+      this.hiddenInput.value = '';
+    }
+    
+    if (this.isMobile()) {
+      // 重置到第一级显示
+      this.initMobileColumnView();
+    } else {
+      this.showLevel1();
+      this.updateBreadcrumb();
+    }
+    
+    // 清除所有选中状态
+    for (let i = 1; i <= this.maxLevels; i++) {
+      const column = this.wrapper.querySelector(`.level-${i}-column`);
+      if (column) {
+        const items = column.querySelectorAll('.category-item');
+        items.forEach(item => item.classList.remove('selected'));
+      }
+    }
+  }
+  
+  // Reset to first page (for mobile)
+  resetToFirstPage() {
+    if (this.mobilePageContainer) {
+      this.mobilePageContainer.innerHTML = '';
+    }
+    
+    // Don't remove mobile header and container references
+    // Just reset the page stack
+    this.pageStack = [];
+    
+    console.log('Mobile pages reset, structure preserved');
+  }
+  
+  // Modify confirmSelection method
+  confirmSelection() {
+    if (this.selectedPath.length > 0) {
+      this.finalizeSelection();
+    } else {
+      this.closeDropdown();
+    }
+  }
+  
+  // Modify closeDropdown method
   closeDropdown() {
     this.panel.style.display = 'none';
     this.selectionDisplay.classList.remove('active');
+    
+    // 移除点击外部关闭事件监听器
+    if (this.outsideClickHandler) {
+      document.removeEventListener('click', this.outsideClickHandler);
+      this.outsideClickHandler = null;
+    }
   }
   
   showLevel1() {
     const level1Options = this.data.level1 || [];
     this.renderColumn(level1Options, 1);
-    this.hideColumns([2, 3, 4, 5]); // 支持5栏
+    if (!this.isMobile()) {
+      this.hideColumns([2, 3, 4, 5]); // 支持5栏
+    }
     this.updateBreadcrumb();
   }
   
@@ -125,22 +903,44 @@ class FiveLevelDropdown {
     const nextLevelData = this.data[`level${nextLevel}`] || [];
     const childOptions = [];
     
+    // 添加调试信息
+    console.log('showNextLevel called:', {
+      parentValue,
+      currentLevel,
+      nextLevel,
+      nextLevelDataLength: nextLevelData.length
+    });
+    
     nextLevelData.forEach(item => {
       if (typeof item === 'string' && item.includes('>')) {
         const parts = item.split('>');
-        if (parts[0].trim() === parentValue) {
-          childOptions.push(parts[1].trim());
+        const parentPart = parts[0].trim();
+        const childPart = parts[1].trim();
+        
+        // 添加调试信息
+        console.log('Checking item:', item, 'Parent part:', parentPart, 'Looking for:', parentValue);
+        
+        if (parentPart === parentValue) {
+          console.log('Match found! Adding child:', childPart);
+          if (childPart && !childOptions.includes(childPart)) {
+            childOptions.push(childPart);
+          }
         }
       }
     });
     
+    console.log('Final childOptions for level', nextLevel, ':', childOptions);
+    
     this.renderColumn(childOptions, nextLevel);
-    // 隐藏后续所有栏目
-    const columnsToHide = [];
-    for (let i = nextLevel + 1; i <= this.maxLevels; i++) {
-      columnsToHide.push(i);
+    
+    if (!this.isMobile()) {
+      // 隐藏后续所有栏目
+      const columnsToHide = [];
+      for (let i = nextLevel + 1; i <= this.maxLevels; i++) {
+        columnsToHide.push(i);
+      }
+      this.hideColumns(columnsToHide);
     }
-    this.hideColumns(columnsToHide);
   }
   
   renderColumn(options, level) {
@@ -184,7 +984,13 @@ class FiveLevelDropdown {
     this.updateSelectedStates(level, value);
     
     if (hasChildren && level < this.maxLevels) {
-      this.showNextLevel(value, level);
+      if (this.isMobile()) {
+        this.showLevel(level + 1, value);
+        // 更新返回按钮显示状态
+        this.updateBackButtonVisibility();
+      } else {
+        this.showNextLevel(value, level);
+      }
     } else {
       this.finalizeSelection();
     }
@@ -196,13 +1002,18 @@ class FiveLevelDropdown {
     if (level >= this.maxLevels) return false;
     
     const nextLevelData = this.data[`level${level + 1}`] || [];
-    return nextLevelData.some(item => {
-      if (typeof item === 'string' && item.includes('>')) {
-        const parts = item.split('>');
-        return parts[0].trim() === option;
-      }
-      return false;
-    });
+    
+    if (level < this.maxLevels) {
+      return nextLevelData.some(item => {
+        if (typeof item === 'string' && item.includes('>')) {
+          const parts = item.split('>');
+          return parts[0].trim() === option;
+        }
+        return false;
+      });
+    }
+    
+    return false;
   }
   
   hideColumns(levels) {
@@ -293,6 +1104,50 @@ class FiveLevelDropdown {
     
     // 更新面包屑
     this.updateBreadcrumb();
+  }
+  
+  // 添加清除选择的方法
+  clearSelection() {
+    // 清空选择路径
+    this.selectedPath = [];
+    
+    // 重置显示文本为原始占位符
+    const placeholder = this.selectionDisplay.querySelector('.placeholder');
+    if (placeholder) {
+      // 获取原始占位符文本
+      const originalPlaceholder = this.wrapper.querySelector('.current-selection').dataset.placeholder || 'Select an option';
+      placeholder.textContent = originalPlaceholder;
+      placeholder.classList.remove('has-selection');
+    }
+    
+    // 清空隐藏输入的值
+    if (this.hiddenInput) {
+      this.hiddenInput.value = '';
+    }
+    
+    // 重置到第一级并清除所有选中状态
+    this.showLevel1();
+    this.updateBreadcrumb();
+    
+    // 清除所有选中状态
+    for (let i = 1; i <= this.maxLevels; i++) {
+      const column = this.wrapper.querySelector(`.level-${i}-column`);
+      if (column) {
+        const items = column.querySelectorAll('.category-item');
+        items.forEach(item => item.classList.remove('selected'));
+      }
+    }
+  }
+  
+  // 添加确认选择的方法
+  confirmSelection() {
+    if (this.selectedPath.length > 0) {
+      // 如果有选择，则确认选择并关闭下拉框
+      this.finalizeSelection();
+    } else {
+      // 如果没有选择，只关闭下拉框
+      this.closeDropdown();
+    }
   }
 }
 

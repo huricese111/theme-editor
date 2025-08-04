@@ -469,7 +469,7 @@
                     elsif block.settings.label_fi != blank and request.locale.iso_code == 'fi'
                       assign label_text = block.settings.label_fi
                     endif
-                    assign placeholder_text = block.settings.placeholder_en | default: 'Browse For Your Category'
+                    assign placeholder_text = block.settings.placeholder_en | default: 'Select an option'
                     if block.settings.placeholder_de != blank and request.locale.iso_code == 'de'
                       assign placeholder_text = block.settings.placeholder_de
                     elsif block.settings.placeholder_fr != blank and request.locale.iso_code == 'fr'
@@ -477,6 +477,7 @@
                     elsif block.settings.placeholder_fi != blank and request.locale.iso_code == 'fi'
                       assign placeholder_text = block.settings.placeholder_fi
                     endif
+
                     assign cancel_text = block.settings.cancel_text_en | default: 'Cancel'
                     if block.settings.cancel_text_de != blank and request.locale.iso_code == 'de'
                       assign cancel_text = block.settings.cancel_text_de
@@ -484,6 +485,24 @@
                       assign cancel_text = block.settings.cancel_text_fr
                     elsif block.settings.cancel_text_fi != blank and request.locale.iso_code == 'fi'
                       assign cancel_text = block.settings.cancel_text_fi
+                    endif
+                    
+                    assign ok_text = 'OK'
+                    if request.locale.iso_code == 'de'
+                      assign ok_text = 'OK'
+                    elsif request.locale.iso_code == 'fr'
+                      assign ok_text = 'OK'
+                    elsif request.locale.iso_code == 'fi'
+                      assign ok_text = 'OK'
+                    endif
+                    
+                    assign clear_text = 'Clear'
+                    if request.locale.iso_code == 'de'
+                      assign clear_text = 'Löschen'
+                    elsif request.locale.iso_code == 'fr'
+                      assign clear_text = 'Effacer'
+                    elsif request.locale.iso_code == 'fi'
+                      assign clear_text = 'Tyhjennä'
                     endif
                   -%}
                   <div class="multilevel-dropdown-wrapper" data-field-name="{{ block.settings.field_name }}">
@@ -495,7 +514,7 @@
                     </label>
 
                     <!-- Current Selection Display -->
-                    <div class="current-selection" id="selection-display-{{ block.settings.field_name }}">
+                    <div class="current-selection" id="selection-display-{{ block.settings.field_name }}" data-placeholder="{{ placeholder_text }}">
                       <span class="placeholder">{{ placeholder_text }}</span>
                       <span class="dropdown-arrow">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -551,7 +570,8 @@
 
                       <!-- Action Buttons -->
                       <div class="dropdown-actions">
-                        <button type="button" class="btn-cancel">{{ cancel_text }}</button>
+                        <button type="button" class="btn-clear">{{ clear_text }}</button>
+                        <button type="button" class="btn-ok">{{ ok_text }}</button>
                       </div>
                     </div>
 
