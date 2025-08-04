@@ -23,42 +23,109 @@ class FiveLevelDropdown {
       const dataElement = this.wrapper.querySelector(`#data-${this.fieldName}`);
       if (!dataElement) {
         console.warn('No data element found for field:', this.fieldName);
-        return { level1: [], level2: [], level3: [], level4: [], level5: [] };
+        return this.createEmptyHierarchy();
       }
       
-      const rawData = JSON.parse(dataElement.textContent);
-      
-      const processedData = {
-        level1: this.processDataArray(rawData.level1),
-        level2: this.processDataArray(rawData.level2),
-        level3: this.processDataArray(rawData.level3),
-        level4: this.processDataArray(rawData.level4),
-        level5: this.processDataArray(rawData.level5)
-      };
-      
-      return processedData;
+      const config = JSON.parse(dataElement.textContent);
+      return this.buildHierarchyFromStructured(config.structuredOptions || [], config.separator || '|');
     } catch (e) {
       console.error('Error parsing data:', e);
-      return { level1: [], level2: [], level3: [], level4: [], level5: [] };
+      return this.createEmptyHierarchy();
     }
   }
   
-  processDataArray(dataArray) {
-    if (!Array.isArray(dataArray)) return [];
+  createEmptyHierarchy() {
+    return {
+      level1: [],
+      level2: [],
+      level3: [],
+      level4: [],
+      level5: []
+    };
+  }
+  
+  buildHierarchyFromStructured(structuredOptions, separator) {
+    console.log('=== Building hierarchy data ===');
+    console.log('Raw data:', structuredOptions);
+    console.log('Separator:', separator);
+
+    const hierarchy = {
+        level1: [],
+        relationMap: new Map()
+    };
+
+    if (!Array.isArray(structuredOptions) || structuredOptions.length === 0) {
+        console.log('Invalid data format or empty data');
+        return hierarchy;
+    }
+
+    const level1Array = []; // Use array to maintain order
+    const level1Seen = new Set(); // For deduplication check
     
-    const result = [];
-    dataArray.forEach(item => {
-      if (typeof item === 'string' && item.trim()) {
-        if (item.includes('\n')) {
-          const splitItems = item.split('\n').filter(subItem => subItem.trim());
-          result.push(...splitItems);
-        } else {
-          result.push(item);
+    // Process data - if first element contains newlines, it's a merged string
+    let dataLines = [];
+    if (structuredOptions.length === 1 && typeof structuredOptions[0] === 'string' && structuredOptions[0].includes('\n')) {
+        // Data is merged into one string, need to split by lines
+        dataLines = structuredOptions[0].split('\n').filter(line => line.trim());
+        console.log('Detected merged data, split into lines:', dataLines.length, 'lines');
+    } else {
+        // Data is already in array format
+        dataLines = structuredOptions;
+    }
+
+    dataLines.forEach((line, index) => {
+        console.log(`Processing line ${index + 1}:`, line);
+        
+        if (typeof line !== 'string' || !line.trim()) {
+            console.log(`Skipping line ${index + 1}: not a valid string`);
+            return;
         }
-      }
+
+        const trimmedLine = line.trim();
+        const parts = trimmedLine.split(separator).map(part => part.trim()).filter(part => part);
+        
+        console.log(`Line ${index + 1} split result:`, parts);
+        
+        if (parts.length === 0) {
+            console.log(`Skipping line ${index + 1}: no valid data after split`);
+            return;
+        }
+
+        // Add first level option (maintain order)
+        const firstLevel = parts[0];
+        if (firstLevel && !level1Seen.has(firstLevel)) {
+            level1Array.push(firstLevel);
+            level1Seen.add(firstLevel);
+            console.log(`Added first level option: ${firstLevel}`);
+        }
+
+        // Build hierarchy relationships (maintain order)
+        for (let i = 0; i < parts.length - 1; i++) {
+            const parentPath = parts.slice(0, i + 1).join('>');
+            const childValue = parts[i + 1];
+            
+            if (!hierarchy.relationMap.has(parentPath)) {
+                hierarchy.relationMap.set(parentPath, []);
+            }
+            
+            const childArray = hierarchy.relationMap.get(parentPath);
+            if (!childArray.includes(childValue)) {
+                childArray.push(childValue);
+            }
+            
+            console.log(`Established relationship: ${parentPath} -> ${childValue}`);
+        }
     });
+
+    // Set final result (maintain original order)
+    hierarchy.level1 = level1Array;
+
+    console.log('=== Build completed ===');
+    console.log('First level options count:', hierarchy.level1.length);
+    console.log('First level options:', hierarchy.level1);
+    console.log('Relation mapping:', hierarchy.relationMap);
     
-    return result;
+    return hierarchy;
   }
   
   init() {
@@ -67,8 +134,36 @@ class FiveLevelDropdown {
       return;
     }
     
+    // 添加创建列结构的代码
+    this.createColumnStructure();
     this.bindEvents();
     this.showLevel1();
+  }
+  
+  // 新增：创建列结构的方法
+  createColumnStructure() {
+    const container = this.panel.querySelector('.dynamic-column-container');
+    if (!container) {
+      console.error('Dynamic column container not found');
+      return;
+    }
+    
+    // 清空容器
+    container.innerHTML = '';
+    
+    // 创建5个列
+    for (let i = 1; i <= this.maxLevels; i++) {
+      const column = document.createElement('div');
+      column.className = `category-column level-${i}-column`;
+      column.style.display = 'none';
+      
+      const content = document.createElement('div');
+      content.id = `level-${i}-${this.fieldName}`;
+      content.className = 'column-content';
+      
+      column.appendChild(content);
+      container.appendChild(column);
+    }
   }
   
   bindEvents() {
@@ -719,7 +814,7 @@ class FiveLevelDropdown {
     
     if (hasChildren && level < this.maxLevels) {
       // 获取下一级数据
-      const nextLevelData = this.getChildOptions(value, level);
+      const nextLevelData = this.getMobileChildOptions(value, level);
       if (nextLevelData && nextLevelData.length > 0) {
         this.showMobilePage(level + 1, nextLevelData, value);
       }
@@ -767,29 +862,17 @@ class FiveLevelDropdown {
     }
   }
   
-  // Get child options
-  getChildOptions(parentValue, currentLevel) {
-  const nextLevel = currentLevel + 1;
-  if (nextLevel > this.maxLevels) return [];
+  // Get child options for mobile view
+  getMobileChildOptions(parentValue, currentLevel) {
+    const nextLevel = currentLevel + 1;
+    if (nextLevel > this.maxLevels) return [];
 
-  const nextLevelData = this.data[`level${nextLevel}`] || [];
-  const childOptions = [];
-
-  nextLevelData.forEach(item => {
-    if (typeof item === 'string' && item.includes('>')) {
-      const parts = item.split('>');
-      const parentPart = parts[0].trim();
-      const childPart = parts[1].trim();
-      if (parentPart === parentValue) {
-        if (childPart && !childOptions.includes(childPart)) {
-          childOptions.push(childPart);
-        }
-      }
-    }
-  });
-
-  return childOptions;
-}
+    // 构建父级路径
+    const parentPath = [...this.selectedPath.slice(0, currentLevel - 1), parentValue].join('>');
+    
+    // 使用统一的数据获取方法
+    return this.getChildOptions(parentPath, nextLevel);
+  }
   
   // Get level title
   getLevelTitle(level) {
@@ -888,50 +971,46 @@ class FiveLevelDropdown {
   }
   
   showLevel1() {
+    console.log('=== 显示第一级 ===');
+    console.log('数据对象:', this.data);
+    
     const level1Options = this.data.level1 || [];
+    console.log('第一级选项:', level1Options);
+    console.log('第一级选项数量:', level1Options.length);
+    
     this.renderColumn(level1Options, 1);
+    this.currentLevel = 1;
+    
     if (!this.isMobile()) {
-      this.hideColumns([2, 3, 4, 5]); // 支持5栏
+      this.hideColumns([2, 3, 4, 5]);
     }
+    
     this.updateBreadcrumb();
+    console.log('第一级显示完成');
   }
   
   showNextLevel(parentValue, currentLevel) {
     const nextLevel = currentLevel + 1;
     if (nextLevel > this.maxLevels) return;
     
-    const nextLevelData = this.data[`level${nextLevel}`] || [];
-    const childOptions = [];
+    // 构建父级路径
+    const parentPath = this.selectedPath.slice(0, currentLevel).join('>');
     
-    // 添加调试信息
     console.log('showNextLevel called:', {
       parentValue,
       currentLevel,
       nextLevel,
-      nextLevelDataLength: nextLevelData.length
+      parentPath,
+      selectedPath: this.selectedPath
     });
     
-    nextLevelData.forEach(item => {
-      if (typeof item === 'string' && item.includes('>')) {
-        const parts = item.split('>');
-        const parentPart = parts[0].trim();
-        const childPart = parts[1].trim();
-        
-        // 添加调试信息
-        console.log('Checking item:', item, 'Parent part:', parentPart, 'Looking for:', parentValue);
-        
-        if (parentPart === parentValue) {
-          console.log('Match found! Adding child:', childPart);
-          if (childPart && !childOptions.includes(childPart)) {
-            childOptions.push(childPart);
-          }
-        }
-      }
-    });
+    // 使用新的数据获取方法
+    const childOptions = this.getChildOptions(parentPath, nextLevel);
     
     console.log('Final childOptions for level', nextLevel, ':', childOptions);
     
     this.renderColumn(childOptions, nextLevel);
+    this.currentLevel = nextLevel;
     
     if (!this.isMobile()) {
       // 隐藏后续所有栏目
@@ -943,16 +1022,44 @@ class FiveLevelDropdown {
     }
   }
   
+  // 获取指定父级路径下的子选项
+  getChildOptions(parentPath, level) {
+    if (!this.data.relationMap) return [];
+    
+    if (level === 1) {
+      return this.data.level1 || [];
+    }
+    
+    return this.data.relationMap.get(parentPath) || [];
+  }
+  
   renderColumn(options, level) {
+    console.log(`=== 渲染第 ${level} 级 ===`);
+    console.log('选项数据:', options);
+    
     const column = this.wrapper.querySelector(`.level-${level}-column`);
     const content = this.wrapper.querySelector(`#level-${level}-${this.fieldName}`);
     
-    if (!column || !content) return;
+    if (!column || !content) {
+      console.error(`找不到第 ${level} 级的列元素`);
+      return;
+    }
     
+    // 清空内容
     content.innerHTML = '';
     column.style.display = 'block';
     
-    options.forEach(option => {
+    // 确保options是数组
+    if (!Array.isArray(options)) {
+      console.error('选项不是数组:', options);
+      return;
+    }
+    
+    console.log(`开始渲染 ${options.length} 个选项`);
+    
+    options.forEach((option, index) => {
+      console.log(`渲染选项 ${index + 1}: ${option}`);
+      
       if (option && typeof option === 'string' && option.trim()) {
         const item = document.createElement('div');
         item.className = 'category-item';
@@ -973,8 +1080,13 @@ class FiveLevelDropdown {
         });
         
         content.appendChild(item);
+        console.log(`成功渲染选项: ${option}`);
+      } else {
+        console.log(`跳过无效选项:`, option);
       }
     });
+    
+    console.log(`第 ${level} 级渲染完成，共 ${content.children.length} 个项目`);
   }
   
   selectOption(value, level, hasChildren) {
@@ -1001,19 +1113,12 @@ class FiveLevelDropdown {
   hasChildrenForOption(option, level) {
     if (level >= this.maxLevels) return false;
     
-    const nextLevelData = this.data[`level${level + 1}`] || [];
+    // 构建当前选项的路径
+    const currentPath = [...this.selectedPath.slice(0, level - 1), option].join('>');
     
-    if (level < this.maxLevels) {
-      return nextLevelData.some(item => {
-        if (typeof item === 'string' && item.includes('>')) {
-          const parts = item.split('>');
-          return parts[0].trim() === option;
-        }
-        return false;
-      });
-    }
-    
-    return false;
+    // 检查是否有子选项
+    const childOptions = this.getChildOptions(currentPath, level + 1);
+    return childOptions.length > 0;
   }
   
   hideColumns(levels) {
@@ -1023,6 +1128,14 @@ class FiveLevelDropdown {
         column.style.display = 'none';
       }
     });
+  }
+  
+  hideColumnsAfter(level) {
+    const columnsToHide = [];
+    for (let i = level + 1; i <= this.maxLevels; i++) {
+      columnsToHide.push(i);
+    }
+    this.hideColumns(columnsToHide);
   }
   
   updateSelectedStates(level, selectedValue) {
@@ -1076,10 +1189,87 @@ class FiveLevelDropdown {
   updateBreadcrumb() {
     if (!this.breadcrumb) return;
     
+    // Clear existing content
+    this.breadcrumb.innerHTML = '';
+    
     if (this.selectedPath.length === 0) {
-      this.breadcrumb.textContent = 'Browse for your category';
+      const span = document.createElement('span');
+      span.textContent = 'Browse for your category';
+      span.className = 'breadcrumb-text';
+      this.breadcrumb.appendChild(span);
     } else {
-      this.breadcrumb.textContent = this.selectedPath.join(' > ');
+      // Create clickable breadcrumb items
+      this.selectedPath.forEach((pathItem, index) => {
+        // Create clickable link for each breadcrumb item
+        const link = document.createElement('a');
+        link.href = '#';
+        link.textContent = pathItem;
+        link.className = 'breadcrumb-link';
+        link.dataset.level = index + 1;
+        
+        // Add click event to return to that level
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          this.returnToLevel(index + 1);
+        });
+        
+        this.breadcrumb.appendChild(link);
+        
+        // Add separator if not the last item
+        if (index < this.selectedPath.length - 1) {
+          const separator = document.createElement('span');
+          separator.textContent = ' > ';
+          separator.className = 'breadcrumb-separator';
+          this.breadcrumb.appendChild(separator);
+        }
+      });
+    }
+  }
+  
+  // Add new method to handle returning to a specific level
+  returnToLevel(targetLevel) {
+    console.log(`Returning to level ${targetLevel}`);
+    
+    // Truncate selectedPath to the target level
+    this.selectedPath = this.selectedPath.slice(0, targetLevel);
+    
+    // Update hidden input value
+    if (this.hiddenInput) {
+      this.hiddenInput.value = this.selectedPath.join('|');
+    }
+    
+    // Update display text
+    const placeholder = this.selectionDisplay.querySelector('.placeholder');
+    if (placeholder) {
+      if (this.selectedPath.length > 0) {
+        placeholder.textContent = this.selectedPath.join(' > ');
+        placeholder.classList.add('has-selection');
+      } else {
+        const originalPlaceholder = this.wrapper.querySelector('.current-selection').dataset.placeholder || 'Select an option';
+        placeholder.textContent = originalPlaceholder;
+        placeholder.classList.remove('has-selection');
+      }
+    }
+    
+    // Show the appropriate level
+    this.currentLevel = targetLevel;
+    if (targetLevel === 1) {
+      this.showLevel1();
+    } else {
+      this.showLevel(targetLevel, this.selectedPath.slice(0, targetLevel - 1));
+    }
+    
+    // Update breadcrumb
+    this.updateBreadcrumb();
+    
+    // Clear selection states for levels beyond the target
+    for (let i = targetLevel + 1; i <= this.maxLevels; i++) {
+      const column = this.wrapper.querySelector(`.level-${i}-column`);
+      if (column) {
+        column.style.display = 'none';
+        const items = column.querySelectorAll('.category-item');
+        items.forEach(item => item.classList.remove('selected'));
+      }
     }
   }
   

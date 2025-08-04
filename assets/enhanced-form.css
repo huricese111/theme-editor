@@ -1201,12 +1201,13 @@ input[type="file"]:hover {
   left: 0;
   right: 0;
   background: #ffffff;
-  border: 2px solid #e1e5e9;
-  border-radius: 16px;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border: 1px solid #e1e5e9;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   z-index: 1000;
   overflow: hidden;
   animation: dropdownSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: 400px;
 }
 
 @keyframes dropdownSlideIn {
@@ -1220,20 +1221,48 @@ input[type="file"]:hover {
   }
 }
 
-/* 面包屑导航 */
+/* Breadcrumb navigation */
 .breadcrumb-nav {
-  padding: 16px 20px;
-  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  padding: 12px 16px;
+  background: #f8fafc;
   border-bottom: 1px solid #e2e8f0;
-  font-size: 14px;
+  font-size: 13px;
   color: #64748b;
   font-weight: 500;
+}
+
+.breadcrumb-link {
+  color: #007bff;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.breadcrumb-link:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+.breadcrumb-separator {
+  color: #6c757d;
+  margin: 0 4px;
+}
+
+.breadcrumb-text {
+  color: #6c757d;
 }
 
 /* 五栏容器布局 */
 .five-column-container {
   display: flex;
-  height: 400px;
+  height: 350px;
+  background: #ffffff;
+}
+
+/* 动态栏目容器布局 */
+.dynamic-column-container {
+  display: flex;
+  height: 350px;
   background: #ffffff;
 }
 
@@ -1244,6 +1273,7 @@ input[type="file"]:hover {
   overflow-y: auto;
   transition: all 0.3s ease;
   background: #ffffff;
+  min-width: 200px;
 }
 
 .category-column:last-child {
@@ -1264,28 +1294,26 @@ input[type="file"]:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 14px 20px;
+  padding: 12px 16px;
   cursor: pointer;
   border-bottom: 1px solid #f1f5f9;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.2s ease;
   position: relative;
+  font-size: 14px;
 }
 
 .category-item:hover {
-  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-  transform: translateX(2px);
+  background: #f8fafc;
 }
 
 .category-item.selected {
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  background: #3b82f6;
   color: #ffffff;
-  font-weight: 600;
-  box-shadow: inset 4px 0 0 #1d4ed8;
+  font-weight: 500;
 }
 
 .category-item.selected:hover {
-  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-  transform: translateX(0);
+  background: #2563eb;
 }
 
 /* 有子项的分类项目 */
@@ -1294,51 +1322,43 @@ input[type="file"]:hover {
 }
 
 .category-item.has-children::after {
-  content: '';
-  width: 6px;
-  height: 6px;
-  border-right: 2px solid #9ca3af;
-  border-bottom: 2px solid #9ca3af;
-  transform: rotate(-45deg);
-  transition: all 0.2s ease;
-}
-
-.category-item.has-children:hover::after {
-  border-color: #6b7280;
-  transform: rotate(-45deg) translateX(2px);
+  content: '›';
+  font-size: 16px;
+  color: #9ca3af;
+  font-weight: bold;
 }
 
 .category-item.has-children.selected::after {
-  border-color: #ffffff;
+  color: #ffffff;
 }
 
 /* 分类名称 */
 .category-name {
   flex: 1;
   font-size: 14px;
-  line-height: 1.5;
+  line-height: 1.4;
 }
 
 /* 操作按钮区域 */
 .dropdown-actions {
-  padding: 16px 20px;
-  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  padding: 12px 16px;
+  background: #f8fafc;
   border-top: 1px solid #e2e8f0;
   display: flex;
-  gap: 12px;
+  gap: 8px;
   justify-content: flex-end;
 }
 
 .btn-clear,
 .btn-ok {
-  padding: 10px 20px;
+  padding: 8px 16px;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   transition: all 0.2s ease;
-  min-width: 80px;
+  min-width: 70px;
 }
 
 .btn-clear {
@@ -1348,8 +1368,6 @@ input[type="file"]:hover {
 
 .btn-clear:hover {
   background: #4b5563;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .btn-ok {
@@ -1359,8 +1377,6 @@ input[type="file"]:hover {
 
 .btn-ok:hover {
   background: #2563eb;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(59, 130, 246, 0.2);
 }
 
 /* 保留原有的btn-cancel样式以兼容 */
