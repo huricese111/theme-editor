@@ -76,8 +76,12 @@
           <a
             class="btn btn--primary button-row__btn btn-1"
             href="{{ section.settings.media_button1_link }}"
+            style="display: inline-flex; align-items: center; justify-content: center;"
           >
             {{- media_button1_label | escape -}}
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-left: 6px;">
+              <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
           </a>
         {% endif %}
 
@@ -93,8 +97,12 @@
           <a
             class="btn btn--secondary button-row__btn btn-2"
             href="{{ section.settings.media_button2_link }}"
+            style="display: inline-flex; align-items: center; justify-content: center;"
           >
             {{- media_button2_label | escape -}}
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-left: 6px;">
+              <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
           </a>
         {% endif %}
       </div>

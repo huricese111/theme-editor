@@ -24,7 +24,10 @@
         href="{{ block.settings[button_link_key] }}"
         style="color: {% if i == 1 %}{{ block.settings.button_text_color1 }}{% else %}{{ block.settings.button_text_color2 }}{% endif %}; background: {% if i == 1 %}{{ block.settings.button_bg_color1 }}{% else %}{{ block.settings.button_bg_color2 }}{% endif %}; border-color: {% if i == 1 %}{{ block.settings.button_border_color1 }}{% else %}{{ block.settings.button_border_color2 }}{% endif %}; border-radius: {{ block.settings.button_border_radius | default: 4 }}px; height: {{ block.settings.button_height | default: 44 }}px; margin: {{ block.settings.button_margin_top | default: 10 }}px {{ block.settings.button_margin_right | default: 10 }}px {{ block.settings.button_margin_bottom | default: 10 }}px {{ block.settings.button_margin_left | default: 0 }}px; display: inline-flex; align-items: center; justify-content: center; text-decoration: none;"
       >
-        {{- translated_label | escape -}}&nbsp;&#8594;
+        {{- translated_label | escape -}}
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-left: 6px;">
+          <path d="M4 2L8 6L4 10" stroke="{% if i == 1 %}{{ block.settings.button_text_color1 }}{% else %}{{ block.settings.button_text_color2 }}{% endif %}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
       </a>
     {% endif %}
   {% endfor %}
