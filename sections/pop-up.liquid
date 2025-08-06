@@ -10,9 +10,22 @@
     <script src="{{ 'pop-up.js' | asset_url }}" defer></script>
 
     {%- liquid
-      # constants
-      assign breakpoint_md = 768
+      assign current_locale = request.locale.iso_code
+      assign supported_locales = 'en,de,fr,fi' | split: ','
+      assign is_supported_locale = false
+      
+      for locale in supported_locales
+        if current_locale == locale
+          assign is_supported_locale = true
+          break
+        endif
+      endfor
+      
+      unless is_supported_locale
+        assign current_locale = 'en'
+      endunless
 
+      assign breakpoint_md = 768
       assign bg_color = section.settings.bg_color
       assign bg = section.settings.bg_grad | default: bg_color
       assign heading_color = section.settings.heading_color
@@ -138,44 +151,77 @@
                   >
                 {%- endif -%}
                 {%- if block.settings.heading != blank -%}
+                  {%- liquid
+                    # 获取本地化标题，支持四种语言回退机制
+                    assign localized_heading = ''
+                    if current_locale == 'en'
+                      assign localized_heading = block.settings.heading
+                    elsif current_locale == 'de'
+                      assign localized_heading = block.settings.heading_de
+                    elsif current_locale == 'fr'
+                      assign localized_heading = block.settings.heading_fr
+                    elsif current_locale == 'fi'
+                      assign localized_heading = block.settings.heading_fi
+                    endif
+                    
+                    # 如果当前语言版本为空，回退到英语版本
+                    if localized_heading == blank
+                      assign localized_heading = block.settings.heading
+                    endif
+                  -%}
                   <h2
                     class="section__block section__block--heading {{ block.settings.heading_size }}"
                     id="{{ section.id }}-heading"
                     {{ block.shopify_attributes }}
                   >
-                    {% if request.locale.iso_code == 'de' %}
-                      {{- block.settings.heading_de | escape -}}
-                    {% elsif request.locale.iso_code == 'fr' %}
-                      {{- block.settings.heading_fr | escape -}}
-                    {% else %}
-                      {{- block.settings.heading | escape -}}
-                    {% endif %}
+                    {{- localized_heading | escape -}}
                   </h2>
                 {%- endif -%}
 
               {%- when 'subheading' -%}
-                {%- if block.settings.text != blank -%}
+                {%- if block.settings.subheading != blank -%}
+                  {%- liquid
+                    assign localized_subheading = ''
+                    if current_locale == 'en'
+                      assign localized_subheading = block.settings.subheading
+                    elsif current_locale == 'de'
+                      assign localized_subheading = block.settings.subheading_de
+                    elsif current_locale == 'fr'
+                      assign localized_subheading = block.settings.subheading_fr
+                    elsif current_locale == 'fi'
+                      assign localized_subheading = block.settings.subheading_fi
+                    endif
+                    
+                    if localized_subheading == blank
+                      assign localized_subheading = block.settings.subheading
+                    endif
+                  -%}
                   <p class="section__block subheading" {{ block.shopify_attributes }}>
-                    {% if request.locale.iso_code == 'de' %}
-                      {{- block.settings.subheading_de | escape -}}
-                    {% elsif request.locale.iso_code == 'fr' %}
-                      {{- block.settings.subheading_fr | escape -}}
-                    {% else %}
-                      {{- block.settings.subheading | escape -}}
-                    {% endif %}
+                    {{- localized_subheading | escape -}}
                   </p>
                 {%- endif -%}
 
               {%- when 'text' -%}
                 {%- if block.settings.text != blank -%}
+                  {%- liquid
+                    assign localized_text = ''
+                    if current_locale == 'en'
+                      assign localized_text = block.settings.text
+                    elsif current_locale == 'de'
+                      assign localized_text = block.settings.text_de
+                    elsif current_locale == 'fr'
+                      assign localized_text = block.settings.text_fr
+                    elsif current_locale == 'fi'
+                      assign localized_text = block.settings.text_fi
+                    endif
+                    
+                    # 如果当前语言版本为空，回退到英语版本
+                    if localized_text == blank
+                      assign localized_text = block.settings.text
+                    endif
+                  -%}
                   <div class="section__block rte {{ block.settings.text_size }}" {{ block.shopify_attributes }}>
-                    {% if request.locale.iso_code == 'de' %}
-                      {{ block.settings.text_de }}
-                    {% elsif request.locale.iso_code == 'fr' %}
-                      {{ block.settings.text_fr }}
-                    {% else %}
-                      {{ block.settings.text }}
-                    {% endif %}
+                    {{ localized_text }}
                   </div>
                 {%- endif -%}
 
@@ -238,6 +284,24 @@
                     {{ block.shopify_attributes }}
                   >
                     {%- if block.settings.button_1_label != blank %}
+                      {%- liquid
+                        # 获取本地化按钮1标签，支持四种语言回退机制
+                        assign localized_btn1_label = ''
+                        if current_locale == 'en'
+                          assign localized_btn1_label = block.settings.button_1_label
+                        elsif current_locale == 'de'
+                          assign localized_btn1_label = block.settings.button_1_label_de
+                        elsif current_locale == 'fr'
+                          assign localized_btn1_label = block.settings.button_1_label_fr
+                        elsif current_locale == 'fi'
+                          assign localized_btn1_label = block.settings.button_1_label_fi
+                        endif
+                        
+                        # 如果当前语言版本为空，回退到英语版本
+                        if localized_btn1_label == blank
+                          assign localized_btn1_label = block.settings.button_1_label
+                        endif
+                      -%}
                       <a
                         class="btn btn--primary btn--popup-1 button-row__btn"
                         style="border:none;"
@@ -247,16 +311,28 @@
                           href="{{ block.settings.button_1_link }}"
                         {% endif %}
                       >
-                        {% if request.locale.iso_code == 'de' %}
-                          {{- block.settings.button_1_label_de | escape -}}
-                        {% elsif request.locale.iso_code == 'fr' %}
-                          {{- block.settings.button_1_label_fr | escape -}}
-                        {% else %}
-                          {{- block.settings.button_1_label | escape -}}
-                        {% endif %}
+                        {{- localized_btn1_label | escape -}}
                       </a>
                     {%- endif -%}
                     {%- if block.settings.button_2_label != blank %}
+                      {%- liquid
+                        # 获取本地化按钮2标签，支持四种语言回退机制
+                        assign localized_btn2_label = ''
+                        if current_locale == 'en'
+                          assign localized_btn2_label = block.settings.button_2_label
+                        elsif current_locale == 'de'
+                          assign localized_btn2_label = block.settings.button_2_label_de
+                        elsif current_locale == 'fr'
+                          assign localized_btn2_label = block.settings.button_2_label_fr
+                        elsif current_locale == 'fi'
+                          assign localized_btn2_label = block.settings.button_2_label_fi
+                        endif
+                        
+                        # 如果当前语言版本为空，回退到英语版本
+                        if localized_btn2_label == blank
+                          assign localized_btn2_label = block.settings.button_2_label
+                        endif
+                      -%}
                       <a
                         class="btn btn--primary btn--popup-2 button-row__btn"
                         {% if block.settings.button_2_link == blank %}
@@ -265,13 +341,7 @@
                           href="{{ block.settings.button_2_link }}"
                         {% endif %}
                       >
-                        {% if request.locale.iso_code == 'de' %}
-                          {{- block.settings.button_2_label_de | escape -}}
-                        {% elsif request.locale.iso_code == 'fr' %}
-                          {{- block.settings.button_2_label_fr | escape -}}
-                        {% else %}
-                          {{- block.settings.button_2_label | escape -}}
-                        {% endif %}
+                        {{- localized_btn2_label | escape -}}
                       </a>
                     {%- endif -%}
                   </div>

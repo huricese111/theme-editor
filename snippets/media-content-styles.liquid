@@ -3,6 +3,34 @@
   and all styles should be scoped to the section ID to prevent conflicts.
 {%- endcomment -%}
 
+{%- assign padding_top = section.settings.content_padding_top | plus: 0 -%}
+  {%- if padding_top == 0 and section.settings.content_padding_top != '0' -%}
+    {%- assign padding_top = 60 -%}
+  {%- endif -%}
+  {%- if padding_top < 0 -%}{%- assign padding_top = 0 -%}{%- endif -%}
+  {%- if padding_top > 500 -%}{%- assign padding_top = 500 -%}{%- endif -%}
+  
+  {%- assign padding_right = section.settings.content_padding_right | plus: 0 -%}
+  {%- if padding_right == 0 and section.settings.content_padding_right != '0' -%}
+    {%- assign padding_right = 60 -%}
+  {%- endif -%}
+  {%- if padding_right < 0 -%}{%- assign padding_right = 0 -%}{%- endif -%}
+  {%- if padding_right > 500 -%}{%- assign padding_right = 500 -%}{%- endif -%}
+  
+  {%- assign padding_bottom = section.settings.content_padding_bottom | plus: 0 -%}
+  {%- if padding_bottom == 0 and section.settings.content_padding_bottom != '0' -%}
+    {%- assign padding_bottom = 60 -%}
+  {%- endif -%}
+  {%- if padding_bottom < 0 -%}{%- assign padding_bottom = 0 -%}{%- endif -%}
+  {%- if padding_bottom > 500 -%}{%- assign padding_bottom = 500 -%}{%- endif -%}
+  
+  {%- assign padding_left = section.settings.content_padding_left | plus: 0 -%}
+  {%- if padding_left == 0 and section.settings.content_padding_left != '0' -%}
+    {%- assign padding_left = 60 -%}
+  {%- endif -%}
+  {%- if padding_left < 0 -%}{%- assign padding_left = 0 -%}{%- endif -%}
+  {%- if padding_left > 500 -%}{%- assign padding_left = 500 -%}{%- endif -%}
+
 {% style %}
   #shopify-section-{{ section.id }} .flexible-layout {
     gap: 0 !important;
@@ -109,6 +137,7 @@
 
   #shopify-section-{{ section.id }} .media-column .rte {
     color: {{ section.settings.media_text_color }};
+    line-height: 1.5;
     font-size: {{ section.settings.media_desktop_text_size }}px;
     {% if section.settings.media_text_font_family == 'sans-serif' %}
       font-family: Helvetica, "Helvetica Neue", Arial, "Lucida Grande", sans-serif;
@@ -116,13 +145,16 @@
       font-family: "SF Mono", Menlo, Consolas, Monaco, "Liberation Mono", "Lucida Console", monospace, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     {% endif %}
   }
-
   #shopify-section-{{ section.id }} .media-column .btn-1 {
     color: {{ section.settings.media_button1_text_color }};
     background: {{ section.settings.media_button1_bg_color }};
     border-color: {{ section.settings.media_button1_border_color }};
     font-size: {{ section.settings.media_desktop_button_size }}px;
     white-space: nowrap;
+    border-radius:50px;
+    padding: 16px;
+    height: 30px;
+    line-height: 0;
   }
 
   #shopify-section-{{ section.id }} .media-column .btn-2 {
@@ -131,13 +163,17 @@
     border-color: {{ section.settings.media_button2_border_color }};
     font-size: {{ section.settings.media_desktop_button_size }}px;
     white-space: nowrap;
+    border-radius:50px;
+    padding: 16px;
+    height: 30px;
+    line-height: 0;
   }
 
   #shopify-section-{{ section.id }} .column--content .text-content-wrapper {
-    display: flex;
+     display: flex;
     flex-direction: column;
     height: 100%;
-    padding: 60px;
+    padding: {{ padding_top }}px {{ padding_right }}px {{ padding_bottom }}px {{ padding_left }}px;
     position: relative;
     z-index: 2;
     max-width: 700px;
@@ -335,10 +371,6 @@
     text-align: justify !important;
   }
 
-  #shopify-section-{{ section.id }} .large-text {
-    font-size: 1.5em !important;
-  }
-
   @media (max-width: 768px) {
     #shopify-section-{{ section.id }} .banner-tab {
       width: 40px;
@@ -458,6 +490,7 @@
 
     #shopify-section-{{ section.id }} .media-column .rte {
       font-size: {{ section.settings.media_mobile_text_size }}px;
+      line-height: 1.2;
     }
 
     #shopify-section-{{ section.id }} .media-column .btn {
@@ -633,6 +666,49 @@
 
   #shopify-section-{{ section.id }} .column--order-push-desktop {
   order: 1;
+  }
+  }
+
+  /* Media Column Content Horizontal Alignment */
+  #shopify-section-{{ section.id }} .media-column .media-text-wrapper.media-align-flex-start {
+  align-items: flex-start;
+  }
+  
+  #shopify-section-{{ section.id }} .media-column .media-text-wrapper.media-align-center {
+  align-items: center;
+  }
+  
+  #shopify-section-{{ section.id }} .media-column .media-text-wrapper.media-align-flex-end {
+  align-items: flex-end;
+  }
+  
+  /* Media Column Content Vertical Alignment */
+  #shopify-section-{{ section.id }} .media-column .media-text-wrapper.media-valign-flex-start {
+  justify-content: flex-start;
+  }
+  
+  #shopify-section-{{ section.id }} .media-column .media-text-wrapper.media-valign-center {
+  justify-content: center;
+  }
+  
+  #shopify-section-{{ section.id }} .media-column .media-text-wrapper.media-valign-flex-end {
+  justify-content: flex-end;
+  }
+  
+  /* Mobile responsive adjustments */
+  @media (max-width: 768px) {
+  #shopify-section-{{ section.id }} .media-column .majortitle {
+  font-size: {{ section.settings.media_mobile_heading_size }}px;
+  }
+  
+  #shopify-section-{{ section.id }} .media-column .rte {
+  font-size: {{ section.settings.media_mobile_text_size }}px;
+  line-height: 1.2;
+  }
+  
+  #shopify-section-{{ section.id }} .media-column .btn-1,
+  #shopify-section-{{ section.id }} .media-column .btn-2 {
+  font-size: {{ section.settings.media_mobile_button_size }}px;
   }
   }
 {% endstyle %}

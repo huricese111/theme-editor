@@ -17,7 +17,7 @@
     </div>
 
     <div 
-      class="media-text-wrapper text-align" 
+      class="media-text-wrapper text-align media-align-{{ section.settings.media_content_alignment }} media-valign-{{ section.settings.media_content_vertical_alignment }}" 
       data-cc-animate
       style="{% if section.settings.media_text_bg_color != blank %}background-color: {{ section.settings.media_text_bg_color }};{% endif %}{% if section.settings.media_text_bg_opacity != blank %}opacity: {{ section.settings.media_text_bg_opacity | divided_by: 100.0 }};{% endif %}"
     >
@@ -56,14 +56,14 @@
         {% endif %}
         
         <div
-          class="rte lightly-spaced-row {% if section.settings.media_enlarge_text %}large-text{% endif %}"
+          class="rte {% if section.settings.media_enlarge_text %}large-text{% endif %}"
           style="{% if section.settings.media_text_bg_enabled %}background-color: rgba(0, 0, 0, 0.5); padding: 20px;{% else %}padding: 15px;{% endif %}{{ media_font_family_style }}"
         >
           {{ media_text }}
         </div>
       {% endif %}
 
-      <div class="button-container lightly-spaced-row">
+      <div class="button-container">
         {% if section.settings.media_button1_label != blank and section.settings.media_button1_link != blank %}
           {% capture media_button1_label %}
             {% case locale_prefix %}
@@ -74,7 +74,7 @@
             {% endcase %}
           {% endcapture %}
           <a
-            class="btn btn--{{ section.settings.media_button1_style }} button-row__btn btn-1"
+            class="btn btn--primary button-row__btn btn-1"
             href="{{ section.settings.media_button1_link }}"
           >
             {{- media_button1_label | escape -}}
@@ -91,7 +91,7 @@
             {% endcase %}
           {% endcapture %}
           <a
-            class="btn btn--{{ section.settings.media_button2_style }} button-row__btn btn-2"
+            class="btn btn--secondary button-row__btn btn-2"
             href="{{ section.settings.media_button2_link }}"
           >
             {{- media_button2_label | escape -}}

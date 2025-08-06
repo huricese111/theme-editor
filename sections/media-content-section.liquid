@@ -377,20 +377,20 @@
       "default": "#ffffff"
     },
     {
-      "type": "range",
-      "id": "media_desktop_heading_size",
-      "min": 20,
-      "max": 60,
-      "step": 1,
-      "unit": "px",
-      "label": "Desktop Size",
-      "default": 36
-    },
+          "type": "range",
+          "id": "media_desktop_heading_size",
+          "min": 8,
+          "max": 108,
+          "step": 1,
+          "unit": "px",
+          "label": "Desktop Size",
+          "default": 36
+        },
     {
       "type": "range",
       "id": "media_mobile_heading_size",
-      "min": 12,
-      "max": 50,
+      "min": 8,
+      "max": 100,
       "step": 1,
       "unit": "px",
       "label": "Mobile Size",
@@ -437,8 +437,8 @@
     {
       "type": "range",
       "id": "media_desktop_text_size",
-      "min": 14,
-      "max": 30,
+      "min": 8,
+      "max": 80,
       "step": 1,
       "unit": "px",
       "label": "Desktop Size",
@@ -447,8 +447,8 @@
     {
       "type": "range",
       "id": "media_mobile_text_size",
-      "min": 12,
-      "max": 30,
+      "min": 8,
+      "max": 60,
       "step": 1,
       "unit": "px",
       "label": "Mobile Size",
@@ -504,6 +504,46 @@
       "default": "center"
     },
     {
+      "type": "select",
+      "id": "media_content_alignment",
+      "label": "Content Horizontal Alignment",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "flex-end",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "media_content_vertical_alignment",
+      "label": "Content Vertical Alignment",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "Top"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "flex-end",
+          "label": "Bottom"
+        }
+      ],
+      "default": "center"
+    },
+    {
       "type": "header",
       "content": "Button 1 Settings"
     },
@@ -552,26 +592,6 @@
       "default": "#000000"
     },
     {
-      "type": "select",
-      "id": "media_button1_style",
-      "label": "Style",
-      "default": "primary",
-      "options": [
-        {
-          "label": "Primary",
-          "value": "primary"
-        },
-        {
-          "label": "Secondary",
-          "value": "secondary"
-        },
-        {
-          "label": "Link",
-          "value": "link"
-        }
-      ]
-    },
-    {
       "type": "header",
       "content": "Button 2 Settings"
     },
@@ -618,26 +638,6 @@
       "id": "media_button2_border_color",
       "label": "Border Color",
       "default": "#000000"
-    },
-    {
-      "type": "select",
-      "id": "media_button2_style",
-      "label": "Style",
-      "default": "secondary",
-      "options": [
-        {
-          "label": "Primary",
-          "value": "primary"
-        },
-        {
-          "label": "Secondary",
-          "value": "secondary"
-        },
-        {
-          "label": "Link",
-          "value": "link"
-        }
-      ]
     },
     {
       "type": "select",
@@ -759,6 +759,42 @@
         }
       ],
       "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Content Column Padding"
+    },
+    {
+      "type": "text",
+      "id": "content_padding_top",
+      "label": "Padding Top (px)",
+      "default": "60",
+      "info": "Enter a number between 0-500. Invalid values will use default (60px)",
+      "placeholder": "60"
+    },
+    {
+      "type": "text",
+      "id": "content_padding_right",
+      "label": "Padding Right (px)",
+      "default": "60",
+      "info": "Enter a number between 0-500. Invalid values will use default (60px)",
+      "placeholder": "60"
+    },
+    {
+      "type": "text",
+      "id": "content_padding_bottom",
+      "label": "Padding Bottom (px)",
+      "default": "60",
+      "info": "Enter a number between 0-500. Invalid values will use default (60px)",
+      "placeholder": "60"
+    },
+    {
+      "type": "text",
+      "id": "content_padding_left",
+      "label": "Padding Left (px)",
+      "default": "60",
+      "info": "Enter a number between 0-500. Invalid values will use default (60px)",
+      "placeholder": "60"
     }
   ],
   "blocks": [
@@ -1456,26 +1492,6 @@
           "unit": "px",
           "label": "Mobile Size",
           "default": 16
-        },
-        {
-          "type": "select",
-          "id": "button_style",
-          "label": "Style",
-          "default": "primary",
-          "options": [
-            {
-              "label": "Primary",
-              "value": "primary"
-            },
-            {
-              "label": "Secondary",
-              "value": "secondary"
-            },
-            {
-              "label": "Link",
-              "value": "link"
-            }
-          ]
         },
         {
           "type": "header",
@@ -2448,24 +2464,18 @@
           "default": 0
         },
         {
-          "type": "range",
+          "type": "number",
           "id": "position_top",
           "label": "Vertical Position",
-          "min": 0,
-          "max": 100,
-          "step": 1,
-          "unit": "%",
-          "default": 10
+          "default": 10,
+          "info": "Vertical position in pixels. Negative values allowed for positioning outside container."
         },
         {
-          "type": "range",
+          "type": "number",
           "id": "position_left",
           "label": "Horizontal Position",
-          "min": 0,
-          "max": 100,
-          "step": 1,
-          "unit": "%",
-          "default": 10
+          "default": 10,
+          "info": "Horizontal position in pixels. Negative values allowed for positioning outside container."
         },
         {
           "type": "range",
@@ -2486,6 +2496,120 @@
           "step": 1,
           "unit": "px",
           "default": 8
+        },
+        {
+          "type": "header",
+          "content": "Mobile Settings"
+        },
+        {
+          "type": "select",
+          "id": "mobile_position_mode",
+          "label": "Mobile Position Mode",
+          "options": [
+            { "value": "absolute", "label": "Absolute (Free positioning)" },
+            { "value": "relative", "label": "Relative (Document flow)" }
+          ],
+          "default": "absolute",
+          "info": "Choose how the label is positioned on mobile devices"
+        },
+        {
+          "type": "number",
+          "id": "mobile_position_top",
+          "label": "Mobile Vertical Position",
+          "default": 10,
+          "info": "Vertical position in pixels on mobile devices. Negative values allowed."
+        },
+        {
+          "type": "number",
+          "id": "mobile_position_left",
+          "label": "Mobile Horizontal Position",
+          "default": 10,
+          "info": "Horizontal position in pixels on mobile devices. Negative values allowed."
+        },
+        {
+          "type": "range",
+          "id": "mobile_rotation",
+          "label": "Mobile Rotation Angle",
+          "min": -45,
+          "max": 45,
+          "step": 1,
+          "default": 0,
+          "unit": "deg",
+          "info": "Rotation angle on mobile devices. Leave empty to use desktop value."
+        },
+                {
+          "type": "range",
+          "id": "mobile_margin_top",
+          "label": "Mobile Top Margin",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 10,
+          "unit": "px",
+          "info": "Top margin for relative positioning mode"
+        },
+        {
+          "type": "range",
+          "id": "mobile_margin_left",
+          "label": "Mobile Left Margin",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 10,
+          "unit": "px",
+          "info": "Left margin for relative positioning mode"
+        },
+        {
+          "type": "header",
+          "content": "Mobile Text Sizes"
+        },
+        {
+          "type": "range",
+          "id": "mobile_small_size",
+          "label": "Mobile Small Text Size",
+          "min": 6,
+          "max": 24,
+          "step": 1,
+          "default": 10,
+          "unit": "px",
+          "info": "Small text size on mobile. Leave empty to use desktop value."
+        },
+        {
+          "type": "range",
+          "id": "mobile_large_size",
+          "label": "Mobile Large Text Size",
+          "min": 8,
+          "max": 48,
+          "step": 1,
+          "default": 18,
+          "unit": "px",
+          "info": "Large text size on mobile. Leave empty to use desktop value."
+        },
+        {
+          "type": "range",
+          "id": "mobile_extra_small_size",
+          "label": "Mobile Extra Text Size",
+          "min": 4,
+          "max": 16,
+          "step": 1,
+          "default": 10,
+          "unit": "px",
+          "info": "Extra text size on mobile. Leave empty to use desktop value."
+        },
+        {
+          "type": "header",
+          "content": "Mobile Shape & Padding"
+        },
+        {
+          "type": "range",
+          "id": "mobile_circle_size",
+          "label": "Mobile Circle Size",
+          "min": 30,
+          "max": 120,
+          "step": 5,
+          "default": 60,
+          "unit": "px",
+          "info": "Circle size on mobile devices. Only applies when shape is circle. Leave empty to use desktop value."
         }
       ]
     }

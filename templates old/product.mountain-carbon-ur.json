@@ -338,10 +338,10 @@
         "section_title": "Everything at maximum",
         "section_title_de": "Alles auf Maximum",
         "section_title_fr": "Tout au maximum",
+        "section_title_fi": "Kaikki maksimitasolla!",
         "text_description": "With the top model \"Ultra\", everything is designed for ultimate performance: the most powerful motor with 100 Nm, the battery with the highest capacity and the complete equipment ensure that the \"Ultra\" leaves nothing to be desired.",
         "text_description_de": "Beim Topmodell „Ultra“ ist alles auf ultimative Performance ausgelegt: Der stärkste Motor mit 100 Nm, der Akku mit der höchsten Kapazität und die Komplettausstattung sorgen dafür, dass beim „Ultra“ keine Wünsche offen bleiben.",
         "text_description_fr": "Avec le modèle haut de gamme « Ultra », tout est conçu pour des performances ultimes : le moteur le plus puissant avec 100 Nm, la batterie avec la plus grande capacité et l'équipement complet garantissent que l'« Ultra » ne laisse rien à désirer.",
-        "section_title_fi": "Kaikki maksimitasolla!",
         "text_description_fi": "\"Ultra\"-huippumalli on suunniteltu tarjoamaan maksimaalista suorituskykyä: Voimakkain tarjoamamme 100 Nm moottorimalli, 804Wh:n suurikapasiteettinen akku, sekä laadukas ja kattava varustelu, takaavat ettei Ultra jätä kuljettajalle toivomisen varaa.",
         "title_font_size": 50,
         "text_font_size": 18,
@@ -549,10 +549,10 @@
             "title": "100 Nm motor",
             "title_de": "100 Nm Motor",
             "title_fr": "Moteur de 100 Nm",
+            "title_fi": "Tehokas 100Nm moottori",
             "description": "With its 100 Nm, the powerful HEPHA P101 motor offers enough power for even the most demanding uphills. Nevertheless, it is extremely efficient, which benefits both range and long-term performance.",
             "description_de": "Der HEPHA P101 Motor bietet mit seinen 100 Nm ordentlich Schub für noch mehr Fahrspaß oder auch steilere Uphills! Seine Effizienz sorgt dafür, dass der Spaß auch auf längeren Touren anhält!",
             "description_fr": "Avec ses 100 Nm, le moteur HEPHA P101 offre une poussée suffisante pour encore plus de plaisir de conduite ou même des montées plus raides ! Son efficacité garantit que le plaisir dure même sur les longues randonnées !",
-            "title_fi": "Tehokas 100Nm moottori",
             "description_fi": "100 Nm:n tehollaan voimakas HEPHA P101 -moottori tarjoaa reilusti vääntöä sekä vauhdikkaisiin metsäseikkailuihin että arkiseen liikkumiseen."
           }
         },

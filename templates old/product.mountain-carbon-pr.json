@@ -360,10 +360,10 @@
         "section_title": "Performance, design & driving pleasure!",
         "section_title_de": "Leistung, Design und Fahrvergnügen!",
         "section_title_fr": "Performance, design & plaisir de conduite !",
+        "section_title_fi": "Suorituskykyä, muotoilua ja ajonautintoa!",
         "text_description": "The \"Performance\" version offers a clever mix of performance, equipment and design. With a maximum engine torque of 90 Nm, the Performance is more powerful than average and is positioned in the middle of the price range between the entry-level Long Range model and the top-of-the-range \"Ultra\" version.",
         "text_description_de": "Die Version „Performance“ bietet einen cleveren Mix aus Leistung, Ausstattung und Design. Mit einem maximalen Motordrehmoment von 90 Nm ist die Performance überdurchschnittlich leistungsstark und positioniert sich preislich im Mittelfeld zwischen dem Einstiegsmodell Long Range und der Top-Version „Ultra“.",
         "text_description_fr": "La version « Performance » propose un savant mélange de performances, d’équipements et de design. Avec un couple moteur maximal de 90 Nm, la Performance est plus puissante que la moyenne et se positionne au milieu de la fourchette de prix entre le modèle d’entrée de gamme Long Range et la version haut de gamme « Ultra ».",
-        "section_title_fi": "Suorituskykyä, muotoilua ja ajonautintoa!",
         "text_description_fi": "\"Performance\"-malli edustaa oivaltavaa yhdistelmää suorituskykyä, varustelua ja muotoilua. 90 Nm maksimivääntönsä ansiosta se tarjoaa keskimääräistä enemmän tehoa ja sijoittuu hintaluokaltaan lähtötason Long Range– ja huippumallin  \"Ultra\"-versioiden välille.",
         "title_font_size": 50,
         "text_font_size": 18,
@@ -563,10 +563,10 @@
             "title": "Carbon frame",
             "title_de": "Carbonrahmen",
             "title_fr": "Cadre en carbone",
+            "title_fi": "Hiilikuiturunko",
             "description": "Light, stiff and robust: these characteristics of the Ultra's carbon frame make it the perfect partner for the high-performance drive unit.",
             "description_de": "Leicht, steif und robust: Diese Eigenschaften des Carbonrahmens des Ultra machen ihn zum perfekten Partner für die leistungsstarke Antriebseinheit.",
             "description_fr": "Léger, rigide et robuste : ces caractéristiques du cadre en carbone de l'Ultra en font le partenaire idéal pour le groupe motopropulseur hautes performances.",
-            "title_fi": "Hiilikuiturunko",
             "description_fi": "Kevyt, jäykkä ja kestävä – nämä hiilikuituisen rungon ominaisuudet tekevät pyörästä täydellisen ja suorituskykyisen kumppanin maastoseikkailuihin."
           }
         },
@@ -605,10 +605,10 @@
             "title": "Rock Shox Recon Silver with 150 mm",
             "title_de": "Rock Shox Recon Silver mit 150 mm",
             "title_fr": "Rock Shox Recon Silver avec 150 mm",
+            "title_fi": "Rock Shox Recon Silver 150 mm",
             "description": "With a lightweight magnesium crown, precise Motion Control damper and adjustable settings for air pressure and damping, this suspension fork offers plenty of customization and control on any trail.",
             "description_de": "Mit einer leichten Magnesiumkrone, einem präzisen Motion Control-Dämpfer und anpassbaren Einstellungen für Luftdruck und Dämpfung bietet diese Federgabel zahlreiche Anpassungsmöglichkeiten und Kontrolle auf jedem Trail.",
             "description_fr": "Avec une couronne légère en magnésium, un amortisseur Motion Control précis et des réglages réglables pour la pression d'air et l'amortissement, cette fourche à suspension offre beaucoup de personnalisation et de contrôle sur n'importe quel sentier.",
-            "title_fi": "Rock Shox Recon Silver 150 mm",
             "description_fi": "Kevyt magnesiumkruunu, herkkätoiminen Motion Control-vaimennin sekä vaimennuksen tarkat säätömahdollisuudet tekevät tästä ilmajousitetusta haarukasta erinomaisen ja helposti hallittavan kumppanin kaikille poluille, haastavuudesta riippumatta."
           }
         },

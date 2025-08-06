@@ -1,12 +1,27 @@
 {% style %}
   .custom-discount-label-{{ block.id }} {
-    position: absolute;
-    top: {{ block.settings.position_top }}%;
-    left: {{ block.settings.position_left }}%;
+    {% if block.settings.position_mode == 'relative' %}
+      position: relative;
+      display: inline-block;
+      margin: {{ block.settings.position_top }}px 0 0 {{ block.settings.position_left }}px;
+    {% else %}
+      position: absolute;
+      top: {{ block.settings.position_top }}px;
+      left: {{ block.settings.position_left }}px;
+    {% endif %}
     transform: rotate({{ block.settings.rotation }}deg);
     transform-origin: center;
     z-index: 100;
     pointer-events: none;
+  }
+
+  /* 移动端位置设置 */
+  @media (max-width: 768px) {
+    .custom-discount-label-{{ block.id }} {
+      top: {{ block.settings.mobile_position_top | default: block.settings.position_top }}px;
+      left: {{ block.settings.mobile_position_left | default: block.settings.position_left }}px;
+      transform: rotate({{ block.settings.mobile_rotation | default: block.settings.rotation }}deg);
+    }
   }
 
   .custom-discount-label-{{ block.id }} .discount-tag {
@@ -37,6 +52,18 @@
     {% endif %}
   }
 
+  /* 移动端圆形大小设置 */
+  @media (max-width: 768px) {
+    .custom-discount-label-{{ block.id }} .discount-tag {
+      {% if block.settings.shape == 'circle' %}
+        width: {{ block.settings.mobile_circle_size | default: block.settings.circle_size }}px;
+        height: {{ block.settings.mobile_circle_size | default: block.settings.circle_size }}px;
+        min-width: {{ block.settings.mobile_circle_size | default: block.settings.circle_size }}px;
+      {% endif %}
+      padding: {{ block.settings.mobile_padding_vertical | default: block.settings.padding_vertical }}px {{ block.settings.mobile_padding_horizontal | default: block.settings.padding_horizontal }}px;
+    }
+  }
+
   .custom-discount-label-{{ block.id }} .small-text {
     font-size: {{ block.settings.small_size }}px;
     font-weight: 600;
@@ -47,6 +74,13 @@
     color: {{ block.settings.small_text_color | default: block.settings.text_color | default: '#FFFFFF' }};
   }
 
+  /* 移动端小字体大小 */
+  @media (max-width: 768px) {
+    .custom-discount-label-{{ block.id }} .small-text {
+      font-size: {{ block.settings.mobile_small_size | default: block.settings.small_size }}px;
+    }
+  }
+
   .custom-discount-label-{{ block.id }} .large-text {
     font-size: {{ block.settings.large_size }}px;
     font-weight: 700;
@@ -55,12 +89,26 @@
     color: {{ block.settings.large_text_color | default: block.settings.text_color | default: '#FFFFFF' }};
   }
 
+  /* 移动端大字体大小 */
+  @media (max-width: 768px) {
+    .custom-discount-label-{{ block.id }} .large-text {
+      font-size: {{ block.settings.mobile_large_size | default: block.settings.large_size }}px;
+    }
+  }
+
   .custom-discount-label-{{ block.id }} .extra-small-text {
     font-size: {{ block.settings.extra_small_size }}px;
     font-weight: 500;
     margin-top: 2px;
     line-height: 1;
     color: {{ block.settings.extra_text_color | default: block.settings.text_color | default: '#FFFFFF' }};
+  }
+
+  /* 移动端超小字体大小 */
+  @media (max-width: 768px) {
+    .custom-discount-label-{{ block.id }} .extra-small-text {
+      font-size: {{ block.settings.mobile_extra_small_size | default: block.settings.extra_small_size }}px;
+    }
   }
 {% endstyle %}
 
