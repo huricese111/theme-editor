@@ -20,15 +20,109 @@
 
     {% if translated_label != blank and block.settings[button_link_key] != blank %}
       <a
-        class="btn btn--{{ block.settings.button_style }} button-row__btn {% if i == 1 %}btn-1{% else %}btn-2{% endif %}"
+        class="btn btn--{{ block.settings.button_style }} button-row__btn {% if i == 1 %}btn-1{% else %}btn-2{% endif %} modern-button"
         href="{{ block.settings[button_link_key] }}"
-        style="color: {% if i == 1 %}{{ block.settings.button_text_color1 }}{% else %}{{ block.settings.button_text_color2 }}{% endif %}; background: {% if i == 1 %}{{ block.settings.button_bg_color1 }}{% else %}{{ block.settings.button_bg_color2 }}{% endif %}; border-color: {% if i == 1 %}{{ block.settings.button_border_color1 }}{% else %}{{ block.settings.button_border_color2 }}{% endif %}; border-radius: {{ block.settings.button_border_radius | default: 4 }}px; height: {{ block.settings.button_height | default: 44 }}px; margin: {{ block.settings.button_margin_top | default: 10 }}px {{ block.settings.button_margin_right | default: 10 }}px {{ block.settings.button_margin_bottom | default: 10 }}px {{ block.settings.button_margin_left | default: 0 }}px; display: inline-flex; align-items: center; justify-content: center; text-decoration: none;"
+        style="
+          color: {% if i == 1 %}{{ block.settings.button_text_color1 }}{% else %}{{ block.settings.button_text_color2 }}{% endif %};
+          background: {% if i == 1 %}{{ block.settings.button_bg_color1 }}{% else %}{{ block.settings.button_bg_color2 }}{% endif %};
+          border: 2px solid {% if i == 1 %}{{ block.settings.button_border_color1 }}{% else %}{{ block.settings.button_border_color2 }}{% endif %};
+          border-radius: {{ block.settings.button_border_radius | default: 50 }}px;
+          height: {{ block.settings.button_height | default: 48 }}px;
+          min-height:48px;
+          margin: {{ block.settings.button_margin_top | default: 10 }}px {{ block.settings.button_margin_right | default: 10 }}px {{ block.settings.button_margin_bottom | default: 10 }}px {{ block.settings.button_margin_left | default: 0 }}px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          text-decoration: none;
+          font-weight: 300;
+          font-size: 16px;
+          letter-spacing: 0.025em;
+          padding: 0 24px;
+          position: relative;
+          overflow: hidden;
+          cursor: pointer;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+        "
       >
-        {{- translated_label | escape -}}
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-left: 6px;">
-          <path d="M4 2L8 6L4 10" stroke="{% if i == 1 %}{{ block.settings.button_text_color1 }}{% else %}{{ block.settings.button_text_color2 }}{% endif %}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <span class="button-text" style="transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 2; position: relative;">
+          {{- translated_label -}}
+        </span>
+        <svg class="button-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-left: 8px; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 2; position: relative;">
+          <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
+        <div class="button-shine" style="
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+          transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        "></div>
       </a>
     {% endif %}
   {% endfor %}
 </div>
+
+<style>
+  .modern-button {
+    position: relative;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+  }
+  
+  .modern-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+    opacity: 0;
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+  }
+  
+  .modern-button:hover {
+    transform: translateY(-2px) scale(1.02) !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15), 0 4px 10px rgba(0, 0, 0, 0.1) !important;
+  }
+  
+  .modern-button:hover::before {
+    opacity: 1;
+  }
+  
+  .modern-button:hover .button-text {
+    transform: translateX(-2px);
+  }
+  
+  .modern-button:hover .button-arrow {
+    transform: translateX(4px) scale(1.1);
+  }
+  
+  .modern-button:hover .button-shine {
+    left: 100%;
+  }
+  
+  .modern-button:active {
+    transform: translateY(0) scale(0.98) !important;
+    transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+  
+  .modern-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3) !important;
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .modern-button,
+    .modern-button *,
+    .modern-button::before {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+</style>
