@@ -98,6 +98,8 @@
  */
 {%- endcomment -%}
 
+{{ 'unified-button-styles.css' | asset_url | stylesheet_tag }}
+
 {% schema %}
 {
   "name": "Dynamic Promo Blocks",
@@ -879,99 +881,98 @@
 {% endschema %}
 
 <style>
-    :root {
-      --banner-height-desktop: {{ section.settings.desktop_height }}px;
-      --banner-height-mobile: {{ section.settings.mobile_height }}px;
-      --module-radius: 12px;
-      --module-padding: 20px;
-      --button-radius: 50px;
-      --button-padding: 10px 20px;
-      --button-font-size: 14px;
-      --tag-bg-color: #f8e71c;
-      --tag-color: #000;
-      --desktop-gap: 20px;
-    }
+  :root {
+    --banner-height-desktop: {{ section.settings.desktop_height }}px;
+    --banner-height-mobile: {{ section.settings.mobile_height }}px;
+    --module-radius: 8px;
+    --module-padding: 20px;
+    --button-radius: 50px;
+    --button-padding: 10px 20px;
+    --button-font-size: 14px;
+    --tag-bg-color: #f8e71c;
+    --tag-color: #000;
+    --desktop-gap: 20px;
+    --text-button-spacing-desktop: 20px;
+    --text-button-spacing-mobile: 16px;
+  }
 
-     .promo-section-container {
-      padding: 20px;
-      box-sizing: border-box;
-    }
+  .promo-section-container {
+    padding: 20px;
+    box-sizing: border-box;
+  }
 
-    .banner-desktop {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: 1fr;
-      gap: var(--desktop-gap);
-      width: 100%;
-      min-height: var(--banner-height-desktop);
-    }
+  .banner-desktop {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: var(--desktop-gap);
+    height: var(--banner-height-desktop);
+  }
 
-    .banner-left {
-      grid-column: 1;
-      grid-row: 1;
-      height: 100%;
-    }
+  .banner-left {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
 
-    .banner-right {
-      grid-column: 2;
-      grid-row: 1;
-      display: grid;
-      grid-template-rows: 1fr 1fr;
-      gap: var(--desktop-gap);
-      height: 100%;
-    }
+  .banner-left .module {
+    height: 100%;
+    flex: 1;
+  }
 
-    .banner-right-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--desktop-gap);
-    }
+  .banner-right {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    gap: var(--desktop-gap);
+    height: 100%;
+  }
 
-    .banner-mobile {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-    }
+  .banner-right-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--desktop-gap);
+    height: 100%;
+  }
 
-    .banner-mobile-left,
-    .banner-mobile-right-row {
-      height: var(--banner-height-mobile);
-    }
+  .banner-right .module {
+    height: 100%;
+  }
 
-    .module {
-      position: relative;
-      padding: var(--module-padding);
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-      background-repeat: no-repeat;
-      border-radius: var(--module-radius);
-      background-size: cover;
-      overflow: hidden;
-      height: 100%;
-    }
+  .module {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: var(--module-radius);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
 
-    .module::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: rgba(0, 0, 0, 0.1);
-      z-index: 1;
-    }
+  .module::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.1);
+    z-index: 1;
+  }
 
-    .module__inner {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-       justify-content: flex-end;
-    }
+  .module__inner {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: flex-end;
+    gap: var(--text-button-spacing-desktop);
+    padding: var(--module-padding);
+    box-sizing: border-box;
+  }
 
-     .module-position-top .module__inner {
+  .module-position-top .module__inner {
     justify-content: flex-start;
   }
 
@@ -983,33 +984,121 @@
     justify-content: flex-end;
   }
 
-    .module__content {
-      padding: 10px;
-      min-width: 140px;
+  .module__content {
+    min-width: 140px;
+    margin: 0;
+  }
+
+  .module__button {
+    align-self: flex-start;
+    margin: 0;
+  }
+
+  .banner-left .module__title {
+    font-weight: 700;
+    font-size: {{ section.settings.left_title_size }}px;
+    line-height: {{ section.settings.left_title_size | times: 1.14 }}px;
+  }
+
+  .module__title--medium {
+    font-weight: 700;
+    font-size: {{ section.settings.right1_title_size }}px;
+    line-height: {{ section.settings.right1_title_size | times: 1.28 }}px;
+  }
+
+  .module__title--small {
+    font-weight: 700;
+    font-size: {{ section.settings.right2_title_size }}px;
+    line-height: {{ section.settings.right2_title_size | times: 1.3 }}px;
+  }
+
+  .module__tag {
+    /* 移除margin，使用gap统一间距 */
+    margin: 0;
+    font-size: 22px;
+    line-height: 40px;
+    height: 40px;
+    color: #000;
+    text-align: center;
+    display: inline-block;
+    padding: 0 10px;
+    background-color: #f8e71c;
+    border-radius: 8px;
+    white-space: nowrap;
+    font-weight: 700;
+  }
+
+  .hide-on-mobile {
+    display: none;
+  }
+
+  @media (min-width: 769px) {
+    .banner-mobile {
+      display: none;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .promo-section-container {
+      padding: 0;
     }
 
-    .banner-left .module__title {
-      font-weight: 700;
-      font-size: {{ section.settings.left_title_size }}px;
-      line-height: {{ section.settings.left_title_size | times: 1.14 }}px;
-      margin: 0 0 20px;
+    .module {
+      border-radius: 0;
+    }
+
+    .banner-desktop {
+      display: none;
+    }
+
+    .banner-mobile {
+      display: block;
+    }
+
+    .banner-mobile-left .module,
+    .banner-mobile-right .module {
+      height: 100%;
+    }
+
+    .banner-mobile-left,
+    .banner-mobile-right-row {
+      height: var(--banner-height-mobile);
+    }
+
+    .banner-mobile-right-row .module-right-1 {
+      height: var(--banner-height-mobile);
+    }
+
+    .module__inner {
+      gap: var(--text-button-spacing-mobile);
+      padding-bottom: 20px; /* 统一content与底部距离 */
+    }
+
+    .banner-mobile-left .module__title {
+      font-size: {{ section.settings.left_title_size_mobile }}px;
+      line-height: {{ section.settings.left_title_size_mobile | times: 1.14 }}px;
+      white-space: auto;
+      margin: 0;
     }
 
     .module__title--medium {
-      font-weight: 700;
-      font-size: {{ section.settings.right1_title_size }}px;
-      line-height: {{ section.settings.right1_title_size | times: 1.28 }}px;
+      font-size: {{ section.settings.right1_title_size_mobile }}px;
+      line-height: {{ section.settings.right1_title_size_mobile | times: 1.14 }}px;
+      white-space: nowrap;
+      margin: 0;
     }
 
     .module__title--small {
-      font-weight: 700;
-      font-size: {{ section.settings.right2_title_size }}px;
-      line-height: {{ section.settings.right2_title_size | times: 1.3 }}px;
+      font-size: {{ section.settings.right2_title_size_mobile }}px;
+      line-height: {{ section.settings.right2_title_size_mobile | times: 1.14 }}px;
+      white-space: nowrap;
+      margin: 0;
     }
 
+    /* 统一移动端tag样式 */
     .module__tag {
-      margin: 0 0 10px;
-      font-size: 22px;
+      margin: 0;
+      font-size: 16px;
       line-height: 40px;
       height: 40px;
       color: #000;
@@ -1022,99 +1111,18 @@
       font-weight: 700;
     }
 
-    .module__button {
-      border-radius: var(--button-radius);
-      text-decoration: none;
-      font-weight: 400;
-      font-size: var(--button-font-size);
-      cursor: pointer;
-      margin-top: 10px;
-      align-self: flex-start;
-      padding: var(--button-padding);
-      display: inline-block;
-      transition: opacity 0.3s ease;
+    .banner-mobile-left .module {
+      {% if section.settings.left_mobile_image != blank %}
+        background-image: url({{ section.settings.left_mobile_image | img_url: '1024x1024' }}) !important;
+      {% endif %}
     }
 
-    .module__button:hover {
-      opacity: 0.8;
+    .module-right-1 {
+      {% if section.settings.right_mobile_image_1 != blank %}
+        background-image: url({{ section.settings.right_mobile_image_1 | img_url: '1024x1024' }}) !important;
+      {% endif %}
     }
-
-
-    .hide-on-mobile {
-      display: none;
-    }
-
-    @media (min-width: 769px) {
-      .banner-mobile {
-        display: none;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .promo-section-container {
-      padding: 0;
-    }
-
-      .module {
-      border-radius: 0;
-    }
-
-      .banner-desktop {
-        display: none;
-      }
-
-      .banner-mobile {
-        display: block;
-      }
-
-      .banner-mobile-left .module,
-      .banner-mobile-right .module {
-        height: 100%;
-      }
-
-      .banner-mobile-left,
-      .banner-mobile-right-row {
-        height: var(--banner-height-mobile);
-      }
-
-      .banner-mobile-left .module__title {
-        font-size: {{ section.settings.left_title_size_mobile }}px;
-        line-height: {{ section.settings.left_title_size_mobile | times: 1.14 }}px;
-        white-space: auto;
-      }
-
-      .module__title--medium {
-        font-size: {{ section.settings.right1_title_size_mobile }}px;
-        line-height: {{ section.settings.right1_title_size_mobile | times: 1.28 }}px;
-        white-space: nowrap;
-      }
-
-      .module__title--small {
-        font-size: {{ section.settings.right2_title_size_mobile }}px;
-        line-height: {{ section.settings.right2_title_size_mobile | times: 1.3 }}px;
-        white-space: nowrap;
-      }
-
-      .module__tag {
-        font-size: 16px;
-      }
-
-      .module__button {
-        font-size: 12px;
-      }
-
-      .banner-mobile-left .module {
-        {% if section.settings.left_mobile_image != blank %}
-          background-image: url({{ section.settings.left_mobile_image | img_url: '1024x1024' }}) !important;
-        {% endif %}
-      }
-
-      .module-right-1 {
-        {% if section.settings.right_mobile_image_1 != blank %}
-          background-image: url({{ section.settings.right_mobile_image_1 | img_url: '1024x1024' }}) !important;
-        {% endif %}
-      }
-    }
+  }
 </style>
 
 {% assign current_locale = request.locale.iso_code %}
@@ -1268,22 +1276,20 @@
         "
       >
         <div class="module__inner">
-          <div class="module__content">
-            {% if left_tag != blank %}
-              <div class="module__tag">{{ left_tag }}</div>
-            {% endif %}
-            <h2 class="module__title" style="color: {{ section.settings.left_title_color }};">{{ left_title }}</h2>
-          </div>
-          <a
-            href="{{ section.settings.left_button_url }}"
-            class="module__button"
-            style="
-              background-color: {{ section.settings.left_button_color }};
-              color: {{ section.settings.left_button_text_color }};
-            "
-          >
-            {{ left_button }} &#8594;
-          </a>
+          {% render 'module-content',
+            tag: left_tag,
+            title: left_title,
+            title_color: section.settings.left_title_color,
+            title_size: 'large',
+            title_element: 'h2'
+          %}
+          {% render 'unified-button',
+            text: left_button,
+            url: section.settings.left_button_url,
+            bg_color: section.settings.left_button_color,
+            text_color: section.settings.left_button_text_color,
+            class: 'module__button'
+          %}
         </div>
       </div>
     </div>
@@ -1299,24 +1305,19 @@
         "
       >
         <div class="module__inner">
-          <div class="module__content">
-            {% if right1_tag != blank %}
-              <div class="module__tag">{{ right1_tag }}</div>
-            {% endif %}
-            <div class="module__title--medium" style="color: {{ section.settings.right1_title_color }};">
-              {{ right1_title }}
-            </div>
-          </div>
-          <a
-            href="{{ section.settings.right1_button_url }}"
-            class="module__button"
-            style="
-              background-color: {{ section.settings.right1_button_color }};
-              color: {{ section.settings.right1_button_text_color }};
-            "
-          >
-            {{ right1_button }} &#8594;
-          </a>
+          {% render 'module-content',
+            tag: right1_tag,
+            title: right1_title,
+            title_color: section.settings.right1_title_color,
+            title_size: 'medium'
+          %}
+          {% render 'unified-button',
+            text: right1_button,
+            url: section.settings.right1_button_url,
+            bg_color: section.settings.right1_button_color,
+            text_color: section.settings.right1_button_text_color,
+            class: 'module__button'
+          %}
         </div>
       </div>
 
@@ -1331,24 +1332,19 @@
           "
         >
           <div class="module__inner">
-            <div class="module__content">
-              {% if right2_tag != blank %}
-                <div class="module__tag">{{ right2_tag }}</div>
-              {% endif %}
-              <div class="module__title--small" style="color: {{ section.settings.right2_title_color }};">
-                {{ right2_title }}
-              </div>
-            </div>
-            <a
-              href="{{ section.settings.right2_button_url }}"
-              class="module__button"
-              style="
-                background-color: {{ section.settings.right2_button_color }};
-                color: {{ section.settings.right2_button_text_color }};
-              "
-            >
-              {{ right2_button }} &#8594;
-            </a>
+            {% render 'module-content',
+              tag: right2_tag,
+              title: right2_title,
+              title_color: section.settings.right2_title_color,
+              title_size: 'small'
+            %}
+            {% render 'unified-button',
+              text: right2_button,
+              url: section.settings.right2_button_url,
+              bg_color: section.settings.right2_button_color,
+              text_color: section.settings.right2_button_text_color,
+              class: 'module__button'
+            %}
           </div>
         </div>
 
@@ -1362,24 +1358,20 @@
           "
         >
           <div class="module__inner">
-            <div class="module__content">
-              {% if right3_tag != blank %}
-                <div class="module__tag">{{ right3_tag }}</div>
-              {% endif %}
-              <div class="module__title--small" style="color: {{ section.settings.right3_title_color }};">
-                {{ right3_title }}
-              </div>
-            </div>
-            <a
-              href="{{ section.settings.right3_button_url }}"
-              class="module__button"
-              style="
-                background-color: {{ section.settings.right3_button_color }};
-                color: {{ section.settings.right3_button_text_color }};
-              "
-            >
-              {{ right3_button }} &#8594;
-            </a>
+            {% render 'module-content',
+              tag: right3_tag,
+              title: right3_title,
+              title_color: section.settings.right3_title_color,
+              title_size: 'small',
+              title_element: 'div'
+            %}
+            {% render 'unified-button',
+              text: right3_button,
+              url: section.settings.right3_button_url,
+              bg_color: section.settings.right3_button_color,
+              text_color: section.settings.right3_button_text_color,
+              class: 'module__button'
+            %}
           </div>
         </div>
       </div>
@@ -1398,22 +1390,20 @@
         "
       >
         <div class="module__inner">
-          <div class="module__content">
-            {% if left_tag != blank %}
-              <div class="module__tag">{{ left_tag }}</div>
-            {% endif %}
-            <h2 class="module__title" style="color: {{ section.settings.left_title_color }};">{{ left_title }}</h2>
-          </div>
-          <a
-            href="{{ section.settings.left_button_url }}"
-            class="module__button"
-            style="
-              background-color: {{ section.settings.left_button_color }};
-              color: {{ section.settings.left_button_text_color }};
-            "
-          >
-            {{ left_button }} &#8594;
-          </a>
+          {% render 'module-content',
+            tag: left_tag,
+            title: left_title,
+            title_color: section.settings.left_title_color,
+            title_size: 'large',
+            title_element: 'h2'
+          %}
+          {% render 'unified-button',
+            text: left_button,
+            url: section.settings.left_button_url,
+            bg_color: section.settings.left_button_color,
+            text_color: section.settings.left_button_text_color,
+            class: 'module__button'
+          %}
         </div>
       </div>
     </div>
@@ -1429,24 +1419,19 @@
         "
       >
         <div class="module__inner">
-          <div class="module__content">
-            {% if right1_tag != blank %}
-              <div class="module__tag">{{ right1_tag }}</div>
-            {% endif %}
-            <div class="module__title--medium" style="color: {{ section.settings.right1_title_color }};">
-              {{ right1_title }}
-            </div>
-          </div>
-          <a
-            href="{{ section.settings.right1_button_url }}"
-            class="module__button"
-            style="
-              background-color: {{ section.settings.right1_button_color }};
-              color: {{ section.settings.right1_button_text_color }};
-            "
-          >
-            {{ right1_button }} &#8594;
-          </a>
+          {% render 'module-content',
+            tag: right1_tag,
+            title: right1_title,
+            title_color: section.settings.right1_title_color,
+            title_size: 'medium'
+          %}
+          {% render 'unified-button',
+            text: right1_button,
+            url: section.settings.right1_button_url,
+            bg_color: section.settings.right1_button_color,
+            text_color: section.settings.right1_button_text_color,
+            class: 'module__button'
+          %}
         </div>
       </div>
     </div>

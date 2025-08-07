@@ -63,7 +63,7 @@
         </div>
       {% endif %}
 
-      <div class="button-container">
+      <div class="button-container" style="justify-content: {{ section.settings.media_button_alignment | default: 'center' }}; display: flex; gap: 10px;">
         {% if section.settings.media_button1_label != blank and section.settings.media_button1_link != blank %}
           {% capture media_button1_label %}
             {% case locale_prefix %}
@@ -73,43 +73,13 @@
               {% else %}{{ section.settings.media_button1_label }}
             {% endcase %}
           {% endcapture %}
-          <a
-            class="btn btn--primary button-row__btn btn-1 modern-media-button"
-            href="{{ section.settings.media_button1_link }}"
-            style="
-              display: inline-flex;
-              align-items: center;
-              justify-content: center;
-              font-weight: 300;
-              font-size: 16px;
-              letter-spacing: 0.025em;
-              padding: 0 24px;
-              height: 48px;
-              border-radius: 50px;
-              position: relative;
-              overflow: hidden;
-              cursor: pointer;
-              transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-              box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
-              text-decoration: none;
-            "
-          >
-            <span class="button-text" style="transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 2; position: relative;">
-              {{- media_button1_label -}}
-            </span>
-            <svg class="button-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-left: 8px; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 2; position: relative;">
-              <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <div class="button-shine" style="
-              position: absolute;
-              top: 0;
-              left: -100%;
-              width: 100%;
-              height: 100%;
-              background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-              transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            "></div>
-          </a>
+          {% render 'unified-button',
+            text: media_button1_label,
+            url: section.settings.media_button1_link,
+            bg_color: section.settings.media_button1_bg_color,
+            text_color: section.settings.media_button1_text_color,
+            class: 'media-button-1'
+          %}
         {% endif %}
 
         {% if section.settings.media_button2_label != blank and section.settings.media_button2_link != blank %}
@@ -121,98 +91,15 @@
               {% else %}{{ section.settings.media_button2_label }}
             {% endcase %}
           {% endcapture %}
-          <a
-            class="btn btn--secondary button-row__btn btn-2 modern-media-button"
-            href="{{ section.settings.media_button2_link }}"
-            style="
-              display: inline-flex;
-              align-items: center;
-              justify-content: center;
-              font-weight: 300;
-              font-size: 16px;
-              letter-spacing: 0.025em;
-              padding: 0 24px;
-              height: 48px;
-              border-radius: 50px;
-              position: relative;
-              overflow: hidden;
-              cursor: pointer;
-              transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-              box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
-              text-decoration: none;
-            "
-          >
-            <span class="button-text" style="transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 2; position: relative;">
-              {{- media_button2_label -}}
-            </span>
-            <svg class="button-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-left: 8px; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 2; position: relative;">
-              <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <div class="button-shine" style="
-              position: absolute;
-              top: 0;
-              left: -100%;
-              width: 100%;
-              height: 100%;
-              background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-              transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            "></div>
-          </a>
+          {% render 'unified-button',
+            text: media_button2_label,
+            url: section.settings.media_button2_link,
+            bg_color: section.settings.media_button2_bg_color,
+            text_color: section.settings.media_button2_text_color,
+            class: 'media-button-2'
+          %}
         {% endif %}
       </div>
     </div>
   </div>
 {% endif %}
-
-<style>
-  .modern-media-button {
-    position: relative;
-    transform-style: preserve-3d;
-    backface-visibility: hidden;
-  }
-  
-  .modern-media-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: inherit;
-    background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
-    opacity: 0;
-    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    pointer-events: none;
-  }
-  
-  .modern-media-button:hover {
-    transform: translateY(-2px) scale(1.02) !important;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15), 0 4px 10px rgba(0, 0, 0, 0.1) !important;
-  }
-  
-  .modern-media-button:hover::before {
-    opacity: 1;
-  }
-  
-  .modern-media-button:hover .button-text {
-    transform: translateX(-2px);
-  }
-  
-  .modern-media-button:hover .button-arrow {
-    transform: translateX(4px) scale(1.1);
-  }
-  
-  .modern-media-button:hover .button-shine {
-    left: 100%;
-  }
-  
-  .modern-media-button:active {
-    transform: translateY(0) scale(0.98) !important;
-    transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1) !important;
-  }
-  
-  .modern-media-button:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3) !important;
-  }
-</style>
