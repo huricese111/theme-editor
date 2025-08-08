@@ -1655,23 +1655,23 @@
 }
 
 .location-card[data-store-type="dealer"] .store-type-badge {
-  background-color: rgba(54, 153, 255, 0.1);
-  color: #3699FF;
+  background-color: rgba(105, 138, 168, 0.1);
+  color: #698aa8;
 }
 
 .location-card[data-store-type="rental"] .store-type-badge {
-  background-color: rgba(81, 187, 168, 0.1);
-  color: #51BBA8;
+  background-color: rgba(227, 74, 56, 0.1);
+  color: #e34a38;
 }
 
 .location-card[data-store-type="service"] .store-type-badge {
-  background-color: rgba(237, 85, 113, 0.1);
-  color: #ED5571;
+  background-color: rgba(102, 173, 120, 0.1);
+  color: #66ad78;
 }
 
 .location-card[data-store-type="click-collect"] .store-type-badge {
-  background-color: rgba(255, 153, 51, 0.1);
-  color: #FF9933;
+  background-color: rgba(242, 161, 18, 0.1);
+  color: #f2a112;
 }
 
 .location-card.hidden {
@@ -1890,23 +1890,23 @@
 }
 
 .gm-style .gm-style-iw-d .info-window .store-type-badge[data-store-type="dealer"] {
-  background-color: rgba(54, 153, 255, 0.1);
-  color: #3699FF;
+  background-color: rgba(105, 138, 168, 0.1);
+  color: #698aa8;
 }
 
 .gm-style .gm-style-iw-d .info-window .store-type-badge[data-store-type="rental"] {
-  background-color: rgba(81, 187, 168, 0.1);
-  color: #51BBA8;
+  background-color: rgba(227, 74, 56, 0.1);
+  color: #e34a38;
 }
 
 .gm-style .gm-style-iw-d .info-window .store-type-badge[data-store-type="service"] {
-  background-color: rgba(237, 85, 113, 0.1);
-  color: #ED5571;
+  background-color: rgba(102, 173, 120, 0.1);
+  color: #66ad78;
 }
 
 .gm-style .gm-style-iw-d .info-window .store-type-badge[data-store-type="click-collect"] {
-  background-color: rgba(255, 153, 51, 0.1);
-  color: #FF9933;
+  background-color: rgba(242, 161, 18, 0.1);
+  color: #f2a112;
 }
 
 /* 移动端样式调整 */
