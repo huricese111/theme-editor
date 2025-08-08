@@ -1,0 +1,207 @@
+<style>
+    #myModal {
+        position: fixed;
+        z-index: 99999999;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+        display: none;
+    }
+
+    #myModal .popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 2;
+        background-color: rgb(255, 255, 255);
+        padding: 0px 0px 20px;
+        border: 1px solid rgb(229, 229, 229);
+        width: 70%;
+        max-height: 80%;
+        overflow-y: auto;
+    }
+
+    .myModaltitle {
+        position: sticky;
+        top: 0;
+        background-color: rgb(255, 255, 255);
+        display: flex;
+        place-content: center space-between;
+        border-bottom: 1px solid rgb(233, 233, 233);
+        padding: 10px 20px;
+        font-weight: 700;
+        align-items: center;
+        z-index: 10;
+    }
+
+    #myModal .popup.title h3 {
+        margin: 0;
+        color: #333;
+        display: inline;
+        font-size: 30px;
+    }
+
+    #myModal .popup.title .close {
+        position: absolute;
+        top: 4px;
+        right: 19px;
+        transition: all 200ms;
+        font-size: 30px;
+        font-weight: bold;
+        text-decoration: none;
+        color: #000;
+        display: inline;
+    }
+
+    .myModalclose {
+        font-size: 30px;
+        font-weight: bold;
+        text-decoration: none;
+        color: #000;
+    }
+
+    .myModalproduct-columns {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        padding: 10px 20px;
+    }
+
+    .myModalproduct-column {
+        width: 32%;
+        box-sizing: border-box;
+        margin-right: 10px;
+        position: relative;
+        transition: transform 0.3s;
+    }
+
+    .myModalproduct-column img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1;
+        object-fit: contain;
+        border-radius: 5px;
+        background: #eeeeee;
+        margin-bottom: 10px;
+    }
+
+    .discount-label {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: #FFD200;
+        color: black;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-weight: bold;
+        z-index: 10;
+    }
+
+    .myModalproduct-name {
+        color: #000;
+        font-size: 16px;
+    }
+
+    .myModalproduct-current-price {
+        font-size: 14px;
+        color: #333333;
+    }
+
+    .myModalproduct-was-price {
+        font-size: 14px;
+        color: grey;
+        text-decoration: line-through;
+    }
+
+    @media (max-width: 768px) {
+        .myModalproduct-column {
+            width: 100%;
+            margin-right: 0;
+            margin-bottom: 20px;
+        }
+
+        #myModal .popup {
+            width: 90%;
+            max-height: 80%;
+            overflow-y: auto;
+        }
+
+        .myModaltitle {
+            padding: 10px;
+            z-index: 999;
+            font-size: 18px;
+        }
+    }
+</style>
+
+<div id="myModal" class="myModal">
+    <div class="popup">
+        <div class="myModaltitle">
+            <h5>{{ 'ebike.model_sold_out' | t }}</h5>
+            <a class="myModalclose" href="javascript:void(0);">&times;</a>
+        </div>
+        <div class="myModalproduct-columns">
+            {% assign recommend_products = product.metafields.custom.recommend_product_modal.value %}
+            {% if recommend_products %}
+            {% for recommend_product in recommend_products %}
+            <div class="myModalproduct-column">
+                <a href="{{ shop.url | append: '/products/' | append: recommend_product.handle }}">
+                    {% assign featured_image = recommend_product.metafields.custom.featured_image | default: recommend_product.featured_image | img_url: 'original' %}
+                    <img src="{{ featured_image }}" alt="{{ recommend_product.title }}">
+                    {% if recommend_product.metafields.custom.discount %}
+                    <div class="discount-label">{{ recommend_product.metafields.custom.discount }}</div>
+                    {% endif %}
+                    <h3 class="myModalproduct-name">{{ recommend_product.title }}</h3>
+                    <div class="price">
+                        {% if recommend_product.compare_at_price > recommend_product.price %}
+                        <span class="myModalproduct-current-price">{{ recommend_product.price | money }}</span>
+                        <span class="myModalproduct-was-price">{{ recommend_product.compare_at_price | money }}</span>
+                        {% else %}
+                        <span class="myModalproduct-current-price">{{ recommend_product.price | money }}</span>
+                        {% endif %}
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p>No recommended products found.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script>
+    const button = document.querySelector('.btn.btn--large.add-to-cart');
+    const modal = document.getElementById('myModal');
+    const closeBtn = document.querySelector('.myModalclose');
+
+    function showModal() {
+        modal.style.display = 'block';
+    }
+
+    function closeModal() {
+        modal.style.display = 'none';
+    }
+
+    const observer = new MutationObserver((mutationsList) => {
+        mutationsList.forEach((mutation) => {
+            const buttonText = mutation.target.innerText.trim().toLowerCase();
+            if (mutation.type === 'childList' && (buttonText === 'unavailable' || buttonText === 'nicht verfügbar' || buttonText === 'pas disponible')) {
+                showModal();
+            }
+        });
+    });
+
+    observer.observe(button, { childList: true });
+
+    document.addEventListener('click', function (e) {
+        if (e.target.classList.contains('myModalclose')) {
+            e.preventDefault(); // Prevent default link behavior
+            closeModal();
+        }
+    });
+</script>

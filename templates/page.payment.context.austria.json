@@ -1,0 +1,35 @@
+{
+    "parent": "page.payment.json",
+    "context": {
+        "market": "austria"
+    },
+    "sections": {
+        "collapsible_tab_7GAqw4": {
+            "disabled": true,
+            "settings": {},
+            "blocks": {}
+        },
+        "custom_imagerow_g6rfNh": {
+            "settings": {},
+            "blocks": {
+                "module_Cnezjb": {
+                    "disabled": true,
+                    "settings": {}
+                },
+                "module_VXAzk3": {
+                    "disabled": true,
+                    "settings": {}
+                },
+                "module_Ma6wdW": {
+                    "disabled": true,
+                    "settings": {}
+                },
+                "module_dLyyBA": {
+                    "settings": {
+                        "subheading_image_1_width": 300
+                    }
+                }
+            }
+        }
+    }
+}

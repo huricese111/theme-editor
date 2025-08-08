@@ -1,0 +1,148 @@
+<script src="{{ 'custom.js' | asset_url }}" defer></script>
+<style>
+    html {
+        scroll-behavior: smooth;
+    }
+
+    .stickyNavigation {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: rgb(255, 255, 255);
+        padding: 1em 2em;
+        width: 100%;
+        box-shadow: rgba(91, 104, 113, 0.1) 0px 6px 8px;
+        transform: translateY(0px);
+        transition: box-shadow 0.2s, transform 0.2s;
+        z-index: 100 !important;
+    }
+
+    .stickyNavigationleft {
+        display: flex;
+        align-items: center;
+        gap: 4rem;
+    }
+
+    .stickyNavigation-title {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .stickyNavigation-links {
+        display: flex;
+        gap: 20px;
+    }
+
+    .stickyNavigation-links a {
+        text-decoration: none;
+        color: #333;
+    }
+
+    .button.button--large {
+    white-space: nowrap !important;
+}
+
+  .highlightitems {
+    font-weight: bold;
+    color: #2b7dde !important;
+}
+
+    @media (max-width: 768px) {
+      #stickyNavigation{
+        bottom:0;
+        top: auto !important;
+      }
+        .stickyNavigation-links {
+            display: none;
+        }
+
+      
+        .stickyNavigation-title {
+            font-size: 18px;
+            line-height: 20px;
+        }
+    }
+</style>
+
+
+<div class="stickyNavigation" id="stickyNavigation">
+    <div class="stickyNavigationleft">
+        <div class="stickyNavigation-title">{{ product.title }}</div>
+        <div class="stickyNavigation-links">
+            <a href="#shopify-section-template--23904323371276__custom_imagerow_HKEdg7" class="nav-link">
+               {% if request.locale.iso_code == 'de' %}
+           Besondere Messeangebote
+            {% elsif request.locale.iso_code == 'fr' %}
+           Offres Spéciales d'Exposition
+            {% else %}
+            Special Exhibition Offers
+            {% endif %}            
+            </a>
+            <a href="#shopify-section-template--23904323371276__custom_product_list_4zpWTr" class="nav-link">
+                {% if request.locale.iso_code == 'de' %}
+            Neue Modelle
+            {% elsif request.locale.iso_code == 'fr' %}
+           Nouveaux modèles
+            {% else %}
+           New models
+            {% endif %}           
+            </a>
+            <a href="#shopify-section-template--23904323371276__17424553342c707506" class="nav-link">
+                {% if request.locale.iso_code == 'de' %}
+           Kundenrezensionen
+            {% elsif request.locale.iso_code == 'fr' %}
+                              Commentaires client
+            {% else %}
+                Customer reviews
+            {% endif %}    
+            </a>
+           
+        </div>
+    </div>
+    <div class="buttonContainer"><div style="display:flex; gap:10px;" class="custom-button-group">
+          <span style="font-size:24px;font-weight:bold;"></span>
+           {% render 'newsletter-signup', id: subscrideform, block: block %}
+
+        </div></div>
+</div>
+
+<script>
+ document.addEventListener('DOMContentLoaded', function() {
+    const links = document.querySelectorAll('.nav-link');
+
+    // 创建一个 Intersection Observer
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            const id = entry.target.id;
+            const link = document.querySelector(`a[href="#${id}"]`);
+
+            if (entry.isIntersecting) {
+                links.forEach(link => link.classList.remove('highlightitems'));
+                if (link) {
+                    link.classList.add('highlightitems');
+                }
+            }
+        });
+    }, {
+        threshold: 0.1 
+    });
+
+    links.forEach(link => {
+        const targetId = link.getAttribute('href').substring(1); // 去掉 #
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+            observer.observe(targetElement);
+        }
+    });
+
+    links.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+    });
+});
+
+</script>

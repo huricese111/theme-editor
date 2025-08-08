@@ -1,0 +1,266 @@
+{% schema %}
+{
+  "name": "Custom Column",
+  "settings": [
+    {
+      "type": "range",
+      "id": "items_per_row",
+      "label": "Items per row",
+      "min": 1,
+      "max": 4,
+      "default": 2
+    },
+  ],
+  "blocks": [
+    {
+      "type": "column_block",
+      "name": "Column Block",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+            "type": "url",
+            "id": "img_url",
+            "label": "Image URL"
+          },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "title_de",
+          "label": "Title(德语)"
+        },
+        {
+          "type": "text",
+          "id": "title_fr",
+          "label": "Title(法语)"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description"
+        },
+        {
+          "type": "richtext",
+          "id": "description_de",
+          "label": "Description(德语)"
+        },
+        {
+          "type": "richtext",
+          "id": "description_fr",
+          "label": "Description(法语)"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "Background Color",
+        },
+        {
+          "type": "text",
+          "id": "button1_text",
+          "label": "Button 1 Text"
+        },
+        {
+          "type": "text",
+          "id": "button1_text_de",
+          "label": "Button 1 Text(德语)"
+        },
+        {
+          "type": "text",
+          "id": "button1_text_fr",
+          "label": "Button 1 Text(法语)"
+        },
+        {
+          "type": "url",
+          "id": "button1_url",
+          "label": "Button 1 URL"
+        },
+        {
+          "type": "color",
+          "id": "button1_background_color",
+          "label": "Button 1 Background Color",
+        },
+        {
+          "type": "color",
+          "id": "button1_text_color",
+          "label": "Button 1 Text Color",
+        },
+        {
+          "type": "text",
+          "id": "button2_text",
+          "label": "Button 2 Text"
+        },
+        {
+          "type": "text",
+          "id": "button2_text_de",
+          "label": "Button 2 Text(德语)"
+        },
+        {
+          "type": "text",
+          "id": "button2_text_fr",
+          "label": "Button 2 Text(法语)"
+        },
+        {
+          "type": "url",
+          "id": "button2_url",
+          "label": "Button 2 URL"
+        },
+        {
+          "type": "color",
+          "id": "button2_background_color",
+          "label": "Button 2 Background Color",
+        },
+        {
+          "type": "color",
+          "id": "button2_text_color",
+          "label": "Button 2 Text Color",
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Column",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+
+
+<div class="tab-content-section">
+  <h2 class="explore-title" id="highlights" style="margin-bottom: 20px;">{{ 'ebike.highlights' | t }}</h2>
+  <div class="custom-column-layout" style="--items-per-row: {{ section.settings.items_per_row }}">
+    {% for block in section.blocks %}
+      <div class="custom-column-item" style="background-color: {{ block.settings.background_color }};">
+        <a href="{{ block.settings.img_url }}">
+           <img src="{{ block.settings.image | img_url: 'original' }}" alt="{{ block.settings.title }}" class="responsive-image"> 
+        </a>
+        <h3>
+         {% if request.locale.iso_code == 'de' %}
+          {{ block.settings.title_de }}
+        {% elsif request.locale.iso_code == 'fr' %}
+          {{ block.settings.title_fr }}
+        {% else %}
+          {{ block.settings.title }}  
+        {% endif %}
+        </h3>
+        <div>
+          {% if request.locale.iso_code == 'de' %}
+          {{ block.settings.description_de }}
+        {% elsif request.locale.iso_code == 'fr' %}
+          {{ block.settings.description_fr }}
+        {% else %}
+          {{ block.settings.description }}  
+        {% endif %}
+        </div>
+        
+        <div class="button-container">
+          <a href="{{ block.settings.button1_url }}" class="custom-button button1" style="background-color: {{ block.settings.button1_background_color }}; color: {{ block.settings.button1_text_color }};">
+            {% if request.locale.iso_code == 'de' %}
+            {{ block.settings.button1_text_de }}
+          {% elsif request.locale.iso_code == 'fr' %}
+            {{ block.settings.button1_text_fr }}
+          {% else %}
+            {{ block.settings.button1_text }}  
+          {% endif %}
+          </a>
+
+          <a href="{{ block.settings.button2_url }}" class="custom-button button2" style="background-color: {{ block.settings.button2_background_color }}; color: {{ block.settings.button2_text_color }};">
+            {% if request.locale.iso_code == 'de' %}
+            {{ block.settings.button2_text_de }}
+          {% elsif request.locale.iso_code == 'fr' %}
+            {{ block.settings.button2_text_fr }}
+          {% else %}
+            {{ block.settings.button2_text }}  
+          {% endif %}
+          </a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{%- style -%}
+.tab-content-section {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 100px 20px;
+}
+
+.explore-title {
+  font-size: 30px;
+  margin-bottom: 60px;
+  text-align: left;
+}
+
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .custom-column-layout {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .custom-column-item {
+    flex: 1 1 calc((100% / var(--items-per-row)) - 20px);
+    margin: 30px 10px;
+    text-align: left;
+    box-sizing: border-box;
+  }
+
+  .custom-column-item h3{
+    font-size:24px;
+    padding: 20px 0;
+  }
+
+  .responsive-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  .button-container {
+    margin-top: 10px;
+    display: flex;
+    justify-content: justify-content;
+    gap: 10px;
+  }
+
+  .custom-button {
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+
+  @media (max-width: 768px) {
+    .custom-column-item {
+      flex: 1 1 100%;
+    }
+  }
+{%- endstyle -%}
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const buttons = document.querySelectorAll('.custom-button');
+
+    buttons.forEach(button => {
+      if (!button.textContent.trim()) {
+        button.style.display = 'none';
+      }
+    });
+  });
+</script>

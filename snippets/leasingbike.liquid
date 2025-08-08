@@ -1,0 +1,204 @@
+{% if localization.country.iso_code == 'DE' %}
+  <div
+    class="product-info-accordion{% unless block.settings.show_in_quickbuy %} not-in-quickbuy{% endunless %}"
+    {{ block.shopify_attributes }}
+  >
+    <details-disclosure>
+      <details
+        class="disclosure"
+        {% if block.settings.open %}
+          open
+        {% endif %}
+      >
+        <summary class="disclosure__title">
+          {% if request.locale.iso_code == 'de' %}
+            Leasing mit einem unserer Partner
+          {% else %}
+            Leasing with one of our partners
+          {% endif %}
+        </summary>
+        <div class="disclosure__panel has-motion">
+          <div class="disclosure__content rte cf">
+            <div class="leasingcontent">
+              <img
+                alt="Jobrad"
+                src="https://cdn.shopify.com/s/files/1/0560/0080/6985/files/Jobrad_logo_anthrazit_3x_994a1a2b-7182-4120-b161-1019ea96654c.png?v=1721918799"
+                width="100px"
+              >
+              {% if request.locale.iso_code == 'de' %}
+                <span
+                  >Über JobRad kannst du dein Bike mit einem Steuervorteil leasen und bis zu 40 % sparen. Einfach
+                  Traumrad aussuchen, Zubehör wählen und bestellen.</span
+                >
+              {% else %}
+                <span
+                  >Lease your new Hepha with JobRad and save up to 40% with tax-free benefits. Just select your dream
+                  bike and approved accessories, and place your order.</span
+                >
+              {% endif %}
+              <a href="{{ block.settings.jobrad_url }}" style="text-decoration: underline;">
+                {{- 'ebike.learn_more' | t -}}
+              </a>
+            </div>
+            <div class="leasingcontent">
+              <img
+                alt="logo-bikeleasing"
+                src="https://cdn.shopify.com/s/files/1/0560/0080/6985/files/logo-bikeleasing.png?v=1727678772"
+                width="100px"
+              >
+              {% if request.locale.iso_code == 'de' %}
+                <span
+                  >Mit unserem Partner Bikeleasing-Service kannst du dein Bike mit steuerlichem Vorteil leasen. Ob dein
+                  Arbeitgeber Bikeleasing-Service anbietet, erfährst du bei deiner Personalabteilung.</span
+                >
+              {% else %}
+                <span
+                  >Bikeleasing-Service lets you lease your bike with a tax advantage. You can find out whether your
+                  employer offers Bikeleasing-Service from your HR department.</span
+                >
+              {% endif %}
+              <a href="{{ block.settings.bikeleasing_url}}" style="text-decoration: underline;">
+                {{- 'ebike.learn_more' | t -}}
+              </a>
+            </div>
+
+            <div class="leasingcontent">
+              <img
+                src="https://cdn.shopify.com/s/files/1/0560/0080/6985/files/dd-logo-dark-yellow.png?v=1727683609"
+                width="100px"
+                alt="Deutsche Dienstrad"
+              >
+              {% if request.locale.iso_code == 'de' %}
+                <span
+                  >Mit unserem Partner Deutsche Dienstrad-Service kannst du dein Bike mit steuerlichem Vorteil leasen.
+                  Ob dein Arbeitgeber Deutsche Dienstrad-Service anbietet, erfährst du bei deiner Personalabteilung.</span
+                >
+              {% else %}
+                <span
+                  >Deutsche Dienstrad-Service lets you lease your bike with a tax advantage. You can find out whether
+                  your employer offers Deutsche Dienstrad-Service from your HR department.</span
+                >
+              {% endif %}
+              <a href="{{ block.settings.deutsche_url}}" style="text-decoration: underline;">
+                {{- 'ebike.learn_more' | t -}}
+              </a>
+            </div>
+
+            <div class="leasingcontent">
+              <img
+                src="https://cdn.shopify.com/s/files/1/0560/0080/6985/files/businessbike_pos_blue_red_blue_rgb.png?v=1727679074"
+                alt="businessbike"
+                width="100px"
+              >
+              {% if request.locale.iso_code == 'de' %}
+                <span
+                  >Mit unserem Partner BusinessBike-Service kannst du dein Bike mit steuerlichem Vorteil leasen. Ob dein
+                  Arbeitgeber BusinessBike-Service anbietet, erfährst du bei deiner Personalabteilung.
+                </span>
+              {% else %}
+                <span
+                  >BusinessBike-Service lets you lease your bike with a tax advantage. You can find out whether your
+                  employer offers BusinessBike-Service from your HR department.</span
+                >
+              {% endif %}
+              <a href="{{ block.settings.businessbike_url}}" style="text-decoration: underline;">
+                {{- 'ebike.learn_more' | t -}}
+              </a>
+            </div>
+          </div>
+        </div>
+      </details>
+    </details-disclosure>
+  </div>
+
+{% elsif localization.country.iso_code == 'AT' %}
+  <div
+    class="product-info-accordion{% unless block.settings.show_in_quickbuy %} not-in-quickbuy{% endunless %}"
+    {{ block.shopify_attributes }}
+  >
+    <details-disclosure>
+      <details
+        class="disclosure"
+        {% if block.settings.open %}
+          open
+        {% endif %}
+      >
+        <summary class="disclosure__title">
+          {% if request.locale.iso_code == 'de' %}
+            <h3>Leasing mit einem unserer Partner</h3>
+          {% else %}
+            <h3>Leasing with one of our partners</h3>
+          {% endif %}
+        </summary>
+        <div class="disclosure__panel has-motion">
+          <div class="disclosure__content rte cf">
+            <div class="leasingcontent">
+              <img
+                alt="Jobrad"
+                src="https://cdn.shopify.com/s/files/1/0560/0080/6985/files/Jobrad_logo_anthrazit_3x_994a1a2b-7182-4120-b161-1019ea96654c.png?v=1721918799"
+                width="100px"
+              >
+              {% if request.locale.iso_code == 'de' %}
+                <span
+                  >Über JobRad kannst du dein Bike mit einem Steuervorteil leasen und bis zu 40 % sparen. Einfach
+                  Traumrad aussuchen, Zubehör wählen und bestellen.</span
+                >
+              {% else %}
+                <span
+                  >Lease your new Hepha with JobRad and save up to 40% with tax-free benefits. Just select your dream
+                  bike and approved accessories, and place your order.</span
+                >
+              {% endif %}
+              <a href="{{ block.settings.jobrad_url }}" style="text-decoration: underline;">
+                {{- 'ebike.learn_more' | t -}}
+              </a>
+            </div>
+          </div>
+        </div>
+      </details>
+    </details-disclosure>
+  </div>
+{% endif %}
+
+<style>
+        .disclosure {
+          background: #ecf0f1;
+      }
+  .disclosure__title h3{
+    font-size:16px;
+  }
+        .disclosure__title:before, .disclosure__title:after {
+          right: 20px;
+      }
+      .product-info-accordion .disclosure__title {
+        padding-left: 20px;
+    }
+    .disclosure__content {
+      padding: 20px;
+  }
+        .js .disclosure[open]:not(.is-closing) .disclosure__content {
+          padding: 20px;
+      }
+          .leasingcontent {
+              display: flex;
+              flex-direction: column;
+              align-items: flex-start;
+              margin-bottom: 50px;
+          }
+
+          .leasingpannel {
+              background: #ecf0f1 !important;
+          }
+
+          .leasingtitle h3 {
+              font-size: 16px !important;
+          }
+
+          .leasingcontent img {
+              margin-bottom: 10px;
+          }
+
+          .leasingcontent span {
+              font-size: 14px !important;
+          }
+</style>
