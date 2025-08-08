@@ -25,15 +25,15 @@
 
 {%- case store_type -%}
   {%- when 'dealer' -%}
-    {%- assign marker_color = '#3699FF' -%}
+    {%- assign marker_color = '#698aa8' -%}
   {%- when 'rental' -%}
-    {%- assign marker_color = '#51BBA8' -%}
+    {%- assign marker_color = '#e34a38' -%}
   {%- when 'service' -%}
-    {%- assign marker_color = '#ED5571' -%}
+    {%- assign marker_color = '#66ad78' -%}
   {%- when 'click-collect' -%}
-    {%- assign marker_color = '#FF9933' -%}
+    {%- assign marker_color = '#f2a112' -%}
   {%- else -%}
-    {%- assign marker_color = '#3699FF' -%}
+    {%- assign marker_color = '#a38aa3' -%}
 {%- endcase -%}
 
 {%- assign unique_id = store_type | append: '-' | append: size | append: '-' | append: 'now' | date: '%s' -%}

@@ -241,19 +241,19 @@ document.addEventListener('DOMContentLoaded', function () {
     let markerColor;
     switch (storeType) {
       case 'dealer':
-        markerColor = '#3699FF';
+        markerColor = '#698aa8';
         break;
       case 'rental':
-        markerColor = '#51BBA8';
+        markerColor = '#e34a38';
         break;
       case 'service':
-        markerColor = '#ED5571';
+        markerColor = '#66ad78';
         break;
       case 'click-collect':
-        markerColor = '#FF9933';
+        markerColor = '#f2a112';
         break;
       default:
-        markerColor = '#3699FF';
+        markerColor = '#a38aa3';
         break;
     }
 

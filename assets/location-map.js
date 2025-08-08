@@ -98,13 +98,13 @@ if (!customElements.get('location-map')) {
     getMarkerSVG(storeType) {
     // 严格按照Frame SVG样式定义颜色
     const colors = {
-    dealer: '#3699FF',       
-    rental: '#51BBA8',      
-    service: '#ED5571',       
-    'click-collect': '#FF9933' 
+    dealer: '#698aa8',       
+    rental: '#e34a38',      
+    service: '#66ad78',       
+    'click-collect': '#f2a112' 
     };
     
-    const color = colors[storeType] || colors.dealer;
+    const color = colors[storeType] || '#a38aa3';
     
     const uniqueId = `map-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
     const clipId = `clip-${uniqueId}`;

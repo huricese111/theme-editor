@@ -230,12 +230,16 @@
                     -%}
                     <label class="enhanced-form-label" for="contact_email">
                       {{- label_text | escape -}}
-                      <span class="required-asterisk">*</span></label
-                    >
+                      {%- if block.settings.required -%}
+                        <span class="required-asterisk">*</span>
+                      {%- endif -%}
+                    </label>
                     <input
                       class="enhanced-form-input email"
                       type="email"
-                      required
+                      {% if block.settings.required %}
+                        required
+                      {% endif %}
                       id="contact_email"
                       name="contact[email]"
                       autocomplete="email"
@@ -506,6 +510,7 @@
 
                   {% when 'multilevel_dropdown' %}
                     {%- liquid
+                      assign current_locale = request.locale.iso_code
                       assign label_text = block.settings.label_en | default: 'Select Category'
                       if block.settings.label_de != blank and request.locale.iso_code == 'de'
                         assign label_text = block.settings.label_de
@@ -514,31 +519,34 @@
                       elsif block.settings.label_fi != blank and request.locale.iso_code == 'fi'
                         assign label_text = block.settings.label_fi
                       endif
-                      assign placeholder_text = block.settings.placeholder | default: 'Select an option'
 
-                      assign cancel_text = 'Cancel'
-                      if request.locale.iso_code == 'de'
-                        assign cancel_text = 'Abbrechen'
-                      elsif request.locale.iso_code == 'fr'
-                        assign cancel_text = 'Annuler'
-                      elsif request.locale.iso_code == 'fi'
-                        assign cancel_text = 'Peruuta'
-                      endif
-
-                      assign ok_text = 'OK'
-                      assign clear_text = 'Clear'
-                      if request.locale.iso_code == 'de'
-                        assign clear_text = 'Löschen'
-                      elsif request.locale.iso_code == 'fr'
-                        assign clear_text = 'Effacer'
-                      elsif request.locale.iso_code == 'fi'
-                        assign clear_text = 'Tyhjennä'
-                      endif
+                      case current_locale
+                        when 'de'
+                          assign placeholder_text = block.settings.placeholder_text_de | default: block.settings.placeholder_text_en
+                          assign clear_text = block.settings.clear_text_de | default: block.settings.clear_text_en
+                          assign ok_text = block.settings.ok_text_de | default: block.settings.ok_text_en
+                          assign structured_options = block.settings.structured_options_de | default: block.settings.structured_options
+                        when 'fr'
+                          assign placeholder_text = block.settings.placeholder_text_fr | default: block.settings.placeholder_text_en
+                          assign clear_text = block.settings.clear_text_fr | default: block.settings.clear_text_en
+                          assign ok_text = block.settings.ok_text_fr | default: block.settings.ok_text_en
+                          assign structured_options = block.settings.structured_options_fr | default: block.settings.structured_options
+                        when 'fi'
+                          assign placeholder_text = block.settings.placeholder_text_fi | default: block.settings.placeholder_text_en
+                          assign clear_text = block.settings.clear_text_fi | default: block.settings.clear_text_en
+                          assign ok_text = block.settings.ok_text_fi | default: block.settings.ok_text_en
+                          assign structured_options = block.settings.structured_options_fi | default: block.settings.structured_options
+                        else
+                          assign placeholder_text = block.settings.placeholder_text_en | default: 'Select an option'
+                          assign clear_text = block.settings.clear_text_en | default: 'Clear'
+                          assign ok_text = block.settings.ok_text_en | default: 'OK'
+                          assign structured_options = block.settings.structured_options
+                      endcase
                     -%}
                     <div class="multilevel-dropdown-wrapper" data-field-name="{{ block.settings.field_name }}">
                       <label
                         for="{{ block.settings.field_name }}"
-                        class="form-label{% if block.settings.required %} required{% endif %}"
+                        class="enhanced-form-label{% if block.settings.required %} required{% endif %}"
                       >
                         {{ label_text -}}
                         {%- if block.settings.required -%}
@@ -593,8 +601,15 @@
                       <!-- Hidden Data for JavaScript -->
                       <script type="application/json" id="data-{{ block.settings.field_name }}">
                         {
-                          "structuredOptions": {{ block.settings.structured_options | split: '\n' | json }},
-                          "separator": "{{ block.settings.separator | default: '|' }}"
+                          "structuredOptions": {{ structured_options | split: '\n' | json }},
+                          "clearText": {{ clear_text | json }},
+                          "okText": {{ ok_text | json }},
+                          "separator": "{{ block.settings.separator | default: '|' }}",
+                          "selectCategoryText": {% case current_locale %}{% when 'de' %}{{ 'Kategorie auswählen' | json }}{% when 'fr' %}{{ 'Sélectionner une catégorie' | json }}{% when 'fi' %}{{ 'Valitse kategoria' | json }}{% else %}{{ 'Select Category' | json }}{% endcase %},
+                          "backText": {% case current_locale %}{% when 'de' %}{{ 'Zurück' | json }}{% when 'fr' %}{{ 'Retour' | json }}{% when 'fi' %}{{ 'Takaisin' | json }}{% else %}{{ 'Back' | json }}{% endcase %},
+                          "doneText": {% case current_locale %}{% when 'de' %}{{ 'Fertig' | json }}{% when 'fr' %}{{ 'Terminé' | json }}{% when 'fi' %}{{ 'Valmis' | json }}{% else %}{{ 'Done' | json }}{% endcase %},
+                          "noOptionsText": {% case current_locale %}{% when 'de' %}{{ 'Keine Optionen verfügbar' | json }}{% when 'fr' %}{{ 'Aucune option disponible' | json }}{% when 'fi' %}{{ 'Ei vaihtoehtoja saatavilla' | json }}{% else %}{{ 'No options available' | json }}{% endcase %},
+                          "checkConfigText": {% case current_locale %}{% when 'de' %}{{ 'Bitte überprüfen Sie die Konfiguration' | json }}{% when 'fr' %}{{ 'Veuillez vérifier la configuration' | json }}{% when 'fi' %}{{ 'Tarkista konfiguraatio' | json }}{% else %}{{ 'Please check the configuration' | json }}{% endcase %}
                         }
                       </script>
                     </div>
@@ -610,7 +625,7 @@
                         assign label_text = block.settings.label_fi
                       endif
                     -%}
-                    <label for="contact_{{ block.settings.field_name | handle }}">
+                    <label class="enhanced-form-label" for="contact_{{ block.settings.field_name | handle }}">
                       {{- label_text | escape -}}
                       {%- if block.settings.required -%}
                         <span class="required-asterisk">*</span>
@@ -1033,7 +1048,7 @@
                         assign label_text = block.settings.label_fi
                       endif
                     -%}
-                    <label for="message">
+                    <label class="enhanced-form-label" for="message">
                       {{- label_text | escape -}}
                       {%- if block.settings.required -%}
                         <span class="required-asterisk">*</span>
@@ -1428,6 +1443,12 @@
         },
         {
           "type": "checkbox",
+          "id": "required",
+          "label": "Required",
+          "default": true
+        },
+        {
+          "type": "checkbox",
           "id": "half_width",
           "label": "Half width",
           "default": false
@@ -1795,7 +1816,7 @@
           "type": "textarea",
           "id": "country_options",
           "label": "Country options",
-          "default": "United States\nCanada\nUnited Kingdom\nGermany\nFrance\nAustralia\nJapan",
+          "default": "Germany\nFrance\nAustralia\nFinland",
           "info": "One country on each line"
         },
         {
@@ -1853,21 +1874,29 @@
           "default": false
         },
         {
-          "type": "text",
-          "id": "placeholder",
-          "label": "Placeholder Text",
-          "default": "Click to select"
-        },
-        {
-          "type": "header",
-          "content": "Dropdown Options Configuration"
+          "type": "textarea",
+          "id": "structured_options",
+          "label": "Structured Options (English)",
+          "default": "Trekking 7 LTD|Long Range|Low step|L|Light Grey\nTrekking 7 LTD|Long Range|High step|M|Light Grey\nTrekking 7 LTD|Long Range|Low step|L|Black\nTrekking 7 LTD|Long Range|High step|M|Black\nTrekking 7 LTD|Performance|Low step|L|Dark Grey\nTrekking 7 LTD|Performance|High step|M|Dark Grey\nTrekking 7 LTD|Performance|Low step|L|Sand\nTrekking 7 LTD|Performance|High step|M|Sand\nTrekking 7 LTD|Ultra|Low step|L|Dark Grey\nTrekking 7 LTD|Ultra|High step|M|Dark Grey\nTrekking 7 LTD|Ultra|Low step|L|Sand\nTrekking 7 LTD|Ultra|High step|M|Sand\nTrekking 7 SE|Long Range|Low step|L|Light Grey\nTrekking 7 SE|Long Range|High step|M|Light Grey\nTrekking 7 SE|Long Range|Low step|L|Black\nTrekking 7 SE|Long Range|High step|M|Black\nTrekking 7 SE|Performance|Low step|L|Dark Grey\nTrekking 7 SE|Performance|High step|M|Dark Grey\nTrekking 7 SE|Performance|Low step|L|Sand\nTrekking 7 SE|Performance|High step|M|Sand\nTrekking 7 SE|Ultra|Low step|L|Dark Grey\nTrekking 7 SE|Ultra|High step|M|Dark Grey\nTrekking 7 SE|Ultra|Low step|L|Sand\nTrekking 7 SE|Ultra|High step|M|Sand\nTrekking 7|Long Range|Step Through|M|Moss\nTrekking 7|Long Range|Step Through|L|Moss\nTrekking 7|Long Range|Step Through|XL|Moss\nTrekking 7|Long Range|High Step|M|Moss\nTrekking 7|Long Range|High Step|L|Moss\nTrekking 7|Long Range|High Step|XL|Moss\nTrekking 7|Long Range|Low Step|M|Moss\nTrekking 7|Long Range|Low Step|L|Moss\nTrekking 7|Long Range|Step Through|M|Anthracite\nTrekking 7|Long Range|Step Through|L|Anthracite\nTrekking 7|Long Range|Step Through|XL|Anthracite\nTrekking 7|Long Range|High Step|M|Anthracite\nTrekking 7|Long Range|High Step|L|Anthracite\nTrekking 7|Long Range|High Step|XL|Anthracite\nTrekking 7|Long Range|Low Step|M|Anthracite\nTrekking 7|Long Range|Low Step|L|Anthracite\nTrekking 7|Performance|Step Through|M|Warm Grey\nTrekking 7|Performance|Step Through|L|Warm Grey\nTrekking 7|Performance|Step Through|XL|Warm Grey\nTrekking 7|Performance|High Step|M|Warm Grey\nTrekking 7|Performance|High Step|L|Warm Grey\nTrekking 7|Performance|High Step|XL|Warm Grey\nTrekking 7|Performance|Low Step|M|Warm Grey\nTrekking 7|Performance|Low Step|L|Warm Grey\nTrekking 7|Performance|Step Through|M|Grey\nTrekking 7|Performance|Step Through|L|Grey\nTrekking 7|Performance|Step Through|XL|Grey\nTrekking 7|Performance|High Step|M|Grey\nTrekking 7|Performance|High Step|L|Grey\nTrekking 7|Performance|High Step|XL|Grey\nTrekking 7|Performance|Low Step|M|Grey\nTrekking 7|Performance|Low Step|L|Grey\nTrekking 7|Ultra|Step Through|M|Warm Grey\nTrekking 7|Ultra|Step Through|L|Warm Grey\nTrekking 7|Ultra|Step Through|XL|Warm Grey\nTrekking 7|Ultra|High Step|M|Warm Grey\nTrekking 7|Ultra|High Step|L|Warm Grey\nTrekking 7|Ultra|High Step|XL|Warm Grey\nTrekking 7|Ultra|Low Step|M|Warm Grey\nTrekking 7|Ultra|Low Step|L|Warm Grey\nTrekking 7|Ultra|Step Through|M|Grey\nTrekking 7|Ultra|Step Through|L|Grey\nTrekking 7|Ultra|Step Through|XL|Grey\nTrekking 7|Ultra|High Step|M|Grey\nTrekking 7|Ultra|High Step|L|Grey\nTrekking 7|Ultra|High Step|XL|Grey\nTrekking 7|Ultra|Low Step|M|Grey\nTrekking 7|Ultra|Low Step|L|Grey\nTrekking 7|Ultra+|Step Through|M|Dark Blue\nTrekking 7|Ultra+|Step Through|L|Dark Blue\nTrekking 7|Ultra+|Step Through|XL|Dark Blue\nTrekking 7|Ultra+|High Step|M|Dark Blue\nTrekking 7|Ultra+|High Step|L|Dark Blue\nTrekking 7|Ultra+|High Step|XL|Dark Blue\nTrekking 7|Ultra+|Low Step|M|Dark Blue\nTrekking 7|Ultra+|Low Step|L|Dark Blue\nMountain 7|Long Range|M|Olive\nMountain 7|Long Range|L|Olive\nMountain 7|Long Range|M|Light Grey\nMountain 7|Long Range|L|Light Grey\nMountain 7|Performance|M|Mint\nMountain 7|Performance|L|Mint\nMountain 7|Performance|M|Blue Grey\nMountain 7|Performance|L|Blue Grey\nMountain 7|Ultra|M|Mint\nMountain 7|Ultra|L|Mint\nMountain 7|Ultra|M|Blue Grey\nMountain 7|Ultra|L|Blue Grey\nMountain 7 Carbon|Long Range|M\nMountain 7 Carbon|Long Range|L\nMountain 7 Carbon|Performance|M\nMountain 7 Carbon|Performance|L\nMountain 7 Carbon|Ultra|M\nMountain 7 Carbon|Ultra|L\nCity 7|Long Range|S\nCity 7|Long Range|M\nCity 7|Long Range|L\nCity 7|Ultra|Step Through|S\nCity 7|Ultra|Step Through|M\nCity 7|Ultra|Step Through|L\nCity 7|Ultra|Step Through|XL\nCity 7|Ultra|High Step|S\nCity 7|Ultra|High Step|M\nCity 7|Ultra|High Step|L\nCity 7|Ultra|High Step|XL",
+          "info": "Use indentation to create hierarchy. Each level should be indented with 2 spaces."
         },
         {
           "type": "textarea",
-          "id": "structured_options",
-          "label": "Structured Options Data",
-          "info": "Format: Level1|Level2|Level3|Level4|Level5 (one option per line). Use | to separate levels. Example:\nTrekking 7 LTD|Long Range|Low step|L|Light Grey\nTrekking 7 LTD|Long Range|High step|M|Light Grey\nTrekking 7 SE|Performance|Low step|L|Dark Grey",
-          "default": "Trekking 7 LTD|Long Range|Low step|L|Light Grey\nTrekking 7 LTD|Long Range|High step|M|Light Grey\nTrekking 7 LTD|Long Range|Low step|L|Black\nTrekking 7 LTD|Long Range|High step|M|Black\nTrekking 7 LTD|Performance|Low step|L|Dark Grey\nTrekking 7 LTD|Performance|High step|M|Dark Grey\nTrekking 7 LTD|Performance|Low step|L|Sand\nTrekking 7 LTD|Performance|High step|M|Sand\nTrekking 7 LTD|Ultra|Low step|L|Dark Grey\nTrekking 7 LTD|Ultra|High step|M|Dark Grey\nTrekking 7 LTD|Ultra|Low step|L|Sand\nTrekking 7 LTD|Ultra|High step|M|Sand\nTrekking 7 SE|Long Range|Low step|L|Light Grey\nTrekking 7 SE|Long Range|High step|M|Light Grey\nTrekking 7 SE|Long Range|Low step|L|Black\nTrekking 7 SE|Long Range|High step|M|Black\nTrekking 7 SE|Performance|Low step|L|Dark Grey\nTrekking 7 SE|Performance|High step|M|Dark Grey\nTrekking 7 SE|Performance|Low step|L|Sand\nTrekking 7 SE|Performance|High step|M|Sand\nTrekking 7 SE|Ultra|Low step|L|Dark Grey\nTrekking 7 SE|Ultra|High step|M|Dark Grey\nTrekking 7 SE|Ultra|Low step|L|Sand\nTrekking 7 SE|Ultra|High step|M|Sand\nTrekking 7|Long Range|Step Through|M|Moss\nTrekking 7|Long Range|Step Through|L|Moss\nTrekking 7|Long Range|Step Through|XL|Moss\nTrekking 7|Long Range|High Step|M|Moss\nTrekking 7|Long Range|High Step|L|Moss\nTrekking 7|Long Range|High Step|XL|Moss\nTrekking 7|Long Range|Low Step|M|Moss\nTrekking 7|Long Range|Low Step|L|Moss\nTrekking 7|Long Range|Step Through|M|Anthracite\nTrekking 7|Long Range|Step Through|L|Anthracite\nTrekking 7|Long Range|Step Through|XL|Anthracite\nTrekking 7|Long Range|High Step|M|Anthracite\nTrekking 7|Long Range|High Step|L|Anthracite\nTrekking 7|Long Range|High Step|XL|Anthracite\nTrekking 7|Long Range|Low Step|M|Anthracite\nTrekking 7|Long Range|Low Step|L|Anthracite\nTrekking 7|Performance|Step Through|M|Warm Grey\nTrekking 7|Performance|Step Through|L|Warm Grey\nTrekking 7|Performance|Step Through|XL|Warm Grey\nTrekking 7|Performance|High Step|M|Warm Grey\nTrekking 7|Performance|High Step|L|Warm Grey\nTrekking 7|Performance|High Step|XL|Warm Grey\nTrekking 7|Performance|Low Step|M|Warm Grey\nTrekking 7|Performance|Low Step|L|Warm Grey\nTrekking 7|Performance|Step Through|M|Grey\nTrekking 7|Performance|Step Through|L|Grey\nTrekking 7|Performance|Step Through|XL|Grey\nTrekking 7|Performance|High Step|M|Grey\nTrekking 7|Performance|High Step|L|Grey\nTrekking 7|Performance|High Step|XL|Grey\nTrekking 7|Performance|Low Step|M|Grey\nTrekking 7|Performance|Low Step|L|Grey\nTrekking 7|Ultra|Step Through|M|Warm Grey\nTrekking 7|Ultra|Step Through|L|Warm Grey\nTrekking 7|Ultra|Step Through|XL|Warm Grey\nTrekking 7|Ultra|High Step|M|Warm Grey\nTrekking 7|Ultra|High Step|L|Warm Grey\nTrekking 7|Ultra|High Step|XL|Warm Grey\nTrekking 7|Ultra|Low Step|M|Warm Grey\nTrekking 7|Ultra|Low Step|L|Warm Grey\nTrekking 7|Ultra|Step Through|M|Grey\nTrekking 7|Ultra|Step Through|L|Grey\nTrekking 7|Ultra|Step Through|XL|Grey\nTrekking 7|Ultra|High Step|M|Grey\nTrekking 7|Ultra|High Step|L|Grey\nTrekking 7|Ultra|High Step|XL|Grey\nTrekking 7|Ultra|Low Step|M|Grey\nTrekking 7|Ultra|Low Step|L|Grey\nTrekking 7|Ultra+|Step Through|M|Dark Blue\nTrekking 7|Ultra+|Step Through|L|Dark Blue\nTrekking 7|Ultra+|Step Through|XL|Dark Blue\nTrekking 7|Ultra+|High Step|M|Dark Blue\nTrekking 7|Ultra+|High Step|L|Dark Blue\nTrekking 7|Ultra+|High Step|XL|Dark Blue\nTrekking 7|Ultra+|Low Step|M|Dark Blue\nTrekking 7|Ultra+|Low Step|L|Dark Blue\nMountain 7|Long Range|M|Olive\nMountain 7|Long Range|L|Olive\nMountain 7|Long Range|M|Light Grey\nMountain 7|Long Range|L|Light Grey\nMountain 7|Performance|M|Mint\nMountain 7|Performance|L|Mint\nMountain 7|Performance|M|Blue Grey\nMountain 7|Performance|L|Blue Grey\nMountain 7|Ultra|M|Mint\nMountain 7|Ultra|L|Mint\nMountain 7|Ultra|M|Blue Grey\nMountain 7|Ultra|L|Blue Grey\nMountain 7 Carbon|Long Range|M\nMountain 7 Carbon|Long Range|L\nMountain 7 Carbon|Performance|M\nMountain 7 Carbon|Performance|L\nMountain 7 Carbon|Ultra|M\nMountain 7 Carbon|Ultra|L\nCity 7|Long Range|S\nCity 7|Long Range|M\nCity 7|Long Range|L\nCity 7|Ultra|Step Through|S\nCity 7|Ultra|Step Through|M\nCity 7|Ultra|Step Through|L\nCity 7|Ultra|Step Through|XL\nCity 7|Ultra|High Step|S\nCity 7|Ultra|High Step|M\nCity 7|Ultra|High Step|L\nCity 7|Ultra|High Step|XL"
+          "id": "structured_options_de",
+          "label": "Structured Options (German)",
+          "info": "German translation of options. Use same structure as English version."
+        },
+        {
+          "type": "textarea",
+          "id": "structured_options_fr",
+          "label": "Structured Options (French)",
+          "info": "French translation of options. Use same structure as English version."
+        },
+        {
+          "type": "textarea",
+          "id": "structured_options_fi",
+          "label": "Structured Options (Finnish)",
+          "info": "Finnish translation of options. Use same structure as English version."
         },
         {
           "type": "text",
@@ -1875,6 +1904,78 @@
           "label": "Level Separator",
           "default": "|",
           "info": "Character used to separate different levels (default: |)"
+        },
+        {
+          "type": "text",
+          "id": "placeholder_text_en",
+          "label": "Placeholder Text (English)",
+          "default": "Select an option"
+        },
+        {
+          "type": "text",
+          "id": "placeholder_text_de",
+          "label": "Placeholder Text (German)",
+          "default": "Option auswählen"
+        },
+        {
+          "type": "text",
+          "id": "placeholder_text_fr",
+          "label": "Placeholder Text (French)",
+          "default": "Sélectionner une option"
+        },
+        {
+          "type": "text",
+          "id": "placeholder_text_fi",
+          "label": "Placeholder Text (Finnish)",
+          "default": "Valitse vaihtoehto"
+        },
+        {
+          "type": "text",
+          "id": "clear_text_en",
+          "label": "Clear Text (English)",
+          "default": "Clear"
+        },
+        {
+          "type": "text",
+          "id": "clear_text_de",
+          "label": "Clear Text (German)",
+          "default": "Löschen"
+        },
+        {
+          "type": "text",
+          "id": "clear_text_fr",
+          "label": "Clear Text (French)",
+          "default": "Effacer"
+        },
+        {
+          "type": "text",
+          "id": "clear_text_fi",
+          "label": "Clear Text (Finnish)",
+          "default": "Tyhjennä"
+        },
+        {
+          "type": "text",
+          "id": "ok_text_en",
+          "label": "OK Text (English)",
+          "default": "OK"
+        },
+        {
+          "type": "text",
+          "id": "ok_text_de",
+          "label": "OK Text (German)",
+          "default": "OK"
+        },
+        {
+          "type": "text",
+          "id": "ok_text_fr",
+          "label": "OK Text (French)",
+          "default": "OK"
+        },
+        {
+          "type": "text",
+          "id": "ok_text_fi",
+          "label": "OK Text (Finnish)",
+          "default": "OK"
         }
       ]
     },

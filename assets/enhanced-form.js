@@ -27,7 +27,20 @@ class FiveLevelDropdown {
       }
       
       const config = JSON.parse(dataElement.textContent);
-      return this.buildHierarchyFromStructured(config.structuredOptions || [], config.separator || '|');
+      
+      // Load multilingual text settings
+      this.clearText = config.clearText || this.wrapper.dataset.clearText || 'Clear';
+      this.okText = config.okText || this.wrapper.dataset.okText || 'OK';
+      this.separator = config.separator || this.wrapper.dataset.separator || '|';
+      
+      // Add multilingual UI text support
+      this.selectCategoryText = config.selectCategoryText || 'Select Category';
+      this.backText = config.backText || 'Back';
+      this.doneText = config.doneText || 'Done';
+      this.noOptionsText = config.noOptionsText || 'No options available';
+      this.checkConfigText = config.checkConfigText || 'Please check the configuration';
+      
+      return this.buildHierarchyFromStructured(config.structuredOptions || [], this.separator);
     } catch (e) {
       console.error('Error parsing data:', e);
       return this.createEmptyHierarchy();
@@ -190,6 +203,7 @@ class FiveLevelDropdown {
     // Clear button - 清除选择
     const clearBtn = this.panel.querySelector('.btn-clear');
     if (clearBtn) {
+      clearBtn.textContent = this.clearText;
       clearBtn.addEventListener('click', () => {
         this.clearSelection();
       });
@@ -198,6 +212,7 @@ class FiveLevelDropdown {
     // OK button - 确认选择
     const okBtn = this.panel.querySelector('.btn-ok');
     if (okBtn) {
+      okBtn.textContent = this.okText;
       okBtn.addEventListener('click', () => {
         this.confirmSelection();
       });
@@ -240,6 +255,7 @@ class FiveLevelDropdown {
     // 清除按钮事件绑定
     const clearBtn = this.panel.querySelector('.btn-clear');
     if (clearBtn && !clearBtn.hasAttribute('data-bound')) {
+      clearBtn.textContent = this.clearText;
       clearBtn.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -251,6 +267,7 @@ class FiveLevelDropdown {
     // 确定按钮事件绑定
     const okBtn = this.panel.querySelector('.btn-ok');
     if (okBtn && !okBtn.hasAttribute('data-bound')) {
+      okBtn.textContent = this.okText;
       okBtn.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -271,9 +288,9 @@ class FiveLevelDropdown {
           <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
             <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          Back
+          ${this.backText}
         </button>
-        <div class="mobile-header-title">Select Category</div>
+        <div class="mobile-header-title">${this.selectCategoryText}</div>
         <button type="button" class="mobile-close-btn">
           <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
             <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -457,15 +474,15 @@ class FiveLevelDropdown {
                         <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </button>
-                <div class="mobile-header-title">Select Category</div>
-                <button type="button" class="mobile-close-btn">Done</button>
+                <div class="mobile-header-title">${this.selectCategoryText}</div>
+                <button type="button" class="mobile-close-btn">${this.doneText}</button>
             </div>
             <div class="mobile-content">
                 <div class="mobile-page-container"></div>
             </div>
             <div class="mobile-actions">
-                <button type="button" class="btn-clear">Clear</button>
-                <button type="button" class="btn-ok">OK</button>
+                <button type="button" class="btn-clear">${this.clearText}</button>
+                <button type="button" class="btn-ok">${this.okText}</button>
             </div>
         </div>
     `;
@@ -514,12 +531,14 @@ class FiveLevelDropdown {
     });
     
     // 清除按钮
+    clearBtn.textContent = this.clearText;
     clearBtn.addEventListener('click', () => {
         this.clearSelection();
         this.closeMobilePanel();
     });
     
     // 确认按钮
+    okBtn.textContent = this.okText;
     okBtn.addEventListener('click', () => {
         this.closeMobilePanel();
     });
@@ -634,10 +653,10 @@ class FiveLevelDropdown {
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-        Back
+        ${this.backText}
       </button>
-      <div class="mobile-header-title">Select Category</div>
-      <button type="button" class="mobile-close-btn">Done</button>
+      <div class="mobile-header-title">${this.selectCategoryText}</div>
+      <button type="button" class="mobile-close-btn">${this.doneText}</button>
     `;
     
     // 创建页面容器
@@ -647,9 +666,9 @@ class FiveLevelDropdown {
     // 在面板开头插入移动端头部
     this.panel.insertBefore(mobileHeader, this.panel.firstChild);
     
-    // 在five-column-container之前插入页面容器
-    const fiveColumnContainer = this.panel.querySelector('.five-column-container');
-    this.panel.insertBefore(pageContainer, fiveColumnContainer);
+    // 在dynamic-column-container之前插入页面容器
+    const dynamicColumnContainer = this.panel.querySelector('.dynamic-column-container');
+    this.panel.insertBefore(pageContainer, dynamicColumnContainer);
     
     // 绑定事件
     const backBtn = mobileHeader.querySelector('.mobile-back-btn');
@@ -672,35 +691,17 @@ class FiveLevelDropdown {
   
   // Add empty state method
   showEmptyState() {
-    if (!this.mobilePageContainer) {
-      console.error('Mobile page container not found for empty state');
-      return;
+    const pageContainer = this.panel.querySelector('.mobile-page-container') || 
+                         this.panel.querySelector('#level-1-' + this.fieldName);
+    
+    if (pageContainer) {
+      pageContainer.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-message">${this.noOptionsText}</div>
+          <div class="empty-submessage">${this.checkConfigText}</div>
+        </div>
+      `;
     }
-    
-    const page = document.createElement('div');
-    page.className = 'mobile-page active';
-    
-    const emptyItem = document.createElement('div');
-    emptyItem.className = 'mobile-category-item';
-    emptyItem.innerHTML = `
-      <div class="mobile-item-content">
-        <div class="mobile-item-name">No options available</div>
-        <div class="mobile-item-subtitle">Please check the configuration</div>
-      </div>
-    `;
-    
-    page.appendChild(emptyItem);
-    this.mobilePageContainer.appendChild(page);
-    
-    // Update page stack
-    this.pageStack.push({
-      level: 1,
-      title: 'No Data',
-      page: page
-    });
-    
-    // Update header
-    this.updateMobileHeader();
   }
   
   // Show mobile page with better error handling
@@ -763,7 +764,7 @@ class FiveLevelDropdown {
       emptyItem.className = 'mobile-category-item';
       emptyItem.innerHTML = `
         <div class="mobile-item-content">
-          <div class="mobile-item-name">No options available</div>
+          <div class="mobile-item-name">${this.noOptionsText}</div>
         </div>
       `;
       page.appendChild(emptyItem);
@@ -877,7 +878,7 @@ class FiveLevelDropdown {
   // Get level title
   getLevelTitle(level) {
     const titles = {
-      1: 'Select Category',
+      1: this.selectCategoryText,
       2: 'Select Subcategory',
       3: 'Select Details',
       4: 'Select Model',
@@ -889,7 +890,7 @@ class FiveLevelDropdown {
   // Update selection display
   updateSelectionDisplay() {
     if (this.selectedPath.length > 0) {
-      const selectedText = this.selectedPath.join(' > ');
+      const selectedText = this.selectedPath.join(this.separator);
       const placeholder = this.selectionDisplay.querySelector('.placeholder');
       if (placeholder) {
         placeholder.textContent = selectedText;
@@ -1167,7 +1168,7 @@ class FiveLevelDropdown {
   }
   
   finalizeSelection() {
-    const selectedText = this.selectedPath.join(' > ');
+    const selectedText = this.selectedPath.join(this.separator);
     const selectedValue = this.selectedPath.join('|');
     
     // 更新显示文本
@@ -1242,7 +1243,7 @@ class FiveLevelDropdown {
     const placeholder = this.selectionDisplay.querySelector('.placeholder');
     if (placeholder) {
       if (this.selectedPath.length > 0) {
-        placeholder.textContent = this.selectedPath.join(' > ');
+        placeholder.textContent = this.selectedPath.join(this.separator);
         placeholder.classList.add('has-selection');
       } else {
         const originalPlaceholder = this.wrapper.querySelector('.current-selection').dataset.placeholder || 'Select an option';
@@ -1280,7 +1281,7 @@ class FiveLevelDropdown {
     this.selectedPath = selectedPath;
     
     // 更新显示文本
-    const selectedText = selectedPath.join(' > ');
+    const selectedText = selectedPath.join(this.separator);
     const placeholder = this.selectionDisplay.querySelector('.placeholder');
     if (placeholder) {
       placeholder.textContent = selectedText;
