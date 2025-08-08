@@ -890,7 +890,7 @@ class FiveLevelDropdown {
   // Update selection display
   updateSelectionDisplay() {
     if (this.selectedPath.length > 0) {
-      const selectedText = this.selectedPath.join(this.separator);
+      const selectedText = this.selectedPath.join(' > ');
       const placeholder = this.selectionDisplay.querySelector('.placeholder');
       if (placeholder) {
         placeholder.textContent = selectedText;
@@ -1168,7 +1168,7 @@ class FiveLevelDropdown {
   }
   
   finalizeSelection() {
-    const selectedText = this.selectedPath.join(this.separator);
+    const selectedText = this.selectedPath.join(' > ');
     const selectedValue = this.selectedPath.join('|');
     
     // 更新显示文本
@@ -1243,7 +1243,7 @@ class FiveLevelDropdown {
     const placeholder = this.selectionDisplay.querySelector('.placeholder');
     if (placeholder) {
       if (this.selectedPath.length > 0) {
-        placeholder.textContent = this.selectedPath.join(this.separator);
+        placeholder.textContent = this.selectedPath.join(' > ');
         placeholder.classList.add('has-selection');
       } else {
         const originalPlaceholder = this.wrapper.querySelector('.current-selection').dataset.placeholder || 'Select an option';
@@ -1281,7 +1281,7 @@ class FiveLevelDropdown {
     this.selectedPath = selectedPath;
     
     // 更新显示文本
-    const selectedText = selectedPath.join(this.separator);
+    const selectedText = selectedPath.join(' > ');
     const placeholder = this.selectionDisplay.querySelector('.placeholder');
     if (placeholder) {
       placeholder.textContent = selectedText;

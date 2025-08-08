@@ -256,6 +256,44 @@
                       name="contact[sender_email]"
                       value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
                     >
+                    
+                    <!-- Newsletter subscription checkbox -->
+                    {% if block.settings.show_newsletter_signup %}
+                      <div class="newsletter-signup-wrapper" style="margin-top: 10px;">
+                        <label class="newsletter-checkbox-label" for="contact_newsletter_{{ block.id }}" style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                          <input
+                            type="checkbox"
+                            id="contact_newsletter_{{ block.id }}"
+                            name="contact[newsletter_signup]"
+                            value="true"
+                            class="newsletter-checkbox"
+                            style="margin: 0; flex-shrink: 0;"
+                            {% if block.settings.newsletter_default_checked %}
+                              checked
+                            {% endif %}
+                          >
+                          <span class="newsletter-checkbox-text" style="line-height: 1.4; font-size: 14px;">
+                            {%- liquid
+                              assign newsletter_text = block.settings.newsletter_text_en | default: 'Accept to receive marketing news by email.'
+                              if block.settings.newsletter_text_de != blank and request.locale.iso_code == 'de'
+                                assign newsletter_text = block.settings.newsletter_text_de
+                              elsif block.settings.newsletter_text_fr != blank and request.locale.iso_code == 'fr'
+                                assign newsletter_text = block.settings.newsletter_text_fr
+                              elsif block.settings.newsletter_text_fi != blank and request.locale.iso_code == 'fi'
+                                assign newsletter_text = block.settings.newsletter_text_fi
+                              endif
+                            -%}
+                            {{ newsletter_text | escape }}
+                          </span>
+                        </label>
+                        <!-- Hidden field to track newsletter tags -->
+                        <input
+                          type="hidden"
+                          name="contact[newsletter_tags]"
+                          value="{{ block.settings.newsletter_tags | default: 'prospect,newsletter' }}"
+                        >
+                      </div>
+                    {% endif %}
 
                   {% when 'phone_input' %}
                     {%- liquid
@@ -1047,6 +1085,15 @@
                       elsif block.settings.label_fi != blank and request.locale.iso_code == 'fi'
                         assign label_text = block.settings.label_fi
                       endif
+                      
+                      assign placeholder_text = block.settings.placeholder_en | default: 'Enter your message here...'
+                      if block.settings.placeholder_de != blank and request.locale.iso_code == 'de'
+                        assign placeholder_text = block.settings.placeholder_de
+                      elsif block.settings.placeholder_fr != blank and request.locale.iso_code == 'fr'
+                        assign placeholder_text = block.settings.placeholder_fr
+                      elsif block.settings.placeholder_fi != blank and request.locale.iso_code == 'fi'
+                        assign placeholder_text = block.settings.placeholder_fi
+                      endif
                     -%}
                     <label class="enhanced-form-label" for="message">
                       {{- label_text | escape -}}
@@ -1060,13 +1107,14 @@
                       {% if block.settings.required %}
                         required
                       {% endif %}
+                      {% if block.settings.min_length != blank %}
+                        minlength="{{ block.settings.min_length }}"
+                      {% endif %}
                       rows="{{ block.settings.rows | default: 5 }}"
                       {% if block.settings.max_length != blank %}
                         maxlength="{{ block.settings.max_length }}"
                       {% endif %}
-                      {% if block.settings.placeholder != blank %}
-                        placeholder="{{ block.settings.placeholder | escape }}"
-                      {% endif %}
+                      placeholder="{{ placeholder_text | escape }}"
                     >{{ form.body }}</textarea>
                     {% if block.settings.max_length != blank %}
                       <small class="character-count">0/{{ block.settings.max_length }} characters</small>
@@ -1452,6 +1500,53 @@
           "id": "half_width",
           "label": "Half width",
           "default": false
+        },
+        {
+          "type": "header",
+          "content": "Newsletter Subscription"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_newsletter_signup",
+          "label": "Show newsletter subscription checkbox",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "newsletter_default_checked",
+          "label": "Newsletter checkbox checked by default",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "newsletter_text_en",
+          "label": "Newsletter text (English)",
+          "default": "Accept to receive marketing news by email."
+        },
+        {
+          "type": "text",
+          "id": "newsletter_text_de",
+          "label": "Newsletter text (German)",
+          "default": "Akzeptieren Sie, Marketing-Nachrichten per E-Mail zu erhalten."
+        },
+        {
+          "type": "text",
+          "id": "newsletter_text_fr",
+          "label": "Newsletter text (French)",
+          "default": "Accepter de recevoir des nouvelles marketing par e-mail."
+        },
+        {
+          "type": "text",
+          "id": "newsletter_text_fi",
+          "label": "Newsletter text (Finnish)",
+          "default": "Hyväksy markkinointitiedotteiden vastaanottaminen sähköpostitse."
+        },
+        {
+          "type": "text",
+          "id": "newsletter_tags",
+          "label": "Newsletter tags (comma-separated)",
+          "default": "prospect,newsletter",
+          "info": "Tags to apply to newsletter subscribers"
         }
       ]
     },
@@ -2461,9 +2556,27 @@
         },
         {
           "type": "text",
-          "id": "placeholder",
-          "label": "Placeholder Text",
+          "id": "placeholder_en",
+          "label": "Placeholder Text (English)",
           "default": "Enter your message here..."
+        },
+        {
+          "type": "text",
+          "id": "placeholder_de",
+          "label": "Placeholder Text (German)",
+          "default": "Geben Sie hier Ihre Nachricht ein..."
+        },
+        {
+          "type": "text",
+          "id": "placeholder_fr",
+          "label": "Placeholder Text (French)",
+          "default": "Entrez votre message ici..."
+        },
+        {
+          "type": "text",
+          "id": "placeholder_fi",
+          "label": "Placeholder Text (Finnish)",
+          "default": "Kirjoita viestisi tähän..."
         },
         {
           "type": "checkbox",
