@@ -1,109 +1,28 @@
 {%- comment -%}
 /**
- * Enhanced Collapsible Tabs Section - Multi-Language Accordion Component
+ * Enhanced Collapsible Tabs Section with Integrated FAQ Header
  * 
- * This section provides a comprehensive collapsible tabs/accordion component with advanced
- * multi-language support, perfect for FAQs, product information, or any content that
- * benefits from organized, space-saving presentation.
+ * A comprehensive collapsible tabs/accordion component with integrated FAQ header,
+ * multi-language support, and complete independence from external stylesheets.
  * 
  * CORE FEATURES:
+ * - Integrated FAQ header with search and index functionality
  * - Multi-language accordion/tabs interface
  * - Dynamic language detection and content switching
  * - Multiple block types (content, button, question/answer)
- * - Responsive accordion-style interface
- * - Image support within content blocks
- * - Custom Liquid content integration
- * - Smooth animations and transitions
- * - Accessibility-compliant with ARIA attributes
- * - Customizable styling with CSS variables
- * 
- * MULTILINGUAL SUPPORT:
- * - Automatic locale detection (German, French, Finnish)
- * - Dynamic language suffix generation (_de, _fr, _fi)
- * - Fallback to default content if localized version unavailable
- * - Localized titles, content, and answers for all block types
- * - Multi-language section headings
- * 
- * BLOCK TYPES:
- * - Content Block: Static text/HTML content with optional images and custom Liquid
- * - Button Block: Call-to-action buttons with custom links and styling
- * - Question Block: Expandable Q&A sections with dual answer support and images
- * 
- * CONTENT MANAGEMENT:
- * - Rich text editor support for all content fields
- * - Custom Liquid code integration for dynamic content
- * - Image picker support with responsive rendering
- * - Dual answer support for complex Q&A scenarios
- * - Additional image support for enhanced visual content
+ * - Responsive design with modern styling
+ * - Complete independence from external CSS/JS
+ * - Single FAQ header per page with multi-section support
+ * - Search functionality across all sections
+ * - Index navigation for quick access
  * 
  * TECHNICAL FEATURES:
- * - Custom web component (details-disclosure) for enhanced functionality
- * - Semantic HTML structure with proper ARIA roles and attributes
- * - CSS animations with motion-safe considerations
- * - Responsive design with mobile-first approach
+ * - Self-contained styling and functionality
+ * - Modern, fashionable design with light color scheme
+ * - Responsive layout with mobile-first approach
  * - Accessible keyboard navigation
- * - Focus management for screen readers
- * 
- * CUSTOMIZATION OPTIONS:
- * - Configurable section headings with multi-language support
- * - Flexible block ordering and arrangement
- * - Custom styling through CSS variables
- * - Responsive image handling
- * - Animation control through theme settings
- * 
- * DEPENDENCIES:
- * 
- * Liquid Snippets:
- * - snippets/animation-attrs.liquid - Animation attribute management for sections
- * - snippets/image.liquid - Responsive image rendering with optimization
- * 
- * Note: The following snippets are referenced but may be defined inline or in theme core:
- * - 'responsive-image' - Referenced but file not found (likely using 'image' snippet instead)
- * - 'localized-value' - Referenced but not actively used in current implementation
- * 
- * Custom Elements:
- * - details-disclosure - Custom web component for enhanced disclosure functionality
- *   (Implementation likely in theme's main JavaScript or inline)
- * 
- * Layout Dependencies:
- * - layout/theme.liquid - Contains animation settings and theme configuration
- * 
- * Template Dependencies:
- * - Used in various page templates including FAQ pages and product information sections
- * 
- * External Dependencies:
- * - Shopify Liquid templating engine
- * - CSS custom properties for theming
- * - Modern browser support for custom elements
- * - Intersection Observer API for animations (via animation-attrs)
- * 
- * BROWSER SUPPORT:
- * - Modern browsers with Custom Elements API support
- * - CSS Grid and Flexbox for layout
- * - Progressive enhancement for older browsers
- * - Accessible navigation with keyboard support
- * 
- * PERFORMANCE CONSIDERATIONS:
- * - Lazy loading for images
- * - Conditional animation loading based on theme settings
- * - Minimal DOM manipulation
- * - Efficient language detection and content switching
- * - Optimized CSS with minimal specificity
- * 
- * ACCESSIBILITY FEATURES:
- * - ARIA labels and roles for screen readers
- * - Keyboard navigation support (Enter, Space, Arrow keys)
- * - Focus management for disclosure panels
- * - Semantic HTML structure with proper heading hierarchy
- * - High contrast support
- * - Motion-safe animations
- * 
- * USAGE EXAMPLES:
- * - FAQ sections with multi-language support
- * - Product information accordions
- * - Help documentation with expandable sections
- * - Terms and conditions with organized content
- * - Multi-step processes with collapsible instructions
+ * - Smooth animations and transitions
+ * - Cross-theme compatibility
  */
 {%- endcomment -%}
 
@@ -114,81 +33,546 @@
   {%- assign lang_suffix = '_' | append: locale_code -%}
 {%- endif -%}
 
-<div class="container" {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
-  <div class="collapsible-tabs">
-    {% if section.settings.title != blank %}
-      <h3 class="collapsible-tabs__heading collapsible-tabs__content" id="faq-{{ section.settings.title | handle }}">
-        {%- assign title_field = 'title' | append: lang_suffix -%}
-        {%- assign title_value = section.settings[title_field] -%}
-        {%- if title_value != blank -%}
-          {{ title_value }}
-        {%- else -%}
-          {{ section.settings.title }}
+{%- assign section_id = 'enhanced-tabs-' | append: section.id -%}
+{%- assign has_faq_header = section.settings.enable_faq_header -%}
+{%- assign is_first_faq_section = false -%}
+
+{%- comment -%} Check if this is the first section with FAQ header enabled {%- endcomment -%}
+{%- if has_faq_header -%}
+  {%- assign faq_sections_count = 0 -%}
+  {%- for section_item in template.sections -%}
+    {%- if section_item.settings.enable_faq_header -%}
+      {%- assign faq_sections_count = faq_sections_count | plus: 1 -%}
+      {%- if section_item.id == section.id -%}
+        {%- if faq_sections_count == 1 -%}
+          {%- assign is_first_faq_section = true -%}
         {%- endif -%}
-      </h3>
-    {% endif %}
+        {%- break -%}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
 
-    {%- for block in section.blocks -%}
-      <div class="collapsible-tabs__block" {{ block.shopify_attributes }}>
-        {% if block.type == 'content' %}
-          <div class="collapsible-tabs__text collapsible-tabs__content rte">
-            {%- assign content_field = 'content' | append: lang_suffix -%}
-            {%- assign content_value = block.settings[content_field] -%}
-            {%- if content_value != blank -%}
-              {{ content_value }}
-            {%- else -%}
-              {{ block.settings.content }}
-            {%- endif -%}
+<style>
+  /* Reset and Base Styles */
+  .enhanced-tabs-container {
+    --primary-color: #2563eb;
+    --primary-hover: #1d4ed8;
+    --text-primary: #1f2937;
+    --text-secondary: #6b7280;
+    --text-muted: #9ca3af;
+    --border-light: #e5e7eb;
+    --border-medium: #d1d5db;
+    --background-white: #ffffff;
+    --background-light: #f9fafb;
+    --background-hover: #f3f4f6;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --radius-sm: 0.375rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 0.75rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 3rem;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.5rem;
+    --font-size-3xl: 1.875rem;
+    --line-height-tight: 1.25;
+    --line-height-normal: 1.5;
+    --line-height-relaxed: 1.625;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    --transition-fast: 150ms ease-in-out;
+    --transition-normal: 250ms ease-in-out;
+    --max-width: 1200px;
+    --content-width: 800px;
+    --index-width: 280px;
+  }
 
-            {{ block.settings.liquid_content }}
+  .enhanced-tabs-container * {
+    box-sizing: border-box;
+  }
 
-            {% if block.settings.image != blank %}
-              {%
-                render 'responsive-image',
-                image: block.settings.image,
-                alt: block.settings.title | escape,
-                sizes: "100vw",
-                class: "collapsible-tabs__image"
-              %}
-            {% endif %}
-          </div>
+  .enhanced-tabs-container {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    color: var(--text-primary);
+    line-height: var(--line-height-normal);
+  }
 
-        {% elsif block.type == 'button' %}
-          <div class="collapsible-tabs__button collapsible-tabs__content">
-            <a class="btn btn--primary btn--link" href="{{ block.settings.link }}"
-              ><span class="btn__text">{{ block.settings.title | escape }}</span></a
-            >
-          </div>
+  /* FAQ Header Styles */
+  .faq-header {
+    background: var(--background-white);
+    border-bottom: 1px solid var(--border-light);
+    padding: var(--spacing-2xl) 0;
+    margin-bottom: var(--spacing-2xl);
+  }
 
-        {% elsif block.type == 'question' %}
-          <div class="collapsible-tabs__tab">
-            <details-disclosure>
-              <details
-                class="disclosure"
-                id="detail-{{ block.id }}"
-                aria-expanded="false"
-                data-accordion
+  .faq-header__container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+    display: flex;
+    gap: var(--spacing-2xl);
+    align-items: flex-start;
+  }
+
+  .faq-header__content {
+    flex: 1;
+    max-width: var(--content-width);
+  }
+
+  .faq-header__title {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+    margin: 0 0 var(--spacing-md) 0;
+    line-height: var(--line-height-tight);
+  }
+
+  .faq-header__description {
+    font-size: var(--font-size-lg);
+    color: var(--text-secondary);
+    margin: 0 0 var(--spacing-xl) 0;
+    line-height: var(--line-height-relaxed);
+  }
+
+  .faq-search {
+    position: relative;
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .faq-search__input {
+    width: 100%;
+    height: 56px;
+    padding: 0 var(--spacing-md) 0 56px;
+    border: 2px solid var(--border-medium);
+    border-radius: var(--radius-lg);
+    font-size: var(--font-size-base);
+    background: var(--background-white);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+    outline: none;
+  }
+
+  .faq-search__input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  }
+
+  .faq-search__input::placeholder {
+    color: var(--text-muted);
+  }
+
+  .faq-search__icon {
+    position: absolute;
+    top: 50%;
+    left: var(--spacing-md);
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    color: var(--text-muted);
+    pointer-events: none;
+  }
+
+  /* FAQ Index */
+  .faq-index {
+    width: var(--index-width);
+    flex-shrink: 0;
+  }
+
+  .faq-index__title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+    margin: 0 0 var(--spacing-md) 0;
+  }
+
+  .faq-index__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .faq-index__item {
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .faq-index__link {
+    display: block;
+    padding: var(--spacing-sm) var(--spacing-md);
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-normal);
+  }
+
+  .faq-index__link:hover {
+    background: var(--background-hover);
+    color: var(--text-primary);
+  }
+
+  .faq-index__link.active {
+    background: var(--primary-color);
+    color: white;
+  }
+
+  /* Main Container */
+  .enhanced-tabs-main {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+    display: flex;
+    gap: var(--spacing-2xl);
+    align-items: flex-start;
+  }
+
+  .enhanced-tabs-content {
+    flex: 1;
+    max-width: var(--content-width);
+  }
+
+  .enhanced-tabs-sidebar {
+    width: var(--index-width);
+    flex-shrink: 0;
+  }
+
+  /* Section Styles */
+  .enhanced-tabs-section {
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  .enhanced-tabs-section:last-child {
+    margin-bottom: 0;
+  }
+
+  .enhanced-tabs-section__title {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+    margin: 0 0 var(--spacing-xl) 0;
+    line-height: var(--line-height-tight);
+  }
+
+  /* Collapsible Tabs */
+  .collapsible-tabs {
+    background: var(--background-white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-light);
+  }
+
+  .collapsible-tab {
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .collapsible-tab:last-child {
+    border-bottom: none;
+  }
+
+  .collapsible-tab__header {
+    width: 100%;
+    padding: var(--spacing-lg) var(--spacing-xl);
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+    transition: background-color var(--transition-fast);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .collapsible-tab__header:hover {
+    background: var(--background-hover);
+  }
+
+  .collapsible-tab__header:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: -2px;
+  }
+
+  .collapsible-tab__icon {
+    width: 20px;
+    height: 20px;
+    transition: transform var(--transition-fast);
+    flex-shrink: 0;
+    margin-left: var(--spacing-md);
+  }
+
+  .collapsible-tab[open] .collapsible-tab__icon {
+    transform: rotate(180deg);
+  }
+
+  .collapsible-tab__content {
+    padding: 0 var(--spacing-xl) var(--spacing-lg) var(--spacing-xl);
+    color: var(--text-secondary);
+    line-height: var(--line-height-relaxed);
+  }
+
+  .collapsible-tab__content > *:first-child {
+    margin-top: 0;
+  }
+
+  .collapsible-tab__content > *:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Content Block Styles */
+  .content-block {
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .content-block:last-child {
+    margin-bottom: 0;
+  }
+
+  .content-block__text {
+    color: var(--text-secondary);
+    line-height: var(--line-height-relaxed);
+  }
+
+  .content-block__image {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-md);
+  }
+
+  .content-block__button {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--primary-color);
+    color: white;
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    font-weight: var(--font-weight-medium);
+    transition: background-color var(--transition-fast);
+    margin-top: var(--spacing-md);
+  }
+
+  .content-block__button:hover {
+    background: var(--primary-hover);
+  }
+
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .faq-header__container,
+    .enhanced-tabs-main {
+      flex-direction: column;
+      gap: var(--spacing-xl);
+    }
+
+    .faq-index,
+    .enhanced-tabs-sidebar {
+      width: 100%;
+      max-width: none;
+    }
+
+    .faq-header__content,
+    .enhanced-tabs-content {
+      max-width: none;
+    }
+
+    .faq-index__list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--spacing-xs);
+    }
+
+    .faq-index__item {
+      margin-bottom: 0;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .faq-header__container,
+    .enhanced-tabs-main {
+      padding: 0 var(--spacing-md);
+    }
+
+    .faq-header {
+      padding: var(--spacing-xl) 0;
+    }
+
+    .faq-header__title {
+      font-size: var(--font-size-2xl);
+    }
+
+    .faq-header__description {
+      font-size: var(--font-size-base);
+    }
+
+    .collapsible-tab__header {
+      padding: var(--spacing-md) var(--spacing-lg);
+      font-size: var(--font-size-base);
+    }
+
+    .collapsible-tab__content {
+      padding: 0 var(--spacing-lg) var(--spacing-md) var(--spacing-lg);
+    }
+  }
+
+  /* Hidden state for non-matching search results */
+  .collapsible-tab.hidden {
+    display: none;
+  }
+
+  .enhanced-tabs-section.hidden {
+    display: none;
+  }
+
+  /* Animation for smooth transitions */
+  .collapsible-tab__content {
+    transition: all var(--transition-normal);
+  }
+
+  /* Focus styles for accessibility */
+  .faq-index__link:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+  }
+</style>
+
+<div class="enhanced-tabs-container" id="{{ section_id }}">
+  {%- if is_first_faq_section -%}
+    <div class="faq-header">
+      <div class="faq-header__container">
+        <div class="faq-header__content">
+          {%- if section.settings.faq_title != blank -%}
+            <h1 class="faq-header__title">
+              {%- assign title_field = 'faq_title' | append: lang_suffix -%}
+              {%- assign title_value = section.settings[title_field] -%}
+              {%- if title_value != blank -%}
+                {{ title_value }}
+              {%- else -%}
+                {{ section.settings.faq_title }}
+              {%- endif -%}
+            </h1>
+          {%- endif -%}
+          
+          {%- if section.settings.faq_description != blank -%}
+            <div class="faq-header__description">
+              {%- assign desc_field = 'faq_description' | append: lang_suffix -%}
+              {%- assign desc_value = section.settings[desc_field] -%}
+              {%- if desc_value != blank -%}
+                {{ desc_value }}
+              {%- else -%}
+                {{ section.settings.faq_description }}
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+          
+          {%- if section.settings.show_search -%}
+            <div class="faq-search">
+              <input 
+                type="text" 
+                class="faq-search__input" 
+                placeholder="{%- assign search_placeholder = 'Search FAQ...' -%}{%- if lang_suffix == '_de' -%}FAQ durchsuchen...{%- elsif lang_suffix == '_fr' -%}Rechercher FAQ...{%- elsif lang_suffix == '_fi' -%}Hae FAQ...{%- else -%}{{ search_placeholder }}{%- endif -%}"
+                id="faq-search-input"
               >
-                <summary
-                  class="disclosure__title"
-                  role="button"
-                  aria-controls="content-{{ block.id }}"
-                  aria-expanded="false"
-                >
-                  {%- assign title_field = 'title' | append: lang_suffix -%}
-                  {%- assign title_value = block.settings[title_field] -%}
-                  {%- if title_value != blank -%}
-                    {{ title_value }}
+              <svg class="faq-search__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+              </svg>
+            </div>
+          {%- endif -%}
+        </div>
+        
+        {%- if section.settings.show_index -%}
+          <div class="faq-index">
+            <h3 class="faq-index__title">
+              {%- if lang_suffix == '_de' -%}Inhaltsverzeichnis
+              {%- elsif lang_suffix == '_fr' -%}Table des matières
+              {%- elsif lang_suffix == '_fi' -%}Sisällysluettelo
+              {%- else -%}Table of Contents{%- endif -%}
+            </h3>
+            <ul class="faq-index__list" id="faq-index-list">
+              <!-- Index items will be populated by JavaScript -->
+            </ul>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  <div class="enhanced-tabs-main">
+    <div class="enhanced-tabs-content">
+      <div class="enhanced-tabs-section" data-section-id="{{ section.id }}">
+        {%- unless has_faq_header -%}
+          {%- if section.settings.title != blank -%}
+            <h2 class="enhanced-tabs-section__title">
+              {%- assign title_field = 'title' | append: lang_suffix -%}
+              {%- assign title_value = section.settings[title_field] -%}
+              {%- if title_value != blank -%}
+                {{ title_value }}
+              {%- else -%}
+                {{ section.settings.title }}
+              {%- endif -%}
+            </h2>
+          {%- endif -%}
+        {%- endunless -%}
+
+        <div class="collapsible-tabs">
+          {%- for block in section.blocks -%}
+            <div class="content-block" {{ block.shopify_attributes }}>
+              {%- if block.type == 'content' -%}
+                <div class="content-block__text">
+                  {%- assign content_field = 'content' | append: lang_suffix -%}
+                  {%- assign content_value = block.settings[content_field] -%}
+                  {%- if content_value != blank -%}
+                    {{ content_value }}
                   {%- else -%}
-                    {{ block.settings.title }}
+                    {{ block.settings.content }}
                   {%- endif -%}
-                </summary>
-                <div
-                  id="content-{{ block.id }}"
-                  class="disclosure__panel has-motion"
-                  aria-labelledby="detail-{{ block.id }}"
-                >
-                  <div class="disclosure__content rte">
+                  
+                  {{ block.settings.liquid_content }}
+                  
+                  {%- if block.settings.image != blank -%}
+                    <img 
+                      src="{{ block.settings.image | image_url: width: 800 }}" 
+                      alt="{{ block.settings.image.alt | escape }}" 
+                      class="content-block__image"
+                      loading="lazy"
+                    >
+                  {%- endif -%}
+                </div>
+                
+              {%- elsif block.type == 'button' -%}
+                <a href="{{ block.settings.link }}" class="content-block__button">
+                  {{ block.settings.title | escape }}
+                </a>
+                
+              {%- elsif block.type == 'question' -%}
+                <details class="collapsible-tab" data-question-id="{{ block.id }}">
+                  <summary class="collapsible-tab__header">
+                    <span>
+                      {%- assign title_field = 'title' | append: lang_suffix -%}
+                      {%- assign title_value = block.settings[title_field] -%}
+                      {%- if title_value != blank -%}
+                        {{ title_value }}
+                      {%- else -%}
+                        {{ block.settings.title }}
+                      {%- endif -%}
+                    </span>
+                    <svg class="collapsible-tab__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                  </summary>
+                  <div class="collapsible-tab__content">
                     {%- assign answer_field = 'answer' | append: lang_suffix -%}
                     {%- assign answer_value = block.settings[answer_field] -%}
                     {%- if answer_value != blank -%}
@@ -196,148 +580,343 @@
                     {%- else -%}
                       {{ block.settings.answer }}
                     {%- endif -%}
-
+                    
                     {{ block.settings.liquid_content }}
-
-                    {% if block.settings.image != blank %}
-                      {%
-                        render 'responsive-image',
-                        image: block.settings.image,
-                        alt: block.settings.title | escape,
-                        sizes: "100vw",
-                        class: "collapsible-tabs__image"
-                      %}
-                    {% endif %}
-
+                    
+                    {%- if block.settings.image != blank -%}
+                      <img 
+                        src="{{ block.settings.image | image_url: width: 800 }}" 
+                        alt="{{ block.settings.title | escape }}" 
+                        class="content-block__image"
+                        loading="lazy"
+                      >
+                    {%- endif -%}
+                    
                     {%- assign answer_2_field = 'answer_2' | append: lang_suffix -%}
                     {%- assign answer_2_value = block.settings[answer_2_field] -%}
                     {%- if answer_2_value != blank -%}
-                      <div style="margin-top: 40px;">
+                      <div style="margin-top: var(--spacing-lg);">
                         {{ answer_2_value }}
                       </div>
                     {%- elsif block.settings.answer_2 != blank -%}
-                      <div style="margin-top: 40px;">
+                      <div style="margin-top: var(--spacing-lg);">
                         {{ block.settings.answer_2 }}
                       </div>
                     {%- endif -%}
-
-                    {% if block.settings.image_2 != blank %}
-                      {%
-                        render 'responsive-image',
-                        image: block.settings.image_2,
-                        alt: block.settings.title | escape,
-                        sizes: "100vw",
-                        class: "collapsible-tabs__image"
-                      %}
-                    {% endif %}
+                    
+                    {%- if block.settings.image_2 != blank -%}
+                      <img 
+                        src="{{ block.settings.image_2 | image_url: width: 800 }}" 
+                        alt="{{ block.settings.title | escape }}" 
+                        class="content-block__image"
+                        loading="lazy"
+                      >
+                    {%- endif -%}
                   </div>
-                </div>
-              </details>
-            </details-disclosure>
-          </div>
-        {% endif %}
+                </details>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
       </div>
-    {%- endfor -%}
+    </div>
+    
+    {%- unless is_first_faq_section -%}
+      {%- if has_faq_header and section.settings.show_index -%}
+        <div class="enhanced-tabs-sidebar">
+          <!-- Sidebar content for non-first sections if needed -->
+        </div>
+      {%- endif -%}
+    {%- endunless -%}
   </div>
 </div>
 
-<style>
-  .collapsible-tabs__tab .disclosure__title {
-    padding-top: 20px;
-    padding-bottom: 20px;
-    border: 0;
-    font-size: 1em;
-    font-weight: 700;
-    position: relative;
-    padding-right: 40px;
-    cursor: pointer;
+<script>
+(function() {
+  'use strict';
+  
+  // Enhanced FAQ functionality
+  class EnhancedFAQ {
+    constructor() {
+      this.searchInput = document.getElementById('faq-search-input');
+      this.indexList = document.getElementById('faq-index-list');
+      this.sections = document.querySelectorAll('.enhanced-tabs-section');
+      this.questions = document.querySelectorAll('.collapsible-tab[data-question-id]');
+      this.searchTimeout = null;
+      
+      this.init();
+    }
+    
+    init() {
+      this.buildIndex();
+      this.bindEvents();
+    }
+    
+    buildIndex() {
+      if (!this.indexList) return;
+      
+      this.indexList.innerHTML = '';
+      
+      this.questions.forEach((question, index) => {
+        const title = question.querySelector('.collapsible-tab__header span').textContent.trim();
+        const questionId = question.getAttribute('data-question-id');
+        
+        const listItem = document.createElement('li');
+        listItem.className = 'faq-index__item';
+        
+        const link = document.createElement('a');
+        link.className = 'faq-index__link';
+        link.href = `#question-${questionId}`;
+        link.textContent = title;
+        link.setAttribute('data-question-id', questionId);
+        
+        listItem.appendChild(link);
+        this.indexList.appendChild(listItem);
+      });
+    }
+    
+    bindEvents() {
+      // Search functionality
+      if (this.searchInput) {
+        this.searchInput.addEventListener('input', (e) => {
+          clearTimeout(this.searchTimeout);
+          this.searchTimeout = setTimeout(() => {
+            this.performSearch(e.target.value);
+          }, 300);
+        });
+      }
+      
+      // Index navigation
+      if (this.indexList) {
+        this.indexList.addEventListener('click', (e) => {
+          if (e.target.classList.contains('faq-index__link')) {
+            e.preventDefault();
+            const questionId = e.target.getAttribute('data-question-id');
+            this.scrollToQuestion(questionId);
+            this.updateActiveIndex(e.target);
+          }
+        });
+      }
+      
+      // Update active index on scroll
+      window.addEventListener('scroll', () => {
+        this.updateActiveIndexOnScroll();
+      });
+    }
+    
+    performSearch(query) {
+      const searchTerm = query.toLowerCase().trim();
+      
+      if (searchTerm === '') {
+        // Show all questions and sections
+        this.questions.forEach(question => {
+          question.classList.remove('hidden');
+        });
+        this.sections.forEach(section => {
+          section.classList.remove('hidden');
+        });
+        return;
+      }
+      
+      let hasVisibleQuestions = false;
+      
+      this.questions.forEach(question => {
+        const title = question.querySelector('.collapsible-tab__header span').textContent.toLowerCase();
+        const content = question.querySelector('.collapsible-tab__content').textContent.toLowerCase();
+        
+        if (title.includes(searchTerm) || content.includes(searchTerm)) {
+          question.classList.remove('hidden');
+          hasVisibleQuestions = true;
+        } else {
+          question.classList.add('hidden');
+        }
+      });
+      
+      // Hide sections with no visible questions
+      this.sections.forEach(section => {
+        const visibleQuestions = section.querySelectorAll('.collapsible-tab[data-question-id]:not(.hidden)');
+        if (visibleQuestions.length === 0) {
+          section.classList.add('hidden');
+        } else {
+          section.classList.remove('hidden');
+        }
+      });
+    }
+    
+    scrollToQuestion(questionId) {
+      const question = document.querySelector(`[data-question-id="${questionId}"]`);
+      if (question) {
+        question.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'start',
+          inline: 'nearest'
+        });
+        
+        // Open the question if it's closed
+        if (!question.hasAttribute('open')) {
+          question.setAttribute('open', '');
+        }
+      }
+    }
+    
+    updateActiveIndex(activeLink) {
+      if (!this.indexList) return;
+      
+      const links = this.indexList.querySelectorAll('.faq-index__link');
+      links.forEach(link => link.classList.remove('active'));
+      activeLink.classList.add('active');
+    }
+    
+    updateActiveIndexOnScroll() {
+      if (!this.indexList) return;
+      
+      const scrollPosition = window.scrollY + 100;
+      let activeQuestionId = null;
+      
+      this.questions.forEach(question => {
+        const rect = question.getBoundingClientRect();
+        const questionTop = rect.top + window.scrollY;
+        
+        if (questionTop <= scrollPosition) {
+          activeQuestionId = question.getAttribute('data-question-id');
+        }
+      });
+      
+      if (activeQuestionId) {
+        const links = this.indexList.querySelectorAll('.faq-index__link');
+        links.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('data-question-id') === activeQuestionId) {
+            link.classList.add('active');
+          }
+        });
+      }
+    }
   }
-
-  details[open] .disclosure__title:after {
-    transform: translateY(-50%) rotate(45deg);
+  
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      new EnhancedFAQ();
+    });
+  } else {
+    new EnhancedFAQ();
   }
-
-  .collapsible-tabs__image {
-    width: 100%;
-    height: auto;
-    margin-top: 15px;
-    border-radius: 4px;
-    display: block;
+  
+  // Reinitialize on Shopify theme editor events
+  if (window.Shopify && window.Shopify.designMode) {
+    document.addEventListener('shopify:section:load', () => {
+      setTimeout(() => {
+        new EnhancedFAQ();
+      }, 100);
+    });
   }
-
-  .disclosure__title:focus-visible {
-    outline: 2px solid currentColor;
-    outline-offset: 2px;
-  }
-
-  .collapsible-tabs {
-    max-width: var(--reading-container-width, 800px);
-    margin: var(--section-padding) auto;
-  }
-  .collapsible-tabs .disclosure {
-    margin: 0;
-    border: 0;
-  }
-
-  .collapsible-tabs__tab {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  }
-  .collapsible-tabs__tab .disclosure__title {
-    padding-top: 20px;
-    padding-bottom: 20px;
-    border: 0;
-    font-size: 1.3em;
-  }
-  .collapsible-tabs__tab p:first-child {
-    margin-top: 0;
-  }
-  .collapsible-tabs__tab p:last-child {
-    margin-bottom: 0;
-  }
-
-  .collapsible-tabs__heading {
-    margin-top: 40px;
-    margin-bottom: 20px;
-  }
-
-  .collapsible-tabs__text {
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
-
-  .collapsible-tabs__button {
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
-</style>
+})();
+</script>
 
 {% schema %}
 {
-  "name": "Enhanced Collapsible tabs",
-  "class": "section-collapsible-tabs",
+  "name": "Enhanced Collapsible Tabs",
+  "class": "section-enhanced-collapsible-tabs",
   "disabled_on": {
     "groups": ["aside"]
   },
   "settings": [
     {
+      "type": "header",
+      "content": "FAQ Header Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_faq_header",
+      "label": "Enable FAQ Header",
+      "info": "Only the first section with this enabled will show the header",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "faq_title",
+      "label": "FAQ Title (Default)",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "text",
+      "id": "faq_title_de",
+      "label": "FAQ Title German",
+      "default": "Häufig gestellte Fragen"
+    },
+    {
+      "type": "text",
+      "id": "faq_title_fr",
+      "label": "FAQ Title French",
+      "default": "Questions fréquemment posées"
+    },
+    {
+      "type": "text",
+      "id": "faq_title_fi",
+      "label": "FAQ Title Finnish",
+      "default": "Usein kysytyt kysymykset"
+    },
+    {
+      "type": "richtext",
+      "id": "faq_description",
+      "label": "FAQ Description (Default)",
+      "default": "<p>Find answers to commonly asked questions below.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "faq_description_de",
+      "label": "FAQ Description German",
+      "default": "<p>Finden Sie unten Antworten auf häufig gestellte Fragen.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "faq_description_fr",
+      "label": "FAQ Description French",
+      "default": "<p>Trouvez ci-dessous les réponses aux questions fréquemment posées.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "faq_description_fi",
+      "label": "FAQ Description Finnish",
+      "default": "<p>Löydä vastauksia usein kysyttyihin kysymyksiin alta.</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search",
+      "label": "Show Search",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_index",
+      "label": "Show Index",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
       "type": "text",
       "id": "title",
-      "label": "Heading (Default)"
+      "label": "Section Title (Default)",
+      "info": "Only shown when FAQ Header is disabled"
     },
     {
       "type": "text",
       "id": "title_de",
-      "label": "Heading German"
+      "label": "Section Title German"
     },
     {
       "type": "text",
       "id": "title_fr",
-      "label": "Heading French"
+      "label": "Section Title French"
     },
     {
       "type": "text",
       "id": "title_fi",
-      "label": "Heading Finnish"
+      "label": "Section Title Finnish"
     }
   ],
   "blocks": [
@@ -348,7 +927,8 @@
         {
           "type": "text",
           "id": "title",
-          "label": "Question (Default)"
+          "label": "Question (Default)",
+          "default": "Your question here"
         },
         {
           "type": "text",
@@ -368,7 +948,8 @@
         {
           "type": "richtext",
           "id": "answer",
-          "label": "Answer (Default)"
+          "label": "Answer (Default)",
+          "default": "<p>Your answer content goes here.</p>"
         },
         {
           "type": "richtext",
@@ -429,7 +1010,8 @@
         {
           "type": "richtext",
           "id": "content",
-          "label": "Content (Default)"
+          "label": "Content (Default)",
+          "default": "<p>Add your content here.</p>"
         },
         {
           "type": "richtext",
@@ -465,27 +1047,34 @@
         {
           "type": "text",
           "id": "title",
-          "label": "Label",
-          "default": "Button label"
+          "label": "Button Label",
+          "default": "Learn More"
         },
         {
           "type": "url",
           "id": "link",
-          "label": "Link"
+          "label": "Button Link"
         }
       ]
     }
   ],
   "presets": [
     {
-      "name": "Enhanced Collapsible tabs",
-      "settings": {},
+      "name": "Enhanced Collapsible Tabs",
       "blocks": [
         {
-          "type": "question"
+          "type": "question",
+          "settings": {
+            "title": "What is your return policy?",
+            "answer": "<p>We offer a 30-day return policy for all unused items in original packaging.</p>"
+          }
         },
         {
-          "type": "question"
+          "type": "question",
+          "settings": {
+            "title": "How long does shipping take?",
+            "answer": "<p>Standard shipping takes 3-5 business days, while express shipping takes 1-2 business days.</p>"
+          }
         }
       ]
     }

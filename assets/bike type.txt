@@ -1,32 +1,25 @@
 Trekking 7 LTD：
-Long Range | Low step | L | Light Grey
-Long Range | High step | M | Light Grey
-Long Range | Low step | L | Black
-Long Range | High step | M | Black
-Performace | Low step | L | Dark Grey
-Performace | High step |  M  | Dark Grey
-Performace | Low step | L | Sand
-Performace High step  |  M  | Sand
-Ultra | Low step | L | Dark Grey
-Ultra | High step |  M  | Dark Grey
-Ultra | Low step | L | Sand
-Ultra High step  |  M  | Sand
+Ultra | High step |  M  | Sand
 
 ---------------------------------------------------------------
 
 Trekking 7 SE：
 Long Range | Low step | L | Light Grey
+Long Range | Low step | M | Light Grey
+Long Range | High step | L | Light Grey
 Long Range | High step | M | Light Grey
 Long Range | Low step | L | Black
+Long Range | Low step | M | Black
+Long Range | High step | L | Black
 Long Range | High step | M | Black
-Performace | Low step | L | Dark Grey
-Performace | High step |  M  | Dark Grey
-Performace | Low step | L | Sand
-Performace High step  |  M  | Sand
 Ultra | Low step | L | Dark Grey
+Ultra | Low step | M | Dark Grey
+Ultra | High step |  L  | Dark Grey
 Ultra | High step |  M  | Dark Grey
 Ultra | Low step | L | Sand
-Ultra High step  |  M  | Sand
+Ultra | Low step | M | Sand
+Ultra | High step  |  L  | Sand
+Ultra | High step  |  M  | Sand
 
 ---------------------------------------------------------------
 
@@ -92,8 +85,6 @@ Ultra+/Step Through /XL/Dark Blue
 Ultra+/High Step/M/Dark Bluey
 Ultra+/High Step/L/Dark Blue
 Ultra+/High Step /XL/Dark Blue
-Ultra+/Low Step/M/Dark Blue
-Ultra+/Low Step/L/Dark Blue
 
 ---------------------------------------------------------------
 
@@ -119,28 +110,27 @@ Ultra/L/Blue Grey
 
 Mountain 7 Carbon:
 
-Long Range/M
-Long Range/L
+Long Range/M/Olive
+Long Range/L/Olive
 
-Performace/M
-Performace/L
+Performace/M/Grey
+Performace/L/Grey
 
-Ultra/M
-Ultra/L
+Ultra/M/Blue Grey
+Ultra/L/Blue Grey
 
 ---------------------------------------------------------------
 
 City 7:
-Long Range/S
-Long Range/M
-Long Range/L
+Long Range/S/Mid Grey
+Long Range/M/Mid Grey
+Long Range/L/Mid Grey
 
 
-Ultra/Step Through/S
-Ultra/Step Through /M
-Ultra/Step Through /L
-Ultra/Step Through /XL
-Ultra/High Step/S
-Ultra/High Step/M
-Ultra/High Step/L
-Ultra/High Step/XL
+Ultra/Step Through/S/Dark Blue
+Ultra/Step Through /M/Dark Blue
+Ultra/Step Through /L/Dark Blue
+Ultra/High Step/M/Dark Blue
+Ultra/High Step/L/Dark Blue
+Ultra/High Step/XL/Dark Blue
+

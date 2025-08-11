@@ -1,3 +1,10 @@
+{%- assign locale_code = request.locale.iso_code -%}
+{%- assign lang_map = 'de,fr,fi' | split: ',' -%}
+{%- assign lang_suffix = '' -%}
+{%- if lang_map contains locale_code -%}
+  {%- assign lang_suffix = '_' | append: locale_code -%}
+{%- endif -%}
+
 <script src="{{ 'faq-header.js' | asset_url }}" defer></script>
 <div class="container" {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
   <faq-header class="faq-header block">
@@ -15,10 +22,24 @@
 
     <div class="faq-header__content">
       {% if section.settings.title != blank %}
+        {%- assign title_field = 'title' | append: lang_suffix -%}
+        {%- assign title_value = section.settings[title_field] -%}
         {% if section.settings.use_h1 %}
-          <h1 id="{{ section.id }}">{{ section.settings.title | escape }}</h1>
+          <h1 id="{{ section.id }}">
+            {%- if title_value != blank -%}
+              {{ title_value | escape }}
+            {%- else -%}
+              {{ section.settings.title | escape }}
+            {%- endif -%}
+          </h1>
         {% else %}
-          <h2 id="{{ section.id }}" class="h1">{{ section.settings.title | escape }}</h2>
+          <h2 id="{{ section.id }}" class="h1">
+            {%- if title_value != blank -%}
+              {{ title_value | escape }}
+            {%- else -%}
+              {{ section.settings.title | escape }}
+            {%- endif -%}
+          </h2>
         {% endif %}
       {% endif %}
 
@@ -54,7 +75,25 @@
     {
       "type": "text",
       "id": "title",
-      "label": "Title",
+      "label": "Title (Default)",
+      "default": "FAQ"
+    },
+    {
+      "type": "text",
+      "id": "title_de",
+      "label": "Title German",
+      "default": "FAQ"
+    },
+    {
+      "type": "text",
+      "id": "title_fr",
+      "label": "Title French",
+      "default": "FAQ"
+    },
+    {
+      "type": "text",
+      "id": "title_fi",
+      "label": "Title Finnish",
       "default": "FAQ"
     },
     {
