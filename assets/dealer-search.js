@@ -18,7 +18,7 @@ const translations = {
     nextPage: 'Next',
     showingResults: 'Showing {start}-{end} of {total} results',
     dealer: 'Dealer',
-    rental: 'Rental Station',
+    rental: 'Rental',
     service: 'Service Center',
     'click-collect': 'Click & Collect',
     directions: 'Directions',
@@ -47,8 +47,8 @@ const translations = {
     nextPage: 'Weiter',
     showingResults: 'Zeige {start}-{end} von {total} Ergebnissen',
     dealer: 'Händler',
-    rental: 'Verleihstation',
-    service: 'Servicezentrum',
+    rental: 'Vermietung',
+    service: 'Service Center',
     'click-collect': 'Click & Collect',
     directions: 'Wegbeschreibung',
     useMyLocation: 'Meinen Standort verwenden',
@@ -75,9 +75,9 @@ const translations = {
     previousPage: 'Précédent',
     nextPage: 'Suivant',
     showingResults: 'Affichage de {start}-{end} sur {total} résultats',
-    dealer: 'Revendeur',
-    rental: 'Point de location',
-    service: 'Centre de service',
+    dealer: 'Concessionnaire',
+    rental: 'Location',
+    service: 'Centre de Service',
     'click-collect': 'Click & Collect',
     directions: 'Itinéraire',
     useMyLocation: 'Utiliser ma position',
@@ -105,7 +105,7 @@ const translations = {
     nextPage: 'Seuraava',
     showingResults: 'Näytetään {start}-{end} / {total} tulosta',
     dealer: 'Jälleenmyyjä',
-    rental: 'Vuokraamo',
+    rental: 'Vuokraus',
     service: 'Huoltokeskus',
     'click-collect': 'Click & Collect',
     directions: 'Reittiohjeet',
@@ -370,6 +370,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const phoneLabel = i18nLabels.phone || 'Phone';
     const emailLabel = i18nLabels.email || 'Email';
     
+    // 处理多种商店类型显示
+    let storeTypes = Array.isArray(dealer.store_type) ? dealer.store_type : [dealer.store_type];
+    let storeTypeDisplay = storeTypes.map(type => {
+      return i18nLabels[type] || type;
+    }).join(' & ');
+    
     return `
       <div class="map-section__content map-section__text location-card" 
            data-block-id="${dealer.id}" 
@@ -384,7 +390,7 @@ document.addEventListener('DOMContentLoaded', function () {
            data-hours="${dealer.hours_of_operation || ''}" 
            data-province="${dealer.province_state || ''}" 
            data-fax="${dealer.fax || ''}" 
-           data-store-type="${dealer.store_type || 'dealer'}">
+           data-store-type="${storeTypes.join(',')}">
         
         <!-- 左侧 Marker Icon -->
         <div class="location-card__marker">
@@ -454,28 +460,55 @@ document.addEventListener('DOMContentLoaded', function () {
         break;
     }
 
-    // 根据店铺类型设置颜色
+    // 处理多种商店类型
+    let storeTypes = Array.isArray(storeType) ? storeType : [storeType];
+    
+    // 根据组合类型设置颜色和样式
     let markerColor;
-    switch (storeType) {
-      case 'dealer':
-        markerColor = '#3699FF';
-        break;
-      case 'rental':
-        markerColor = '#51BBA8';
-        break;
-      case 'service':
-        markerColor = '#ED5571';
-        break;
-      case 'click-collect':
-        markerColor = '#FF9933';
-        break;
-      default:
-        markerColor = '#3699FF';
-        break;
+    let hasMultipleTypes = storeTypes.length > 1;
+    
+    if (hasMultipleTypes) {
+      // 组合类型使用渐变色或特殊标识
+      if (storeTypes.includes('dealer') && storeTypes.includes('service')) {
+        markerColor = '#8B5CF6'; // 紫色表示dealer+service
+      } else if (storeTypes.includes('dealer') && storeTypes.includes('rental')) {
+        markerColor = '#F59E0B'; // 橙色表示dealer+rental
+      } else {
+        markerColor = '#6B7280'; // 默认灰色
+      }
+    } else {
+      // 单一类型保持原有颜色
+      switch (storeTypes[0]) {
+        case 'dealer':
+          markerColor = '#3699FF';
+          break;
+        case 'rental':
+          markerColor = '#51BBA8';
+          break;
+        case 'service':
+          markerColor = '#ED5571';
+          break;
+        case 'click-collect':
+          markerColor = '#FF9933';
+          break;
+        default:
+          markerColor = '#3699FF';
+          break;
+      }
     }
 
     // 生成唯一ID
-    const uniqueId = `${storeType}-${size}-${Date.now()}`;
+    const uniqueId = `${storeTypes.join('-')}-${size}-${Date.now()}`;
+    
+    // 为组合类型添加特殊标识
+    let additionalIcon = '';
+    if (hasMultipleTypes) {
+      additionalIcon = `
+        <!-- 组合类型标识 -->
+        <circle cx="${(width * 0.8).toFixed(3)}" cy="${(height * 0.2).toFixed(3)}" r="${(width * 0.1).toFixed(3)}" fill="white" stroke="${markerColor}" stroke-width="1"/>
+        <text x="${(width * 0.8).toFixed(3)}" y="${(height * 0.25).toFixed(3)}" text-anchor="middle" font-size="${(width * 0.12).toFixed(3)}" fill="${markerColor}">+</text>
+      `;
+    }
 
     // 计算路径坐标
     const coords = {
@@ -540,13 +573,15 @@ document.addEventListener('DOMContentLoaded', function () {
     ].join(' ');
 
     return `
-      <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" fill="none" xmlns="http://www.w3.org/2000/svg" class="custom-marker custom-marker--${storeType}">
+      <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" fill="none" xmlns="http://www.w3.org/2000/svg" class="custom-marker custom-marker--${storeTypes.join('-')}">
         <g clip-path="url(#clip${uniqueId})">
           <!-- 主体路径 -->
           <path d="${mainPath}" fill="${markerColor}"/>
           
           <!-- Hepha图标 -->
           <path d="${coords.iconPath.points}" fill="white"/>
+          
+          ${additionalIcon}
         </g>
         
         <defs>
@@ -2028,7 +2063,10 @@ document.addEventListener('DOMContentLoaded', function () {
     if (selectedFilters.length > 0) {
       filteredLocations = allLocations.filter(card => {
         const storeType = card.getAttribute('data-store-type');
-        return selectedFilters.includes(storeType);
+        const storeTypes = Array.isArray(storeType) ? storeType : storeType.split(',');
+        
+        // 检查是否有任何匹配的类型
+        return selectedFilters.some(filter => storeTypes.includes(filter));
       });
     } else {
       filteredLocations = [...allLocations];
@@ -2186,9 +2224,27 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
     if (storeType) {
+    // 处理组合类型
+    const storeTypes = storeType.split(',').map(type => type.trim());
+    
+    if (storeTypes.length > 1) {
+      const translatedTypes = storeTypes.map(type => {
+        switch(type) {
+          case 'dealer': return currentLang === 'de' ? 'Händler' : currentLang === 'fr' ? 'Concessionnaire' : currentLang === 'fi' ? 'Jälleenmyyjä' : 'Dealer';
+          case 'service': return currentLang === 'de' ? 'Service Center' : currentLang === 'fr' ? 'Centre de Service' : currentLang === 'fi' ? 'Huoltokeskus' : 'Service Center';
+          case 'rental': return currentLang === 'de' ? 'Vermietung' : currentLang === 'fr' ? 'Location' : currentLang === 'fi' ? 'Vuokraus' : 'Rental';
+          case 'click-collect': return 'Click & Collect';
+          default: return type;
+        }
+      });
+      const combinedText = translatedTypes.join(', ');
+      content += `<div class="store-type-badge" data-store-types="${storeType}">${combinedText}</div>`;
+    } else {
+      // 单一类型：保持原有逻辑
       const translatedStoreType = i18nLabels[storeType] || storeType;
       content += `<div class="store-type-badge" data-store-type="${storeType}">${translatedStoreType}</div>`;
     }
+  }
 
     content += `</div>`;
     return content;

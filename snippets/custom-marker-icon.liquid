@@ -1,12 +1,43 @@
 {%- comment -%}
   Custom Marker Icon for Dealer Search
   Parameters:
-  - store_type: dealer, rental, service, click-collect
+  - store_type: dealer, rental, service, click-collect, or array like "dealer,service"
   - size: small, medium, large (default: medium)
 {%- endcomment -%}
 
 {%- assign store_type = store_type | default: 'dealer' -%}
 {%- assign size = size | default: 'medium' -%}
+
+{%- comment -%} 处理多种商店类型 {%- endcomment -%}
+{%- assign store_types = store_type | split: ',' -%}
+{%- assign has_multiple_types = false -%}
+{%- if store_types.size > 1 -%}
+  {%- assign has_multiple_types = true -%}
+{%- endif -%}
+
+{%- comment -%} 设置颜色 {%- endcomment -%}
+{%- if has_multiple_types -%}
+  {%- if store_types contains 'dealer' and store_types contains 'service' -%}
+    {%- assign marker_color = '#8B5CF6' -%}
+  {%- elsif store_types contains 'dealer' and store_types contains 'rental' -%}
+    {%- assign marker_color = '#F59E0B' -%}
+  {%- else -%}
+    {%- assign marker_color = '#6B7280' -%}
+  {%- endif -%}
+{%- else -%}
+  {%- case store_types[0] -%}
+    {%- when 'dealer' -%}
+      {%- assign marker_color = '#698aa8' -%}
+    {%- when 'rental' -%}
+      {%- assign marker_color = '#e34a38' -%}
+    {%- when 'service' -%}
+      {%- assign marker_color = '#66ad78' -%}
+    {%- when 'click-collect' -%}
+      {%- assign marker_color = '#f2a112' -%}
+    {%- else -%}
+      {%- assign marker_color = '#a38aa3' -%}
+  {%- endcase -%}
+{%- endif -%}
 
 {%- case size -%}
   {%- when 'small' -%}
@@ -53,3 +84,10 @@
     </clipPath>
   </defs>
 </svg>
+
+{%- comment -%} 添加组合类型标识 {%- endcomment -%}
+{%- if has_multiple_types -%}
+  <!-- 组合类型标识 -->
+  <circle cx="{{ width | times: 0.8 | round: 1 }}" cy="{{ height | times: 0.2 | round: 1 }}" r="{{ width | times: 0.1 | round: 1 }}" fill="white" stroke="{{ marker_color }}" stroke-width="1"/>
+  <text x="{{ width | times: 0.8 | round: 1 }}" y="{{ height | times: 0.25 | round: 1 }}" text-anchor="middle" font-size="{{ width | times: 0.12 | round: 1 }}" fill="{{ marker_color }}">+</text>
+{%- endif -%}

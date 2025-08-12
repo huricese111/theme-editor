@@ -96,15 +96,36 @@ if (!customElements.get('location-map')) {
     }
     
     getMarkerSVG(storeType) {
-    // 严格按照Frame SVG样式定义颜色
     const colors = {
-    dealer: '#698aa8',       
-    rental: '#e34a38',      
-    service: '#66ad78',       
-    'click-collect': '#f2a112' 
+    dealer: '#3699FF',        
+    rental: '#51BBA8',     
+    service: '#ED5571',      
+    'click-collect': '#FF9933', 
+    'dealer,service': '#8B5CF6',
+    'dealer&service': '#8B5CF6',
+    'dealer,rental': '#F59E0B', 
+    'dealer&rental': '#F59E0B'
     };
     
-    const color = colors[storeType] || '#a38aa3';
+    // 处理复合类型的逻辑
+    let color;
+    if (storeType.includes('&') || storeType.includes(',')) {
+    // 直接查找复合类型
+    color = colors[storeType];
+    
+    // 如果没有找到，尝试标准化格式
+    if (!color) {
+    const normalizedType = storeType.replace('&', ',');
+    color = colors[normalizedType];
+    }
+    
+    // 如果还是没找到，使用默认复合类型颜色
+    if (!color) {
+    color = '#6B7280';
+    }
+    } else {
+    color = colors[storeType] || '#3699FF';
+    }
     
     const uniqueId = `map-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
     const clipId = `clip-${uniqueId}`;
@@ -119,12 +140,25 @@ if (!customElements.get('location-map')) {
     <path d="M34.4 13.3C33.6 6.1 27.4 0.6 20 0.6C12.6 0.6 6.4 6.1 5.6 13.3C5.5 13.9 5.4 14.5 5.4 15.0C5.3 17.5 6.0 20.0 7.1 22.3C7.6 23.3 8.2 24.3 8.8 25.3L17.9 38.9C18.5 39.6 19.2 40.0 20.0 40.0C20.8 40.0 21.5 39.6 22.1 38.9L31.2 25.3C31.8 24.3 32.4 23.3 32.9 22.3C34.9 19.5 35.1 16.4 34.4 13.3Z" fill="${color}"/>
     
     <path d="M27.1 12.6C27.0 12.5 26.9 12.5 26.9 12.5C25.9 13.3 21.2 18.2 21.2 18.2C20.5 18.9 19.3 18.9 18.6 18.2C17.9 17.5 17.9 16.4 18.6 15.7C18.6 15.7 20.7 13.6 22.1 12.2C22.8 11.5 23.2 10.6 23.2 9.6L23.2 5.3C23.2 5.2 23.1 5.1 23.0 5.2L18.2 10.0C18.1 10.1 18.0 10.0 18.0 9.9V7.3C18.0 7.2 17.9 7.1 17.8 7.2L13.9 11.2H13.9C10.7 14.4 10.8 19.6 14.0 22.8C17.2 26.0 22.6 25.9 25.8 22.8C28.7 20.0 29.1 15.8 27.1 12.6Z" fill="white"/>
+    
+    ${(storeType.includes('&') || storeType.includes(',')) ? 
+      '<circle cx="32" cy="10" r="4" fill="white" stroke="' + color + '" stroke-width="1"/><text x="32" y="14" text-anchor="middle" font-size="5" fill="' + color + '">+</text>' : 
+      ''}
     </g>
     </svg>`;
     }
 
     updateMap(address, storeType = 'dealer') {
     if (!this.geocoder || !this.map) return;
+    
+    // 正确处理数组格式的storeType
+    let processedStoreType;
+    if (Array.isArray(storeType)) {
+    // 如果是数组，转换为逗号分隔的字符串
+    processedStoreType = storeType.join(',');
+    } else {
+    processedStoreType = storeType;
+    }
     
     this.geocoder.geocode({ address: address })
     .then(({ results }) => {
@@ -136,8 +170,8 @@ if (!customElements.get('location-map')) {
     this.marker.setMap(null);
     }
     
-    // 创建自定义标记
-    this.marker = this.createCustomMarker(storeType, results[0].geometry.location);
+    // 使用处理后的完整storeType
+    this.marker = this.createCustomMarker(processedStoreType, results[0].geometry.location);
     }
     })
     .catch((error) => {

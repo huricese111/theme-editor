@@ -303,7 +303,6 @@
       <div class="map-section__locations">
         <div class="dealer-search__fixed-header">
           <div class="dealer-search__form">
-            <!-- 合并位置按钮和距离过滤器到同一行 -->
             <div class="location-and-distance-wrapper">
               <div class="location-button-wrapper">
                 <button type="button" id="use-location-btn" class="use-location-btn">
@@ -464,6 +463,25 @@
                         Huoltokeskus
                       {%- else -%}
                         Service Center
+                    {%- endcase -%}
+                  </span>
+                </div>
+                
+                <!-- 添加组合类型图例 -->
+                <div class="map-legend__item">
+                  <div class="map-legend__icon">
+                    {% render 'custom-marker-icon', store_type: 'dealer,service', size: 'small' %}
+                  </div>
+                  <span class="map-legend__label">
+                    {%- case request.locale.iso_code -%}
+                      {%- when 'de' -%}
+                        Händler & Service
+                      {%- when 'fr' -%}
+                        Revendeur & Service
+                      {%- when 'fi' -%}
+                        Jälleenmyyjä & Huolto
+                      {%- else -%}
+                        Dealer & Service
                     {%- endcase -%}
                   </span>
                 </div>
