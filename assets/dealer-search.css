@@ -1138,7 +1138,9 @@
   }
   
   .dealer-search__fixed-header {
-    padding: 0.5rem; 
+    padding: 20px;
+    flex-shrink: 0;
+    background-color: #f8f9fa;
   }
   
   .dealer-search__title {
@@ -1239,6 +1241,7 @@
   .location-results {
     gap: 0.2rem;
     padding-bottom: 100px;
+    min-height: 600px;
   }
 
   .search-input-group--simple {
@@ -1285,7 +1288,7 @@
   .map-section__wrapper {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 60vh 40vh;
+    grid-template-rows: 50vh auto;
     min-height: 100vh;
     width: 100%;
     position: static;
@@ -1299,13 +1302,14 @@
     display: flex;
     flex-direction: column;
     background-color: #f8f9fa;
-    min-height: 40vh;
-    max-height: 40vh;
+    min-height: auto;
+    max-height: none;
     flex: none;
+    position: relative;
   }
 
   .dealer-search__fixed-header {
-    padding: 1rem;
+    padding: 20px;
     flex-shrink: 0;
     background-color: #f8f9fa;
   }
@@ -1315,8 +1319,9 @@
     flex: 1;
     overflow-y: auto;
     background-color: #f8f9fa;
-    min-height: 25vh;
-    max-height: 30vh;
+    min-height: 40vh;
+    max-height: 80vh;
+    padding-bottom: 120px;
   }
 
   .map-section__map {
@@ -1523,7 +1528,7 @@
   }
 
   .dealer-search__fixed-header {
-    padding: 0.4rem; /* 最小padding */
+    padding: 20px;
   }
   
   .dealer-search__title {
@@ -1546,6 +1551,8 @@
 
   .dealer-search__scrollable-results {
     padding: 1rem;
+    min-height: 45vh;
+    max-height: 55vh;
   }
 
   .search-input {
@@ -1600,11 +1607,11 @@
   .map-section__wrapper {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 50vh 50vh;
+    grid-template-rows: 50vh auto;
     min-height: 100vh;
     width: 100%;
     position: static;
-    overflow: hidden;
+    overflow: visible;
   }
 
   .map-section__locations {
@@ -1613,9 +1620,10 @@
     display: flex;
     flex-direction: column;
     background-color: #f8f9fa;
-    min-height: 50vh;
-    max-height: 50vh;
-    overflow: hidden;
+    min-height: auto;
+    max-height: none;
+    overflow: visible;
+    position: relative;
   }
 
   .dealer-search__scrollable-results {
@@ -1624,9 +1632,10 @@
     overflow-x: hidden;
     background-color: #f8f9fa;
     min-height: 35vh;
-    max-height: 40vh;
+    max-height: 80vh;
     -webkit-overflow-scrolling: touch;
     position: relative;
+    padding-bottom: 100px;
   }
 
   .dealer-search__scrollable-results::-webkit-scrollbar {
@@ -1681,6 +1690,7 @@
   .location-results {
     gap: 0.15rem;
     padding-bottom: 80px;
+    min-height: 600px;
   }
 
   .gm-style .gm-style-iw.gm-style-iw-c {
@@ -1941,6 +1951,38 @@
   border-radius: 0;
   box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
   z-index: 10;
+}
+
+@media (max-width: 768px) {
+  .pagination-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin-top: 0;
+    padding: 1rem;
+    border-top: 1px solid #e5e7eb;
+    background: #ffffff;
+    border-radius: 0;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+  }
+}
+
+@media (max-width: 480px) {
+  .pagination-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin-top: 0;
+    padding: 0.75rem;
+    border-top: 1px solid #e5e7eb;
+    background: #ffffff;
+    border-radius: 0;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+  }
 }
 
 .pagination-info {

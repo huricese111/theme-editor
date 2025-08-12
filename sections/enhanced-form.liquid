@@ -546,6 +546,136 @@
                       %}
                     </div>
 
+                  {% when 'delivery_type_dropdown' %}
+                    {%- liquid
+                      assign title_handle = 'delivery_type'
+                      assign custom_options = block.settings.delivery_options | newline_to_br | strip_newlines | split: '<br />'
+                      assign input_id = title_handle | prepend: 'contact_'
+                      assign input_name = title_handle | prepend: 'contact[' | append: ']'
+                      assign label_text = block.settings.label_en | default: 'Delivery Type'
+                      if block.settings.label_de != blank and request.locale.iso_code == 'de'
+                        assign label_text = block.settings.label_de
+                      elsif block.settings.label_fr != blank and request.locale.iso_code == 'fr'
+                        assign label_text = block.settings.label_fr
+                      elsif block.settings.label_fi != blank and request.locale.iso_code == 'fi'
+                        assign label_text = block.settings.label_fi
+                      endif
+                    -%}
+                    <div class="option-selector" data-selector-type="dropdown">
+                      <script src="{{ 'custom-select.js' | asset_url }}" defer></script>
+                      {% render 'custom-select',
+                        id: input_id,
+                        label: label_text,
+                        option_values: custom_options,
+                        selected_value: custom_options.first,
+                        include_native: true,
+                        native_name: input_name
+                      %}
+                    </div>
+
+                  {% when 'building_number_input' %}
+                    {%- liquid
+                      assign label_text = block.settings.label_en | default: 'Building Number'
+                      if block.settings.label_de != blank and request.locale.iso_code == 'de'
+                        assign label_text = block.settings.label_de
+                      elsif block.settings.label_fr != blank and request.locale.iso_code == 'fr'
+                        assign label_text = block.settings.label_fr
+                      elsif block.settings.label_fi != blank and request.locale.iso_code == 'fi'
+                        assign label_text = block.settings.label_fi
+                      endif
+                      
+                      assign placeholder_text = block.settings.placeholder_en | default: 'Enter building number'
+                      if block.settings.placeholder_de != blank and request.locale.iso_code == 'de'
+                        assign placeholder_text = block.settings.placeholder_de
+                      elsif block.settings.placeholder_fr != blank and request.locale.iso_code == 'fr'
+                        assign placeholder_text = block.settings.placeholder_fr
+                      elsif block.settings.placeholder_fi != blank and request.locale.iso_code == 'fi'
+                        assign placeholder_text = block.settings.placeholder_fi
+                      endif
+                    -%}
+                    <label class="enhanced-form-label" for="contact_building_number">
+                      {{- label_text | escape -}}
+                      {%- if block.settings.required -%}
+                        <span class="required-asterisk">*</span>
+                      {%- endif -%}
+                    </label>
+                    <input
+                      class="enhanced-form-input"
+                      type="text"
+                      id="contact_building_number"
+                      name="contact[building_number]"
+                      {% if block.settings.required %}
+                        required
+                      {% endif %}
+                      value="{{ form.building_number }}"
+                      placeholder="{{ placeholder_text | escape }}"
+                    >
+
+                  {% when 'reason_for_contact_dropdown' %}
+                    {%- liquid
+                      assign title_handle = 'reason_for_contact'
+                      assign custom_options = block.settings.reason_options | newline_to_br | strip_newlines | split: '<br />'
+                      assign input_id = title_handle | prepend: 'contact_'
+                      assign input_name = title_handle | prepend: 'contact[' | append: ']'
+                      assign label_text = block.settings.label_en | default: 'Reason For Contacting Us'
+                      if block.settings.label_de != blank and request.locale.iso_code == 'de'
+                        assign label_text = block.settings.label_de
+                      elsif block.settings.label_fr != blank and request.locale.iso_code == 'fr'
+                        assign label_text = block.settings.label_fr
+                      elsif block.settings.label_fi != blank and request.locale.iso_code == 'fi'
+                        assign label_text = block.settings.label_fi
+                      endif
+                    -%}
+                    <div class="option-selector" data-selector-type="dropdown">
+                      <script src="{{ 'custom-select.js' | asset_url }}" defer></script>
+                      {% render 'custom-select',
+                        id: input_id,
+                        label: label_text,
+                        option_values: custom_options,
+                        selected_value: custom_options.first,
+                        include_native: true,
+                        native_name: input_name
+                      %}
+                    </div>
+
+                  {% when 'order_frame_number_input' %}
+                    {%- liquid
+                      assign label_text = block.settings.label_en | default: 'Order/Frame Number'
+                      if block.settings.label_de != blank and request.locale.iso_code == 'de'
+                        assign label_text = block.settings.label_de
+                      elsif block.settings.label_fr != blank and request.locale.iso_code == 'fr'
+                        assign label_text = block.settings.label_fr
+                      elsif block.settings.label_fi != blank and request.locale.iso_code == 'fi'
+                        assign label_text = block.settings.label_fi
+                      endif
+                      
+                      assign placeholder_text = block.settings.placeholder_en | default: 'Enter order or frame number'
+                      if block.settings.placeholder_de != blank and request.locale.iso_code == 'de'
+                        assign placeholder_text = block.settings.placeholder_de
+                      elsif block.settings.placeholder_fr != blank and request.locale.iso_code == 'fr'
+                        assign placeholder_text = block.settings.placeholder_fr
+                      elsif block.settings.placeholder_fi != blank and request.locale.iso_code == 'fi'
+                        assign placeholder_text = block.settings.placeholder_fi
+                      endif
+                    -%}
+                    <label class="enhanced-form-label" for="contact_order_frame_number">
+                      {{- label_text | escape -}}
+                      {%- if block.settings.required -%}
+                        <span class="required-asterisk">*</span>
+                      {%- endif -%}
+                    </label>
+                    <input
+                      class="enhanced-form-input"
+                      type="text"
+                      id="contact_order_frame_number"
+                      name="contact[order_frame_number]"
+                      {% if block.settings.required %}
+                        required
+                      {% endif %}
+                      value="{{ form.order_frame_number }}"
+                      placeholder="{{ placeholder_text | escape }}"
+                    >
+
                   {% when 'multilevel_dropdown' %}
                     {%- liquid
                       assign current_locale = request.locale.iso_code
@@ -1911,7 +2041,7 @@
           "type": "textarea",
           "id": "country_options",
           "label": "Country options",
-          "default": "Germany\nFrance\nAustralia\nFinland",
+          "default": "DE\nAT",
           "info": "One country on each line"
         },
         {
@@ -2632,6 +2762,236 @@
           "id": "divider_color",
           "label": "Divider color",
           "default": "#e0e0e0"
+        }
+      ]
+    },
+    {
+      "type": "delivery_type_dropdown",
+      "name": "🚚 Delivery Type",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label_en",
+          "label": "Label (English)",
+          "default": "Delivery Type"
+        },
+        {
+          "type": "text",
+          "id": "label_de",
+          "label": "Label (German)",
+          "default": "Lieferart"
+        },
+        {
+          "type": "text",
+          "id": "label_fr",
+          "label": "Label (French)",
+          "default": "Type de livraison"
+        },
+        {
+          "type": "text",
+          "id": "label_fi",
+          "label": "Label (Finnish)",
+          "default": "Toimitustapa"
+        },
+        {
+          "type": "textarea",
+          "id": "delivery_options",
+          "label": "Delivery options",
+          "default": "Delivery\nPickup",
+          "info": "One option on each line"
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "half_width",
+          "label": "Half width",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "building_number_input",
+      "name": "🏢 Building Number",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label_en",
+          "label": "Label (English)",
+          "default": "Building Number"
+        },
+        {
+          "type": "text",
+          "id": "label_de",
+          "label": "Label (German)",
+          "default": "Hausnummer"
+        },
+        {
+          "type": "text",
+          "id": "label_fr",
+          "label": "Label (French)",
+          "default": "Numéro de bâtiment"
+        },
+        {
+          "type": "text",
+          "id": "label_fi",
+          "label": "Label (Finnish)",
+          "default": "Rakennusnumero"
+        },
+        {
+          "type": "text",
+          "id": "placeholder_en",
+          "label": "Placeholder (English)",
+          "default": "Enter building number"
+        },
+        {
+          "type": "text",
+          "id": "placeholder_de",
+          "label": "Placeholder (German)",
+          "default": "Hausnummer eingeben"
+        },
+        {
+          "type": "text",
+          "id": "placeholder_fr",
+          "label": "Placeholder (French)",
+          "default": "Entrez le numéro de bâtiment"
+        },
+        {
+          "type": "text",
+          "id": "placeholder_fi",
+          "label": "Placeholder (Finnish)",
+          "default": "Syötä rakennusnumero"
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "half_width",
+          "label": "Half width",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "reason_for_contact_dropdown",
+      "name": "📞 Reason For Contact",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label_en",
+          "label": "Label (English)",
+          "default": "Reason For Contacting Us"
+        },
+        {
+          "type": "text",
+          "id": "label_de",
+          "label": "Label (German)",
+          "default": "Grund der Kontaktaufnahme"
+        },
+        {
+          "type": "text",
+          "id": "label_fr",
+          "label": "Label (French)",
+          "default": "Raison de nous contacter"
+        },
+        {
+          "type": "text",
+          "id": "label_fi",
+          "label": "Label (Finnish)",
+          "default": "Yhteydenoton syy"
+        },
+        {
+          "type": "textarea",
+          "id": "reason_options",
+          "label": "Contact reason options",
+          "default": "General\nWarranty Claim\nOrder\nComplaint\nApp & Connection",
+          "info": "One option on each line"
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "half_width",
+          "label": "Half width",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "order_frame_number_input",
+      "name": "🔢 Order/Frame Number",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label_en",
+          "label": "Label (English)",
+          "default": "Order/Frame Number"
+        },
+        {
+          "type": "text",
+          "id": "label_de",
+          "label": "Label (German)",
+          "default": "Bestell-/Rahmennummer"
+        },
+        {
+          "type": "text",
+          "id": "label_fr",
+          "label": "Label (French)",
+          "default": "Numéro de commande/cadre"
+        },
+        {
+          "type": "text",
+          "id": "label_fi",
+          "label": "Label (Finnish)",
+          "default": "Tilaus-/runkonnumero"
+        },
+        {
+          "type": "text",
+          "id": "placeholder_en",
+          "label": "Placeholder (English)",
+          "default": "Enter order or frame number"
+        },
+        {
+          "type": "text",
+          "id": "placeholder_de",
+          "label": "Placeholder (German)",
+          "default": "Bestell- oder Rahmennummer eingeben"
+        },
+        {
+          "type": "text",
+          "id": "placeholder_fr",
+          "label": "Placeholder (French)",
+          "default": "Entrez le numéro de commande ou de cadre"
+        },
+        {
+          "type": "text",
+          "id": "placeholder_fi",
+          "label": "Placeholder (Finnish)",
+          "default": "Syötä tilaus- tai runkonnumero"
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "half_width",
+          "label": "Half width",
+          "default": false
         }
       ]
     },
