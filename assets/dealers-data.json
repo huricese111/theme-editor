@@ -12,7 +12,9 @@
       "email": "steffen@sportshop-bittner.de",
       "website": "https://sportshop-bittner.de/",
       "hours_of_operation": "Open:\nMonday - Friday 10:00 - 18:00\nThursday 10:00 - 19:00\nSaturday 09:00 - 13:00\n\n(+49)34159097850",
-      "store_type": ["dealer"]
+      "store_type": [
+        "dealer"
+      ]
     },
     {
       "id": "location_002",
@@ -26,7 +28,9 @@
       "email": "service@hepha.com",
       "website": "https://hepha.com/",
       "hours_of_operation": "Service time:  Mo.-Fr.: 09:00-15:00\n\nThis is our factory. No access without booking",
-      "store_type": ["service"]
+      "store_type": [
+        "service"
+      ]
     },
     {
       "id": "location_003",
@@ -40,7 +44,9 @@
       "email": "info@haslinger-hof.de",
       "website": "",
       "hours_of_operation": "",
-      "store_type": ["rental"]
+      "store_type": [
+        "rental"
+      ]
     },
     {
       "id": "location_004",
@@ -54,7 +60,9 @@
       "email": "service@e-bike-schrauber.de",
       "website": "",
       "hours_of_operation": "",
-      "store_type": ["dealer"]
+      "store_type": [
+        "dealer"
+      ]
     },
     {
       "id": "location_005",
@@ -68,7 +76,9 @@
       "email": "service@radl-ladl.de",
       "website": "https://www.radl-ladl.de/",
       "hours_of_operation": "Montag, Dienstag, Donnerstag & Freitag: 9:00 - 12.00 Uhr & 13:00 - 18:00 Uhr\nMittwoch & Samstag: 9:00 - 12:00 Uhr",
-      "store_type": ["dealer"]
+      "store_type": [
+        "dealer"
+      ]
     },
     {
       "id": "location_006",
@@ -82,7 +92,9 @@
       "email": "info@switchbike.de",
       "website": "https://www.switchbike.de/",
       "hours_of_operation": "Montag, Dienstag, Mittwoch & Freitag: 10:00 - 18:00 Uhr\nDonnerstag: geschlossen\nSamstag: 10:00 - 16:00 Uhr",
-      "store_type": ["dealer"]
+      "store_type": [
+        "dealer"
+      ]
     },
     {
       "id": "location_007",
@@ -96,7 +108,9 @@
       "email": "info@pott-gmbh.de",
       "website": "",
       "hours_of_operation": "",
-      "store_type": ["dealer"]
+      "store_type": [
+        "dealer"
+      ]
     },
     {
       "id": "location_008",
@@ -110,7 +124,9 @@
       "email": "lingen@fahrwerk.me",
       "website": "https://fahrwerk.me/",
       "hours_of_operation": "Montag - Freitag: 9:30 - 13:00 Uhr & 14:00 - 18:30 Uhr\nSamstag: 9:30 - 14:00 Uhr",
-      "store_type": ["dealer"]
+      "store_type": [
+        "dealer"
+      ]
     },
     {
       "id": "location_009",
@@ -124,7 +140,9 @@
       "email": "info@mr-bike.com",
       "website": "",
       "hours_of_operation": "",
-      "store_type": ["dealer"]
+      "store_type": [
+        "dealer"
+      ]
     },
     {
       "id": "location_010",
@@ -138,7 +156,9 @@
       "email": "info@schnellrad.de",
       "website": "",
       "hours_of_operation": "Montag, Dienstag, Donnerstag & Freitag: 13.00 - 18:30 Uhr\nSamstag: 9:00 - 13:00 Uhr",
-      "store_type": ["dealer"]
+      "store_type": [
+        "dealer"
+      ]
     },
     {
       "id": "location_011",
@@ -152,7 +172,9 @@
       "email": "afathi@hupfer-fahrradladen.de",
       "website": "",
       "hours_of_operation": "",
-      "store_type": ["dealer"]
+      "store_type": [
+        "dealer"
+      ]
     },
     {
       "id": "location_012",
@@ -166,7 +188,9 @@
       "email": "info@fahrradladen-essen.de",
       "website": "https://fahrradladen-essen.de",
       "hours_of_operation": "Montag - Freitag: 10:00 - 18:00 Uhr\nSamstag: 10:00 - 16:00 Uhr",
-      "store_type": ["dealer"]
+      "store_type": [
+        "dealer"
+      ]
     },
     {
       "id": "location_013",
@@ -180,7 +204,9 @@
       "email": "bikesforfriends@posteo.de",
       "website": "",
       "hours_of_operation": "",
-      "store_type": ["dealer"]
+      "store_type": [
+        "dealer"
+      ]
     },
     {
       "id": "location_014",
@@ -194,7 +220,9 @@
       "email": "info@oleks-radsport.de",
       "website": "https://www.oleks-radsport.de/",
       "hours_of_operation": "Montag, Dienstag, Donnerstag & Freitag: 9:00 - 12:30 Uhr & 14:30 Uhr - 18:00 Uhr\nMittwoch: 9:00 - 12:30 Uhr\nSamstag: 9:00 - 13:00 Uhr",
-      "store_type": ["dealer"]
+      "store_type": [
+        "dealer"
+      ]
     },
     {
       "id": "location_015",
@@ -208,7 +236,9 @@
       "email": "info@total-normal.com",
       "website": "https://total-normal.com/",
       "hours_of_operation": "Montag, Mittwoch & Donnerstag: 13:30 – 18:00 Uhr\nDienstag & Freitag: 10:00 – 12:00 & 13:30 – 18:00 Uhr\nSamstag: 9:30 – 13:00 Uhr",
-      "store_type": ["dealer"]
+      "store_type": [
+        "dealer"
+      ]
     },
     {
       "id": "location_016",
@@ -222,7 +252,9 @@
       "email": "info@ebike-saar.com",
       "website": "https://www.ebike-saar.com/",
       "hours_of_operation": "Montag - Freitag: 14:00 - 18:00 Uhr\nSamstag: 10:00 - 14:00 Uhr",
-      "store_type": ["dealer"]
+      "store_type": [
+        "dealer"
+      ]
     },
     {
       "id": "location_017",
@@ -236,7 +268,9 @@
       "email": "info@puls-sport.de",
       "website": "https://www.puls-sport.com/",
       "hours_of_operation": "Montag, Dienstag, Donnerstag & Freitag: 13:00 - 18:00 Uhr\nSamstag: 9:00 - 12:00 Uhr",
-      "store_type": ["dealer"]
+      "store_type": [
+        "dealer"
+      ]
     },
     {
       "id": "location_018",
@@ -250,7 +284,10 @@
       "email": "enrico-hartmann@web.de",
       "website": "https://www.dorfrad.de",
       "hours_of_operation": "Montag - Freitag: 12.00 - 19:00 Uhr \nund nach Vereinbarung",
-      "store_type": ["dealer", "service"]
+      "store_type": [
+        "dealer",
+        "service"
+      ]
     },
     {
       "id": "location_019",
@@ -264,7 +301,9 @@
       "email": "info@karls-bike-shop.de",
       "website": "",
       "hours_of_operation": "",
-      "store_type": ["dealer"]
+      "store_type": [
+        "dealer"
+      ]
     },
     {
       "id": "location_020",
@@ -278,7 +317,10 @@
       "email": "vineyard-bikes@t-online.de",
       "website": "http://vineyard-bikes.de",
       "hours_of_operation": "",
-      "store_type": ["dealer", "service"]
+      "store_type": [
+        "dealer",
+        "service"
+      ]
     },
     {
       "id": "location_021",
@@ -292,7 +334,9 @@
       "email": "info@mattis-bike-shop.de",
       "website": "https://mattis-bike-shop.de",
       "hours_of_operation": "Montag: geschlossen\nDienstag & Donnerstag: 10:00 - 18:00 Uhr\nMittwoch & Freitag: 08:00 - 16:00 Uhr\nSamstag: 09:00 - 13:00 Uhr",
-      "store_type": ["dealer"]
+      "store_type": [
+        "dealer"
+      ]
     },
     {
       "id": "location_022",
@@ -306,7 +350,10 @@
       "email": "ottoachilles@dg-email.de",
       "website": "",
       "hours_of_operation": "Montag, Mittwoch & Freitag: 10:00 - 12:30 Uhr & 14:30 - 18:00 Uhr\nDienstag & Donnerstag: 14:30 - 18:00 Uhr\nSamstag: 10:00 . 13:00 Uhr",
-      "store_type": ["dealer", "service"]
+      "store_type": [
+        "dealer",
+        "service"
+      ]
     },
     {
       "id": "location_023",
@@ -320,7 +367,9 @@
       "email": "info@bavarian-finest-e.bike",
       "website": "http://www.bavarian-finest-e.bike",
       "hours_of_operation": "",
-      "store_type": ["dealer"]
+      "store_type": [
+        "dealer"
+      ]
     },
     {
       "id": "location_024",
@@ -334,7 +383,9 @@
       "email": "lvdknord@gmail.com",
       "website": "https://www.location-velo-dunkerque.fr",
       "hours_of_operation": "",
-      "store_type": ["dealer"]
+      "store_type": [
+        "dealer"
+      ]
     },
     {
       "id": "location_025",
@@ -348,7 +399,9 @@
       "email": "info@welikebikes.de",
       "website": "",
       "hours_of_operation": "",
-      "store_type": ["dealer"]
+      "store_type": [
+        "dealer"
+      ]
     },
     {
       "id": "location_026",
@@ -362,7 +415,9 @@
       "email": "info@radsport-reyhle.de",
       "website": "http://radsport-Reyhle.de",
       "hours_of_operation": "Winter-Öffnungszeiten ab 14.10.2024:\nMontag - Freitag: 10:00 - 18:00 Uhr\nSamstag: 9:00 - 14:00 Uhr",
-      "store_type": ["dealer"]
+      "store_type": [
+        "dealer"
+      ]
     },
     {
       "id": "location_027",
@@ -376,7 +431,9 @@
       "email": "cap.velo.creuse@gmail.com",
       "website": "",
       "hours_of_operation": "",
-      "store_type": ["dealer"]
+      "store_type": [
+        "dealer"
+      ]
     },
     {
       "id": "location_028",
@@ -390,7 +447,10 @@
       "email": "miriquidi.wolkenstein@gmail.com",
       "website": "https://miriquidi-bikestore.de",
       "hours_of_operation": "Montag, Mittwoch & Freitag: 09:00–12:00 & 13:00–16:00 Uhr\nDienstag & Donnerstag: 09:00–12:00 & 13:00–18:00 Uhr\nSamstag nach Vereinbarung",
-      "store_type": ["dealer", "service"]
+      "store_type": [
+        "dealer",
+        "service"
+      ]
     },
     {
       "id": "location_029",
@@ -404,7 +464,10 @@
       "email": "contact@paddockshop.fr",
       "website": "",
       "hours_of_operation": "",
-      "store_type": ["dealer", "service"]
+      "store_type": [
+        "dealer",
+        "service"
+      ]
     },
     {
       "id": "location_030",
@@ -418,7 +481,10 @@
       "email": "contact@atv-cycles.fr",
       "website": "",
       "hours_of_operation": "",
-      "store_type": ["dealer", "service"]
+      "store_type": [
+        "dealer",
+        "service"
+      ]
     },
     {
       "id": "location_031",
@@ -432,7 +498,9 @@
       "email": "contact@lhv.store",
       "website": "http://www.leshautsvelos.fr",
       "hours_of_operation": "",
-      "store_type": ["service"]
+      "store_type": [
+        "service"
+      ]
     },
     {
       "id": "location_032",
@@ -446,7 +514,10 @@
       "email": "info.graz@bauerbikes.com",
       "website": "http://www.bauerbikes.com",
       "hours_of_operation": "Montag - Freitag: 10:00 - 13:00 Uhr & 14:00 - 17:00 Uhr\nSamstag: 10:00 - 13:00 Uhr",
-      "store_type": ["dealer", "service"]
+      "store_type": [
+        "dealer",
+        "service"
+      ]
     },
     {
       "id": "location_033",
@@ -460,7 +531,10 @@
       "email": "info.gleisdorf@bauerbikes.com",
       "website": "http://www.bauerbikes.com",
       "hours_of_operation": "Montag, Donnerstag & Freitag: 14:00 - 17:00 Uhr\nSamstag: 10:00 - 13:00 Uhr",
-      "store_type": ["dealer", "service"]
+      "store_type": [
+        "dealer",
+        "service"
+      ]
     },
     {
       "id": "location_034",
@@ -474,7 +548,9 @@
       "email": "arndt-fahrradladen@gmx.de",
       "website": "",
       "hours_of_operation": "",
-      "store_type": ["dealer"]
+      "store_type": [
+        "dealer"
+      ]
     },
     {
       "id": "location_035",
@@ -488,7 +564,9 @@
       "email": "info@pfalz-bikes.de",
       "website": "https://pfalz-bikes.de/",
       "hours_of_operation": "Montag: 08:00–12:00 / 13:00–17:00\nDienstag: 08:00–12:00 / 13:00–17:00\nMittwoch: 08:00–12:00 / 13:00–17:00\nDonnerstag: 08:00–12:00 / 13:00–17:00\nFreitag: 08:00–12:00 / 13:00–17:00\nSamstag: Geschlossen\nSonntag: Geschlossen",
-      "store_type": ["dealer"]
+      "store_type": [
+        "dealer"
+      ]
     },
     {
       "id": "location_036",
@@ -502,7 +580,9 @@
       "email": "info@biketeam-raunheim.de",
       "website": "https://www.oleks-radsport.de/",
       "hours_of_operation": "Montag: geschlossen\nDienstag - Freitag: 10:00 - 13:00 Uhr & 14:30 - 19:00 Uhr\nSamstag: 10:00 - 16:00 Uhr",
-      "store_type": ["dealer"]
+      "store_type": [
+        "dealer"
+      ]
     },
     {
       "id": "location_037",
@@ -516,7 +596,9 @@
       "email": "funcyclesio@gmail.com",
       "website": "https://www.veloland-funcycles.fr/",
       "hours_of_operation": "",
-      "store_type": ["dealer"]
+      "store_type": [
+        "dealer"
+      ]
     },
     {
       "id": "location_038",
@@ -530,7 +612,9 @@
       "email": "bordeaux@citibike.fr",
       "website": "",
       "hours_of_operation": "",
-      "store_type": ["dealer"]
+      "store_type": [
+        "dealer"
+      ]
     },
     {
       "id": "location_039",
@@ -544,7 +628,9 @@
       "email": "lesvelosdeleon@gmail.com",
       "website": "https://lesvelosdeleon.fr/",
       "hours_of_operation": "",
-      "store_type": ["dealer"]
+      "store_type": [
+        "dealer"
+      ]
     },
     {
       "id": "location_040",
@@ -558,7 +644,9 @@
       "email": "serviceclient@armorcycles.fr",
       "website": "",
       "hours_of_operation": "",
-      "store_type": ["dealer"]
+      "store_type": [
+        "dealer"
+      ]
     },
     {
       "id": "location_041",
@@ -572,7 +660,9 @@
       "email": "lehavre@citibike.fr",
       "website": "",
       "hours_of_operation": "",
-      "store_type": ["dealer"]
+      "store_type": [
+        "dealer"
+      ]
     },
     {
       "id": "location_042",
@@ -586,7 +676,9 @@
       "email": "cherbourg@citibike.fr",
       "website": "",
       "hours_of_operation": "",
-      "store_type": ["dealer"]
+      "store_type": [
+        "dealer"
+      ]
     },
     {
       "id": "location_043",
@@ -600,7 +692,9 @@
       "email": "caen@citibike.fr",
       "website": "http://www.citibike.fr",
       "hours_of_operation": "",
-      "store_type": ["dealer"]
+      "store_type": [
+        "dealer"
+      ]
     },
     {
       "id": "location_044",
@@ -614,7 +708,9 @@
       "email": "fg.bikestore@gmail.com",
       "website": "http://fgbikestore.fr",
       "hours_of_operation": "",
-      "store_type": ["dealer"]
+      "store_type": [
+        "dealer"
+      ]
     },
     {
       "id": "location_045",
@@ -628,7 +724,9 @@
       "email": "larochelle@velovolt.fr",
       "website": "",
       "hours_of_operation": "",
-      "store_type": ["dealer"]
+      "store_type": [
+        "dealer"
+      ]
     },
     {
       "id": "location_046",
@@ -642,7 +740,9 @@
       "email": "biganos@citibike.fr",
       "website": "",
       "hours_of_operation": "",
-      "store_type": ["dealer"]
+      "store_type": [
+        "dealer"
+      ]
     },
     {
       "id": "location_047",
@@ -656,7 +756,9 @@
       "email": "",
       "website": "http://www.citibike.fr",
       "hours_of_operation": "",
-      "store_type": ["dealer"]
+      "store_type": [
+        "dealer"
+      ]
     },
     {
       "id": "location_048",
@@ -670,7 +772,3563 @@
       "email": "",
       "website": "",
       "hours_of_operation": "",
-      "store_type": ["dealer"]
+      "store_type": [
+        "dealer"
+      ]
+    },
+    {
+      "id": "location_048",
+      "store_name": "Fahrwerk Bocholt",
+      "address": "An der Königsmühle 16",
+      "city": "Bocholt",
+      "province_state": "",
+      "country": "DE",
+      "postal_code": "",
+      "phone": "",
+      "email": "",
+      "website": "",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer"
+      ]
+    },
+    {
+      "id": "location_049",
+      "store_name": "Zweirad-Center Durach",
+      "address": "Achenerweg 11",
+      "city": "Isny",
+      "province_state": "Bayern",
+      "country": "DE",
+      "postal_code": "88316",
+      "phone": "+49 7562 245 6",
+      "email": "info@fahrrad-durach.de",
+      "website": "https://www.zweirad-center-durach.de/",
+      "hours_of_operation": "Montag - Freitag: 09:00 - 12:30 Uhr & 14:00 - 18:00 Uhr\nMittwoch: Nachmittag: geschlossen\nSamstag: 09:00 - 13:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_050",
+      "store_name": "Leichter fahren Elektrorad-Zentrum",
+      "address": "Dietzhölzstraße 6",
+      "city": "Eschenburg",
+      "province_state": "Hessen",
+      "country": "DE",
+      "postal_code": "35713",
+      "phone": "+49 2774 917 917 0",
+      "email": "info@leichter-fahren.de",
+      "website": "https://leichter-fahren.de/",
+      "hours_of_operation": "Von März bis Oktober:\nMontag - Freitag: 9:30 - 18:00 Uhr\nSamstag: 9:30 - 13:00 Uhr\n\nVon November bis Februar:\nMontag: geschlossen\nDienstag - Freitag: 14:00 - 18:00 Uhr\nSamstag: 10:00 - 13:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_051",
+      "store_name": "Intersport Harms - House of Bike",
+      "address": "Marktstraße 521",
+      "city": "Neukirchen",
+      "province_state": "Tyrol",
+      "country": "AT",
+      "postal_code": "5741",
+      "phone": "+43 656 521664",
+      "email": "bikeshop@harms.at",
+      "website": "https://www.intersport-harms.at/de/shops/Bikeshop-Neukirchen_sl_794",
+      "hours_of_operation": "Öffnungszeiten Sommer 13.03.2024 - 09.11.2024\n\nMontag - Freitag: 08:30 - 12:00 Uhr und 14:30 - 18:00 Uhr\nSamstag: 08:30 - 12:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_052",
+      "store_name": "Citibike Dunkerque",
+      "address": "60, Route de Furnes",
+      "city": "Coudekerque Branche",
+      "province_state": "",
+      "country": "FR",
+      "postal_code": "59210",
+      "phone": "+33 3 28 61 39 75",
+      "email": "cote-dopale@citibike.fr",
+      "website": "https://www.citibike.fr/fr/",
+      "hours_of_operation": "Dienstag - Freitag: 10:00 - 13:00 & 14:30 - 19:00 Uhr\nSamstag: 10:00 - 19:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_053",
+      "store_name": "KW-Bikes",
+      "address": "Bürgermeister-Graf-Ring 21",
+      "city": "Geretsried",
+      "province_state": "Bayern",
+      "country": "DE",
+      "postal_code": "82538",
+      "phone": "+49 8171 6399220",
+      "email": "",
+      "website": "http://www.kw-bikes.de",
+      "hours_of_operation": "Montag, Dienstag, Donnerstag & Freitag: 09:30 - 13:00 Uhr & 14:00 - 18:30 Uhr\nSamstag: 09:30 - 14:00 Uhr\nMittwoch: geschlossen",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_054",
+      "store_name": "Hennecke Zweirad Meisterbetrieb",
+      "address": "Zwinger 15",
+      "city": "Öttingen",
+      "province_state": "Bayern",
+      "country": "DE",
+      "postal_code": "86732",
+      "phone": "+49 91082 4468",
+      "email": "robert.hennecke@t-online.de",
+      "website": "",
+      "hours_of_operation": "Montag - Freitag: 9:00 - 12:15 Uhr & 14:00 - 18:00 Uhr\nSamstag: 9:00 - 12:00 Uhr",
+      "store_type": [
+        "service"
+      ]
+    },
+    {
+      "id": "location_055",
+      "store_name": "Schölzhorn Sport GmbH",
+      "address": "Fuggerstraße 3",
+      "city": "Sterzing",
+      "province_state": "Trentino-Alto Adige",
+      "country": "IT",
+      "postal_code": "39049",
+      "phone": "+39 472 671 376",
+      "email": "info@skiprofi.it",
+      "website": "https://www.rentandgo-shop.it",
+      "hours_of_operation": "Montag - Freitag: 10:00 - 17:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_056",
+      "store_name": "Bikehouse Bühler",
+      "address": "Hauptstraße 98",
+      "city": "Mosbach",
+      "province_state": "Baden-Wuerttemberg",
+      "country": "DE",
+      "postal_code": "74821",
+      "phone": "+49 6261 899 376",
+      "email": "mail@bikehouse-buehler.de",
+      "website": "https://www.bikehouse-buehler.de",
+      "hours_of_operation": "Montag bis Freitag: 9:00 - 13:00 Uhr & 14:00 - 18:00 Uhr\nSamstag: 9:30 - 14:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_057",
+      "store_name": "SKITOP BADIA",
+      "address": "Str. San Linert 3",
+      "city": "Badia",
+      "province_state": "Trentino-Alto Adige",
+      "country": "IT",
+      "postal_code": "39036",
+      "phone": "+39 471 839685",
+      "email": "info@skitop.it",
+      "website": "https://biketop.skitop.it/de/",
+      "hours_of_operation": "Montag - Sonntag: 8:30 - 12:00 Uhr & 15:00 - 19:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_058",
+      "store_name": "REVEN EUROPE GmbH",
+      "address": "Am Umspannwerk 6",
+      "city": "Baindt/Schachen",
+      "province_state": "Baden-Wuerttemberg",
+      "country": "DE",
+      "postal_code": "88255",
+      "phone": "+49 7502 9421898",
+      "email": "info@revenbikes.com",
+      "website": "https://revenbikes.de/",
+      "hours_of_operation": "Montag: 13:00 – 19:00 Uhr\nDienstag - Freitag: 13:00 – 18:00 Uhr\nSamstag: 9:00 – 13:00 Uhr\nMittwoch geschlossen",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_059",
+      "store_name": "Sport Edoardo",
+      "address": "Via Pecei 12",
+      "city": "Corvara",
+      "province_state": "Trentino-Alto Adige",
+      "country": "IT",
+      "postal_code": "39033",
+      "phone": "",
+      "email": "info@sportedoardo.it",
+      "website": "https://www.sportedoardo.it/",
+      "hours_of_operation": "Monday - Saturday: 08:30 - 12:00 & 15:00 - 19:00",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_060",
+      "store_name": "Bader Rad-Kraftwerk",
+      "address": "Dieselstraße 6",
+      "city": "Leinfelden-Echterdingen",
+      "province_state": "Baden-Wuerttemberg",
+      "country": "DE",
+      "postal_code": "70771",
+      "phone": "+49 711 220 918 16",
+      "email": "stephan.bader@rad-kraftwerk.de",
+      "website": "https://rad-kraftwerk.de/",
+      "hours_of_operation": "Dienstag - Freitag: 10:00 - 18:30 Uhr\nSamstag: 10:00 - 13:30 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_061",
+      "store_name": "Zweirad Högerl",
+      "address": "Bogenroither Straße 4",
+      "city": "Wiesenfelden",
+      "province_state": "Bayern",
+      "country": "DE",
+      "postal_code": "94344",
+      "phone": "+49 9966 1201",
+      "email": "info@zweirad-hoegerl.de",
+      "website": "https://www.zweirad-hoegerl.de/",
+      "hours_of_operation": "Montag - Freitag: 08:00 - 12:00 Uhr & 13:00 - 18:00 Uhr\nSamstag: 08:30 - 12:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_062",
+      "store_name": "Bike Monkey",
+      "address": "Bgm.-Neumeyr-Straße 7",
+      "city": "Allershausen",
+      "province_state": "Bayern",
+      "country": "DE",
+      "postal_code": "85391",
+      "phone": "+49 8166 9889258",
+      "email": "info@bike-monkey.de",
+      "website": "https://bike-monkey.de/",
+      "hours_of_operation": "Montag - Donnerstag: 17:00 - 20:00 Uhr\nFreitag: 9:30 - 17:00 Uhr\nSamstag: 10:00 -16:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_063",
+      "store_name": "Wunderlich GmbH",
+      "address": "Dieselstraße 2",
+      "city": "Marktleuthen",
+      "province_state": "Bayern",
+      "country": "DE",
+      "postal_code": "95168",
+      "phone": "",
+      "email": "info@wunderlich-umwelt.de",
+      "website": "http://www.wunderlich-umwelt.de/",
+      "hours_of_operation": "Montag - Freitag: 8:00 - 18:00 Uhr\nSamstag: 8:00 - 12:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_064",
+      "store_name": "Fahrrad Hoffmann",
+      "address": "Horster Landstraße 117",
+      "city": "Seevetal",
+      "province_state": "",
+      "country": "DE",
+      "postal_code": "21220",
+      "phone": "+49 4105 84005",
+      "email": "info@fahrradhoffmann.de",
+      "website": "https://fahrradhoffmann.de/",
+      "hours_of_operation": "Montag - Freitag: 9:00 - 13:00 Uhr & 14:00 - 18:00 Uhr\nSamstag: 9:00 - 14:00 Uhr",
+      "store_type": [
+        "dealer"
+      ]
+    },
+    {
+      "id": "location_065",
+      "store_name": "Ebike Riviera Tour",
+      "address": "8 boulevard Lech WALESA",
+      "city": "Nice",
+      "province_state": "",
+      "country": "FR",
+      "postal_code": "06300",
+      "phone": "+33 6 65 27 52 79",
+      "email": "",
+      "website": "",
+      "hours_of_operation": "Monday: closed\nTuesday - Friday: 9 am - 12 pm & 2 - 7 pm\nSaturday: 9:30 am - 12 pm & 1:30 - 6 pm",
+      "store_type": [
+        "dealer"
+      ]
+    },
+    {
+      "id": "location_066",
+      "store_name": "1000 Räder Hamburg",
+      "address": "Krausestraße 116a",
+      "city": "Hamburg",
+      "province_state": "",
+      "country": "DE",
+      "postal_code": "22049",
+      "phone": "+49 40 6525 217",
+      "email": "info@1000raeder.de",
+      "website": "https://www.1000raeder.de/",
+      "hours_of_operation": "Montag - Freitag: 10:00 - 19:00 Uhr\nSamstag: 10:00 - 16:00 Uhr",
+      "store_type": [
+        "dealer"
+      ]
+    },
+    {
+      "id": "location_067",
+      "store_name": "Nicklas Kleingerätewelt",
+      "address": "Bürgermeister-Kleinlein-Straße 2",
+      "city": "Thurnau",
+      "province_state": "",
+      "country": "DE",
+      "postal_code": "95349",
+      "phone": "+49 92289974151",
+      "email": "info@kleingeraetewelt.de",
+      "website": "https://www.kleingeraetewelt.de/",
+      "hours_of_operation": "Montag - Freitag: 9:00 - 18:00 Uhr\nSamstag: 8:00 - 13:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_068",
+      "store_name": "FanVelo",
+      "address": "426 rue Jenny Vetillard Lieu dit Le Chassagnon",
+      "city": "Mazeyrat d'Allier",
+      "province_state": "",
+      "country": "FR",
+      "postal_code": "43300",
+      "phone": "+33 6 33 33 37 66",
+      "email": "contact@fanvelo.fr",
+      "website": "http://fanvelo.fr/",
+      "hours_of_operation": "Tuesday - Thursday: 5 - 9 pm\nFriday: 2 - 7 pm\nSaturday: 9 am - 2 pm",
+      "store_type": [
+        "dealer"
+      ]
+    },
+    {
+      "id": "location_069",
+      "store_name": "Bike Now",
+      "address": "Amberger Straße 95",
+      "city": "Neumarkt",
+      "province_state": "Bayern",
+      "country": "DE",
+      "postal_code": "92318",
+      "phone": "+49 9181 47550",
+      "email": "team@bikenow.de",
+      "website": "https://bikenow.de/",
+      "hours_of_operation": "Montag - Freitag: 8:00 - 18:00 Uhr\nSamstag: 8:00 - 13:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_070",
+      "store_name": "Veloland Blois",
+      "address": "Rue Bernard Palissy",
+      "city": "Vineuil",
+      "province_state": "Lorraine",
+      "country": "FR",
+      "postal_code": "41350",
+      "phone": "+33 254500103",
+      "email": "velolandblois@valdeloirevelo.fr",
+      "website": "https://valdeloirevelo.fr/",
+      "hours_of_operation": "Monday: 2 pm - 7 pm\nTuesday - Saturday: 10 - 12 am & 2 - 7 pm",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_071",
+      "store_name": "Val de Loire Velo",
+      "address": "15 Rue Arthur Rimband",
+      "city": "Tours",
+      "province_state": "Lorraine",
+      "country": "FR",
+      "postal_code": "37100",
+      "phone": "+33 247633724",
+      "email": "toursnord@valdeloirevelo.fr",
+      "website": "https://www.valdeloirevelo.fr/",
+      "hours_of_operation": "Monday: 2 - 7 pm\nTuesday - Saturday: 10 - 12 am & 2 - 7 pm",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_072",
+      "store_name": "Val de Loire Velo",
+      "address": "7 Rue Paul Langevin",
+      "city": "Chambray les Tours",
+      "province_state": "Lorraine",
+      "country": "FR",
+      "postal_code": "37170",
+      "phone": "+33 247748080",
+      "email": "velolandtours@valdeloirevelo.fr",
+      "website": "https://www.valdeloirevelo.fr/",
+      "hours_of_operation": "Monday: 2 - 7 pm\nTuesday - Saturday: 10 - 12 am & 2 - 7 pm",
+      "store_type": [
+        "dealer"
+      ]
+    },
+    {
+      "id": "location_073",
+      "store_name": "Badbikes",
+      "address": "Dornbergweg 28",
+      "city": "Werningerode",
+      "province_state": "Sachsen-Anhalt",
+      "country": "DE",
+      "postal_code": "38855",
+      "phone": "+49 3943 694 253",
+      "email": "badbikes.online@gmail.com",
+      "website": "https://www.rockmachine-germany.de/",
+      "hours_of_operation": "Mo - Fr: 08:30 - 18:30 Uhr\nSa: 09:00 - 13:00 Uhr",
+      "store_type": [
+        "dealer"
+      ]
+    },
+    {
+      "id": "location_074",
+      "store_name": "Velocity Braunschweig GmbH",
+      "address": "Kurt-Schumacher-Straße 8",
+      "city": "Braunschweing",
+      "province_state": "Niedersachsen",
+      "country": "DE",
+      "postal_code": "38102",
+      "phone": "+49 531 1231180",
+      "email": "verkauf@velocity-bs.de",
+      "website": "https://velocity-bs.de/",
+      "hours_of_operation": "Montag : geschlossen\nDienstag - Freitag: 11:00 - 19:00 Uhr\nSamstag: 10:00 - 14:00 Uhr",
+      "store_type": [
+        "dealer"
+      ]
+    },
+    {
+      "id": "location_075",
+      "store_name": "Rad Max",
+      "address": "Marktplatz 7",
+      "city": "Mühlacker",
+      "province_state": "Baden-Wuerttemberg",
+      "country": "DE",
+      "postal_code": "75417",
+      "phone": "+49 172 77 40 890",
+      "email": "info@rad-max.de",
+      "website": "https://www.rad-max.de/",
+      "hours_of_operation": "Montag: 14:00 - 18:00 Uhr\nDienstag, Donnerstag & Freitag: 10:00 - 13:00 Uhr & 14:00 - 18:00 Uhr\nMittwoch: 14:00 - 18:00 Uhr\nSamstag: 10:00 - 13:00 Uhr",
+      "store_type": [
+        "dealer"
+      ]
+    },
+    {
+      "id": "location_076",
+      "store_name": "CICLI BERTINETTI",
+      "address": "Via Trieste 47",
+      "city": "Biella",
+      "province_state": "Piedmont",
+      "country": "IT",
+      "postal_code": "13900",
+      "phone": "+39 15406587",
+      "email": "ciclibertinetti@libero.it",
+      "website": "",
+      "hours_of_operation": "Tuesday - Friday: 9:00 - 12:00 & 16:00 - 19:00\nSaturday: 9:00 - 12:00",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_077",
+      "store_name": "Cycles Guyonnet",
+      "address": "105 Avenue du Marechal de Lattre",
+      "city": "Niort",
+      "province_state": "Poitou-Charentes",
+      "country": "FR",
+      "postal_code": "79000",
+      "phone": "+33 5 49 73 98 86",
+      "email": "Cycles-guyonnet@orange.fr",
+      "website": "",
+      "hours_of_operation": "Monday: 14:00 - 18:00\nTuesday, Thursday, Friday & Saturday: 8:00 12:00 & 14:00 - 18:00",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_078",
+      "store_name": "CYCLES EXPERTS BAIN DE BR",
+      "address": "1 Rue Lanserva",
+      "city": "Plechatel",
+      "province_state": "Bretagne",
+      "country": "FR",
+      "postal_code": "35470",
+      "phone": "+33 299444650",
+      "email": "sarlh3b@gmail.com",
+      "website": "http://cyclexperts.com",
+      "hours_of_operation": "Monday - Friday: 9:30 -12:30 & 14:00 - 19:00\nSaturday: 9:30 - 18:00",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_079",
+      "store_name": "Martin's Fahrradladen",
+      "address": "Alter Hessenweg 23a",
+      "city": "Lüneburg",
+      "province_state": "Niedersachsen",
+      "country": "DE",
+      "postal_code": "21335",
+      "phone": "+49 41319984140",
+      "email": "md.doetsch@gmail.com",
+      "website": "",
+      "hours_of_operation": "Dienstag - Freitag: 10:00 - 12:00 & 13:00 - 18:00 Uhr\nSamstag: 11:00 - 14:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_080",
+      "store_name": "enduroX Hollmann& Richter GbR",
+      "address": "Hetzweger Weg 4",
+      "city": "Rotenburg",
+      "province_state": "Niedersachsen",
+      "country": "DE",
+      "postal_code": "27356",
+      "phone": "+49 4261-6826",
+      "email": "INFO@ENDUROX.DE",
+      "website": "https://www.endurox.de/",
+      "hours_of_operation": "Montag - Freitag: 09:00 - 18:00 Uhr\nSamstag: 10:00 - 13:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_081",
+      "store_name": "Fahrrad-Team Baumann",
+      "address": "Im Leimenfeld 7",
+      "city": "Ringsheim",
+      "province_state": "Baden-Wuerttemberg",
+      "country": "DE",
+      "postal_code": "77975",
+      "phone": "+49 176/32426587",
+      "email": "fahrrad@teambaumann.com",
+      "website": "https://www.teambaumann.com/fahrrad",
+      "hours_of_operation": "Montag, Dienstag, Donnerstag & Freitag: 15:30 Uhr- 18:30 Uhr\nMittwoch: geschlossen\nSamstag: 10:00 - 13:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_082",
+      "store_name": "Radlmadl",
+      "address": "Lenbachstraße 39",
+      "city": "Schrobenhausen",
+      "province_state": "Bayern",
+      "country": "DE",
+      "postal_code": "86529",
+      "phone": "+49 176 31541822",
+      "email": "info@radlmadl.de",
+      "website": "https://radlmadl.de/",
+      "hours_of_operation": "Dienstag - Freitag: 9:00 - 13:00 & 14:00 - 18:00 Uhr\nSamstag: 9:00 - 13:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_083",
+      "store_name": "Sport Passion GSB",
+      "address": "273 chemin de Croupillac",
+      "city": "Ales",
+      "province_state": "Midi-Pyrenees",
+      "country": "FR",
+      "postal_code": "30100",
+      "phone": "+33 4 66 55 17 23",
+      "email": "30ales@culturevelo.com",
+      "website": "https://www.culturevelo.com/-Ales-",
+      "hours_of_operation": "Monday - Saturday: 9:30 - 12:30 & 14:30 - 19:00",
+      "store_type": [
+        "dealer"
+      ]
+    },
+    {
+      "id": "location_084",
+      "store_name": "GEM BIKES BBMC",
+      "address": "22 avenue du Mont Aigoual",
+      "city": "Ganges",
+      "province_state": "Midi-Pyrenees",
+      "country": "FR",
+      "postal_code": "34190",
+      "phone": "+33 4 99 64 91 73",
+      "email": "34ganges@gem-bikes.com",
+      "website": "https://shop.gem-bikes.com/",
+      "hours_of_operation": "Monday: 14:30 - 19:00\nTuesday - Saturday: 9:30 - 12:30 & 14:30 -19:00",
+      "store_type": [
+        "dealer"
+      ]
+    },
+    {
+      "id": "location_085",
+      "store_name": "MONBOIPEN SPORT34",
+      "address": "2 rue des Joncasses",
+      "city": "Le Cres",
+      "province_state": "Languedoc-Roussillon",
+      "country": "FR",
+      "postal_code": "34920",
+      "phone": "+33 4 67 72 64 46",
+      "email": "34montpellier-lecres@culturevelo.c",
+      "website": "https://www.culturevelo.com/-Mon",
+      "hours_of_operation": "Monday: closed\nTuesday - Saturday: 9:30 -12:00 & 14:00 - 19:00",
+      "store_type": [
+        "dealer"
+      ]
+    },
+    {
+      "id": "location_086",
+      "store_name": "Zweirad Würdinger",
+      "address": "Kapuziner Straße 107",
+      "city": "Vilshofen",
+      "province_state": "Bayern",
+      "country": "DE",
+      "postal_code": "94474",
+      "phone": "+49 8541 910710",
+      "email": "info@wuerdinger.de",
+      "website": "https://www.wuerdinger.de/",
+      "hours_of_operation": "Montag - Freitag: 09:00 - 18:00 Uhr\nSamstag: 9:00 - 13:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_087",
+      "store_name": "Zweirad Würdinger",
+      "address": "Äußere Spitalhofstraße 2",
+      "city": "Passau",
+      "province_state": "Bayern",
+      "country": "DE",
+      "postal_code": "94036",
+      "phone": "+49 851 6346",
+      "email": "passau@wuerdinger.de",
+      "website": "https://www.wuerdinger.de/",
+      "hours_of_operation": "Montag - Freitag: 9:00 - 18:00 Uhr\nSamstag: 9:00 - 13:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_088",
+      "store_name": "Zweirad Würdinger",
+      "address": "Scheiblerstr. 10",
+      "city": "Plattling",
+      "province_state": "Bayern",
+      "country": "DE",
+      "postal_code": "94447",
+      "phone": "+49 9931 8945901",
+      "email": "plattling@wuerdinger.de",
+      "website": "https://www.wuerdinger.de/",
+      "hours_of_operation": "Montag - Freitag: 9:00 - 18:00 Uhr\nSamstag: 9:00 - 13:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_089",
+      "store_name": "Radshop Brunner",
+      "address": "Mürwiker Straße 144",
+      "city": "Flensburg",
+      "province_state": "Schleswig-Holstein",
+      "country": "DE",
+      "postal_code": "24943",
+      "phone": "+49 461 312462",
+      "email": "info@eike-brunner.de",
+      "website": "http://eike-brunner.de/",
+      "hours_of_operation": "Montag - Freitag: 9:00 - 18:00 Uhr\nSamstag: 9:00 - 13:00 Uhr",
+      "store_type": [
+        "dealer"
+      ]
+    },
+    {
+      "id": "location_090",
+      "store_name": "Zweiradhaus Kämpflein",
+      "address": "Mittelstraße 35+37 Verkehrsberuhigter Bereich",
+      "city": "Daaden",
+      "province_state": "Rheinland-Pfalz",
+      "country": "DE",
+      "postal_code": "57567",
+      "phone": "+49 2743 930204",
+      "email": "kaempflein@t-online.de",
+      "website": "https://www.kaempflein-zweirad.de/",
+      "hours_of_operation": "Montag - Freitag: 10:00 - 13:00 Uhr & 14:00 - 18:00 Uhr\nSamstag: 10:00 - 13:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_091",
+      "store_name": "Fahrrad Rapp",
+      "address": "Hauptstraße 161",
+      "city": "Kehl",
+      "province_state": "Baden-Wuerttemberg",
+      "country": "DE",
+      "postal_code": "77694",
+      "phone": "+49 785171231",
+      "email": "info@fahrrad-rapp.de",
+      "website": "https://www.fahrrad-rapp.de/",
+      "hours_of_operation": "Montag, Dienstag, Donnerstag & Freitag: 9:00 - 13:00 & 14:00 - 18:00 Uhr\nSamstag: 9:00 - 13:00 Uhr",
+      "store_type": [
+        "dealer"
+      ]
+    },
+    {
+      "id": "location_092",
+      "store_name": "House of Bikes",
+      "address": "Eiserfelder Straße 236",
+      "city": "Siegen",
+      "province_state": "Nordrhein-Westfalen",
+      "country": "DE",
+      "postal_code": "57080",
+      "phone": "+49 271 3868250",
+      "email": "info@house-of-bikes.de",
+      "website": "https://www.house-of-bikes-siegen.de/",
+      "hours_of_operation": "Montag - Freitag: 10:00 - 18:00 Uhr\nSamstag: 9:00 - 14:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_093",
+      "store_name": "CM Emporio",
+      "address": "Piazza Mercato 14",
+      "city": "Comano Terme",
+      "province_state": "Trentino-Alto Adige",
+      "country": "IT",
+      "postal_code": "38077",
+      "phone": "+39 335 453188",
+      "email": "info@cm-emporio.it",
+      "website": "https://cm-emporio.it/",
+      "hours_of_operation": "Monday - Saturday: 6:30 - 12:30 & 15:00 - 19:30\nSunday: 7:00 - 12:00",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_094",
+      "store_name": "VELOLAND Cannes",
+      "address": "Zi Les Tourrades",
+      "city": "Mandelieu",
+      "province_state": "Provence-Alpes-Cote d'Azur",
+      "country": "FR",
+      "postal_code": "06210",
+      "phone": "+33 493472026",
+      "email": "veloland-cannes@veloland.com",
+      "website": "http://veloland.com",
+      "hours_of_operation": "Tuesday - Saturday: 10:00 - 13:00 & 15:00 - 19:00",
+      "store_type": [
+        "dealer"
+      ]
+    },
+    {
+      "id": "location_095",
+      "store_name": "Motopep",
+      "address": "Via Cesare Battisti 82",
+      "city": "Pogliano Milanese",
+      "province_state": "Lombardy",
+      "country": "IT",
+      "postal_code": "20005",
+      "phone": "+39 02 934 1902",
+      "email": "motorpep@gmail.com",
+      "website": "https://www.motorpepstore.it",
+      "hours_of_operation": "Tuesday - Saturday: 9:00 –12:30 & 15:00 – 19:00",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_096",
+      "store_name": "Drahtesel Der Fahrradladen",
+      "address": "Saathainer Straße 296",
+      "city": "Elsterwerda",
+      "province_state": "Brandenburg",
+      "country": "DE",
+      "postal_code": "04910",
+      "phone": "+49 6355 164471",
+      "email": "mrz-weber@t-online.de",
+      "website": "",
+      "hours_of_operation": "Montag - Freitag: 9:00 - 18:00 Uhr\nSamstag: 9:00 - 12:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_097",
+      "store_name": "Bike Point Jena",
+      "address": "Löbstedter Straße 53",
+      "city": "Jena",
+      "province_state": "Thüringen",
+      "country": "DE",
+      "postal_code": "07749",
+      "phone": "+49 3641 618561",
+      "email": "mail@bike-point-jena.de",
+      "website": "https://bike-point-jena.de/",
+      "hours_of_operation": "Montag - Freitag: 10:00 - 18:00 Uhr\nSamstag: 10:00 - 13:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_098",
+      "store_name": "EBike-Warehouse.de",
+      "address": "Hoffeldstr. 104",
+      "city": "Düsseldorf",
+      "province_state": "Nordrhein-Westfalen",
+      "country": "DE",
+      "postal_code": "40235",
+      "phone": "+49 211-4167251",
+      "email": "info@ebike-warehouse.de",
+      "website": "https://ebike-warehouse.de/",
+      "hours_of_operation": "Montag - Freitag: 9:30 - 17:30 Uhr\nSamstag: 11:00 - 15:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_099",
+      "store_name": "Henco GmbH & Co. KG Wiesmoor",
+      "address": "Neuer Weg 9",
+      "city": "Wiesmoor",
+      "province_state": "Niedersachsen",
+      "country": "DE",
+      "postal_code": "26639",
+      "phone": "+49 4944 6329",
+      "email": "info@henco-gmbh.de",
+      "website": "http://www.hencobikes.de",
+      "hours_of_operation": "Montag - Freitag: 9:00 - 18:00 Uhr\nSamstag: 9:00 - 13:00 Uhr",
+      "store_type": [
+        "dealer"
+      ]
+    },
+    {
+      "id": "location_100",
+      "store_name": "Elektrorad-Partner",
+      "address": "Hangwerfeld 4",
+      "city": "Havixbeck",
+      "province_state": "Nordrhein-Westfalen",
+      "country": "DE",
+      "postal_code": "48329",
+      "phone": "+49 2507 983705",
+      "email": "info@elektrorad-partner.de",
+      "website": "http://www.elektrorad-partner.de",
+      "hours_of_operation": "Montag - Freitag: 8:00 - 13:00 & 15:00 - 18:00 Uhr\nSamstag: 10:00 - 13:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_101",
+      "store_name": "Zweiradhaus Terbrack",
+      "address": "Bahnhofstraße 18",
+      "city": "Vreden",
+      "province_state": "Nordrhein-Westfalen",
+      "country": "DE",
+      "postal_code": "48691",
+      "phone": "+49 256497999",
+      "email": "info@vredenna.de",
+      "website": "http://www.fahrradhaus-terbrack.de/",
+      "hours_of_operation": "Montag - Freitag: 9:00 - 12:30 & 14:00 - 18:00 Uhr\nSamstag: 9:00 - 12:30 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_102",
+      "store_name": "Zweirad Dütsch",
+      "address": "Münsterstraße 10 – 12",
+      "city": "Emsdetten",
+      "province_state": "Nordrhein-Westfalen",
+      "country": "DE",
+      "postal_code": "48282",
+      "phone": "+49 2572 960 797 4",
+      "email": "emsdetten@zweirad-duetsch.de",
+      "website": "https://ebike-emsdetten.de/",
+      "hours_of_operation": "Montag - Freitag: 9:00 – 12:30 & 14:00 – 18:00 Uhr\nSamstag: 9:00 – 13:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_103",
+      "store_name": "Radwerk Hachen",
+      "address": "Am Sportplatz 3",
+      "city": "Sundern",
+      "province_state": "Nordrhein-Westfalen",
+      "country": "DE",
+      "postal_code": "59846",
+      "phone": "+49 2935 1038",
+      "email": "radwerkhachen@gmx.de",
+      "website": "https://radwerk-hüsten.de",
+      "hours_of_operation": "Montag - Freitag: 8:30 - 18:00 Uhr\nSamstag: 8:30 - 13:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_104",
+      "store_name": "Radwerk Hüsten",
+      "address": "Kleinbahnstraße 11",
+      "city": "Arnsberg",
+      "province_state": "Nordrhein-Westfalen",
+      "country": "DE",
+      "postal_code": "59759",
+      "phone": "+49 2932 9319993",
+      "email": "radwerkhuesten@gmx.de",
+      "website": "https://radwerk-hüsten.de",
+      "hours_of_operation": "Montag - Freitag: 8:30 - 18:00 Uhr\nSamstag: 8:30 - 13:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_105",
+      "store_name": "A Ruota Libera Varese",
+      "address": "Via Cesare Battisti, 17",
+      "city": "Varese",
+      "province_state": "Varese",
+      "country": "IT",
+      "postal_code": "21100",
+      "phone": "+39 0332 280094",
+      "email": "aruotalibera1@gmail.com",
+      "website": "https://www.aruotaliberavarese.com/",
+      "hours_of_operation": "Monday - Saturday: 9:00 - 12:30 & 15:00 - 19:00",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_106",
+      "store_name": "A Ruota Libera Castronno",
+      "address": "Via Lombardia, 91",
+      "city": "Castronno",
+      "province_state": "Varese",
+      "country": "IT",
+      "postal_code": "21040",
+      "phone": "+39 0332 893170",
+      "email": "aruotalibera1@gmail.com",
+      "website": "https://www.aruotaliberavarese.com/",
+      "hours_of_operation": "Monday - Saturday: 9:00 - 12:30 & 15:00 - 19:00",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_107",
+      "store_name": "Zweirad Center Horst Weynand",
+      "address": "Zur Domaine 25",
+      "city": "Bütgenbach",
+      "province_state": "Wallonia",
+      "country": "BE",
+      "postal_code": "4750",
+      "phone": "+32 80 64 22 01",
+      "email": "weynand.horst@skynet.be",
+      "website": "https://h-weynand.be/",
+      "hours_of_operation": "Monday: closed\nTuesday - Friday: 9:00 - 12:00 & 13:00 - 18:00\nSaturday: 9:00 - 12:00 & 13:00 - 16:00 (during winter until 15:00)",
+      "store_type": [
+        "dealer"
+      ]
+    },
+    {
+      "id": "location_108",
+      "store_name": "e-Bike Corner",
+      "address": "Wernberger Straße 48",
+      "city": "Pfreimd",
+      "province_state": "Bayern",
+      "country": "DE",
+      "postal_code": "92536",
+      "phone": "+49 96065979430",
+      "email": "info@ebike-corner.de",
+      "website": "https://ebike-corner.de/",
+      "hours_of_operation": "Montag: geschlossen\nDienstag - Freitag: 9:00 - 12:00 & 13:00 - 18:00 Uhr\nSamstag: 9:00 - 14:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_109",
+      "store_name": "Les Cycles Clemer",
+      "address": "124 A, rue du Général de Gaulle",
+      "city": "La Neuville en Hez",
+      "province_state": "Haute-Normandie",
+      "country": "FR",
+      "postal_code": "60510",
+      "phone": "+33 3 44 68 03 72",
+      "email": "cyclesclemer@outlook.com",
+      "website": "http://www.cyclesclemer.fr",
+      "hours_of_operation": "Monday: closed\nTuesday - Saturday: 9:30 - 12:00 & 14:00 - 18:30",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_110",
+      "store_name": "2Rad Leuer",
+      "address": "Hauptstraße 50",
+      "city": "Meckenheim",
+      "province_state": "Nordrhein-Westfalen",
+      "country": "DE",
+      "postal_code": "53340",
+      "phone": "+492225 2272",
+      "email": "info@2rad-leuer.de",
+      "website": "https://www.2rad-leuer.de/",
+      "hours_of_operation": "Montag: geschlossen\nDienstag - Freitag: 10:00 - 13:00 & 14:00 - 18:30 Uhr\nSamstag: 10:00 - 14:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_111",
+      "store_name": "Zweirad Hees",
+      "address": "Hammersraße 19",
+      "city": "Kreuztal",
+      "province_state": "Nordrhein-Westfalen",
+      "country": "DE",
+      "postal_code": "57223",
+      "phone": "+49 2732-79843 0",
+      "email": "info@zweirad-hees.com",
+      "website": "https://www.zweirad-hees.com/",
+      "hours_of_operation": "Montag - Freitag: 10:00 - 18:00 Uhr\nSamstag: 10:00 - 13:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_112",
+      "store_name": "Zweirad-Schmiede",
+      "address": "Zum Königsberg 5",
+      "city": "Erkelenz",
+      "province_state": "Nordrhein-Westfalen",
+      "country": "DE",
+      "postal_code": "41812",
+      "phone": "+49 2435 3314",
+      "email": "zweirad-schmiede@online.de",
+      "website": "https://www.zweirad-schmiede.de/",
+      "hours_of_operation": "Montag, Dienstag, Donnerstag & Freitag: 9:00 - 18:30 Uhr\nMittwoch: 9:00 - 12:30 Uhr\nSamstag: 9:00 - 14:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_113",
+      "store_name": "Velo City Soest",
+      "address": "Elfser Weg 27a",
+      "city": "Soest",
+      "province_state": "Nordrhein-Westfalen",
+      "country": "DE",
+      "postal_code": "59494",
+      "phone": "+49 2921 31318",
+      "email": "info@velo-city-soest.de",
+      "website": "https://www.velo-city-soest.de/",
+      "hours_of_operation": "Montag, Dienstag, Donnerstag & Freitag: 10:00 - 18:00 Uhr\nMittwoch: 10:00 - 13:00 Uhr\nSamstag: 10:00 - 14:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_114",
+      "store_name": "Takari Cicli",
+      "address": "VIA NICOLÒ REZZARA 14/16",
+      "city": "RANICA (BG)",
+      "province_state": "Bologna",
+      "country": "IT",
+      "postal_code": "24020",
+      "phone": "+39035514313",
+      "email": "info@takari.it",
+      "website": "https://www.takari.it/",
+      "hours_of_operation": "Monday: 15:00 - 19:00\nTuesday - Friday: 9:00 - 12:30 & 15:00 - 19:00\nSaturday: 9:00 - 12:30",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_115",
+      "store_name": "E-Bike Shop Gevelsberg",
+      "address": "Körnerstraße 79",
+      "city": "Gevelsberg",
+      "province_state": "Nordrhein-Westfalen",
+      "country": "DE",
+      "postal_code": "58285",
+      "phone": "+49 176 31390444",
+      "email": "info@ebike-shop.eu",
+      "website": "http://www.ebike-shop.eu",
+      "hours_of_operation": "Montag: geschlossen\nDienstag - Freitag: 13:00 - 18:00 Uhr\nSamstag: 10:00 - 14:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_116",
+      "store_name": "E-Bike Shop Ennepetal",
+      "address": "Berninghauser Str. 2",
+      "city": "Ennepetal",
+      "province_state": "Nordrhein-Westfalen",
+      "country": "DE",
+      "postal_code": "58256",
+      "phone": "+49 176 62425684",
+      "email": "info@ebike-shop.eu",
+      "website": "http://info@ebike-shop.eu",
+      "hours_of_operation": "Montag: geschlossen\nDienstag - Freitag: 13:00 - 18:00 Uhr\nSamstag: 10:00 - 14:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_117",
+      "store_name": "E-Bike ServicePoint Riegersburg",
+      "address": "Riegersburg 53b",
+      "city": "Riegersburg",
+      "province_state": "Steiermark",
+      "country": "AT",
+      "postal_code": "8333",
+      "phone": "+43 681 84619785",
+      "email": "",
+      "website": "https://bauerbikes.com/standorte/standort-riegersburg/",
+      "hours_of_operation": "Freitag: 10:00 - 13:00 Uhr\nSamstag: 10:00 - 13:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_118",
+      "store_name": "Bike Activ",
+      "address": "Taunusstraße 44",
+      "city": "Großkrotzenburg",
+      "province_state": "Hessen",
+      "country": "DE",
+      "postal_code": "63538",
+      "phone": "+49 6186 201310",
+      "email": "info@bike-activ.de",
+      "website": "https://bike-activ.de/",
+      "hours_of_operation": "Montag, Dienstag, Donnerstag & Freitag: 10:00 - 13:00 &14:00 - 18:00 Uhr\nMittwoch: geschlossen\nSamstag: 9:00 - 13:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_119",
+      "store_name": "Fahrrad Heidemann",
+      "address": "Saarstraße 6a",
+      "city": "Trier",
+      "province_state": "Rheinland-Pfalz",
+      "country": "DE",
+      "postal_code": "54290",
+      "phone": "+49 651 9945227",
+      "email": "info@fahrrad-heidemann.de",
+      "website": "https://www.fahrrad-heidemann.de/",
+      "hours_of_operation": "Montag: geschlossen\nDienstag - Freitag: 9:00 - 18:00 Uhr\nSamstag: 9:00 - 14:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_120",
+      "store_name": "Radlladen am Schweinemarkt",
+      "address": "Hauptstraße 8",
+      "city": "Pegnitz",
+      "province_state": "Bayern",
+      "country": "DE",
+      "postal_code": "91257",
+      "phone": "+49 9241 4986630",
+      "email": "radlladen.am.schweinemarkt@gmail",
+      "website": "https://radlladen-am-schweinemarkt.de/",
+      "hours_of_operation": "Montag, Donnerstag & Freitag: 10:00 - 18:00 Uhr\nDienstag: nach Vereinbarung\nMittwoch: geschlossen\nSamstag: 10:00 - 12:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_121",
+      "store_name": "EBIKE LAB",
+      "address": "Viale Lecco 79",
+      "city": "Como",
+      "province_state": "Como",
+      "country": "IT",
+      "postal_code": "22100",
+      "phone": "+39 3102270072",
+      "email": "info@ebikelab.it",
+      "website": "http://www.ebikelab.it",
+      "hours_of_operation": "Monday - Friday: 9:30 - 12:30 & 14:30 - 19:00",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_122",
+      "store_name": "Kiki´s Fahrradhaus Silbernagl",
+      "address": "Am Römerstein 16",
+      "city": "Gilching",
+      "province_state": "Bayern",
+      "country": "DE",
+      "postal_code": "82205",
+      "phone": "+49 81055036",
+      "email": "info@fahrradhaus-silbernagl.de",
+      "website": "http://www.fahrradhaus-silbernagl.de",
+      "hours_of_operation": "Montag, Dienstag, Donnerstag & Freitag: 10:00 - 18:00 Uhr\nMittwoch: geschlossen\nSamstag: 10:00 - 14:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_123",
+      "store_name": "Velo Sport Werner Otto GmbH",
+      "address": "Pastor Niemöller Platz 8",
+      "city": "Berlin",
+      "province_state": "Berlin",
+      "country": "DE",
+      "postal_code": "13156",
+      "phone": "+49 30 20093711",
+      "email": "info@premium-bikeshop.de",
+      "website": "https://www.premium-bikeshop.de/",
+      "hours_of_operation": "Montag - Freitag: 10:00 - 19:00 Uhr\nSamstag: geschlossen",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_124",
+      "store_name": "Zweirad Müller",
+      "address": "Frankfurter Strasse 67",
+      "city": "Bad Vilbel",
+      "province_state": "Hessen",
+      "country": "DE",
+      "postal_code": "61118",
+      "phone": "+49 6101 85826",
+      "email": "info@fahrrad-mueller.info",
+      "website": "https://www.fahrrad-mueller.info",
+      "hours_of_operation": "Montag, Dienstag, Donnerstag & Freitag: 8:30 (10:00*) - 12:30 Uhr & 14:30 - 18:00 Uhr\nMittwoch: 8:30 (10:00*) - 12:30 Uhr\nSamstag: 8:30 (10:00*) - 13:00 Uhr\n* In der Zeit vom 14.10.2024 bis 28.02.2025 erst ab 10:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_125",
+      "store_name": "HB Zero",
+      "address": "Via Cesare Battisti 61",
+      "city": "Costa Volpino BG",
+      "province_state": "Bergamo",
+      "country": "IT",
+      "postal_code": "24062",
+      "phone": "+39 3356557739",
+      "email": "hbzerobike@gmail.com",
+      "website": "https://www.hbzerosrl.it/",
+      "hours_of_operation": "Monday - Friday: 8:30 - 12:30 & 14:00 - 19:30\nSaturday: 8:30 - 18:30",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_126",
+      "store_name": "Die Fahrradprofis",
+      "address": "Wangener Straße 17",
+      "city": "Ravensburg",
+      "province_state": "Baden-Wuerttemberg",
+      "country": "DE",
+      "postal_code": "88212",
+      "phone": "+49 751 362994 0",
+      "email": "shop@fahrradprofis.de",
+      "website": "https://www.fahrradprofis.de/",
+      "hours_of_operation": "Montag - Freitag: 10:00 - 18:00 Uhr\nSamstag: 9:00 - 16:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_127",
+      "store_name": "BIKE POINT JENA-OST",
+      "address": "Breite Straße 2, Ecke K.-Liebknecht-Straße",
+      "city": "Jena",
+      "province_state": "Thüringen",
+      "country": "DE",
+      "postal_code": "07749",
+      "phone": "+49 3641 827110",
+      "email": "mail@bike-point-jena.de",
+      "website": "https://bike-point-jena.de/",
+      "hours_of_operation": "Montag - Freitag: 10:00 - 18:00 Uhr\nSamstag: 10:00 - 13:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_128",
+      "store_name": "HM Racing",
+      "address": "Hauptstra0e 120",
+      "city": "Hage",
+      "province_state": "Niedersachsen",
+      "country": "DE",
+      "postal_code": "26524",
+      "phone": "+49 4931 9301115",
+      "email": "info@powerformx.de",
+      "website": "http://powerformx.de/",
+      "hours_of_operation": "Montag, Dienstag, Mittwoch & Freitag: 9:00 - 12:00 & 14:00 - 17:00 Uhr\nDonnerstag: 9:00 - 12:00 & 14:00 - 19:00 Uhr\nSamstag: 9:00 - 12:00 Uhr",
+      "store_type": [
+        "dealer"
+      ]
+    },
+    {
+      "id": "location_129",
+      "store_name": "RADWerk Görlitz",
+      "address": "Heilige-Grab-Straße 26",
+      "city": "Görlitz",
+      "province_state": "Sachsen",
+      "country": "DE",
+      "postal_code": "02826",
+      "phone": "+49 3581 4298990",
+      "email": "epost@radwerk-goerlitz.de",
+      "website": "https://www.radwerk.online/",
+      "hours_of_operation": "Montag - Freitag: 9:00 - 18:00 Uhr\nSamstag: 9:00 - 12:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_130",
+      "store_name": "Rad-Konzept Mario Johannsohn",
+      "address": "Ernst-Thälmann-Straße 125",
+      "city": "Senftenberg",
+      "province_state": "Brandenburg",
+      "country": "DE",
+      "postal_code": "01968",
+      "phone": "+49 35738100811",
+      "email": "radkonzept-senftenberg@web.de",
+      "website": "",
+      "hours_of_operation": "Montag - Freitag: 9:00 - 18:00 Uhr\nSamstag: 9:00 - 12:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_131",
+      "store_name": "Radsport Claassen",
+      "address": "Judenstraße 24",
+      "city": "Kempen",
+      "province_state": "Nordrhein-Westfalen",
+      "country": "DE",
+      "postal_code": "47906",
+      "phone": "+49 2152 3398",
+      "email": "info@radsport-claassen.de",
+      "website": "https://radsport-claassen.de/",
+      "hours_of_operation": "Montag - Freitag: 9:00 - 13:00 & 14:00 - 18:30 Uhr\nSamstag: 10:00 - 14:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_132",
+      "store_name": "MTB Store",
+      "address": "Langwahn 100",
+      "city": "Eschweiler",
+      "province_state": "Nordrhein-Westfalen",
+      "country": "DE",
+      "postal_code": "52249",
+      "phone": "+49 240322497",
+      "email": "info@mtb-store.de",
+      "website": "https://www.mtb-store.de/",
+      "hours_of_operation": "Montag, Mittwoch & Freitag: 13:00 - 18:00 Uhr\nSamstag: 10:00 - 13:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_133",
+      "store_name": "Zweirad Nübling",
+      "address": "Rudolf Diesel Straße 9",
+      "city": "Denzlingen",
+      "province_state": "Baden-Wuerttemberg",
+      "country": "DE",
+      "postal_code": "79211",
+      "phone": "+49 7666 5078",
+      "email": "info@zweirad-nuebling.de",
+      "website": "https://www.zweirad-nuebling.de/",
+      "hours_of_operation": "Montag, Dienstag, Donnerstag & Freitag: 8:00 - 12:30 & 14:00 - 18:00 Uhr\nMittwoch: 8:00 - 12:30 Uhr\nSamstag: 9:00 - 13:00 Uhr",
+      "store_type": [
+        "dealer"
+      ]
+    },
+    {
+      "id": "location_134",
+      "store_name": "Radwelt Main-Tauber",
+      "address": "Wilhelm-Frank-Straße 82",
+      "city": "Bad Mergentheim",
+      "province_state": "Baden-Wuerttemberg",
+      "country": "DE",
+      "postal_code": "97980",
+      "phone": "+49 7931 520 21",
+      "email": "info@radwelt-mt.de",
+      "website": "https://www.radwelt-main-tauber.de/",
+      "hours_of_operation": "Montag: geschlossen\nDienstag - Freitag: 9:00 -13:00 & 14:00 - 18:00 Uhr\nSamstag: 9:00 - 13:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_135",
+      "store_name": "Bikes Only",
+      "address": "Jakob-Krebs-Straße 124g",
+      "city": "Willich-Anraht",
+      "province_state": "Nordrhein-Westfalen",
+      "country": "DE",
+      "postal_code": "4787",
+      "phone": "+49 2156 915370",
+      "email": "info@bikesonlywillich.de",
+      "website": "https://www.bikesonlywillich.de/",
+      "hours_of_operation": "Montag - Freitag: 9:30 - 18:00 Uhr\nSamstag: 9:30 - 14:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_136",
+      "store_name": "Kraft Rad GmbH",
+      "address": "Roitzheimer Straße 113",
+      "city": "Euskirchen",
+      "province_state": "",
+      "country": "DE",
+      "postal_code": "53879",
+      "phone": "+49 2251 2758",
+      "email": "euskirchen@zweirad-kraft.de",
+      "website": "https://www.zweirad-kraft.de/",
+      "hours_of_operation": "Montag - Freitag: 10:00 - 19:00 Uhr\nSamstag: 10:00 -17:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_137",
+      "store_name": "Kraft Rad GmbH",
+      "address": "Ernst-Heinrich-Geist-Straße 7",
+      "city": "Frechen",
+      "province_state": "Nordrhein-Westfalen",
+      "country": "DE",
+      "postal_code": "50226",
+      "phone": "+49 2234 911930",
+      "email": "frechen@zweirad-kraft.de",
+      "website": "https://www.zweirad-kraft.de/",
+      "hours_of_operation": "Montag - Freitag: 10:00 - 19:00 Uhr\nSamstag: 10:00 -17:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_138",
+      "store_name": "Radsport Borens",
+      "address": "Aegidienberger Straße 1",
+      "city": "Bad Honnef",
+      "province_state": "Nordrhein-Westfalen",
+      "country": "DE",
+      "postal_code": "53604",
+      "phone": "+49 2224820750",
+      "email": "verkauf@radsport-borens.de",
+      "website": "https://www.radsport-borens.de/",
+      "hours_of_operation": "Montag, Dienstag, Donnerstag & Freitag: 9:30 - 13:00 & 14:30 - 18:30 Uhr\nMittwoch: 9:30 - 13:00 Uhr\nSamstag: 9:30 - 14:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_139",
+      "store_name": "eBike Welt Hanau",
+      "address": "Johann-Carl-Koch-Straße 7",
+      "city": "Hanau",
+      "province_state": "Hessen",
+      "country": "DE",
+      "postal_code": "63452",
+      "phone": "+49 6181 911 99 0",
+      "email": "office@ebikewelthanau.de",
+      "website": "https://ebikewelthanau.de/",
+      "hours_of_operation": "Montag: geschlossen\nDienstag - Freitag: 10:00 - 19:00 Uhr\nSamstag: 10:00 -15:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_140",
+      "store_name": "Zweirad Stephan",
+      "address": "Untere Hauptstraße 1a",
+      "city": "Thalheim",
+      "province_state": "Sachsen",
+      "country": "DE",
+      "postal_code": "09380",
+      "phone": "+49 3721 84484",
+      "email": "stephan-thalheim@t-online.de",
+      "website": "https://zweirad-stephan.de/de/",
+      "hours_of_operation": "Montag - Freitag: 9:00 - 18:00 Uhr\nSamstag: 9:00 - 12:00 Uhr (ausgenommen September bis Februar)",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_141",
+      "store_name": "Zweirad Käppner",
+      "address": "Friedrichstraße 34",
+      "city": "Neundorf",
+      "province_state": "Sachsen-Anhalt",
+      "country": "DE",
+      "postal_code": "39418",
+      "phone": "+49 3925 378951",
+      "email": "",
+      "website": "",
+      "hours_of_operation": "Montag - Freitag: 9:00 - 18:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_142",
+      "store_name": "Zweirad Sebold",
+      "address": "Duisburger Straße 147",
+      "city": "Mühlheim an der Ruhr",
+      "province_state": "Nordrhein-Westfalen",
+      "country": "DE",
+      "postal_code": "45479",
+      "phone": "+49 208 425232",
+      "email": "info@zweirad-sebold.de",
+      "website": "https://www.zweirad-sebold.de/",
+      "hours_of_operation": "Montag: geschlossen\nDienstag - Freitag: 9:00 - 13:00 & 14:00 - 18:30 Uhr\nSamstag: 9:00 - 13:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_143",
+      "store_name": "Waterkant eBikes GmbH",
+      "address": "Maurerstraße 3",
+      "city": "Buchholz i.d.N.",
+      "province_state": "Niedersachsen",
+      "country": "DE",
+      "postal_code": "21244",
+      "phone": "+49 41819284870",
+      "email": "nordheide@emotion-ebikes.de",
+      "website": "https://emotion-technologies.de/nordheide/",
+      "hours_of_operation": "Montag: geschlossen\nDienstag - Freitag: 10:00 - 18:30 Uhr\nSamstag: 10:00 - 14:00 Uhr",
+      "store_type": [
+        "dealer"
+      ]
+    },
+    {
+      "id": "location_144",
+      "store_name": "e-motion e-Bike Welt Stade - Altes Land",
+      "address": "Hansestraße 32",
+      "city": "Stade",
+      "province_state": "Niedersachsen",
+      "country": "DE",
+      "postal_code": "21682",
+      "phone": "+49 4141 4263130",
+      "email": "stade@emotion-ebikes.de",
+      "website": "https://emotion-technologies.de/stade/",
+      "hours_of_operation": "Montag: geschlossen\nDienstag - Freitag: 10:00 - 18:30 Uhr\nSamstag: 10:00 - 14:00 Uhr",
+      "store_type": [
+        "dealer"
+      ]
+    },
+    {
+      "id": "location_145",
+      "store_name": "vit:bikes Hann.Münden",
+      "address": "Veckerhäger Str. 30",
+      "city": "Hann.Münden",
+      "province_state": "Niedersachsen",
+      "country": "DE",
+      "postal_code": "34346",
+      "phone": "+49 5541 98250",
+      "email": "info@schelp.de",
+      "website": "https://schelp.de/",
+      "hours_of_operation": "Montag - Freitag: 8:30 - 18:00 Uhr\nSamsatag: 8:30 - 13:00 Uhr",
+      "store_type": [
+        "dealer"
+      ]
+    },
+    {
+      "id": "location_146",
+      "store_name": "vit:bikes Erding",
+      "address": "Franz-Brombach-Straße 11",
+      "city": "Erding",
+      "province_state": "Bayern",
+      "country": "DE",
+      "postal_code": "84435",
+      "phone": "+49 8122 9419481",
+      "email": "erding@vitbikes.de",
+      "website": "http://www.vitbikes.de",
+      "hours_of_operation": "Montag: geschlossen\nDienstag - Freitag: 10:00 - 18:00 Uhr\nSamstag: 10:00 - 15:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_147",
+      "store_name": "Lili´s Radl-Laden",
+      "address": "Martin-Luther-Straße 25",
+      "city": "Hersbruck",
+      "province_state": "Bayern",
+      "country": "DE",
+      "postal_code": "91217",
+      "phone": "+49 9151 9050580",
+      "email": "info@lilis-radlladen.de",
+      "website": "http://www.lilis-radlladen.de",
+      "hours_of_operation": "Montag - Freitag: 10:00 - 18:00 Uhr\nSamstag: 10:00 - 13:00 Uhr\nIn den Wintermonaten: Mittwochs nur bis 13:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_148",
+      "store_name": "Zweirad-Center Van de Stay GmbH",
+      "address": "An St. Sebastian 40",
+      "city": "Nettetal",
+      "province_state": "Nordrhein-Westfalen",
+      "country": "DE",
+      "postal_code": "41334",
+      "phone": "+49 2153 405405",
+      "email": "lobberich@van-de-Stay.de",
+      "website": "http://www.van-de-stay.de/",
+      "hours_of_operation": "Montag, Dienstag, Donnerstag & Freitag: 9:00 - 13:00 & 14:00 - 18:00 Uhr\nMittwoch & Samstag: 9:00 - 13:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_149",
+      "store_name": "Little John Bikes Dresden -Johannstadt",
+      "address": "Pfotenhauer Straße 7",
+      "city": "Dresden",
+      "province_state": "Sachsen",
+      "country": "DE",
+      "postal_code": "01307",
+      "phone": "+49 351 47004212",
+      "email": "dd5@littlejohnbikes.com",
+      "website": "https://littlejohnbikes.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_150",
+      "store_name": "Little John Bikes Dessau-Roßlau",
+      "address": "Kavalierstraße 82",
+      "city": "Dessau",
+      "province_state": "Sachsen-Anhalt",
+      "country": "DE",
+      "postal_code": "06844",
+      "phone": "+49 340 2168989",
+      "email": "de1@littlejohnbikes.com",
+      "website": "https://littlejohnbikes.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_151",
+      "store_name": "Little John Bikes Duisburg-Neudorf",
+      "address": "Sternbuschweg 95",
+      "city": "Duisburg",
+      "province_state": "Nordrhein-Westfalen",
+      "country": "DE",
+      "postal_code": "47057",
+      "phone": "+49 203 2898488",
+      "email": "du3@littlejohnbikes.com",
+      "website": "https://littlejohnbikes.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_152",
+      "store_name": "Little John Bikes Duisburg-Buchholz",
+      "address": "Sittardsberger Allee 21",
+      "city": "Duisburg",
+      "province_state": "Nordrhein-Westfalen",
+      "country": "DE",
+      "postal_code": "47249",
+      "phone": "+49 203 701293",
+      "email": "du4@littlejohnbikes.com",
+      "website": "https://littlejohnbikes.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_153",
+      "store_name": "Little John Bikes Eisenach",
+      "address": "Bahnhofstraße 8 - 32",
+      "city": "Eisenach",
+      "province_state": "",
+      "country": "DE",
+      "postal_code": "99817",
+      "phone": "",
+      "email": "ea1@littlejohnbikes.com",
+      "website": "https://littlejohnbikes.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_154",
+      "store_name": "Little John Bikes Erfurt",
+      "address": "Leipziger Straße 56b",
+      "city": "Erfurt",
+      "province_state": "",
+      "country": "DE",
+      "postal_code": "99085",
+      "phone": "+49 361 55069771",
+      "email": "ef1@littlejohnbikes.com",
+      "website": "https://littlejohnbikes.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_155",
+      "store_name": "Little John Bikes Erkrath",
+      "address": "Schimmelbuschstraße 19",
+      "city": "Erkrath",
+      "province_state": "Nordrhein-Westfalen",
+      "country": "DE",
+      "postal_code": "40699",
+      "phone": "+49 2104 43919",
+      "email": "et1@littlejohnbikes.com",
+      "website": "https://littlejohnbikes.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_156",
+      "store_name": "Little John Bikes Eberswalde",
+      "address": "Schneidemühlenweg 1",
+      "city": "Eberswalde",
+      "province_state": "Brandenburg",
+      "country": "DE",
+      "postal_code": "16225",
+      "phone": "+49 3334 3868226",
+      "email": "ew1@littlejohnbikes.com",
+      "website": "https://littlejohnbikes.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_157",
+      "store_name": "Little John Bikes Erkelenz",
+      "address": "August-Horch-Straße 5",
+      "city": "Erkelenz",
+      "province_state": "Nordrhein-Westfalen",
+      "country": "DE",
+      "postal_code": "41812",
+      "phone": "+49 2431 6620",
+      "email": "ez1@littlejohnbikes.com",
+      "website": "https://littlejohnbikes.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_158",
+      "store_name": "Little John Bikes Frankfurt (Oder)",
+      "address": "Berliner Straße 40",
+      "city": "Frankfurt (Oder)",
+      "province_state": "Brandenburg",
+      "country": "DE",
+      "postal_code": "15230",
+      "phone": "+49 335 40163430",
+      "email": "ff1@littlejohnbikes.com",
+      "website": "https://littlejohnbikes.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_159",
+      "store_name": "Little John Bikes Freiberg",
+      "address": "Häuersteig 2",
+      "city": "Freiberg",
+      "province_state": "Brandenburg",
+      "country": "DE",
+      "postal_code": "09599",
+      "phone": "+49 3731 2449086",
+      "email": "fg1@littlejohnbikes.com",
+      "website": "https://littlejohnbikes.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_160",
+      "store_name": "Little John Bikes Falkensee",
+      "address": "Spandauer Straße 112",
+      "city": "Falkensee",
+      "province_state": "Sachsen",
+      "country": "DE",
+      "postal_code": "14612",
+      "phone": "+49 3322 4260117",
+      "email": "fs1@littlejohnbikes.com",
+      "website": "https://littlejohnbikes.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_161",
+      "store_name": "Little John Bikes Greifswald",
+      "address": "Gützkower Straße 81/82",
+      "city": "Greifswald",
+      "province_state": "Mecklenburg-Vorpommern",
+      "country": "DE",
+      "postal_code": "17489",
+      "phone": "+49 3834 8890777",
+      "email": "gf1@littlejohnbikes.com",
+      "website": "https://littlejohnbikes.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_162",
+      "store_name": "Little John Bikes Görlitz",
+      "address": "Am Hopfenfeld 6",
+      "city": "Görlitz",
+      "province_state": "Sachsen",
+      "country": "DE",
+      "postal_code": "02828",
+      "phone": "+49 3581 313166",
+      "email": "gr3@littlejohnbikes.com",
+      "website": "https://littlejohnbikes.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_163",
+      "store_name": "Little John Bikes Gotha",
+      "address": "Bertha von Suttner Platz 2-8",
+      "city": "Gotha",
+      "province_state": "Thüringen",
+      "country": "DE",
+      "postal_code": "99867",
+      "phone": "+49 3621 7367601",
+      "email": "gt1@littlejohnbikes.com",
+      "website": "https://littlejohnbikes.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_164",
+      "store_name": "Little John Bikes Güstrow",
+      "address": "Speicherstraße 1",
+      "city": "Güstrow",
+      "province_state": "Mecklenburg-Vorpommern",
+      "country": "DE",
+      "postal_code": "18273",
+      "phone": "+49 3843 681193",
+      "email": "gw1@littlejohnbikes.com",
+      "website": "https://littlejohnbikes.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_165",
+      "store_name": "Little John Bikes Halle Mitte",
+      "address": "Mansfelder Straße 15",
+      "city": "Halle",
+      "province_state": "Sachsen-Anhalt",
+      "country": "DE",
+      "postal_code": "06108",
+      "phone": "",
+      "email": "ha1@littlejohnbikes.com",
+      "website": "https://littlejohnbikes.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_166",
+      "store_name": "ePedalics Bremen",
+      "address": "Kirchhuchtinger Landstraße 36",
+      "city": "Bremen",
+      "province_state": "Bremen",
+      "country": "DE",
+      "postal_code": "28259",
+      "phone": "+49 421 5799293",
+      "email": "hb1@epedalics.de",
+      "website": "https://epedalics.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_167",
+      "store_name": "Little John Bikes Hilden",
+      "address": "Am Kronengarten 21",
+      "city": "Hilden",
+      "province_state": "Nordrhein-Westfalen",
+      "country": "DE",
+      "postal_code": "40721",
+      "phone": "+49 2103 286660",
+      "email": "hi1@littlejohnbikes.com",
+      "website": "https://littlejohnbikes.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_168",
+      "store_name": "Little John Bikes Hof",
+      "address": "Wunsiedler Straße 16",
+      "city": "Hof",
+      "province_state": "Bayern",
+      "country": "DE",
+      "postal_code": "95032",
+      "phone": "+49 9281 1441909",
+      "email": "ho1@littlejohnbikes.com",
+      "website": "https://littlejohnbikes.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_169",
+      "store_name": "Little John Bikes Hoyerswerda",
+      "address": "Senftenberger Straße 1",
+      "city": "Hoyerswerda",
+      "province_state": "Sachsen",
+      "country": "DE",
+      "postal_code": "02977",
+      "phone": "+49 3571 600719",
+      "email": "hy1@littlejohnbikes.com",
+      "website": "https://littlejohnbikes.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_170",
+      "store_name": "Little John Bikes Leipzig-Rückmarsdorf",
+      "address": "Großer Marktweg 2",
+      "city": "Leipzig",
+      "province_state": "Sachsen",
+      "country": "DE",
+      "postal_code": "04178",
+      "phone": "+49 341 4417641",
+      "email": "le1@littlejohnbikes.com",
+      "website": "https://littlejohnbikes.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_171",
+      "store_name": "Little John Bikes Leipzig-Zentrum",
+      "address": "Martin-Luther-Ring 3-5",
+      "city": "Leipzig",
+      "province_state": "Sachsen",
+      "country": "DE",
+      "postal_code": "04109",
+      "phone": "+49 341 4625919",
+      "email": "le5@littlejohnbikes.com",
+      "website": "https://littlejohnbikes.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_172",
+      "store_name": "Little John Bikes Magdeburg-Neustadt",
+      "address": "Lübecker Straße 92",
+      "city": "Magdeburg",
+      "province_state": "Sachsen-Anhalt",
+      "country": "DE",
+      "postal_code": "39124",
+      "phone": "+49 391 2581627",
+      "email": "md1@littlejohnbikes.com",
+      "website": "https://littlejohnbikes.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_173",
+      "store_name": "Little John Bikes Magdeburg-Altstadt",
+      "address": "Alter Markt 13/14",
+      "city": "Magdeburg",
+      "province_state": "Sachsen-Anhalt",
+      "country": "DE",
+      "postal_code": "39104",
+      "phone": "+49 391 5556203",
+      "email": "md2@littlejohnbikes.com",
+      "website": "https://littlejohnbikes.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_174",
+      "store_name": "Little John Bikes Magdeburg-Hermsdorf",
+      "address": "Am Elbepark 1",
+      "city": "Hermsdorf",
+      "province_state": "Thüringen",
+      "country": "DE",
+      "postal_code": "39326",
+      "phone": "+49 39206 689540",
+      "email": "md3@littlejohnbikes.com",
+      "website": "https://littlejohnbikes.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_175",
+      "store_name": "Little John Bikes Mühlhausen",
+      "address": "Wendewehrstraße 130",
+      "city": "Mühlhausen",
+      "province_state": "Thüringen",
+      "country": "DE",
+      "postal_code": "99974",
+      "phone": "+49 3601 4086680",
+      "email": "mh1@littlejohnbikes.com",
+      "website": "https://littlejohnbikes.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_176",
+      "store_name": "Little John Bikes Neubrandenburg",
+      "address": "Juri-Gagarin-Ring 1",
+      "city": "Neubrandenburg",
+      "province_state": "Mecklenburg-Vorpommern",
+      "country": "DE",
+      "postal_code": "17036",
+      "phone": "+49 395 45503043",
+      "email": "nb1@littlejohnbikes.com",
+      "website": "https://littlejohnbikes.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_177",
+      "store_name": "Little John Bikes Nordhausen",
+      "address": "Alte Leipziger Straße 57",
+      "city": "Nordhausen",
+      "province_state": "Thüringen",
+      "country": "DE",
+      "postal_code": "99734",
+      "phone": "",
+      "email": "nh1@littlejohnbikes.com",
+      "website": "https://littlejohnbikes.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_178",
+      "store_name": "Little John Bikes Niederkrüchten",
+      "address": "Gewerbering 24",
+      "city": "Niederkrüchten",
+      "province_state": "Nordrhein-Westfalen",
+      "country": "DE",
+      "postal_code": "41372",
+      "phone": "+49 2163 8896271",
+      "email": "ni1@littlejohnbikes.com",
+      "website": "https://littlejohnbikes.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_179",
+      "store_name": "Little John Bikes Neukirch/Lausitz",
+      "address": "Oststraße 29",
+      "city": "Neukirch",
+      "province_state": "Sachsen",
+      "country": "DE",
+      "postal_code": "01904",
+      "phone": "+49 35951 34333",
+      "email": "nk2@littlejohnbikes.com",
+      "website": "https://littlejohnbikes.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_180",
+      "store_name": "Little John Bikes Oranienburg",
+      "address": "Lehnitzstraße 87-89",
+      "city": "Oranienburg",
+      "province_state": "Brandenburg",
+      "country": "DE",
+      "postal_code": "16515",
+      "phone": "+49 3301 5771854",
+      "email": "or1@littlejohnbikes.com",
+      "website": "https://littlejohnbikes.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_181",
+      "store_name": "Little John Bikes Plauen",
+      "address": "Pausaer Straße 281a",
+      "city": "Plauen",
+      "province_state": "Sachsen",
+      "country": "DE",
+      "postal_code": "08525",
+      "phone": "+49 3741 1494676",
+      "email": "pl1@littlejohnbikes.com",
+      "website": "https://littlejohnbikes.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_182",
+      "store_name": "ePedalics Ratingen",
+      "address": "Homberger Str. 19",
+      "city": "Ratingen",
+      "province_state": "Nordrhein-Westfalen",
+      "country": "DE",
+      "postal_code": "40882",
+      "phone": "+49 2102 843279",
+      "email": "ra1@epedalics.de",
+      "website": "https://epedalics.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_183",
+      "store_name": "Little John Bikes Rostock-Schmarl",
+      "address": "Handwerkstraße 1",
+      "city": "Rostock",
+      "province_state": "Mecklenburg-Vorpommern",
+      "country": "DE",
+      "postal_code": "18069",
+      "phone": "+49 381 12830975",
+      "email": "ro2@littlejohnbikes.com",
+      "website": "https://littlejohnbikes.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_184",
+      "store_name": "Little John Bikes Stendal",
+      "address": "Gneisenaustraße 2",
+      "city": "Stendal",
+      "province_state": "Sachsen-Anhalt",
+      "country": "DE",
+      "postal_code": "39576",
+      "phone": "+49 3931 4186809",
+      "email": "sd1@littlejohnbikes.com",
+      "website": "https://littlejohnbikes.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_185",
+      "store_name": "Little John Bikes Schwerin",
+      "address": "Am Margaretenhof 26",
+      "city": "Schwerin",
+      "province_state": "Mecklenburg-Vorpommern",
+      "country": "DE",
+      "postal_code": "19057",
+      "phone": "+49 385 4866165",
+      "email": "sn1@littlejohnbikes.com",
+      "website": "https://littlejohnbikes.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_186",
+      "store_name": "Little John Bikes Spremberg",
+      "address": "Friedrichstraße 39",
+      "city": "Spremberg",
+      "province_state": "Brandenburg",
+      "country": "DE",
+      "postal_code": "03130",
+      "phone": "+49 3563 348486",
+      "email": "sp1@littlejohnbikes.com",
+      "website": "https://littlejohnbikes.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_187",
+      "store_name": "Little John Bikes Stralsund",
+      "address": "Grünhufer Bogen 15",
+      "city": "Stralsund",
+      "province_state": "Mecklenburg-Vorpommern",
+      "country": "DE",
+      "postal_code": "18437",
+      "phone": "+49 3831 3079622",
+      "email": "st1@littlejohnbikes.com",
+      "website": "https://littlejohnbikes.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_188",
+      "store_name": "Little John Bikes Wittenberg",
+      "address": "Elbstraße 3A",
+      "city": "Wittenberg",
+      "province_state": "Sachsen-Anhalt",
+      "country": "DE",
+      "postal_code": "06886",
+      "phone": "+49 3491 8774333",
+      "email": "wb1@littlejohnbikes.com",
+      "website": "https://littlejohnbikes.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_189",
+      "store_name": "ePedalics Weimar",
+      "address": "Nordstraße 1a",
+      "city": "Weimar",
+      "province_state": "Thüringen",
+      "country": "DE",
+      "postal_code": "99427",
+      "phone": "+49 3643 779900",
+      "email": "we1@epedalics.de",
+      "website": "https://epedalics.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_190",
+      "store_name": "Little John Bikes Weißenfels",
+      "address": "Max-Planck-Straße 1",
+      "city": "Weißenfels",
+      "province_state": "Sachsen-Anhalt",
+      "country": "DE",
+      "postal_code": "06667",
+      "phone": "+49 3443 3387880",
+      "email": "wf1@littlejohnbikes.com",
+      "website": "https://littlejohnbikes.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_191",
+      "store_name": "Little John Bikes Wismar",
+      "address": "Am Kleinen Stadtfeld 5",
+      "city": "Wismar",
+      "province_state": "Mecklenburg-Vorpommern",
+      "country": "DE",
+      "postal_code": "23970",
+      "phone": "+49 3841 7589202",
+      "email": "wi1@littlejohnbikes.com",
+      "website": "https://littlejohnbikes.de",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_192",
+      "store_name": "Sormitz-Tandem Lutz Wohlfarth",
+      "address": "Lehestener Straße 10",
+      "city": "Wurbach",
+      "province_state": "Thüringen",
+      "country": "DE",
+      "postal_code": "07343",
+      "phone": "+49 1522 368 378 0",
+      "email": "vertrieb@sormitz-tandem.de",
+      "website": "http://www.sormitz-tandem.de",
+      "hours_of_operation": "Ab April 2025\nMontag: geschlossen\nDienstag: 9:00 - 14:00 & 16:00 - 19:00 Uhr\nMittwoch: 9:00 - 14:00 & 16:00 - 18:00 Uhr\nDonnerstag: 9:00 - 14:00 Uhr\nFreitag: 16:00 - 18:00 Uhr\nSamstag: 9:30 - 11:30 Uhr",
+      "store_type": [
+        "service"
+      ]
+    },
+    {
+      "id": "location_193",
+      "store_name": "Zweirad Kopsch",
+      "address": "Roßmarktsche Straße 8",
+      "city": "Borna",
+      "province_state": "Sachsen",
+      "country": "DE",
+      "postal_code": "04552",
+      "phone": "+49 3433203659",
+      "email": "zweirad.kopsch@web.de",
+      "website": "",
+      "hours_of_operation": "Montag - Freitag: 9:00 - 12:30 & 14:00 - 18:00 Uhr\nSamstag: 9:00 - 11:30 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_194",
+      "store_name": "Jeti X Bikes",
+      "address": "Alte Neustädtleiner Straße 1",
+      "city": "Dinkelsbühl",
+      "province_state": "Bayern",
+      "country": "DE",
+      "postal_code": "91550",
+      "phone": "+49 9851 3119",
+      "email": "info@jeti-x.de",
+      "website": "http://www.jeti-x.de",
+      "hours_of_operation": "Montag - Freitag: 9:00 - 12:00 & 13:30 - 18:00 Uhr\nSamstag: 9:00 - 13:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_195",
+      "store_name": "Radhaus Radebeul",
+      "address": "Neißner Straße 66",
+      "city": "Radebeul",
+      "province_state": "Sachsen",
+      "country": "DE",
+      "postal_code": "01445",
+      "phone": "+49 351 8336365",
+      "email": "info@radhaus-radebeul.com",
+      "website": "http://www.radhaus-radebeul.com",
+      "hours_of_operation": "Montag - Freitag: 10:00 - 19:00 Uhr",
+      "store_type": [
+        "dealer"
+      ]
+    },
+    {
+      "id": "location_196",
+      "store_name": "Bikezeit",
+      "address": "Pommernstraße 4",
+      "city": "Neutraubling",
+      "province_state": "Bayern",
+      "country": "DE",
+      "postal_code": "93073",
+      "phone": "+49 9401913870",
+      "email": "info@bikezeit.de",
+      "website": "http://www.bikezeit.de",
+      "hours_of_operation": "Montag - Freitag: 10:00 - 18:00 Uhr\nSamstag: 10:00 - 16:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_197",
+      "store_name": "Zweirad Kirch",
+      "address": "Plöck 81",
+      "city": "Heidelberg",
+      "province_state": "Baden-Wuerttemberg",
+      "country": "DE",
+      "postal_code": "69117",
+      "phone": "+49 6221 24046",
+      "email": "zweiradkirch@t-online.de",
+      "website": "http://www.zweirad-kirch.de",
+      "hours_of_operation": "Montag - Freitag: 9:00 - 18:00 Uhr\nSamstag: 10:00 - 13:00 Uhr\n\nIm Winter montags geschlossen.",
+      "store_type": [
+        "dealer"
+      ]
+    },
+    {
+      "id": "location_198",
+      "store_name": "e-motion e-Bike Welt Freiburg-Süd",
+      "address": "Tulpenbaumallee 8",
+      "city": "Bad Krozingen",
+      "province_state": "Baden-Wuerttemberg",
+      "country": "DE",
+      "postal_code": "79189",
+      "phone": "+49 7633 988 50 80",
+      "email": "freiburg@emotion-ebikes.de",
+      "website": "http://www.emotion-technologies.de/freiburg",
+      "hours_of_operation": "Montag: geschlossen\nDienstag - Freitag: 10:00 - 18:00 Uhr\nSamstag: 10:00 - 15:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_199",
+      "store_name": "TEX RACING",
+      "address": "7 Rue de la Marine BP 69",
+      "city": "PROPRIANO",
+      "province_state": "",
+      "country": "FR",
+      "postal_code": "20110",
+      "phone": "+33 6 03 53 55 62",
+      "email": "tex.racing@orange.fr",
+      "website": "http://www.texracing.shop",
+      "hours_of_operation": "Monday: closed\nTuesday - Saturday: 9:30 - 12:00 & 14:30 - 18:30",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_200",
+      "store_name": "La Roue Liber",
+      "address": "32 rue Vignon",
+      "city": "Paris",
+      "province_state": "",
+      "country": "FR",
+      "postal_code": "75009",
+      "phone": "+33 144700865",
+      "email": "laroueliber@gmail.com",
+      "website": "http://www.laroueliber.fr",
+      "hours_of_operation": "Monday: closed\nTuesday - Friday: 10h - 19h\nSaturday: 11h - 18h",
+      "store_type": [
+        "dealer"
+      ]
+    },
+    {
+      "id": "location_201",
+      "store_name": "Florea E-Mobility",
+      "address": "Guldenstraße 31a",
+      "city": "Königsbrunn",
+      "province_state": "",
+      "country": "DE",
+      "postal_code": "86343",
+      "phone": "+49 82319241054",
+      "email": "mail@florea-emobility.de",
+      "website": "http://www.florea-emobility.de",
+      "hours_of_operation": "Montag - Freitag: 9:00 - 18:00 Uhr\nSamstag: 10:00 - 16:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_202",
+      "store_name": "Brive Bike Store",
+      "address": "43 rue Antoine Dubayle",
+      "city": "Brive la Gaillarde",
+      "province_state": "",
+      "country": "FR",
+      "postal_code": "19100",
+      "phone": "+33 5 55 87 58 86",
+      "email": "19brive@culturevelo.com",
+      "website": "http://www.culturevelo.com",
+      "hours_of_operation": "Monday: 14h30 - 18h30\nTuesday - Saturday: 09h30 - 12h30 & 14h30 - 18h30",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_203",
+      "store_name": "Cycles Cesbron",
+      "address": "2 rue Lino Ventura",
+      "city": "Les Ponts-de-Cé",
+      "province_state": "",
+      "country": "FR",
+      "postal_code": "49130",
+      "phone": "+33 241448744",
+      "email": "info@cyclescesbron.fr",
+      "website": "https://www.cyclescesbron.fr/",
+      "hours_of_operation": "Monday: closed\nTuesday - Saturday: 9h00 - 12h00 & 14h00 - 19h00",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_204",
+      "store_name": "Evolution 2",
+      "address": "5 rue de la glisse",
+      "city": "Montchavin",
+      "province_state": "",
+      "country": "FR",
+      "postal_code": "73210",
+      "phone": "+33 686349415",
+      "email": "montchavin@evolution2.com",
+      "website": "http://evolution2.com/la-plagne-montchav",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer"
+      ]
+    },
+    {
+      "id": "location_205",
+      "store_name": "Mondovelo Le Mans Sud",
+      "address": "ZAC du Cormier // 10 rue Wilbur",
+      "city": "MULSANNE",
+      "province_state": "",
+      "country": "FR",
+      "postal_code": "72230",
+      "phone": "+33 2 43 78 50 90",
+      "email": "mondovelolemansud@orange.fr",
+      "website": "https://mulsanne.mondovelo.fr/",
+      "hours_of_operation": "Monday: 14h00-19h00\nTuesday - Saturday: 09h30-12h30 & 14h00-19h00",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_206",
+      "store_name": "Mondovelo Le Mans Nord",
+      "address": "Parc Manceau - ZAC de l 'Ardoise",
+      "city": "LE MANS",
+      "province_state": "",
+      "country": "FR",
+      "postal_code": "72000",
+      "phone": "+33 2 43 51 16 00",
+      "email": "mondovelolemans@gmail.com",
+      "website": "https://le-mans.mondovelo.fr/",
+      "hours_of_operation": "Monday: 14h00-19h00\nTuesday - Saturday: 09h30-12h30 & 14h00-19h00",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_207",
+      "store_name": "ARMOR CYCLES",
+      "address": "ZA LANJOUAN 2",
+      "city": "LAMBALLE",
+      "province_state": "",
+      "country": "FR",
+      "postal_code": "22400",
+      "phone": "+33 296310423",
+      "email": "armorcycles@orange.fr",
+      "website": "",
+      "hours_of_operation": "Monday: closed\nTuesday - Friday: 9h30 - 12h30 & 14h00 - 19h00\nSaturday: 9h30 - 12h30 & 14h00 - 18h00",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_208",
+      "store_name": "Mondovelo Langueux",
+      "address": "1 RUE DES GRIGNONS",
+      "city": "LANGUEUX",
+      "province_state": "",
+      "country": "FR",
+      "postal_code": "22360",
+      "phone": "+33 296700691",
+      "email": "saintbrieuc@velogiant.fr",
+      "website": "",
+      "hours_of_operation": "Monday - Saturday: 10h00 - 12h30 & 14h00 - 19h00",
+      "store_type": [
+        "dealer"
+      ]
+    },
+    {
+      "id": "location_209",
+      "store_name": "GIANT PONTIVY",
+      "address": "23 RUE ALBERT DE MUN",
+      "city": "PONTIVY",
+      "province_state": "",
+      "country": "FR",
+      "postal_code": "56300",
+      "phone": "+33 297089191",
+      "email": "pontivy@velogiant.fr",
+      "website": "",
+      "hours_of_operation": "Monday: closed\nTuesday - Friday: 9h30 - 12h30 & 14h00 - 19h00\nSaturday: 9h30 - 12h30 & 14h00 - 18h00",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_210",
+      "store_name": "GIANT ST MALO",
+      "address": "44 RUE DU GENERAL PATTON",
+      "city": "ST MALO",
+      "province_state": "",
+      "country": "FR",
+      "postal_code": "35400",
+      "phone": "+33 299820184",
+      "email": "saintmalo@velogiant.fr",
+      "website": "",
+      "hours_of_operation": "Monday: 14h00 - 19h00\nTuesday - Friday: 9h30 - 12h30 & 14h00 - 19h00\nSaturday: 9h30 - 12h30 & 14h00 - 18h00",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_211",
+      "store_name": "VELO EMOTION",
+      "address": "CHEMIN ROMAIN",
+      "city": "ST ALBAN",
+      "province_state": "",
+      "country": "FR",
+      "postal_code": "22400",
+      "phone": "+33 257675609",
+      "email": "contact@velo-emotion.fr",
+      "website": "",
+      "hours_of_operation": "Monday: closed\nTuesday - Friday: 9h30 - 12h30 & 14h00 - 19h00\nSaturday: 9h30 - 12h30 & 14h00 - 18h00",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_212",
+      "store_name": "BIKE CENTER MARIBOR",
+      "address": "Na Poljanah 18 (Ikona center)",
+      "city": "Maribor",
+      "province_state": "",
+      "country": "SI",
+      "postal_code": "2000",
+      "phone": "+386 2 420 18 36",
+      "email": "info@bike-center.si",
+      "website": "http://www.bike-center.si",
+      "hours_of_operation": "Monday - Friday: 10:00 - 18:00\nSaturday: 9:00 - 13:00",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_213",
+      "store_name": "Bentho eBikes - Wien",
+      "address": "Lassallestraße 5",
+      "city": "Wien",
+      "province_state": "",
+      "country": "AT",
+      "postal_code": "1020",
+      "phone": "0043 01 589 70 64",
+      "email": "servus@bentho.at",
+      "website": "https://www.bentho.at/",
+      "hours_of_operation": "Montag: geschlossen\nDienstag - Freitag: 10.00 - 18:00 Uhr\nSamstag: 9:30 - 15:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_214",
+      "store_name": "Bentho eBikes - Brunn/Geb",
+      "address": "Wolfholzgasse 11",
+      "city": "Brunn am Gebirge",
+      "province_state": "",
+      "country": "AT",
+      "postal_code": "2345",
+      "phone": "+43 2236 378 763",
+      "email": "servus@bentho.at",
+      "website": "https://www.bentho.at/",
+      "hours_of_operation": "Montag: geschlossen\nDienstag - Freitag: 10:00 - 18:00 Uhr\nSamstag: 9:30 - 15:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_215",
+      "store_name": "Drahtesel",
+      "address": "Hoyersweraer Straße 20",
+      "city": "Wittichenau",
+      "province_state": "",
+      "country": "DE",
+      "postal_code": "02997",
+      "phone": "+49 3572592655",
+      "email": "drahtesel@outlook.com",
+      "website": "",
+      "hours_of_operation": "Mittwoch - Freitag: 9:00 - 18:00 Uhr",
+      "store_type": [
+        "dealer"
+      ]
+    },
+    {
+      "id": "location_216",
+      "store_name": "R & R Sportart GmbH",
+      "address": "Obere Marktstraße 58",
+      "city": "Altenmarkt",
+      "province_state": "",
+      "country": "AT",
+      "postal_code": "5541",
+      "phone": "+43 6452 20750",
+      "email": "office@sport-art.at",
+      "website": "https://www.sport-art.at/",
+      "hours_of_operation": "Montag - Freitag: 8:00 - 12:00 & 13:00 - 18:00 Uhr\nSamstag: 8:00 - 13:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_217",
+      "store_name": "Marocco Sport",
+      "address": "Piazza Garibaldi 3/4",
+      "city": "Barzio",
+      "province_state": "",
+      "country": "IT",
+      "postal_code": "23816",
+      "phone": "+33 341 996191",
+      "email": "info@maroccosport.it",
+      "website": "http://maroccosport.it",
+      "hours_of_operation": "Tuesday, Thursday, Friday & Saturday: 9:00 - 12:30 & 15:00 - 17:30",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_218",
+      "store_name": "Freetime GmbH",
+      "address": "Rudolf Diesel Straße 21",
+      "city": "Weiterstadt",
+      "province_state": "",
+      "country": "DE",
+      "postal_code": "64331",
+      "phone": "+49 6151 871507",
+      "email": "info@freetime-fahrraeder.de",
+      "website": "https://www.freetimefahrraeder.de/",
+      "hours_of_operation": "Montag bis Freitag: 10:00 - 19:00 Uhr\nSamstag: 10:00 - 16:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_219",
+      "store_name": "REINE ET BICLOU",
+      "address": "49 RUE DE MONS",
+      "city": "VALENCIENNES",
+      "province_state": "",
+      "country": "FR",
+      "postal_code": "59300",
+      "phone": "+33 671999799",
+      "email": "contact@reineetbiclou.fr",
+      "website": "http://www.reineetbiclou.fr",
+      "hours_of_operation": "Monday: closed\nTuesday, Thursday & Friday: 8:00 - 18:00h\nWednesday: 8:00 - 19:00h\nSaturday: 9:00 - 19:00h",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_220",
+      "store_name": "MEGA Bike Schwentinental",
+      "address": "Liebigstr.11",
+      "city": "Schwentinental",
+      "province_state": "",
+      "country": "DE",
+      "postal_code": "24223",
+      "phone": "4,94308E+11",
+      "email": "schwentinental@megabike24.de",
+      "website": "https://www.megabike24.de/",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_221",
+      "store_name": "MEGA Bike Lager",
+      "address": "Werner-von-Siemens-Str.11",
+      "city": "Kaltenkirchen",
+      "province_state": "",
+      "country": "DE",
+      "postal_code": "24568",
+      "phone": "4,94192E+12",
+      "email": "lager@megabike24.de",
+      "website": "https://www.megabike24.de/",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_222",
+      "store_name": "MEGA Bike Kiel-Hassee",
+      "address": "Rendsburger Landstr.161",
+      "city": "Kiel-Hassee",
+      "province_state": "",
+      "country": "DE",
+      "postal_code": "24113",
+      "phone": "4,94317E+12",
+      "email": "hassee@megabike24.de",
+      "website": "https://www.megabike24.de/",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_223",
+      "store_name": "MEGA Bike Rendsburg",
+      "address": "Friedrichstädter Str.75-77",
+      "city": "Rendsburg",
+      "province_state": "",
+      "country": "DE",
+      "postal_code": "24768",
+      "phone": "4,94332E+11",
+      "email": "rendsburg@megabike24.de",
+      "website": "https://www.megabike24.de/",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_224",
+      "store_name": "MEGA Bike Wik",
+      "address": "Schleusenstraße 18",
+      "city": "Kiel-Wik",
+      "province_state": "",
+      "country": "DE",
+      "postal_code": "24106",
+      "phone": "4,94317E+11",
+      "email": "wik@megabike24.de",
+      "website": "https://www.megabike24.de/",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_225",
+      "store_name": "MEGA Bike Schleswig",
+      "address": "Stadtweg72-76",
+      "city": "Schleswig",
+      "province_state": "",
+      "country": "DE",
+      "postal_code": "24837",
+      "phone": "4,94622E+11",
+      "email": "schleswig@megabike24.de",
+      "website": "https://www.megabike24.de/",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_226",
+      "store_name": "MEGA Bike Flensburg",
+      "address": "Westerallee161",
+      "city": "Flensburg",
+      "province_state": "",
+      "country": "DE",
+      "postal_code": "24941",
+      "phone": "4946124438",
+      "email": "flensburg@megabike24.de",
+      "website": "https://www.megabike24.de/",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_227",
+      "store_name": "MEGA Bike Pinneberg",
+      "address": "Mühlenstr.2",
+      "city": "Pinneberg",
+      "province_state": "",
+      "country": "DE",
+      "postal_code": "25421",
+      "phone": "4,94102E+12",
+      "email": "pinneberg@megabike24.de",
+      "website": "https://www.megabike24.de/",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_228",
+      "store_name": "MEGA Bike Lübeck",
+      "address": "St.-Jürgen-Ring62",
+      "city": "Lübeck",
+      "province_state": "",
+      "country": "DE",
+      "postal_code": "23564",
+      "phone": "4,94515E+11",
+      "email": "luebeck@megabike24.de",
+      "website": "https://www.megabike24.de/",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_229",
+      "store_name": "MEGA Bike Bad Segeberg",
+      "address": "Ziegelstr.107",
+      "city": "Bad Segeberg",
+      "province_state": "",
+      "country": "DE",
+      "postal_code": "23795",
+      "phone": "4,94552E+12",
+      "email": "badsegeberg@megabike24.de",
+      "website": "https://www.megabike24.de/",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_230",
+      "store_name": "MEGA Bike Neumünster",
+      "address": "Rendsburger Str.12",
+      "city": "Neumünster",
+      "province_state": "",
+      "country": "DE",
+      "postal_code": "24534",
+      "phone": "4,94321E+11",
+      "email": "neumuenster@megabike24.de",
+      "website": "https://www.megabike24.de/",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_231",
+      "store_name": "MEGA Bike Altona",
+      "address": "Stresemannstr.360",
+      "city": "Hamburg",
+      "province_state": "",
+      "country": "DE",
+      "postal_code": "22761",
+      "phone": "4,94089E+11",
+      "email": "altona@megabike24.de",
+      "website": "https://www.megabike24.de/",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_232",
+      "store_name": "MEGA Bike Bramfeld",
+      "address": "Bramfelder Ch.148",
+      "city": "Hamburg",
+      "province_state": "",
+      "country": "DE",
+      "postal_code": "22177",
+      "phone": "4,94064E+11",
+      "email": "bramfeld@megabike24.de",
+      "website": "https://www.megabike24.de/",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_233",
+      "store_name": "MEGA Bike Kaltenkirchen",
+      "address": "Kisdorfer Weg 32",
+      "city": "Kaltenkirchen",
+      "province_state": "",
+      "country": "DE",
+      "postal_code": "24568",
+      "phone": "+49 4191 956 77 73",
+      "email": "kaltenkirchen@megabike24.de",
+      "website": "https://www.megabike24.de/",
+      "hours_of_operation": "",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_234",
+      "store_name": "LT2MH BICI",
+      "address": "2 Rue de la Poste",
+      "city": "SAONE",
+      "province_state": "",
+      "country": "FR",
+      "postal_code": "25660",
+      "phone": "+33 6 31 76 64 20",
+      "email": "Lt2mh.bici@sfr.fr",
+      "website": "http://Lt2mhbici.fr",
+      "hours_of_operation": "Monday - Friday: 9:00 - 12:00 & 14:00 - 17:00h\nSaturday: 9:00 - 12:00h",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_235",
+      "store_name": "Vit:Bikes Wesel",
+      "address": "Rudolf-Diesel-Str. 15a",
+      "city": "Wesel",
+      "province_state": "",
+      "country": "DE",
+      "postal_code": "46485",
+      "phone": "+49 28120694031",
+      "email": "wesel@vitbikes.de",
+      "website": "http://vitbikes.de",
+      "hours_of_operation": "Montag: geschlossen\nDienstag - Freitag: 10:00 - 18:00 Uhr\nSamstag: 10.=0 - 14:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_236",
+      "store_name": "ORCIERES CYCLING",
+      "address": "3755 ROUTE D ORCIERES",
+      "city": "ORCIERES",
+      "province_state": "",
+      "country": "FR",
+      "postal_code": "05170",
+      "phone": "+3 6 83 97 99 58",
+      "email": "romainmiellot.atelieroct@gmail.com",
+      "website": "",
+      "hours_of_operation": "Monday - Saturday: 8h - 18h",
+      "store_type": [
+        "dealer"
+      ]
+    },
+    {
+      "id": "location_237",
+      "store_name": "Bertis Bike Center",
+      "address": "Werner-Eckart-Ring 2",
+      "city": "Cloppenburg",
+      "province_state": "",
+      "country": "DE",
+      "postal_code": "49961",
+      "phone": "+49 4471 93 25 39",
+      "email": "info@bertis-bikes.de",
+      "website": "http://www.bertis-bikes.de",
+      "hours_of_operation": "Montag - Freitag: 9:00 - 18:30 Uhr\nSamstag: 9:00 - 16:00 Uhr",
+      "store_type": [
+        "dealer"
+      ]
+    },
+    {
+      "id": "location_238",
+      "store_name": "eBike Dresden",
+      "address": "Sagader Weg 1",
+      "city": "01109",
+      "province_state": "",
+      "country": "DE",
+      "postal_code": "Dresden",
+      "phone": "+49 0351 88814380",
+      "email": "info@ebike-dresden.com",
+      "website": "http://www.ebike-dresden.com",
+      "hours_of_operation": "Montag - Freitag: 10:00 - 18:00 Uhr\nSamstag: 10:00 - 16:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_239",
+      "store_name": "Ebikeone",
+      "address": "Località Quarto Inferiore 275",
+      "city": "Asti",
+      "province_state": "",
+      "country": "IT",
+      "postal_code": "14100",
+      "phone": "+39 335 7573794",
+      "email": "corrado@ebikeone.it",
+      "website": "http://www.ebikeone.it",
+      "hours_of_operation": "Monday: closed\nTuesday - Saturday: 09:00 - 12:00 & 15:30 - 19:00",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_240",
+      "store_name": "E-Bike Center Gründau",
+      "address": "Gelnhäuser Str. 15B",
+      "city": "Gründau",
+      "province_state": "",
+      "country": "DE",
+      "postal_code": "63584",
+      "phone": "+49 6051 9677433",
+      "email": "info@ebikegründau.de",
+      "website": "http://xn--ebikegrndau-zhb.de/",
+      "hours_of_operation": "Montag - Mittwoch: 10:00 - 18:00 Uhr\nDonnerstag & Freitag: 12:00 - 18:00 Uhr.",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_241",
+      "store_name": "Profile Korte der Fahrradspezialist",
+      "address": "Bahnhofstraße 123",
+      "city": "Herne",
+      "province_state": "",
+      "country": "DE",
+      "postal_code": "44623",
+      "phone": "+49 232353494",
+      "email": "hallo@fahrrad-korte.de",
+      "website": "http://fahrrad-korte.de",
+      "hours_of_operation": "Montag: geschlossen\nDienstag - Freitag: 10:00 - 18:30 Uhr\nSamstag: 10:00 - 14:30 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_242",
+      "store_name": "Bergspezl Haid",
+      "address": "EKZ Haid, Ikea Platz 4",
+      "city": "Haid",
+      "province_state": "",
+      "country": "AT",
+      "postal_code": "4053",
+      "phone": "+43 7229 246 90",
+      "email": "verkauf.haid@bergspezl.at",
+      "website": "https://bergspezl.at/",
+      "hours_of_operation": "Montag - Freitag: 9:00 - 19:00 Uhr\nSamstag: 9:00 - 18:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_243",
+      "store_name": "Bergspezl Wien",
+      "address": "Stiftgasse 5-9",
+      "city": "Wien",
+      "province_state": "",
+      "country": "AT",
+      "postal_code": "1070",
+      "phone": "+43 1 395 07 70",
+      "email": "verkauf.Wien7@bergspezl.at",
+      "website": "https://bergspezl.at/",
+      "hours_of_operation": "Montag - Freitag: 10:00 - 19:00 Uhr\nSamstag: 10:00 - 18:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_244",
+      "store_name": "Bergspezl Villach",
+      "address": "Maria-Gailer-Straße 57",
+      "city": "Villach",
+      "province_state": "",
+      "country": "AT",
+      "postal_code": "9500",
+      "phone": "+43 4242 40 439",
+      "email": "verkauf.villach@bergspezl.at",
+      "website": "https://bergspezl.at/",
+      "hours_of_operation": "Montag - Freitag: 9:00 - 18:00 Uhr\nSamstag: 9:00 - 17:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_245",
+      "store_name": "Bergspezl Vösendorf Süd",
+      "address": "Westfield Shopping City Süd - Galerie 11",
+      "city": "Vösendorf Süd",
+      "province_state": "",
+      "country": "AT",
+      "postal_code": "2334",
+      "phone": "+43 1 39 50 944",
+      "email": "verkauf.scs@bergspezl.at",
+      "website": "https://bergspezl.at/",
+      "hours_of_operation": "Montag - Mittwoch: 9:00 - 19:00 Uhr\nDonnerstag & Freitag: 9:00 - 20:00 Uhr\nSamstag: 9:00 - 18:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_246",
+      "store_name": "Bergspezl Klagenfurt",
+      "address": "Völkermarkter Straße 163",
+      "city": "Klagenfurt",
+      "province_state": "",
+      "country": "AT",
+      "postal_code": "9020",
+      "phone": "+43 463 519 000",
+      "email": "verkauf.klagenfurt@bergspezl.at",
+      "website": "https://bergspezl.at/",
+      "hours_of_operation": "Montag - Freitag: 9:00 - 18:00 Uhr\nSamstag: 9:00 - 17:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_247",
+      "store_name": "Bergspezl Wörgl",
+      "address": "Salzburger Straße 30",
+      "city": "Wörgl",
+      "province_state": "",
+      "country": "AT",
+      "postal_code": "6300",
+      "phone": "+43 5332 219 26",
+      "email": "verkauf.woergl@bergspezl.at",
+      "website": "https://bergspezl.at/",
+      "hours_of_operation": "Montag - Freitag : 09:00 - 18:00 Uhr\nSamstag: 09:00 - 17:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_248",
+      "store_name": "Fahrwerk Timmer Meppen",
+      "address": "Burgstraße 3",
+      "city": "Meppen",
+      "province_state": "",
+      "country": "DE",
+      "postal_code": "49716",
+      "phone": "+49 5931 12261",
+      "email": "meppen@fahrwerk.me",
+      "website": "https://fahrwerk.me/",
+      "hours_of_operation": "Montag - Freitag: 9:30 - 13:00 Uhr & 14:00 - 18:30 Uhr\nSamstag: 9:30 - 14:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_249",
+      "store_name": "Sport Stefan",
+      "address": "Gemeindestraße 3",
+      "city": "Filzmoos",
+      "province_state": "",
+      "country": "DE",
+      "postal_code": "5532",
+      "phone": "+43 645320080",
+      "email": "shop@sportstefan.at",
+      "website": "http://sportstefan.at",
+      "hours_of_operation": "Montag - Freitag: 8:30 - 12:00 & 14:00 - 18:00 Uhr\nSamstag: 8:30 - 12:00 & 14:00 - 17:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_250",
+      "store_name": "emotion eBike Welt Tuttlingen",
+      "address": "Langes Gewand 5",
+      "city": "Rietheim-Weilheim",
+      "province_state": "",
+      "country": "DE",
+      "postal_code": "78604",
+      "phone": "+49 7461 140 85 44",
+      "email": "tut@emotion-technologies.de",
+      "website": "http://emotion-tut.de",
+      "hours_of_operation": "Montag: geschlossen\nDienstag - Freitag: 9:30 - 12:30 & 13:30 - 18:30 Uhr\nSamstag: 9:30 - 15:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_251",
+      "store_name": "Radhaus Ingolstadt",
+      "address": "Bei der Arena 7",
+      "city": "Ingolstadt",
+      "province_state": "",
+      "country": "DE",
+      "postal_code": "85053",
+      "phone": "+49 841 8857720",
+      "email": "info@radhaus.de",
+      "website": "http://www.radhaus.de",
+      "hours_of_operation": "Montag: geschlossen\nDienstag - Freitag: 10:00 - 19:00 Uhr\nSamstag: 10:00 - 18:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_252",
+      "store_name": "Radsport Ersing",
+      "address": "Rottumstraße 1",
+      "city": "Mietingen",
+      "province_state": "",
+      "country": "DE",
+      "postal_code": "88487",
+      "phone": "+49 7392 9390213",
+      "email": "info@radsport-ersing.de",
+      "website": "http://www.radsport-ersing.de",
+      "hours_of_operation": "Montag: geschlossen\nDienstag - Freitag: 10:00 - 12:00 & 13:30 - 18:00 Uhr\nSamstag: 9:00 - 12:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_253",
+      "store_name": "Modovélo Sarl Espace Bike 38",
+      "address": "12 route de Lyon",
+      "city": "Chanas",
+      "province_state": "",
+      "country": "FR",
+      "postal_code": "38150",
+      "phone": "+33 771 591636",
+      "email": "mondovelochanas@gmail.com",
+      "website": "",
+      "hours_of_operation": "Monday: closed\nTuesday - Saturday: 9:30 - 12:00 & 14:00 - 18:00",
+      "store_type": [
+        "dealer"
+      ]
+    },
+    {
+      "id": "location_254",
+      "store_name": "Zweirad Schnieder",
+      "address": "Goldstraße 1",
+      "city": "Steinfurt",
+      "province_state": "",
+      "country": "DE",
+      "postal_code": "48565",
+      "phone": "+49 25519969062",
+      "email": "verkauf@schnieder-steinfurt.de",
+      "website": "http://www.fahrrad-steinfurt.de",
+      "hours_of_operation": "Montag: geschlossen\nDienstag: 14:00 - 18:00 Uhr\nMittwoch - Freitag: 9:00 - 13:00 & 14:00 - 18:00 Uhr\nSamstag: 9:00 - 13:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_255",
+      "store_name": "SCHMITZ Fahrrad.Freiheit.Leben.",
+      "address": "Barbarastraße 55/4",
+      "city": "Dorsten",
+      "province_state": "",
+      "country": "DE",
+      "postal_code": "46282",
+      "phone": "+492363605060",
+      "email": "office@schmitz.bike",
+      "website": "http://www.schmitz.bike",
+      "hours_of_operation": "Montag - Freitag: 9:30 - 19:00 Uhr\nSamstag: 9:30 - 16:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_256",
+      "store_name": "Rad Service Jung",
+      "address": "Wilhelmstr. 4",
+      "city": "Bad Sobernheim",
+      "province_state": "",
+      "country": "DE",
+      "postal_code": "55566",
+      "phone": "+49 6751 8568500",
+      "email": "info@radjung.de",
+      "website": "http://www.radjung.de",
+      "hours_of_operation": "Montag, Dienstag, Donnerstag & Freitag: 9:00 - 12:00 & 14:00 - 18:00 Uhr\nMittwoch: geschlossen\nSamstag: 9:00 - 13:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_257",
+      "store_name": "Emotion E-Bike Welt Bad Kreuznach",
+      "address": "Hüffelsheimerstraße 1",
+      "city": "Rüdesheim",
+      "province_state": "",
+      "country": "DE",
+      "postal_code": "55593",
+      "phone": "+49 671 92012525",
+      "email": "bad-kreuznach@emotion-technologi",
+      "website": "http://emotion-technologies.de/bad-Kreuznach",
+      "hours_of_operation": "Montag: geschlossen\nDienstag - Freitag: 10:00 - 18:30 Uhr\nSamstag: 10:00 - 15:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
+    },
+    {
+      "id": "location_258",
+      "store_name": "SCHMITZ Fahrrad.Freiheit.Leben.",
+      "address": "Erlenstraße 14a",
+      "city": "Oberhausen",
+      "province_state": "",
+      "country": "DE",
+      "postal_code": "46149",
+      "phone": "+4920888016620",
+      "email": "oberhausen@schmitz.bike",
+      "website": "http://www.schmitz.bike",
+      "hours_of_operation": "Montag: geschlossen\nDienstag - Freitag: 9:30 - 19:00 Uhr\nSamstag: 9:30 - 16:00 Uhr",
+      "store_type": [
+        "dealer",
+        "service"
+      ]
     }
   ]
 }

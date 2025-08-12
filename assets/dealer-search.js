@@ -1173,7 +1173,10 @@ document.addEventListener('DOMContentLoaded', function () {
     if (selectedFilters.length > 0) {
       filteredLocations = allLocations.filter(card => {
         const storeType = card.getAttribute('data-store-type');
-        return selectedFilters.includes(storeType);
+        const storeTypes = Array.isArray(storeType) ? storeType : storeType.split(',').map(type => type.trim());
+        
+        // 检查是否有任何匹配的类型
+        return selectedFilters.some(filter => storeTypes.includes(filter));
       });
     } else {
       filteredLocations = [...allLocations];
@@ -1286,7 +1289,10 @@ document.addEventListener('DOMContentLoaded', function () {
     if (selectedFilters.length > 0) {
       filteredLocations = allLocations.filter(card => {
         const storeType = card.getAttribute('data-store-type');
-        return selectedFilters.includes(storeType);
+        const storeTypes = Array.isArray(storeType) ? storeType : storeType.split(',').map(type => type.trim());
+        
+        // 检查是否有任何匹配的类型
+        return selectedFilters.some(filter => storeTypes.includes(filter));
       });
     } else {
       filteredLocations = [...allLocations];
@@ -1367,17 +1373,17 @@ document.addEventListener('DOMContentLoaded', function () {
       .filter((cb) => cb.checked)
       .map((cb) => cb.value);
 
-    // 首先根据过滤器筛选位置
     if (selectedFilters.length > 0) {
       filteredLocations = allLocations.filter(card => {
         const storeType = card.getAttribute('data-store-type');
-        return selectedFilters.includes(storeType);
+        const storeTypes = Array.isArray(storeType) ? storeType : storeType.split(',').map(type => type.trim());
+        
+        return selectedFilters.some(filter => storeTypes.includes(filter));
       });
     } else {
       filteredLocations = [...allLocations];
     }
 
-    // 如果有搜索词，进行文本搜索
     if (searchTerm) {
       filteredLocations = filteredLocations.filter(card => {
         const storeName = card.getAttribute('data-store-name')?.toLowerCase() || '';
