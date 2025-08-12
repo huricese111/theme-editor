@@ -297,6 +297,26 @@
     {%- assign less_text = 'Less' -%}
 {%- endcase -%}
 
+{%- assign dealer_tooltip = 'Dealer (you can buy bikes + bring your bike for service)' -%}
+{%- assign rental_tooltip = 'Rental station (only rental bikes)' -%}
+{%- assign service_tooltip = 'Service Station (only service possible)' -%}
+
+{%- case request.locale.iso_code -%}
+  {%- when 'de' -%}
+    {%- assign dealer_tooltip = 'Händler (Sie können Fahrräder kaufen + Ihr Fahrrad zum Service bringen)' -%}
+    {%- assign rental_tooltip = 'Verleihstation (nur Leihfahrräder)' -%}
+    {%- assign service_tooltip = 'Servicestation (nur Service möglich)' -%}
+  {%- when 'fr' -%}
+    {%- assign dealer_tooltip = 'Revendeur (vous pouvez acheter des vélos + apporter votre vélo pour le service)' -%}
+    {%- assign rental_tooltip = 'Station de location (vélos de location uniquement)' -%}
+    {%- assign service_tooltip = 'Station de service (service uniquement possible)' -%}
+  {%- when 'fi' -%}
+    {%- assign dealer_tooltip = 'Jälleenmyyjä (voit ostaa pyöriä + tuoda pyöräsi huoltoon)' -%}
+    {%- assign rental_tooltip = 'Vuokraamo (vain vuokrapyöriä)' -%}
+    {%- assign service_tooltip = 'Huoltoasema (vain huolto mahdollista)' -%}
+{%- endcase -%}
+
+
 <div class="section-id-{{ section.id }} map-section {% unless section.settings.full_width %} map-section--map-constrained{% endunless %}{% if display_map %} map-section--display-map{% endif %}" {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
   <div class="container">
     <div class="map-section__wrapper">
@@ -339,15 +359,15 @@
           <div class="search-advanced" id="search-advanced">
             <div class="search-filters">
               <div class="filter-options">
-                <label class="filter-option">
+                <label class="filter-option" data-tooltip="{{ dealer_tooltip }}">
                   <input type="checkbox" id="filter-dealer" value="dealer">
                   <span>{{ dealer_text }}</span>
                 </label>
-                <label class="filter-option">
+                <label class="filter-option" data-tooltip="{{ rental_tooltip }}">
                   <input type="checkbox" id="filter-rental" value="rental">
                   <span>{{ rental_station_text }}</span>
                 </label>
-                <label class="filter-option">
+                <label class="filter-option" data-tooltip="{{ service_tooltip }}">
                   <input type="checkbox" id="filter-service" value="service">
                   <span>{{ service_center_text }}</span>
                 </label>

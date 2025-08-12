@@ -223,16 +223,16 @@ document.addEventListener('DOMContentLoaded', function () {
       <div class="location-permission-overlay"></div>
       <div class="location-permission-content">
         <div class="location-permission-header">
-          <h3>${i18nLabels.locationPermissionTitle || '使用您的位置'}</h3>
-          <button class="location-permission-close" aria-label="关闭">&times;</button>
+          <h3>${i18nLabels.locationPermissionTitle || 'Use Your Location'}</h3>
+          <button class="location-permission-close" aria-label="Close">&times;</button>
         </div>
         <div class="location-permission-body">
           <div class="location-permission-icon">📍</div>
-          <p>${i18nLabels.locationPermissionMessage || '我们想要使用您的位置来显示附近的店铺并按距离排序。这将帮助您找到最近的服务点。'}</p>
+          <p>${i18nLabels.locationPermissionMessage || 'We would like to use your location to show nearby stores and sort them by distance. This will help you find the closest service points.'}</p>
         </div>
         <div class="location-permission-actions">
-          <button class="location-permission-deny">${i18nLabels.locationPermissionDeny || '不允许'}</button>
-          <button class="location-permission-allow">${i18nLabels.locationPermissionAllow || '允许位置访问'}</button>
+          <button class="location-permission-deny">${i18nLabels.locationPermissionDeny || 'Don\'t Allow'}</button>
+          <button class="location-permission-allow">${i18nLabels.locationPermissionAllow || 'Allow Location Access'}</button>
         </div>
       </div>
     `;
@@ -298,7 +298,7 @@ document.addEventListener('DOMContentLoaded', function () {
     hideLocationPermissionModal();
     getCurrentLocation();
     
-    // 保存用户选择到本地存储
+    // Save user preference to local storage
     localStorage.setItem('dealerSearchLocationPreference', 'allowed');
   }
 
@@ -306,7 +306,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function handleLocationDeny() {
     hideLocationPermissionModal();
     
-    // 保存用户选择到本地存储
+    // Save user preference to local storage
     localStorage.setItem('dealerSearchLocationPreference', 'denied');
   }
 
@@ -377,20 +377,22 @@ document.addEventListener('DOMContentLoaded', function () {
     }).join(' & ');
     
     return `
-      <div class="map-section__content map-section__text location-card" 
-           data-block-id="${dealer.id}" 
-           data-store-name="${dealer.store_name || ''}" 
-           data-address="${dealer.address || ''}" 
-           data-city="${dealer.city || ''}" 
-           data-country="${dealer.country || ''}" 
-           data-postal-code="${dealer.postal_code || ''}" 
-           data-phone="${dealer.phone || ''}" 
-           data-email="${dealer.email || ''}" 
-           data-website="${dealer.website || ''}" 
-           data-hours="${dealer.hours_of_operation || ''}" 
-           data-province="${dealer.province_state || ''}" 
-           data-fax="${dealer.fax || ''}" 
-           data-store-type="${storeTypes.join(',')}">
+    <div class="map-section__content map-section__text location-card" 
+         data-block-id="${dealer.id}" 
+         data-store-name="${dealer.store_name || ''}" 
+         data-address="${dealer.address || ''}" 
+         data-city="${dealer.city || ''}" 
+         data-country="${dealer.country || ''}" 
+         data-postal-code="${dealer.postal_code || ''}" 
+         data-phone="${dealer.phone || ''}" 
+         data-email="${dealer.email || ''}" 
+         data-website="${dealer.website || ''}" 
+         data-hours="${dealer.hours_of_operation || ''}" 
+         data-province="${dealer.province_state || ''}" 
+         data-fax="${dealer.fax || ''}" 
+         data-latitude="${dealer.latitude || ''}" 
+         data-longitude="${dealer.longitude || ''}" 
+         data-store-type="${storeTypes.join(',')}">
         
         <!-- 左侧 Marker Icon -->
         <div class="location-card__marker">
@@ -627,6 +629,13 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function calculateDistance(lat1, lon1, lat2, lon2) {
+    // 验证输入参数
+    if (lat1 === null || lon1 === null || lat2 === null || lon2 === null ||
+        !isFinite(lat1) || !isFinite(lon1) || !isFinite(lat2) || !isFinite(lon2)) {
+      console.warn('Invalid coordinates for distance calculation:', { lat1, lon1, lat2, lon2 });
+      return null;
+    }
+    
     const R = 6371; // 地球半径（公里）
     const dLat = (lat2 - lat1) * Math.PI / 180;
     const dLon = (lon2 - lon1) * Math.PI / 180;
@@ -636,7 +645,9 @@ document.addEventListener('DOMContentLoaded', function () {
       Math.sin(dLon/2) * Math.sin(dLon/2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
     const distance = R * c;
-    return distance;
+    
+    // 返回计算结果，允许0距离（同一位置）
+    return isFinite(distance) ? distance : null;
   }
   
   // 使用Web Workers进行距离计算
@@ -719,6 +730,40 @@ document.addEventListener('DOMContentLoaded', function () {
     processBatch();
   }
 
+  // 获取商店坐标的函数（优先使用预存坐标）
+  function getStoreCoordinates(card, callback) {
+    const latitude = parseFloat(card.getAttribute('data-latitude'));
+    const longitude = parseFloat(card.getAttribute('data-longitude'));
+    
+    // 如果有预存的经纬度坐标且有效，直接使用
+    if (!isNaN(latitude) && !isNaN(longitude) && latitude !== 0 && longitude !== 0) {
+      console.log('Using pre-stored coordinates for:', card.getAttribute('data-store-name'), { lat: latitude, lng: longitude });
+      callback({ lat: latitude, lng: longitude });
+      return;
+    }
+    
+    // 如果没有预存坐标，使用地理编码
+    const address = card.getAttribute('data-address');
+    const city = card.getAttribute('data-city');
+    const country = card.getAttribute('data-country');
+    const postalCode = card.getAttribute('data-postal-code');
+    const province = card.getAttribute('data-province');
+    
+    let fullAddress = '';
+    if (address) fullAddress += address;
+    if (postalCode) fullAddress += (fullAddress ? ', ' : '') + postalCode;
+    if (city) fullAddress += (fullAddress ? ', ' : '') + city;
+    if (province) fullAddress += (fullAddress ? ', ' : '') + province;
+    if (country) fullAddress += (fullAddress ? ', ' : '') + country;
+    
+    if (fullAddress) {
+      console.log('Geocoding address for:', card.getAttribute('data-store-name'), fullAddress);
+      geocodeAddress(fullAddress, callback);
+    } else {
+      callback(null);
+    }
+  }
+
   // 地理编码函数
   function geocodeAddress(address, callback) {
     if (!window.google || !window.google.maps) {
@@ -739,13 +784,10 @@ document.addEventListener('DOMContentLoaded', function () {
     // 添加调试信息
     console.log('Geocoding address:', address);
     
-    // 改进地理编码选项，限制在德国范围内
+    // 移除地区限制，支持欧洲范围的地理编码
     const geocodeOptions = {
-      address: address,
-      region: 'DE', // 限制在德国
-      componentRestrictions: {
-        country: 'DE'
-      }
+      address: address
+      // 移除了 region 和 componentRestrictions 限制
     };
     
     geocoder.geocode(geocodeOptions, function(results, status) {
@@ -850,29 +892,16 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     
     filteredLocations.forEach(card => {
-      const address = card.getAttribute('data-address');
-      const city = card.getAttribute('data-city');
-      const country = card.getAttribute('data-country');
-      const postalCode = card.getAttribute('data-postal-code');
-      const province = card.getAttribute('data-province');
-      
-      let fullAddress = '';
-      if (address) fullAddress += address;
-      if (postalCode) fullAddress += (fullAddress ? ', ' : '') + postalCode;
-      if (city) fullAddress += (fullAddress ? ', ' : '') + city;
-      if (province) fullAddress += (fullAddress ? ', ' : '') + province;
-      if (country) fullAddress += (fullAddress ? ', ' : '') + country;
-      
-      if (fullAddress) {
-        geocodeAddress(fullAddress, function(storeLocation) {
-          completedRequests++;
+      getStoreCoordinates(card, function(storeLocation) {
+        completedRequests++;
+        
+        if (storeLocation) {
+          const distance = calculateDistance(
+            userLocation.lat, userLocation.lng,
+            storeLocation.lat, storeLocation.lng
+          );
           
-          if (storeLocation) {
-            const distance = calculateDistance(
-              userLocation.lat, userLocation.lng,
-              storeLocation.lat, storeLocation.lng
-            );
-            
+          if (distance !== null) {
             const distanceElement = card.querySelector('.location-card__distance');
             const distanceValue = card.querySelector('.distance-value');
             
@@ -884,25 +913,31 @@ document.addEventListener('DOMContentLoaded', function () {
               card.setAttribute('data-distance', distance.toFixed(1));
             }
           }
-          
-          if (completedRequests === totalRequests) {
-            filteredLocations.sort((a, b) => {
-              const distanceA = parseFloat(a.getAttribute('data-distance')) || Infinity;
-              const distanceB = parseFloat(b.getAttribute('data-distance')) || Infinity;
-              return distanceA - distanceB;
-            });
-            
-            hideLoadingState();
-            displayResults();
-          }
-        });
-      } else {
-        completedRequests++;
+        }
+        
+        // 所有请求完成后进行距离过滤和排序
         if (completedRequests === totalRequests) {
+          // 应用距离过滤
+          const selectedDistance = distanceFilter.value;
+          if (selectedDistance !== 'all') {
+            const maxDistance = parseFloat(selectedDistance);
+            filteredLocations = filteredLocations.filter(card => {
+              const distance = parseFloat(card.getAttribute('data-distance'));
+              return !isNaN(distance) && distance <= maxDistance;
+            });
+          }
+          
+          // 按距离排序（从近到远）
+          filteredLocations.sort((a, b) => {
+            const distanceA = parseFloat(a.getAttribute('data-distance')) || Infinity;
+            const distanceB = parseFloat(b.getAttribute('data-distance')) || Infinity;
+            return distanceA - distanceB;
+          });
+          
           hideLoadingState();
           displayResults();
         }
-      }
+      });
     });
   }
   
@@ -1193,68 +1228,30 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     
     filteredLocations.forEach(card => {
-      const address = card.getAttribute('data-address');
-      const city = card.getAttribute('data-city');
-      const country = card.getAttribute('data-country');
-      const postalCode = card.getAttribute('data-postal-code');
-      const province = card.getAttribute('data-province');
-      
-      let fullAddress = '';
-      if (address) fullAddress += address;
-      if (postalCode) fullAddress += (fullAddress ? ', ' : '') + postalCode;
-      if (city) fullAddress += (fullAddress ? ', ' : '') + city;
-      if (province) fullAddress += (fullAddress ? ', ' : '') + province;
-      if (country) fullAddress += (fullAddress ? ', ' : '') + country;
-      
-      if (fullAddress) {
-        geocodeAddress(fullAddress, function(storeLocation) {
-          completedRequests++;
-          
-          if (storeLocation) {
-            const distance = calculateDistance(
-              userCurrentLocation.lat, userCurrentLocation.lng,
-              storeLocation.lat, storeLocation.lng
-            );
-            
-            const distanceElement = card.querySelector('.location-card__distance');
-            const distanceValue = card.querySelector('.distance-value');
-            
-            if (distanceElement && distanceValue) {
-              distanceValue.textContent = distance.toFixed(1) + ' KM';
-              distanceElement.style.display = 'block';
-              distanceElement.classList.add('has-distance');
-              
-              card.setAttribute('data-distance', distance.toFixed(1));
-            }
-          }
-          
-          // 所有请求完成后进行距离过滤和排序
-          if (completedRequests === totalRequests) {
-            // 应用距离过滤
-            const selectedDistance = distanceFilter.value;
-            if (selectedDistance !== 'all') {
-              const maxDistance = parseFloat(selectedDistance);
-              filteredLocations = filteredLocations.filter(card => {
-                const distance = parseFloat(card.getAttribute('data-distance'));
-                return !isNaN(distance) && distance <= maxDistance;
-              });
-            }
-            
-            // 按距离排序（从近到远）
-            filteredLocations.sort((a, b) => {
-              const distanceA = parseFloat(a.getAttribute('data-distance')) || Infinity;
-              const distanceB = parseFloat(b.getAttribute('data-distance')) || Infinity;
-              return distanceA - distanceB;
-            });
-            
-            hideLoadingState();
-            displayResults();
-          }
-        });
-      } else {
+      getStoreCoordinates(card, function(storeLocation) {
         completedRequests++;
+        
+        if (storeLocation) {
+          const distance = calculateDistance(
+            userCurrentLocation.lat, userCurrentLocation.lng,
+            storeLocation.lat, storeLocation.lng
+          );
+          
+          const distanceElement = card.querySelector('.location-card__distance');
+          const distanceValue = card.querySelector('.distance-value');
+          
+          if (distanceElement && distanceValue) {
+            distanceValue.textContent = distance.toFixed(1) + ' KM';
+            distanceElement.style.display = 'block';
+            distanceElement.classList.add('has-distance');
+            
+            card.setAttribute('data-distance', distance.toFixed(1));
+          }
+        }
+        
+        // 所有请求完成后进行距离过滤和排序
         if (completedRequests === totalRequests) {
-          // 应用距离过滤（对于没有地址的店铺）
+          // 应用距离过滤
           const selectedDistance = distanceFilter.value;
           if (selectedDistance !== 'all') {
             const maxDistance = parseFloat(selectedDistance);
@@ -1264,7 +1261,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
           }
           
-          // 按距离排序
+          // 按距离排序（从近到远）
           filteredLocations.sort((a, b) => {
             const distanceA = parseFloat(a.getAttribute('data-distance')) || Infinity;
             const distanceB = parseFloat(b.getAttribute('data-distance')) || Infinity;
@@ -1274,7 +1271,7 @@ document.addEventListener('DOMContentLoaded', function () {
           hideLoadingState();
           displayResults();
         }
-      }
+      });
     });
   }
   
@@ -1285,11 +1282,25 @@ document.addEventListener('DOMContentLoaded', function () {
       .filter((cb) => cb.checked)
       .map((cb) => cb.value);
     
-    // 首先按店铺类型过滤 - 这个逻辑始终执行
+    // 首先按店铺类型过滤 - 修复店铺类型匹配逻辑
     if (selectedFilters.length > 0) {
       filteredLocations = allLocations.filter(card => {
         const storeType = card.getAttribute('data-store-type');
-        const storeTypes = Array.isArray(storeType) ? storeType : storeType.split(',').map(type => type.trim());
+        let storeTypes;
+        
+        // 修复：正确处理数组和字符串格式
+        if (Array.isArray(storeType)) {
+          storeTypes = storeType;
+        } else if (typeof storeType === 'string') {
+          // 处理逗号分隔的字符串或JSON数组字符串
+          try {
+            storeTypes = JSON.parse(storeType);
+          } catch (e) {
+            storeTypes = storeType.split(',').map(type => type.trim());
+          }
+        } else {
+          storeTypes = [];
+        }
         
         // 检查是否有任何匹配的类型
         return selectedFilters.some(filter => storeTypes.includes(filter));
@@ -1298,13 +1309,13 @@ document.addEventListener('DOMContentLoaded', function () {
       filteredLocations = [...allLocations];
     }
     
-    // 只有在有用户位置且距离不为'all'时才应用距离筛选
+    // 修复：只有在距离计算完成且不为'all'时才应用距离筛选
     if (selectedDistance !== 'all' && userCurrentLocation) {
       const maxDistance = parseFloat(selectedDistance);
       filteredLocations = filteredLocations.filter(card => {
         const distance = parseFloat(card.getAttribute('data-distance'));
-        // 如果距离未计算，保留该店铺
-        return isNaN(distance) || distance <= maxDistance;
+        // 修复：如果距离未计算（NaN），则排除该店铺，而不是保留
+        return !isNaN(distance) && distance <= maxDistance;
       });
     }
     
@@ -1331,6 +1342,29 @@ document.addEventListener('DOMContentLoaded', function () {
       allLocations.forEach((card) => {
         card.classList.add('pagination-hidden');
         card.classList.remove('active');
+      });
+      
+      // 重新排列DOM元素的顺序以反映排序结果
+      const locationResults = document.getElementById('location-results');
+      
+      // 先移除所有卡片（但保留其他元素如加载指示器）
+      const nonCardElements = [];
+      Array.from(locationResults.children).forEach(child => {
+        if (!child.classList.contains('location-card')) {
+          nonCardElements.push(child);
+        } else {
+          child.remove();
+        }
+      });
+      
+      // 按排序后的顺序重新添加卡片
+      filteredLocations.forEach((card) => {
+        locationResults.appendChild(card);
+      });
+      
+      // 重新添加非卡片元素到开头
+      nonCardElements.forEach(element => {
+        locationResults.insertBefore(element, locationResults.firstChild);
       });
       
       // 立即显示当前页面的卡片
@@ -1376,7 +1410,25 @@ document.addEventListener('DOMContentLoaded', function () {
     if (selectedFilters.length > 0) {
       filteredLocations = allLocations.filter(card => {
         const storeType = card.getAttribute('data-store-type');
-        const storeTypes = Array.isArray(storeType) ? storeType : storeType.split(',').map(type => type.trim());
+        let storeTypes;
+        
+        // 修复：正确处理数组和字符串格式
+        if (Array.isArray(storeType)) {
+          storeTypes = storeType;
+        } else if (typeof storeType === 'string') {
+          // 处理逗号分隔的字符串或JSON数组字符串
+          if (storeType.includes(',')) {
+            storeTypes = storeType.split(',').map(type => type.trim());
+          } else {
+            try {
+              storeTypes = JSON.parse(storeType);
+            } catch (e) {
+              storeTypes = [storeType.trim()];
+            }
+          }
+        } else {
+          storeTypes = [];
+        }
         
         return selectedFilters.some(filter => storeTypes.includes(filter));
       });
@@ -1393,7 +1445,32 @@ document.addEventListener('DOMContentLoaded', function () {
         const province = card.getAttribute('data-province')?.toLowerCase() || '';
         const postalCode = card.getAttribute('data-postal-code')?.toLowerCase() || '';
         
-        return storeName.includes(searchTerm) ||
+        // 构建完整地址用于匹配
+        const fullAddress = [address, city, postalCode, province, country]
+          .filter(part => part)
+          .join(', ')
+          .toLowerCase();
+        
+        // 分割搜索词，支持部分匹配
+        const searchWords = searchTerm.toLowerCase().split(/[,\s]+/).filter(word => word.length > 0);
+        
+        // 检查是否所有搜索词都能在某个字段中找到
+        const matchesAllWords = searchWords.every(word => 
+          storeName.includes(word) ||
+          city.includes(word) ||
+          country.includes(word) ||
+          address.includes(word) ||
+          province.includes(word) ||
+          postalCode.includes(word) ||
+          fullAddress.includes(word)
+        );
+        
+        // 或者检查完整地址是否包含搜索词
+        const matchesFullAddress = fullAddress.includes(searchTerm) || 
+                                  searchTerm.includes(fullAddress.substring(0, Math.min(fullAddress.length, 20)));
+        
+        return matchesAllWords || matchesFullAddress ||
+               storeName.includes(searchTerm) ||
                city.includes(searchTerm) ||
                country.includes(searchTerm) ||
                address.includes(searchTerm) ||
@@ -1403,6 +1480,147 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     return filteredLocations;
+  }
+
+  // Enhanced text search with fallback to nearest stores
+  function performTextSearchWithFallback(searchTerm) {
+    const textResults = performTextSearch(searchTerm);
+    
+    if (textResults.length === 0 && searchTerm.trim()) {
+      // No results found, try to recommend nearest stores
+      geocodeAddress(searchTerm, function(userLocation) {
+        if (userLocation) {
+          userCurrentLocation = userLocation;
+          recommendNearestStores(10);
+        } else {
+          displayNoResults();
+        }
+      });
+    } else {
+      filteredLocations = textResults;
+      
+      // 如果有搜索词且找到了结果，将搜索词作为中心点计算距离
+      if (searchTerm.trim()) {
+        geocodeAddress(searchTerm, function(searchLocation) {
+          if (searchLocation) {
+            userCurrentLocation = searchLocation;
+            // 计算并显示从搜索地点到各个商店的距离
+            calculateDistancesProgressively(filteredLocations, () => {
+              displayResults();
+            });
+          } else {
+            // 如果无法获取搜索地点的坐标，直接显示结果
+            displayResults();
+          }
+        });
+      } else {
+        displayResults();
+      }
+    }
+  }
+
+  // Recommend nearest stores when no search results found
+  function recommendNearestStores(count = 10) {
+    if (!userCurrentLocation) {
+      displayNoResults();
+      return;
+    }
+    
+    showLoadingState();
+    
+    // Calculate distances for all locations
+    const locationsWithDistance = [];
+    let processedCount = 0;
+    
+    allLocations.forEach(card => {
+      getStoreCoordinates(card, (coords) => {
+        if (coords) {
+          const distance = calculateDistance(
+            userCurrentLocation.lat, userCurrentLocation.lng,
+            coords.lat, coords.lng
+          );
+          locationsWithDistance.push({ card, distance });
+        }
+        
+        processedCount++;
+        if (processedCount === allLocations.length) {
+          showNearestStoresResults(locationsWithDistance, count);
+        }
+      });
+    });
+  }
+
+  // Show nearest stores results
+  function showNearestStoresResults(locationsWithDistance, count) {
+    hideLoadingState();
+    
+    // Sort by distance and take the nearest ones
+    const nearestStores = locationsWithDistance
+      .sort((a, b) => a.distance - b.distance)
+      .slice(0, count);
+    
+    // Update distance display for nearest stores
+    nearestStores.forEach(({ card, distance }) => {
+      updateCardDistance(card, distance);
+    });
+    
+    filteredLocations = nearestStores.map(item => item.card);
+    
+    // Show recommendation message
+    showRecommendationMessage();
+    displayResults();
+  }
+
+  // Show recommendation message
+  function showRecommendationMessage() {
+    // 检查是否已存在推荐消息，避免重复显示
+    const existingMessage = document.querySelector('.search-recommendation-message');
+    if (existingMessage) {
+      return; // 如果已存在，直接返回
+    }
+    
+    const messageContainer = document.createElement('div');
+    messageContainer.className = 'search-recommendation-message';
+    messageContainer.innerHTML = `
+      <div class="recommendation-icon">💡</div>
+      <div class="recommendation-text">
+        <strong>No exact matches found.</strong><br>
+        Here are the 10 nearest stores to your searched location:
+      </div>
+    `;
+    
+    // Insert message before results
+    const resultsContainer = locationResults;
+    if (resultsContainer.firstChild) {
+      resultsContainer.insertBefore(messageContainer, resultsContainer.firstChild);
+    } else {
+      resultsContainer.appendChild(messageContainer);
+    }
+    
+    // Auto-remove message after 10 seconds
+    setTimeout(() => {
+      if (messageContainer.parentNode) {
+        messageContainer.parentNode.removeChild(messageContainer);
+      }
+    }, 10000);
+  }
+
+  // Display no results message
+  function displayNoResults() {
+    hideLoadingState();
+    filteredLocations = [];
+    
+    locationResults.innerHTML = `
+      <div class="no-results-message">
+        <div class="no-results-icon">🔍</div>
+        <div class="no-results-text">
+          <strong>No stores found</strong><br>
+          Please try a different search term or check your spelling.
+        </div>
+      </div>
+    `;
+    
+    updatePagination();
   }
 
   function calculateDistancesProgressively(locations, callback) {
@@ -1419,18 +1637,16 @@ document.addEventListener('DOMContentLoaded', function () {
       }
       
       chunk.forEach(card => {
-        const address = getFullAddress(card);
-        const cacheKey = address.toLowerCase().trim();
-        
-        if (coordinatesCache[cacheKey]) {
-          const coords = coordinatesCache[cacheKey];
-          const distance = calculateDistance(
-            userCurrentLocation.lat, userCurrentLocation.lng,
-            coords.lat, coords.lng
-          );
-          updateCardDistance(card, distance);
-          chunkCompleted++;
+        getStoreCoordinates(card, (coords) => {
+          if (coords) {
+            const distance = calculateDistance(
+              userCurrentLocation.lat, userCurrentLocation.lng,
+              coords.lat, coords.lng
+            );
+            updateCardDistance(card, distance);
+          }
           
+          chunkCompleted++;
           if (chunkCompleted === chunk.length) {
             processedCount += CHUNK_SIZE;
             
@@ -1438,71 +1654,39 @@ document.addEventListener('DOMContentLoaded', function () {
             sortLocationsByDistance();
             
             if (processedCount < locations.length) {
-              setTimeout(processChunk, 100);
+              setTimeout(processChunk, 300);
             } else {
-              // 只在最后完成时调用callback，避免频繁更新
+              // 只在最后完成时调用callback
               callback();
             }
           }
-        } else {
-          geocodeAddress(address, (coords) => {
-            if (coords) {
-              const distance = calculateDistance(
-                userCurrentLocation.lat, userCurrentLocation.lng,
-                coords.lat, coords.lng
-              );
-              updateCardDistance(card, distance);
-            }
-            
-            chunkCompleted++;
-            if (chunkCompleted === chunk.length) {
-              processedCount += CHUNK_SIZE;
-              
-              // 只重新排序，不立即显示结果
-              sortLocationsByDistance();
-              
-              if (processedCount < locations.length) {
-                setTimeout(processChunk, 300);
-              } else {
-                // 只在最后完成时调用callback
-                callback();
-              }
-            }
-          });
-        }
+        });
       });
     }
     
     processChunk();
   }
 
-  function getFullAddress(card) {
-    const address = card.getAttribute('data-address');
-    const city = card.getAttribute('data-city');
-    const country = card.getAttribute('data-country');
-    const postalCode = card.getAttribute('data-postal-code');
-    const province = card.getAttribute('data-province');
-    
-    let fullAddress = '';
-    if (address) fullAddress += address;
-    if (postalCode) fullAddress += (fullAddress ? ', ' : '') + postalCode;
-    if (city) fullAddress += (fullAddress ? ', ' : '') + city;
-    if (province) fullAddress += (fullAddress ? ', ' : '') + province;
-    if (country) fullAddress += (fullAddress ? ', ' : '') + country;
-    
-    return fullAddress;
-  }
+
 
   function updateCardDistance(card, distance) {
     const distanceElement = card.querySelector('.location-card__distance');
     const distanceValue = card.querySelector('.distance-value');
     
     if (distanceElement && distanceValue) {
-      distanceValue.textContent = distance.toFixed(1) + ' KM';
-      distanceElement.style.display = 'block';
-      distanceElement.classList.add('has-distance');
-      
-      card.setAttribute('data-distance', distance.toFixed(1));
+      // 检查距离是否有效（大于等于0且不是NaN或Infinity）
+      if (distance !== null && distance >= 0 && isFinite(distance)) {
+        distanceValue.textContent = distance.toFixed(1) + ' KM';
+        distanceElement.style.display = 'block';
+        distanceElement.classList.add('has-distance');
+        
+        card.setAttribute('data-distance', distance.toFixed(1));
+      } else {
+        // 如果距离无效，隐藏距离显示
+        distanceElement.style.display = 'none';
+        distanceElement.classList.remove('has-distance');
+        card.removeAttribute('data-distance');
+      }
     }
   }
 
@@ -1562,11 +1746,14 @@ document.addEventListener('DOMContentLoaded', function () {
     // 重置到第一页
     currentPage = 1;
     
-    const searchTerm = locationSearch.value.toLowerCase().trim();
-    const selectedFilters = Array.from(filterCheckboxes)
-      .filter((cb) => cb.checked)
-      .map((cb) => cb.value);
-  
+    const searchTerm = locationSearch.value.trim();
+    
+    // Remove any existing recommendation messages
+    const existingMessage = document.querySelector('.search-recommendation-message');
+    if (existingMessage) {
+      existingMessage.remove();
+    }
+    
     // 如果有搜索词，保存到历史记录
     if (saveToHistory && searchTerm && !searchHistory.includes(searchTerm)) {
       searchHistory.unshift(searchTerm);
@@ -1582,23 +1769,8 @@ document.addEventListener('DOMContentLoaded', function () {
       return;
     }
   
-    // 如果有搜索词且有Google Maps API，使用渐进式搜索
-    if (searchTerm && window.google && window.google.maps) {
-      geocodeAddress(searchTerm, function(userLocation) {
-        if (userLocation) {
-          userCurrentLocation = userLocation;
-          performProgressiveSearch(searchTerm);
-        } else {
-          // 如果地理编码失败，则进行文本搜索
-          performTextSearch(searchTerm);
-          displayResults();
-        }
-      });
-    } else {
-      // 没有搜索词或没有Google Maps API，直接进行文本搜索
-      performTextSearch(searchTerm);
-      displayResults();
-    }
+    // Use the enhanced search with fallback
+    performTextSearchWithFallback(searchTerm);
   
     hideSuggestions();
   }
@@ -1641,57 +1813,95 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     
     filteredLocations.forEach(card => {
-      const address = card.getAttribute('data-address');
-      const city = card.getAttribute('data-city');
-      const country = card.getAttribute('data-country');
-      const postalCode = card.getAttribute('data-postal-code');
-      const province = card.getAttribute('data-province');
+      // 首先尝试使用JSON文件中的经纬度坐标
+      const latitude = parseFloat(card.getAttribute('data-latitude'));
+      const longitude = parseFloat(card.getAttribute('data-longitude'));
       
-      let fullAddress = '';
-      if (address) fullAddress += address;
-      if (postalCode) fullAddress += (fullAddress ? ', ' : '') + postalCode;
-      if (city) fullAddress += (fullAddress ? ', ' : '') + city;
-      if (province) fullAddress += (fullAddress ? ', ' : '') + province;
-      if (country) fullAddress += (fullAddress ? ', ' : '') + country;
-      
-      if (fullAddress) {
-        geocodeAddress(fullAddress, function(storeLocation) {
-          completedRequests++;
+      if (!isNaN(latitude) && !isNaN(longitude) && latitude !== 0 && longitude !== 0) {
+        // 直接使用JSON文件中的坐标计算距离
+        const distance = calculateDistance(
+          userLocation.lat, userLocation.lng,
+          latitude, longitude
+        );
+        
+        const distanceElement = card.querySelector('.location-card__distance');
+        const distanceValue = card.querySelector('.distance-value');
+        
+        if (distanceElement && distanceValue) {
+          distanceValue.textContent = distance.toFixed(1) + ' KM';
+          distanceElement.style.display = 'block';
+          distanceElement.classList.add('has-distance');
           
-          if (storeLocation) {
-            const distance = calculateDistance(
-              userLocation.lat, userLocation.lng,
-              storeLocation.lat, storeLocation.lng
-            );
+          card.setAttribute('data-distance', distance.toFixed(1));
+        }
+        
+        completedRequests++;
+        
+        if (completedRequests === totalRequests) {
+          // 按距离排序
+          filteredLocations.sort((a, b) => {
+            const distanceA = parseFloat(a.getAttribute('data-distance')) || Infinity;
+            const distanceB = parseFloat(b.getAttribute('data-distance')) || Infinity;
+            return distanceA - distanceB;
+          });
+          
+          hideLoadingState();
+          displayResults();
+        }
+      } else {
+        // 如果没有有效的经纬度坐标，回退到地理编码API
+        const address = card.getAttribute('data-address');
+        const city = card.getAttribute('data-city');
+        const country = card.getAttribute('data-country');
+        const postalCode = card.getAttribute('data-postal-code');
+        const province = card.getAttribute('data-province');
+        
+        let fullAddress = '';
+        if (address) fullAddress += address;
+        if (postalCode) fullAddress += (fullAddress ? ', ' : '') + postalCode;
+        if (city) fullAddress += (fullAddress ? ', ' : '') + city;
+        if (province) fullAddress += (fullAddress ? ', ' : '') + province;
+        if (country) fullAddress += (fullAddress ? ', ' : '') + country;
+        
+        if (fullAddress) {
+          geocodeAddress(fullAddress, function(storeLocation) {
+            completedRequests++;
             
-            const distanceElement = card.querySelector('.location-card__distance');
-            const distanceValue = card.querySelector('.distance-value');
-            
-            if (distanceElement && distanceValue) {
-              distanceValue.textContent = distance.toFixed(1) + ' KM';
-              distanceElement.style.display = 'block';
-              distanceElement.classList.add('has-distance');
+            if (storeLocation) {
+              const distance = calculateDistance(
+                userLocation.lat, userLocation.lng,
+                storeLocation.lat, storeLocation.lng
+              );
               
-              card.setAttribute('data-distance', distance.toFixed(1));
+              const distanceElement = card.querySelector('.location-card__distance');
+              const distanceValue = card.querySelector('.distance-value');
+              
+              if (distanceElement && distanceValue) {
+                distanceValue.textContent = distance.toFixed(1) + ' KM';
+                distanceElement.style.display = 'block';
+                distanceElement.classList.add('has-distance');
+                
+                card.setAttribute('data-distance', distance.toFixed(1));
+              }
             }
-          }
-          
-          if (completedRequests === totalRequests) {
-            filteredLocations.sort((a, b) => {
-              const distanceA = parseFloat(a.getAttribute('data-distance')) || Infinity;
-              const distanceB = parseFloat(b.getAttribute('data-distance')) || Infinity;
-              return distanceA - distanceB;
-            });
             
+            if (completedRequests === totalRequests) {
+              filteredLocations.sort((a, b) => {
+                const distanceA = parseFloat(a.getAttribute('data-distance')) || Infinity;
+                const distanceB = parseFloat(b.getAttribute('data-distance')) || Infinity;
+                return distanceA - distanceB;
+              });
+              
+              hideLoadingState();
+              displayResults();
+            }
+          });
+        } else {
+          completedRequests++;
+          if (completedRequests === totalRequests) {
             hideLoadingState();
             displayResults();
           }
-        });
-      } else {
-        completedRequests++;
-        if (completedRequests === totalRequests) {
-          hideLoadingState();
-          displayResults();
         }
       }
     });
@@ -2069,7 +2279,28 @@ document.addEventListener('DOMContentLoaded', function () {
     if (selectedFilters.length > 0) {
       filteredLocations = allLocations.filter(card => {
         const storeType = card.getAttribute('data-store-type');
-        const storeTypes = Array.isArray(storeType) ? storeType : storeType.split(',');
+        let storeTypes;
+        
+        // 修复：正确处理数组和字符串格式
+        if (Array.isArray(storeType)) {
+          storeTypes = storeType;
+        } else if (typeof storeType === 'string') {
+          // 处理逗号分隔的字符串或JSON数组字符串
+          if (storeType.includes(',')) {
+            // 处理逗号分隔的字符串（如 "dealer,service"）
+            storeTypes = storeType.split(',').map(type => type.trim());
+          } else {
+            try {
+              // 尝试解析JSON数组字符串
+              storeTypes = JSON.parse(storeType);
+            } catch (e) {
+              // 如果解析失败，作为单个类型处理
+              storeTypes = [storeType.trim()];
+            }
+          }
+        } else {
+          storeTypes = [];
+        }
         
         // 检查是否有任何匹配的类型
         return selectedFilters.some(filter => storeTypes.includes(filter));
@@ -2078,7 +2309,7 @@ document.addEventListener('DOMContentLoaded', function () {
       filteredLocations = [...allLocations];
     }
     
-    // 添加这行：应用距离筛选
+    // 应用距离筛选
     applyDistanceFilter();
   }
 
@@ -2121,6 +2352,44 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 初始化分页
     initializePagination();
+    
+    // 初始化工具提示
+    initializeTooltips();
+  }
+
+  // Enhanced tooltip functionality for mobile devices
+  function initializeTooltips() {
+    const filterOptions = document.querySelectorAll('.filter-option[data-tooltip]');
+    
+    filterOptions.forEach(option => {
+      // For touch devices, show tooltip on tap and hide after delay
+      option.addEventListener('touchstart', function(e) {
+        // Hide any existing tooltips
+        hideAllTooltips();
+        
+        // Show current tooltip
+        this.classList.add('tooltip-active');
+        
+        // Auto-hide after 3 seconds
+        setTimeout(() => {
+          this.classList.remove('tooltip-active');
+        }, 3000);
+      });
+      
+      // Hide tooltip when touching elsewhere
+      document.addEventListener('touchstart', function(e) {
+        if (!option.contains(e.target)) {
+          option.classList.remove('tooltip-active');
+        }
+      });
+    });
+  }
+
+  function hideAllTooltips() {
+    const activeTooltips = document.querySelectorAll('.filter-option.tooltip-active');
+    activeTooltips.forEach(tooltip => {
+      tooltip.classList.remove('tooltip-active');
+    });
   }
 
   // 启动应用
