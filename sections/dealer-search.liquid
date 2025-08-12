@@ -213,7 +213,8 @@
     {%- assign direction_text = 'Directions' -%}
 {%- endcase -%}
 
-{%- assign placeholder_text = 'Enter postcode or city' -%}
+{%- assign placeholder_text = 'Sites nearby' -%}
+{%- assign use_location_text = 'Use My Location' -%}
 {%- assign distance_label = 'Distance' -%}
 {%- assign results_label = 'Results' -%}
 {%- assign search_button_text = 'Search' -%}
@@ -232,7 +233,8 @@
 
 {%- case request.locale.iso_code -%}
   {%- when 'de' -%}
-    {%- assign placeholder_text = 'PLZ oder Stadt eingeben' -%}
+    {%- assign use_location_text = 'Meinen Standort verwenden' -%}
+    {%- assign placeholder_text = 'Standorte in der Nähe' -%}
     {%- assign distance_label = 'Distanz' -%}
     {%- assign results_label = 'Ergebnisse' -%}
     {%- assign search_button_text = 'Suchen' -%}
@@ -247,7 +249,8 @@
     {%- assign website_label = 'Webseite' -%}
     {%- assign store_type_label = 'Geschäftstyp' -%}
   {%- when 'fr' -%}
-    {%- assign placeholder_text = 'Saisissez code postal ou ville' -%}
+    {%- assign use_location_text = 'Utiliser ma position' -%}
+    {%- assign placeholder_text = 'Sites à proximité' -%}
     {%- assign distance_label = 'Distance' -%}
     {%- assign results_label = 'Ergebnisse' -%}
     {%- assign search_button_text = 'Recherche' -%}
@@ -262,7 +265,8 @@
     {%- assign website_label = 'Site Web' -%}
     {%- assign store_type_label = 'Type de Magasin' -%}
   {%- when 'fi' -%}
-    {%- assign placeholder_text = 'Anna postinumero tai kaupunki' -%}
+    {%- assign use_location_text = 'Käytä sijaintiani' -%}
+    {%- assign placeholder_text = 'Sivustoja lähellä' -%}
     {%- assign distance_label = 'Etäisyys' -%}
     {%- assign results_label = 'Tulokset' -%}
     {%- assign search_button_text = 'Haku' -%}
@@ -298,11 +302,31 @@
     <div class="map-section__wrapper">
       <div class="map-section__locations">
         <div class="dealer-search__fixed-header">
-          {% if section_title != blank %}
-            <h2 class="dealer-search__title">{{ section_title }}</h2>
-          {% endif %}
-
           <div class="dealer-search__form">
+            <!-- 合并位置按钮和距离过滤器到同一行 -->
+            <div class="location-and-distance-wrapper">
+              <div class="location-button-wrapper">
+                <button type="button" id="use-location-btn" class="use-location-btn">
+                  <svg class="location-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>
+                  <span>{{ use_location_text }}</span>
+                </button>
+              </div>
+              
+              <div class="distance-filter-wrapper">
+                <label for="distance-filter" class="distance-filter-label">{{ distance_label }}</label>
+                <select id="distance-filter" class="distance-filter">
+                  <option value="all">{{ all_text }}</option>
+                  <option value="25">25 KM</option>
+                  <option value="50">50 KM</option>
+                  <option value="100">100 KM</option>
+                  <option value="200">200 KM</option>
+                </select>
+              </div>
+            </div>
+            
             <div class="search-input-group search-input-group--simple">
               <div class="search-input-wrapper">
                 <input type="text" id="location-search" placeholder="{{ placeholder_text }}" class="search-input" style="width:100%;">
@@ -328,7 +352,7 @@
                   <input type="checkbox" id="filter-service" value="service">
                   <span>{{ service_center_text }}</span>
                 </label>
-              </div>
+              </div>              
             </div>
           </div>
         </div>
@@ -451,7 +475,6 @@
     </div>
   </div>
 </div>
-
 {% schema %}
 {
   "name": "Find a dealer",
