@@ -1240,8 +1240,7 @@
 
   .location-results {
     gap: 0.2rem;
-    padding-bottom: 100px;
-    min-height: 600px;
+    min-height: 100%;
   }
 
   .search-input-group--simple {
@@ -1288,11 +1287,12 @@
   .map-section__wrapper {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 50vh auto;
-    min-height: 100vh;
+    grid-template-rows: 50vh 100vh;
+    min-height: auto;
     width: 100%;
-    position: static;
+    position: relative;
     flex-direction: column;
+    overflow: visible;
     height: auto;
   }
 
@@ -1302,10 +1302,11 @@
     display: flex;
     flex-direction: column;
     background-color: #f8f9fa;
-    min-height: auto;
-    max-height: none;
-    flex: none;
+    min-height: 100vh;
+    max-height: 100vh;
     position: relative;
+    padding-bottom: 80px;
+    overflow: hidden;
   }
 
   .dealer-search__fixed-header {
@@ -1315,13 +1316,15 @@
   }
 
   .dealer-search__scrollable-results {
-    padding: 1rem;
     flex: 1;
     overflow-y: auto;
+    overflow-x: hidden;
     background-color: #f8f9fa;
-    min-height: 40vh;
-    max-height: 80vh;
-    padding-bottom: 120px;
+    min-height: 0;
+    max-height: calc(100vh - 200px); 
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+    padding-bottom: 0;
   }
 
   .map-section__map {
@@ -1333,8 +1336,8 @@
   .location-card {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto auto;
-    padding: 0.5rem; /* 减少padding */
-    min-height: 70px; /* 减少最小高度 */
+    padding: 0.5rem; 
+    min-height: 70px;
     gap: 0.75rem;
   }
 
@@ -1551,8 +1554,8 @@
 
   .dealer-search__scrollable-results {
     padding: 1rem;
-    min-height: 45vh;
-    max-height: 55vh;
+    min-height: 0;
+    max-height: calc(100vh - 200px); 
   }
 
   .search-input {
@@ -1607,35 +1610,37 @@
   .map-section__wrapper {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 50vh auto;
-    min-height: 100vh;
+    grid-template-rows: 50vh 100vh;
+    min-height: 150vh;
     width: 100%;
-    position: static;
+    position: relative;
     overflow: visible;
+    height: 150vh;
   }
 
-  .map-section__locations {
+   .map-section__locations {
     order: 2;
     min-width: auto;
     display: flex;
     flex-direction: column;
     background-color: #f8f9fa;
-    min-height: auto;
-    max-height: none;
-    overflow: visible;
+    min-height: 100vh;
+    max-height: 100vh;
+    overflow: hidden; 
     position: relative;
+    padding-bottom: 70px;
   }
 
-  .dealer-search__scrollable-results {
+   .dealer-search__scrollable-results {
     flex: 1;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
     background-color: #f8f9fa;
-    min-height: 35vh;
-    max-height: 80vh;
+    min-height: 0;
+    max-height: calc(100vh - 200px); 
     -webkit-overflow-scrolling: touch;
     position: relative;
-    padding-bottom: 100px;
+    padding-bottom: 0;
   }
 
   .dealer-search__scrollable-results::-webkit-scrollbar {
@@ -1687,56 +1692,77 @@
     justify-content: center !important;
   }
 
-  .location-results {
-    gap: 0.15rem;
-    padding-bottom: 80px;
-    min-height: 600px;
+  .gm-style-iw-chr {
+    height: 20px !important;
   }
 
   .gm-style .gm-style-iw.gm-style-iw-c {
-    max-width: 75vw !important;
-    min-width: 240px !important;
+    max-width: 300px !important;
+    min-width: 280px !important;
+    max-height: none !important; 
   }
 
   .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d {
-    max-height: 40vh !important;
-    overflow: visible !important;
+   max-height: 200px !important; 
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch !important; 
   }
 
   .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window {
-    padding: 8px !important;
+   padding: 12px !important;
     max-width: none !important;
-    max-height: 35vh !important;
-    overflow-y: auto !important;
-    line-height: 1.3 !important;
+    max-height: none !important;
+    overflow: visible !important; 
+    line-height: 1.4 !important;
     word-wrap: break-word !important;
     word-break: break-word !important;
-    font-size: 12px !important;
+    font-size: 13px !important;
+    background: transparent !important;
   }
 
+  .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d::-webkit-scrollbar {
+    width: 8px !important;
+  }
+
+  .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d::-webkit-scrollbar-track {
+    background: #f1f1f1 !important;
+    border-radius: 4px !important;
+  }
+
+  .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d::-webkit-scrollbar-thumb {
+    background: #888 !important;
+    border-radius: 4px !important;
+  }
+
+  .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d::-webkit-scrollbar-thumb:hover {
+    background: #555 !important;
+  }
+
+
   .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window h4 {
-    font-size: 14px !important;
-    margin-bottom: 4px !important;
-    line-height: 1.2 !important;
+    font-size: 15px !important;
+    margin-bottom: 6px !important;
+    line-height: 1.3 !important;
   }
 
   .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window p {
-    font-size: 12px !important;
-    margin: 3px 0 !important;
-    line-height: 1.3 !important;
+    font-size: 13px !important;
+    margin: 4px 0 !important;
+    line-height: 1.4 !important;
   }
 
   .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window .contact-item {
-    margin: 3px 0 !important;
-    padding: 2px 0 !important;
-    font-size: 12px !important;
-    line-height: 1.3 !important;
+    margin: 4px 0 !important;
+    padding: 3px 0 !important;
+    font-size: 13px !important;
+    line-height: 1.4 !important;
   }
 
   .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window .contact-icon {
-    width: 14px !important;
-    height: 14px !important;
-    margin-right: 4px !important;
+    width: 16px !important;
+    height: 16px !important;
+    margin-right: 6px !important;
   }
 
   .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window strong {
@@ -1751,14 +1777,15 @@
   }
 
   .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window .info-section {
-    padding: 2px 0 !important;
+    padding: 4px 0 !important;
     border-bottom: 1px solid #f1f5f9 !important;
   }
 
-  .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window .address-text {
-    font-size: 12px !important;
+  .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window .store-type-badge {
+    font-size: 11px !important;
+    padding: 3px 6px !important;
+    margin-top: 4px !important;
     line-height: 1.3 !important;
-    word-break: break-word !important;
   }
 
   .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window .store-type-badge {
@@ -1818,34 +1845,32 @@
 
 @media (max-width: 360px) {
   .gm-style .gm-style-iw.gm-style-iw-c {
-    max-width: 80vw !important;
-    min-width: 220px !important;
+    max-width: 95vw !important;
+    min-width: 250px !important;
   }
 
+   .gm-style-iw-chr {
+    height: 20px !important;
+   }
+
   .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d {
-    max-height: 35vh !important;
+    max-height: 200px !important;
   }
 
   .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window {
-    padding: 6px !important;
-    max-height: 30vh !important;
-    font-size: 11px !important;
+    padding: 10px !important;
+    font-size: 12px !important;
+    background: transparent !important;
+
   }
 
   .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window h4 {
-    font-size: 13px !important;
-    margin-bottom: 3px !important;
+    font-size: 14px !important;
   }
 
   .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window p,
-  .gm-style
-    .gm-style-iw.gm-style-iw-c
-    .gm-style-iw-d
-    .info-window
-    .contact-item {
-    font-size: 11px !important;
-    line-height: 1.2 !important;
-    margin: 2px 0 !important;
+  .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window .contact-item {
+    font-size: 12px !important;
   }
 
   .gm-style .gm-style-iw.gm-style-iw-c .gm-style-iw-d .info-window .contact-icon {
@@ -1965,7 +1990,12 @@
     background: #ffffff;
     border-radius: 0;
     box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
-    z-index: 10;
+    z-index: 1000;
+  }
+  
+  .location-results {
+    gap: 0.15rem;
+    height: 100%;
   }
 }
 
@@ -1981,7 +2011,7 @@
     background: #ffffff;
     border-radius: 0;
     box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
-    z-index: 10;
+    z-index: 1000;
   }
 }
 
