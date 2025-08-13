@@ -221,13 +221,17 @@
   }
 
   #shopify-section-{{ section.id }} .column--content .text-content-wrapper {
-     display: flex;
+    display: flex;
     flex-direction: column;
     height: 100%;
     padding: {{ padding_top }}px {{ padding_right }}px {{ padding_bottom }}px {{ padding_left }}px;
     position: relative;
     z-index: 2;
+    {% if section.settings.show_media_column %}
     max-width: 700px;
+    {% else %}
+    max-width: 1200px;
+    {% endif %}
   }
 
   #shopify-section-{{ section.id }} .column--content.valign-top .text-content-wrapper {

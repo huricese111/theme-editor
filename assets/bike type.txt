@@ -76,7 +76,7 @@ Ultra/High Step/M/Grey
 Ultra/High Step/L/Grey
 Ultra/High Step/XL/Grey
 Ultra/Low Step/M/Grey
-Ultra/Low Step/L/Grey
+Ultra/Low Step/L/Greyd
 
 
 Ultra+/Step Through/M / Dark Blue

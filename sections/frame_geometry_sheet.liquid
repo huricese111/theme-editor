@@ -123,6 +123,7 @@
       "label": "Select Frame Image",
       "options": [
         { "value": "trekking", "label": "Trekking 7" },
+        { "value": "trekking_new", "label": "Trekking 7 New Size" },
         { "value": "mountain", "label": "Mountain 7" },
         { "value": "city", "label": "City Frame" },
         { "value": "custom", "label": "Custom Image" }
@@ -1329,6 +1330,8 @@
             {% assign img_name = false %}
             {% if section.settings.geometry_type == 'trekking' %}
               {% assign img_name = 'Trekking 7.png' %}
+            {% elsif section.settings.geometry_type == 'trekking_new' %}
+              {% assign img_name = 'trekking_new_size.png' %}
             {% elsif section.settings.geometry_type == 'mountain' %}
               {% assign img_name = 'mountain7.png' %}
             {% elsif section.settings.geometry_type == 'city' %}
@@ -1405,7 +1408,7 @@
                       >
                     {% else %}
                       <img
-                        src="{{ 'hepha_trekking7_geo_high.png' | asset_url }}"
+                        src="{{ 'hepha_trekking7_geo_step.png' | asset_url }}"
                         alt="Low Step Geometry"
                         class="geometry-image"
                         width="2000"
@@ -1701,9 +1704,6 @@
     }
   }
 
-  /* 移除与基础样式冲突的样式 */
-  /* .explore-title 和 .product-content-section 样式已被基础样式替代 */
-
   .custom-size-tabs {
     display: flex;
     margin-bottom: 20px;
@@ -1925,12 +1925,10 @@
       object-fit: contain;
     }
 
-    /* 滑动提示显示在Frame Size页卡 */
     #framesize .swipe-hint {
       display: block;
     }
 
-    /* 其他页卡保持图片在上、表格在下 */
     .sizetab-panel:not(#framesize) .sizechart-two-column-layout {
       flex-direction: column;
     }

@@ -9,6 +9,13 @@
   {% endcase %}
 {% endcapture %}
 
+{% assign font_family_style = '' %}
+{% if block.settings.font_family == 'sans-serif' %}
+  {% assign font_family_style = 'font-family: Helvetica, "Helvetica Neue", Arial, "Lucida Grande", sans-serif;' %}
+{% else %}
+  {% assign font_family_style = 'font-family: "SF Mono", Menlo, Consolas, Monaco, "Liberation Mono", "Lucida Console", monospace, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";' %}
+{% endif %}
+
 {% assign is_absolute = false %}
 {% if block.settings.position_mode == 'absolute' %}
   {% assign is_absolute = true %}
@@ -34,11 +41,11 @@
   "
 >
   {% if block.settings.use_h1 %}
-    <h1 class="majortitle in-content">
+    <h1 class="majortitle in-content" style="{{ font_family_style }}">
       {{ block_title | escape }}
     </h1>
   {% else %}
-    <h2 class="majortitle in-content h1">
+    <h2 class="majortitle in-content h1" style="{{ font_family_style }}">
       {{ block_title | escape }}
     </h2>
   {% endif %}
