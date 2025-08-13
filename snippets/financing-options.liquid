@@ -10,7 +10,7 @@
     {%- when 'AT' -%}
       {%- assign partners = 'klarna' | split: ',' -%}
     {%- when 'FR' -%}
-      {%- assign partners = 'klarna' | split: ',' -%}
+      {%- assign partners = 'klarna,alma' | split: ',' -%}
   {%- endcase -%}
 
   {%- for partner in partners -%}
@@ -22,18 +22,28 @@
               alt="Paypal"
               src="https://cdn.shopify.com/s/files/1/0560/0080/6985/files/PayPal.svg?v=1751531389"
               width="120px"
+              height="auto"
             >
           {%- when 'zinia' -%}
             <img
               alt="Zinia"
               src="https://cdn.shopify.com/s/files/1/0560/0080/6985/files/20250214-163529.png?v=1739522191"
               width="100px"
+              height="auto"
             >
           {%- when 'klarna' -%}
             <img
               alt="Klarna"
               src="https://cdn.shopify.com/s/files/1/0560/0080/6985/files/Klarna_Payment_Badge_svg.png?v=1739522386"
               width="100px"
+              height="auto"
+            >
+          {%- when 'alma' -%}
+            <img
+              alt="Alma"
+              src="https://cdn.shopify.com/s/files/1/0560/0080/6985/files/alma-logo.svg?v=1755079767"
+              width="100px"
+              height="auto"
             >
         {%- endcase -%}
       </div>
@@ -65,6 +75,12 @@
               {%- else -%}
                 Financing with Klarna
               {%- endif -%}
+            {%- when 'alma' -%}
+              {%- if locale == 'fr' -%}
+                Financement avec Alma
+              {%- else -%}
+                Financing with Alma
+              {%- endif -%}
           {%- endcase -%}
         </strong>
       </p>
@@ -93,10 +109,16 @@
             {%- if locale == 'de' -%}
               Klarna bietet direkte Zahlungen, Optionen zum späteren Bezahlen oder Ratenpläne von 6 bis 36 Monaten an.
             {%- elsif locale == 'fr' -%}
-              Klarna propose des paiements directs, des options de paiement différé ou des plans de paiement échelonnés
-              de 6 à 36 mois.
+              Klarna propose des paiements directs, des options de paiement différé ou des plans de paiement échelonnés de 6 à 36 mois.
             {%- else -%}
               Klarna offers direct payments, pay later options, or installment plans ranging from 6 to 36 months.
+            {%- endif -%}
+
+          {%- when 'alma' -%}
+            {%- if locale == 'fr' -%}
+              Alma propose des paiements en plusieurs fois, avec des options de 2 à 4 échéances (sans frais), pour des montants allant de 50 à 5000 euros.
+            {%- else -%}
+              Alma offers installment payments with options for 2 to 4 installments (interest-free) for amounts ranging from €50 to €5000.
             {%- endif -%}
         {%- endcase -%}
       </p>
