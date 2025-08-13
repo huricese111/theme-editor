@@ -1,28 +1,30 @@
 <div class="finance-leasing-module">
-  <div class="accordion-container leasing-panel" id="leasing-accordion">
-    <div class="accordion-header">
-      <h3 class="accordion-title">
-        {% if request.locale.iso_code == 'de' %}
-          Leasing mit einem unserer Partner
-        {% else %}
-          Leasing with one of our partners
-        {% endif %}
-      </h3>
-      <span class="accordion-toggle"></span>
-    </div>
-    <div class="accordion-content">
-      <div class="accordion-body">
-        {% render 'leasing-partner',
-          jobrad_url: block.settings.jobrad_url,
-          bikeleasing_url: block.settings.bikeleasing_url,
-          deutsche_url: block.settings.deutsche_url,
-          businessbike_url: block.settings.businessbike_url
-        %}
+  {%- assign country = localization.country.iso_code -%}
+  {%- unless country == 'FR' -%}
+    <div class="accordion-container leasing-panel" id="leasing-accordion">
+      <div class="accordion-header">
+        <h3 class="accordion-title">
+          {% if request.locale.iso_code == 'de' %}
+            Leasing mit einem unserer Partner
+          {% else %}
+            Leasing with one of our partners
+          {% endif %}
+        </h3>
+        <span class="accordion-toggle"></span>
+      </div>
+      <div class="accordion-content">
+        <div class="accordion-body">
+          {% render 'leasing-partner',
+            jobrad_url: block.settings.jobrad_url,
+            bikeleasing_url: block.settings.bikeleasing_url,
+            deutsche_url: block.settings.deutsche_url,
+            businessbike_url: block.settings.businessbike_url
+          %}
+        </div>
       </div>
     </div>
-  </div>
+  {%- endunless -%}
 
-  {%- assign country = localization.country.iso_code -%}
   {%- if country == 'DE' or country == 'AT' or country == 'FR' -%}
     <div class="accordion-container leasing-panel" id="financing-accordion">
       <div class="accordion-header">
