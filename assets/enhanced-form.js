@@ -1968,3 +1968,181 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+
+// === EMAIL FORWARDING FUNCTIONALITY ===
+// 邮件转发功能 - 最终版本
+
+(function() {
+    'use strict';
+    
+    console.log('📧 Email forwarding module loading...');
+    
+    let emailForwardingInitialized = false;
+    
+    // 初始化邮件转发功能
+    function initEmailForwarding() {
+        if (emailForwardingInitialized) {
+            console.log('⚠️ Email forwarding already initialized, skipping...');
+            return;
+        }
+        
+        console.log('🚀 Initializing email forwarding...');
+        
+        // 检查EmailJS是否可用
+        if (typeof emailjs === 'undefined' || !emailjs.send) {
+            console.error('❌ EmailJS is not available, retrying in 1 second...');
+            setTimeout(initEmailForwarding, 1000);
+            return;
+        }
+        
+        console.log('✅ EmailJS confirmed available');
+        
+        // 查找所有表单
+        const forms = document.querySelectorAll('form');
+        console.log(`📋 Found ${forms.length} forms on page`);
+        
+        if (forms.length === 0) {
+            console.log('⚠️ No forms found on page, will retry in 2 seconds...');
+            setTimeout(initEmailForwarding, 2000);
+            return;
+        }
+        
+        let formsWithRecipient = 0;
+        
+        forms.forEach((form, index) => {
+            console.log(`🔍 Analyzing form ${index + 1}:`);
+            console.log(`  - Form action: ${form.action || 'No action'}`);
+            console.log(`  - Form method: ${form.method || 'GET'}`);
+            console.log(`  - Form ID: ${form.id || 'No ID'}`);
+            console.log(`  - Form class: ${form.className || 'No class'}`);
+            
+            // 检查表单中是否有recipient字段
+            const recipientField = form.querySelector('input[name="contact[recipient]"]');
+            if (recipientField) {
+                console.log(`✅ Found recipient field in form ${index + 1}: "${recipientField.value}"`);
+                formsWithRecipient++;
+            } else {
+                console.log(`ℹ️ No recipient field found in form ${index + 1}`);
+            }
+            
+            // 为每个表单添加提交监听器
+            form.addEventListener('submit', function(event) {
+                console.log(`📝 Form ${index + 1} submitted:`, event.target);
+                // 延迟处理，确保表单数据已更新
+                setTimeout(() => {
+                    handleFormSubmission(event.target, index + 1);
+                }, 200);
+            });
+            
+            console.log(`✅ Event listener added to form ${index + 1}`);
+        });
+        
+        console.log(`📊 Summary: ${forms.length} forms found, ${formsWithRecipient} with recipient fields`);
+        emailForwardingInitialized = true;
+        console.log('🎉 Email forwarding initialization complete');
+    }
+    
+    // 处理表单提交
+    function handleFormSubmission(form, formIndex) {
+        console.log(`🔄 Processing form ${formIndex} submission...`);
+        
+        try {
+            const formData = new FormData(form);
+            
+            // 打印所有表单数据
+            console.log(`📊 Form ${formIndex} data:`);
+            let hasData = false;
+            for (let [key, value] of formData.entries()) {
+                console.log(`  ${key}: "${value}"`);
+                hasData = true;
+            }
+            
+            if (!hasData) {
+                console.log('⚠️ No form data found');
+                return;
+            }
+            
+            // 查找收件人邮箱字段
+            const recipientEmail = formData.get('contact[recipient]');
+            console.log(`📧 Recipient email from form ${formIndex}: "${recipientEmail}"`);
+            
+            if (!recipientEmail || recipientEmail.trim() === '') {
+                console.log(`ℹ️ No recipient email found in form ${formIndex}, skipping forwarding`);
+                return;
+            }
+            
+            console.log(`✅ Recipient email found: "${recipientEmail}", preparing to send copy...`);
+            
+            // 再次验证EmailJS是否可用
+            if (typeof emailjs === 'undefined' || !emailjs.send) {
+                console.error('❌ EmailJS is not available at submission time');
+                return;
+            }
+            
+            // 准备邮件数据
+            const emailData = {
+                to_email: recipientEmail.trim(),
+                from_name: formData.get('contact[name]') || 'Website Visitor',
+                from_email: formData.get('contact[email]') || 'no-reply@website.com',
+                subject: formData.get('contact[subject]') || 'New Contact Form Submission',
+                message: formData.get('contact[body]') || formData.get('contact[message]') || 'No message provided',
+                form_url: window.location.href,
+                submission_time: new Date().toISOString()
+            };
+            
+            console.log(`📤 Sending email with data:`, emailData);
+            
+            // 发送邮件
+            emailjs.send('service_iyemwjj', 'template_0hrpowp', emailData)
+                .then(function(response) {
+                    console.log(`✅ Email sent successfully to: ${recipientEmail}`);
+                    console.log('📧 EmailJS response:', response);
+                    console.log('🎯 Email forwarding completed successfully!');
+                })
+                .catch(function(error) {
+                    console.error('❌ Email sending failed:', error);
+                    console.error('📧 Error details:', error.text || error.message || error);
+                });
+                
+        } catch (error) {
+            console.error(`❌ Error processing form ${formIndex} submission:`, error);
+        }
+    }
+    
+    // 多重初始化策略
+    function startInitialization() {
+        console.log('🎯 Starting email forwarding initialization...');
+        
+        // 策略1: 立即尝试
+        setTimeout(initEmailForwarding, 100);
+        
+        // 策略2: DOM加载完成后
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function() {
+                console.log('📄 DOM loaded, initializing...');
+                setTimeout(initEmailForwarding, 500);
+            });
+        } else {
+            console.log('📄 DOM already loaded, initializing...');
+            setTimeout(initEmailForwarding, 500);
+        }
+        
+        // 策略3: 页面完全加载后
+        window.addEventListener('load', function() {
+            console.log('🌐 Page fully loaded, final initialization...');
+            setTimeout(initEmailForwarding, 1000);
+        });
+        
+        // 策略4: 延迟备用初始化
+        setTimeout(function() {
+            console.log('⏰ Backup initialization after 5 seconds...');
+            initEmailForwarding();
+        }, 5000);
+    }
+    
+    // 立即开始初始化
+    startInitialization();
+    
+    console.log('📧 Email forwarding module setup complete');
+    
+})();

@@ -12,6 +12,7 @@
  * - Article excerpts with automatic truncation
  * - Author and publication date display
  * - Article tags with filtering links
+ * - **Category filtering based on custom.post_category metafield**
  * - Social sharing integration (Twitter, Facebook)
  * - RSS feed link support
  * - Responsive design with mobile optimization
@@ -25,6 +26,7 @@
  * - Publication date with time tag formatting
  * - Author information display
  * - Tag-based categorization and filtering
+ * - **Category-based filtering using metafields**
  * - Excerpt display with fallback to content truncation
  * 
  * SOCIAL FEATURES:
@@ -39,6 +41,7 @@
  * - Show/hide publication dates
  * - Show/hide article excerpts
  * - Show/hide article tags
+ * - **Enable/disable category filtering**
  * - Enable/disable social sharing options
  * 
  * RESPONSIVE BEHAVIOR:
@@ -53,6 +56,7 @@
  * - CSS Grid and Flexbox layouts
  * - Animation attributes integration
  * - SEO-optimized markup
+ * - **Client-side category filtering with JavaScript**
  * 
  * STYLING:
  * - Custom CSS for card-based grid layout
@@ -78,6 +82,78 @@
     {% if section.settings.show_page_title %}
       <div class="page-header" {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
         <h4 class="majortitle">{{ blog.title }}</h4>
+      </div>
+    {% endif %}
+
+    <!-- Category Filter Section -->
+    {% if section.settings.show_category_filter %}
+      <div class="category-filter-section" {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
+        <div class="category-filter-container">
+          {% comment %} Multi-language filter title {% endcomment %}
+          <h5 class="category-filter-title">
+            {% case request.locale.iso_code %}
+              {% when 'de' %}
+                Nach Kategorie filtern
+              {% when 'fr' %}
+                Filtrer par catégorie
+              {% when 'fi' %}
+                Suodata kategorian mukaan
+              {% else %}
+                Filter by Category
+            {% endcase %}
+          </h5>
+          <div class="category-filter-buttons">
+            <button class="category-filter-btn active" data-category="all">
+              {% comment %} Multi-language "All Articles" button {% endcomment %}
+              {% case request.locale.iso_code %}
+                {% when 'de' %}
+                  Alle Artikel
+                {% when 'fr' %}
+                  Tous les articles
+                {% when 'fi' %}
+                  Kaikki artikkelit
+                {% else %}
+                  All Articles
+              {% endcase %}
+            </button>
+            <button class="category-filter-btn" data-category="Awards & Test Results">
+              {% case request.locale.iso_code %}
+                {% when 'de' %}
+                  Auszeichnungen & Testergebnisse
+                {% when 'fr' %}
+                  Prix & Résultats de tests
+                {% when 'fi' %}
+                  Palkinnot & Testitulokset
+                {% else %}
+                  Awards & Test Results
+              {% endcase %}
+            </button>
+            <button class="category-filter-btn" data-category="E-Bike Guides & Tips">
+              {% case request.locale.iso_code %}
+                {% when 'de' %}
+                  E-Bike Anleitungen & Tipps
+                {% when 'fr' %}
+                  Guides & Conseils E-Bike
+                {% when 'fi' %}
+                  E-pyörä oppaat & vinkit
+                {% else %}
+                  E-Bike Guides & Tips
+              {% endcase %}
+            </button>
+            <button class="category-filter-btn" data-category="Hepha News & Stories">
+              {% case request.locale.iso_code %}
+                {% when 'de' %}
+                  Hepha Nachrichten & Geschichten
+                {% when 'fr' %}
+                  Actualités & Histoires Hepha
+                {% when 'fi' %}
+                  Hepha uutiset & tarinat
+                {% else %}
+                  Hepha News & Stories
+              {% endcase %}
+            </button>
+          </div>
+        </div>
       </div>
     {% endif %}
 
@@ -113,9 +189,10 @@
 
   {% if section.settings.layout == 'columns' %}<div class="container">{% endif %}
 
-  <div class="article-list article-layout--{{ section.settings.layout }}">
+  <div class="article-list article-layout--{{ section.settings.layout }}" id="article-list">
     {% for article in blog.articles %}
-      <div class="article" {%- render 'animation-attrs', attrs: 'data-cc-animate', always: true -%}>
+      {% assign article_category = article.metafields.custom.post_category.value | default: 'Uncategorized' %}
+      <div class="article" data-category="{{ article_category }}" {%- render 'animation-attrs', attrs: 'data-cc-animate', always: true -%}>
         <div class="article__inner {% if section.settings.layout != 'columns' %}container container--reading-width{% endif %}">
           {% if article.image %}
             <div class="article-image">
@@ -170,6 +247,26 @@
                   <span class="author">{{ article.author }}</span>
                 {% endif %}
               </span>
+
+              <!-- Display Category -->
+              {% if section.settings.show_category and article_category != 'Uncategorized' %}
+                <div class="iconmeta category">
+                  <span class="label">
+                    {% comment %} Multi-language "Category" label {% endcomment %}
+                    {% case request.locale.iso_code %}
+                      {% when 'de' %}
+                        Kategorie
+                      {% when 'fr' %}
+                        Catégorie
+                      {% when 'fi' %}
+                        Kategoria
+                      {% else %}
+                        Category
+                    {% endcase %}:
+                  </span>
+                  <span class="category-tag">{{ article_category }}</span>
+                </div>
+              {% endif %}
 
               {% if section.settings.show_article_tags %}
                 {% capture tag_markup %}
@@ -235,7 +332,132 @@
     line-height: 1.5;
     max-height: 6em;
   }
+
+  /* Category Filter Styles */
+  .category-filter-section {
+    margin: 30px 0;
+    padding: 20px 0;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  .category-filter-container {
+    text-align: center;
+  }
+
+  .category-filter-title {
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .category-filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .category-filter-btn {
+    background: #f8f8f8;
+    border: 2px solid #ddd;
+    border-radius: 25px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .category-filter-btn:hover {
+    background: #e8e8e8;
+    border-color: #bbb;
+  }
+
+  .category-filter-btn.active {
+    background: #007acc;
+    border-color: #007acc;
+    color: white;
+  }
+
+  .category-tag {
+    background: #f0f0f0;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    color: #666;
+  }
+
+  .iconmeta.category {
+    margin-top: 8px;
+  }
+
+  .iconmeta.category .label {
+    font-weight: 600;
+    margin-right: 5px;
+  }
+
+  /* Article hiding for filtering */
+  .article.hidden {
+    display: none;
+  }
+
+  /* Mobile responsive */
+  @media (max-width: 768px) {
+    .category-filter-buttons {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .category-filter-btn {
+      width: 100%;
+      max-width: 280px;
+    }
+  }
 </style>
+
+<!-- Category Filter JavaScript -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const filterButtons = document.querySelectorAll('.category-filter-btn');
+    const articles = document.querySelectorAll('.article[data-category]');
+    
+    if (filterButtons.length === 0 || articles.length === 0) return;
+    
+    filterButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const selectedCategory = this.getAttribute('data-category');
+        
+        // Update active button
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        this.classList.add('active');
+        
+        // Filter articles
+        articles.forEach(article => {
+          const articleCategory = article.getAttribute('data-category');
+          
+          if (selectedCategory === 'all' || articleCategory === selectedCategory) {
+            article.classList.remove('hidden');
+            article.style.display = '';
+          } else {
+            article.classList.add('hidden');
+            article.style.display = 'none';
+          }
+        });
+        
+        // Trigger animation for visible articles
+        setTimeout(() => {
+          const visibleArticles = document.querySelectorAll('.article:not(.hidden)');
+          visibleArticles.forEach((article, index) => {
+            article.style.animationDelay = (index * 0.1) + 's';
+          });
+        }, 50);
+      });
+    });
+  });
+</script>
 
 {% schema %}
 {
@@ -315,6 +537,23 @@
       "type": "checkbox",
       "id": "show_article_tags",
       "label": "Show tags underneath articles",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Category Filtering"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_category_filter",
+      "label": "Show category filter buttons",
+      "info": "Enable category filtering based on custom.post_category metafield",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_category",
+      "label": "Show category underneath articles",
       "default": true
     },
     {

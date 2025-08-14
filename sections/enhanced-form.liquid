@@ -87,7 +87,7 @@
           <input
             type="hidden"
             name="contact[subject]"
-            value="[{{ form_title_text | default: 'Contact us' }}] {{ form_title_text | default: 'Contact us' }} - {{ shop.name }}"
+            value="[{{ section.settings.recipient_email | default: 'Contact Form' }}] {{ form_title_text | default: 'Contact us' }} - {{ shop.name }}"
           >
 
           <!-- Add formatted message intro -->
@@ -563,9 +563,15 @@
                     -%}
                     <div class="option-selector" data-selector-type="dropdown">
                       <script src="{{ 'custom-select.js' | asset_url }}" defer></script>
+                      <label class="enhanced-form-label" for="{{ input_id }}-button">
+                        {{- label_text | escape -}}
+                        {%- if block.settings.required -%}
+                          <span class="required-asterisk">*</span>
+                        {%- endif -%}
+                      </label>
                       {% render 'custom-select',
                         id: input_id,
-                        label: label_text,
+                        hide_label: true,
                         option_values: custom_options,
                         selected_value: custom_options.first,
                         include_native: true,
@@ -1295,6 +1301,16 @@
 
 {{ 'enhanced-form.js' | asset_url | script_tag }}
 
+<!-- EmailJS Library for Email Forwarding -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script type="text/javascript">
+  (function(){
+    emailjs.init({
+      publicKey: "zbX7LW1R-BM6Gvcwu",
+    });
+  })();
+</script>
+
 {% schema %}
 {
   "name": {
@@ -1717,7 +1733,7 @@
           "type": "checkbox",
           "id": "required",
           "label": "Required",
-          "default": false
+          "default": true
         },
         {
           "type": "checkbox",
@@ -2072,31 +2088,31 @@
           "type": "text",
           "id": "label_en",
           "label": "Label (English)",
-          "default": "Select Category"
+          "default": "E-bike(model name)"
         },
         {
           "type": "text",
           "id": "label_de",
           "label": "Label (German)",
-          "default": "Kategorie Auswählen"
+          "default": "E-Bike(Modellname)"
         },
         {
           "type": "text",
           "id": "label_fr",
           "label": "Label (French)",
-          "default": "Sélectionner Une Catégorie"
+          "default": "E-bike(nom du modèle)"
         },
         {
           "type": "text",
           "id": "label_fi",
           "label": "Label (Finnish)",
-          "default": "Valitse Kategoria"
+          "default": "Sähköpyörä(mallin nimi)"
         },
         {
           "type": "checkbox",
           "id": "required",
           "label": "Required",
-          "default": false
+          "default": true
         },
         {
           "type": "textarea",
