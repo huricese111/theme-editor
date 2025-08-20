@@ -6,7 +6,7 @@
  * layout options, article previews, and social sharing functionality.
  * 
  * FEATURES:
- * - Paginated article listing (12 articles per page)
+ * - JavaScript-based pagination (12 articles per page)
  * - Multiple layout options (list and grid/columns)
  * - Article image display with customizable aspect ratios
  * - Article excerpts with automatic truncation
@@ -51,7 +51,7 @@
  * - Touch-friendly navigation
  * 
  * TECHNICAL FEATURES:
- * - Liquid pagination with 12 articles per page
+ * - JavaScript-based pagination with all articles loaded
  * - Lazy loading for images (except first few)
  * - CSS Grid and Flexbox layouts
  * - Animation attributes integration
@@ -65,7 +65,6 @@
  * - Consistent spacing and typography
  * 
  * DEPENDENCIES:
- * - pagination-control snippet
  * - social-share snippet
  * - image snippet for responsive images
  * - animation-attrs snippet
@@ -77,224 +76,217 @@
  */
 {%- endcomment -%}
 
-{% paginate blog.articles by 12 %}
-  <div class="container">
-    {% if section.settings.show_page_title %}
-      <div class="page-header" {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
-        <h4 class="majortitle">{{ blog.title }}</h4>
-      </div>
-    {% endif %}
+<div class="container">
+  {% if section.settings.show_page_title %}
+    <div class="page-header" {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
+      <h4 class="majortitle">{{ blog.title }}</h4>
+    </div>
+  {% endif %}
 
-    <!-- Category Filter Section -->
-    {% if section.settings.show_category_filter %}
-      <div class="category-filter-section" {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
-        <div class="category-filter-container">
-          {% comment %} Multi-language filter title {% endcomment %}
-          <h5 class="category-filter-title">
+  <!-- Category Filter Section -->
+  {% if section.settings.show_category_filter %}
+    <div class="category-filter-section" {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
+      <div class="category-filter-container">
+        {% comment %} Multi-language filter title {% endcomment %}
+        <h5 class="category-filter-title">
+          {% case request.locale.iso_code %}
+            {% when 'de' %}
+              Nach Kategorie filtern
+            {% when 'fr' %}
+              Filtrer par catégorie
+            {% when 'fi' %}
+              Suodata kategorian mukaan
+            {% else %}
+              Filter by Category
+          {% endcase %}
+        </h5>
+        <div class="category-filter-buttons">
+          <button class="category-filter-btn active" data-category="all">
+            {% comment %} Multi-language "All Articles" button {% endcomment %}
             {% case request.locale.iso_code %}
               {% when 'de' %}
-                Nach Kategorie filtern
+                Alle Artikel
               {% when 'fr' %}
-                Filtrer par catégorie
+                Tous les articles
               {% when 'fi' %}
-                Suodata kategorian mukaan
+                Kaikki artikkelit
               {% else %}
-                Filter by Category
+                All Articles
             {% endcase %}
-          </h5>
-          <div class="category-filter-buttons">
-            <button class="category-filter-btn active" data-category="all">
-              {% comment %} Multi-language "All Articles" button {% endcomment %}
-              {% case request.locale.iso_code %}
-                {% when 'de' %}
-                  Alle Artikel
-                {% when 'fr' %}
-                  Tous les articles
-                {% when 'fi' %}
-                  Kaikki artikkelit
-                {% else %}
-                  All Articles
-              {% endcase %}
-            </button>
-            <button class="category-filter-btn" data-category="Awards & Test Results">
-              {% case request.locale.iso_code %}
-                {% when 'de' %}
-                  Auszeichnungen & Testergebnisse
-                {% when 'fr' %}
-                  Prix & Résultats de tests
-                {% when 'fi' %}
-                  Palkinnot & Testitulokset
-                {% else %}
-                  Awards & Test Results
-              {% endcase %}
-            </button>
-            <button class="category-filter-btn" data-category="E-Bike Guides & Tips">
-              {% case request.locale.iso_code %}
-                {% when 'de' %}
-                  E-Bike Anleitungen & Tipps
-                {% when 'fr' %}
-                  Guides & Conseils E-Bike
-                {% when 'fi' %}
-                  E-pyörä oppaat & vinkit
-                {% else %}
-                  E-Bike Guides & Tips
-              {% endcase %}
-            </button>
-            <button class="category-filter-btn" data-category="Hepha News & Stories">
-              {% case request.locale.iso_code %}
-                {% when 'de' %}
-                  Hepha Nachrichten & Geschichten
-                {% when 'fr' %}
-                  Actualités & Histoires Hepha
-                {% when 'fi' %}
-                  Hepha uutiset & tarinat
-                {% else %}
-                  Hepha News & Stories
-              {% endcase %}
-            </button>
-          </div>
+          </button>
+          <button class="category-filter-btn" data-category="Awards & Test Results">
+            {% case request.locale.iso_code %}
+              {% when 'de' %}
+                Auszeichnungen & Testergebnisse
+              {% when 'fr' %}
+                Prix & Tests
+              {% when 'fi' %}
+                Palkinnot & Testitulokset
+              {% else %}
+                Awards & Test Results
+            {% endcase %}
+          </button>
+          <button class="category-filter-btn" data-category="E-Bike Guides & Tips">
+            {% case request.locale.iso_code %}
+              {% when 'de' %}
+                E-Bike Ratgeber & Tipps
+              {% when 'fr' %}
+                Guides & Conseils
+              {% when 'fi' %}
+                E-pyörä oppaat & vinkit
+              {% else %}
+                E-Bike Guides & Tips
+            {% endcase %}
+          </button>
+          <button class="category-filter-btn" data-category="Hepha News & Stories">
+            {% case request.locale.iso_code %}
+              {% when 'de' %}
+                Hepha Neuigkeiten & Geschichten
+              {% when 'fr' %}
+                Actualités & Histoires
+              {% when 'fi' %}
+                Hepha uutiset & tarinat
+              {% else %}
+                Hepha News & Stories
+            {% endcase %}
+          </button>
         </div>
       </div>
-    {% endif %}
+    </div>
+  {% endif %}
 
-    <div class="utility-bar" {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
-      {% if section.settings.show_twitter or section.settings.show_facebook or section.settings.show_rss_icon %}
-        <div class="utility-bar__right" {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
-          {% if section.settings.show_twitter or section.settings.show_facebook %}
-            <span class="utility-bar__item desktop-only">
-              <div class="social-share flex items-center">
-                <p class="social-share__heading">{{ 'general.social.share_heading' | t }}</p>
-                {% render 'social-share',
-                  share_twitter: section.settings.show_twitter,
-                  share_facebook: section.settings.show_facebook,
-                  share_title: blog.title,
-                  share_url: blog.url
-                %}
-              </div>
-            </span>
-          {% endif %}
+  <div class="utility-bar" {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
+    {% if section.settings.show_twitter or section.settings.show_facebook or section.settings.show_rss_icon %}
+      <div class="utility-bar__right" {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
+        {% if section.settings.show_twitter or section.settings.show_facebook %}
+          <span class="utility-bar__item desktop-only">
+            <div class="social-share flex items-center">
+              <p class="social-share__heading">{{ 'general.social.share_heading' | t }}</p>
+              {% render 'social-share',
+                share_twitter: section.settings.show_twitter,
+                share_facebook: section.settings.show_facebook,
+                share_title: blog.title,
+                share_url: blog.url
+              %}
+            </div>
+          </span>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% if section.settings.layout == 'columns' %}<div class="container">{% endif %}
+
+<div class="article-list article-layout--{{ section.settings.layout }}" id="article-list">
+  {% for article in blog.articles %}
+    {% assign article_category = article.metafields.custom.post_category.value | default: 'Uncategorized' %}
+    <div class="article" data-category="{{ article_category }}" {%- render 'animation-attrs', attrs: 'data-cc-animate', always: true -%}>
+      <div class="article__inner {% if section.settings.layout != 'columns' %}container container--reading-width{% endif %}">
+        {% if article.image %}
+          <div class="article-image">
+            <a href="{{ article.url }}">
+              {%- liquid
+                assign loading = 'lazy'
+                if section.settings.layout == 'columns'
+                  if forloop.index < 4
+                    assign loading = 'eager'
+                  endif
+                  render 'image' with article.image, sizes: '(min-width: 1024px) 440px, (min-width: 768px) 50vw, 100vw', custom_aspect_ratio: section.settings.crop_ratio, loading: loading
+
+                else
+                  if forloop.first
+                    assign loading = 'eager'
+                  endif
+                  render 'image' with article.image, sizes: '(min-width: 768px) 740px, 100vw', custom_aspect_ratio: section.settings.crop_ratio, loading: loading
+                endif
+              -%}
+            </a>
+            <img
+              src="{{ article.image | img_url: '2048x2048' }}"
+              srcset="{{ article.image | img_url: '1024x1024' }} 1024w, {{ article.image | img_url: '2048x2048' }} 2048w, {{ article.image | img_url: 'original' }} 1000w"
+              sizes="(min-width: 768px) 740px, 100vw"
+              loading="{{ loading }}"
+              alt="{{ article.image.alt | escape }}"
+              style="display: none;"
+            >
+          </div>
+        {% endif %}
+
+        <div class="article-description">
+          <h5>{{ article.title | escape | link_to: article.url }}</h5>
+
           {%- if section.settings.show_excerpts -%}
             <div class="rte cf">
               {%- if article.excerpt.size > 0 -%}
-                {{ article.excerpt | strip_html | truncatewords: 30 }}
+                {{ article.excerpt }}
               {%- else -%}
                 {{ article.content | strip_html | truncatewords: 30 }}
               {%- endif -%}
             </div>
           {%- endif -%}
-        </div>
-      {% endif %}
-    </div>
-  </div>
 
-  {% if section.settings.layout == 'columns' %}<div class="container">{% endif %}
+          <div class="meta">
+            <span class="iconmeta time">
+              {% if section.settings.show_date %}
+                {{ article.published_at | time_tag: format: 'date' }}
+              {% endif %}
+              {% if section.settings.show_author %}
+                {% if section.settings.show_date %}&mdash;{% endif %}
+                <span class="author">{{ article.author }}</span>
+              {% endif %}
+            </span>
 
-  <div class="article-list article-layout--{{ section.settings.layout }}" id="article-list">
-    {% for article in blog.articles %}
-      {% assign article_category = article.metafields.custom.post_category.value | default: 'Uncategorized' %}
-      <div class="article" data-category="{{ article_category }}" {%- render 'animation-attrs', attrs: 'data-cc-animate', always: true -%}>
-        <div class="article__inner {% if section.settings.layout != 'columns' %}container container--reading-width{% endif %}">
-          {% if article.image %}
-            <div class="article-image">
-              <a href="{{ article.url }}">
-                {%- liquid
-                  assign loading = 'lazy'
-                  if section.settings.layout == 'columns'
-                    if forloop.index < 4
-                      assign loading = 'eager'
-                    endif
-                    render 'image' with article.image, sizes: '(min-width: 1024px) 440px, (min-width: 768px) 50vw, 100vw', custom_aspect_ratio: section.settings.crop_ratio, loading: loading
-
-                  else
-                    if forloop.first
-                      assign loading = 'eager'
-                    endif
-                    render 'image' with article.image, sizes: '(min-width: 768px) 740px, 100vw', custom_aspect_ratio: section.settings.crop_ratio, loading: loading
-                  endif
-                -%}
-              </a>
-              <img
-                src="{{ article.image | img_url: '2048x2048' }}"
-                srcset="{{ article.image | img_url: '1024x1024' }} 1024w, {{ article.image | img_url: '2048x2048' }} 2048w, {{ article.image | img_url: 'original' }} 1000w"
-                sizes="(min-width: 768px) 740px, 100vw"
-                loading="{{ loading }}"
-                alt="{{ article.image.alt | escape }}"
-                style="display: none;"
-              >
-            </div>
-          {% endif %}
-
-          <div class="article-description">
-            <h5>{{ article.title | escape | link_to: article.url }}</h5>
-
-            {%- if section.settings.show_excerpts -%}
-              <div class="rte cf">
-                {%- if article.excerpt.size > 0 -%}
-                  {{ article.excerpt }}
-                {%- else -%}
-                  {{ article.content | strip_html | truncatewords: 30 }}
-                {%- endif -%}
+            <!-- Display Category -->
+            {% if section.settings.show_category and article_category != 'Uncategorized' %}
+              <div class="iconmeta category">
+                <span class="label">
+                  {% comment %} Multi-language "Category" label {% endcomment %}
+                  {% case request.locale.iso_code %}
+                    {% when 'de' %}
+                      Kategorie
+                    {% when 'fr' %}
+                      Catégorie
+                    {% when 'fi' %}
+                      Kategoria
+                    {% else %}
+                      Category
+                  {% endcase %}:
+                </span>
+                <span class="category-tag">{{ article_category }}</span>
               </div>
-            {%- endif -%}
+            {% endif %}
 
-            <div class="meta">
-              <span class="iconmeta time">
-                {% if section.settings.show_date %}
-                  {{ article.published_at | time_tag: format: 'date' }}
-                {% endif %}
-                {% if section.settings.show_author %}
-                  {% if section.settings.show_date %}&mdash;{% endif %}
-                  <span class="author">{{ article.author }}</span>
-                {% endif %}
-              </span>
-
-              <!-- Display Category -->
-              {% if section.settings.show_category and article_category != 'Uncategorized' %}
-                <div class="iconmeta category">
-                  <span class="label">
-                    {% comment %} Multi-language "Category" label {% endcomment %}
-                    {% case request.locale.iso_code %}
-                      {% when 'de' %}
-                        Kategorie
-                      {% when 'fr' %}
-                        Catégorie
-                      {% when 'fi' %}
-                        Kategoria
-                      {% else %}
-                        Category
-                    {% endcase %}:
-                  </span>
-                  <span class="category-tag">{{ article_category }}</span>
-                </div>
-              {% endif %}
-
-              {% if section.settings.show_article_tags %}
-                {% capture tag_markup %}
-        <div class="iconmeta tags">
-          <span class="label">{{ 'blogs.tags.label' | t }}:</span>
-          {% for tag in article.tags %}
-            {{ tag | link_to_tag: tag }}
-          {% endfor %}
-        </div>
-        {% endcapture %}
-                {% if tag_markup contains '</a>' %}{{ tag_markup }}{% endif %}
-              {% endif %}
-            </div>
+            {% if section.settings.show_article_tags %}
+              {% capture tag_markup %}
+      <div class="iconmeta tags">
+        <span class="label">{{ 'blogs.tags.label' | t }}:</span>
+        {% for tag in article.tags %}
+          {{ tag | link_to_tag: tag }}
+        {% endfor %}
+      </div>
+      {% endcapture %}
+              {% if tag_markup contains '</a>' %}{{ tag_markup }}{% endif %}
+            {% endif %}
           </div>
         </div>
       </div>
+    </div>
 
-    {% else %}
-      <div class="container">
-        <h5 class="align-centre fully-spaced-row">{{ 'blogs.article.no_matches' | t }}</h5>
-      </div>
-    {% endfor %}
-  </div>
+  {% else %}
+    <div class="container">
+      <h5 class="align-centre fully-spaced-row">{{ 'blogs.article.no_matches' | t }}</h5>
+    </div>
+  {% endfor %}
+</div>
 
-  {% if section.settings.layout == 'columns' %}</div>{% endif %}
+{% if section.settings.layout == 'columns' %}</div>{% endif %}
 
-  <div class="container pagination-row">{% render 'pagination-control', paginate: paginate %}</div>
-{% endpaginate %}
+<div class="container pagination-row">
+  <nav id="pagination-control" class="pagination dynamic-pagination" role="navigation" aria-label="Pagination Navigation">
+    <!-- Pagination will be generated by JavaScript -->
+  </nav>
+</div>
 
 <style>
   .title,
@@ -404,6 +396,69 @@
     display: none;
   }
 
+  /* Dynamic Pagination Styles */
+  .dynamic-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem 0;
+  }
+
+  .dynamic-pagination .pagination__inner {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .dynamic-pagination .pagination__item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.5rem;
+    height: 2.5rem;
+    padding: 0.5rem;
+    text-decoration: none;
+    color: #374151;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    background: white;
+    cursor: pointer;
+  }
+
+  .dynamic-pagination .pagination__item:hover:not(.pagination__item--disabled):not(.pagination__number--current) {
+    background-color: #f9fafb;
+    border-color: #9ca3af;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .dynamic-pagination .pagination__number--current {
+    background-color: #007acc;
+    border-color: #007acc;
+    color: white;
+  }
+
+  .dynamic-pagination .pagination__item--disabled {
+    color: #9ca3af;
+    cursor: not-allowed;
+    opacity: 0.6;
+    background-color: #f9fafb;
+  }
+
+  .dynamic-pagination .pagination__numbers {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  /* Hide original pagination when using dynamic pagination */
+  .pagination-row:has(.dynamic-pagination) .pagination:not(.dynamic-pagination) {
+    display: none;
+  }
+
   /* Mobile responsive */
   @media (max-width: 768px) {
     .category-filter-buttons {
@@ -415,6 +470,25 @@
       width: 100%;
       max-width: 280px;
     }
+
+    .dynamic-pagination .pagination__item {
+      min-width: 2rem;
+      height: 2rem;
+      font-size: 0.75rem;
+    }
+    
+    .dynamic-pagination .pagination__prev-text,
+    .dynamic-pagination .pagination__next-text {
+      display: none;
+    }
+    
+    .dynamic-pagination .pagination__prev::after {
+      content: '‹';
+    }
+    
+    .dynamic-pagination .pagination__next::after {
+      content: '›';
+    }
   }
 </style>
 
@@ -423,29 +497,30 @@
   document.addEventListener('DOMContentLoaded', function() {
     const filterButtons = document.querySelectorAll('.category-filter-btn');
     const articles = document.querySelectorAll('.article[data-category]');
+    const paginationControl = document.getElementById('pagination-control');
+    
+    // Configuration
+    const articlesPerPage = 12; // Match the Liquid pagination setting
+    let currentPage = 1;
+    let currentCategory = 'all';
     
     if (filterButtons.length === 0 || articles.length === 0) return;
+    
+    // Initialize pagination
+    initializeDynamicPagination();
     
     filterButtons.forEach(button => {
       button.addEventListener('click', function() {
         const selectedCategory = this.getAttribute('data-category');
+        currentCategory = selectedCategory;
+        currentPage = 1; // Reset to first page when filtering
         
         // Update active button
         filterButtons.forEach(btn => btn.classList.remove('active'));
         this.classList.add('active');
         
-        // Filter articles
-        articles.forEach(article => {
-          const articleCategory = article.getAttribute('data-category');
-          
-          if (selectedCategory === 'all' || articleCategory === selectedCategory) {
-            article.classList.remove('hidden');
-            article.style.display = '';
-          } else {
-            article.classList.add('hidden');
-            article.style.display = 'none';
-          }
-        });
+        // Filter and paginate articles
+        filterAndPaginateArticles();
         
         // Trigger animation for visible articles
         setTimeout(() => {
@@ -456,6 +531,130 @@
         }, 50);
       });
     });
+    
+    function initializeDynamicPagination() {
+      // Create pagination container if it doesn't exist
+      if (!paginationControl) {
+        const paginationRow = document.querySelector('.pagination-row');
+        if (paginationRow) {
+          const newPagination = document.createElement('nav');
+          newPagination.id = 'pagination-control';
+          newPagination.className = 'pagination dynamic-pagination';
+          newPagination.setAttribute('role', 'navigation');
+          newPagination.setAttribute('aria-label', 'Pagination Navigation');
+          paginationRow.appendChild(newPagination);
+        }
+      }
+      
+      // Initial pagination setup
+      filterAndPaginateArticles();
+    }
+    
+    function filterAndPaginateArticles() {
+      // Get filtered articles
+      const filteredArticles = getFilteredArticles();
+      const totalPages = Math.ceil(filteredArticles.length / articlesPerPage);
+      
+      // Hide all articles first
+      articles.forEach(article => {
+        article.classList.add('hidden');
+        article.style.display = 'none';
+      });
+      
+      // Show articles for current page
+      const startIndex = (currentPage - 1) * articlesPerPage;
+      const endIndex = startIndex + articlesPerPage;
+      const articlesToShow = filteredArticles.slice(startIndex, endIndex);
+      
+      articlesToShow.forEach(article => {
+        article.classList.remove('hidden');
+        article.style.display = '';
+      });
+      
+      // Update pagination
+      updatePaginationControls(totalPages, filteredArticles.length);
+    }
+    
+    function getFilteredArticles() {
+      if (currentCategory === 'all') {
+        return Array.from(articles);
+      }
+      
+      return Array.from(articles).filter(article => {
+        const articleCategory = article.getAttribute('data-category');
+        return articleCategory === currentCategory;
+      });
+    }
+    
+    function updatePaginationControls(totalPages, totalArticles) {
+      const pagination = document.getElementById('pagination-control') || 
+                        document.querySelector('.pagination') ||
+                        document.querySelector('.dynamic-pagination');
+      
+      if (!pagination) return;
+      
+     // Hide pagination if no articles
+     if (totalPages === 0 || totalArticles === 0) {
+      pagination.style.display = 'none';
+      return;
+    }
+      
+      pagination.style.display = 'flex';
+      
+      // Generate pagination HTML
+      let paginationHTML = '<div class="pagination__inner">';
+      
+      // Previous button
+      if (currentPage > 1) {
+        paginationHTML += `<button class="pagination__item pagination__prev" onclick="changePage(${currentPage - 1})" aria-label="Previous page">
+          <span class="pagination__prev-text">Previous</span>
+        </button>`;
+      } else {
+        paginationHTML += `<span class="pagination__item pagination__prev pagination__item--disabled" aria-label="Previous page">
+          <span class="pagination__prev-text">Previous</span>
+        </span>`;
+      }
+      
+      // Page numbers
+      paginationHTML += '<div class="pagination__numbers">';
+      
+      for (let i = 1; i <= totalPages; i++) {
+        if (i === currentPage) {
+          paginationHTML += `<span class="pagination__item pagination__number pagination__number--current" aria-current="page" aria-label="Current page ${i}">${i}</span>`;
+        } else {
+          paginationHTML += `<button class="pagination__item pagination__number" onclick="changePage(${i})" aria-label="Go to page ${i}">${i}</button>`;
+        }
+      }
+      
+      paginationHTML += '</div>';
+      
+      // Next button
+      if (currentPage < totalPages) {
+        paginationHTML += `<button class="pagination__item pagination__next" onclick="changePage(${currentPage + 1})" aria-label="Next page">
+          <span class="pagination__next-text">Next</span>
+        </button>`;
+      } else {
+        paginationHTML += `<span class="pagination__item pagination__next pagination__item--disabled" aria-label="Next page">
+          <span class="pagination__next-text">Next</span>
+        </span>`;
+      }
+      
+      paginationHTML += '</div>';
+      
+      pagination.innerHTML = paginationHTML;
+    }
+    
+    // Global function for pagination clicks
+    window.changePage = function(page) {
+      currentPage = page;
+      filterAndPaginateArticles();
+      
+      // Scroll to top of article list
+      const articleList = document.getElementById('article-list');
+      if (articleList) {
+        articleList.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    };
   });
 </script>
 

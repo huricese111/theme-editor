@@ -64,15 +64,20 @@
         {%- endcase -%}
       </p>
 
+      {%- assign page_handle = '' -%}
+      {%- case partner -%}
+        {%- when 'jobrad' -%}
+          {%- assign page_handle = 'jobrad' -%}
+        {%- when 'bikeleasing' -%}
+          {%- assign page_handle = 'save-with-bikeleasing' -%}
+        {%- when 'deutsche' -%}
+          {%- assign page_handle = 'deutsche-dienstrad' -%}
+        {%- when 'businessbike' -%}
+          {%- assign page_handle = 'business-bike' -%}
+      {%- endcase -%}
+
       <a
-        href="
-          {% case partner %}
-            {% when 'jobrad' %}{{ jobrad_url }}
-            {% when 'bikeleasing' %}{{ bikeleasing_url }}
-            {% when 'deutsche' %}{{ deutsche_url }}
-            {% when 'businessbike' %}{{ businessbike_url }}
-          {% endcase %}
-        "
+        href="{{ shop.url }}{{ localization.language.root_url }}/pages/{{ page_handle }}"
         class="leasing-link"
         target="_blank"
       >

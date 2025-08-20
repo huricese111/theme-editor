@@ -87,7 +87,7 @@
           <input
             type="hidden"
             name="contact[subject]"
-            value="[{{ section.settings.recipient_email | default: 'Contact Form' }}] {{ form_title_text | default: 'Contact us' }} - {{ shop.name }}"
+            value="{{ form_title_text | default: 'Contact us' }} - {{ shop.name }}"
           >
 
           <!-- Add formatted message intro -->
@@ -1301,16 +1301,6 @@
 
 {{ 'enhanced-form.js' | asset_url | script_tag }}
 
-<!-- EmailJS Library for Email Forwarding -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script type="text/javascript">
-  (function(){
-    emailjs.init({
-      publicKey: "zbX7LW1R-BM6Gvcwu",
-    });
-  })();
-</script>
-
 {% schema %}
 {
   "name": {
@@ -1356,16 +1346,16 @@
       "default": "Parannettu lomake"
     },
     {
-      "type": "text",
-      "id": "recipient_email",
-      "label": "Recipient Email Address",
-      "info": "Email address to receive form submissions. Leave blank to use store email."
-    },
-    {
       "type": "checkbox",
       "id": "use_columns",
       "label": "Two column layout",
       "default": true
+    },
+    {
+      "type": "text",
+      "id": "recipient_email",
+      "label": "Recipient Email Address",
+      "info": "Email address to receive form submissions. Leave blank to use store email."
     },
     {
       "type": "richtext",

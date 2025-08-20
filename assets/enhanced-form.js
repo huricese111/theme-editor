@@ -1769,6 +1769,9 @@ class CustomDatePicker {
 
 // 初始化自定义日期选择器
 document.addEventListener('DOMContentLoaded', function() {
+  // 添加表单验证功能
+  initFormValidation();
+  
   // 初始化日期输入框
   document.querySelectorAll('.custom-date-input').forEach(input => {
     const wrapper = input.parentElement;
@@ -1969,180 +1972,234 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-// === EMAIL FORWARDING FUNCTIONALITY ===
-// 邮件转发功能 - 最终版本
+// 表单验证功能
+function initFormValidation() {
+  const forms = document.querySelectorAll('form[action*="contact"]');
+  
+  forms.forEach(form => {
+    // 为表单添加提交验证
+    form.addEventListener('submit', function(event) {
+      if (!validateForm(this)) {
+        event.preventDefault();
+        event.stopPropagation();
+        return false;
+      }
+    });
+    
+    // 为必填字段添加实时验证
+    const requiredFields = form.querySelectorAll('input[required], select[required], textarea[required]');
+    requiredFields.forEach(field => {
+      // 失去焦点时验证
+      field.addEventListener('blur', function() {
+        validateField(this);
+      });
+      
+      // 输入时清除错误状态
+      field.addEventListener('input', function() {
+        clearFieldError(this);
+      });
+    });
+  });
+}
 
-(function() {
-    'use strict';
-    
-    console.log('📧 Email forwarding module loading...');
-    
-    let emailForwardingInitialized = false;
-    
-    // 初始化邮件转发功能
-    function initEmailForwarding() {
-        if (emailForwardingInitialized) {
-            console.log('⚠️ Email forwarding already initialized, skipping...');
-            return;
-        }
-        
-        console.log('🚀 Initializing email forwarding...');
-        
-        // 检查EmailJS是否可用
-        if (typeof emailjs === 'undefined' || !emailjs.send) {
-            console.error('❌ EmailJS is not available, retrying in 1 second...');
-            setTimeout(initEmailForwarding, 1000);
-            return;
-        }
-        
-        console.log('✅ EmailJS confirmed available');
-        
-        // 查找所有表单
-        const forms = document.querySelectorAll('form');
-        console.log(`📋 Found ${forms.length} forms on page`);
-        
-        if (forms.length === 0) {
-            console.log('⚠️ No forms found on page, will retry in 2 seconds...');
-            setTimeout(initEmailForwarding, 2000);
-            return;
-        }
-        
-        let formsWithRecipient = 0;
-        
-        forms.forEach((form, index) => {
-            console.log(`🔍 Analyzing form ${index + 1}:`);
-            console.log(`  - Form action: ${form.action || 'No action'}`);
-            console.log(`  - Form method: ${form.method || 'GET'}`);
-            console.log(`  - Form ID: ${form.id || 'No ID'}`);
-            console.log(`  - Form class: ${form.className || 'No class'}`);
-            
-            // 检查表单中是否有recipient字段
-            const recipientField = form.querySelector('input[name="contact[recipient]"]');
-            if (recipientField) {
-                console.log(`✅ Found recipient field in form ${index + 1}: "${recipientField.value}"`);
-                formsWithRecipient++;
-            } else {
-                console.log(`ℹ️ No recipient field found in form ${index + 1}`);
-            }
-            
-            // 为每个表单添加提交监听器
-            form.addEventListener('submit', function(event) {
-                console.log(`📝 Form ${index + 1} submitted:`, event.target);
-                // 延迟处理，确保表单数据已更新
-                setTimeout(() => {
-                    handleFormSubmission(event.target, index + 1);
-                }, 200);
-            });
-            
-            console.log(`✅ Event listener added to form ${index + 1}`);
-        });
-        
-        console.log(`📊 Summary: ${forms.length} forms found, ${formsWithRecipient} with recipient fields`);
-        emailForwardingInitialized = true;
-        console.log('🎉 Email forwarding initialization complete');
+// 验证整个表单
+function validateForm(form) {
+  let isValid = true;
+  const requiredFields = form.querySelectorAll('input[required], select[required], textarea[required]');
+  
+  // 清除之前的错误提示
+  clearAllErrors(form);
+  
+  requiredFields.forEach(field => {
+    if (!validateField(field)) {
+      isValid = false;
+    }
+  });
+  
+  // 如果有错误，滚动到第一个错误字段
+  if (!isValid) {
+    const firstError = form.querySelector('.field-error');
+    if (firstError) {
+      firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
     
-    // 处理表单提交
-    function handleFormSubmission(form, formIndex) {
-        console.log(`🔄 Processing form ${formIndex} submission...`);
-        
-        try {
-            const formData = new FormData(form);
-            
-            // 打印所有表单数据
-            console.log(`📊 Form ${formIndex} data:`);
-            let hasData = false;
-            for (let [key, value] of formData.entries()) {
-                console.log(`  ${key}: "${value}"`);
-                hasData = true;
-            }
-            
-            if (!hasData) {
-                console.log('⚠️ No form data found');
-                return;
-            }
-            
-            // 查找收件人邮箱字段
-            const recipientEmail = formData.get('contact[recipient]');
-            console.log(`📧 Recipient email from form ${formIndex}: "${recipientEmail}"`);
-            
-            if (!recipientEmail || recipientEmail.trim() === '') {
-                console.log(`ℹ️ No recipient email found in form ${formIndex}, skipping forwarding`);
-                return;
-            }
-            
-            console.log(`✅ Recipient email found: "${recipientEmail}", preparing to send copy...`);
-            
-            // 再次验证EmailJS是否可用
-            if (typeof emailjs === 'undefined' || !emailjs.send) {
-                console.error('❌ EmailJS is not available at submission time');
-                return;
-            }
-            
-            // 准备邮件数据
-            const emailData = {
-                to_email: recipientEmail.trim(),
-                from_name: formData.get('contact[name]') || 'Website Visitor',
-                from_email: formData.get('contact[email]') || 'no-reply@website.com',
-                subject: formData.get('contact[subject]') || 'New Contact Form Submission',
-                message: formData.get('contact[body]') || formData.get('contact[message]') || 'No message provided',
-                form_url: window.location.href,
-                submission_time: new Date().toISOString()
-            };
-            
-            console.log(`📤 Sending email with data:`, emailData);
-            
-            // 发送邮件
-            emailjs.send('service_iyemwjj', 'template_0hrpowp', emailData)
-                .then(function(response) {
-                    console.log(`✅ Email sent successfully to: ${recipientEmail}`);
-                    console.log('📧 EmailJS response:', response);
-                    console.log('🎯 Email forwarding completed successfully!');
-                })
-                .catch(function(error) {
-                    console.error('❌ Email sending failed:', error);
-                    console.error('📧 Error details:', error.text || error.message || error);
-                });
-                
-        } catch (error) {
-            console.error(`❌ Error processing form ${formIndex} submission:`, error);
-        }
+    // 显示总体错误提示
+    showFormError(form, getLocalizedText('form_validation_error'));
+  }
+  
+  return isValid;
+}
+
+// 验证单个字段
+function validateField(field) {
+  const value = field.value.trim();
+  const fieldType = field.type;
+  const fieldName = field.name;
+  
+  // 检查是否为空
+  if (!value) {
+    showFieldError(field, getLocalizedText('field_required'));
+    return false;
+  }
+  
+  // 邮箱格式验证
+  if (fieldType === 'email') {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(value)) {
+      showFieldError(field, getLocalizedText('email_invalid'));
+      return false;
+    }
+  }
+  
+  // 电话号码验证（如果是电话字段）
+  if (fieldName.includes('phone') || fieldName.includes('tel')) {
+    const phoneRegex = /^[\+]?[0-9\s\-\(\)]{10,}$/;
+    if (!phoneRegex.test(value)) {
+      showFieldError(field, getLocalizedText('phone_invalid'));
+      return false;
+    }
+  }
+  
+  clearFieldError(field);
+  return true;
+}
+
+// 显示字段错误
+function showFieldError(field, message) {
+  // 添加错误样式
+  field.classList.add('field-error');
+  
+  // 移除现有错误消息
+  const existingError = field.parentNode.querySelector('.error-message');
+  if (existingError) {
+    existingError.remove();
+  }
+  
+  // 创建错误消息元素
+  const errorElement = document.createElement('div');
+  errorElement.className = 'error-message';
+  errorElement.textContent = message;
+  errorElement.style.cssText = `
+    color: #e74c3c;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: block;
+  `;
+  
+  // 插入错误消息
+  field.parentNode.appendChild(errorElement);
+}
+
+// 清除字段错误
+function clearFieldError(field) {
+  field.classList.remove('field-error');
+  const errorMessage = field.parentNode.querySelector('.error-message');
+  if (errorMessage) {
+    errorMessage.remove();
+  }
+}
+
+// 清除所有错误
+function clearAllErrors(form) {
+  const errorFields = form.querySelectorAll('.field-error');
+  const errorMessages = form.querySelectorAll('.error-message');
+  const formErrors = form.querySelectorAll('.form-error-message');
+  
+  errorFields.forEach(field => field.classList.remove('field-error'));
+  errorMessages.forEach(msg => msg.remove());
+  formErrors.forEach(msg => msg.remove());
+}
+
+// 显示表单总体错误
+function showFormError(form, message) {
+  const existingError = form.querySelector('.form-error-message');
+  if (existingError) {
+    existingError.remove();
+  }
+  
+  const errorElement = document.createElement('div');
+  errorElement.className = 'form-error-message';
+  errorElement.innerHTML = `
+    <div style="
+      background-color: #fee;
+      border: 1px solid #e74c3c;
+      border-radius: 4px;
+      padding: 12px;
+      margin-bottom: 16px;
+      color: #e74c3c;
+      font-weight: 500;
+    ">
+      ⚠️ ${message}
+    </div>
+  `;
+  
+  form.insertBefore(errorElement, form.firstChild);
+}
+
+// 获取本地化文本
+function getLocalizedText(key) {
+  const locale = document.documentElement.lang || 'en';
+  
+  const translations = {
+    en: {
+      field_required: 'This field is required',
+      email_invalid: 'Please enter a valid email address',
+      phone_invalid: 'Please enter a valid phone number',
+      form_validation_error: 'Please fill in all required fields correctly'
+    },
+    de: {
+      field_required: 'Dieses Feld ist erforderlich',
+      email_invalid: 'Bitte geben Sie eine gültige E-Mail-Adresse ein',
+      phone_invalid: 'Bitte geben Sie eine gültige Telefonnummer ein',
+      form_validation_error: 'Bitte füllen Sie alle Pflichtfelder korrekt aus'
+    },
+    fr: {
+      field_required: 'Ce champ est obligatoire',
+      email_invalid: 'Veuillez saisir une adresse e-mail valide',
+      phone_invalid: 'Veuillez saisir un numéro de téléphone valide',
+      form_validation_error: 'Veuillez remplir correctement tous les champs obligatoires'
+    },
+    fi: {
+      field_required: 'Tämä kenttä on pakollinen',
+      email_invalid: 'Syötä kelvollinen sähköpostiosoite',
+      phone_invalid: 'Syötä kelvollinen puhelinnumero',
+      form_validation_error: 'Täytä kaikki pakolliset kentät oikein'
+    }
+  };
+  
+  return translations[locale.toLowerCase()]?.[key] || translations.en[key];
+}
+
+// 添加CSS样式
+function addValidationStyles() {
+  const style = document.createElement('style');
+  style.textContent = `
+    .field-error {
+      border-color: #e74c3c !important;
+      box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.2) !important;
     }
     
-    // 多重初始化策略
-    function startInitialization() {
-        console.log('🎯 Starting email forwarding initialization...');
-        
-        // 策略1: 立即尝试
-        setTimeout(initEmailForwarding, 100);
-        
-        // 策略2: DOM加载完成后
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', function() {
-                console.log('📄 DOM loaded, initializing...');
-                setTimeout(initEmailForwarding, 500);
-            });
-        } else {
-            console.log('📄 DOM already loaded, initializing...');
-            setTimeout(initEmailForwarding, 500);
-        }
-        
-        // 策略3: 页面完全加载后
-        window.addEventListener('load', function() {
-            console.log('🌐 Page fully loaded, final initialization...');
-            setTimeout(initEmailForwarding, 1000);
-        });
-        
-        // 策略4: 延迟备用初始化
-        setTimeout(function() {
-            console.log('⏰ Backup initialization after 5 seconds...');
-            initEmailForwarding();
-        }, 5000);
+    .field-error:focus {
+      border-color: #e74c3c !important;
+      box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.3) !important;
     }
     
-    // 立即开始初始化
-    startInitialization();
+    .error-message {
+      animation: fadeIn 0.3s ease-in;
+    }
     
-    console.log('📧 Email forwarding module setup complete');
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
     
-})();
+    .required-asterisk {
+      color: #e74c3c;
+      margin-left: 2px;
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+// 初始化样式
+addValidationStyles();
