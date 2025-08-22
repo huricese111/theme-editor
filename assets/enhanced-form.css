@@ -496,9 +496,6 @@
 .enhanced-form-section .form-success-message {
   text-align: center;
   padding: 3rem 2rem;
-  background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%);
-  border-radius: 16px;
-  border: 2px solid #bbf7d0;
   margin-bottom: 2rem;
 }
 
@@ -970,9 +967,8 @@
   font-weight: 500;
 }
 
-// ... existing code ...
 /* Success Message */
-.enhanced-form-section .form-success-message {
+.enhanced-form-section .enhanced-form-success-message {
   text-align: center;
   padding: 3rem 2rem;
   background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%);
@@ -981,14 +977,14 @@
   margin-bottom: 2rem;
 }
 
-.enhanced-form-section .form-success-message h3 {
+.enhanced-form-section .enhanced-form-success-message h3 {
   color: #059669;
   font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 1rem;
 }
 
-.enhanced-form-section .form-success-message p {
+.enhanced-form-section .enhanced-form-success-message p {
   color: #065f46;
   font-size: 1.125rem;
   line-height: 1.6;
@@ -1447,6 +1443,49 @@
   font-size: 0.875rem;
   text-align: right;
   font-weight: 500;
+}
+
+/* 统一 Delivery Type 下拉框样式与其他输入框 */
+.enhanced-form-section .custom-select__btn {
+  padding: 0.875rem 1rem !important;
+  border: 2px solid #e2e8f0 !important;
+  border-radius: 12px !important;
+  font-size: 1rem !important;
+  color: #1e293b !important;
+  background: #ffffff !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+  min-height: auto !important;
+  line-height: 1.5 !important;
+}
+
+.enhanced-form-section .custom-select__btn:focus,
+.enhanced-form-section .custom-select__btn:hover {
+  outline: none !important;
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1), 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+  transform: translateY(-1px) !important;
+  background: #ffffff !important;
+}
+
+.enhanced-form-section .custom-select__btn > .icon {
+  width: 25px !important;
+  height: 20px !important;
+  padding-inline-start: 10px !important;
+  margin-inline-end: -5px !important;
+}
+
+/* 确保下拉框容器样式一致 */
+.enhanced-form-section .custom-select {
+  width: 100% !important;
+}
+
+.enhanced-form-section .custom-select__listbox {
+  border: 2px solid #e2e8f0 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  top: calc(100% + 5px) !important; 
+  left: 0 !important; 
 }
 
 /* Responsive Design */
@@ -2155,6 +2194,24 @@
   }
 }
 
+/* Dropdown 错误状态样式 */
+.enhanced-form-section .multilevel-dropdown-wrapper .current-selection.dropdown-error {
+  border-color: #e74c3c !important;
+  box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.2) !important;
+}
+
+.enhanced-form-section .multilevel-dropdown-wrapper .current-selection.dropdown-error:focus {
+  border-color: #e74c3c !important;
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.3) !important;
+}
+
+.enhanced-form-section .multilevel-dropdown-wrapper .error-message {
+  color: #e74c3c;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  display: block;
+}
+
 /* 移动端独立面板样式 */
 .enhanced-form-section #mobile-dropdown-panel .mobile-overlay {
     position: absolute;
@@ -2610,6 +2667,123 @@
   }
 }
 
+/* 独特的成功模态框样式 - 避免与其他组件冲突 */
+.enhanced-form-success-modal-unique {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 99999 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+}
+
+.enhanced-form-modal-overlay-unique {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: rgba(0, 0, 0, 0.6) !important;
+  backdrop-filter: blur(4px) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.enhanced-form-modal-content-unique {
+  position: relative !important;
+  background: #ffffff !important;
+  border-radius: 16px !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2) !important;
+  max-width: 600px !important;
+  width: 100% !important;
+  max-height: 90vh !important;
+  overflow: hidden !important;
+  animation: enhancedFormModalSlideIn 0.3s ease-out !important;
+  z-index: 100000 !important;
+}
+
+@keyframes enhancedFormModalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.enhanced-form-modal-header-unique {
+  padding: 2rem 2rem 1rem 2rem !important;
+  text-align: center !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+}
+
+.enhanced-form-modal-header-unique h3 {
+  margin: 0 !important;
+  color: #10b981 !important;
+  font-size: 1.75rem !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.025em !important;
+}
+
+.enhanced-form-modal-body-unique {
+  padding: 1.5rem 2rem !important;
+  text-align: center !important;
+}
+
+.enhanced-form-modal-body-unique p {
+  margin: 0 0 1rem 0 !important;
+  color: #374151 !important;
+  font-size: 1.125rem !important;
+  line-height: 1.6 !important;
+}
+
+.enhanced-form-email-notification-info-unique {
+  background: #dbeafe !important;
+  border-radius: 8px !important;
+  padding: 1rem !important;
+  font-size: 0.875rem !important;
+  color: #1e40af !important;
+  border: 1px solid #bfdbfe !important;
+}
+
+.enhanced-form-modal-footer-unique {
+  padding: 1rem 2rem 2rem 2rem !important;
+  text-align: center !important;
+}
+
+.enhanced-form-btn-unique {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0.75rem 2rem !important;
+  border: none !important;
+  border-radius: 8px !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  min-width: 120px !important;
+}
+
+.enhanced-form-btn-primary-unique {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+  color: #ffffff !important;
+}
+
+.enhanced-form-btn-primary-unique:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3) !important;
+}
+
 /* Enhanced Form Success Modal */
 .enhanced-form-section .enhanced-form-success-modal {
   position: fixed;
@@ -2638,7 +2812,7 @@
   background: #ffffff;
   border-radius: 16px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-  max-width: 500px;
+  max-width: 600px;
   width: 90%;
   z-index: 10000;
   animation: modalSlideIn 0.3s ease-out;
@@ -2675,7 +2849,7 @@
   background: #ffffff;
   border-radius: 16px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-  max-width: 500px;
+  max-width: 600px;
   width: 90%;
   max-height: 90vh;
   overflow: hidden;

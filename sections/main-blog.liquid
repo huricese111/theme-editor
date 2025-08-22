@@ -87,20 +87,27 @@
   {% if section.settings.show_category_filter %}
     <div class="category-filter-section" {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
       <div class="category-filter-container">
-        {% comment %} Multi-language filter title {% endcomment %}
-        <h5 class="category-filter-title">
-          {% case request.locale.iso_code %}
-            {% when 'de' %}
-              Nach Kategorie filtern
-            {% when 'fr' %}
-              Filtrer par catégorie
-            {% when 'fi' %}
-              Suodata kategorian mukaan
-            {% else %}
-              Filter by Category
-          {% endcase %}
-        </h5>
-        <div class="category-filter-buttons">
+        {% comment %} Mobile toggle button {% endcomment %}
+        <div class="category-filter-header">
+          <button class="category-filter-toggle mobile-only" aria-expanded="false" aria-controls="category-filter-buttons">
+            <span class="toggle-text">
+              {% case request.locale.iso_code %}
+                {% when 'de' %}
+                  Filter anzeigen
+                {% when 'fr' %}
+                  Afficher les filtres
+                {% when 'fi' %}
+                  Näytä suodattimet
+                {% else %}
+                  Show filters
+              {% endcase %}
+            </span>
+            <svg class="toggle-icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+        <div class="category-filter-buttons" id="category-filter-buttons">
           <button class="category-filter-btn active" data-category="all">
             {% comment %} Multi-language "All Articles" button {% endcomment %}
             {% case request.locale.iso_code %}
@@ -327,20 +334,52 @@
 
   /* Category Filter Styles */
   .category-filter-section {
-    margin: 30px 0;
-    padding: 20px 0;
-    border-bottom: 1px solid #e0e0e0;
+    margin: 0;
+    padding: 0;
   }
 
   .category-filter-container {
     text-align: center;
   }
 
+  .category-filter-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
   .category-filter-title {
-    margin-bottom: 20px;
+    margin: 0;
     font-size: 18px;
     font-weight: 600;
     color: #333;
+  }
+
+  .category-filter-toggle {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    padding: 8px 12px;
+    font-size: 14px;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .category-filter-toggle:hover {
+    background: #f8f8f8;
+    border-color: #bbb;
+  }
+
+  .toggle-icon {
+    transition: transform 0.3s ease;
+  }
+
+  .category-filter-toggle[aria-expanded="true"] .toggle-icon {
+    transform: rotate(180deg);
   }
 
   .category-filter-buttons {
@@ -350,6 +389,59 @@
     gap: 10px;
   }
 
+  .mobile-only {
+    display: none;
+  }
+
+  /* Mobile responsive styles */
+  @media (max-width: 768px) {
+    .mobile-only {
+      display: flex;
+    }
+    
+    .desktop-only {
+      display: none;
+    }
+    
+    .category-filter-header {
+      text-align: left;
+      justify-content: center;
+    }
+    
+    .category-filter-title {
+      font-size: 16px;
+    }
+    
+    .category-filter-buttons {
+      display: none;
+      margin-top: 15px;
+      justify-content: flex-start;
+      gap: 8px;
+    }
+    
+    .category-filter-buttons.expanded {
+      display: flex;
+    }
+    
+    .category-filter-btn {
+      font-size: 13px;
+      padding: 8px 16px;
+    }
+  }
+
+  .mobile-only {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .mobile-only {
+      display: block;
+    }
+    
+    .desktop-only {
+      display: none;
+    }
+  }
   .category-filter-btn {
     background: #f8f8f8;
     border: 2px solid #ddd;
@@ -471,6 +563,25 @@
       max-width: 280px;
     }
 
+    /* Add spacing between articles on mobile */
+    .article-list .article {
+      margin-bottom: 20px;
+    }
+    
+    .article-list.article-layout--columns .article {
+      padding: 0 5px;
+      margin-bottom: 25px;
+    }
+    
+    .article-list.article-layout--list .article {
+      margin-bottom: 30px;
+    }
+    
+    /* Ensure proper spacing for the last article */
+    .article-list .article:last-child {
+      margin-bottom: 0;
+    }
+
     .dynamic-pagination .pagination__item {
       min-width: 2rem;
       height: 2rem;
@@ -494,6 +605,7 @@
 
 <!-- Category Filter JavaScript -->
 <script>
+  // Category filtering and mobile toggle functionality
   document.addEventListener('DOMContentLoaded', function() {
     const filterButtons = document.querySelectorAll('.category-filter-btn');
     const articles = document.querySelectorAll('.article[data-category]');
@@ -654,7 +766,48 @@
       if (articleList) {
         articleList.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
-    };
+    }
+
+  // Mobile category filter toggle functionality
+    const categoryToggle = document.querySelector('.category-filter-toggle');
+    const categoryButtons = document.querySelector('.category-filter-buttons');
+    const toggleText = categoryToggle?.querySelector('.toggle-text');
+    
+    if (categoryToggle && categoryButtons) {
+      // Set up toggle text for different languages
+      const locale = '{{ request.locale.iso_code }}';
+      const showText = {
+        'de': 'Filter anzeigen',
+        'fr': 'Afficher les filtres', 
+        'fi': 'Näytä suodattimet',
+        'default': 'Show filters'
+      };
+      const hideText = {
+        'de': 'Filter ausblenden',
+        'fr': 'Masquer les filtres',
+        'fi': 'Piilota suodattimet', 
+        'default': 'Hide filters'
+      };
+      
+      const currentShowText = showText[locale] || showText.default;
+      const currentHideText = hideText[locale] || hideText.default;
+      
+      toggleText.textContent = currentShowText;
+      
+      categoryToggle.addEventListener('click', function() {
+        const isExpanded = this.getAttribute('aria-expanded') === 'true';
+        
+        this.setAttribute('aria-expanded', !isExpanded);
+        categoryButtons.classList.toggle('expanded', !isExpanded);
+        
+        // Update toggle text
+        if (!isExpanded) {
+          toggleText.textContent = currentHideText;
+        } else {
+          toggleText.textContent = currentShowText;
+        }
+      });
+    }
   });
 </script>
 

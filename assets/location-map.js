@@ -97,9 +97,9 @@ if (!customElements.get('location-map')) {
     
     getMarkerSVG(storeType) {
     const colors = {
-    dealer: '#3699FF',        
-    rental: '#51BBA8',     
-    service: '#ED5571',      
+    dealer: '#2b7dde',     
+    rental: '#66ad78',        
+    service: '#fa6959',     
     'click-collect': '#FF9933', 
     'dealer,service': '#8B5CF6',
     'dealer&service': '#8B5CF6',

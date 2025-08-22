@@ -1183,6 +1183,13 @@ class FiveLevelDropdown {
       this.hiddenInput.value = selectedValue;
     }
     
+    // 清除验证错误（如果存在）
+    clearDropdownError(this.wrapper);
+    
+    // 触发 change 事件
+    const changeEvent = new Event('change', { bubbles: true });
+    this.hiddenInput.dispatchEvent(changeEvent);
+    
     // 关闭下拉框
     this.closeDropdown();
   }
@@ -1297,49 +1304,7 @@ class FiveLevelDropdown {
     this.updateBreadcrumb();
   }
   
-  // 添加清除选择的方法
-  clearSelection() {
-    // 清空选择路径
-    this.selectedPath = [];
-    
-    // 重置显示文本为原始占位符
-    const placeholder = this.selectionDisplay.querySelector('.placeholder');
-    if (placeholder) {
-      // 获取原始占位符文本
-      const originalPlaceholder = this.wrapper.querySelector('.current-selection').dataset.placeholder || 'Select an option';
-      placeholder.textContent = originalPlaceholder;
-      placeholder.classList.remove('has-selection');
-    }
-    
-    // 清空隐藏输入的值
-    if (this.hiddenInput) {
-      this.hiddenInput.value = '';
-    }
-    
-    // 重置到第一级并清除所有选中状态
-    this.showLevel1();
-    this.updateBreadcrumb();
-    
-    // 清除所有选中状态
-    for (let i = 1; i <= this.maxLevels; i++) {
-      const column = this.wrapper.querySelector(`.level-${i}-column`);
-      if (column) {
-        const items = column.querySelectorAll('.category-item');
-        items.forEach(item => item.classList.remove('selected'));
-      }
-    }
-  }
-  
-  // 添加确认选择的方法
-  confirmSelection() {
-    if (this.selectedPath.length > 0) {
-      // 如果有选择，则确认选择并关闭下拉框
-      this.finalizeSelection();
-    } else {
-      // 如果没有选择，只关闭下拉框
-      this.closeDropdown();
-    }
-  }
+
 }
 
 class CustomDatePicker {
@@ -1767,6 +1732,101 @@ class CustomDatePicker {
   }
 }
 
+// 全局成功弹窗函数
+function showSuccessModal() {
+  // 获取页面语言
+  const locale = document.documentElement.lang || 'en';
+  
+  // 从全局变量获取自定义文本
+  let customTitle = '';
+  let customMessage = '';
+  
+  if (window.enhancedFormSettings) {
+    customTitle = window.enhancedFormSettings.successTitle[locale] || window.enhancedFormSettings.successTitle.en;
+    customMessage = window.enhancedFormSettings.successMessage[locale] || window.enhancedFormSettings.successMessage.en;
+  }
+  
+  // 多语言文本配置（作为fallback）
+  const translations = {
+    en: {
+      title: customTitle || 'Thank you!',
+      message: customMessage || 'Your form has been submitted successfully.',
+      notification: 'A notification has been sent to our team.',
+      button: 'Close'
+    },
+    de: {
+      title: customTitle || 'Vielen Dank!',
+      message: customMessage || 'Ihr Formular wurde erfolgreich übermittelt.',
+      notification: 'Eine Benachrichtigung wurde an unser Team gesendet.',
+      button: 'Schließen'
+    },
+    fr: {
+      title: customTitle || 'Merci!',
+      message: customMessage || 'Votre formulaire a été soumis avec succès.',
+      notification: 'Une notification a été envoyée à notre équipe.',
+      button: 'Fermer'
+    },
+    fi: {
+      title: customTitle || 'Kiitos!',
+      message: customMessage || 'Lomakkeesi on lähetetty onnistuneesti.',
+      notification: 'Ilmoitus on lähetetty tiimillemme.',
+      button: 'Sulje'
+    }
+  };
+  
+  // 获取当前语言的文本，如果找不到则使用英语
+  const texts = translations[locale.toLowerCase()] || translations.en;
+  
+  // 使用自定义文本或默认文本
+  const finalTitle = texts.title;
+  const finalMessage = texts.message;
+  
+  // 创建与bubble-chat一致的模态框结构
+  const modal = document.createElement('div');
+  modal.className = 'modal';
+  modal.setAttribute('open', '');
+  modal.style.zIndex = '10000'; // 确保在最顶层
+  
+  modal.innerHTML = `
+    <div class="modal__window">
+      <button type="button" class="modal__close-btn js-close-modal" aria-label="Close">&times;</button>
+      <div class="modal__content">
+        <div class="feedback-success-message show">
+          <h3>${finalTitle}</h3>
+          <p>${finalMessage}</p>
+          <div style="background: #e3f2fd; padding: 1rem; border-radius: 8px; margin: 1.5rem 0; color: #1565c0; font-size: 0.95rem;">
+            ${texts.notification}
+          </div>
+          <button class="feedback-success-close" onclick="this.closest('.modal').remove()">${texts.button}</button>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  document.body.appendChild(modal);
+  
+  // 添加事件监听器
+  const closeBtn = modal.querySelector('.modal__close-btn');
+  const overlay = modal;
+  
+  closeBtn.addEventListener('click', function() {
+    modal.remove();
+  });
+  
+  overlay.addEventListener('click', function(e) {
+    if (e.target === this) {
+      modal.remove();
+    }
+  });
+  
+  // ESC键关闭
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      modal.remove();
+    }
+  }, { once: true });
+}
+
 // 初始化自定义日期选择器
 document.addEventListener('DOMContentLoaded', function() {
   // 添加表单验证功能
@@ -1843,9 +1903,9 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // 检查URL参数，如果表单提交成功则显示弹窗
   const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.get('contact_posted') === 'true') {
+  if (urlParams.get('enhanced_form_posted') === 'true') {
     // 不要隐藏表单，只隐藏页面上的成功消息
-    const successMessage = document.querySelector('.form-success-message');
+    const successMessage = document.querySelector('.enhanced-form-section .enhanced-form-success-message');
     if (successMessage) {
       successMessage.style.display = 'none';
     }
@@ -1889,7 +1949,16 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // 在表单提交前保存数据到localStorage
   if (contactForm) {
-    contactForm.addEventListener('submit', function() {
+    contactForm.addEventListener('submit', function(e) {
+      // 阻止默认的 Shopify 重定向行为
+      e.preventDefault();
+      
+      // 先进行表单验证
+      if (!validateForm(contactForm)) {
+        return; // 如果验证失败，不提交表单
+      }
+      
+      // 保存表单数据
       const formData = new FormData(contactForm);
       const dataToSave = {};
       
@@ -1898,78 +1967,75 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       
       localStorage.setItem('formData', JSON.stringify(dataToSave));
+      
+      // 显示提交中状态
+      const submitBtn = contactForm.querySelector('button[type="submit"]');
+      const originalText = submitBtn ? submitBtn.textContent : '';
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Submitting...';
+      }
+      
+      // 添加标志位防止重复提交
+    let isSubmitted = false;
+    
+    // 手动提交表单数据到 Shopify
+    fetch(contactForm.action, {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+      }
+    })
+    .then(response => {
+      // 恢复按钮状态
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+      }
+      
+      if (response.ok || response.status === 302) {
+        // 提交成功（包括重定向响应），显示成功弹窗
+        isSubmitted = true;
+        showSuccessModal();
+        // 重置表单
+        contactForm.reset();
+        // 清除保存的数据
+        localStorage.removeItem('formData');
+        // 清除所有错误信息
+        clearAllErrors(contactForm);
+      } else {
+        // 提交失败，显示错误信息
+        throw new Error(`Form submission failed with status: ${response.status}`);
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      
+      // 恢复按钮状态
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+      }
+      
+      // 只有在确实没有成功提交的情况下才显示错误
+      if (!isSubmitted) {
+        // 显示错误信息给用户
+        showFormError(contactForm, 'There was an error submitting your form. Please try again.');
+        
+        // 移除传统提交的回退机制，避免页面跳转
+        // 注释掉以下代码：
+        // if (error.name === 'TypeError' && error.message.includes('fetch')) {
+        //   console.log('Falling back to traditional form submission');
+        //   contactForm.removeEventListener('submit', arguments.callee);
+        //   contactForm.submit();
+        // }
+      }
+    });
     });
   }
   
-  function showSuccessModal() {
-    // 获取页面语言
-    const locale = document.documentElement.lang || 'en';
-    
-    // 多语言文本配置
-    const translations = {
-      en: {
-        title: '✅ Thank you!',
-        message: 'Your form has been submitted successfully.',
-        notification: 'A notification has been sent to our team.',
-        button: 'OK'
-      },
-      de: {
-        title: '✅ Vielen Dank!',
-        message: 'Ihr Formular wurde erfolgreich übermittelt.',
-        notification: 'Eine Benachrichtigung wurde an unser Team gesendet.',
-        button: 'OK'
-      },
-      fr: {
-        title: '✅ Merci !',
-        message: 'Votre formulaire a été soumis avec succès.',
-        notification: 'Une notification a été envoyée à notre équipe.',
-        button: 'OK'
-      },
-      fi: {
-        title: '✅ Kiitos!',
-        message: 'Lomakkeesi on lähetetty onnistuneesti.',
-        notification: 'Ilmoitus on lähetetty tiimillemme.',
-        button: 'OK'
-      }
-    };
-    
-    // 获取当前语言的文本，如果找不到则使用英语
-    const texts = translations[locale.toLowerCase()] || translations.en;
-    
-    const modal = document.createElement('div');
-    modal.className = 'success-modal';
-    modal.innerHTML = `
-      <div class="modal-overlay">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h3>${texts.title}</h3>
-          </div>
-          <div class="modal-body">
-            <p>${texts.message}</p>
-            <p class="email-notification-info">${texts.notification}</p>
-          </div>
-          <div class="modal-footer">
-            <button class="btn btn--primary" onclick="this.closest('.success-modal').remove()">${texts.button}</button>
-          </div>
-        </div>
-      </div>
-    `;
-    document.body.appendChild(modal);
-    
-    // Close on overlay click
-    modal.querySelector('.modal-overlay').addEventListener('click', function(e) {
-      if (e.target === this) {
-        modal.remove();
-      }
-    });
-    
-    // Close on Escape key
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') {
-        modal.remove();
-      }
-    });
-  }
+
 });
 
 // 表单验证功能
@@ -1977,13 +2043,127 @@ function initFormValidation() {
   const forms = document.querySelectorAll('form[action*="contact"]');
   
   forms.forEach(form => {
+    let isMouseClick = false;
+    
+    // 监听submit按钮的鼠标点击事件
+    const submitBtn = form.querySelector('.enhanced-form-submit-btn, button[type="submit"]');
+    
+    // 添加动态按钮状态控制函数
+    function updateSubmitButtonState() {
+      if (!submitBtn) return;
+      
+      const isFormValid = checkFormValidity(form);
+      
+      if (isFormValid) {
+        submitBtn.disabled = false;
+        submitBtn.style.opacity = '1';
+        submitBtn.style.cursor = 'pointer';
+        submitBtn.removeAttribute('title');
+      } else {
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = '0.5';
+        submitBtn.style.cursor = 'not-allowed';
+        submitBtn.setAttribute('title', getLocalizedText('form_incomplete'));
+      }
+    }
+    
+    // 检查表单完整性的函数
+    function checkFormValidity(form) {
+      // 检查所有必填的普通字段
+      const requiredFields = form.querySelectorAll('input[required], select[required], textarea[required]');
+      for (let field of requiredFields) {
+        if (!field.value.trim()) {
+          return false;
+        }
+        // 特殊验证邮箱格式
+        if (field.type === 'email' && field.value.trim()) {
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(field.value.trim())) {
+            return false;
+          }
+        }
+      }
+      
+      // 检查所有必填的多级下拉框
+      const requiredDropdowns = form.querySelectorAll('.multilevel-dropdown-wrapper');
+      for (let wrapper of requiredDropdowns) {
+        const hiddenInput = wrapper.querySelector('input[type="hidden"][required]');
+        if (hiddenInput && !hiddenInput.value.trim()) {
+          return false;
+        }
+      }
+      
+      return true;
+    }
+    
+    // 初始化按钮状态
+    updateSubmitButtonState();
+    
+    if (submitBtn) {
+      submitBtn.addEventListener('mousedown', function(event) {
+        // 只有鼠标左键点击才标记为有效
+        if (event.button === 0) {
+          isMouseClick = true;
+        }
+      });
+      
+      submitBtn.addEventListener('mouseup', function(event) {
+        // 鼠标抬起后重置标记
+        setTimeout(() => {
+          isMouseClick = false;
+        }, 100);
+      });
+      
+      // 阻止键盘事件触发按钮点击
+      submitBtn.addEventListener('keydown', function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        return false;
+      });
+      
+      submitBtn.addEventListener('keyup', function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        return false;
+      });
+    }
+    
     // 为表单添加提交验证
     form.addEventListener('submit', function(event) {
+      // 严格检查：只有鼠标点击才允许提交
+      if (!isMouseClick) {
+        event.preventDefault();
+        event.stopPropagation();
+        console.log('表单提交被阻止：只允许鼠标点击submit按钮提交');
+        return false;
+      }
+      
       if (!validateForm(this)) {
         event.preventDefault();
         event.stopPropagation();
         return false;
       }
+    });
+    
+    // 阻止键盘Enter键提交表单
+    form.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        event.stopPropagation();
+        return false;
+      }
+    });
+    
+    // 阻止键盘Enter键在输入框中触发提交
+    const inputs = form.querySelectorAll('input, textarea, select');
+    inputs.forEach(input => {
+      input.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          event.stopPropagation();
+          return false;
+        }
+      });
     });
     
     // 为必填字段添加实时验证
@@ -1992,12 +2172,37 @@ function initFormValidation() {
       // 失去焦点时验证
       field.addEventListener('blur', function() {
         validateField(this);
+        updateSubmitButtonState();
       });
       
       // 输入时清除错误状态
       field.addEventListener('input', function() {
         clearFieldError(this);
+        updateSubmitButtonState();
       });
+    });
+    
+    // 为必填的多级下拉框添加验证
+    const requiredDropdowns = form.querySelectorAll('.multilevel-dropdown-wrapper');
+    requiredDropdowns.forEach(wrapper => {
+      const hiddenInput = wrapper.querySelector('input[type="hidden"][required]');
+      if (hiddenInput) {
+        // 监听下拉框选择变化
+        const observer = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'value') {
+              clearDropdownError(wrapper);
+              updateSubmitButtonState();
+            }
+          });
+        });
+        observer.observe(hiddenInput, { attributes: true });
+        
+        // 监听下拉框点击事件来清除错误
+        wrapper.addEventListener('click', function() {
+          clearDropdownError(this);
+        });
+      }
     });
   });
 }
@@ -2016,9 +2221,18 @@ function validateForm(form) {
     }
   });
   
+  // 添加 multilevel_dropdown 验证
+  const requiredDropdowns = form.querySelectorAll('.multilevel-dropdown-wrapper');
+  requiredDropdowns.forEach(wrapper => {
+    const hiddenInput = wrapper.querySelector('input[type="hidden"][required]');
+    if (hiddenInput && !validateMultilevelDropdown(wrapper, hiddenInput)) {
+      isValid = false;
+    }
+  });
+  
   // 如果有错误，滚动到第一个错误字段
   if (!isValid) {
-    const firstError = form.querySelector('.field-error');
+    const firstError = form.querySelector('.field-error, .dropdown-error');
     if (firstError) {
       firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
@@ -2104,10 +2318,12 @@ function clearAllErrors(form) {
   const errorFields = form.querySelectorAll('.field-error');
   const errorMessages = form.querySelectorAll('.error-message');
   const formErrors = form.querySelectorAll('.form-error-message');
+  const dropdownErrors = form.querySelectorAll('.dropdown-error');
   
   errorFields.forEach(field => field.classList.remove('field-error'));
   errorMessages.forEach(msg => msg.remove());
   formErrors.forEach(msg => msg.remove());
+  dropdownErrors.forEach(dropdown => dropdown.classList.remove('dropdown-error'));
 }
 
 // 显示表单总体错误
@@ -2136,6 +2352,62 @@ function showFormError(form, message) {
   form.insertBefore(errorElement, form.firstChild);
 }
 
+// 验证多级下拉框
+function validateMultilevelDropdown(wrapper, hiddenInput) {
+  const value = hiddenInput.value.trim();
+  const selectionDisplay = wrapper.querySelector('.current-selection');
+  
+  // 检查是否为空
+  if (!value) {
+    showDropdownError(wrapper, getLocalizedText('field_required'));
+    return false;
+  }
+  
+  clearDropdownError(wrapper);
+  return true;
+}
+
+// 显示下拉框错误
+function showDropdownError(wrapper, message) {
+  // 添加错误样式
+  const selectionDisplay = wrapper.querySelector('.current-selection');
+  if (selectionDisplay) {
+    selectionDisplay.classList.add('dropdown-error');
+  }
+  
+  // 移除现有错误消息
+  const existingError = wrapper.querySelector('.error-message');
+  if (existingError) {
+    existingError.remove();
+  }
+  
+  // 创建错误消息元素
+  const errorElement = document.createElement('div');
+  errorElement.className = 'error-message';
+  errorElement.textContent = message;
+  errorElement.style.cssText = `
+    color: #e74c3c;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: block;
+  `;
+  
+  // 插入错误消息
+  wrapper.appendChild(errorElement);
+}
+
+// 清除下拉框错误
+function clearDropdownError(wrapper) {
+  const selectionDisplay = wrapper.querySelector('.current-selection');
+  if (selectionDisplay) {
+    selectionDisplay.classList.remove('dropdown-error');
+  }
+  const errorMessage = wrapper.querySelector('.error-message');
+  if (errorMessage) {
+    errorMessage.remove();
+  }
+}
+
 // 获取本地化文本
 function getLocalizedText(key) {
   const locale = document.documentElement.lang || 'en';
@@ -2145,25 +2417,33 @@ function getLocalizedText(key) {
       field_required: 'This field is required',
       email_invalid: 'Please enter a valid email address',
       phone_invalid: 'Please enter a valid phone number',
-      form_validation_error: 'Please fill in all required fields correctly'
+      form_validation_error: 'Please fill in all required fields correctly',
+      dropdown_required: 'Please select an option',
+      form_incomplete: 'Please fill in all required fields before submitting'
     },
     de: {
       field_required: 'Dieses Feld ist erforderlich',
       email_invalid: 'Bitte geben Sie eine gültige E-Mail-Adresse ein',
       phone_invalid: 'Bitte geben Sie eine gültige Telefonnummer ein',
-      form_validation_error: 'Bitte füllen Sie alle Pflichtfelder korrekt aus'
+      form_validation_error: 'Bitte füllen Sie alle Pflichtfelder korrekt aus',
+      dropdown_required: 'Bitte wählen Sie eine Option',
+      form_incomplete: 'Bitte füllen Sie alle Pflichtfelder aus, bevor Sie das Formular absenden'
     },
     fr: {
       field_required: 'Ce champ est obligatoire',
       email_invalid: 'Veuillez saisir une adresse e-mail valide',
       phone_invalid: 'Veuillez saisir un numéro de téléphone valide',
-      form_validation_error: 'Veuillez remplir correctement tous les champs obligatoires'
+      form_validation_error: 'Veuillez remplir correctement tous les champs obligatoires',
+      dropdown_required: 'Veuillez sélectionner une option',
+      form_incomplete: 'Veuillez remplir tous les champs obligatoires avant de soumettre'
     },
     fi: {
       field_required: 'Tämä kenttä on pakollinen',
       email_invalid: 'Syötä kelvollinen sähköpostiosoite',
       phone_invalid: 'Syötä kelvollinen puhelinnumero',
-      form_validation_error: 'Täytä kaikki pakolliset kentät oikein'
+      form_validation_error: 'Täytä kaikki pakolliset kentät oikein',
+      dropdown_required: 'Valitse vaihtoehto',
+      form_incomplete: 'Täytä kaikki pakolliset kentät ennen lähettämistä'
     }
   };
   
@@ -2184,7 +2464,12 @@ function addValidationStyles() {
       box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.3) !important;
     }
     
-    .error-message {
+    .dropdown-error .current-selection {
+      border-color: #e74c3c !important;
+      box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.2) !important;
+    }
+    
+    .error-message, .dropdown-error-message {
       animation: fadeIn 0.3s ease-in;
     }
     

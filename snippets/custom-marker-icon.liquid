@@ -18,20 +18,20 @@
 {%- comment -%} 设置颜色 {%- endcomment -%}
 {%- if has_multiple_types -%}
   {%- if store_types contains 'dealer' and store_types contains 'service' -%}
-    {%- assign marker_color = '#3699FF' -%}
+    {%- assign marker_color = '#2b7dde' -%}
   {%- elsif store_types contains 'dealer' and store_types contains 'rental' -%}
-    {%- assign marker_color = '#51BBA8' -%}
+    {%- assign marker_color = '#66ad78' -%}
   {%- else -%}
-    {%- assign marker_color = '#3699FF' -%}
+    {%- assign marker_color = '#2b7dde' -%}
   {%- endif -%}
 {%- else -%}
   {%- case store_types[0] -%}
     {%- when 'dealer' -%}
-      {%- assign marker_color = '#3699FF' -%}
+      {%- assign marker_color = '#2b7dde' -%}
     {%- when 'rental' -%}
-      {%- assign marker_color = '#51BBA8' -%}
+      {%- assign marker_color = '#66ad78' -%}
     {%- when 'service' -%}
-      {%- assign marker_color = '#ED5571' -%}
+      {%- assign marker_color = '#fa6959' -%}
     {%- when 'click-collect' -%}
       {%- assign marker_color = '#f2a112' -%}
     {%- else -%}
@@ -56,11 +56,11 @@
 
 {%- case store_type -%}
   {%- when 'dealer' -%}
-      {%- assign marker_color = '#3699FF' -%}
+      {%- assign marker_color = '#2b7dde' -%}
     {%- when 'rental' -%}
-      {%- assign marker_color = '#51BBA8' -%}
+      {%- assign marker_color = '#66ad78' -%}
     {%- when 'service' -%}
-      {%- assign marker_color = '#ED5571' -%}
+      {%- assign marker_color = '#fa6959' -%}
     {%- when 'click-collect' -%}
       {%- assign marker_color = '#f2a112' -%}
     {%- else -%}

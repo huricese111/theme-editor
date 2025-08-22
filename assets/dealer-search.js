@@ -482,19 +482,19 @@ document.addEventListener('DOMContentLoaded', function () {
       // 单一类型保持原有颜色
       switch (storeTypes[0]) {
         case 'dealer':
-          markerColor = '#3699FF';
+          markerColor = '#2b7dde';
           break;
         case 'rental':
-          markerColor = '#51BBA8';
+          markerColor = '#66ad78';
           break;
         case 'service':
-          markerColor = '#ED5571';
+          markerColor = '#fa6959';
           break;
         case 'click-collect':
           markerColor = '#FF9933';
           break;
         default:
-          markerColor = '#3699FF';
+          markerColor = '#2b7dde';
           break;
       }
     }
@@ -1331,10 +1331,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // 统一的displayResults函数（支持分页）
   function displayResults() {
+    // 如果没有结果，显示"No results"消息
+    if (filteredLocations.length === 0) {
+      displayNoResults();
+      return;
+    }
+    
+    // 清除任何现有的"No results"消息
+    const noResultsMessage = document.querySelector('.no-results-message');
+    if (noResultsMessage) {
+      noResultsMessage.remove();
+    }
+    
     // 计算当前页面要显示的项目
     const startIndex = (currentPage - 1) * pageSize;
     const endIndex = startIndex + pageSize;
     const cardsToShow = filteredLocations.slice(startIndex, endIndex);
+    
+    // 保存当前焦点元素
+    const activeElement = document.activeElement;
+    const shouldRestoreFocus = activeElement && activeElement.id === 'location-search';
     
     // 使用requestAnimationFrame确保DOM更新的正确时序
     requestAnimationFrame(() => {
@@ -1344,27 +1360,9 @@ document.addEventListener('DOMContentLoaded', function () {
         card.classList.remove('active');
       });
       
-      // 重新排列DOM元素的顺序以反映排序结果
-      const locationResults = document.getElementById('location-results');
-      
-      // 先移除所有卡片（但保留其他元素如加载指示器）
-      const nonCardElements = [];
-      Array.from(locationResults.children).forEach(child => {
-        if (!child.classList.contains('location-card')) {
-          nonCardElements.push(child);
-        } else {
-          child.remove();
-        }
-      });
-      
-      // 按排序后的顺序重新添加卡片
-      filteredLocations.forEach((card) => {
-        locationResults.appendChild(card);
-      });
-      
-      // 重新添加非卡片元素到开头
-      nonCardElements.forEach(element => {
-        locationResults.insertBefore(element, locationResults.firstChild);
+      // 使用CSS order属性重新排序，而不是移除和重新添加DOM元素
+      filteredLocations.forEach((card, index) => {
+        card.style.order = index;
       });
       
       // 立即显示当前页面的卡片
@@ -1376,6 +1374,16 @@ document.addEventListener('DOMContentLoaded', function () {
       if (cardsToShow.length > 0) {
         cardsToShow[0].classList.add('active');
         updateMapForCard(cardsToShow[0]);
+      }
+      
+      // 恢复输入框焦点
+      if (shouldRestoreFocus) {
+        setTimeout(() => {
+          const locationSearch = document.getElementById('location-search');
+          if (locationSearch) {
+            locationSearch.focus();
+          }
+        }, 0);
       }
     });
     
@@ -1610,15 +1618,29 @@ document.addEventListener('DOMContentLoaded', function () {
     hideLoadingState();
     filteredLocations = [];
     
-    locationResults.innerHTML = `
-      <div class="no-results-message">
+    // 隐藏所有现有的商店卡片，但不删除它们
+    allLocations.forEach((card) => {
+      card.classList.add('pagination-hidden');
+      card.classList.remove('active');
+    });
+    
+    // 检查是否已经存在"No results"消息
+    let noResultsMessage = document.querySelector('.no-results-message');
+    if (!noResultsMessage) {
+      // 创建"No results"消息元素
+      noResultsMessage = document.createElement('div');
+      noResultsMessage.className = 'no-results-message';
+      noResultsMessage.innerHTML = `
         <div class="no-results-icon">🔍</div>
         <div class="no-results-text">
           <strong>No stores found</strong><br>
           Please try a different search term or check your spelling.
         </div>
-      </div>
-    `;
+      `;
+      
+      // 将消息添加到容器的开头
+      locationResults.insertBefore(noResultsMessage, locationResults.firstChild);
+    }
     
     updatePagination();
   }
@@ -2185,7 +2207,22 @@ document.addEventListener('DOMContentLoaded', function () {
   function clearSearch() {
     locationSearch.value = '';
     filterCheckboxes.forEach((cb) => (cb.checked = false));
+    
+    // 完全重置搜索状态
     filteredLocations = [...allLocations];
+    userCurrentLocation = null;
+    currentPage = 1;
+    
+    // 清除"No results"消息
+    const noResultsMessage = document.querySelector('.no-results-message');
+    if (noResultsMessage) {
+      noResultsMessage.remove();
+    }
+    
+    // 清除加载状态
+    hideLoadingState();
+    
+    // 重新显示所有结果
     displayResults();
     hideSuggestions();
   }
@@ -2240,9 +2277,10 @@ document.addEventListener('DOMContentLoaded', function () {
       clearSearch();
     } else {
       showSuggestions(this.value);
-      searchTimeout = setTimeout(() => {
-        performSearch(false);
-      }, 300);
+      // 移除自动搜索逻辑，只显示建议
+      // searchTimeout = setTimeout(() => {
+      //   performSearch(false);
+      // }, 300);
     }
   });
 

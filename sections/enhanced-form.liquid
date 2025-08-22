@@ -77,20 +77,16 @@
       {% endif %}
 
       <div class="account-form">
-        {% form 'contact', novalidate: true %}
-          <!-- Add recipient email routing -->
-          {% if section.settings.recipient_email != blank %}
-            <input type="hidden" name="contact[recipient]" value="{{ section.settings.recipient_email }}">
-          {% endif %}
+        {% form 'contact', id: 'enhanced-contact-form', class: 'enhanced-form', novalidate: true %}
+
 
           <!-- Add email subject with form identifier -->
           <input
             type="hidden"
-            name="contact[subject]"
+            name="contact[subject]"image.png
             value="{{ form_title_text | default: 'Contact us' }} - {{ shop.name }}"
           >
 
-          <!-- Add formatted message intro -->
           <input
             type="hidden"
             name="contact[message_intro]"
@@ -98,36 +94,54 @@
           >
 
           {% if form.posted_successfully? %}
-            <div class="form-success-message" style="display: none;">
-              {%- liquid
-                assign success_title_text = section.settings.success_title_en | default: 'Thank you!'
-                if section.settings.success_title_de != blank and request.locale.iso_code == 'de'
-                  assign success_title_text = section.settings.success_title_de
-                elsif section.settings.success_title_fr != blank and request.locale.iso_code == 'fr'
-                  assign success_title_text = section.settings.success_title_fr
-                elsif section.settings.success_title_fi != blank and request.locale.iso_code == 'fi'
-                  assign success_title_text = section.settings.success_title_fi
-                endif
+            <script>
+              // 不进行页面跳转，直接在当前页面显示成功弹窗
+              document.addEventListener('DOMContentLoaded', function() {
+                {%- liquid
+                  assign success_title_text = section.settings.success_title_en | default: 'Thank you!'
+                  if section.settings.success_title_de != blank and request.locale.iso_code == 'de'
+                    assign success_title_text = section.settings.success_title_de
+                  elsif section.settings.success_title_fr != blank and request.locale.iso_code == 'fr'
+                    assign success_title_text = section.settings.success_title_fr
+                  elsif section.settings.success_title_fi != blank and request.locale.iso_code == 'fi'
+                    assign success_title_text = section.settings.success_title_fi
+                  endif
 
-                assign success_message_text = section.settings.success_message_en | default: 'Your form has been submitted successfully.'
-                if section.settings.success_message_de != blank and request.locale.iso_code == 'de'
-                  assign success_message_text = section.settings.success_message_de
-                elsif section.settings.success_message_fr != blank and request.locale.iso_code == 'fr'
-                  assign success_message_text = section.settings.success_message_fr
-                elsif section.settings.success_message_fi != blank and request.locale.iso_code == 'fi'
-                  assign success_message_text = section.settings.success_message_fi
-                endif
-              -%}
-              <h3>{{ success_title_text | escape }}</h3>
-              <p>{{ success_message_text | escape }}</p>
-              {% if section.settings.recipient_email != blank %}
-                <p class="email-notification-info">
-                  A notification has been sent to {{ section.settings.recipient_email }}.
-                </p>
-              {% else %}
-                <p class="email-notification-info">A notification has been sent to our team.</p>
-              {% endif %}
-            </div>
+                  assign success_message_text = section.settings.success_message_en | default: 'Your form has been submitted successfully.'
+                  if section.settings.success_message_de != blank and request.locale.iso_code == 'de'
+                    assign success_message_text = section.settings.success_message_de
+                  elsif section.settings.success_message_fr != blank and request.locale.iso_code == 'fr'
+                    assign success_message_text = section.settings.success_message_fr
+                  elsif section.settings.success_message_fi != blank and request.locale.iso_code == 'fi'
+                    assign success_message_text = section.settings.success_message_fi
+                  endif
+                -%}
+                // 传递成功消息文本到JavaScript
+                window.enhancedFormSettings = {
+                  successTitle: {
+                    en: '{{ success_title_text | escape }}',
+                    de: '{{ section.settings.success_title_de | default: success_title_text | escape }}',
+                    fr: '{{ section.settings.success_title_fr | default: success_title_text | escape }}',
+                    fi: '{{ section.settings.success_title_fi | default: success_title_text | escape }}'
+                  },
+                  successMessage: {
+                    en: '{{ success_message_text | escape }}',
+                    de: '{{ section.settings.success_message_de | default: success_message_text | escape }}',
+                    fr: '{{ section.settings.success_message_fr | default: success_message_text | escape }}',
+                    fi: '{{ section.settings.success_message_fi | default: success_message_text | escape }}'
+                  }
+                };
+                
+                // 直接显示成功弹窗
+                showSuccessModal();
+                
+                // 重置表单
+                const form = document.getElementById('enhanced-contact-form');
+                if (form) {
+                  form.reset();
+                }
+              });
+            </script>
           {% endif %}
 
           {%- render 'form-errors', form: form -%}
@@ -613,7 +627,7 @@
                       {% if block.settings.required %}
                         required
                       {% endif %}
-                      value="{{ form.building_number }}"
+                      value="{{ form.building_number | default: '' }}"
                       placeholder="{{ placeholder_text | escape }}"
                     >
 
@@ -1299,6 +1313,26 @@
   </div>
 </section>
 
+<script>
+  // 只在表单未成功提交时设置默认的enhancedFormSettings
+  {% unless form.posted_successfully? %}
+    window.enhancedFormSettings = {
+      successTitle: {
+        en: {{ section.settings.success_title_en | default: 'Thank you!' | json }},
+        de: {{ section.settings.success_title_de | default: 'Vielen Dank!' | json }},
+        fr: {{ section.settings.success_title_fr | default: 'Merci!' | json }},
+        fi: {{ section.settings.success_title_fi | default: 'Kiitos!' | json }}
+      },
+      successMessage: {
+        en: {{ section.settings.success_message_en | default: 'Your form has been submitted successfully.' | json }},
+        de: {{ section.settings.success_message_de | default: 'Ihr Formular wurde erfolgreich übermittelt.' | json }},
+        fr: {{ section.settings.success_message_fr | default: 'Votre formulaire a été soumis avec succès.' | json }},
+        fi: {{ section.settings.success_message_fi | default: 'Lomakkeesi on lähetetty onnistuneesti.' | json }}
+      }
+    };
+  {% endunless %}
+</script>
+
 {{ 'enhanced-form.js' | asset_url | script_tag }}
 
 {% schema %}
@@ -1350,12 +1384,6 @@
       "id": "use_columns",
       "label": "Two column layout",
       "default": true
-    },
-    {
-      "type": "text",
-      "id": "recipient_email",
-      "label": "Recipient Email Address",
-      "info": "Email address to receive form submissions. Leave blank to use store email."
     },
     {
       "type": "richtext",
