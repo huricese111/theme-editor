@@ -323,11 +323,11 @@
     {% assign feedback_subtitle = section.settings.feedback_subtitle_de | default: 'Ihr Feedback hilft uns, besser zu werden.' %}
     {% assign close_label = 'Feedback-Formular schließen' %}
     {% assign q1_label = section.settings.q1_label_de | default: 'Wie zufrieden waren Sie overall mit Hepha.com?' %}
-    {% assign rating_very_poor = 'Sehr unzufrieden' %}
+    {% assign rating_very_poor = 'Hate' %}
     {% assign rating_poor = 'Eher unzufrieden' %}
     {% assign rating_average = 'Zufrieden' %}
     {% assign rating_good = 'Sehr zufrieden' %}
-    {% assign rating_excellent = 'Äußerst zufrieden' %}
+    {% assign rating_excellent = 'Love' %}
     {% assign rating_error = 'Bitte wählen Sie Ihre Bewertung' %}
     {% assign q2_title = section.settings.q2_title_de | default: 'Auf welche Probleme sind Sie gestoßen?' %}
     {% assign issue_error = 'Bitte wählen Sie einen Problemtyp' %}
@@ -340,11 +340,11 @@
     {% assign feedback_subtitle = section.settings.feedback_subtitle_fr | default: 'Vos commentaires sont importants pour nous et nous aident à améliorer la qualité de notre service' %}
     {% assign close_label = 'Fermer le formulaire de commentaires' %}
     {% assign q1_label = section.settings.q1_label_fr | default: 'Veuillez évaluer votre expérience globale sur Hepha.com' %}
-    {% assign rating_very_poor = 'Très insatisfait' %}
+    {% assign rating_very_poor = 'Hate' %}
     {% assign rating_poor = 'Quelque peu insatisfait' %}
     {% assign rating_average = 'Satisfait' %}
     {% assign rating_good = 'Très satisfait' %}
-    {% assign rating_excellent = 'Extrêmement satisfait' %}
+    {% assign rating_excellent = 'Love' %}
     {% assign rating_error = 'Veuillez sélectionner votre évaluation' %}
     {% assign q2_title = section.settings.q2_title_fr | default: ' Veuillez nous dire quels problèmes vous avez rencontrés' %}
     {% assign issue_error = 'Veuillez sélectionner un type de problème' %}
@@ -357,11 +357,11 @@
     {% assign feedback_subtitle = section.settings.feedback_subtitle_fi | default: 'Palautteesi on meille tärkeää ja auttaa meitä parantamaan palvelumme laatua.' %}
     {% assign close_label = 'Sulje palautelomake' %}
     {% assign q1_label = section.settings.q1_label_fi | default: 'Kuinka tyytyväinen olit kaiken kaikkiaan Hepha.com-sivustoon?' %}
-    {% assign rating_very_poor = 'Erittäin tyytymätön' %}
+    {% assign rating_very_poor = 'Hate' %}
     {% assign rating_poor = 'Jonkin verran tyytymätön' %}
     {% assign rating_average = 'Tyytyväinen' %}
     {% assign rating_good = 'Erittäin tyytyväinen' %}
-    {% assign rating_excellent = 'Äärimmäisen tyytyväinen' %}
+    {% assign rating_excellent = 'Love' %}
     {% assign rating_error = 'Valitse arviointisi' %}
     {% assign q2_title = section.settings.q2_title_fi | default: 'Kuvaile ratkaisematon kysymyksesi (vastaamme 24 tunnin sisällä arkipäivisin):' %}
     {% assign issue_error = 'Valitse ongelmatyyppi' %}
@@ -375,11 +375,11 @@
     {% assign feedback_subtitle = section.settings.feedback_subtitle_en | default: 'Your feedback is important to us and helps us improve our service quality.' %}
     {% assign close_label = 'Close feedback form' %}
     {% assign q1_label = section.settings.q1_label_en | default: 'How satisfied were you overall with Hepha.com?' %}
-    {% assign rating_very_poor = 'Very dissatisfied' %}
+    {% assign rating_very_poor = 'Hate' %}
     {% assign rating_poor = 'Somewhat dissatisfied' %}
     {% assign rating_average = 'Satisfied' %}
     {% assign rating_good = 'Very satisfied' %}
-    {% assign rating_excellent = 'Extremely satisfied' %}
+    {% assign rating_excellent = 'Love' %}
     {% assign rating_error = 'Please select your rating' %}
     {% assign q2_title = section.settings.q2_title_en | default: "Describe your unresolved question (we'll respond within 24h on weekdays):" %}
     {% assign issue_error = 'Please select an issue type' %}
@@ -530,7 +530,8 @@
   }
 
   .rating-stars {
-    display: flex;
+    display: grid;
+    grid-template-rows: auto auto;
     gap: 8px;
     margin-bottom: 8px;
     justify-content: center;
@@ -538,6 +539,12 @@
     background: #ffffff;
     border-radius: 12px;
     border: 2px solid #e2e8f0;
+  }
+  
+  .rating-stars-row {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
   }
 
   .rating-star {
@@ -567,12 +574,27 @@
     fill: #fbbf24;
   }
 
+  .rating-container {
+    position: relative;
+  }
+  
   .rating-labels {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin-top: 4px;
+  }
+  
+  .rating-labels span {
     font-size: 12px;
     color: #64748b;
-    margin-top: 4px;
+    text-align: center;
+  }
+  
+  .rating-labels span:nth-child(2),
+  .rating-labels span:nth-child(3),
+  .rating-labels span:nth-child(4) {
+    visibility: hidden;
   }
 
   /*  Problem Report Panel */
@@ -966,40 +988,44 @@
           <!-- Overall Experience Rating -->
           <div class="rating-section">
             <label class="rating-label">{{ q1_label }}</label>
-            <div class="rating-stars" id="ratingStars">
-              <button type="button" class="rating-star" data-rating="1" aria-label="1 star">
-                <svg viewBox="0 0 24 24">
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                </svg>
-              </button>
-              <button type="button" class="rating-star" data-rating="2" aria-label="2 stars">
-                <svg viewBox="0 0 24 24">
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                </svg>
-              </button>
-              <button type="button" class="rating-star" data-rating="3" aria-label="3 stars">
-                <svg viewBox="0 0 24 24">
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                </svg>
-              </button>
-              <button type="button" class="rating-star" data-rating="4" aria-label="4 stars">
-                <svg viewBox="0 0 24 24">
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                </svg>
-              </button>
-              <button type="button" class="rating-star" data-rating="5" aria-label="5 stars">
-                <svg viewBox="0 0 24 24">
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                </svg>
-              </button>
+            <div class="rating-container">
+              <div class="rating-stars" id="ratingStars">
+                <div class="rating-stars-row">
+                  <button type="button" class="rating-star" data-rating="1" aria-label="1 star">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                  </button>
+                  <button type="button" class="rating-star" data-rating="2" aria-label="2 stars">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                  </button>
+                  <button type="button" class="rating-star" data-rating="3" aria-label="3 stars">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                  </button>
+                  <button type="button" class="rating-star" data-rating="4" aria-label="4 stars">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                  </button>
+                  <button type="button" class="rating-star" data-rating="5" aria-label="5 stars">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                  </button>
+                </div>
+                <div class="rating-labels">
+                  <span>{{ rating_very_poor }}</span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span>{{ rating_excellent }}</span>
+                </div>
+              </div>
             </div>
-            {% comment %} <div class="rating-labels">
-              <span>{{ rating_very_poor }}</span>
-              <span>{{ rating_poor }}</span>
-              <span>{{ rating_average }}</span>
-              <span>{{ rating_good }}</span>
-              <span>{{ rating_excellent }}</span>
-            </div> {% endcomment %}
             <div class="error-message" id="ratingError">{{ rating_error }}</div>
           </div>
 
@@ -1062,11 +1088,11 @@
   const translations = {
     'en': {
       ratingTexts: {
-        1: 'Very dissatisfied',
+        1: 'Hate',
         2: 'Somewhat dissatisfied', 
         3: 'Satisfied',
         4: 'Very satisfied',
-        5: 'Extremely satisfied'
+        5: 'Love'
       },
       issueTexts: {
         'page-loading-slow': 'Page loading speed issues',
@@ -1167,11 +1193,11 @@
     },
     'de': {
       ratingTexts: {
-        1: 'Sehr unzufrieden',
+        1: 'Hate',
         2: 'Eher unzufrieden', 
         3: 'Zufrieden',
         4: 'Sehr zufrieden',
-        5: 'Äußerst zufrieden'
+        5: 'Love'
       },
       issueTexts: {
         'page-loading-slow': 'Probleme mit der Seitenladegeschwindigkeit',
@@ -1273,11 +1299,11 @@
     },
     'fr': {
       ratingTexts: {
-        1: 'Très insatisfait',
+        1: 'Hate',
         2: 'Quelque peu insatisfait', 
         3: 'Satisfait',
         4: 'Très satisfait',
-        5: 'Extrêmement satisfait'
+        5: 'Love'
       },
       issueTexts: {
         'page-loading-slow': 'Problèmes de vitesse de chargement des pages',
@@ -1378,11 +1404,11 @@
     },
     'fi': {
       ratingTexts: {
-        1: 'Erittäin tyytymätön',
+        1: 'Hate',
         2: 'Jonkin verran tyytymätön', 
         3: 'Tyytyväinen',
         4: 'Erittäin tyytyväinen',
-        5: 'Äärimmäisen tyytyväinen'
+        5: 'Love'
       },
       issueTexts: {
         'page-loading-slow': 'Sivun latausnopeuden ongelmat',
