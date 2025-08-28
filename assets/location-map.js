@@ -171,7 +171,8 @@ if (!customElements.get('location-map')) {
         dealer: '#2b7dde',     
         rental: '#66ad78',        
         service: '#fa6959',     
-        'click-collect': '#FF9933'
+        'click-collect': '#FF9933',
+        search: '#9C27B0'  // Purple color for search locations
       };
       
       // Simple color lookup for single store types only
@@ -179,6 +180,11 @@ if (!customElements.get('location-map')) {
       
       const uniqueId = `map-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
       const clipId = `clip-${uniqueId}`;
+      
+      // Different icon for search locations
+      const iconPath = storeType === 'search' ? 
+        'M27.1 12.6C27.0 12.5 26.9 12.5 26.9 12.5C25.9 13.3 21.2 18.2 21.2 18.2C20.5 18.9 19.3 18.9 18.6 18.2C17.9 17.5 17.9 16.4 18.6 15.7C18.6 15.7 20.7 13.6 22.1 12.2C22.8 11.5 23.2 10.6 23.2 9.6L23.2 5.3C23.2 5.2 23.1 5.1 23.0 5.2L18.2 10.0C18.1 10.1 18.0 10.0 18.0 9.9V7.3C18.0 7.2 17.9 7.1 17.8 7.2L13.9 11.2H13.9C10.7 14.4 10.8 19.6 14.0 22.8C17.2 26.0 22.6 25.9 25.8 22.8C28.7 20.0 29.1 15.8 27.1 12.6Z' :
+        'M20 8C16.7 8 14 10.7 14 14C14 17.3 16.7 20 20 20C23.3 20 26 17.3 26 14C26 10.7 23.3 8 20 8ZM20 17C18.3 17 17 15.7 17 14C17 12.3 18.3 11 20 11C21.7 11 23 12.3 23 14C23 15.7 21.7 17 20 17Z'; // Search icon vs location pin
       
       return `<svg width="40" height="50" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg">
         <defs>
@@ -189,7 +195,7 @@ if (!customElements.get('location-map')) {
         <g clip-path="url(#${clipId})">
         <path d="M34.4 13.3C33.6 6.1 27.4 0.6 20 0.6C12.6 0.6 6.4 6.1 5.6 13.3C5.5 13.9 5.4 14.5 5.4 15.0C5.3 17.5 6.0 20.0 7.1 22.3C7.6 23.3 8.2 24.3 8.8 25.3L17.9 38.9C18.5 39.6 19.2 40.0 20.0 40.0C20.8 40.0 21.5 39.6 22.1 38.9L31.2 25.3C31.8 24.3 32.4 23.3 32.9 22.3C34.9 19.5 35.1 16.4 34.4 13.3Z" fill="${color}"/>
         
-        <path d="M27.1 12.6C27.0 12.5 26.9 12.5 26.9 12.5C25.9 13.3 21.2 18.2 21.2 18.2C20.5 18.9 19.3 18.9 18.6 18.2C17.9 17.5 17.9 16.4 18.6 15.7C18.6 15.7 20.7 13.6 22.1 12.2C22.8 11.5 23.2 10.6 23.2 9.6L23.2 5.3C23.2 5.2 23.1 5.1 23.0 5.2L18.2 10.0C18.1 10.1 18.0 10.0 18.0 9.9V7.3C18.0 7.2 17.9 7.1 17.8 7.2L13.9 11.2H13.9C10.7 14.4 10.8 19.6 14.0 22.8C17.2 26.0 22.6 25.9 25.8 22.8C28.7 20.0 29.1 15.8 27.1 12.6Z" fill="white"/>
+        <path d="${iconPath}" fill="white"/>
         
         </g>
         </svg>`;
@@ -198,25 +204,38 @@ if (!customElements.get('location-map')) {
     updateMap(address, storeType = 'dealer') {
       if (!this.geocoder || !this.map) return;
       
-      // Handle only single store types
-      const processedStoreType = Array.isArray(storeType) ? storeType[0] : storeType;
+      // Handle search location type
+      const processedStoreType = storeType === 'search-location' ? 'search' : 
+                           (Array.isArray(storeType) ? storeType[0] : storeType);
+      
+      console.log('Updating map for address:', address, 'with store type:', processedStoreType);
       
       this.geocoder.geocode({ address: address })
         .then(({ results }) => {
           if (results[0]) {
-            this.map.setCenter(results[0].geometry.location);
+            const position = results[0].geometry.location;
+            console.log('Map updated to position:', position.lat(), position.lng());
+            
+            this.map.setCenter(position);
             
             // Remove old marker
             if (this.marker) {
               this.marker.setMap(null);
             }
             
-            // Use single store type only
-            this.marker = this.createCustomMarker(processedStoreType, results[0].geometry.location);
+            // Create marker with appropriate type
+            this.marker = this.createCustomMarker(processedStoreType, position);
+            
+            // Set appropriate zoom level for search locations
+            if (storeType === 'search-location') {
+              this.map.setZoom(12); // Wider view for search locations
+            } else {
+              this.map.setZoom(16); // Closer view for specific stores
+            }
           }
         })
         .catch((error) => {
-          console.error('Geocoding failed:', error);
+          console.error('Geocoding failed for map update:', error);
         });
     }
 

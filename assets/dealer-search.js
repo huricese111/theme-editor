@@ -818,11 +818,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const geocoder = new google.maps.Geocoder();
     
     const geocodeOptions = {
-      address: address,
-      // 添加组件限制以提高准确性和速度
-      componentRestrictions: {
-        country: ['DE', 'AT', 'CH', 'NL', 'BE', 'FR'] // 限制在欧洲主要国家
-      }
+      address: address
+      // Remove or expand component restrictions for better global coverage
+      // componentRestrictions: {
+      //   country: ['DE', 'AT', 'CH', 'NL', 'BE', 'FR'] // Too restrictive
+      // }
     };
     
     geocoder.geocode(geocodeOptions, function(results, status) {
@@ -831,17 +831,44 @@ document.addEventListener('DOMContentLoaded', function () {
         const result = {
           lat: location.lat(),
           lng: location.lng(),
-          timestamp: Date.now() // 添加时间戳用于缓存过期
+          timestamp: Date.now(), // 添加时间戳用于缓存过期
+          formatted_address: results[0].formatted_address // Add formatted address for verification
         };
         
         // 缓存结果
         coordinatesCache[cacheKey] = result;
         saveCoordinatesCache();
         
+        console.log('Geocoded address:', address, 'to coordinates:', result);
         callback(result);
       } else {
         console.error('Geocoding failed for "' + address + '":', status);
-        callback(null);
+        // Try fallback without restrictions if initial geocoding fails
+        if (geocodeOptions.componentRestrictions) {
+          delete geocodeOptions.componentRestrictions;
+          geocoder.geocode(geocodeOptions, function(fallbackResults, fallbackStatus) {
+            if (fallbackStatus === 'OK' && fallbackResults[0]) {
+              const location = fallbackResults[0].geometry.location;
+              const result = {
+                lat: location.lat(),
+                lng: location.lng(),
+                timestamp: Date.now(),
+                formatted_address: fallbackResults[0].formatted_address
+              };
+              
+              coordinatesCache[cacheKey] = result;
+              saveCoordinatesCache();
+              
+              console.log('Fallback geocoded address:', address, 'to coordinates:', result);
+              callback(result);
+            } else {
+              console.error('Fallback geocoding also failed for "' + address + '":', fallbackStatus);
+              callback(null);
+            }
+          });
+        } else {
+          callback(null);
+        }
       }
     });
   }
@@ -1558,8 +1585,13 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // 新增函数：更新地图显示当前页面所有结果的标记
-  function updateMapWithAllCurrentPageMarkers(cardsToShow) {
+  function updateMapWithAllCurrentPageMarkers() {
     if (mapType === 'dynamic' && window.updateDynamicMapWithMultipleMarkers) {
+      // 计算当前页面要显示的项目
+      const startIndex = (currentPage - 1) * pageSize;
+      const endIndex = startIndex + pageSize;
+      const cardsToShow = filteredLocations.slice(startIndex, endIndex);
+      
       // 准备当前页面所有位置的数据
       const locations = cardsToShow.map(card => {
         const address = card.getAttribute('data-address');
@@ -1583,9 +1615,16 @@ document.addEventListener('DOMContentLoaded', function () {
       
       // 调用新的地图更新函数
       window.updateDynamicMapWithMultipleMarkers(locations);
-    } else if (cardsToShow.length > 0) {
-      // 如果是embed地图或者没有多标记功能，回退到显示第一个位置
-      updateMapForCard(cardsToShow[0]);
+    } else {
+      // 计算当前页面要显示的项目
+      const startIndex = (currentPage - 1) * pageSize;
+      const endIndex = startIndex + pageSize;
+      const cardsToShow = filteredLocations.slice(startIndex, endIndex);
+      
+      if (cardsToShow.length > 0) {
+        // 如果是embed地图或者没有多标记功能，回退到显示第一个位置
+        updateMapForCard(cardsToShow[0]);
+      }
     }
   }
 
@@ -1678,6 +1717,13 @@ document.addEventListener('DOMContentLoaded', function () {
       geocodeAddress(searchTerm, function(userLocation) {
         if (userLocation) {
           userCurrentLocation = userLocation;
+          console.log('User location geocoded for nearest stores:', userLocation);
+          
+          // Update map to show the searched location
+          if (mapType === 'dynamic' && window.updateDynamicMap) {
+            window.updateDynamicMap(searchTerm, 'search-location');
+          }
+          
           recommendNearestStores(10);
         } else {
           displayNoResults();
@@ -1686,22 +1732,45 @@ document.addEventListener('DOMContentLoaded', function () {
     } else {
       filteredLocations = textResults;
       
-      // 如果有搜索词且找到了结果，将搜索词作为中心点计算距离
+      // If search term exists and results found, use search term as center point
       if (searchTerm.trim()) {
         geocodeAddress(searchTerm, function(searchLocation) {
           if (searchLocation) {
             userCurrentLocation = searchLocation;
-            // 计算并显示从搜索地点到各个商店的距离
+            console.log('Search location geocoded:', searchLocation);
+            
+            // Update map to show the searched location first
+            if (mapType === 'dynamic' && window.updateDynamicMap) {
+              window.updateDynamicMap(searchTerm, 'search-location');
+            }
+            
+            // Calculate distances from search location to stores
             calculateDistancesProgressively(filteredLocations, () => {
               displayResults();
+              
+              // Update map with all current page markers after displaying results
+              setTimeout(() => {
+                updateMapWithAllCurrentPageMarkers();
+              }, 500);
             });
           } else {
-            // 如果无法获取搜索地点的坐标，直接显示结果
+            // If unable to get search location coordinates, display results directly
+            console.warn('Could not geocode search term:', searchTerm);
             displayResults();
+            
+            // Still try to update map with current results
+            setTimeout(() => {
+              updateMapWithAllCurrentPageMarkers();
+            }, 500);
           }
         });
       } else {
         displayResults();
+        
+        // Update map with current results
+        setTimeout(() => {
+          updateMapWithAllCurrentPageMarkers();
+        }, 500);
       }
     }
   }
