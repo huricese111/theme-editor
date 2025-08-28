@@ -15,6 +15,29 @@ function loadScript(src) {
 
 /* global google */
 
+// Global variable to store the current map instance
+let currentMapInstance = null;
+
+// Global functions for external access
+window.updateDynamicMap = function(address, storeType = 'dealer') {
+  if (currentMapInstance) {
+    currentMapInstance.updateMap(address, storeType);
+  }
+};
+
+// 新增：支持多个标记的全局函数
+window.updateDynamicMapWithMultipleMarkers = function(locations) {
+  if (currentMapInstance) {
+    currentMapInstance.updateMapWithMultipleMarkers(locations);
+  }
+};
+
+window.updateInfoWindow = function(content) {
+  if (currentMapInstance) {
+    currentMapInstance.updateInfoWindow(content);
+  }
+};
+
 if (!customElements.get('location-map')) {
   class LocationMap extends HTMLElement {
     constructor() {
@@ -26,7 +49,7 @@ if (!customElements.get('location-map')) {
 
     init() {
       this.mapOptions = {
-        scrollwheel: false,
+        scrollwheel: true,  // 启用鼠标滚轮缩放
         zoom: 14
       };
 
@@ -39,7 +62,7 @@ if (!customElements.get('location-map')) {
         this.mapOptions.styles = LocationMap.getStyle(this.dataset.mapStyle);
       }
 
-      // 获取语言和区域设置
+      // Get language and region settings
       const language = this.dataset.language || 'en';
       const region = this.dataset.region || 'US';
 
@@ -52,10 +75,12 @@ if (!customElements.get('location-map')) {
       this.geocoder = new google.maps.Geocoder();
       this.infoWindow = new google.maps.InfoWindow();
       this.marker = null;
-
-      // 将updateDynamicMap和updateInfoWindow函数暴露到全局
-      window.updateDynamicMap = this.updateMap.bind(this);
-      window.updateInfoWindow = this.updateInfoWindow.bind(this);
+    
+      // Store this instance globally for external access
+      currentMapInstance = this;
+    
+      // Add custom zoom controls
+      this.addCustomZoomControls();
 
       this.geocoder.geocode({ address: this.dataset.address })
         .then(({ results }) => {
@@ -78,105 +103,272 @@ if (!customElements.get('location-map')) {
         });
     }
 
-    // 在createMap方法中添加自定义marker函数
+    // Add custom zoom controls method
+    addCustomZoomControls() {
+      // Create zoom control container
+      const zoomControlDiv = document.createElement('div');
+      zoomControlDiv.className = 'custom-zoom-controls';
+      
+      // Create zoom in button
+      const zoomInButton = document.createElement('button');
+      zoomInButton.className = 'zoom-control zoom-in';
+      zoomInButton.innerHTML = '+';
+      zoomInButton.title = 'Zoom in';
+      zoomInButton.setAttribute('aria-label', 'Zoom in');
+      
+      // Create zoom out button
+      const zoomOutButton = document.createElement('button');
+      zoomOutButton.className = 'zoom-control zoom-out';
+      zoomOutButton.innerHTML = '−';
+      zoomOutButton.title = 'Zoom out';
+      zoomOutButton.setAttribute('aria-label', 'Zoom out');
+      
+      // Add buttons to container
+      zoomControlDiv.appendChild(zoomInButton);
+      zoomControlDiv.appendChild(zoomOutButton);
+      
+      // Add event listeners
+      zoomInButton.addEventListener('click', () => {
+        const currentZoom = this.map.getZoom();
+        this.map.setZoom(currentZoom + 1);
+      });
+      
+      zoomOutButton.addEventListener('click', () => {
+        const currentZoom = this.map.getZoom();
+        this.map.setZoom(currentZoom - 1);
+      });
+      
+      // Add to map
+      this.map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(zoomControlDiv);
+      
+      // Disable default zoom control to avoid duplication
+      this.map.setOptions({
+        zoomControl: false,
+        scrollwheel: true,  // 确保鼠标滚轮缩放功能启用
+        zoom: 14
+      });
+    }
+
+    // Custom marker creation function
     createCustomMarker(storeType, position) {
-    // 创建自定义marker图标
-    const markerIcon = {
-    url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(this.getMarkerSVG(storeType))}`,
-    scaledSize: new google.maps.Size(40, 50),
-    anchor: new google.maps.Point(20, 50)
-    };
-    
-    return new google.maps.Marker({
-    map: this.map,
-    position: position,
-    icon: markerIcon,
-    clickable: true
-    });
+      // Create custom marker icon
+      const markerIcon = {
+        url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(this.getMarkerSVG(storeType))}`,
+        scaledSize: new google.maps.Size(40, 50),
+        anchor: new google.maps.Point(20, 50)
+      };
+      
+      return new google.maps.Marker({
+        map: this.map,
+        position: position,
+        icon: markerIcon,
+        clickable: true
+      });
     }
     
     getMarkerSVG(storeType) {
-    const colors = {
-    dealer: '#2b7dde',     
-    rental: '#66ad78',        
-    service: '#fa6959',     
-    'click-collect': '#FF9933', 
-    'dealer,service': '#8B5CF6',
-    'dealer&service': '#8B5CF6',
-    'dealer,rental': '#F59E0B', 
-    'dealer&rental': '#F59E0B'
-    };
-    
-    // 处理复合类型的逻辑
-    let color;
-    if (storeType.includes('&') || storeType.includes(',')) {
-    // 直接查找复合类型
-    color = colors[storeType];
-    
-    // 如果没有找到，尝试标准化格式
-    if (!color) {
-    const normalizedType = storeType.replace('&', ',');
-    color = colors[normalizedType];
-    }
-    
-    // 如果还是没找到，使用默认复合类型颜色
-    if (!color) {
-    color = '#6B7280';
-    }
-    } else {
-    color = colors[storeType] || '#3699FF';
-    }
-    
-    const uniqueId = `map-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-    const clipId = `clip-${uniqueId}`;
-    
-    return `<svg width="40" height="50" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-    <clipPath id="${clipId}">
-    <rect width="40" height="50" fill="white"/>
-    </clipPath>
-    </defs>
-    <g clip-path="url(#${clipId})">
-    <path d="M34.4 13.3C33.6 6.1 27.4 0.6 20 0.6C12.6 0.6 6.4 6.1 5.6 13.3C5.5 13.9 5.4 14.5 5.4 15.0C5.3 17.5 6.0 20.0 7.1 22.3C7.6 23.3 8.2 24.3 8.8 25.3L17.9 38.9C18.5 39.6 19.2 40.0 20.0 40.0C20.8 40.0 21.5 39.6 22.1 38.9L31.2 25.3C31.8 24.3 32.4 23.3 32.9 22.3C34.9 19.5 35.1 16.4 34.4 13.3Z" fill="${color}"/>
-    
-    <path d="M27.1 12.6C27.0 12.5 26.9 12.5 26.9 12.5C25.9 13.3 21.2 18.2 21.2 18.2C20.5 18.9 19.3 18.9 18.6 18.2C17.9 17.5 17.9 16.4 18.6 15.7C18.6 15.7 20.7 13.6 22.1 12.2C22.8 11.5 23.2 10.6 23.2 9.6L23.2 5.3C23.2 5.2 23.1 5.1 23.0 5.2L18.2 10.0C18.1 10.1 18.0 10.0 18.0 9.9V7.3C18.0 7.2 17.9 7.1 17.8 7.2L13.9 11.2H13.9C10.7 14.4 10.8 19.6 14.0 22.8C17.2 26.0 22.6 25.9 25.8 22.8C28.7 20.0 29.1 15.8 27.1 12.6Z" fill="white"/>
-    
-    ${(storeType.includes('&') || storeType.includes(',')) ? 
-      '<circle cx="32" cy="10" r="4" fill="white" stroke="' + color + '" stroke-width="1"/><text x="32" y="14" text-anchor="middle" font-size="5" fill="' + color + '">+</text>' : 
-      ''}
-    </g>
-    </svg>`;
+      const colors = {
+        dealer: '#2b7dde',     
+        rental: '#66ad78',        
+        service: '#fa6959',     
+        'click-collect': '#FF9933'
+      };
+      
+      // Simple color lookup for single store types only
+      const color = colors[storeType] || '#3699FF';
+      
+      const uniqueId = `map-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+      const clipId = `clip-${uniqueId}`;
+      
+      return `<svg width="40" height="50" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+        <clipPath id="${clipId}">
+        <rect width="40" height="50" fill="white"/>
+        </clipPath>
+        </defs>
+        <g clip-path="url(#${clipId})">
+        <path d="M34.4 13.3C33.6 6.1 27.4 0.6 20 0.6C12.6 0.6 6.4 6.1 5.6 13.3C5.5 13.9 5.4 14.5 5.4 15.0C5.3 17.5 6.0 20.0 7.1 22.3C7.6 23.3 8.2 24.3 8.8 25.3L17.9 38.9C18.5 39.6 19.2 40.0 20.0 40.0C20.8 40.0 21.5 39.6 22.1 38.9L31.2 25.3C31.8 24.3 32.4 23.3 32.9 22.3C34.9 19.5 35.1 16.4 34.4 13.3Z" fill="${color}"/>
+        
+        <path d="M27.1 12.6C27.0 12.5 26.9 12.5 26.9 12.5C25.9 13.3 21.2 18.2 21.2 18.2C20.5 18.9 19.3 18.9 18.6 18.2C17.9 17.5 17.9 16.4 18.6 15.7C18.6 15.7 20.7 13.6 22.1 12.2C22.8 11.5 23.2 10.6 23.2 9.6L23.2 5.3C23.2 5.2 23.1 5.1 23.0 5.2L18.2 10.0C18.1 10.1 18.0 10.0 18.0 9.9V7.3C18.0 7.2 17.9 7.1 17.8 7.2L13.9 11.2H13.9C10.7 14.4 10.8 19.6 14.0 22.8C17.2 26.0 22.6 25.9 25.8 22.8C28.7 20.0 29.1 15.8 27.1 12.6Z" fill="white"/>
+        
+        </g>
+        </svg>`;
     }
 
     updateMap(address, storeType = 'dealer') {
-    if (!this.geocoder || !this.map) return;
-    
-    // 正确处理数组格式的storeType
-    let processedStoreType;
-    if (Array.isArray(storeType)) {
-    // 如果是数组，转换为逗号分隔的字符串
-    processedStoreType = storeType.join(',');
-    } else {
-    processedStoreType = storeType;
+      if (!this.geocoder || !this.map) return;
+      
+      // Handle only single store types
+      const processedStoreType = Array.isArray(storeType) ? storeType[0] : storeType;
+      
+      this.geocoder.geocode({ address: address })
+        .then(({ results }) => {
+          if (results[0]) {
+            this.map.setCenter(results[0].geometry.location);
+            
+            // Remove old marker
+            if (this.marker) {
+              this.marker.setMap(null);
+            }
+            
+            // Use single store type only
+            this.marker = this.createCustomMarker(processedStoreType, results[0].geometry.location);
+          }
+        })
+        .catch((error) => {
+          console.error('Geocoding failed:', error);
+        });
+    }
+
+    // 新增：支持多个标记的地图更新函数（支持直接使用坐标）
+    updateMapWithMultipleMarkers(locations) {
+      if (!this.map || !locations || locations.length === 0) return;
+      
+      // 防止重复调用的逻辑
+      const locationsKey = JSON.stringify(locations.map(loc => ({
+        lat: loc.latitude,
+        lng: loc.longitude,
+        type: loc.storeType,
+        name: loc.storeName
+      })));
+      
+      // 如果位置数据没有变化，跳过更新
+      if (this.lastLocationsKey === locationsKey) {
+        return;
+      }
+      
+      this.lastLocationsKey = locationsKey;
+      
+      // 清除现有的标记
+      if (this.markers) {
+        this.markers.forEach(marker => marker.setMap(null));
+      }
+      this.markers = [];
+      
+      // 清除单个标记（如果存在）
+      if (this.marker) {
+        this.marker.setMap(null);
+        this.marker = null;
+      }
+      
+      const bounds = new google.maps.LatLngBounds();
+      let processedCount = 0;
+      const totalLocations = locations.length;
+      
+      // 批量创建标记，减少DOM操作
+      const markersToAdd = [];
+      
+      // 为每个位置创建标记
+      locations.forEach((location, index) => {
+        if (location.useCoordinates && location.latitude && location.longitude) {
+          // 直接使用坐标，避免地理编码
+          const position = new google.maps.LatLng(location.latitude, location.longitude);
+          const marker = this.createCustomMarker(location.storeType, position);
+          
+          // 添加信息窗口
+          const infoWindow = new google.maps.InfoWindow({
+            content: location.infoContent
+          });
+          
+          marker.addListener('click', () => {
+            // 关闭其他信息窗口
+            if (this.currentInfoWindow) {
+              this.currentInfoWindow.close();
+            }
+            infoWindow.open(this.map, marker);
+            this.currentInfoWindow = infoWindow;
+          });
+          
+          markersToAdd.push(marker);
+          bounds.extend(position);
+          
+          processedCount++;
+          
+          // 当所有位置都处理完成后，批量添加到地图并调整视图
+          if (processedCount === totalLocations) {
+            // 使用requestAnimationFrame确保平滑渲染
+            requestAnimationFrame(() => {
+              this.markers = markersToAdd;
+              this.adjustMapView(bounds, totalLocations);
+            });
+          }
+        } else if (location.address) {
+          // 使用地理编码（作为备选方案）
+          this.geocoder.geocode({ address: location.address })
+            .then(({ results }) => {
+              if (results[0]) {
+                const position = results[0].geometry.location;
+                const marker = this.createCustomMarker(location.storeType, position);
+                
+                // 添加信息窗口
+                const infoWindow = new google.maps.InfoWindow({
+                  content: location.infoContent
+                });
+                
+                marker.addListener('click', () => {
+                  if (this.currentInfoWindow) {
+                    this.currentInfoWindow.close();
+                  }
+                  infoWindow.open(this.map, marker);
+                  this.currentInfoWindow = infoWindow;
+                });
+                
+                markersToAdd.push(marker);
+                bounds.extend(position);
+              }
+              
+              processedCount++;
+              if (processedCount === totalLocations) {
+                requestAnimationFrame(() => {
+                  this.markers = markersToAdd;
+                  this.adjustMapView(bounds, this.markers.length);
+                });
+              }
+            })
+            .catch((error) => {
+              console.error('Geocoding failed for location:', location.address, error);
+              processedCount++;
+              if (processedCount === totalLocations) {
+                requestAnimationFrame(() => {
+                  this.markers = markersToAdd;
+                  this.adjustMapView(bounds, this.markers.length);
+                });
+              }
+            });
+        }
+      });
     }
     
-    this.geocoder.geocode({ address: address })
-    .then(({ results }) => {
-    if (results[0]) {
-    this.map.setCenter(results[0].geometry.location);
-    
-    // 移除旧标记
-    if (this.marker) {
-    this.marker.setMap(null);
-    }
-    
-    // 使用处理后的完整storeType
-    this.marker = this.createCustomMarker(processedStoreType, results[0].geometry.location);
-    }
-    })
-    .catch((error) => {
-    console.error('Geocoding failed:', error);
-    });
+    // 新增：调整地图视图的辅助函数，以德国为中心并使用较低缩放级别
+    adjustMapView(bounds, markerCount) {
+      if (markerCount === 0) return;
+      
+      // 德国的中心坐标（柏林附近）
+      const germanyCenter = new google.maps.LatLng(51.1657, 10.4515);
+      
+      if (markerCount === 1) {
+        // 如果只有一个位置，设置中心点和更高的缩放级别
+        this.map.setCenter(bounds.getCenter());
+        this.map.setZoom(16); // 从14提高到16，地图更放大
+      } else {
+        // 如果有多个位置，以德国为中心并设置更高的缩放级别
+        this.map.setCenter(germanyCenter);
+        this.map.setZoom(7); // 从6提高到7，地图更放大
+        
+        // 可选：如果需要确保所有标记都在视野内，可以使用fitBounds但限制最小缩放级别
+        // this.map.fitBounds(bounds);
+        // 
+        // // 设置最小和最大缩放级别，避免过度放大或缩小
+        // const listener = google.maps.event.addListener(this.map, 'idle', () => {
+        //   const currentZoom = this.map.getZoom();
+        //   if (currentZoom > 8) {
+        //     this.map.setZoom(8); // 最大缩放级别
+        //   } else if (currentZoom < 5) {
+        //     this.map.setZoom(5); // 最小缩放级别
+        //   }
+        //   google.maps.event.removeListener(listener);
+        // });
+      }
     }
 
     updateInfoWindow(content) {
@@ -185,7 +377,7 @@ if (!customElements.get('location-map')) {
         return;
       }
       
-      // 清除之前的事件监听器
+      // Clear previous event listeners
       if (this.markerClickListener) {
         google.maps.event.removeListener(this.markerClickListener);
       }
@@ -193,7 +385,7 @@ if (!customElements.get('location-map')) {
       this.infoWindow.setContent(content);
       this.infoWindow.open(this.map, this.marker);
       
-      // 添加点击标记显示info window的事件
+      // Add click marker to show info window event
       this.markerClickListener = this.marker.addListener('click', () => {
         this.infoWindow.open(this.map, this.marker);
       });

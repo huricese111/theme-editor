@@ -297,23 +297,23 @@
     {%- assign less_text = 'Less' -%}
 {%- endcase -%}
 
-{%- assign dealer_tooltip = 'Dealer (you can buy bikes + bring your bike for service)' -%}
-{%- assign rental_tooltip = 'Rental station (only rental bikes)' -%}
-{%- assign service_tooltip = 'Service Station (only service possible)' -%}
+{%- assign dealer_tooltip = 'Dealer - Official HEPHA dealer: Your perfect contact to buy or maintain your bike' -%}
+{%- assign rental_tooltip = 'Rental station - You want to rent a HEPHA bike? No problem, this is the right location to go to.' -%}
+{%- assign service_tooltip = 'Servicestation - HEPHA service partner: Here you can do service only' -%}
 
 {%- case request.locale.iso_code -%}
   {%- when 'de' -%}
-    {%- assign dealer_tooltip = 'Händler (Sie können Fahrräder kaufen + Ihr Fahrrad zum Service bringen)' -%}
-    {%- assign rental_tooltip = 'Verleihstation (nur Leihfahrräder)' -%}
-    {%- assign service_tooltip = 'Servicestation (nur Service möglich)' -%}
+    {%- assign dealer_tooltip = 'Händler – Offizieller HEPHA-Händler: Ihr perfekter Ansprechpartner für den Kauf oder die Wartung Ihres Fahrrads.' -%}
+    {%- assign rental_tooltip = 'Verleihstation – Sie möchten ein HEPHA-Fahrrad mieten? Kein Problem, hier sind Sie genau richtig.' -%}
+    {%- assign service_tooltip = 'Servicestation – HEPHA-Servicepartner: Hier können Sie ausschließlich Serviceleistungen in Anspruch nehmen.' -%}
   {%- when 'fr' -%}
-    {%- assign dealer_tooltip = 'Revendeur (vous pouvez acheter des vélos + apporter votre vélo pour le service)' -%}
-    {%- assign rental_tooltip = 'Station de location (vélos de location uniquement)' -%}
-    {%- assign service_tooltip = 'Station de service (service uniquement possible)' -%}
+    {%- assign dealer_tooltip = 'Concessionnaire - Concessionnaire officiel HEPHA : votre interlocuteur idéal pour acheter ou entretenir votre vélo.' -%}
+    {%- assign rental_tooltip = 'Station de location - Vous souhaitez louer un vélo HEPHA ? Pas de problème, vous êtes au bon endroit.' -%}
+    {%- assign service_tooltip = 'Station-service - Partenaire de service HEPHA : ici, vous pouvez uniquement faire entretenir votre vélo.' -%}
   {%- when 'fi' -%}
-    {%- assign dealer_tooltip = 'Jälleenmyyjä (voit ostaa pyöriä + tuoda pyöräsi huoltoon)' -%}
-    {%- assign rental_tooltip = 'Vuokraamo (vain vuokrapyöriä)' -%}
-    {%- assign service_tooltip = 'Huoltoasema (vain huolto mahdollista)' -%}
+    {%- assign dealer_tooltip = 'Jälleenmyyjä - Virallinen HEPHA-jälleenmyyjä: Täydellinen yhteyshenkilösi pyörän ostamiseen tai huoltamiseen' -%}
+    {%- assign rental_tooltip = 'Vuokraamo - Haluatko vuokrata HEPHA-pyörän? Ei ongelmaa, tämä on oikea paikka.' -%}
+    {%- assign service_tooltip = 'Huoltoasema - HEPHA-huoltokumppani: Täällä voit tehdä vain huoltoa' -%}
 {%- endcase -%}
 
 
@@ -361,14 +361,32 @@
               <div class="filter-options">
                 <label class="filter-option" data-tooltip="{{ dealer_tooltip }}">
                   <input type="checkbox" id="filter-dealer" value="dealer">
+                  <span class="filter-marker-icon" data-store-type="dealer">
+                    <svg width="16" height="20" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M34.4 13.3C33.6 6.1 27.4 0.6 20 0.6C12.6 0.6 6.4 6.1 5.6 13.3C5.5 13.9 5.4 14.5 5.4 15.0C5.3 17.5 6.0 20.0 7.1 22.3C7.6 23.3 8.2 24.3 8.8 25.3L17.9 38.9C18.5 39.6 19.2 40.0 20.0 40.0C20.8 40.0 21.5 39.6 22.1 38.9L31.2 25.3C31.8 24.3 32.4 23.3 32.9 22.3C34.9 19.5 35.1 16.4 34.4 13.3Z" fill="#2b7dde"/>
+                      <path d="M27.1 12.6C27.0 12.5 26.9 12.5 26.9 12.5C25.9 13.3 21.2 18.2 21.2 18.2C20.5 18.9 19.3 18.9 18.6 18.2C17.9 17.5 17.9 16.4 18.6 15.7C18.6 15.7 20.7 13.6 22.1 12.2C22.8 11.5 23.2 10.6 23.2 9.6L23.2 5.3C23.2 5.2 23.1 5.1 23.0 5.2L18.2 10.0C18.1 10.1 18.0 10.0 18.0 9.9V7.3C18.0 7.2 17.9 7.1 17.8 7.2L13.9 11.2H13.9C10.7 14.4 10.8 19.6 14.0 22.8C17.2 26.0 22.6 25.9 25.8 22.8C28.7 20.0 29.1 15.8 27.1 12.6Z" fill="white"/>
+                    </svg>
+                  </span>
                   <span>{{ dealer_text }}</span>
                 </label>
                 <label class="filter-option" data-tooltip="{{ rental_tooltip }}">
                   <input type="checkbox" id="filter-rental" value="rental">
+                  <span class="filter-marker-icon" data-store-type="rental">
+                    <svg width="16" height="20" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M34.4 13.3C33.6 6.1 27.4 0.6 20 0.6C12.6 0.6 6.4 6.1 5.6 13.3C5.5 13.9 5.4 14.5 5.4 15.0C5.3 17.5 6.0 20.0 7.1 22.3C7.6 23.3 8.2 24.3 8.8 25.3L17.9 38.9C18.5 39.6 19.2 40.0 20.0 40.0C20.8 40.0 21.5 39.6 22.1 38.9L31.2 25.3C31.8 24.3 32.4 23.3 32.9 22.3C34.9 19.5 35.1 16.4 34.4 13.3Z" fill="#66ad78"/>
+                      <path d="M27.1 12.6C27.0 12.5 26.9 12.5 26.9 12.5C25.9 13.3 21.2 18.2 21.2 18.2C20.5 18.9 19.3 18.9 18.6 18.2C17.9 17.5 17.9 16.4 18.6 15.7C18.6 15.7 20.7 13.6 22.1 12.2C22.8 11.5 23.2 10.6 23.2 9.6L23.2 5.3C23.2 5.2 23.1 5.1 23.0 5.2L18.2 10.0C18.1 10.1 18.0 10.0 18.0 9.9V7.3C18.0 7.2 17.9 7.1 17.8 7.2L13.9 11.2H13.9C10.7 14.4 10.8 19.6 14.0 22.8C17.2 26.0 22.6 25.9 25.8 22.8C28.7 20.0 29.1 15.8 27.1 12.6Z" fill="white"/>
+                    </svg>
+                  </span>
                   <span>{{ rental_station_text }}</span>
                 </label>
                 <label class="filter-option" data-tooltip="{{ service_tooltip }}">
                   <input type="checkbox" id="filter-service" value="service">
+                  <span class="filter-marker-icon" data-store-type="service">
+                    <svg width="16" height="20" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M34.4 13.3C33.6 6.1 27.4 0.6 20 0.6C12.6 0.6 6.4 6.1 5.6 13.3C5.5 13.9 5.4 14.5 5.4 15.0C5.3 17.5 6.0 20.0 7.1 22.3C7.6 23.3 8.2 24.3 8.8 25.3L17.9 38.9C18.5 39.6 19.2 40.0 20.0 40.0C20.8 40.0 21.5 39.6 22.1 38.9L31.2 25.3C31.8 24.3 32.4 23.3 32.9 22.3C34.9 19.5 35.1 16.4 34.4 13.3Z" fill="#fa6959"/>
+                      <path d="M27.1 12.6C27.0 12.5 26.9 12.5 26.9 12.5C25.9 13.3 21.2 18.2 21.2 18.2C20.5 18.9 19.3 18.9 18.6 18.2C17.9 17.5 17.9 16.4 18.6 15.7C18.6 15.7 20.7 13.6 22.1 12.2C22.8 11.5 23.2 10.6 23.2 9.6L23.2 5.3C23.2 5.2 23.1 5.1 23.0 5.2L18.2 10.0C18.1 10.1 18.0 10.0 18.0 9.9V7.3C18.0 7.2 17.9 7.1 17.8 7.2L13.9 11.2H13.9C10.7 14.4 10.8 19.6 14.0 22.8C17.2 26.0 22.6 25.9 25.8 22.8C28.7 20.0 29.1 15.8 27.1 12.6Z" fill="white"/>
+                    </svg>
+                  </span>
                   <span>{{ service_center_text }}</span>
                 </label>
               </div>              
@@ -430,82 +448,6 @@
             {%- else -%}
               <iframe id="map-iframe" class="map" src="https://www.google.com/maps/embed/v1/place?key={{ section.settings.api_key }}&q={{ first_map_address }}&zoom=14&language={{ request.locale.iso_code }}&region={{ region_code }}" width="100%" height="100%" frameborder="0" style="border:0" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
             {%- endif -%}
-            
-            <!-- Map Legend -->
-            <div class="map-legend">
-              <div class="map-legend__items">
-                <div class="map-legend__item">
-                  <div class="map-legend__icon">
-                    {% render 'custom-marker-icon', store_type: 'dealer', size: 'small' %}
-                  </div>
-                  <span class="map-legend__label">
-                    {%- case request.locale.iso_code -%}
-                      {%- when 'de' -%}
-                        Händler
-                      {%- when 'fr' -%}
-                        Revendeur
-                      {%- when 'fi' -%}
-                        Jälleenmyyjä
-                      {%- else -%}
-                        Dealer
-                    {%- endcase -%}
-                  </span>
-                </div>
-                <div class="map-legend__item">
-                  <div class="map-legend__icon">
-                    {% render 'custom-marker-icon', store_type: 'rental', size: 'small' %}
-                  </div>
-                  <span class="map-legend__label">
-                    {%- case request.locale.iso_code -%}
-                      {%- when 'de' -%}
-                        Verleihstation
-                      {%- when 'fr' -%}
-                        Point de location
-                      {%- when 'fi' -%}
-                        Vuokraamo
-                      {%- else -%}
-                        Rental Station
-                    {%- endcase -%}
-                  </span>
-                </div>
-                <div class="map-legend__item">
-                  <div class="map-legend__icon">
-                    {% render 'custom-marker-icon', store_type: 'service', size: 'small' %}
-                  </div>
-                  <span class="map-legend__label">
-                    {%- case request.locale.iso_code -%}
-                      {%- when 'de' -%}
-                        Servicezentrum
-                      {%- when 'fr' -%}
-                        Centre de Service
-                      {%- when 'fi' -%}
-                        Huoltokeskus
-                      {%- else -%}
-                        Service Center
-                    {%- endcase -%}
-                  </span>
-                </div>
-                
-                <!-- 添加组合类型图例 -->
-                <div class="map-legend__item">
-                  <div class="map-legend__icon">
-                    {% render 'custom-marker-icon', store_type: 'dealer,service', size: 'small' %}
-                  </div>
-                  <span class="map-legend__label">
-                    {%- case request.locale.iso_code -%}
-                      {%- when 'de' -%}
-                        Händler & Service
-                      {%- when 'fr' -%}
-                        Revendeur & Service
-                      {%- when 'fi' -%}
-                        Jälleenmyyjä & Huolto
-                      {%- else -%}
-                        Dealer & Service
-                    {%- endcase -%}
-                  </span>
-                </div>
-              </div>
-            </div>
           </div>
         {%- endif -%}
       </div>

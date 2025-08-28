@@ -68,12 +68,18 @@
                 Financing with Zinia
               {%- endif -%}
             {%- when 'klarna' -%}
-              {%- if locale == 'de' -%}
-                Finanzierung mit Klarna
-              {%- elsif locale == 'fr' -%}
-                Financement avec Klarna
-              {%- else -%}
-                Financing with Klarna
+              {%- if country == 'DE' or country == 'AT' -%}
+                {%- if locale == 'de' -%}
+                  Finanzierung mit Klarna
+                {%- else -%}
+                  Financing with Klarna
+                {%- endif -%}
+              {%- elsif country == 'FR' -%}
+                {%- if locale == 'fr' -%}
+                  Financement avec klarna
+                {%- else -%}
+                  Financing with Klarna
+                {%- endif -%}
               {%- endif -%}
             {%- when 'alma' -%}
               {%- if locale == 'fr' -%}
@@ -106,12 +112,18 @@
             {%- endif -%}
 
           {%- when 'klarna' -%}
-            {%- if locale == 'de' -%}
-              Klarna bietet direkte Zahlungen, Optionen zum späteren Bezahlen oder Ratenpläne von 6 bis 36 Monaten an.
-            {%- elsif locale == 'fr' -%}
-              Klarna propose des paiements directs, des options de paiement différé ou des plans de paiement échelonnés de 6 à 36 mois.
-            {%- else -%}
-              Klarna offers direct payments, pay later options, or installment plans ranging from 6 to 36 months.
+            {%- if country == 'DE' or country == 'AT' -%}
+              {%- if locale == 'de' -%}
+                Klarna bietet direkte Zahlungen, Optionen zum späteren Bezahlen oder Ratenpläne von 6 bis 36 Monaten an.
+              {%- else -%}
+                Klarna offers direct payments, pay later options, or installment plans ranging from 6 to 36 months.
+              {%- endif -%}
+            {%- elsif country == 'FR' -%}
+              {%- if locale == 'fr' -%}
+                Payer maintenant ou payer dans 30 jours<br>Payer en 3 fois sans frais
+              {%- else -%}
+                Pay now or pay later<br>Pay in 3 interest-free
+              {%- endif -%}
             {%- endif -%}
 
           {%- when 'alma' -%}

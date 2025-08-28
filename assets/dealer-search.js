@@ -3,7 +3,8 @@ function getCurrentLanguage() {
   return htmlLang.toLowerCase().substring(0, 2);
 }
 
-const translations = {
+// 使用命名空间避免全局变量冲突
+const DealerSearchTranslations = {
   en: {
     address: 'Address',
     phone: 'Phone',
@@ -123,7 +124,7 @@ const translations = {
 };
 
 const currentLang = getCurrentLanguage();
-const i18nLabels = translations[currentLang] || translations.en;
+const i18nLabels = DealerSearchTranslations[currentLang] || DealerSearchTranslations.en;
 
 document.addEventListener('DOMContentLoaded', function () {
   const mapContainer = document.getElementById('map-container');
@@ -370,11 +371,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const phoneLabel = i18nLabels.phone || 'Phone';
     const emailLabel = i18nLabels.email || 'Email';
     
-    // 处理多种商店类型显示
-    let storeTypes = Array.isArray(dealer.store_type) ? dealer.store_type : [dealer.store_type];
-    let storeTypeDisplay = storeTypes.map(type => {
-      return i18nLabels[type] || type;
-    }).join(' & ');
+    let storeType = Array.isArray(dealer.store_type) ? dealer.store_type[0] : dealer.store_type;
+    let storeTypeDisplay = i18nLabels[storeType] || storeType;
     
     return `
     <div class="map-section__content map-section__text location-card" 
@@ -392,7 +390,7 @@ document.addEventListener('DOMContentLoaded', function () {
          data-fax="${dealer.fax || ''}" 
          data-latitude="${dealer.latitude || ''}" 
          data-longitude="${dealer.longitude || ''}" 
-         data-store-type="${storeTypes.join(',')}">
+         data-store-type="${storeType}">
         
         <!-- 左侧 Marker Icon -->
         <div class="location-card__marker">
@@ -462,55 +460,31 @@ document.addEventListener('DOMContentLoaded', function () {
         break;
     }
 
-    // 处理多种商店类型
-    let storeTypes = Array.isArray(storeType) ? storeType : [storeType];
+    // 处理单一商店类型
+    const singleStoreType = Array.isArray(storeType) ? storeType[0] : storeType;
     
-    // 根据组合类型设置颜色和样式
+    // 根据单一类型设置颜色
     let markerColor;
-    let hasMultipleTypes = storeTypes.length > 1;
-    
-    if (hasMultipleTypes) {
-      // 组合类型使用渐变色或特殊标识
-      if (storeTypes.includes('dealer') && storeTypes.includes('service')) {
-        markerColor = '#8B5CF6'; // 紫色表示dealer+service
-      } else if (storeTypes.includes('dealer') && storeTypes.includes('rental')) {
-        markerColor = '#F59E0B'; // 橙色表示dealer+rental
-      } else {
-        markerColor = '#6B7280'; // 默认灰色
-      }
-    } else {
-      // 单一类型保持原有颜色
-      switch (storeTypes[0]) {
-        case 'dealer':
-          markerColor = '#2b7dde';
-          break;
-        case 'rental':
-          markerColor = '#66ad78';
-          break;
-        case 'service':
-          markerColor = '#fa6959';
-          break;
-        case 'click-collect':
-          markerColor = '#FF9933';
-          break;
-        default:
-          markerColor = '#2b7dde';
-          break;
-      }
+    switch (singleStoreType) {
+      case 'dealer':
+        markerColor = '#2b7dde';
+        break;
+      case 'rental':
+        markerColor = '#66ad78';
+        break;
+      case 'service':
+        markerColor = '#fa6959';
+        break;
+      case 'click-collect':
+        markerColor = '#FF9933';
+        break;
+      default:
+        markerColor = '#2b7dde';
+        break;
     }
 
     // 生成唯一ID
-    const uniqueId = `${storeTypes.join('-')}-${size}-${Date.now()}`;
-    
-    // 为组合类型添加特殊标识
-    let additionalIcon = '';
-    if (hasMultipleTypes) {
-      additionalIcon = `
-        <!-- 组合类型标识 -->
-        <circle cx="${(width * 0.8).toFixed(3)}" cy="${(height * 0.2).toFixed(3)}" r="${(width * 0.1).toFixed(3)}" fill="white" stroke="${markerColor}" stroke-width="1"/>
-        <text x="${(width * 0.8).toFixed(3)}" y="${(height * 0.25).toFixed(3)}" text-anchor="middle" font-size="${(width * 0.12).toFixed(3)}" fill="${markerColor}">+</text>
-      `;
-    }
+    const uniqueId = `${singleStoreType}-${size}-${Date.now()}`;
 
     // 计算路径坐标
     const coords = {
@@ -575,15 +549,13 @@ document.addEventListener('DOMContentLoaded', function () {
     ].join(' ');
 
     return `
-      <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" fill="none" xmlns="http://www.w3.org/2000/svg" class="custom-marker custom-marker--${storeTypes.join('-')}">
+      <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" fill="none" xmlns="http://www.w3.org/2000/svg" class="custom-marker custom-marker--${singleStoreType}">
         <g clip-path="url(#clip${uniqueId})">
           <!-- 主体路径 -->
           <path d="${mainPath}" fill="${markerColor}"/>
           
           <!-- Hepha图标 -->
           <path d="${coords.iconPath.points}" fill="white"/>
-          
-          ${additionalIcon}
         </g>
         
         <defs>
@@ -626,6 +598,11 @@ document.addEventListener('DOMContentLoaded', function () {
     
     // 检查位置偏好并可能显示弹窗
     checkLocationPreference();
+    
+    // 显示所有经销商标记
+    setTimeout(() => {
+      updateMapWithAllDealers();
+    }, 1000); // 延迟1秒确保地图已初始化
   }
 
   function calculateDistance(lat1, lon1, lat2, lon2) {
@@ -764,10 +741,69 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  // 地理编码函数
-  function geocodeAddress(address, callback) {
+  // 添加地理编码队列管理
+  class GeocodingQueue {
+    constructor() {
+      this.queue = [];
+      this.processing = false;
+      this.maxConcurrent = 3; // 限制并发请求数
+      this.delay = 200; // 请求间隔
+    }
+    
+    async add(address, callback) {
+      return new Promise((resolve) => {
+        this.queue.push({ address, callback, resolve });
+        this.process();
+      });
+    }
+    
+    async process() {
+      if (this.processing || this.queue.length === 0) return;
+      
+      this.processing = true;
+      
+      while (this.queue.length > 0) {
+        const batch = this.queue.splice(0, this.maxConcurrent);
+        
+        await Promise.all(batch.map(async (item) => {
+          try {
+            await this.geocodeWithDelay(item.address, item.callback);
+            item.resolve();
+          } catch (error) {
+            console.error('Geocoding failed:', error);
+            item.callback(null);
+            item.resolve();
+          }
+        }));
+        
+        // 添加延迟避免API限制
+        if (this.queue.length > 0) {
+          await new Promise(resolve => setTimeout(resolve, this.delay));
+        }
+      }
+      
+      this.processing = false;
+    }
+    
+    async geocodeWithDelay(address, callback) {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          geocodeAddressInternal(address, (result) => {
+            callback(result);
+            resolve();
+          });
+        }, Math.random() * 100); // 随机延迟避免同时请求
+      });
+    }
+  }
+
+  const geocodingQueue = new GeocodingQueue();
+
+  // 内部地理编码函数
+  function geocodeAddressInternal(address, callback) {
     if (!window.google || !window.google.maps) {
       console.error('Google Maps API not loaded');
+      callback(null);
       return;
     }
     
@@ -781,13 +817,12 @@ document.addEventListener('DOMContentLoaded', function () {
     
     const geocoder = new google.maps.Geocoder();
     
-    // 添加调试信息
-    console.log('Geocoding address:', address);
-    
-    // 移除地区限制，支持欧洲范围的地理编码
     const geocodeOptions = {
-      address: address
-      // 移除了 region 和 componentRestrictions 限制
+      address: address,
+      // 添加组件限制以提高准确性和速度
+      componentRestrictions: {
+        country: ['DE', 'AT', 'CH', 'NL', 'BE', 'FR'] // 限制在欧洲主要国家
+      }
     };
     
     geocoder.geocode(geocodeOptions, function(results, status) {
@@ -795,15 +830,13 @@ document.addEventListener('DOMContentLoaded', function () {
         const location = results[0].geometry.location;
         const result = {
           lat: location.lat(),
-          lng: location.lng()
+          lng: location.lng(),
+          timestamp: Date.now() // 添加时间戳用于缓存过期
         };
         
         // 缓存结果
         coordinatesCache[cacheKey] = result;
         saveCoordinatesCache();
-        
-        // 添加调试信息
-        console.log('Geocoded result for "' + address + '":', result, 'Full address:', results[0].formatted_address);
         
         callback(result);
       } else {
@@ -811,6 +844,11 @@ document.addEventListener('DOMContentLoaded', function () {
         callback(null);
       }
     });
+  }
+
+  // 地理编码函数（使用队列）
+  function geocodeAddress(address, callback) {
+    geocodingQueue.add(address, callback);
   }
   
   // 更新距离显示函数
@@ -1208,10 +1246,8 @@ document.addEventListener('DOMContentLoaded', function () {
     if (selectedFilters.length > 0) {
       filteredLocations = allLocations.filter(card => {
         const storeType = card.getAttribute('data-store-type');
-        const storeTypes = Array.isArray(storeType) ? storeType : storeType.split(',').map(type => type.trim());
-        
-        // 检查是否有任何匹配的类型
-        return selectedFilters.some(filter => storeTypes.includes(filter));
+        // 检查是否有匹配的类型
+        return selectedFilters.includes(storeType);
       });
     } else {
       filteredLocations = [...allLocations];
@@ -1286,24 +1322,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (selectedFilters.length > 0) {
       filteredLocations = allLocations.filter(card => {
         const storeType = card.getAttribute('data-store-type');
-        let storeTypes;
-        
-        // 修复：正确处理数组和字符串格式
-        if (Array.isArray(storeType)) {
-          storeTypes = storeType;
-        } else if (typeof storeType === 'string') {
-          // 处理逗号分隔的字符串或JSON数组字符串
-          try {
-            storeTypes = JSON.parse(storeType);
-          } catch (e) {
-            storeTypes = storeType.split(',').map(type => type.trim());
-          }
-        } else {
-          storeTypes = [];
-        }
-        
-        // 检查是否有任何匹配的类型
-        return selectedFilters.some(filter => storeTypes.includes(filter));
+        return selectedFilters.includes(storeType);
       });
     } else {
       filteredLocations = [...allLocations];
@@ -1370,11 +1389,13 @@ document.addEventListener('DOMContentLoaded', function () {
         card.classList.remove('pagination-hidden');
       });
       
-      // 激活第一个卡片并更新地图
+      // 激活第一个卡片
       if (cardsToShow.length > 0) {
         cardsToShow[0].classList.add('active');
-        updateMapForCard(cardsToShow[0]);
       }
+      
+      // 修改：始终显示所有经销商标记，而不是只显示当前页面的标记
+      updateMapWithAllDealers();
       
       // 恢复输入框焦点
       if (shouldRestoreFocus) {
@@ -1389,6 +1410,183 @@ document.addEventListener('DOMContentLoaded', function () {
     
     // 更新分页信息
     updatePagination();
+  }
+
+  // 优化：更新地图显示所有经销商的标记（使用坐标而不是地理编码）
+  async function updateMapWithAllDealers() {
+    if (mapType === 'dynamic' && window.updateDynamicMapWithMultipleMarkers) {
+      try {
+        // 直接从JSON文件加载所有经销商数据
+        const dealers = await loadDealersData();
+        
+        // 准备所有经销商位置的数据，优先使用已有的经纬度坐标
+        const locations = dealers.map(dealer => {
+          const storeType = Array.isArray(dealer.store_type) ? dealer.store_type[0] : dealer.store_type;
+          
+          // 如果有经纬度坐标，直接使用，避免地理编码
+          if (dealer.latitude && dealer.longitude) {
+            return {
+              latitude: parseFloat(dealer.latitude),
+              longitude: parseFloat(dealer.longitude),
+              storeType: storeType || 'dealer',
+              storeName: dealer.store_name,
+              infoContent: createInfoWindowContentFromDealer(dealer),
+              useCoordinates: true
+            };
+          } else {
+            // 如果没有坐标，回退到地址
+            let fullAddress = '';
+            if (dealer.address) fullAddress += dealer.address;
+            if (dealer.city) fullAddress += (fullAddress ? ', ' : '') + dealer.city;
+            if (dealer.country) fullAddress += (fullAddress ? ', ' : '') + dealer.country;
+            
+            return {
+              address: fullAddress,
+              storeType: storeType || 'dealer',
+              storeName: dealer.store_name,
+              infoContent: createInfoWindowContentFromDealer(dealer),
+              useCoordinates: false
+            };
+          }
+        }).filter(location => 
+          (location.useCoordinates && location.latitude && location.longitude) || 
+          (!location.useCoordinates && location.address)
+        );
+        
+        // 调用优化后的地图更新函数显示所有标记
+        window.updateDynamicMapWithMultipleMarkers(locations);
+        
+        console.log(`显示了 ${locations.length} 个经销商标记`);
+      } catch (error) {
+        console.error('Error loading all dealers for map:', error);
+      }
+    }
+  }
+
+  // 新增函数：从经销商数据创建信息窗口内容
+  function createInfoWindowContentFromDealer(dealer) {
+    const storeType = Array.isArray(dealer.store_type) ? dealer.store_type[0] : dealer.store_type;
+    
+    let content = `<div class="info-window">`;
+
+    if (dealer.store_name) {
+      content += `<h4>${dealer.store_name}</h4>`;
+    }
+
+    if (dealer.address || dealer.city || dealer.postal_code || dealer.province_state || dealer.country) {
+      content += `<div class="info-section">`;
+      content += `<div class="contact-item">`;
+      content += `<svg class="contact-icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path></svg>`;
+      content += `<div class="address-text">`;
+      
+      let addressParts = [];
+      if (dealer.address) addressParts.push(dealer.address);
+      if (dealer.city && dealer.postal_code) {
+        addressParts.push(`${dealer.city} ${dealer.postal_code}`);
+      } else {
+        if (dealer.city) addressParts.push(dealer.city);
+        if (dealer.postal_code) addressParts.push(dealer.postal_code);
+      }
+      if (dealer.province_state) addressParts.push(dealer.province_state);
+      if (dealer.country) addressParts.push(dealer.country);
+      
+      content += addressParts.join(', ');
+      content += `</div></div></div>`;
+    }
+
+    if (dealer.phone || dealer.email) {
+      content += `<div class="info-section">`;
+      
+      if (dealer.phone) {
+        content += `<div class="contact-item">`;
+        content += `<svg class="contact-icon" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path></svg>`;
+        content += `<div class="contact-content">`;
+        content += `<div class="contact-label">${i18nLabels.phone}</div>`;
+        content += `<div class="contact-value"><a href="tel:${dealer.phone}">${dealer.phone}</a></div>`;
+        content += `</div></div>`;
+      }
+      
+      if (dealer.email) {
+        content += `<div class="contact-item">`;
+        content += `<svg class="contact-icon" fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>`;
+        content += `<div class="contact-content">`;
+        content += `<div class="contact-label">${i18nLabels.email}</div>`;
+        content += `<div class="contact-value"><a href="mailto:${dealer.email}">${dealer.email}</a></div>`;
+        content += `</div></div>`;
+      }
+      
+      content += `</div>`;
+    }
+
+    if (dealer.website) {
+      content += `<div class="info-section">`;
+      content += `<div class="contact-item">`;
+      content += `<svg class="contact-icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.083 9h1.946c.089-1.546.383-2.97.837-4.118A6.004 6.004 0 004.083 9zM10 2a8 8 0 100 16 8 8 0 000-16zm0 2c-.076 0-.232.032-.465.262-.238.234-.497.623-.737 1.182-.389.907-.673 2.142-.766 3.556h3.936c-.093-1.414-.377-2.649-.766-3.556-.24-.56-.5-.948-.737-1.182C10.232 4.032 10.076 4 10 4zm3.971 5c-.089-1.546-.383-2.97-.837-4.118A6.004 6.004 0 0115.917 9h-1.946zm-2.003 2H8.032c.093 1.414.377 2.649.766 3.556.24.56.5.948.737 1.182.233.23.389.262.465.262.076 0 .232-.032.465-.262.238-.234.498-.623.737-1.182.389-.907.673-2.142.766-3.556zm1.166 4.118c.454-1.147.748-2.572.837-4.118h1.946a6.004 6.004 0 01-2.783 4.118zm-6.268 0C6.412 13.97 6.118 12.546 6.03 11H4.083a6.004 6.004 0 002.783 4.118z" clip-rule="evenodd"></path></svg>`;
+      content += `<div class="contact-content">`;
+      content += `<div class="contact-label">${i18nLabels.website}</div>`;
+      content += `<div class="contact-value"><a href="${dealer.website}" target="_blank">${dealer.website}</a></div>`;
+      content += `</div></div></div>`;
+    }
+
+    if (dealer.hours_of_operation) {
+      content += `<div class="info-section">`;
+      content += `<div class="contact-item">`;
+      content += `<svg class="contact-icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path></svg>`;
+      content += `<div class="contact-content">`;
+      
+      let hoursLabel = 'Hours of Operation';
+      if (currentLang === 'de') {
+        hoursLabel = 'Öffnungszeiten';
+      } else if (currentLang === 'fr') {
+        hoursLabel = 'Heures d\'ouverture';
+      } else if (currentLang === 'fi') {
+        hoursLabel = 'Aukioloajat';
+      }
+      
+      content += `<div class="contact-label">${hoursLabel}</div>`;
+      content += `<div class="contact-value">${dealer.hours_of_operation.replace(/\n/g, '<br>')}</div>`;
+      content += `</div></div></div>`;
+    }
+
+    if (storeType) {
+      const translatedStoreType = i18nLabels[storeType] || storeType;
+      content += `<div class="store-type-badge" data-store-type="${storeType}">${translatedStoreType}</div>`;
+    }
+
+    content += `</div>`;
+    return content;
+  }
+
+  // 新增函数：更新地图显示当前页面所有结果的标记
+  function updateMapWithAllCurrentPageMarkers(cardsToShow) {
+    if (mapType === 'dynamic' && window.updateDynamicMapWithMultipleMarkers) {
+      // 准备当前页面所有位置的数据
+      const locations = cardsToShow.map(card => {
+        const address = card.getAttribute('data-address');
+        const city = card.getAttribute('data-city');
+        const country = card.getAttribute('data-country');
+        const storeType = card.getAttribute('data-store-type') || 'dealer';
+        const storeName = card.getAttribute('data-store-name');
+        
+        let fullAddress = '';
+        if (address) fullAddress += address;
+        if (city) fullAddress += (fullAddress ? ', ' : '') + city;
+        if (country) fullAddress += (fullAddress ? ', ' : '') + country;
+        
+        return {
+          address: fullAddress,
+          storeType: storeType,
+          storeName: storeName,
+          infoContent: createInfoWindowContent(card)
+        };
+      }).filter(location => location.address); // 只包含有地址的位置
+      
+      // 调用新的地图更新函数
+      window.updateDynamicMapWithMultipleMarkers(locations);
+    } else if (cardsToShow.length > 0) {
+      // 如果是embed地图或者没有多标记功能，回退到显示第一个位置
+      updateMapForCard(cardsToShow[0]);
+    }
   }
 
   // 渐进式显示结果
@@ -1418,27 +1616,8 @@ document.addEventListener('DOMContentLoaded', function () {
     if (selectedFilters.length > 0) {
       filteredLocations = allLocations.filter(card => {
         const storeType = card.getAttribute('data-store-type');
-        let storeTypes;
-        
-        // 修复：正确处理数组和字符串格式
-        if (Array.isArray(storeType)) {
-          storeTypes = storeType;
-        } else if (typeof storeType === 'string') {
-          // 处理逗号分隔的字符串或JSON数组字符串
-          if (storeType.includes(',')) {
-            storeTypes = storeType.split(',').map(type => type.trim());
-          } else {
-            try {
-              storeTypes = JSON.parse(storeType);
-            } catch (e) {
-              storeTypes = [storeType.trim()];
-            }
-          }
-        } else {
-          storeTypes = [];
-        }
-        
-        return selectedFilters.some(filter => storeTypes.includes(filter));
+        // 检查是否有匹配的类型
+        return selectedFilters.includes(storeType);
       });
     } else {
       filteredLocations = [...allLocations];
@@ -2317,31 +2496,10 @@ document.addEventListener('DOMContentLoaded', function () {
     if (selectedFilters.length > 0) {
       filteredLocations = allLocations.filter(card => {
         const storeType = card.getAttribute('data-store-type');
-        let storeTypes;
+        const storeTypes = [storeType]; // 只处理单一类型
         
-        // 修复：正确处理数组和字符串格式
-        if (Array.isArray(storeType)) {
-          storeTypes = storeType;
-        } else if (typeof storeType === 'string') {
-          // 处理逗号分隔的字符串或JSON数组字符串
-          if (storeType.includes(',')) {
-            // 处理逗号分隔的字符串（如 "dealer,service"）
-            storeTypes = storeType.split(',').map(type => type.trim());
-          } else {
-            try {
-              // 尝试解析JSON数组字符串
-              storeTypes = JSON.parse(storeType);
-            } catch (e) {
-              // 如果解析失败，作为单个类型处理
-              storeTypes = [storeType.trim()];
-            }
-          }
-        } else {
-          storeTypes = [];
-        }
-        
-        // 检查是否有任何匹配的类型
-        return selectedFilters.some(filter => storeTypes.includes(filter));
+        // 检查是否有匹配的类型
+        return selectedFilters.includes(storeType);
       });
     } else {
       filteredLocations = [...allLocations];
@@ -2537,26 +2695,9 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
     if (storeType) {
-    // 处理组合类型
-    const storeTypes = storeType.split(',').map(type => type.trim());
-    
-    if (storeTypes.length > 1) {
-      const translatedTypes = storeTypes.map(type => {
-        switch(type) {
-          case 'dealer': return currentLang === 'de' ? 'Händler' : currentLang === 'fr' ? 'Concessionnaire' : currentLang === 'fi' ? 'Jälleenmyyjä' : 'Dealer';
-          case 'service': return currentLang === 'de' ? 'Service Center' : currentLang === 'fr' ? 'Centre de Service' : currentLang === 'fi' ? 'Huoltokeskus' : 'Service Center';
-          case 'rental': return currentLang === 'de' ? 'Vermietung' : currentLang === 'fr' ? 'Location' : currentLang === 'fi' ? 'Vuokraus' : 'Rental';
-          case 'click-collect': return 'Click & Collect';
-          default: return type;
-        }
-      });
-      const combinedText = translatedTypes.join(', ');
-      content += `<div class="store-type-badge" data-store-types="${storeType}">${combinedText}</div>`;
-    } else {
-      // 单一类型：保持原有逻辑
-      const translatedStoreType = i18nLabels[storeType] || storeType;
-      content += `<div class="store-type-badge" data-store-type="${storeType}">${translatedStoreType}</div>`;
-    }
+    // 单一类型显示
+    const translatedStoreType = i18nLabels[storeType] || storeType;
+    content += `<div class="store-type-badge" data-store-type="${storeType}">${translatedStoreType}</div>`;
   }
 
     content += `</div>`;
