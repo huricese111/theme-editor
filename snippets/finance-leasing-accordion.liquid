@@ -1,3 +1,5 @@
+{%- assign country = localization.country.iso_code -%}
+{%- unless country == 'FI' -%}
 <div class="finance-leasing-module">
   {%- assign country = localization.country.iso_code -%}
   {%- unless country == 'FR' -%}
@@ -289,3 +291,4 @@
     }
   });
 </script>
+{%- endunless -%}
