@@ -105,6 +105,70 @@
   </div>
 {%- endif -%}
 
+<script>
+(function() {
+  const wrapper = document.getElementById('items-wrapper-{{ section.id }}');
+  if (!wrapper) return;
+  
+  const track = wrapper.querySelector('.items-wrapper-track');
+  const items = track.querySelectorAll('.items-wrapper-item:not(.items-wrapper-duplicate)');
+  const separators = track.querySelectorAll('.items-wrapper-separator');
+  
+  function calculateScrollDistance() {
+    let totalWidth = 0;
+    
+    // 计算所有原始项目的宽度
+    items.forEach((item, index) => {
+      totalWidth += item.offsetWidth;
+      // 添加分隔符宽度（除了最后一个）
+      if (index < items.length - 1 && separators[index]) {
+        totalWidth += separators[index].offsetWidth;
+      }
+    });
+    
+    return totalWidth;
+  }
+  
+  function updateAnimation() {
+    const scrollDistance = calculateScrollDistance();
+    const isMobile = window.innerWidth <= 768;
+    const speed = isMobile ? 
+      {{ section.settings.mobile_scroll_speed | default: 15 }} : 
+      {{ section.settings.scroll_speed | default: 30 }};
+    
+    // 创建新的keyframes
+    const styleId = 'items-wrapper-dynamic-{{ section.id }}';
+    let styleElement = document.getElementById(styleId);
+    
+    if (!styleElement) {
+      styleElement = document.createElement('style');
+      styleElement.id = styleId;
+      document.head.appendChild(styleElement);
+    }
+    
+    styleElement.textContent = `
+      @keyframes items-wrapper-scroll-dynamic-{{ section.id }} {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-${scrollDistance}px); }
+      }
+      #items-wrapper-{{ section.id }} .items-wrapper-track {
+        animation: items-wrapper-scroll-dynamic-{{ section.id }} ${speed}s linear infinite !important;
+      }
+    `;
+  }
+  
+  // 初始化
+  updateAnimation();
+  
+  // 响应窗口大小变化
+  let resizeTimeout;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(updateAnimation, 250);
+  });
+})();
+</script>
+
 {% style %}
   #items-wrapper-{{ section.id }} .items-wrapper-container {
     height: 100%;
@@ -193,6 +257,13 @@
       transform: translateX(-50%);
     }
   }
+  
+  /* 移除移动端特定的动画设置，改用JavaScript控制 */
+  @media screen and (max-width: 768px) {
+    #items-wrapper-{{ section.id }} .items-wrapper-track {
+      animation: items-wrapper-scroll-{{ section.id }} {{ section.settings.mobile_scroll_speed | default: 15 }}s linear infinite;
+    }
+  }
 {% endstyle %}
 
 {% schema %}
@@ -229,6 +300,16 @@
       "step": 5,
       "default": 30,
       "info": "Higher number = slower scroll"
+    },
+    {
+      "type": "range",
+      "id": "mobile_scroll_speed",
+      "label": "Mobile scroll speed (seconds)",
+     "min": 10,
+      "max": 60,
+      "step": 5,
+      "default": 30,
+      "info": "Higher number = slower scroll. Recommended: 10-20 seconds for mobile"
     }
   ],
   "blocks": [
