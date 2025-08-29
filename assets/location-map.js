@@ -87,11 +87,12 @@ if (!customElements.get('location-map')) {
           if (results[0]) {
             this.map.setCenter(results[0].geometry.location);
 
-            this.marker = new google.maps.Marker({
-              map: this.map,
-              position: results[0].geometry.location,
-              clickable: true
-            });
+            // 注释掉默认标记创建，只保留地图定位
+            // this.marker = new google.maps.Marker({
+            //   map: this.map,
+            //   position: results[0].geometry.location,
+            //   clickable: true
+            // });
           }
         })
         .catch((error) => {
