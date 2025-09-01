@@ -1781,23 +1781,86 @@ function showSuccessModal() {
   const finalTitle = texts.title;
   const finalMessage = texts.message;
   
-  // 创建与bubble-chat一致的模态框结构
-  const modal = document.createElement('div');
+  // 创建正确的模态框结构
+  const modal = document.createElement('modal-dialog');
   modal.className = 'modal';
   modal.setAttribute('open', '');
-  modal.style.zIndex = '10000'; // 确保在最顶层
+  modal.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    visibility: visible;
+    background-color: rgba(0, 0, 0, 0.5);
+  `;
   
   modal.innerHTML = `
-    <div class="modal__window">
-      <button type="button" class="modal__close-btn js-close-modal" aria-label="Close">&times;</button>
-      <div class="modal__content">
-        <div class="feedback-success-message show">
-          <h3>${finalTitle}</h3>
-          <p>${finalMessage}</p>
-          <div style="background: #e3f2fd; padding: 1rem; border-radius: 8px; margin: 1.5rem 0; color: #1565c0; font-size: 0.95rem;">
+    <div class="modal__window" style="
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      max-width: 500px;
+      width: 90%;
+      transform: scale(1);
+      opacity: 1;
+      position: relative;
+    ">
+      <button type="button" class="modal__close-btn js-close-modal" aria-label="Close" style="
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        color: #666;
+        z-index: 1;
+      ">&times;</button>
+      <div class="modal__content" style="
+        padding: 40px 30px 30px 30px;
+        text-align: center;
+      ">
+        <div class="feedback-success-message" style="
+          display: block;
+        ">
+          <h3 style="
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin: 0 0 1rem 0;
+          ">${finalTitle}</h3>
+          <p style="
+            color: #64748b;
+            line-height: 1.6;
+            margin: 0 0 1rem 0;
+            font-size: 1rem;
+          ">${finalMessage}</p>
+          <div style="
+            background: #e3f2fd;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            color: #1565c0;
+            font-size: 0.95rem;
+          ">
             ${texts.notification}
           </div>
-          <button class="feedback-success-close" onclick="this.closest('.modal').remove()">${texts.button}</button>
+          <button class="feedback-success-close" onclick="this.closest('.modal').remove()" style="
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+          ">${texts.button}</button>
         </div>
       </div>
     </div>
@@ -1807,24 +1870,40 @@ function showSuccessModal() {
   
   // 添加事件监听器
   const closeBtn = modal.querySelector('.modal__close-btn');
-  const overlay = modal;
   
   closeBtn.addEventListener('click', function() {
     modal.remove();
   });
   
-  overlay.addEventListener('click', function(e) {
+  modal.addEventListener('click', function(e) {
     if (e.target === this) {
       modal.remove();
     }
   });
   
   // ESC键关闭
-  document.addEventListener('keydown', function(e) {
+  const handleEscape = function(e) {
     if (e.key === 'Escape') {
       modal.remove();
+      document.removeEventListener('keydown', handleEscape);
     }
-  }, { once: true });
+  };
+  
+  document.addEventListener('keydown', handleEscape);
+  
+  // 添加悬停效果
+  const successBtn = modal.querySelector('.feedback-success-close');
+  successBtn.addEventListener('mouseenter', function() {
+    this.style.background = 'linear-gradient(135deg, #059669 0%, #047857 100%)';
+    this.style.transform = 'translateY(-1px)';
+    this.style.boxShadow = '0 4px 12px rgba(16, 185, 129, 0.3)';
+  });
+  
+  successBtn.addEventListener('mouseleave', function() {
+    this.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+    this.style.transform = 'translateY(0)';
+    this.style.boxShadow = 'none';
+  });
 }
 
 // 初始化自定义日期选择器

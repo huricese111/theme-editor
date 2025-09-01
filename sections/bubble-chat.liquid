@@ -1674,6 +1674,9 @@
       this.setLoadingState(true);
       this.prepareFormData();
       
+      // 设置自定义成功标识
+      localStorage.setItem('feedback_submitted', 'true');
+      
       // Submit the form
       setTimeout(() => {
         this.form.submit();
@@ -1750,7 +1753,7 @@
       // Set hidden fields
       if (hiddenEmail) hiddenEmail.value = userEmail;
       if (hiddenMessage) hiddenMessage.value = message;
-      if (returnTo) returnTo.value = window.location.pathname + '?contact_posted=true' + window.location.hash;
+      if (returnTo) returnTo.value = window.location.pathname + '?feedback_posted=true' + window.location.hash;
     },
 
     // Build comprehensive message for email
@@ -1814,9 +1817,9 @@
 
     // Check submission status
     checkSubmissionStatus() {
-      // Check URL parameters
+      // Check URL parameters - 只检查bubble-chat特定的参数
       const urlParams = new URLSearchParams(window.location.search);
-      if (urlParams.get('contact_posted') === 'true') {
+      if (urlParams.get('feedback_posted') === 'true') {
         this.showSuccess();
         this.open();
         return;
@@ -1830,12 +1833,8 @@
         return;
       }
       
-      // Check for Shopify success message
-      const shopifySuccess = document.querySelector('.shopify-section--contact-form .form-success');
-      if (shopifySuccess && shopifySuccess.style.display !== 'none') {
-        this.showSuccess();
-        this.open();
-      }
+      // 移除对通用contact_posted的检查，避免与enhanced-form冲突
+      // 不再检查Shopify的通用成功消息
     },
 
     // Show error message
