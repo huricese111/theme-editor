@@ -117,7 +117,7 @@
   function calculateScrollDistance() {
     let totalWidth = 0;
     
-    // 计算所有原始项目的宽度
+    // 计算所有原始项目的宽度（包括分隔符）
     items.forEach((item, index) => {
       totalWidth += item.offsetWidth;
       // 添加分隔符宽度（除了最后一个）
@@ -133,32 +133,73 @@
     const scrollDistance = calculateScrollDistance();
     const isMobile = window.innerWidth <= 768;
     const speed = isMobile ? 
-      {{ section.settings.mobile_scroll_speed | default: 15 }} : 
+      {{ section.settings.mobile_scroll_speed | default: 30 }} : 
       {{ section.settings.scroll_speed | default: 30 }};
     
-    // 创建新的keyframes
-    const styleId = 'items-wrapper-dynamic-{{ section.id }}';
-    let styleElement = document.getElementById(styleId);
-    
-    if (!styleElement) {
-      styleElement = document.createElement('style');
-      styleElement.id = styleId;
-      document.head.appendChild(styleElement);
+    // 移除旧的样式
+    const oldStyle = document.getElementById('items-wrapper-dynamic-{{ section.id }}');
+    if (oldStyle) {
+      oldStyle.remove();
     }
     
+    // 创建新的样式
+    const styleElement = document.createElement('style');
+    styleElement.id = 'items-wrapper-dynamic-{{ section.id }}';
+    
     styleElement.textContent = `
-      @keyframes items-wrapper-scroll-dynamic-{{ section.id }} {
+      #items-wrapper-{{ section.id }} .items-wrapper-track {
+        animation: items-wrapper-scroll-{{ section.id }} ${speed}s linear infinite;
+        display: flex;
+        align-items: center;
+        height: 100%;
+        white-space: nowrap;
+        will-change: transform;
+      }
+      
+      @keyframes items-wrapper-scroll-{{ section.id }} {
         0% { transform: translateX(0); }
         100% { transform: translateX(-${scrollDistance}px); }
       }
-      #items-wrapper-{{ section.id }} .items-wrapper-track {
-        animation: items-wrapper-scroll-dynamic-{{ section.id }} ${speed}s linear infinite !important;
+      
+      #items-wrapper-{{ section.id }} .items-wrapper-track:hover {
+        animation-play-state: paused;
       }
     `;
+    
+    document.head.appendChild(styleElement);
+  }
+  
+  // 等待所有内容加载完成后初始化
+  function init() {
+    // 确保所有图片和内容都已加载
+    const images = track.querySelectorAll('img');
+    let loadedImages = 0;
+    
+    if (images.length === 0) {
+      updateAnimation();
+      return;
+    }
+    
+    images.forEach(img => {
+      if (img.complete) {
+        loadedImages++;
+      } else {
+        img.addEventListener('load', () => {
+          loadedImages++;
+          if (loadedImages === images.length) {
+            updateAnimation();
+          }
+        });
+      }
+    });
+    
+    if (loadedImages === images.length) {
+      updateAnimation();
+    }
   }
   
   // 初始化
-  updateAnimation();
+  setTimeout(init, 100);
   
   // 响应窗口大小变化
   let resizeTimeout;
@@ -181,12 +222,7 @@
     align-items: center;
     height: 100%;
     white-space: nowrap;
-    animation: items-wrapper-scroll-{{ section.id }} var(--items-wrapper-speed) linear infinite;
     will-change: transform;
-  }
-  
-  #items-wrapper-{{ section.id }} .items-wrapper-track:hover {
-    animation-play-state: paused;
   }
   
   #items-wrapper-{{ section.id }} .items-wrapper-item {
@@ -248,22 +284,6 @@
     padding: 0 15px;
     flex-shrink: 0;
   }
-  
-  @keyframes items-wrapper-scroll-{{ section.id }} {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(-50%);
-    }
-  }
-  
-  /* 移除移动端特定的动画设置，改用JavaScript控制 */
-  @media screen and (max-width: 768px) {
-    #items-wrapper-{{ section.id }} .items-wrapper-track {
-      animation: items-wrapper-scroll-{{ section.id }} {{ section.settings.mobile_scroll_speed | default: 15 }}s linear infinite;
-    }
-  }
 {% endstyle %}
 
 {% schema %}
@@ -309,7 +329,7 @@
       "max": 60,
       "step": 5,
       "default": 30,
-      "info": "Higher number = slower scroll. Recommended: 10-20 seconds for mobile"
+      "info": "Higher number = slower scroll. Recommended: 20-40 seconds for mobile"
     }
   ],
   "blocks": [
