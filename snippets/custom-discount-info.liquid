@@ -24,8 +24,23 @@
   </div>
 
   <div class="discount-labels">
-    {% if localization.country.iso_code == 'DE' and discounts.discount_2 %}
-      <div class="discount-label">{{ discounts.discount_2 }}</div>
+    {% if discounts.discount_2 %}
+      {% assign show_discount_2 = true %}
+      
+      {% assign discount_2_lower = discounts.discount_2 | downcase %}
+      {% if discount_2_lower contains 'free insurance' or discount_2_lower contains 'gratis versicherung' or discount_2_lower contains 'assurance gratuite' %}
+        {% if localization.country.iso_code == 'FR' or localization.country.iso_code == 'AT' %}
+          {% assign show_discount_2 = false %}
+        {% endif %}
+      {% endif %}
+      
+      {% if show_discount_2 %}
+        <div class="discount-label">{{ discounts.discount_2 }}</div>
+      {% endif %}
+    {% endif %}
+
+    {% if discounts.discount_3 %}
+      <div class="discount-label">{{ discounts.discount_3 }}</div>
     {% endif %}
 
     {% if discounts.discount %}
@@ -44,7 +59,7 @@
     justify-content: space-between;
     align-items: flex-start;
     pointer-events: none;
-    z-index: 2;
+    z-index: 100;
   }
 
   .discount-images {
