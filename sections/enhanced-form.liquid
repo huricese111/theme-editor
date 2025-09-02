@@ -83,7 +83,7 @@
           <!-- Add email subject with form identifier -->
           <input
             type="hidden"
-            name="contact[subject]"image.png
+            name="contact[subject]"
             value="{{ form_title_text | default: 'Contact us' }} - {{ shop.name }}"
           >
 
@@ -107,13 +107,21 @@
                     assign success_title_text = section.settings.success_title_fi
                   endif
 
-                  assign success_message_text = section.settings.success_message_en | default: 'Your form has been submitted successfully.'
-                  if section.settings.success_message_de != blank and request.locale.iso_code == 'de'
-                    assign success_message_text = section.settings.success_message_de
-                  elsif section.settings.success_message_fr != blank and request.locale.iso_code == 'fr'
-                    assign success_message_text = section.settings.success_message_fr
-                  elsif section.settings.success_message_fi != blank and request.locale.iso_code == 'fi'
-                    assign success_message_text = section.settings.success_message_fi
+                  if section.settings.enable_leasing_success_info
+                    if request.locale.iso_code == 'de'
+                      assign success_message_text = 'Vielen Dank für Ihren Antrag. Unser Vertriebsteam wird Ihre Anfrage prüfen und Ihnen innerhalb von 1-3 Werktagen ein Angebot senden oder Sie kontaktieren. Wenn Sie zusätzliche Informationen benötigen, können Sie uns gerne unter service@hepha.com kontaktieren.'
+                    else
+                      assign success_message_text = 'Thank you for your application. Our sales team will review your request and will send you an offer or contact you within 1-3 working days. If you need any additional information, please feel free to contact us at service@hepha.com.'
+                    endif
+                  else
+                    assign success_message_text = section.settings.success_message_en | default: 'Your form has been submitted successfully.'
+                    if section.settings.success_message_de != blank and request.locale.iso_code == 'de'
+                      assign success_message_text = section.settings.success_message_de
+                    elsif section.settings.success_message_fr != blank and request.locale.iso_code == 'fr'
+                      assign success_message_text = section.settings.success_message_fr
+                    elsif section.settings.success_message_fi != blank and request.locale.iso_code == 'fi'
+                      assign success_message_text = section.settings.success_message_fi
+                    endif
                   endif
                 -%}
                 // 传递成功消息文本到JavaScript
@@ -368,6 +376,99 @@
                         required
                       {% endif %}
                       value="{{ form.company }}"
+                      {% if block.settings.placeholder != blank %}
+                        placeholder="{{ block.settings.placeholder | escape }}"
+                      {% endif %}
+                    >
+
+                  {% when 'employer_id_input' %}
+                    {%- liquid
+                      assign label_text = block.settings.label_en | default: 'Employer ID'
+                      if block.settings.label_de != blank and request.locale.iso_code == 'de'
+                        assign label_text = block.settings.label_de
+                      elsif block.settings.label_fr != blank and request.locale.iso_code == 'fr'
+                        assign label_text = block.settings.label_fr
+                      elsif block.settings.label_fi != blank and request.locale.iso_code == 'fi'
+                        assign label_text = block.settings.label_fi
+                      endif
+                    -%}
+                    <label class="enhanced-form-label" for="contact_employer_id">
+                      {{- label_text | escape -}}
+                      {%- if block.settings.required -%}
+                        <span class="required-asterisk">*</span>
+                      {%- endif -%}
+                    </label>
+                    <input
+                      class="enhanced-form-input"
+                      type="text"
+                      id="contact_employer_id"
+                      name="contact[employer_id]"
+                      {% if block.settings.required %}
+                        required
+                      {% endif %}
+                      value="{{ form.employer_id }}"
+                      {% if block.settings.placeholder != blank %}
+                        placeholder="{{ block.settings.placeholder | escape }}"
+                      {% endif %}
+                    >
+
+                  {% when 'company_code_input' %}
+                    {%- liquid
+                      assign label_text = block.settings.label_en | default: 'Company Code'
+                      if block.settings.label_de != blank and request.locale.iso_code == 'de'
+                        assign label_text = block.settings.label_de
+                      elsif block.settings.label_fr != blank and request.locale.iso_code == 'fr'
+                        assign label_text = block.settings.label_fr
+                      elsif block.settings.label_fi != blank and request.locale.iso_code == 'fi'
+                        assign label_text = block.settings.label_fi
+                      endif
+                    -%}
+                    <label class="enhanced-form-label" for="contact_company_code">
+                      {{- label_text | escape -}}
+                      {%- if block.settings.required -%}
+                        <span class="required-asterisk">*</span>
+                      {%- endif -%}
+                    </label>
+                    <input
+                      class="enhanced-form-input"
+                      type="text"
+                      id="contact_company_code"
+                      name="contact[company_code]"
+                      {% if block.settings.required %}
+                        required
+                      {% endif %}
+                      value="{{ form.company_code }}"
+                      {% if block.settings.placeholder != blank %}
+                        placeholder="{{ block.settings.placeholder | escape }}"
+                      {% endif %}
+                    >
+
+                  {% when 'user_id_input' %}
+                    {%- liquid
+                      assign label_text = block.settings.label_en | default: 'User ID'
+                      if block.settings.label_de != blank and request.locale.iso_code == 'de'
+                        assign label_text = block.settings.label_de
+                      elsif block.settings.label_fr != blank and request.locale.iso_code == 'fr'
+                        assign label_text = block.settings.label_fr
+                      elsif block.settings.label_fi != blank and request.locale.iso_code == 'fi'
+                        assign label_text = block.settings.label_fi
+                      endif
+                    -%}
+                    <label class="enhanced-form-label" for="contact_user_id">
+                      {{- label_text | escape -}}
+                      {%- if block.settings.required -%}
+                        <span class="required-asterisk">*</span>
+                      {%- endif -%}
+                    </label>
+                    <input
+                      class="enhanced-form-input"
+                      type="text"
+                      id="contact_user_id"
+                      name="contact[user_id]"
+                      {% if block.settings.required %}
+                        required
+                      {% endif %}
+                      value="{{ form.user_id }}"
                       {% if block.settings.placeholder != blank %}
                         placeholder="{{ block.settings.placeholder | escape }}"
                       {% endif %}
@@ -1518,6 +1619,23 @@
         "fr": "Par défaut, dégradé noir. Laisser vide pour utiliser le thème par défaut.",
         "fi": "Oletus on musta liukuväri. Jätä tyhjäksi käyttääksesi teeman oletusta."
       }
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_leasing_success_info",
+      "label": {
+        "en": "Enable Leasing Success Message",
+        "de": "Leasing-Erfolgsmeldung aktivieren",
+        "fr": "Activer le message de succès de leasing",
+        "fi": "Ota käyttöön leasing-onnistumisviesti"
+      },
+      "default": false,
+      "info": {
+        "en": "When enabled, shows a special success message for leasing applications instead of the default success message.",
+        "de": "Wenn aktiviert, wird eine spezielle Erfolgsmeldung für Leasing-Anträge anstelle der Standard-Erfolgsmeldung angezeigt.",
+        "fr": "Lorsqu'activé, affiche un message de succès spécial pour les demandes de leasing au lieu du message de succès par défaut.",
+        "fi": "Kun käytössä, näyttää erityisen onnistumisviesti leasing-hakemuksille oletusviestin sijaan."
+      }
     }
   ],
   "blocks": [
@@ -1788,6 +1906,53 @@
           "id": "label_fi",
           "label": "Label (Finnish)",
           "default": "Yritys"
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Placeholder"
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "half_width",
+          "label": "Half width",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "employer_id_input",
+      "name": "🆔 Employer ID",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label_en",
+          "label": "Label (English)",
+          "default": "Employer ID"
+        },
+        {
+          "type": "text",
+          "id": "label_de",
+          "label": "Label (German)",
+          "default": "Arbeitgeber-ID"
+        },
+        {
+          "type": "text",
+          "id": "label_fr",
+          "label": "Label (French)",
+          "default": "ID Employeur"
+        },
+        {
+          "type": "text",
+          "id": "label_fi",
+          "label": "Label (Finnish)",
+          "default": "Työnantajan ID"
         },
         {
           "type": "text",
@@ -3026,6 +3191,100 @@
           "id": "half_width",
           "label": "Half width",
           "default": false
+        }
+      ]
+    },
+    {
+      "type": "company_code_input",
+      "name": "🏢 Company Code",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label_en",
+          "label": "Label (English)",
+          "default": "Company Code"
+        },
+        {
+          "type": "text",
+          "id": "label_de",
+          "label": "Label (German)",
+          "default": "Firmencode"
+        },
+        {
+          "type": "text",
+          "id": "label_fr",
+          "label": "Label (French)",
+          "default": "Code d'entreprise"
+        },
+        {
+          "type": "text",
+          "id": "label_fi",
+          "label": "Label (Finnish)",
+          "default": "Yrityskoodi"
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Placeholder"
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "half_width",
+          "label": "Half width",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "user_id_input",
+      "name": "👤 User ID",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label_en",
+          "label": "Label (English)",
+          "default": "User ID"
+        },
+        {
+          "type": "text",
+          "id": "label_de",
+          "label": "Label (German)",
+          "default": "Nutzer-ID"
+        },
+        {
+          "type": "text",
+          "id": "label_fr",
+          "label": "Label (French)",
+          "default": "ID utilisateur"
+        },
+        {
+          "type": "text",
+          "id": "label_fi",
+          "label": "Label (Finnish)",
+          "default": "Käyttäjätunnus"
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Placeholder"
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "half_width",
+          "label": "Half width",
+          "default": true
         }
       ]
     },
