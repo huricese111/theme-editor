@@ -1655,7 +1655,6 @@ document.addEventListener('DOMContentLoaded', function () {
     if (selectedFilters.length > 0) {
       filteredLocations = allLocations.filter(card => {
         const storeType = card.getAttribute('data-store-type');
-        // 检查是否有匹配的类型
         return selectedFilters.includes(storeType);
       });
     } else {
@@ -1663,6 +1662,19 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     if (searchTerm) {
+      const searchTermLower = searchTerm.toLowerCase().trim();
+      
+      // 预处理搜索词：检测是否包含德国相关关键词
+      const containsGermany = /\b(germany|deutschland|de)\b/i.test(searchTermLower);
+      const cleanSearchTerm = searchTermLower
+        .replace(/\b(germany|deutschland|de)\b/gi, '')
+        .replace(/[,\s]+/g, ' ')
+        .trim();
+      
+      // 检测搜索词类型
+      const isPostalCode = /^\d{5}$/.test(cleanSearchTerm);
+      const isCityName = cleanSearchTerm.length > 2 && !/\d/.test(cleanSearchTerm);
+      
       filteredLocations = filteredLocations.filter(card => {
         const storeName = card.getAttribute('data-store-name')?.toLowerCase() || '';
         const city = card.getAttribute('data-city')?.toLowerCase() || '';
@@ -1671,14 +1683,40 @@ document.addEventListener('DOMContentLoaded', function () {
         const province = card.getAttribute('data-province')?.toLowerCase() || '';
         const postalCode = card.getAttribute('data-postal-code')?.toLowerCase() || '';
         
-        // 构建完整地址用于匹配
-        const fullAddress = [address, city, postalCode, province, country]
-          .filter(part => part)
-          .join(', ')
-          .toLowerCase();
+        const isGermanLocation = country === 'de' || country === 'germany';
         
-        // 分割搜索词，支持部分匹配
-        const searchWords = searchTerm.toLowerCase().split(/[,\s]+/).filter(word => word.length > 0);
+        // 如果搜索包含德国关键词或检测到德国地理位置格式
+        if (containsGermany || isPostalCode || isCityName) {
+          // 优先匹配德国位置
+          if (isGermanLocation) {
+            // 邮编匹配
+            if (isPostalCode && (postalCode === cleanSearchTerm || postalCode.startsWith(cleanSearchTerm))) {
+              return true;
+            }
+            
+            // 城市匹配
+            if (isCityName && (city === cleanSearchTerm || city.includes(cleanSearchTerm))) {
+              return true;
+            }
+            
+            // 如果原搜索词包含德国关键词，进行标准匹配
+            if (containsGermany) {
+              return storeName.includes(cleanSearchTerm) ||
+                     city.includes(cleanSearchTerm) ||
+                     address.includes(cleanSearchTerm) ||
+                     province.includes(cleanSearchTerm) ||
+                     postalCode.includes(cleanSearchTerm);
+            }
+          }
+          
+          // 如果明确搜索德国但当前不是德国位置，排除
+          if (containsGermany && !isGermanLocation) {
+            return false;
+          }
+        }
+        
+        // 标准搜索逻辑（用于非德国特定搜索）
+        const searchWords = searchTermLower.split(/[,\s]+/).filter(word => word.length > 0);
         
         // 检查是否所有搜索词都能在某个字段中找到
         const matchesAllWords = searchWords.every(word => 
@@ -1687,21 +1725,19 @@ document.addEventListener('DOMContentLoaded', function () {
           country.includes(word) ||
           address.includes(word) ||
           province.includes(word) ||
-          postalCode.includes(word) ||
-          fullAddress.includes(word)
+          postalCode.includes(word)
         );
         
-        // 或者检查完整地址是否包含搜索词
-        const matchesFullAddress = fullAddress.includes(searchTerm) || 
-                                  searchTerm.includes(fullAddress.substring(0, Math.min(fullAddress.length, 20)));
+        // 单字段完整匹配
+        const singleFieldMatch = 
+          storeName.includes(searchTermLower) ||
+          city.includes(searchTermLower) ||
+          country.includes(searchTermLower) ||
+          address.includes(searchTermLower) ||
+          province.includes(searchTermLower) ||
+          postalCode.includes(searchTermLower);
         
-        return matchesAllWords || matchesFullAddress ||
-               storeName.includes(searchTerm) ||
-               city.includes(searchTerm) ||
-               country.includes(searchTerm) ||
-               address.includes(searchTerm) ||
-               province.includes(searchTerm) ||
-               postalCode.includes(searchTerm);
+        return matchesAllWords || singleFieldMatch;
       });
     }
 
@@ -1710,6 +1746,41 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Enhanced text search with fallback to nearest stores
   function performTextSearchWithFallback(searchTerm) {
+    const searchTermLower = searchTerm.toLowerCase().trim();
+    
+    // Clean search term by removing country references
+    const containsGermany = /\b(germany|deutschland|de)\b/i.test(searchTermLower);
+    const cleanSearchTerm = searchTermLower
+      .replace(/\b(germany|deutschland|de)\b/gi, '')
+      .replace(/[,\s]+/g, ' ')
+      .trim();
+    
+    // Detect if search term is postal code or city name
+    const isPostalCode = /^\d{5}$/.test(cleanSearchTerm);
+    const isCityName = cleanSearchTerm.length > 2 && !/\d/.test(cleanSearchTerm);
+    
+    // If searching by postal code or city, always show nearest 10 results
+    if (isPostalCode || isCityName) {
+      geocodeAddress(searchTerm, function(searchLocation) {
+        if (searchLocation) {
+          userCurrentLocation = searchLocation;
+          console.log('Search location geocoded for nearest stores:', searchLocation);
+          
+          // Update map to show the searched location
+          if (mapType === 'dynamic' && window.updateDynamicMap) {
+            window.updateDynamicMap(searchTerm, 'search-location');
+          }
+          
+          // Always show nearest 10 stores for postal code/city searches
+          showNearestStoresForLocation(searchLocation, 10);
+        } else {
+          displayNoResults();
+        }
+      });
+      return;
+    }
+    
+    // For other search terms, use the existing logic
     const textResults = performTextSearch(searchTerm);
     
     if (textResults.length === 0 && searchTerm.trim()) {
@@ -1773,6 +1844,37 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 500);
       }
     }
+  }
+
+  // New function to show nearest stores for a specific location
+  function showNearestStoresForLocation(searchLocation, count = 10) {
+    if (!searchLocation) {
+      displayNoResults();
+      return;
+    }
+    
+    showLoadingState();
+    
+    // Calculate distances for all locations
+    const locationsWithDistance = [];
+    let processedCount = 0;
+    
+    allLocations.forEach(card => {
+      getStoreCoordinates(card, (coords) => {
+        if (coords) {
+          const distance = calculateDistance(
+            searchLocation.lat, searchLocation.lng,
+            coords.lat, coords.lng
+          );
+          locationsWithDistance.push({ card, distance });
+        }
+        
+        processedCount++;
+        if (processedCount === allLocations.length) {
+          showNearestStoresResults(locationsWithDistance, count);
+        }
+      });
+    });
   }
 
   // Recommend nearest stores when no search results found
