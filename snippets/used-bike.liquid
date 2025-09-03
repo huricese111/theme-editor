@@ -28,7 +28,7 @@
   assign text_length = text_content | size
 %}
 
-{% if country_code == 'DE' %}
+{% if country_code == 'DE' or country_code == 'AT' %}
 <div class="product-promo-container">
   <div class="product-promo-left {% if text_length > 80 %}long-text{% endif %}">
     <h5 class="product-promo-text">
