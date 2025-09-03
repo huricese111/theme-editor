@@ -5888,24 +5888,6 @@
     },
     {
       "id": "location_328",
-      "store_name": "Les Hauts Vélos",
-      "address": "rue Sainte-Cécile",
-      "city": "Paris",
-      "province_state": "",
-      "country": "FR",
-      "postal_code": "75009",
-      "phone": "+33 9 73 88 90 96",
-      "email": "contact@lhv.store",
-      "website": "http://www.leshautsvelos.fr",
-      "hours_of_operation": "",
-      "store_type": [
-        "dealer"
-      ],
-      "latitude": 48.873221,
-      "longitude": 2.345586
-    },
-    {
-      "id": "location_329",
       "store_name": "LES VELOS DE LEON",
       "address": "RUE DUQUESNE 5",
       "city": "DIEPPE",
@@ -5923,7 +5905,7 @@
       "longitude": 1.078884
     },
     {
-      "id": "location_330",
+      "id": "location_329",
       "store_name": "Location Vélo Dunkerque",
       "address": "1 bis Digue de Mer",
       "city": "Dunkerque",
@@ -5941,7 +5923,7 @@
       "longitude": 2.386325
     },
     {
-      "id": "location_331",
+      "id": "location_330",
       "store_name": "LT2MH BICI",
       "address": "2  Rue de la Poste",
       "city": "SAONE",
@@ -5959,7 +5941,7 @@
       "longitude": 6.116989
     },
     {
-      "id": "location_332",
+      "id": "location_331",
       "store_name": "Modovélo Sarl Espace Bike 38",
       "address": "12 route de Lyon",
       "city": "Chanas",
@@ -5977,7 +5959,7 @@
       "longitude": 4.808476
     },
     {
-      "id": "location_333",
+      "id": "location_332",
       "store_name": "MONBOIPEN SPORT34",
       "address": "2 rue des Joncasses",
       "city": "Le Cres",
@@ -5995,7 +5977,7 @@
       "longitude": 3.939191
     },
     {
-      "id": "location_334",
+      "id": "location_333",
       "store_name": "Mondovelo Langueux",
       "address": "1 RUE DES GRIGNONS",
       "city": "LANGUEUX",
@@ -6013,7 +5995,7 @@
       "longitude": -2.731863
     },
     {
-      "id": "location_335",
+      "id": "location_334",
       "store_name": "Mondovelo Le Mans Nord",
       "address": "Parc Manceau - ZAC de l 'Ardoise",
       "city": "LE MANS",
@@ -6031,7 +6013,7 @@
       "longitude": 0.181164
     },
     {
-      "id": "location_336",
+      "id": "location_335",
       "store_name": "Mondovelo Le Mans Sud",
       "address": "ZAC du Cormier // 10 rue Wilbur",
       "city": "MULSANNE",
@@ -6049,7 +6031,7 @@
       "longitude": 0.231357
     },
     {
-      "id": "location_337",
+      "id": "location_336",
       "store_name": "ORCIERES CYCLING",
       "address": "3755 ROUTE D ORCIERES",
       "city": "ORCIERES",
@@ -6067,7 +6049,7 @@
       "longitude": 6.324415
     },
     {
-      "id": "location_338",
+      "id": "location_337",
       "store_name": "Paddock shop",
       "address": "10",
       "city": "Vesoul",
@@ -6085,7 +6067,7 @@
       "longitude": 6.15428
     },
     {
-      "id": "location_339",
+      "id": "location_338",
       "store_name": "REINE ET BICLOU",
       "address": "49 RUE DE MONS",
       "city": "VALENCIENNES",
@@ -6103,7 +6085,7 @@
       "longitude": 3.528905
     },
     {
-      "id": "location_340",
+      "id": "location_339",
       "store_name": "Roule Energie",
       "address": "12 Rue de l'Europe //  ZA la Tigno",
       "city": "Aubigny",
@@ -6121,7 +6103,7 @@
       "longitude": 2.483286
     },
     {
-      "id": "location_341",
+      "id": "location_340",
       "store_name": "Sport Passion GSB",
       "address": "273 chemin de Croupillac",
       "city": "Ales",
@@ -6139,7 +6121,7 @@
       "longitude": 4.104612
     },
     {
-      "id": "location_342",
+      "id": "location_341",
       "store_name": "TEX RACING",
       "address": "7 Rue de la Marine BP 69",
       "city": "PROPRIANO",
@@ -6157,7 +6139,7 @@
       "longitude": 8.898206
     },
     {
-      "id": "location_343",
+      "id": "location_342",
       "store_name": "Val de Loire Velo",
       "address": "15 Rue Arthur Rimband",
       "city": "Tours",
@@ -6175,7 +6157,7 @@
       "longitude": 0.70801
     },
     {
-      "id": "location_344",
+      "id": "location_343",
       "store_name": "Val de Loire Velo",
       "address": "7 Rue Paul Langevin",
       "city": "Chambray les Tours",
@@ -6193,7 +6175,7 @@
       "longitude": 0.704564
     },
     {
-      "id": "location_345",
+      "id": "location_344",
       "store_name": "VELO EMOTION",
       "address": "CHEMIN ROMAIN",
       "city": "ST ALBAN",
@@ -6211,7 +6193,7 @@
       "longitude": -2.548169
     },
     {
-      "id": "location_346",
+      "id": "location_345",
       "store_name": "Vélo Montagne Noire",
       "address": "1 impasse des capucines",
       "city": "Aiguefonde",
@@ -6229,7 +6211,7 @@
       "longitude": 2.346087
     },
     {
-      "id": "location_347",
+      "id": "location_346",
       "store_name": "Velo2Max",
       "address": "589 ZAC des Bousquets",
       "city": "CUERS",
@@ -6247,7 +6229,7 @@
       "longitude": 6.0722
     },
     {
-      "id": "location_348",
+      "id": "location_347",
       "store_name": "Veloland Blois",
       "address": "Rue Bernard Palissy",
       "city": "Vineuil",
@@ -6265,7 +6247,7 @@
       "longitude": 1.375111
     },
     {
-      "id": "location_349",
+      "id": "location_348",
       "store_name": "VELOLAND Cannes",
       "address": "Zi Les Tourrades",
       "city": "Mandelieu",
@@ -6283,7 +6265,7 @@
       "longitude": 6.95442
     },
     {
-      "id": "location_350",
+      "id": "location_349",
       "store_name": "VELOLAND FUNCYCLES",
       "address": "13 AVENUE DE BEL AIR // ZC DE LA CLAIRCIERE",
       "city": "SAINT PIERRE D'OLERON",
@@ -6301,7 +6283,7 @@
       "longitude": -1.304816
     },
     {
-      "id": "location_351",
+      "id": "location_350",
       "store_name": "VeloMax",
       "address": "235 Rue de l'Artisanat",
       "city": "Six Fours Les Plages",
@@ -6319,7 +6301,7 @@
       "longitude": 5.847377
     },
     {
-      "id": "location_352",
+      "id": "location_351",
       "store_name": "VELOVOLT",
       "address": "AVENUE DU COMMANDANT LYSIACK 8",
       "city": "AYTRE",
@@ -6337,7 +6319,7 @@
       "longitude": -1.129171
     },
     {
-      "id": "location_353",
+      "id": "location_352",
       "store_name": "EAST MX",
       "address": "Ivontie 9",
       "city": "Joensuu",
@@ -6355,7 +6337,7 @@
       "longitude": 29.823806
     },
     {
-      "id": "location_354",
+      "id": "location_353",
       "store_name": "Moto-Seinäjoki Oy",
       "address": "Lieskatie 2",
       "city": "Hyllykallio",
@@ -6373,7 +6355,7 @@
       "longitude": 22.882222
     },
     {
-      "id": "location_355",
+      "id": "location_354",
       "store_name": "Kari Vehniäinen Racing Oy",
       "address": "Vasarakatu 5",
       "city": "Jyväskylä",
@@ -6391,7 +6373,7 @@
       "longitude": 25.770738
     },
     {
-      "id": "location_356",
+      "id": "location_355",
       "store_name": "Kytönen Motorsport",
       "address": "Teollisuuskatu 4",
       "city": "Jämsä",
@@ -6409,7 +6391,7 @@
       "longitude": 25.178365
     },
     {
-      "id": "location_357",
+      "id": "location_356",
       "store_name": "Vmsport",
       "address": "Kanavapuistikko 8",
       "city": "Pietarsaari",
@@ -6427,7 +6409,7 @@
       "longitude": 22.707911
     },
     {
-      "id": "location_358",
+      "id": "location_357",
       "store_name": "Zweirad Center Horst Weynand",
       "address": "Zur Domaine 25",
       "city": "Bütgenbach",
@@ -6445,7 +6427,7 @@
       "longitude": 6.220246
     },
     {
-      "id": "location_359",
+      "id": "location_358",
       "store_name": "BIKE CENTER MARIBOR",
       "address": "Na Poljanah 18 (Ikona center)",
       "city": "Maribor",
