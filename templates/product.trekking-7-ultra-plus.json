@@ -1,1 +1,769 @@
-{"sections":{"main":{"type":"main-product","blocks":{"title":{"type":"title","settings":{}},"loox_reviews_loox_rating_4LcXpt":{"type":"shopify:\/\/apps\/loox-reviews\/blocks\/loox-rating\/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e","settings":{"contentSize":16,"pattern":"","hideText":false,"alignment":"","layout":"","textColor":"","starColor":"","showAllReviews":false,"looxOpenFloatingWidget":false,"emptyRatingWidget":false}},"price":{"type":"price","settings":{"show_tax_and_shipping":false,"enable_product_reviews_by_price":true}},"description_JNVXj3":{"type":"description","settings":{"show_in_tab":false,"open_tab":false,"icon":"","show_in_quickbuy":false}},"specification_simple_KR3q47":{"type":"specification_simple","settings":{}},"variant_picker_BNiCD8":{"type":"variant-picker","settings":{"show_single":false,"selector_style":"listed","dynamic_availability":"show","enable_size_chart":false,"size_chart_label":"","size_chart_variant":"","size_chart_page":""}},"pop_up_AAc34B":{"type":"pop-up","settings":{"text":"Which frame size fit me?","text_de":"Welche Rahmengröße passt zu mir?","text_fr":"Quelle taille de cadre me convient ?","text_fi":"Millainen rungon koko sopii minulle?","style":"link","page":"trekking2024-sizechart","show_in_quickbuy":false}},"usedbike_eaenLQ":{"type":"usedbike","disabled":true,"settings":{"text":"Save with Used - Like New","text_de":"Sparen Sie mit gebrauchten Fahrrädern - Wie Neu","text_fr":"Économisez avec des vélos d'occasion -  Comme Neuf","text_fi":"Säästä käytetyllä - kuin uusi","currentprice":"From €1,599.00","currentprice_de":"Ab 1.599,00 €","currentprice_fr":"À partir de 1 599,00 €","currentprice_fi":"alkaen 1.599,00 €","wasprice":"","wasprice_de":"","wasprice_fr":"","url":"shopify:\/\/collections\/used-bikes"}},"buy_buttons_ieLink":{"type":"buy-buttons","settings":{"show_quantity_selector":false,"show_pickup_availability":true,"show_backorder_text":false,"enable_payment_button":true,"show_gift_card_recipient":false,"show_accessories":true,"accessories_heading":"Compatible accessories","accessories_heading_de":"Kompatibles Zubehör","accessories_heading_fr":"Accessoires compatibles","accessories_heading_fi":"Yhteensopivat lisävarusteet","accessory_products":[],"show_accessory_description":false}},"pop_up_zVXKyw":{"type":"pop-up","disabled":true,"settings":{"text":"Click & Collect at your local dealer","text_de":"Click & Collect bei Ihrem lokalen Händler","text_fr":"Click & Collect chez votre revendeur local","text_fi":"Millainen rungon koko sopii minulle?","style":"link","page":"click-collect-at-your-local-dealer","show_in_quickbuy":false}},"sharing_Hmw8qb":{"type":"sharing","settings":{"show_twitter":true,"show_facebook":true,"show_pinterest":true,"show_linkedin":true,"show_whatsapp":true,"show_snapchat":true,"show_threads":true,"show_tumblr":true,"show_twitch":true}}},"block_order":["title","loox_reviews_loox_rating_4LcXpt","price","description_JNVXj3","specification_simple_KR3q47","variant_picker_BNiCD8","pop_up_AAc34B","usedbike_eaenLQ","buy_buttons_ieLink","pop_up_zVXKyw","sharing_Hmw8qb"],"custom_css":[],"settings":{"show_breadcrumbs":false,"select_first_variant":true,"show_location_underneath":false,"inventory_transfers_enable":false,"enable_sticky_columns":true,"enable_sticky_atc":true,"sticky_atc_position":"end","sticky_atc_mobile":true,"sticky_atc_behavior":"add_to_cart","sticky_atc_button_style":"secondary","gallery_size":"large","gallery_layout":"carousel-under","enable_zoom":true,"show_alt_text":false,"alt_text_icon":"","enable_video_autoplay":false,"enable_video_looping":false,"enable_media_grouping":true,"media_grouping_option":"Choose from the following colors,Wählen Sie aus den folgenden Rahmenfarben, Choisissez parmi les couleurs suivantes, Valitse seuraavista väreistä","new_label_text":"","new_label_text_de":"","new_label_text_fr":"","new_label_text_fi":""}},"enhance_text_area_jW4tf6":{"type":"enhance-text-area","blocks":{"list_item_dPbd8x":{"type":"list_item","settings":{"item_text":"Powerful 100 Nm motor","item_text_de":"Kraftvoller 100 Nm Motor","item_text_fr":"Moteur puissant de 100 Nm","item_text_fi":"Tehokas 100 Nm moottori"}},"list_item_Mg33QU":{"type":"list_item","settings":{"item_text":"Battery with 800 Wh capacity","item_text_de":"Akku mit 800 Wh Kapazität","item_text_fr":"Batterie d'une capacité de 800 Wh","item_text_fi":"Akku 800 Wh:n kapasiteetilla"}},"list_item_zQwhEi":{"type":"list_item","settings":{"item_text":"Quick charger","item_text_de":"Schnellladegerät","item_text_fr":"Chargeur rapide","item_text_fi":"6A Nopea laturi"}},"list_item_awbTm4":{"type":"list_item","settings":{"item_text":"11-speed Shimano Deore XT gears","item_text_de":"11-Gang Shimano Deore XT-Schaltung","item_text_fr":"11 vitesses Shimano Deore XT","item_text_fi":"11-nopeuksinen Shimano Deore XT-vaihteisto"}},"list_item_GfRpFj":{"type":"list_item","settings":{"item_text":"Luggage carrier with MIK-HD interface","item_text_de":"Gepäckträger mit MIK-HD-Schnittstelle","item_text_fr":"Porte-bagages avec interface MIK-HD","item_text_fi":"Tavarateline MIK-HD-liitännällä"}},"list_item_k8QRTR":{"type":"list_item","settings":{"item_text":"110 lux front headlight","item_text_de":"110 Lux Front-Schweinwerfer","item_text_fr":"Projecteur avant de 110 lux","item_text_fi":"110 lux etuvalo"}}},"block_order":["list_item_dPbd8x","list_item_Mg33QU","list_item_zQwhEi","list_item_awbTm4","list_item_GfRpFj","list_item_k8QRTR"],"name":"Enhanced Text Area","settings":{"section_title":"Ultimate Performance Meets Premium Components","section_title_de":"Ultimative Performance trifft auf Premium-Komponenten","section_title_fr":"Performance ultime et composants premium","section_title_fi":"Huipputason suorituskyky kohtaa premium-komponentit.","text_description":"<p>Looking for an e-bike that won't let you down? The Trekking 7 Ultra+ is your reliable partner for every ride. With the powerful HEPHA P101C motor (100 Nm) and the durable 800 Wh battery, you can easily conquer long distances. The Shimano Deore XT 11-speed gear system ensures precise shifting, while the 110 lux lighting guides your way – even in the dark.<br\/><br\/>Available in two frame styles (step-through & diamond) and a stylish dark blue that not only looks good but also matches any outfit. Weighing 26.2 kg and supporting up to 150 kg, it's both sturdy and agile.<br\/><br\/>The Trekking 7 Ultra+ is more than just an e-bike – it's your companion for new adventures.<\/p>","text_description_de":"<p>Du willst ein E-Bike, das dich nicht im Stich lässt? Das Trekking 7 Ultra+ ist dein verlässlicher Partner für jede Tour. Mit dem kraftvollen HEPHA P101C Motor (100 Nm) und dem langlebigen 800 Wh Akku meisterst du auch lange Strecken mit Leichtigkeit. Die Shimano Deore XT 11-Gang-Schaltung sorgt für präzises Schalten, während die 110 Lux starke Beleuchtung dir den Weg weist – auch bei Dunkelheit.<br\/><br\/>Erhältlich in zwei Rahmenformen (Tiefeinsteiger & Diamant) und in einem stilvollen Dunkelblau, das nicht nur gut aussieht, sondern auch zu jedem Outfit passt. Mit einem Gewicht von 26,2 kg und einer Zuladung von bis zu 150 kg ist es robust und dennoch agil.<br\/><br\/>Das Trekking 7 Ultra+ ist mehr als nur ein E-Bike – es ist dein Begleiter für neue Abenteuer.<\/p>","text_description_fr":"<p>Vous cherchez un vélo électrique fiable ? Le Trekking 7 Ultra+ est votre partenaire de confiance pour chaque sortie. Avec son puissant moteur HEPHA P101C (100 Nm) et sa batterie durable de 800 Wh, vous parcourez de longues distances en toute simplicité. Le dérailleur Shimano Deore XT à 11 vitesses assure des changements de vitesse précis, tandis que l'éclairage de 110 lux vous guide – même dans l'obscurité.<br\/><br\/>Disponible en deux formes de cadre (entrée basse & diamant) et dans un élégant bleu foncé qui s'accorde avec toutes vos tenues. Avec un poids de 26,2 kg et une capacité de charge allant jusqu'à 150 kg, il est à la fois robuste et agile.<br\/><br\/>Le Trekking 7 Ultra+ est plus qu'un vélo électrique – c'est votre compagnon pour de nouvelles aventures.<\/p>","text_description_fi":"<p>Etsitkö sähköpyörää, joka ei petä? Trekking 7 Ultra+ on luotettava kumppanisi jokaiselle ajolle. Tehokkaan HEPHA P101C -moottorin (100 Nm) ja kestävä 800 Wh akun avulla voit helposti vallata pitkiä matkoja. Shimano Deore XT 11-vaihteinen vaihteisto takaa tarkan vaihdon, kun taas 110 luksin valaistus ohjaa tietäsi – jopa pimeässä. Saatavilla on kaksi runkotyyliä (askelmallinen ja timantti) sekä tyylikäs tummansininen väri, joka ei ainoastaan näytä hyvältä, vaan sopii myös mihin tahansa asuun. Paino on 26,2 kg ja se tukee jopa 150 kg, joten se on sekä kestävä että ketterä. Trekking 7 Ultra+ on enemmän kuin vain sähköpyörä – se on kumppanisi uusille seikkailuille.<\/p>","title_font_size":50,"text_font_size":18,"show_item_list":true,"layout":"title_above","item_font_size":16,"custom_icon":"checkmark","title_color":"#000000","text_color":"#333333","icon_color":"#000000","mobile_title_font_size":40,"mobile_text_font_size":16,"mobile_item_font_size":14}},"custom_image_with_text_EPCjJj":{"type":"Custom-Image-with-Text","blocks":{"custom_item_dUaeKM":{"type":"custom_item","settings":{"image":"shopify:\/\/shop_images\/Frame_382.jpg","image_link":"","title":"Powerful & efficient 100 Nm Motor","title_de":"Leistungsstarker & effizienter 100 Nm Motor","title_fr":"Moteur puissant et efficace de 100 Nm","title_fi":"Dian otsikko","title_link":"","text":"<p>With its 100 Nm, the powerful motor of the Long Range offers enough power for practically any situation. It is also particularly efficient for long tours!<\/p>","text_de":"<p>Der kraftvolle Motor des Long Range bietet mit seinen 100 Nm genügend Power für praktisch jede Situation. Auch auf langen Touren ist er besonders effizient!<\/p>","text_fr":"<p>Avec ses 100 Nm, le puissant moteur du Long Range offre suffisamment de puissance pour pratiquement toutes les situations. Il est également particulièrement efficace pour les longs trajets !<\/p>","text_fi":"<p>Lisää mukautettu teksti tähän<\/p>","button_link":"","button_text_override":"","button_text_override_de":"","button_text_override_fr":"","button_text_override_fi":""}},"custom_item_EXHXzV":{"type":"custom_item","settings":{"image":"shopify:\/\/shop_images\/Frame_372_36e983ba-8fb1-44b8-baaa-31654884bfef.jpg","image_link":"","title":"800 Wh battery","title_de":"800 Wh Akku","title_fr":"Batterie de 800 Wh","title_fi":"800 Wh Akku","title_link":"","text":"<p>The battery is perfectly integrated into the frame and offers 800 Wh capacity with state-of-the-art cell technology. It can be removed or charged on the bike.<\/p>","text_de":"<p>Der Akku ist perfekt in den Rahmen integriert und bietet 800 Wh Kapazität mit modernster Zelltechnologie. Er kann herausgenommen oder am Fahrrad aufgeladen werden.<\/p>","text_fr":"<p>La batterie est parfaitement intégrée au cadre et offre une capacité de 800 Wh grâce à une technologie de cellule de pointe. Elle peut être retirée ou rechargée sur le vélo.<\/p>","text_fi":"<p>Ultra+ -mallin akku on tyylikkäästi runkoon integroitu. Yhdistettynä tehokkaaseen moottoriin, sen 800Wh:n kapasiteetti tarjoaa erinomaisen kilometrikantaman. Akku on ladattavissa suoraan pyörässä sijaitsevasta pistokkeesta, tai vaihtoehtoisesti irrotettavissa kotona lataamista varten.<\/p>","button_link":"","button_text_override":"","button_text_override_de":"","button_text_override_fr":"","button_text_override_fi":""}},"custom_item_gX9mm6":{"type":"custom_item","settings":{"image":"shopify:\/\/shop_images\/Frame_377_77b0c983-39ff-4d1c-9972-46079a9e94e1.jpg","image_link":"","title":"6 A fast charger","title_de":"6 A Schnellladegerät","title_fr":"Chargeur rapide 6 A","title_fi":"6A nopeasti lataava pikalaturi","title_link":"","text":"<p>Quickly mobile again - no problem with our standard HEPHA quick charger. With its 6 A, it charges almost 1.5 times faster than conventional chargers. It can be used both on the road and as a detachable wallbox at home!<\/p>","text_de":"<p>Schnell wieder mobil - mit unserem serienmäßigen HEPHA Schnellladegerät kein Problem. Es lädt fast 1,5 mal schneller als herkömmliche Ladegeräte. Es ist sowohl mobil auf der Tour als auch als abnehmbare Wallbox zuhause einsetzbar!<\/p>","text_fr":"<p>De nouveau rapidement mobile – aucun problème avec notre chargeur rapide HEPHA standard. Avec ses 6 A, il charge presque 1,5 fois plus vite que les chargeurs classiques. Il peut être utilisé aussi bien en déplacement que comme boîtier mural amovible à la maison !<\/p>","text_fi":"<p>Nopeasti takaisin matkaan – HEPHA-sähköpyörien vakiona mukana toimitettavalla pikalaturilla se onnistuu helposti. Laturin 6A latausvirta tekee siitä lähes 1,5 kertaa nopeampaa kuin tavanomaisilla latureilla. Laturia voidaan käyttää joko tien päällä tai kotona, ja myös seinään asennettavana wallboxina!<\/p>","button_link":"","button_text_override":"","button_text_override_de":"","button_text_override_fr":"","button_text_override_fi":""}},"custom_item_yDrae9":{"type":"custom_item","settings":{"image":"shopify:\/\/shop_images\/Frame_376_132dc3eb-7169-45f9-b1b8-484ff6cfbce6.jpg","image_link":"","title":"Crystal clear 1.96\" Display","title_de":"kristallklarer 1.96\" Display","title_fr":"Écran 1.96\" d'une clarté exceptionnelle","title_fi":"Kristallinkirkas 1.96\" näyttö","title_link":"","text":"<p>The compact 1.96\" display sits well protected to the left of the stem. Thanks to the high-quality IPS technology, it is very easy to read even in bright light.<\/p>","text_de":"<p>Das kompakte 1.96\"-Display sitzt gut geschützt links am Vorbau. Dank hochwertiger IPS-Technologie ist es auch bei hellem Licht sehr gut lesbar.<\/p>","text_fr":"<p>L'écran compact de 1.96\" est bien protégé à gauche de la tige. Grâce à la technologie IPS de haute qualité, il est très facile à lire même en pleine lumière.<\/p>","text_fi":"<p>Kompakti 1,96” näyttö sijaitsee ohjainkannattimen vasemmalla puolella, hyvin suojattuna. IPS-tekniikan ansiosta se on helposti luettavissa myös kirkkaassa valossa ja mistä katselukulmasta tahansa.<\/p>","button_link":"","button_text_override":"","button_text_override_de":"","button_text_override_fr":"","button_text_override_fi":""}},"custom_item_7KKc4H":{"type":"custom_item","settings":{"image":"shopify:\/\/shop_images\/Frame_378_780417fd-5fd7-4d1c-a773-964cf507b6aa.jpg","image_link":"","title":"11-speed gearshift","title_de":"11-Gang Schaltung","title_fr":"Boîte de vitesses à 11 vitesses","title_fi":"11-nopeuksinen vaihteisto","title_link":"","text":"<p>The Shimano Cues U6020 drivetrain has been specially developed for e-bikes and is therefore perfect for smooth shifting in combination with the Ultra's high-performance motor.<\/p>","text_de":"<p>Die Shimano Cues U6020 Schaltung des Long Range wurde speziell für E-Bikes entwickelt und eignet sich daher perfekt für sanfte Schaltvorgänge auch unter mehr Last.<\/p>","text_fr":"<p>Le système de changement de vitesse Shimano Cues U6020 du Long Range a été spécialement développé pour les vélos électriques et est donc parfait pour un changement de vitesse en douceur même sous une charge plus élevée.<\/p>","text_fi":"<p>Ultra-mallin 11-nopeuksinen Shimano CUES U6020-vaihteisto on suunniteltu erityisesti sähköpyörien vaatimuksiin. Vaihteisto tarjoaa sulavaa vaihteensiirtoa myös suuremman kuormituksen alla.<\/p>","button_link":"","button_text_override":"","button_text_override_de":"","button_text_override_fr":"","button_text_override_fi":""}},"custom_item_wtRirp":{"type":"custom_item","settings":{"image":"shopify:\/\/shop_images\/Frame_373_465529dc-8a77-4e97-bf68-a5b00643c0a6.jpg","image_link":"","title":"Special e-bike suspension fork","title_de":"Spezielle E-Bike Federgabel","title_fr":"Fourche à suspension spéciale pour vélo électrique","title_fi":"Sähköpyöriin suunniteltu joustohaarukka","title_link":"","text":"<p>The Suntour NEX-25 with its 63 mm suspension travel provides additional comfort, dampens vibrations and compensates for bumps.<\/p>","text_de":"<p>Die Suntour NEX-25 mit ihren 63 mm Federweg sorgt für zusätzlichen Komfort, dämpft Vibrationen und gleicht Unebenheiten aus..<\/p>","text_fr":"<p>Le Suntour NEX-25 avec son débattement de suspension de 63 mm offre un confort supplémentaire, amortit les vibrations et compense les bosses.<\/p>","text_fi":"<p>Suntour NEX-25 63mm joustomatkallaan parantaa ajomukavuutta tehokkaasti, vaimentaa tärinöitä ja tasaa reitin epätasaisuuksia.<\/p>","button_link":"","button_text_override":"","button_text_override_de":"","button_text_override_fr":"","button_text_override_fi":""}},"custom_item_yaFPYt":{"type":"custom_item","settings":{"image":"shopify:\/\/shop_images\/Frame_381.jpg","image_link":"","title":"Multifunctional luggage carrier","title_de":"Multifunktionaler Gepäckträger","title_fr":"Porte-bagages multifonctionnel","title_fi":"Monitoiminen tavarateline","title_link":"","text":"<p>The robust pannier rack always has a solution at hand: whether for panniers on the side or for quickly clicking in baskets thanks to the universal MIK HD interface.<\/p>","text_de":"<p>Der robuste Gepäckträger hat immer eine Lösung parat: ob für seitlichen Packtaschen oder für das schnelle Einklicken von Körben dank der universellen MIK HD Schnittstelle..<\/p>","text_fr":"<p>Le porte-bagages robuste a toujours une solution à portée de main : que ce soit pour les sacoches latérales ou pour cliquer rapidement dans les paniers grâce à l'interface universelle MIK HD.<\/p>","text_fi":"<p>Tukeva tavarateline taipuu moneen: sivulaukuille tai vaikka kätevästi MIK HD-järjestelmään kiinnityvälle korille.<\/p>","button_link":"","button_text_override":"","button_text_override_de":"","button_text_override_fr":"","button_text_override_fi":""}},"custom_item_fjmjTL":{"type":"custom_item","settings":{"image":"shopify:\/\/shop_images\/Frame_374.png","image_link":"","title":"Automatic light sensor","title_de":"Automatischer Lichtsensor","title_fr":"Capteur de lumière automatique","title_fi":"Automaattinen valosensori","title_link":"","text":"<p>The light on your Trekking 7 is controlled fully automatically by a light sensor. This is particularly practical in suddenly changing light conditions, such as tunnels!<\/p>","text_de":"<p>Das Licht an Ihrem Trekking 7 wird vollautomatisch durch einen Lichtsensor gesteuert. Besonders praktisch bei plötzlich wechselnden Lichtverhältnissen, wie Tunneln!.<\/p>","text_fr":"<p>L'éclairage de votre Trekking 7 est contrôlé de manière entièrement automatique par un capteur de lumière. Cela est particulièrement pratique en cas de changement soudain de la luminosité, comme dans les tunnels !<\/p>","text_fi":"<p>Valaistus ohjautuu täysin automaattisesti valosensorilla – erityisen hyödyllinen ominaisuus äkillisesti vaihtuvissa valaistusolosuhteissa, kuten tunneliin ajettaessa!<\/p>","button_link":"","button_text_override":"","button_text_override_de":"","button_text_override_fr":"","button_text_override_fi":""}},"custom_item_Lg9gqi":{"type":"custom_item","settings":{"image":"shopify:\/\/shop_images\/app_432ee281-bc29-43b1-9f76-b357a74d18a6.png","image_link":"","title":"Smart APP","title_de":"Smarte App","title_fr":"Application intelligente","title_fi":"Älykäs mobiilisovellus","title_link":"","text":"<p>With the HEPHA APP, you can unlock the full potential of your e-bike: record rides, configure your e-bike, update your system or get help with questions.<\/p>","text_de":"<p>Mit der HEPHA APP setzen Sie das volle Potenzial Ihres E-Bikes frei: Zeichnen Sie Fahrten auf, konfigurieren Sie Ihr E-Bike, updaten Sie Ihr System oder erhalten Sie Hilfe bei Fragen..<\/p>","text_fr":"<p>Avec l'application HEPHA, vous pouvez exploiter tout le potentiel de votre vélo électrique : enregistrer des trajets, configurer votre vélo électrique, mettre à jour votre système ou obtenir de l'aide en cas de questions.<\/p>","text_fi":"<p>HEPHA-sovelluksella valjastat pyöräsi koko potentiaalin käyttöösi: tallenna ajosi, konfiguroi moottorin avustustasot ja löydä apua tukipalvelusta.<\/p>","button_link":"","button_text_override":"","button_text_override_de":"","button_text_override_fr":"","button_text_override_fi":""}}},"block_order":["custom_item_dUaeKM","custom_item_EXHXzV","custom_item_gX9mm6","custom_item_yDrae9","custom_item_7KKc4H","custom_item_wtRirp","custom_item_yaFPYt","custom_item_fjmjTL","custom_item_Lg9gqi"],"name":"Custom Image with Text","settings":{"title":"Highlights","title_de":"Highlights","title_fr":"Highlights","title_fi":"Highlights","hide_title":false,"image_aspect_ratio":"1\/1","show_title_global":true,"show_text_global":true,"show_button_global":false,"button_text":"Learn More","button_text_de":"Mehr erfahren","button_text_fr":"En savoir plus","button_text_fi":"Lue lisää","button_background_color":"#ffffff","button_text_color":"#222222","button_border_color":"#222222","button_hover_background_color":"#222222","button_hover_text_color":"#ffffff","button_hover_border_color":"#222222"}},"custom_specification_DXgxaL":{"type":"custom_specification","settings":{}},"frame_geometry_sheet_TcyQhX":{"type":"frame_geometry_sheet","blocks":{"step_through_L4hQVE":{"type":"step_through","settings":{"show_size_s":false,"frame_height_low_S":"","frame_height_low":"460 mm","frame_height_low_L":"490 mm","seat_tube_angle_low_S":"","seat_tube_angle_low":"74°","seat_tube_angle_low_L":"74°","fork_offset_low_S":"","fork_offset_low":"43 mm","fork_offset_low_L":"43 mm","seat_angle_low_S":"","seat_angle_low":"74°","seat_angle_low_L":"74°","head_tube_length_low_S":"","head_tube_length_low":"160 mm","head_tube_length_low_L":"170 mm","head_tube_angle_low_S":"","head_tube_angle_low":"68.5°","head_tube_angle_low_L":"68.5°","top_tube_horizontal_low_S":"","top_tube_horizontal_low":"591 mm","top_tube_horizontal_low_L":"629 mm","chain_stay_length_low_S":"","chain_stay_length_low":"484 mm","chain_stay_length_low_L":"484 mm","bottom_bracket_drop_low_S":"","bottom_bracket_drop_low":"60 mm","bottom_bracket_drop_low_L":"60 mm","wheelbase_low_S":"","wheelbase_low":"1162 mm","wheelbase_low_L":"1201 mm","stack_low_S":"","stack_low":"637 mm","stack_low_L":"647 mm","reach_low_S":"","reach_low":"408 mm","reach_low_L":"443 mm","standover_height_low_S":"","standover_height_low":"720 mm","standover_height_low_L":"720 mm","seat_height_min_low_S":"","seat_height_min_low":"850 mm","seat_height_min_low_L":"850 mm","seat_height_max_low_S":"","seat_height_max_low":"1000 mm","seat_height_max_low_L":"1000 mm"}},"high_step_4V6ryn":{"type":"high_step","settings":{"show_size_xl":true,"frame_height_high":"490 mm","frame_height_high_L":"520 mm","frame_height_high_XL":"560 mm","seat_tube_angle_high":"74°","seat_tube_angle_high_L":"74°","seat_tube_angle_high_XL":"74°","fork_offset_high":"43 mm","fork_offset_high_L":"43 mm","fork_offset_high_XL":"43 mm","seat_angle_high":"74°","seat_angle_high_L":"74°","seat_angle_high_XL":"74°","head_tube_length_high":"160 mm","head_tube_length_high_L":"170 mm","head_tube_length_high_XL":"173 mm","head_tube_angle_high":"68.5°","head_tube_angle_high_L":"68.5°","head_tube_angle_high_XL":"68.5°","top_tube_horizontal_high":"591 mm","top_tube_horizontal_high_L":"629 mm","top_tube_horizontal_high_XL":"670 mm","chain_stay_length_high":"484 mm","chain_stay_length_high_L":"484 mm","chain_stay_length_high_XL":"484 mm","bottom_bracket_drop_high":"60 mm","bottom_bracket_drop_high_L":"60 mm","bottom_bracket_drop_high_XL":"60 mm","wheelbase_high":"1162","wheelbase_high_L":"1201","wheelbase_high_XL":"1242","stack_high":"637 mm","stack_high_L":"647 mm","stack_high_XL":"653 mm","reach_high":"408 mm","reach_high_L":"443 mm","reach_high_XL":"482 mm","standover_height_high":"760","standover_height_high_L":"780","standover_height_high_XL":"780","seat_height_min_high":"860","seat_height_min_high_L":"890","seat_height_min_high_XL":"890","seat_height_max_high":"1050","seat_height_max_high_L":"1080","seat_height_max_high_XL":"1080"}}},"block_order":["step_through_L4hQVE","high_step_4V6ryn"],"name":"Frame geometry sheet","settings":{"title":"Frame & Geometry","title_de":"Rahmen & Geometrie","title_fr":"Cadre & Géométrie","title_fi":"Runko & Geometria","geometry_type":"trekking"}},"173442611857857522":{"type":"apps","blocks":{"loox_reviews_loox_dynamic_section_p3bDHL":{"type":"shopify:\/\/apps\/loox-reviews\/blocks\/loox-dynamic-section\/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e","settings":{"only_photos":false,"aggregated":false,"limit":20,"hide_thumbnails":false,"maxwidth":1080,"is_sample":true}}},"block_order":["loox_reviews_loox_dynamic_section_p3bDHL"],"settings":{"full_width":false,"show_space":true,"title":"","title_de":"","title_fr":""}},"custom_product_tab_new_YFTbdM":{"type":"custom-product-tab-new","blocks":{"tab_DqHrca":{"type":"tab","settings":{"title":"Sale","title_de":"Sale","title_fr":"Sale","title_fi":"Sale","product_source":"collection","collection":"trekking-7-my23","products":[]}},"tab_fTaqjN":{"type":"tab","settings":{"title":"City","title_de":"City","title_fr":"City","title_fi":"City","product_source":"collection","collection":"city-e-bike","products":[]}},"tab_UCR6jj":{"type":"tab","settings":{"title":"Trekking","title_de":"Trekking","title_fr":"Trekking","title_fi":"Trekking","product_source":"collection","collection":"new-bike-2024","products":[]}},"tab_FCcrXd":{"type":"tab","settings":{"title":"Mountain","title_de":"Mountain","title_fr":"Mountain","title_fi":"Mountain","product_source":"collection","collection":"mountain-7-2024","products":[]}},"tab_TGa68N":{"type":"tab","settings":{"title":"Mountain Carbon","title_de":"Mountain Carbon","title_fr":"Mountain Carbon","title_fi":"Mountain Carbon","product_source":"collection","collection":"mountain-7-carbon","products":[]}},"advertisement_UPqxjp":{"type":"advertisement","settings":{"ad_link":"shopify:\/\/collections\/hepha-ebikes","image":"shopify:\/\/shop_images\/HEPHA-Trekking7_01_grey_7ff138ad-9f41-4981-b752-1bd80fee72c0.jpg","background_color":"#ffffff","background_position":"center center","background_size":"cover","background_align_items":"center","background_padding_top":20,"background_padding_left":20,"background_padding_right":20,"background_padding_bottom":20,"title_1":"<p>Not sure which E-Bike is right for you? Discover and compare our full range of E-Bikes to find the perfect model for your adventures.<\/p>","title_1_de":"<p>Nicht sicher, welches E-Bike das richtige für Sie ist? Entdecken und vergleichen Sie unser gesamtes Sortiment an E-Bikes, um das perfekte Modell für Ihre Abenteuer zu finden.<\/p>","title_1_fr":"<p>Vous n’êtes pas sûr de quel vélo électrique est fait pour vous ? Découvrez et comparez notre gamme complète de vélos électriques pour trouver le modèle parfait pour vos aventures.<\/p>","title_1_fi":"<p>Etkö ole varma, mikä sähköpyörämalli sopii sinulle? Tutustu ja vertaa koko valikoimaamme löytääksesi täydellisen pyörän omaan käyttötarkoitukseesi.<\/p>","heading_color_1":"#ffffff","heading_size_1":18,"button_label":"Explore all E-Bikes!","button_label_de":"Entdecke alle E-Bikes!","button_label_fr":"Découvrez tous modèles !","button_label_fi":"Tutki koko mallistoa!"}}},"block_order":["tab_DqHrca","tab_fTaqjN","tab_UCR6jj","tab_FCcrXd","tab_TGa68N","advertisement_UPqxjp"],"name":"Custom Product Tabs New","settings":{"title":"Explore more HEPHA E-Bikes","title_de":"Entdecken Sie mehr HEPHA E-Bikes","title_fr":"Découvrez d'autres vélos électriques HEPHA","title_fi":"Tutustu lisää HEPHA E-Bike-malleihin"}},"custom_stickybar_b9zk6H":{"type":"custom-stickybar","settings":{}}},"order":["main","enhance_text_area_jW4tf6","custom_image_with_text_EPCjJj","custom_specification_DXgxaL","frame_geometry_sheet_TcyQhX","173442611857857522","custom_product_tab_new_YFTbdM","custom_stickybar_b9zk6H"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "loox_reviews_loox_rating_4LcXpt": {
+          "type": "shopify://apps/loox-reviews/blocks/loox-rating/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
+          "settings": {
+            "contentSize": 16,
+            "pattern": "",
+            "hideText": false,
+            "alignment": "",
+            "layout": "",
+            "textColor": "",
+            "starColor": "",
+            "showAllReviews": false,
+            "looxOpenFloatingWidget": false,
+            "emptyRatingWidget": false
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {
+            "show_tax_and_shipping": false,
+            "enable_product_reviews_by_price": true
+          }
+        },
+        "description_JNVXj3": {
+          "type": "description",
+          "settings": {
+            "show_in_tab": false,
+            "open_tab": false,
+            "icon": "",
+            "show_in_quickbuy": false
+          }
+        },
+        "specification_simple_KR3q47": {
+          "type": "specification_simple",
+          "settings": {}
+        },
+        "variant_picker_BNiCD8": {
+          "type": "variant-picker",
+          "settings": {
+            "show_single": false,
+            "selector_style": "listed",
+            "dynamic_availability": "show",
+            "enable_size_chart": false,
+            "size_chart_label": "",
+            "size_chart_variant": "",
+            "size_chart_page": ""
+          }
+        },
+        "pop_up_AAc34B": {
+          "type": "pop-up",
+          "settings": {
+            "text": "Which frame size fit me?",
+            "text_de": "Welche Rahmengröße passt zu mir?",
+            "text_fr": "Quelle taille de cadre me convient ?",
+            "text_fi": "Millainen rungon koko sopii minulle?",
+            "style": "link",
+            "page": "trekking2024-sizechart",
+            "show_in_quickbuy": false
+          }
+        },
+        "usedbike_eaenLQ": {
+          "type": "usedbike",
+          "disabled": true,
+          "settings": {
+            "text": "Save with Used - Like New",
+            "text_de": "Sparen Sie mit gebrauchten Fahrrädern - Wie Neu",
+            "text_fr": "Économisez avec des vélos d'occasion -  Comme Neuf",
+            "text_fi": "Säästä käytetyllä - kuin uusi",
+            "currentprice": "From €1,599.00",
+            "currentprice_de": "Ab 1.599,00 €",
+            "currentprice_fr": "À partir de 1 599,00 €",
+            "currentprice_fi": "alkaen 1.599,00 €",
+            "wasprice": "",
+            "wasprice_de": "",
+            "wasprice_fr": "",
+            "url": "shopify://collections/used-bikes"
+          }
+        },
+        "buy_buttons_ieLink": {
+          "type": "buy-buttons",
+          "settings": {
+            "show_quantity_selector": false,
+            "show_pickup_availability": true,
+            "show_backorder_text": false,
+            "enable_payment_button": true,
+            "show_gift_card_recipient": false,
+            "show_accessories": true,
+            "accessories_heading": "Compatible accessories",
+            "accessories_heading_de": "Kompatibles Zubehör",
+            "accessories_heading_fr": "Accessoires compatibles",
+            "accessories_heading_fi": "Yhteensopivat lisävarusteet",
+            "accessory_products": [],
+            "show_accessory_description": false
+          }
+        },
+        "pop_up_zVXKyw": {
+          "type": "pop-up",
+          "disabled": true,
+          "settings": {
+            "text": "Click & Collect at your local dealer",
+            "text_de": "Click & Collect bei Ihrem lokalen Händler",
+            "text_fr": "Click & Collect chez votre revendeur local",
+            "text_fi": "Millainen rungon koko sopii minulle?",
+            "style": "link",
+            "page": "click-collect-at-your-local-dealer",
+            "show_in_quickbuy": false
+          }
+        },
+        "sharing_Hmw8qb": {
+          "type": "sharing",
+          "settings": {
+            "show_twitter": true,
+            "show_facebook": true,
+            "show_pinterest": true,
+            "show_linkedin": true,
+            "show_whatsapp": true,
+            "show_snapchat": true,
+            "show_threads": true,
+            "show_tumblr": true,
+            "show_twitch": true
+          }
+        }
+      },
+      "block_order": [
+        "title",
+        "loox_reviews_loox_rating_4LcXpt",
+        "price",
+        "description_JNVXj3",
+        "specification_simple_KR3q47",
+        "variant_picker_BNiCD8",
+        "pop_up_AAc34B",
+        "usedbike_eaenLQ",
+        "buy_buttons_ieLink",
+        "pop_up_zVXKyw",
+        "sharing_Hmw8qb"
+      ],
+      "custom_css": [],
+      "settings": {
+        "show_breadcrumbs": false,
+        "select_first_variant": true,
+        "show_location_underneath": false,
+        "inventory_transfers_enable": false,
+        "enable_sticky_columns": true,
+        "enable_sticky_atc": true,
+        "sticky_atc_position": "end",
+        "sticky_atc_mobile": true,
+        "sticky_atc_behavior": "add_to_cart",
+        "sticky_atc_button_style": "secondary",
+        "gallery_size": "large",
+        "gallery_layout": "carousel-under",
+        "enable_zoom": true,
+        "show_alt_text": false,
+        "alt_text_icon": "",
+        "enable_video_autoplay": false,
+        "enable_video_looping": false,
+        "enable_media_grouping": true,
+        "media_grouping_option": "Choose from the following colors,Wählen Sie aus den folgenden Rahmenfarben, Choisissez parmi les couleurs suivantes, Valitse seuraavista väreistä",
+        "new_label_text": "",
+        "new_label_text_de": "",
+        "new_label_text_fr": "",
+        "new_label_text_fi": ""
+      }
+    },
+    "enhance_text_area_jW4tf6": {
+      "type": "enhance-text-area",
+      "blocks": {
+        "list_item_dPbd8x": {
+          "type": "list_item",
+          "settings": {
+            "item_text": "Powerful 100 Nm motor",
+            "item_text_de": "Kraftvoller 100 Nm Motor",
+            "item_text_fr": "Moteur puissant de 100 Nm",
+            "item_text_fi": "Tehokas 100 Nm moottori"
+          }
+        },
+        "list_item_Mg33QU": {
+          "type": "list_item",
+          "settings": {
+            "item_text": "Battery with 800 Wh capacity",
+            "item_text_de": "Akku mit 800 Wh Kapazität",
+            "item_text_fr": "Batterie d'une capacité de 800 Wh",
+            "item_text_fi": "Akku 800 Wh:n kapasiteetilla"
+          }
+        },
+        "list_item_zQwhEi": {
+          "type": "list_item",
+          "settings": {
+            "item_text": "Quick charger",
+            "item_text_de": "Schnellladegerät",
+            "item_text_fr": "Chargeur rapide",
+            "item_text_fi": "6A Nopea laturi"
+          }
+        },
+        "list_item_awbTm4": {
+          "type": "list_item",
+          "settings": {
+            "item_text": "11-speed Shimano Deore XT gears",
+            "item_text_de": "11-Gang Shimano Deore XT-Schaltung",
+            "item_text_fr": "11 vitesses Shimano Deore XT",
+            "item_text_fi": "11-nopeuksinen Shimano Deore XT-vaihteisto"
+          }
+        },
+        "list_item_GfRpFj": {
+          "type": "list_item",
+          "settings": {
+            "item_text": "Luggage carrier with MIK-HD interface",
+            "item_text_de": "Gepäckträger mit MIK-HD-Schnittstelle",
+            "item_text_fr": "Porte-bagages avec interface MIK-HD",
+            "item_text_fi": "Tavarateline MIK-HD-liitännällä"
+          }
+        },
+        "list_item_k8QRTR": {
+          "type": "list_item",
+          "settings": {
+            "item_text": "110 lux front headlight",
+            "item_text_de": "110 Lux Front-Schweinwerfer",
+            "item_text_fr": "Projecteur avant de 110 lux",
+            "item_text_fi": "110 lux etuvalo"
+          }
+        }
+      },
+      "block_order": [
+        "list_item_dPbd8x",
+        "list_item_Mg33QU",
+        "list_item_zQwhEi",
+        "list_item_awbTm4",
+        "list_item_GfRpFj",
+        "list_item_k8QRTR"
+      ],
+      "name": "Enhanced Text Area",
+      "settings": {
+        "section_title": "Ultimate Performance Meets Premium Components",
+        "section_title_de": "Ultimative Performance trifft auf Premium-Komponenten",
+        "section_title_fr": "Performance ultime et composants premium",
+        "section_title_fi": "Huipputason suorituskyky kohtaa premium-komponentit.",
+        "text_description": "<p>Looking for an e-bike that won't let you down? The Trekking 7 Ultra+ is your reliable partner for every ride. With the powerful HEPHA P101C motor (100 Nm) and the durable 800 Wh battery, you can easily conquer long distances. The Shimano Deore XT 11-speed gear system ensures precise shifting, while the 110 lux lighting guides your way – even in the dark.<br/><br/>Available in two frame styles (step-through & diamond) and a stylish dark blue that not only looks good but also matches any outfit. Weighing 26.2 kg and supporting up to 150 kg, it's both sturdy and agile.<br/><br/>The Trekking 7 Ultra+ is more than just an e-bike – it's your companion for new adventures.</p>",
+        "text_description_de": "<p>Du willst ein E-Bike, das dich nicht im Stich lässt? Das Trekking 7 Ultra+ ist dein verlässlicher Partner für jede Tour. Mit dem kraftvollen HEPHA P101C Motor (100 Nm) und dem langlebigen 800 Wh Akku meisterst du auch lange Strecken mit Leichtigkeit. Die Shimano Deore XT 11-Gang-Schaltung sorgt für präzises Schalten, während die 110 Lux starke Beleuchtung dir den Weg weist – auch bei Dunkelheit.<br/><br/>Erhältlich in zwei Rahmenformen (Tiefeinsteiger & Diamant) und in einem stilvollen Dunkelblau, das nicht nur gut aussieht, sondern auch zu jedem Outfit passt. Mit einem Gewicht von 26,2 kg und einer Zuladung von bis zu 150 kg ist es robust und dennoch agil.<br/><br/>Das Trekking 7 Ultra+ ist mehr als nur ein E-Bike – es ist dein Begleiter für neue Abenteuer.</p>",
+        "text_description_fr": "<p>Vous cherchez un vélo électrique fiable ? Le Trekking 7 Ultra+ est votre partenaire de confiance pour chaque sortie. Avec son puissant moteur HEPHA P101C (100 Nm) et sa batterie durable de 800 Wh, vous parcourez de longues distances en toute simplicité. Le dérailleur Shimano Deore XT à 11 vitesses assure des changements de vitesse précis, tandis que l'éclairage de 110 lux vous guide – même dans l'obscurité.<br/><br/>Disponible en deux formes de cadre (entrée basse & diamant) et dans un élégant bleu foncé qui s'accorde avec toutes vos tenues. Avec un poids de 26,2 kg et une capacité de charge allant jusqu'à 150 kg, il est à la fois robuste et agile.<br/><br/>Le Trekking 7 Ultra+ est plus qu'un vélo électrique – c'est votre compagnon pour de nouvelles aventures.</p>",
+        "text_description_fi": "<p>Etsitkö sähköpyörää, joka ei petä? Trekking 7 Ultra+ on luotettava kumppanisi jokaiselle ajolle. Tehokkaan HEPHA P101C -moottorin (100 Nm) ja kestävä 800 Wh akun avulla voit helposti vallata pitkiä matkoja. Shimano Deore XT 11-vaihteinen vaihteisto takaa tarkan vaihdon, kun taas 110 luksin valaistus ohjaa tietäsi – jopa pimeässä. Saatavilla on kaksi runkotyyliä (askelmallinen ja timantti) sekä tyylikäs tummansininen väri, joka ei ainoastaan näytä hyvältä, vaan sopii myös mihin tahansa asuun. Paino on 26,2 kg ja se tukee jopa 150 kg, joten se on sekä kestävä että ketterä. Trekking 7 Ultra+ on enemmän kuin vain sähköpyörä – se on kumppanisi uusille seikkailuille.</p>",
+        "title_font_size": 50,
+        "text_font_size": 18,
+        "show_item_list": true,
+        "layout": "title_above",
+        "item_font_size": 16,
+        "custom_icon": "checkmark",
+        "title_color": "#000000",
+        "text_color": "#333333",
+        "icon_color": "#000000",
+        "mobile_title_font_size": 40,
+        "mobile_text_font_size": 16,
+        "mobile_item_font_size": 14
+      }
+    },
+    "custom_image_with_text_EPCjJj": {
+      "type": "Custom-Image-with-Text",
+      "blocks": {
+        "custom_item_dUaeKM": {
+          "type": "custom_item",
+          "settings": {
+            "image": "shopify://shop_images/Frame_382.jpg",
+            "image_link": "",
+            "title": "Powerful & efficient 100 Nm Motor",
+            "title_de": "Leistungsstarker & effizienter 100 Nm Motor",
+            "title_fr": "Moteur puissant et efficace de 100 Nm",
+            "title_fi": "Dian otsikko",
+            "title_link": "",
+            "text": "<p>With its 100 Nm, the powerful motor of the Long Range offers enough power for practically any situation. It is also particularly efficient for long tours!</p>",
+            "text_de": "<p>Der kraftvolle Motor des Long Range bietet mit seinen 100 Nm genügend Power für praktisch jede Situation. Auch auf langen Touren ist er besonders effizient!</p>",
+            "text_fr": "<p>Avec ses 100 Nm, le puissant moteur du Long Range offre suffisamment de puissance pour pratiquement toutes les situations. Il est également particulièrement efficace pour les longs trajets !</p>",
+            "text_fi": "<p>Lisää mukautettu teksti tähän</p>",
+            "button_link": "",
+            "button_text_override": "",
+            "button_text_override_de": "",
+            "button_text_override_fr": "",
+            "button_text_override_fi": ""
+          }
+        },
+        "custom_item_EXHXzV": {
+          "type": "custom_item",
+          "settings": {
+            "image": "shopify://shop_images/Frame_372_1_43ed96fa-7f17-4a97-96a2-45382353d072.jpg",
+            "image_link": "",
+            "title": "800 Wh battery",
+            "title_de": "800 Wh Akku",
+            "title_fr": "Batterie de 800 Wh",
+            "title_fi": "800 Wh Akku",
+            "title_link": "",
+            "text": "<p>The battery is perfectly integrated into the frame and offers 800 Wh capacity with state-of-the-art cell technology. It can be removed or charged on the bike.</p>",
+            "text_de": "<p>Der Akku ist perfekt in den Rahmen integriert und bietet 800 Wh Kapazität mit modernster Zelltechnologie. Er kann herausgenommen oder am Fahrrad aufgeladen werden.</p>",
+            "text_fr": "<p>La batterie est parfaitement intégrée au cadre et offre une capacité de 800 Wh grâce à une technologie de cellule de pointe. Elle peut être retirée ou rechargée sur le vélo.</p>",
+            "text_fi": "<p>Ultra+ -mallin akku on tyylikkäästi runkoon integroitu. Yhdistettynä tehokkaaseen moottoriin, sen 800Wh:n kapasiteetti tarjoaa erinomaisen kilometrikantaman. Akku on ladattavissa suoraan pyörässä sijaitsevasta pistokkeesta, tai vaihtoehtoisesti irrotettavissa kotona lataamista varten.</p>",
+            "button_link": "",
+            "button_text_override": "",
+            "button_text_override_de": "",
+            "button_text_override_fr": "",
+            "button_text_override_fi": ""
+          }
+        },
+        "custom_item_gX9mm6": {
+          "type": "custom_item",
+          "settings": {
+            "image": "shopify://shop_images/Frame_377_77b0c983-39ff-4d1c-9972-46079a9e94e1.jpg",
+            "image_link": "",
+            "title": "6 A fast charger",
+            "title_de": "6 A Schnellladegerät",
+            "title_fr": "Chargeur rapide 6 A",
+            "title_fi": "6A nopeasti lataava pikalaturi",
+            "title_link": "",
+            "text": "<p>Quickly mobile again - no problem with our standard HEPHA quick charger. With its 6 A, it charges almost 1.5 times faster than conventional chargers. It can be used both on the road and as a detachable wallbox at home!</p>",
+            "text_de": "<p>Schnell wieder mobil - mit unserem serienmäßigen HEPHA Schnellladegerät kein Problem. Es lädt fast 1,5 mal schneller als herkömmliche Ladegeräte. Es ist sowohl mobil auf der Tour als auch als abnehmbare Wallbox zuhause einsetzbar!</p>",
+            "text_fr": "<p>De nouveau rapidement mobile – aucun problème avec notre chargeur rapide HEPHA standard. Avec ses 6 A, il charge presque 1,5 fois plus vite que les chargeurs classiques. Il peut être utilisé aussi bien en déplacement que comme boîtier mural amovible à la maison !</p>",
+            "text_fi": "<p>Nopeasti takaisin matkaan – HEPHA-sähköpyörien vakiona mukana toimitettavalla pikalaturilla se onnistuu helposti. Laturin 6A latausvirta tekee siitä lähes 1,5 kertaa nopeampaa kuin tavanomaisilla latureilla. Laturia voidaan käyttää joko tien päällä tai kotona, ja myös seinään asennettavana wallboxina!</p>",
+            "button_link": "",
+            "button_text_override": "",
+            "button_text_override_de": "",
+            "button_text_override_fr": "",
+            "button_text_override_fi": ""
+          }
+        },
+        "custom_item_yDrae9": {
+          "type": "custom_item",
+          "settings": {
+            "image": "shopify://shop_images/Frame_387.jpg",
+            "image_link": "",
+            "title": "Crystal clear 3.5'\" display",
+            "title_de": "Kristallklarer 3.5'\" Display",
+            "title_fr": "Ecran 3.5'' clair comme de l'eau de roche",
+            "title_fi": "Kristallinkirkas 3,5\" näyttö",
+            "title_link": "",
+            "text": "<p>The compact 3.5'\" display sits well protected to the left of the stem. Thanks to the high-quality IPS technology, it is very easy to read even in bright light.</p>",
+            "text_de": "<p>Das kompakte 3.5'\"-Display sitzt gut geschützt links am Vorbau. Dank hochwertiger IPS-Technologie ist es auch bei hellem Licht sehr gut lesbar.</p>",
+            "text_fr": "<p>L'écran compact de 3,5 pouces est bien protégé à gauche de la tige. Grâce à la technologie IPS de haute qualité, il est très facile à lire, même en cas de forte luminosité.</p>",
+            "text_fi": "<p>Kompakti 3,5\" näyttö sijaitsee ohjainkannattimen vasemmalla puolella, hyvin suojattuna. IPS-tekniikan ansiosta se on helposti luettavissa myös kirkkaassa valossa ja mistä katselukulmasta tahansa.</p>",
+            "button_link": "",
+            "button_text_override": "",
+            "button_text_override_de": "",
+            "button_text_override_fr": "",
+            "button_text_override_fi": ""
+          }
+        },
+        "custom_item_7KKc4H": {
+          "type": "custom_item",
+          "settings": {
+            "image": "shopify://shop_images/Frame_378_780417fd-5fd7-4d1c-a773-964cf507b6aa.jpg",
+            "image_link": "",
+            "title": "11-speed gearshift",
+            "title_de": "11-Gang Schaltung",
+            "title_fr": "Boîte de vitesses à 11 vitesses",
+            "title_fi": "11-nopeuksinen vaihteisto",
+            "title_link": "",
+            "text": "<p>The Shimano Cues U6020 drivetrain has been specially developed for e-bikes and is therefore perfect for smooth shifting in combination with the Ultra's high-performance motor.</p>",
+            "text_de": "<p>Die Shimano Cues U6020 Schaltung des Long Range wurde speziell für E-Bikes entwickelt und eignet sich daher perfekt für sanfte Schaltvorgänge auch unter mehr Last.</p>",
+            "text_fr": "<p>Le système de changement de vitesse Shimano Cues U6020 du Long Range a été spécialement développé pour les vélos électriques et est donc parfait pour un changement de vitesse en douceur même sous une charge plus élevée.</p>",
+            "text_fi": "<p>Ultra-mallin 11-nopeuksinen Shimano CUES U6020-vaihteisto on suunniteltu erityisesti sähköpyörien vaatimuksiin. Vaihteisto tarjoaa sulavaa vaihteensiirtoa myös suuremman kuormituksen alla.</p>",
+            "button_link": "",
+            "button_text_override": "",
+            "button_text_override_de": "",
+            "button_text_override_fr": "",
+            "button_text_override_fi": ""
+          }
+        },
+        "custom_item_wtRirp": {
+          "type": "custom_item",
+          "settings": {
+            "image": "shopify://shop_images/Frame_373_465529dc-8a77-4e97-bf68-a5b00643c0a6.jpg",
+            "image_link": "",
+            "title": "Special e-bike suspension fork",
+            "title_de": "Spezielle E-Bike Federgabel",
+            "title_fr": "Fourche à suspension spéciale pour vélo électrique",
+            "title_fi": "Sähköpyöriin suunniteltu joustohaarukka",
+            "title_link": "",
+            "text": "<p>The Suntour NEX-25 with its 63 mm suspension travel provides additional comfort, dampens vibrations and compensates for bumps.</p>",
+            "text_de": "<p>Die Suntour NEX-25 mit ihren 63 mm Federweg sorgt für zusätzlichen Komfort, dämpft Vibrationen und gleicht Unebenheiten aus..</p>",
+            "text_fr": "<p>Le Suntour NEX-25 avec son débattement de suspension de 63 mm offre un confort supplémentaire, amortit les vibrations et compense les bosses.</p>",
+            "text_fi": "<p>Suntour NEX-25 63mm joustomatkallaan parantaa ajomukavuutta tehokkaasti, vaimentaa tärinöitä ja tasaa reitin epätasaisuuksia.</p>",
+            "button_link": "",
+            "button_text_override": "",
+            "button_text_override_de": "",
+            "button_text_override_fr": "",
+            "button_text_override_fi": ""
+          }
+        },
+        "custom_item_yaFPYt": {
+          "type": "custom_item",
+          "settings": {
+            "image": "shopify://shop_images/Frame_381.jpg",
+            "image_link": "",
+            "title": "Multifunctional luggage carrier",
+            "title_de": "Multifunktionaler Gepäckträger",
+            "title_fr": "Porte-bagages multifonctionnel",
+            "title_fi": "Monitoiminen tavarateline",
+            "title_link": "",
+            "text": "<p>The robust pannier rack always has a solution at hand: whether for panniers on the side or for quickly clicking in baskets thanks to the universal MIK HD interface.</p>",
+            "text_de": "<p>Der robuste Gepäckträger hat immer eine Lösung parat: ob für seitlichen Packtaschen oder für das schnelle Einklicken von Körben dank der universellen MIK HD Schnittstelle..</p>",
+            "text_fr": "<p>Le porte-bagages robuste a toujours une solution à portée de main : que ce soit pour les sacoches latérales ou pour cliquer rapidement dans les paniers grâce à l'interface universelle MIK HD.</p>",
+            "text_fi": "<p>Tukeva tavarateline taipuu moneen: sivulaukuille tai vaikka kätevästi MIK HD-järjestelmään kiinnityvälle korille.</p>",
+            "button_link": "",
+            "button_text_override": "",
+            "button_text_override_de": "",
+            "button_text_override_fr": "",
+            "button_text_override_fi": ""
+          }
+        },
+        "custom_item_fjmjTL": {
+          "type": "custom_item",
+          "settings": {
+            "image": "shopify://shop_images/Frame_374.png",
+            "image_link": "",
+            "title": "Automatic light sensor",
+            "title_de": "Automatischer Lichtsensor",
+            "title_fr": "Capteur de lumière automatique",
+            "title_fi": "Automaattinen valosensori",
+            "title_link": "",
+            "text": "<p>The light on your Trekking 7 is controlled fully automatically by a light sensor. This is particularly practical in suddenly changing light conditions, such as tunnels!</p>",
+            "text_de": "<p>Das Licht an Ihrem Trekking 7 wird vollautomatisch durch einen Lichtsensor gesteuert. Besonders praktisch bei plötzlich wechselnden Lichtverhältnissen, wie Tunneln!.</p>",
+            "text_fr": "<p>L'éclairage de votre Trekking 7 est contrôlé de manière entièrement automatique par un capteur de lumière. Cela est particulièrement pratique en cas de changement soudain de la luminosité, comme dans les tunnels !</p>",
+            "text_fi": "<p>Valaistus ohjautuu täysin automaattisesti valosensorilla – erityisen hyödyllinen ominaisuus äkillisesti vaihtuvissa valaistusolosuhteissa, kuten tunneliin ajettaessa!</p>",
+            "button_link": "",
+            "button_text_override": "",
+            "button_text_override_de": "",
+            "button_text_override_fr": "",
+            "button_text_override_fi": ""
+          }
+        },
+        "custom_item_Lg9gqi": {
+          "type": "custom_item",
+          "settings": {
+            "image": "shopify://shop_images/app_432ee281-bc29-43b1-9f76-b357a74d18a6.png",
+            "image_link": "",
+            "title": "Smart APP",
+            "title_de": "Smarte App",
+            "title_fr": "Application intelligente",
+            "title_fi": "Älykäs mobiilisovellus",
+            "title_link": "",
+            "text": "<p>With the HEPHA APP, you can unlock the full potential of your e-bike: record rides, configure your e-bike, update your system or get help with questions.</p>",
+            "text_de": "<p>Mit der HEPHA APP setzen Sie das volle Potenzial Ihres E-Bikes frei: Zeichnen Sie Fahrten auf, konfigurieren Sie Ihr E-Bike, updaten Sie Ihr System oder erhalten Sie Hilfe bei Fragen..</p>",
+            "text_fr": "<p>Avec l'application HEPHA, vous pouvez exploiter tout le potentiel de votre vélo électrique : enregistrer des trajets, configurer votre vélo électrique, mettre à jour votre système ou obtenir de l'aide en cas de questions.</p>",
+            "text_fi": "<p>HEPHA-sovelluksella valjastat pyöräsi koko potentiaalin käyttöösi: tallenna ajosi, konfiguroi moottorin avustustasot ja löydä apua tukipalvelusta.</p>",
+            "button_link": "",
+            "button_text_override": "",
+            "button_text_override_de": "",
+            "button_text_override_fr": "",
+            "button_text_override_fi": ""
+          }
+        }
+      },
+      "block_order": [
+        "custom_item_dUaeKM",
+        "custom_item_EXHXzV",
+        "custom_item_gX9mm6",
+        "custom_item_yDrae9",
+        "custom_item_7KKc4H",
+        "custom_item_wtRirp",
+        "custom_item_yaFPYt",
+        "custom_item_fjmjTL",
+        "custom_item_Lg9gqi"
+      ],
+      "name": "Custom Image with Text",
+      "settings": {
+        "title": "Highlights",
+        "title_de": "Highlights",
+        "title_fr": "Highlights",
+        "title_fi": "Highlights",
+        "hide_title": false,
+        "image_aspect_ratio": "1/1",
+        "show_title_global": true,
+        "show_text_global": true,
+        "show_button_global": false,
+        "button_text": "Learn More",
+        "button_text_de": "Mehr erfahren",
+        "button_text_fr": "En savoir plus",
+        "button_text_fi": "Lue lisää",
+        "button_background_color": "#ffffff",
+        "button_text_color": "#222222",
+        "button_border_color": "#222222",
+        "button_hover_background_color": "#222222",
+        "button_hover_text_color": "#ffffff",
+        "button_hover_border_color": "#222222"
+      }
+    },
+    "custom_specification_DXgxaL": {
+      "type": "custom_specification",
+      "settings": {}
+    },
+    "frame_geometry_sheet_TcyQhX": {
+      "type": "frame_geometry_sheet",
+      "blocks": {
+        "step_through_L4hQVE": {
+          "type": "step_through",
+          "settings": {
+            "show_size_s": false,
+            "frame_height_low_S": "",
+            "frame_height_low": "460 mm",
+            "frame_height_low_L": "490 mm",
+            "seat_tube_angle_low_S": "",
+            "seat_tube_angle_low": "74°",
+            "seat_tube_angle_low_L": "74°",
+            "fork_offset_low_S": "",
+            "fork_offset_low": "43 mm",
+            "fork_offset_low_L": "43 mm",
+            "seat_angle_low_S": "",
+            "seat_angle_low": "74°",
+            "seat_angle_low_L": "74°",
+            "head_tube_length_low_S": "",
+            "head_tube_length_low": "160 mm",
+            "head_tube_length_low_L": "170 mm",
+            "head_tube_angle_low_S": "",
+            "head_tube_angle_low": "68.5°",
+            "head_tube_angle_low_L": "68.5°",
+            "top_tube_horizontal_low_S": "",
+            "top_tube_horizontal_low": "591 mm",
+            "top_tube_horizontal_low_L": "629 mm",
+            "chain_stay_length_low_S": "",
+            "chain_stay_length_low": "484 mm",
+            "chain_stay_length_low_L": "484 mm",
+            "bottom_bracket_drop_low_S": "",
+            "bottom_bracket_drop_low": "60 mm",
+            "bottom_bracket_drop_low_L": "60 mm",
+            "wheelbase_low_S": "",
+            "wheelbase_low": "1162 mm",
+            "wheelbase_low_L": "1201 mm",
+            "stack_low_S": "",
+            "stack_low": "637 mm",
+            "stack_low_L": "647 mm",
+            "reach_low_S": "",
+            "reach_low": "408 mm",
+            "reach_low_L": "443 mm",
+            "standover_height_low_S": "",
+            "standover_height_low": "720 mm",
+            "standover_height_low_L": "720 mm",
+            "seat_height_min_low_S": "",
+            "seat_height_min_low": "850 mm",
+            "seat_height_min_low_L": "850 mm",
+            "seat_height_max_low_S": "",
+            "seat_height_max_low": "1000 mm",
+            "seat_height_max_low_L": "1000 mm"
+          }
+        },
+        "high_step_4V6ryn": {
+          "type": "high_step",
+          "settings": {
+            "show_size_xl": true,
+            "frame_height_high": "490 mm",
+            "frame_height_high_L": "520 mm",
+            "frame_height_high_XL": "560 mm",
+            "seat_tube_angle_high": "74°",
+            "seat_tube_angle_high_L": "74°",
+            "seat_tube_angle_high_XL": "74°",
+            "fork_offset_high": "43 mm",
+            "fork_offset_high_L": "43 mm",
+            "fork_offset_high_XL": "43 mm",
+            "seat_angle_high": "74°",
+            "seat_angle_high_L": "74°",
+            "seat_angle_high_XL": "74°",
+            "head_tube_length_high": "160 mm",
+            "head_tube_length_high_L": "170 mm",
+            "head_tube_length_high_XL": "173 mm",
+            "head_tube_angle_high": "68.5°",
+            "head_tube_angle_high_L": "68.5°",
+            "head_tube_angle_high_XL": "68.5°",
+            "top_tube_horizontal_high": "591 mm",
+            "top_tube_horizontal_high_L": "629 mm",
+            "top_tube_horizontal_high_XL": "670 mm",
+            "chain_stay_length_high": "484 mm",
+            "chain_stay_length_high_L": "484 mm",
+            "chain_stay_length_high_XL": "484 mm",
+            "bottom_bracket_drop_high": "60 mm",
+            "bottom_bracket_drop_high_L": "60 mm",
+            "bottom_bracket_drop_high_XL": "60 mm",
+            "wheelbase_high": "1162",
+            "wheelbase_high_L": "1201",
+            "wheelbase_high_XL": "1242",
+            "stack_high": "637 mm",
+            "stack_high_L": "647 mm",
+            "stack_high_XL": "653 mm",
+            "reach_high": "408 mm",
+            "reach_high_L": "443 mm",
+            "reach_high_XL": "482 mm",
+            "standover_height_high": "760",
+            "standover_height_high_L": "780",
+            "standover_height_high_XL": "780",
+            "seat_height_min_high": "860",
+            "seat_height_min_high_L": "890",
+            "seat_height_min_high_XL": "890",
+            "seat_height_max_high": "1050",
+            "seat_height_max_high_L": "1080",
+            "seat_height_max_high_XL": "1080"
+          }
+        }
+      },
+      "block_order": [
+        "step_through_L4hQVE",
+        "high_step_4V6ryn"
+      ],
+      "name": "Frame geometry sheet",
+      "settings": {
+        "title": "Frame & Geometry",
+        "title_de": "Rahmen & Geometrie",
+        "title_fr": "Cadre & Géométrie",
+        "title_fi": "Runko & Geometria",
+        "geometry_type": "trekking_new"
+      }
+    },
+    "173442611857857522": {
+      "type": "apps",
+      "blocks": {
+        "loox_reviews_loox_dynamic_section_p3bDHL": {
+          "type": "shopify://apps/loox-reviews/blocks/loox-dynamic-section/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
+          "settings": {
+            "only_photos": false,
+            "aggregated": false,
+            "limit": 20,
+            "hide_thumbnails": false,
+            "maxwidth": 1080,
+            "is_sample": true
+          }
+        }
+      },
+      "block_order": [
+        "loox_reviews_loox_dynamic_section_p3bDHL"
+      ],
+      "settings": {
+        "full_width": false,
+        "show_space": true,
+        "title": "",
+        "title_de": "",
+        "title_fr": ""
+      }
+    },
+    "custom_product_tab_new_YFTbdM": {
+      "type": "custom-product-tab-new",
+      "blocks": {
+        "tab_DqHrca": {
+          "type": "tab",
+          "settings": {
+            "title": "Sale",
+            "title_de": "Sale",
+            "title_fr": "Sale",
+            "title_fi": "Sale",
+            "product_source": "collection",
+            "collection": "trekking-7-my23",
+            "products": []
+          }
+        },
+        "tab_fTaqjN": {
+          "type": "tab",
+          "settings": {
+            "title": "City",
+            "title_de": "City",
+            "title_fr": "City",
+            "title_fi": "City",
+            "product_source": "collection",
+            "collection": "city-e-bike",
+            "products": []
+          }
+        },
+        "tab_UCR6jj": {
+          "type": "tab",
+          "settings": {
+            "title": "Trekking",
+            "title_de": "Trekking",
+            "title_fr": "Trekking",
+            "title_fi": "Trekking",
+            "product_source": "collection",
+            "collection": "new-bike-2024",
+            "products": []
+          }
+        },
+        "tab_FCcrXd": {
+          "type": "tab",
+          "settings": {
+            "title": "Mountain",
+            "title_de": "Mountain",
+            "title_fr": "Mountain",
+            "title_fi": "Mountain",
+            "product_source": "collection",
+            "collection": "mountain-7-2024",
+            "products": []
+          }
+        },
+        "tab_TGa68N": {
+          "type": "tab",
+          "settings": {
+            "title": "Mountain Carbon",
+            "title_de": "Mountain Carbon",
+            "title_fr": "Mountain Carbon",
+            "title_fi": "Mountain Carbon",
+            "product_source": "collection",
+            "collection": "mountain-7-carbon",
+            "products": []
+          }
+        },
+        "advertisement_UPqxjp": {
+          "type": "advertisement",
+          "settings": {
+            "ad_link": "shopify://collections/hepha-ebikes",
+            "image": "shopify://shop_images/HEPHA-Trekking7_01_grey_7ff138ad-9f41-4981-b752-1bd80fee72c0.jpg",
+            "background_color": "#ffffff",
+            "background_position": "center center",
+            "background_size": "cover",
+            "background_align_items": "center",
+            "background_padding_top": 20,
+            "background_padding_left": 20,
+            "background_padding_right": 20,
+            "background_padding_bottom": 20,
+            "title_1": "<p>Not sure which E-Bike is right for you? Discover and compare our full range of E-Bikes to find the perfect model for your adventures.</p>",
+            "title_1_de": "<p>Nicht sicher, welches E-Bike das richtige für Sie ist? Entdecken und vergleichen Sie unser gesamtes Sortiment an E-Bikes, um das perfekte Modell für Ihre Abenteuer zu finden.</p>",
+            "title_1_fr": "<p>Vous n’êtes pas sûr de quel vélo électrique est fait pour vous ? Découvrez et comparez notre gamme complète de vélos électriques pour trouver le modèle parfait pour vos aventures.</p>",
+            "title_1_fi": "<p>Etkö ole varma, mikä sähköpyörämalli sopii sinulle? Tutustu ja vertaa koko valikoimaamme löytääksesi täydellisen pyörän omaan käyttötarkoitukseesi.</p>",
+            "heading_color_1": "#ffffff",
+            "heading_size_1": 18,
+            "button_label": "Explore all E-Bikes!",
+            "button_label_de": "Entdecke alle E-Bikes!",
+            "button_label_fr": "Découvrez tous modèles !",
+            "button_label_fi": "Tutki koko mallistoa!",
+            "button_bg_color": "#000000",
+            "button_text_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "tab_DqHrca",
+        "tab_fTaqjN",
+        "tab_UCR6jj",
+        "tab_FCcrXd",
+        "tab_TGa68N",
+        "advertisement_UPqxjp"
+      ],
+      "name": "Custom Product Tabs New",
+      "settings": {
+        "title": "Explore more HEPHA E-Bikes",
+        "title_de": "Entdecken Sie mehr HEPHA E-Bikes",
+        "title_fr": "Découvrez d'autres vélos électriques HEPHA",
+        "title_fi": "Tutustu lisää HEPHA E-Bike-malleihin"
+      }
+    },
+    "custom_stickybar_b9zk6H": {
+      "type": "custom-stickybar",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "enhance_text_area_jW4tf6",
+    "custom_image_with_text_EPCjJj",
+    "custom_specification_DXgxaL",
+    "frame_geometry_sheet_TcyQhX",
+    "173442611857857522",
+    "custom_product_tab_new_YFTbdM",
+    "custom_stickybar_b9zk6H"
+  ]
+}
