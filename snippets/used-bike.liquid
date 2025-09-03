@@ -1,4 +1,5 @@
 {% liquid
+  assign country_code = localization.country.iso_code
   assign lang_map = request.locale.iso_code
   assign text_setting = 'text'
   assign currentprice_setting = 'currentprice'
@@ -27,6 +28,7 @@
   assign text_length = text_content | size
 %}
 
+{% unless country_code == 'FR' %}
 <div class="product-promo-container">
   <div class="product-promo-left {% if text_length > 80 %}long-text{% endif %}">
     <h5 class="product-promo-text">
@@ -159,3 +161,4 @@
     }
   }
 </style>
+{% endunless %}
