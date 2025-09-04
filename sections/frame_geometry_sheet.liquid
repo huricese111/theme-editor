@@ -1291,7 +1291,18 @@
     </h2>
 
     <div class="custom-size-tabs" role="tablist">
-      <div class="tab-item-size active" role="tab" data-target="framesize">Frame Size</div>
+      <div class="tab-item-size active" role="tab" data-target="framesize">
+        {% assign current_locale = request.locale.iso_code %}
+        {% if current_locale == 'de' %}
+          Rahmengröße
+        {% elsif current_locale == 'fr' %}
+          Taille du cadre
+        {% elsif current_locale == 'fi' %}
+          Rungon koko
+        {% else %}
+          Frame Size
+        {% endif %}
+      </div>
       {% for block in section.blocks %}
         {% case block.type %}
           {% when 'step_through' %}

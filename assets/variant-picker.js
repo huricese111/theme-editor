@@ -75,7 +75,7 @@ if (!customElements.get('variant-picker')) {
       this.addBtn.disabled = !variantAvailable;
       this.addBtn.textContent = variantAvailable
         ? this.addBtn.dataset.addToCartText
-        : unavailableStr;
+        : (this.addBtn.dataset.unavailableText || unavailableStr);
     }
 
     /**

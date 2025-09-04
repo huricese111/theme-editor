@@ -22,8 +22,28 @@
 <table class="pf-inner-table" style="width: 100%;">
   <thead>
     <tr>
-      <th>No.</th>
-      <th>Measurement</th>
+      <th>
+        {% if request.locale.iso_code == 'de' %}
+          Nr.
+        {% elsif request.locale.iso_code == 'fr' %}
+          N°
+        {% elsif request.locale.iso_code == 'fi' %}
+          Nro
+        {% else %}
+          No.
+        {% endif %}
+      </th>
+      <th>
+        {% if request.locale.iso_code == 'de' %}
+          Messung
+        {% elsif request.locale.iso_code == 'fr' %}
+          Mesure
+        {% elsif request.locale.iso_code == 'fi' %}
+          Mittaus
+        {% else %}
+          Measurement
+        {% endif %}
+      </th>
       {% for size in sizes %}
         <th>{{ size }}</th>
       {% endfor %}
@@ -37,35 +57,155 @@
         <td>
           {% case measurement %}
             {% when 'frame_height' -%}
-              Frame Height
+              {% if request.locale.iso_code == 'de' %}
+                Rahmenhöhe
+              {% elsif request.locale.iso_code == 'fr' %}
+                Hauteur du cadre
+              {% elsif request.locale.iso_code == 'fi' %}
+                Rungon korkeus
+              {% else %}
+                Frame Height
+              {% endif %}
             {% when 'seat_tube_angle' -%}
-              Seat Tube Angle
+              {% if request.locale.iso_code == 'de' %}
+                Sitzrohrwinkel
+              {% elsif request.locale.iso_code == 'fr' %}
+                Angle du tube de selle
+              {% elsif request.locale.iso_code == 'fi' %}
+                Satulatolpan kulma
+              {% else %}
+                Seat Tube Angle
+              {% endif %}
             {% when 'fork_offset' -%}
-              Fork Offset
+              {% if request.locale.iso_code == 'de' %}
+                Gabelvorlauf
+              {% elsif request.locale.iso_code == 'fr' %}
+                Décalage de fourche
+              {% elsif request.locale.iso_code == 'fi' %}
+                Haarukan offset
+              {% else %}
+                Fork Offset
+              {% endif %}
             {% when 'seat_angle' -%}
-              Seat Angle
+              {% if request.locale.iso_code == 'de' %}
+                Sitzwinkel
+              {% elsif request.locale.iso_code == 'fr' %}
+                Angle de selle
+              {% elsif request.locale.iso_code == 'fi' %}
+                Satulakulma
+              {% else %}
+                Seat Angle
+              {% endif %}
             {% when 'head_tube_length' -%}
-              Head Tube Length
+              {% if request.locale.iso_code == 'de' %}
+                Steuerrohrlänge
+              {% elsif request.locale.iso_code == 'fr' %}
+                Longueur du tube de direction
+              {% elsif request.locale.iso_code == 'fi' %}
+                Ohjaustolpan pituus
+              {% else %}
+                Head Tube Length
+              {% endif %}
             {% when 'head_tube_angle' -%}
-              Head Tube Angle
+              {% if request.locale.iso_code == 'de' %}
+                Steuerrohrwinkel
+              {% elsif request.locale.iso_code == 'fr' %}
+                Angle du tube de direction
+              {% elsif request.locale.iso_code == 'fi' %}
+                Ohjaustolpan kulma
+              {% else %}
+                Head Tube Angle
+              {% endif %}
             {% when 'top_tube_horizontal' -%}
-              Top Tube Horizontal
+              {% if request.locale.iso_code == 'de' %}
+                Oberrohr horizontal
+              {% elsif request.locale.iso_code == 'fr' %}
+                Tube horizontal supérieur
+              {% elsif request.locale.iso_code == 'fi' %}
+                Yläputki vaakasuora
+              {% else %}
+                Top Tube Horizontal
+              {% endif %}
             {% when 'chain_stay_length' -%}
-              Chain Stay Length
+              {% if request.locale.iso_code == 'de' %}
+                Kettenstreben-Länge
+              {% elsif request.locale.iso_code == 'fr' %}
+                Longueur des haubans
+              {% elsif request.locale.iso_code == 'fi' %}
+                Ketjutuen pituus
+              {% else %}
+                Chain Stay Length
+              {% endif %}
             {% when 'bottom_bracket_drop' -%}
-              Bottom Bracket Drop
+              {% if request.locale.iso_code == 'de' %}
+                Tretlager-Tiefung
+              {% elsif request.locale.iso_code == 'fr' %}
+                Chute du boîtier de pédalier
+              {% elsif request.locale.iso_code == 'fi' %}
+                Keskiön pudotus
+              {% else %}
+                Bottom Bracket Drop
+              {% endif %}
             {% when 'wheelbase' -%}
-              Wheelbase
+              {% if request.locale.iso_code == 'de' %}
+                Radstand
+              {% elsif request.locale.iso_code == 'fr' %}
+                Empattement
+              {% elsif request.locale.iso_code == 'fi' %}
+                Akseliväli
+              {% else %}
+                Wheelbase
+              {% endif %}
             {% when 'stack' -%}
-              Stack
+              {% if request.locale.iso_code == 'de' %}
+                Stack
+              {% elsif request.locale.iso_code == 'fr' %}
+                Stack
+              {% elsif request.locale.iso_code == 'fi' %}
+                Stack
+              {% else %}
+                Stack
+              {% endif %}
             {% when 'reach' -%}
-              Reach
+              {% if request.locale.iso_code == 'de' %}
+                Reach
+              {% elsif request.locale.iso_code == 'fr' %}
+                Reach
+              {% elsif request.locale.iso_code == 'fi' %}
+                Reach
+              {% else %}
+                Reach
+              {% endif %}
             {% when 'standover_height' -%}
-              Standover Height
+              {% if request.locale.iso_code == 'de' %}
+                Überstandshöhe
+              {% elsif request.locale.iso_code == 'fr' %}
+                Hauteur d'enjambement
+              {% elsif request.locale.iso_code == 'fi' %}
+                Yliastumiskorkeus
+              {% else %}
+                Standover Height
+              {% endif %}
             {% when 'seat_height_min' -%}
-              Seat Height Min
+              {% if request.locale.iso_code == 'de' %}
+                Sitzhöhe Min
+              {% elsif request.locale.iso_code == 'fr' %}
+                Hauteur de selle Min
+              {% elsif request.locale.iso_code == 'fi' %}
+                Satulakorkeus Min
+              {% else %}
+                Seat Height Min
+              {% endif %}
             {% when 'seat_height_max' -%}
-              Seat Height Max
+              {% if request.locale.iso_code == 'de' %}
+                Sitzhöhe Max
+              {% elsif request.locale.iso_code == 'fr' %}
+                Hauteur de selle Max
+              {% elsif request.locale.iso_code == 'fi' %}
+                Satulakorkeus Max
+              {% else %}
+                Seat Height Max
+              {% endif %}
             {% else -%}
               {{ measurement | replace: '_', ' ' | capitalize }}
           {% endcase %}

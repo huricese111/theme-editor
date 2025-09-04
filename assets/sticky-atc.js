@@ -157,8 +157,7 @@ if (!customElements.get('sticky-atc')) {
         if (!this.submitBtn) return;
 
         const variantAvailable = variant && variant.available;
-        const unavailableStr = variant
-          ? theme.strings.noStock : this.submitBtn.dataset.unavailableText;
+        const unavailableStr = this.submitBtn.dataset.unavailableText || 'Unavailable';
 
         this.submitBtn.textContent = variantAvailable
           ? this.submitBtn.dataset.addToCartText

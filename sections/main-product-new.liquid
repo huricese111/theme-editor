@@ -1,117 +1,67 @@
 {%- comment -%}
-/*
- * Main Product New Section - Enhanced Product Detail Page Component
+/**
+ * Product Page Section - Enhanced Product Display Component
  * 
- * CORE FUNCTIONALITY:
- * This section creates a comprehensive product detail page with a modern two-column layout,
- * featuring product media gallery on the left and product information on the right.
- * Supports dynamic block rendering, variant selection, media grouping, sticky elements,
- * and extensive customization options for product presentation.
+ * This section provides a comprehensive product page layout with advanced features
+ * for displaying product information, media gallery, and interactive elements.
  * 
- * TECHNICAL IMPLEMENTATION:
- * - Liquid templating with advanced variant handling and media management
- * - CSS Grid and Flexbox for responsive layout design
- * - JavaScript integration for slideshow functionality and interactive elements
- * - Dynamic block system for flexible content arrangement
- * - Shopify native features integration (variants, inventory, checkout)
+ * Key Features:
+ * - Responsive product media gallery with multiple layout options (carousel, collage)
+ * - Advanced variant selection with dynamic availability updates
+ * - Comprehensive product information blocks (title, price, description, specifications)
+ * - Media grouping by variant options (color-based image switching)
+ * - Image zoom functionality and alt text overlay support
+ * - Video autoplay and looping controls
+ * - Breadcrumb navigation with structured data
+ * - Social sharing integration across multiple platforms
+ * - Used bike information display with multilingual support
+ * - Financial leasing accordion with partner integration
+ * - Countdown timer for promotional campaigns
+ * - Sticky add-to-cart functionality
+ * - Quick buy modal support
+ * - Product reviews integration
+ * - Inventory level display and backorder notifications
+ * - Gift card recipient fields
+ * - Custom liquid blocks for advanced customization
  * 
- * SHOPIFY INTEGRATION:
- * - Product variant selection and management
- * - Inventory tracking and backorder handling
- * - Dynamic checkout button integration
- * - Media grouping by variant options
- * - Metafield support for extended product information
- * - Multi-language support with locale-specific content
- * - SEO optimization with structured data
+ * Layout Options:
+ * - Media gallery: Carousel (under/beside), Collage (style 1/2)
+ * - Sticky columns for improved user experience
+ * - Mobile-optimized responsive design
+ * - Configurable media dimensions and aspect ratios
  * 
- * RELATED FILES:
- * 
- * Core Section File:
- * - sections/main-product-new.liquid - This main section file
- * 
- * Snippet Dependencies (Existing):
- * - snippets/animation-attrs.liquid - Animation attributes for scroll-triggered effects
- * - snippets/media-gallery.liquid - Product media gallery component with zoom and navigation
- * - snippets/product-price.liquid - Product pricing display with compare-at pricing
- * - snippets/product-description.liquid - Product description rendering with rich text support
- * - snippets/specification-simple.liquid - Simple product specifications display
- * - snippets/popup-block.liquid - Modal popup functionality for additional content
- * - snippets/used-bike.liquid - Used bike specific information and pricing
- * - snippets/product-vendor.liquid - Product vendor/brand information display
- * - snippets/product-sku.liquid - Product SKU display component
- * - snippets/product-barcode.liquid - Product barcode display component
- * - snippets/variant-picker.liquid - Product variant selection interface
- * - snippets/variant-metafield.liquid - Variant-specific metafield display
- * - snippets/buy-buttons.liquid - Add to cart and purchase buttons
- * - snippets/finance-leasing-accordion.liquid - Financial leasing options accordion
- * - snippets/text-block.liquid - Simple text content blocks
- * - snippets/richtext-block.liquid - Rich text content blocks with formatting
- * - snippets/link-block.liquid - Link button components
- * - snippets/image-block.liquid - Image content blocks
- * - snippets/sharing-block.liquid - Social media sharing buttons
- * - snippets/block-complementary-products.liquid - Related/complementary products display
- * - snippets/block-countdown-timer.liquid - Countdown timer for promotions
- * - snippets/block-feature-rating.liquid - Product feature rating display
- * 
- * Snippet Dependencies (Referenced but Missing):
- * - snippets/breadcrumbs.liquid - Breadcrumb navigation component
- * - snippets/product-inventory.liquid - Inventory level display component
- * - snippets/product-popups.liquid - Product-related popup modals
- * - snippets/structured-data-product.liquid - SEO structured data for products
- * - snippets/sticky-atc.liquid - Sticky add-to-cart component
- * - snippets/custom-bidex-find-dealers.liquid - Custom dealer finder integration
- * 
- * JavaScript Dependencies:
- * - assets/slideshow.js - Media gallery slideshow functionality
- * 
- * LAYOUT OPTIONS:
- * - Two-column desktop layout (60% media, 40% details)
- * - Single-column mobile layout with stacked sections
- * - Sticky columns option for enhanced user experience
- * - Responsive breakpoints for optimal viewing on all devices
- * 
- * MEDIA GALLERY FEATURES:
- * - Multiple layout options (carousel, grid, tiles)
- * - Image zoom functionality with configurable zoom levels
- * - Video autoplay and loop controls
- * - Media grouping by variant options
- * - Thumbnail navigation with multiple positioning options
- * - Alternative text display with customizable icons
- * 
- * PRODUCT INFORMATION BLOCKS:
- * - Dynamic block system supporting 20+ content types
- * - Multi-language content support (English, German, French, Finnish)
- * - Customizable icons and styling options
- * - Quick buy integration for streamlined checkout
- * - Conditional display based on product properties
- * 
- * CUSTOMIZATION OPTIONS:
- * - Breadcrumb navigation toggle
- * - First available variant selection behavior
- * - Description positioning options
+ * Customization Options:
+ * - Breadcrumb visibility toggle
+ * - First available variant auto-selection
+ * - Description positioning (above/below media)
  * - Inventory transfer notifications
- * - Sticky add-to-cart button with positioning controls
- * - Gallery size and layout customization
- * - Color scheme and styling options
+ * - Tax and shipping policy display
+ * - Product rating integration
+ * - Icon selection for various elements
  * 
- * PERFORMANCE CONSIDERATIONS:
- * - Lazy loading for media content
- * - Optimized image delivery with responsive sizing
- * - Efficient variant switching without page reload
- * - Minimal JavaScript footprint with deferred loading
+ * Multilingual Support:
+ * - German (DE), French (FR), Finnish (FI) translations
+ * - Localized pricing and promotional text
+ * - Multi-language variant option labels
+ * - Regional leasing partner integration (DE/AT)
  * 
- * BROWSER COMPATIBILITY:
+ * Technical Features:
+ * - Structured data implementation for SEO
+ * - JavaScript integration for interactive elements
+ * - CSS custom properties for responsive behavior
+ * - Liquid template logic for dynamic content rendering
+ * - App block support for third-party integrations
+ * 
+ * Dependencies:
+ * - custom.js for enhanced functionality
+ * - slideshow.js for media gallery
+ * - Various snippet files for modular components
+ * - Theme settings for global configuration
+ * 
+ * Browser Support:
  * - Modern browsers with CSS Grid and Flexbox support
  * - Progressive enhancement for older browsers
- * - Touch-friendly interface for mobile devices
- * - Keyboard navigation support for accessibility
- * 
- * USE CASES:
- * - E-commerce product detail pages
- * - Product showcase with extensive media
- * - Variant-heavy products (clothing, bikes, electronics)
- * - B2B product catalogs with detailed specifications
- * - Multi-language international stores
+ * - Touch-friendly mobile interface
  */
 {%- endcomment -%}
 
@@ -357,6 +307,8 @@
     }
   }
 </style>
+
+<script src="{{ 'custom.js' | asset_url }}" defer></script>
 
 {%- if product.media.size > 1 -%}
   <script src="{{ 'slideshow.js' | asset_url }}" defer></script>
