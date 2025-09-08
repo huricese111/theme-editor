@@ -251,9 +251,9 @@
         {% if product.metafields.custom.alma_financing.value %}
           {% case request.locale.iso_code %}
             {% when 'fr' %}
-              4 x {{ product.metafields.custom.alma_financing.value }} € sans frais avec 
+              4x {{ product.metafields.custom.alma_financing.value }} € sans frais avec 
             {% else %}
-              4 interest-free payments of €{{ product.metafields.custom.alma_financing.value }} with 
+              4x €{{ product.metafields.custom.alma_financing.value }}, 0% interest with 
           {% endcase %}
            {% render 'icon-alma' %}
         {% endif %}
