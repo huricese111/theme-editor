@@ -220,13 +220,24 @@
                   {% when 'sprocket' %}
                     {% case lang %}
                       {% when 'de' -%}
-                        Kettenblatt
+                        Kettenantrieb
                       {% when 'fr' -%}
-                        Pignon
+                        Sprocket
                       {% when 'fi' -%}
-                        Eturatas
+                        Hammaspyörä
                       {% else -%}
                         Sprocket
+                    {% endcase %}
+                  {% when 'chain_ring' %}
+                    {% case lang %}
+                      {% when 'de' -%}
+                        Kettenblätter
+                      {% when 'fr' -%}
+                        Plateau
+                      {% when 'fi' -%}
+                        Eturattaat
+                      {% else -%}
+                        Chain ring
                     {% endcase %}
                   {% when 'cassette' %}
                     {% case lang %}
