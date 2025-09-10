@@ -95,7 +95,6 @@
 
           {% if form.posted_successfully? %}
             <script>
-              // 不进行页面跳转，直接在当前页面显示成功弹窗
               document.addEventListener('DOMContentLoaded', function() {
                 {%- liquid
                   assign success_title_text = section.settings.success_title_en | default: 'Thank you!'
@@ -124,7 +123,6 @@
                     endif
                   endif
                 -%}
-                // 传递成功消息文本到JavaScript
                 window.enhancedFormSettings = {
                   successTitle: {
                     en: '{{ success_title_text | escape }}',
@@ -140,10 +138,8 @@
                   }
                 };
                 
-                // 直接显示成功弹窗
                 showSuccessModal();
                 
-                // 重置表单
                 const form = document.getElementById('enhanced-contact-form');
                 if (form) {
                   form.reset();

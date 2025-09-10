@@ -216,6 +216,9 @@ class FiveLevelDropdown {
       okBtn.addEventListener('click', () => {
         this.confirmSelection();
       });
+      
+      // 初始化确认按钮状态
+      this.updateOkButtonState();
     }
   }
   
@@ -248,6 +251,9 @@ class FiveLevelDropdown {
     
     // 绑定点击外部关闭事件
     this.bindOutsideClickClose();
+    
+    // 初始化OK按钮状态
+    this.updateOkButtonState();
   }
   
   // 新增移动端按钮事件绑定方法
@@ -342,6 +348,9 @@ class FiveLevelDropdown {
       
       // 更新返回按钮显示状态
       this.updateBackButtonVisibility();
+      
+      // 更新OK按钮状态
+      this.updateOkButtonState();
     }
   }
   
@@ -935,6 +944,9 @@ class FiveLevelDropdown {
         items.forEach(item => item.classList.remove('selected'));
       }
     }
+    
+    // 更新确认按钮状态
+    this.updateOkButtonState();
   }
   
   // Reset to first page (for mobile)
@@ -950,10 +962,37 @@ class FiveLevelDropdown {
     console.log('Mobile pages reset, structure preserved');
   }
   
+  // 新增：更新确认按钮状态的方法
+  updateOkButtonState() {
+    const okBtn = this.panel.querySelector('.btn-ok');
+    if (!okBtn) return;
+    
+    // 获取当前下拉菜单的实际最大层级数
+    const actualMaxLevels = this.getActualMaxLevels();
+    
+    // 检查用户是否选择了所有必要的层级
+    if (this.selectedPath.length > 0 && this.selectedPath.length >= actualMaxLevels) {
+      // 用户已选择所有必要层级，启用按钮
+      okBtn.disabled = false;
+      okBtn.style.opacity = '1';
+    } else {
+      // 用户未选择所有必要层级，禁用按钮
+      okBtn.disabled = true;
+      okBtn.style.opacity = '0.5';
+    }
+  }
+  
   // Modify confirmSelection method
   confirmSelection() {
     if (this.selectedPath.length > 0) {
-      this.finalizeSelection();
+      // 获取当前下拉菜单的实际最大层级数
+      const actualMaxLevels = this.getActualMaxLevels();
+      
+      // 检查用户是否选择了所有必要的层级
+      if (this.selectedPath.length >= actualMaxLevels) {
+        this.finalizeSelection();
+      }
+      // 移除了弹窗提示部分
     } else {
       this.closeDropdown();
     }
@@ -1109,6 +1148,9 @@ class FiveLevelDropdown {
     }
     
     this.updateBreadcrumb();
+    
+    // 更新确认按钮状态
+    this.updateOkButtonState();
   }
   
   hasChildrenForOption(option, level) {
@@ -1120,6 +1162,57 @@ class FiveLevelDropdown {
     // 检查是否有子选项
     const childOptions = this.getChildOptions(currentPath, level + 1);
     return childOptions.length > 0;
+  }
+  
+  // 添加一个新方法来获取当前下拉菜单的实际最大层级数
+  getActualMaxLevels() {
+    // 如果没有选择任何选项，返回默认最大层级
+    if (this.selectedPath.length === 0) {
+      return 1; // 至少需要选择第一级
+    }
+    
+    // 构建当前选择的路径
+    const currentPath = this.selectedPath.join('>');
+    
+    // 检查是否有下一级选项
+    let currentLevel = this.selectedPath.length;
+    const nextLevelOptions = this.data.relationMap.get(currentPath);
+    
+    // 如果没有下一级选项，则当前级别就是最大级别
+    if (!nextLevelOptions || nextLevelOptions.length === 0) {
+      return currentLevel;
+    }
+    
+    // 递归检查下一级
+    return this._getMaxLevelsRecursive(currentPath, currentLevel);
+  }
+  
+  // 递归辅助方法来确定最大层级数
+  _getMaxLevelsRecursive(parentPath, currentLevel) {
+    if (currentLevel >= this.maxLevels) {
+      return currentLevel;
+    }
+    
+    const childOptions = this.data.relationMap.get(parentPath);
+    if (!childOptions || childOptions.length === 0) {
+      return currentLevel;
+    }
+    
+    // 检查所有子选项的最大层级数
+    let maxLevel = currentLevel;
+    for (const child of childOptions) {
+      const childPath = parentPath + '>' + child;
+      const grandchildren = this.data.relationMap.get(childPath);
+      
+      if (grandchildren && grandchildren.length > 0) {
+        const childMaxLevel = this._getMaxLevelsRecursive(childPath, currentLevel + 1);
+        maxLevel = Math.max(maxLevel, childMaxLevel);
+      } else {
+        maxLevel = Math.max(maxLevel, currentLevel + 1);
+      }
+    }
+    
+    return maxLevel;
   }
   
   hideColumns(levels) {
@@ -1279,6 +1372,9 @@ class FiveLevelDropdown {
         items.forEach(item => item.classList.remove('selected'));
       }
     }
+    
+    // 更新确认按钮状态
+    this.updateOkButtonState();
   }
   
   // 添加恢复选择状态的方法
@@ -1302,6 +1398,9 @@ class FiveLevelDropdown {
     
     // 更新面包屑
     this.updateBreadcrumb();
+    
+    // 更新确认按钮状态
+    this.updateOkButtonState();
   }
   
 
@@ -2442,6 +2541,22 @@ function validateMultilevelDropdown(wrapper, hiddenInput) {
     return false;
   }
   
+  // 获取下拉菜单实例
+  const dropdownInstance = wrapper.fiveLevelDropdownInstance;
+  if (dropdownInstance) {
+    // 获取当前选择的路径
+    const selectedPath = dropdownInstance.selectedPath;
+    
+    // 获取当前下拉菜单的实际最大层级数
+    const actualMaxLevels = dropdownInstance.getActualMaxLevels();
+    
+    // 检查用户是否选择了所有必要的层级
+    if (selectedPath.length < actualMaxLevels) {
+      showDropdownError(wrapper, getLocalizedText('incomplete_selection'));
+      return false;
+    }
+  }
+  
   clearDropdownError(wrapper);
   return true;
 }
@@ -2498,7 +2613,8 @@ function getLocalizedText(key) {
       phone_invalid: 'Please enter a valid phone number',
       form_validation_error: 'Please fill in all required fields correctly',
       dropdown_required: 'Please select an option',
-      form_incomplete: 'Please fill in all required fields before submitting'
+      form_incomplete: 'Please fill in all required fields before submitting',
+      incomplete_selection: 'Please complete all levels of selection'
     },
     de: {
       field_required: 'Dieses Feld ist erforderlich',
@@ -2506,7 +2622,8 @@ function getLocalizedText(key) {
       phone_invalid: 'Bitte geben Sie eine gültige Telefonnummer ein',
       form_validation_error: 'Bitte füllen Sie alle Pflichtfelder korrekt aus',
       dropdown_required: 'Bitte wählen Sie eine Option',
-      form_incomplete: 'Bitte füllen Sie alle Pflichtfelder aus, bevor Sie das Formular absenden'
+      form_incomplete: 'Bitte füllen Sie alle Pflichtfelder aus, bevor Sie das Formular absenden',
+      incomplete_selection: 'Bitte wählen Sie alle Ebenen aus'
     },
     fr: {
       field_required: 'Ce champ est obligatoire',
@@ -2514,7 +2631,8 @@ function getLocalizedText(key) {
       phone_invalid: 'Veuillez saisir un numéro de téléphone valide',
       form_validation_error: 'Veuillez remplir correctement tous les champs obligatoires',
       dropdown_required: 'Veuillez sélectionner une option',
-      form_incomplete: 'Veuillez remplir tous les champs obligatoires avant de soumettre'
+      form_incomplete: 'Veuillez remplir tous les champs obligatoires avant de soumettre',
+      incomplete_selection: 'Veuillez compléter tous les niveaux de sélection'
     },
     fi: {
       field_required: 'Tämä kenttä on pakollinen',
@@ -2522,7 +2640,8 @@ function getLocalizedText(key) {
       phone_invalid: 'Syötä kelvollinen puhelinnumero',
       form_validation_error: 'Täytä kaikki pakolliset kentät oikein',
       dropdown_required: 'Valitse vaihtoehto',
-      form_incomplete: 'Täytä kaikki pakolliset kentät ennen lähettämistä'
+      form_incomplete: 'Täytä kaikki pakolliset kentät ennen lähettämistä',
+      incomplete_selection: 'Valitse kaikki tasot'
     }
   };
   
