@@ -30,9 +30,8 @@
   assign motor_value = product.metafields.custom.motor2.value
   assign battery_value = product.metafields.custom.battery.value
 
-  assign raw_locale = request.locale
-  assign lang_parts = raw_locale | split: '-'
-  assign lang_code = lang_parts[0] | default: 'en'
+  assign raw_locale = request.locale.iso_code
+  assign lang_code = raw_locale | split: '-' | first | downcase | default: 'en'
 
   assign motor_label = 'Motor'
   assign battery_label = 'Battery'
@@ -46,7 +45,7 @@
       assign battery_label = 'Batterie'
     when 'fi'
       assign motor_label = 'Moottori'
-      assign battery_label = 'Paristo'
+      assign battery_label = 'Akku'
   endcase
 -%}
 
