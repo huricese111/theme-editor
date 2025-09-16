@@ -210,9 +210,7 @@
           <span class="tags-label">{{ 'blogs.tags.label' | t }}</span>
           <div class="tags-list">
             {% for tag in article.tags %}
-              <a href="{{ tag | link_to_tag: tag | split: '"' | last | split: '"' | first }}" class="tag-item">
-                {{ tag }}
-              </a>
+              {{ tag | link_to_tag: tag | replace: '<a href=', '<a class="tag-item" href=' }}
             {% endfor %}
           </div>
         </div>

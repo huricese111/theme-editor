@@ -2194,6 +2194,33 @@
         },
         {
           "type": "checkbox",
+          "id": "enable_product_display",
+          "label": "Enable product display",
+          "default": false
+        },
+        {
+          "type": "product_list",
+          "id": "selected_products",
+          "label": "Select products to display",
+          "limit": 12
+        },
+        {
+          "type": "range",
+          "id": "products_per_row",
+          "label": "Products per row",
+          "min": 2,
+          "max": 4,
+          "step": 1,
+          "default": 3
+        },
+        {
+          "type": "checkbox",
+          "id": "show_product_prices",
+          "label": "Show product prices",
+          "default": true
+        },
+        {
+          "type": "checkbox",
           "id": "show_in_quickbuy",
           "label": "Show in quick buy",
           "default": false
