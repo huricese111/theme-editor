@@ -1,0 +1,68 @@
+{%- comment -%}
+  Universal localized value retrieval snippet
+  
+  Parameters:
+  - field: Base field name (without language suffix)
+  - locale_code: Language code (optional, will auto-detect if not provided)
+  - block: Block object (optional)
+  - section: Section object (optional)
+  - settings: Custom settings object (optional)
+  - supported_languages: Comma-separated list of supported languages (optional, defaults to 'de,fr,fi')
+  
+  Usage examples:
+  // 原有调用方式（完全兼容）
+  {% render 'localized-value', field: 'title', locale_code: locale_code, block: block %}
+  {% render 'localized-value', field: 'heading', locale_code: locale_code, section: section %}
+  
+  // 新的简化调用方式
+  {% render 'localized-value', field: 'title', block: block %}
+  {% render 'localized-value', field: 'heading', section: section %}
+  {% render 'localized-value', field: 'title', section: section, supported_languages: 'de,fr,fi,es' %}
+  
+  Priority order: settings > section > block
+{%- endcomment -%}
+
+{%- unless locale_code -%}
+  {%- assign locale_code = request.locale.iso_code -%}
+  {%- assign auto_detected = true -%}
+{%- else -%}
+  {%- assign auto_detected = false -%}
+{%- endunless -%}
+
+{%- if auto_detected -%}
+  {%- unless supported_languages -%}
+    {%- assign supported_languages = 'de,fr,fi' -%}
+  {%- endunless -%}
+  
+  {%- assign lang_map = supported_languages | split: ',' -%}
+  {%- if lang_map contains locale_code -%}
+    {%- assign localized_field = field | append: '_' | append: locale_code -%}
+  {%- else -%}
+    {%- assign localized_field = '' -%}
+  {%- endif -%}
+{%- else -%}
+  {%- assign localized_field = field | append: '_' | append: locale_code -%}
+{%- endif -%}
+
+{%- if settings -%}
+  {%- assign base_value = settings[field] -%}
+  {%- if localized_field != blank -%}
+    {%- assign localized_value = settings[localized_field] -%}
+  {%- endif -%}
+{%- elsif section -%}
+  {%- assign base_value = section.settings[field] -%}
+  {%- if localized_field != blank -%}
+    {%- assign localized_value = section.settings[localized_field] -%}
+  {%- endif -%}
+{%- elsif block -%}
+  {%- assign base_value = block.settings[field] -%}
+  {%- if localized_field != blank -%}
+    {%- assign localized_value = block.settings[localized_field] -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- if localized_value and localized_value != blank -%}
+  {{- localized_value -}}
+{%- elsif base_value and base_value != blank -%}
+  {{- base_value -}}
+{%- endif -%}

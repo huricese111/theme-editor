@@ -1,0 +1,68 @@
+<style>
+  .specification_simple_text {
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    text-align: left;
+    line-height: 1.3;
+    margin: 8px 0;
+    font-size: 14px;
+    color: #555;
+  }
+  .spec-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .spec-row dt {
+    font-weight: bold;
+    white-space: nowrap;
+  }
+  dl dd {
+    margin-inline-start: 0;
+  }
+  dl {
+    margin-inline-start: 0;
+  }
+</style>
+
+{%- liquid
+  assign motor_value = product.metafields.custom.motor2.value
+  assign battery_value = product.metafields.custom.battery.value
+
+  assign raw_locale = request.locale.iso_code
+  assign lang_code = raw_locale | split: '-' | first | downcase | default: 'en'
+
+  assign motor_label = 'Motor'
+  assign battery_label = 'Battery'
+
+  case lang_code
+    when 'de'
+      assign motor_label = 'Motor'
+      assign battery_label = 'Batterie'
+    when 'fr'
+      assign motor_label = 'Moteur'
+      assign battery_label = 'Batterie'
+    when 'fi'
+      assign motor_label = 'Moottori'
+      assign battery_label = 'Akku'
+  endcase
+-%}
+
+{%- if motor_value or battery_value -%}
+  <dl class="specification_simple_text mt-30 mb-30">
+    {%- if motor_value -%}
+      <div class="spec-row">
+        <dt>{{ motor_label }}:</dt>
+        <dd>{{ motor_value }}</dd>
+      </div>
+    {%- endif -%}
+
+    {%- if battery_value -%}
+      <div class="spec-row">
+        <dt>{{ battery_label }}:</dt>
+        <dd>{{ battery_value }}</dd>
+      </div>
+    {%- endif -%}
+  </dl>
+{%- endif -%}

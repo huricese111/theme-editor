@@ -1,0 +1,605 @@
+{%- liquid
+  if collection and settings.prod_thumb_url_within_coll and product.collections contains collection
+    assign product_url = product.url | within: collection
+  else
+    assign product_url = product.url
+  endif
+
+  assign product_images = product.media | where: 'media_type', 'image'
+  if force_hover_image
+    assign show_hover_image = true
+  elsif settings.prod_thumb_hover_image and product_images.size > 1
+    assign show_hover_image = true
+  else
+    assign show_hover_image = false
+  endif
+
+  if grid == blank
+    assign size_cols_desktop = section.settings.grid
+  else
+    assign size_cols_desktop = grid
+  endif
+
+  assign compact = compact | default: false
+  assign cheapest_variant = product.variants | sort: 'price' | first
+  assign no_swiping = no_swiping | default: false
+  assign no_quick_buy = no_quick_buy | default: false
+  assign manual_loading = manual_loading | default: false
+  assign prioritised_loading = prioritised_loading | default: false
+  assign in_predictive_search = in_predictive_search | default: false
+  assign custom_aspect_ratio = custom_aspect_ratio | default: false
+  assign hide_swatches = hide_swatches | default: false
+  assign no_quick_buy_markup = no_quick_buy_markup | default: false
+  assign animate = animate | default: false
+
+  if manual_loading
+    assign loading = 'manual'
+    assign hover_loading = 'manual'
+  elsif prioritised_loading
+    assign loading = 'eager'
+    assign hover_loading = 'eager'
+  else
+    assign loading = 'eager'
+    assign hover_loading = 'eager'
+  endif
+
+  if in_predictive_search
+    assign show_vendor = settings.quick_search_show_vendor
+    assign show_price = settings.quick_search_show_price
+  else
+    assign show_vendor = section.settings.show_vendor
+    assign show_price = true
+  endif
+
+  if custom_aspect_ratio
+    assign custom_aspect_ratio = custom_aspect_ratio | at_least: 0.6
+  endif
+
+  assign aspect_ratios_same = true
+  for media in product.media offset: 1
+    if media.preview_image.aspect_ratio != product.media.first.preview_image.aspect_ratio
+      assign aspect_ratios_same = false
+      break
+    endif
+  endfor
+
+  if settings.prod_thumb_crop
+    assign custom_crop = settings.prod_thumb_crop_align
+  else
+    assign custom_crop = 'contain'
+  endif
+-%}
+
+<style>
+  .product-block {
+    position: relative;
+  }
+  
+  .product-block__image {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .image-cont {
+    position: relative;
+    overflow: hidden;
+    background-color: rgba(240, 240, 240, 0.2);
+  }
+  
+  .product-block__image--primary,
+  .product-block__image--secondary {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: opacity 0.6s ease-in-out;
+    backface-visibility: hidden;
+    will-change: opacity;
+    /* 使用更轻微的背景色 */
+    background-color: rgba(240, 240, 240, 0.1);
+  }
+  
+  /* 确保主图片始终可见，直到次要图片加载完成 */
+  .product-block__image--primary {
+    position: relative;
+    opacity: 1;
+    z-index: 2;
+  }
+  
+  .product-block__image--secondary {
+    opacity: 0;
+    z-index: 1;
+  }
+  
+  /* 添加图片加载状态类 */
+  .product-block__image--loading {
+    opacity: 0;
+  }
+  
+  .product-block__image--loaded {
+    opacity: 1;
+  }
+  
+  .product-block__images-container {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* 改进的翻页按钮样式 */
+  .image-page-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    opacity: 0;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border: none;
+    cursor: pointer;
+  }
+  
+  .image-page-button svg {
+    width: 16px;
+    height: 16px;
+    stroke-width: 2px;
+    position: absolute; /* 添加这行 */
+    top: 50%; /* 添加这行 */
+    left: 50%; /* 添加这行 */
+    transform: translate(-50%, -50%); /* 添加这行 */
+  }
+  
+  .image-page-button--previous {
+    left: 10px;
+  }
+  
+  .image-page-button--next {
+    right: 10px;
+  }
+  
+  .product-block:hover .image-page-button {
+    opacity: 1;
+  }
+  
+  .image-page-button:hover {
+    background-color: rgba(255, 255, 255, 0.95);
+    transform: translateY(-50%) scale(1.05);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  }
+</style>
+
+<product-block 
+  class="product-block{% if compact %} product-block--compact{% endif %}{% if card_layout == 'landscape' %} product-block--landscape{% endif %}" 
+  data-product-id="{{ product.id }}"
+  data-product-handle="{{ product.handle }}"
+  data-product-title="{{ product.title }}" 
+  data-product-image="{{ product.featured_image | img_url: '200x' }}" 
+  data-product-price="{{ product.price | money }}"
+  data-product-compare-price="{{ product.compare_at_price | money }}"
+  data-motor-torque="{{ product.metafields.custom.motor_torque_2.value }}"
+  data-motor-model="{{ product.metafields.custom.motor2.value }}"
+  data-battery-capacity="{{ product.metafields.custom.battery_capacity.value }}"
+  data-battery-model="{{ product.metafields.custom.battery.value }}"
+  data-display-size="{{ product.metafields.custom.display_size.value }}"
+  data-display-type="{{ product.metafields.custom.display.value }}"
+  data-frame="{{ product.metafields.custom.frame.value }}"
+  data-fork="{{ product.metafields.custom.fork.value }}"
+  data-shock="{{ product.metafields.custom.shock.value }}"
+  data-derailleur="{{ product.metafields.custom.derailleur.value }}"
+  data-shifters="{{ product.metafields.custom.shifters.value }}"
+  data-sprocket="{{ product.metafields.custom.sprocket.value }}"
+  data-cassette="{{ product.metafields.custom.cassette.value }}"
+  data-brakes="{{ product.metafields.custom.brake_f_r.value }}"
+  data-brake-discs="{{ product.metafields.custom.brake_disc_f_r.value }}"
+  data-brake-levers="{{ product.metafields.custom.brake_levers.value }}"
+  data-tires="{{ product.metafields.custom.tires.value }}"
+  data-rims="{{ product.metafields.custom.rims.value }}"
+  data-hubs="{{ product.metafields.custom.hub_front_f_r.value }}"
+  data-handlebar="{{ product.metafields.custom.handlebar.value }}"
+  data-grips="{{ product.metafields.custom.grips.value }}"
+  data-stem="{{ product.metafields.custom.stem.value }}"
+  data-seat-post="{{ product.metafields.custom.seat_post.value }}"
+  data-saddle="{{ product.metafields.custom.saddle.value }}"
+  data-front-light="{{ product.metafields.custom.front_light.value }}"
+  data-rear-light="{{ product.metafields.custom.rear_light.value }}"
+  data-carrier="{{ product.metafields.custom.carrier.value }}"
+  data-bike-weight="{{ product.metafields.custom.bike_weight.value }}"
+  data-total-weight="{{ product.metafields.custom.perm_total_weight.value }}"
+  data-bike-category="{{ product.metafields.custom.category.value }}"
+>
+  <div class="block-inner"{% if animate %} data-cc-animate{% endif %}>
+    <div class="block-inner-inner">
+      {% if product.featured_media %}
+        <div class="image-cont {% if show_hover_image %}image-cont--with-secondary-image {% if aspect_ratios_same %}image-cont--same-aspect-ratio{% endif %}{% endif %}">
+          <a
+            class="product-link{% if settings.quickbuy_style == 'whole' and no_quick_buy != true %} quickbuy-toggle{% endif %}"
+            href="{{ product_url }}"
+            aria-hidden="true"
+            tabindex="-1"
+          >
+            <div class="image-label-wrap">
+              <div class="product-block__images-container">
+                {%- if show_hover_image -%}
+                  <div
+                    class="product-block__image product-block__image--primary product-block__image--active"
+                    data-media-id="{{ product.media.first.id }}"
+                    data-image-index="0"
+                  >
+                    {%- render 'image' with product.media.first.preview_image,
+                      loading: 'eager',
+                      size_cols_mobile: 2,
+                      size_cols_desktop: size_cols_desktop,
+                      custom_aspect_ratio: custom_aspect_ratio,
+                      custom_crop: custom_crop
+                    -%}
+                  </div>
+                  
+                  <!-- 次要图片使用懒加载 -->
+                  {%- for image in product_images offset: 1 limit: 4 -%}
+                    <div
+                      class="product-block__image product-block__image--secondary"
+                      data-media-id="{{ image.id }}"
+                      data-image-index="{{ forloop.index }}"
+                    >
+                      {%- render 'image' with image.preview_image,
+                        loading: 'lazy', /* 次要图片懒加载 */
+                        size_cols_mobile: 2,
+                        size_cols_desktop: size_cols_desktop,
+                        custom_aspect_ratio: custom_aspect_ratio,
+                        custom_crop: custom_crop
+                      -%}
+                    </div>
+                  {%- endfor -%}
+                {%- else -%}
+                  <div
+                    class="product-block__image product-block__image--primary product-block__image--active"
+                    data-media-id="{{ product.featured_media.id }}"
+                    data-image-index="0"
+                  >
+                    {%- render 'image' with product.featured_media.preview_image,
+                      loading: loading,
+                      size_cols_mobile: 2,
+                      size_cols_desktop: size_cols_desktop,
+                      custom_aspect_ratio: custom_aspect_ratio,
+                      custom_crop: custom_crop
+                    -%}
+                  </div>
+                {%- endif -%}
+              </div>
+              
+              {%- if show_hover_image and no_swiping != true and product_images.size > 1 -%}
+                <div class="product-block__image-dots" aria-hidden="true">
+                  <div class="product-block__image-dot product-block__image-dot--active" data-index="0"></div>
+                  {%- for image in product_images offset: 1 limit: 4 -%}
+                    <div class="product-block__image-dot" data-index="{{ forloop.index }}"></div>
+                  {%- endfor -%}
+                </div>
+              {%- endif -%}
+              
+              {%- unless compact -%}
+                {%- render 'product-label', product: product, cheapest_variant: cheapest_variant -%}
+              {%- endunless -%}
+            </div>
+          </a>
+          
+          {%- if show_hover_image and product_images.size > 1 -%}
+            <a
+              class="image-page-button image-page-button--previous has-ltr-icon"
+              href="#"
+              aria-label="{{ 'general.slider.previous' | t | escape }}"
+              tabindex="-1"
+              data-direction="prev"
+            >
+              {%- render 'icon-chevron-left', stroke_width: 1.3 -%}
+            </a>
+            <a
+              class="image-page-button image-page-button--next has-ltr-icon"
+              href="#"
+              aria-label="{{ 'general.slider.next' | t | escape }}"
+              tabindex="-1"
+              data-direction="next"
+            >
+              {%- render 'icon-chevron-right', stroke_width: 1.3 -%}
+            </a>
+          {%- endif -%}
+
+          {%- if settings.quickbuy_style == 'button' and no_quick_buy != true -%}
+            <a class="btn btn--secondary quickbuy-toggle" href="{{ product_url }}">
+              {{- 'products.product.quick_buy' | t -}}
+            </a>
+          {%- endif -%}
+        </div>
+      {% else %}
+        <div class="image-cont">
+          <div class="placeholder-image">{{ 'product-1' | placeholder_svg_tag }}</div>
+          {%- if settings.quickbuy_style == 'button' and no_quick_buy != true -%}
+            <a class="btn btn--secondary quickbuy-toggle" href="{{ product_url }}">
+              {{- 'products.product.quick_buy' | t -}}
+            </a>
+          {%- endif -%}
+        </div>
+      {% endif %}
+
+      {% render 'custom-discount-info' with product: product %}
+
+      <div class="product-block__detail align-ltr-{{ settings.prod_thumb_text_align }}">
+        <div class="inner">
+          <div class="innerer">
+            <a
+              class="product-link{% if settings.quickbuy_style == 'whole' and no_quick_buy != true %} quickbuy-toggle{% endif %}"
+              href="{{ product_url }}"
+            >
+              <div class="productcard-left">
+                {%- if show_vendor -%}
+                  <div class="vendor">{{ product.vendor | escape }}</div>
+                {%- endif -%}
+
+                {%- if settings.prod_thumb_show_subtitle and product.metafields.descriptors.subtitle != blank -%}
+                  <div class="product-block__subtitle">{{ product.metafields.descriptors.subtitle }}</div>
+                {%- endif -%}
+
+                {% render 'custom-description-box' with product: product %}
+                            
+                {%- if settings.enable_product_reviews_collection
+                  and product.metafields.reviews.rating_count != blank
+                  and compact != true
+                -%}
+                  {%- assign rating_count = product.metafields.reviews.rating_count | plus: 0 -%}
+                  {%- if rating_count > 0 -%}
+                    <div class="product-block__rating">
+                      {% render 'rating', rating_value: product.metafields.reviews.rating.value %}
+                      <span class="cc-rating-custom-caption">
+                        {{- 'products.product.reviews_count' | t: count: rating_count }}
+                      </span>
+                    </div>
+                  {%- endif -%}
+                {%- endif -%}
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {%- if settings.quickbuy_style != 'off' and no_quick_buy != true and no_quick_buy_markup != true -%}
+    <div class="quickbuy-container use-color-scheme use-color-scheme--{{ settings.quickbuy_color_scheme }}">
+      <a href="#" class="close-detail" aria-label="{{ 'accessibility.close' | t }}" tabindex="-1">
+        {%- render 'icon-close', stroke_width: 1 -%}
+      </a>
+      <div class="inner"></div>
+    </div>
+  {%- endif -%}
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      initProductBlocks();
+      
+      function initProductBlocks() {
+        const productBlocks = document.querySelectorAll('product-block');
+        productBlocks.forEach(initProductBlock);
+      }
+      
+      function initProductBlock(productBlock) {
+        const images = productBlock.querySelectorAll('.product-block__image');
+        const primaryImage = productBlock.querySelector('.product-block__image--primary');
+        const secondaryImages = productBlock.querySelectorAll('.product-block__image--secondary');
+        const prevButton = productBlock.querySelector('.image-page-button--previous');
+        const nextButton = productBlock.querySelector('.image-page-button--next');
+        const imageDots = productBlock.querySelectorAll('.product-block__image-dot');
+        const swatchItems = productBlock.querySelectorAll('.product-block-options__item');
+        const imagesContainer = productBlock.querySelector('.product-block__images-container');
+        
+        if (images.length <= 1) return;
+        
+        let currentIndex = 0;
+        let hoverEnabled = true;
+        let isTransitioning = false;
+        const maxIndex = images.length - 1;
+        
+        preloadImages();
+        updateImageState();
+        
+        function preloadImages() {
+          images.forEach(img => {
+            img.classList.add('product-block__image--loading');
+            
+            const imgElement = img.querySelector('img');
+            if (imgElement) {
+              if (imgElement.complete) {
+                img.classList.remove('product-block__image--loading');
+                img.classList.add('product-block__image--loaded');
+              } else {
+                imgElement.addEventListener('load', function() {
+                  img.classList.remove('product-block__image--loading');
+                  img.classList.add('product-block__image--loaded');
+                });
+                
+                imgElement.addEventListener('error', function() {
+                  if (img === primaryImage) {
+                    img.classList.remove('product-block__image--loading');
+                    img.classList.add('product-block__image--loaded');
+                  }
+                });
+              }
+            }
+          });
+        }
+        
+        if (prevButton && nextButton) {
+          prevButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (!isTransitioning) {
+              navigateImage('prev');
+            }
+          });
+          
+          nextButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (!isTransitioning) {
+              navigateImage('next');
+            }
+          });
+        }
+        
+        if (imageDots.length > 0) {
+          imageDots.forEach((dot, index) => {
+            dot.addEventListener('click', function(e) {
+              e.preventDefault();
+              e.stopPropagation();
+              if (!isTransitioning && currentIndex !== index) {
+                currentIndex = index;
+                updateImageState();
+              }
+            });
+          });
+        }
+        
+        if (swatchItems.length > 0) {
+          swatchItems.forEach(swatch => {
+            const mediaId = swatch.getAttribute('data-media');
+            if (mediaId) {
+              swatch.addEventListener('mouseenter', function() {
+                hoverEnabled = false;
+                
+                const targetImage = Array.from(images).find(img => 
+                  img.getAttribute('data-media-id') === mediaId
+                );
+                
+                if (targetImage) {
+                  const targetIndex = parseInt(targetImage.getAttribute('data-image-index') || '0');
+                  if (currentIndex !== targetIndex && !isTransitioning) {
+                    currentIndex = targetIndex;
+                    updateImageState();
+                  }
+                }
+              });
+              
+              swatch.addEventListener('mouseleave', function() {
+                setTimeout(() => {
+                  hoverEnabled = true;
+                }, 100);
+              });
+            }
+          });
+        }
+        
+        if (imagesContainer && secondaryImages.length > 0) {
+          imagesContainer.addEventListener('mouseenter', function() {
+            if (hoverEnabled && secondaryImages.length > 0 && currentIndex === 0 && !isTransitioning) {
+              currentIndex = 1;
+              updateImageState();
+            }
+          });
+          
+          imagesContainer.addEventListener('mouseleave', function() {
+            if (hoverEnabled && currentIndex !== 0 && !isTransitioning) {
+              currentIndex = 0;
+              updateImageState();
+            }
+          });
+        }
+        
+        function navigateImage(direction) {
+          if (isTransitioning) return;
+          
+          hoverEnabled = false;
+          
+          if (direction === 'prev') {
+            currentIndex = currentIndex > 0 ? currentIndex - 1 : maxIndex;
+          } else {
+            currentIndex = currentIndex < maxIndex ? currentIndex + 1 : 0;
+          }
+          
+          updateImageState();
+          
+          setTimeout(function() {
+            hoverEnabled = true;
+          }, 2000);
+        }
+        
+        function updateImageState() {
+          isTransitioning = true;
+          
+          const targetImage = images[currentIndex];
+          const isLoaded = targetImage.classList.contains('product-block__image--loaded');
+          
+          if (!isLoaded && currentIndex !== 0) {
+            currentIndex = 0;
+            setTimeout(() => {
+              isTransitioning = false;
+              if (targetImage.classList.contains('product-block__image--loaded')) {
+                currentIndex = Array.from(images).indexOf(targetImage);
+                updateImageState();
+              }
+            }, 600);
+            return;
+          }
+          
+          images.forEach((img, index) => {
+            if (index === currentIndex) {
+              img.classList.add('product-block__image--active');
+              img.style.opacity = '1';
+              img.style.zIndex = '5';
+            } else {
+              img.classList.remove('product-block__image--active');
+              img.style.opacity = '0';
+              img.style.zIndex = '1';
+            }
+          });
+          
+          if (imageDots.length > 0) {
+            imageDots.forEach((dot, index) => {
+              if (index === currentIndex) {
+                dot.classList.add('product-block__image-dot--active');
+              } else {
+                dot.classList.remove('product-block__image-dot--active');
+              }
+            });
+          }
+          
+          setTimeout(() => {
+            isTransitioning = false;
+          }, 600);
+        }
+      }
+      
+      const filterContainers = document.querySelectorAll('.filter-container');
+      if (filterContainers.length > 0) {
+        const observer = new MutationObserver(function(mutations) {
+          let hasRelevantChanges = false;
+          
+          mutations.forEach(function(mutation) {
+            if (mutation.type === 'childList') {
+              hasRelevantChanges = true;
+            }
+          });
+          
+          if (hasRelevantChanges) {
+            setTimeout(function() {
+              initProductBlocks();
+            }, 300);
+          }
+        });
+        
+        const ajaxContainers = document.querySelectorAll('[data-ajax-container]');
+        ajaxContainers.forEach(container => {
+          observer.observe(container, { childList: true, subtree: true });
+        });
+        
+        filterContainers.forEach(container => {
+          observer.observe(container, { childList: true, subtree: true });
+        });
+      }
+    });
+  </script>
+</product-block>

@@ -1,0 +1,597 @@
+{%- if section.blocks.size > 0 -%}
+  <div id="items-wrapper-{{ section.id }}" class="items-wrapper-section" style="
+    --items-wrapper-bg: {{ section.settings.background_color | default: '#000000' }};
+    --items-wrapper-height: {{ section.settings.height | default: 100 }}px;
+    --items-wrapper-text-color: {{ section.settings.text_color | default: '#ffffff' }};
+    --items-wrapper-speed: {{ section.settings.scroll_speed | default: 30 }}s;
+    background-color: var(--items-wrapper-bg);
+    height: var(--items-wrapper-height);
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+  ">
+    <div class="items-wrapper-container">
+      <div class="items-wrapper-track">
+        {%- for block in section.blocks -%}
+          <div class="items-wrapper-item" {{ block.shopify_attributes }}>
+            {%- if block.settings.link_url != blank -%}
+              <a href="{{ block.settings.link_url }}" class="items-wrapper-link">
+            {%- endif -%}
+            
+            <div class="items-wrapper-content">
+              {%- if block.settings.custom_icon != blank -%}
+                <div class="items-wrapper-icon">
+                  {%- render 'image' with block.settings.custom_icon,
+                    sizes: '20px',
+                    widths: '20, 40',
+                    loading: 'lazy'
+                  -%}
+                </div>
+              {%- elsif block.settings.icon != blank -%}
+                <div class="items-wrapper-icon">
+                  {%- render 'icon', icon: block.settings.icon, size: 'small' -%}
+                </div>
+              {%- endif -%}
+              
+              <span class="items-wrapper-text">
+                {%- if request.locale.iso_code == 'de' and block.settings.text_de != blank -%}
+                  {{ block.settings.text_de | escape }}
+                {%- elsif request.locale.iso_code == 'fr' and block.settings.text_fr != blank -%}
+                  {{ block.settings.text_fr | escape }}
+                {%- elsif request.locale.iso_code == 'fi' and block.settings.text_fi != blank -%}
+                  {{ block.settings.text_fi | escape }}
+                {%- else -%}
+                  {{ block.settings.text | escape }}
+                {%- endif -%}
+              </span>
+            </div>
+            
+            {%- if block.settings.link_url != blank -%}
+              </a>
+            {%- endif -%}
+          </div>
+          
+          {%- unless forloop.last -%}
+            <div class="items-wrapper-separator">|</div>
+          {%- endunless -%}
+        {%- endfor -%}
+        
+        <!-- Duplicate items for seamless loop -->
+        {%- for block in section.blocks -%}
+          <div class="items-wrapper-item items-wrapper-duplicate" {{ block.shopify_attributes }}>
+            {%- if block.settings.link_url != blank -%}
+              <a href="{{ block.settings.link_url }}" class="items-wrapper-link">
+            {%- endif -%}
+            
+            <div class="items-wrapper-content">
+              {%- if block.settings.custom_icon != blank -%}
+                <div class="items-wrapper-icon">
+                  {%- render 'image' with block.settings.custom_icon,
+                    sizes: '20px',
+                    widths: '20, 40',
+                    loading: 'lazy'
+                  -%}
+                </div>
+              {%- elsif block.settings.icon != blank -%}
+                <div class="items-wrapper-icon">
+                  {%- render 'icon', icon: block.settings.icon, size: 'small' -%}
+                </div>
+              {%- endif -%}
+              
+              <span class="items-wrapper-text">
+                {%- if request.locale.iso_code == 'de' and block.settings.text_de != blank -%}
+                  {{ block.settings.text_de | escape }}
+                {%- elsif request.locale.iso_code == 'fr' and block.settings.text_fr != blank -%}
+                  {{ block.settings.text_fr | escape }}
+                {%- elsif request.locale.iso_code == 'fi' and block.settings.text_fi != blank -%}
+                  {{ block.settings.text_fi | escape }}
+                {%- else -%}
+                  {{ block.settings.text | escape }}
+                {%- endif -%}
+              </span>
+            </div>
+            
+            {%- if block.settings.link_url != blank -%}
+              </a>
+            {%- endif -%}
+          </div>
+          
+          {%- unless forloop.last -%}
+            <div class="items-wrapper-separator">|</div>
+          {%- endunless -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+<script>
+(function() {
+  const wrapper = document.getElementById('items-wrapper-{{ section.id }}');
+  if (!wrapper) return;
+  
+  const track = wrapper.querySelector('.items-wrapper-track');
+  const items = track.querySelectorAll('.items-wrapper-item:not(.items-wrapper-duplicate)');
+  const separators = track.querySelectorAll('.items-wrapper-separator');
+  
+  function calculateScrollDistance() {
+    let totalWidth = 0;
+    
+    // 计算所有原始项目的宽度（包括分隔符）
+    items.forEach((item, index) => {
+      totalWidth += item.offsetWidth;
+      // 添加分隔符宽度（除了最后一个）
+      if (index < items.length - 1 && separators[index]) {
+        totalWidth += separators[index].offsetWidth;
+      }
+    });
+    
+    return totalWidth;
+  }
+  
+  function updateAnimation() {
+    const scrollDistance = calculateScrollDistance();
+    const isMobile = window.innerWidth <= 768;
+    const speed = isMobile ? 
+      {{ section.settings.mobile_scroll_speed | default: 30 }} : 
+      {{ section.settings.scroll_speed | default: 30 }};
+    
+    // 移除旧的样式
+    const oldStyle = document.getElementById('items-wrapper-dynamic-{{ section.id }}');
+    if (oldStyle) {
+      oldStyle.remove();
+    }
+    
+    // 创建新的样式
+    const styleElement = document.createElement('style');
+    styleElement.id = 'items-wrapper-dynamic-{{ section.id }}';
+    
+    styleElement.textContent = `
+      #items-wrapper-{{ section.id }} .items-wrapper-track {
+        animation: items-wrapper-scroll-{{ section.id }} ${speed}s linear infinite;
+        display: flex;
+        align-items: center;
+        height: 100%;
+        white-space: nowrap;
+        will-change: transform;
+      }
+      
+      @keyframes items-wrapper-scroll-{{ section.id }} {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-${scrollDistance}px); }
+      }
+      
+      #items-wrapper-{{ section.id }} .items-wrapper-track:hover {
+        animation-play-state: paused;
+      }
+    `;
+    
+    document.head.appendChild(styleElement);
+  }
+  
+  // 等待所有内容加载完成后初始化
+  function init() {
+    // 确保所有图片和内容都已加载
+    const images = track.querySelectorAll('img');
+    let loadedImages = 0;
+    
+    if (images.length === 0) {
+      updateAnimation();
+      return;
+    }
+    
+    images.forEach(img => {
+      if (img.complete) {
+        loadedImages++;
+      } else {
+        img.addEventListener('load', () => {
+          loadedImages++;
+          if (loadedImages === images.length) {
+            updateAnimation();
+          }
+        });
+      }
+    });
+    
+    if (loadedImages === images.length) {
+      updateAnimation();
+    }
+  }
+  
+  // 初始化
+  setTimeout(init, 100);
+  
+  // 响应窗口大小变化
+  let resizeTimeout;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(updateAnimation, 250);
+  });
+})();
+</script>
+
+{% style %}
+  #items-wrapper-{{ section.id }} .items-wrapper-container {
+    height: 100%;
+    position: relative;
+    width: 100%;
+  }
+  
+  #items-wrapper-{{ section.id }} .items-wrapper-track {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    white-space: nowrap;
+    will-change: transform;
+  }
+  
+  #items-wrapper-{{ section.id }} .items-wrapper-item {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 20px;
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+  
+  #items-wrapper-{{ section.id }} .items-wrapper-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  #items-wrapper-{{ section.id }} .items-wrapper-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  #items-wrapper-{{ section.id }} .items-wrapper-icon {
+    display: flex;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+  }
+  
+  #items-wrapper-{{ section.id }} .items-wrapper-icon svg {
+    width: 100%;
+    height: 100%;
+    fill: var(--items-wrapper-text-color);
+    color: var(--items-wrapper-text-color);
+  }
+  
+  #items-wrapper-{{ section.id }} .items-wrapper-icon svg path {
+    fill: var(--items-wrapper-text-color);
+  }
+  
+  #items-wrapper-{{ section.id }} .items-wrapper-text {
+    color: var(--items-wrapper-text-color);
+    font-size: 16px;
+    line-height: 1.2;
+    transition: text-decoration 0.2s ease;
+  }
+  
+  #items-wrapper-{{ section.id }} .items-wrapper-link:hover .items-wrapper-text {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  
+  #items-wrapper-{{ section.id }} .items-wrapper-separator {
+    color: var(--items-wrapper-text-color);
+    opacity: 0.5;
+    padding: 0 15px;
+    flex-shrink: 0;
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Items Wrapper",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "height",
+      "label": "Height (px)",
+      "min": 30,
+      "max": 200,
+      "step": 5,
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "scroll_speed",
+      "label": "Scroll speed (seconds)",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "default": 30,
+      "info": "Higher number = slower scroll"
+    },
+    {
+      "type": "range",
+      "id": "mobile_scroll_speed",
+      "label": "Mobile scroll speed (seconds)",
+     "min": 10,
+      "max": 60,
+      "step": 5,
+      "default": 30,
+      "info": "Higher number = slower scroll. Recommended: 20-40 seconds for mobile"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text (English)",
+          "default": "Sample text"
+        },
+        {
+          "type": "text",
+          "id": "text_de",
+          "label": "Text (German)"
+        },
+        {
+          "type": "text",
+          "id": "text_fr",
+          "label": "Text (French)"
+        },
+        {
+          "type": "text",
+          "id": "text_fi",
+          "label": "Text (Finnish)"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "",
+          "options": [
+            {
+              "value": "",
+              "label": "No icon"
+            },
+            {
+              "value": "award",
+              "label": "Award"
+            },
+            {
+              "value": "box",
+              "label": "Box"
+            },
+            {
+              "value": "briefcase",
+              "label": "Briefcase"
+            },
+            {
+              "value": "calendar",
+              "label": "Calendar"
+            },
+            {
+              "value": "chat_bubble",
+              "label": "Chat bubble"
+            },
+            {
+              "value": "check_mark",
+              "label": "Check mark"
+            },
+            {
+              "value": "check_mark_in_circle",
+              "label": "Check mark in circle"
+            },
+            {
+              "value": "clock",
+              "label": "Clock"
+            },
+            {
+              "value": "credit_card",
+              "label": "Credit card"
+            },
+            {
+              "value": "dollar_sign",
+              "label": "Dollar sign"
+            },
+            {
+              "value": "dryer",
+              "label": "Dryer"
+            },
+            {
+              "value": "eye",
+              "label": "Eye"
+            },
+            {
+              "value": "feather",
+              "label": "Feather"
+            },
+            {
+              "value": "gift",
+              "label": "Gift"
+            },
+            {
+              "value": "heart",
+              "label": "Heart"
+            },
+            {
+              "value": "iron",
+              "label": "Iron"
+            },
+            {
+              "value": "leaf",
+              "label": "Leaf"
+            },
+            {
+              "value": "leather",
+              "label": "Leather"
+            },
+            {
+              "value": "lock",
+              "label": "Lock"
+            },
+            {
+              "value": "map_pin",
+              "label": "Map pin"
+            },
+            {
+              "value": "pants",
+              "label": "Pants"
+            },
+            {
+              "value": "percent",
+              "label": "Percent"
+            },
+            {
+              "value": "plane",
+              "label": "Plane"
+            },
+            {
+              "value": "price_tag",
+              "label": "Price tag"
+            },
+            {
+              "value": "question_mark",
+              "label": "Question mark"
+            },
+            {
+              "value": "return",
+              "label": "Return"
+            },
+            {
+              "value": "ruler",
+              "label": "Ruler"
+            },
+            {
+              "value": "scissors",
+              "label": "Scissors"
+            },
+            {
+              "value": "shirt",
+              "label": "Shirt"
+            },
+            {
+              "value": "shoe",
+              "label": "Shoe"
+            },
+            {
+              "value": "silhouette",
+              "label": "Silhouette"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "truck",
+              "label": "Truck"
+            },
+            {
+              "value": "washing",
+              "label": "Washing"
+            }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Custom icon",
+          "info": "Replaces icon above if uploaded"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Link URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Items Wrapper",
+      "blocks": [
+        {
+          "type": "item",
+          "settings": {
+            "text": "300+ local dealers",
+            "text_de": "Über 300 Fachhändler vor Ort",
+            "text_fr": "Plus de 300 revendeurs",
+            "text_fi": "300+ paikallista jälleenmyyjää",
+            "icon": "map_pin",
+            "link_url": "shopify://pages/find-a-dealer"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "text": "Award winning bikes",
+            "text_de": "Preisgekrönte Fahrräder",
+            "text_fr": "Vélos primés et récompensés",
+            "text_fi": "Palkitut pyörät",
+            "icon": "award",
+            "link_url": "shopify://pages/award"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "text": "2 years warranty",
+            "text_de": "2 Jahre Garantie",
+            "text_fr": "Garantie de 2 ans",
+            "text_fi": "2 vuoden takuu",
+            "icon": "check_mark_in_circle",
+            "link_url": "shopify://pages/warranty"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "text": "Designed in Germany",
+            "text_de": "Entworfen und entwickelt in Deutschland",
+            "text_fr": "Conçu en Allemagne",
+            "text_fi": "Suunniteltu Saksassa",
+            "icon": "star",
+            "link_url": "shopify://pages/about-hepha"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "text": "14-day hassle-free returns",
+            "text_de": "14 Tage Widerrufsrecht",
+            "text_fr": "Retours sous 14 jours",
+            "text_fi": "14 päivän vaivaton palautus",
+            "icon": "truck",
+             "link_url": "shopify://pages/return"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "text": "Flexible payment options",
+            "text_de": "Flexible Zahlungsmethoden",
+            "text_fr": "Options de paiement flexibles",
+            "text_fi": "Joustavat maksuvaihtoehdot",
+            "icon": "credit_card",
+            "link_url": "shopify://pages/payment-and-finance"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

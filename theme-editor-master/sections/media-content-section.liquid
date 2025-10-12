@@ -1,0 +1,2673 @@
+{%- comment -%}
+/**
+ * Media & Content Section - Flexible Two-Column Layout Component
+ * 
+ * OVERVIEW:
+ * This section creates a flexible two-column layout with a media column and content column.
+ * It supports various content types including images, videos, text, buttons, and interactive elements.
+ * The section is highly customizable with extensive multilingual support (English, German, French, Finnish)
+ * and responsive design capabilities.
+ * 
+ * CORE FUNCTIONALITY:
+ * - Two-column responsive layout (media + content)
+ * - Media column: background images/videos, overlay text, buttons
+ * - Content column: dynamic blocks with various content types
+ * - Multilingual content support with locale-based rendering
+ * - Extensive customization options for styling and positioning
+ * - Mobile-responsive with configurable column ordering
+ * 
+ * TECHNICAL IMPLEMENTATION:
+ * - Liquid templating with dynamic block rendering
+ * - CSS Grid/Flexbox layout system
+ * - Responsive design with separate mobile/desktop settings
+ * - JavaScript integration for interactive elements
+ * - Shopify section schema for admin customization
+ * 
+ * DEPENDENCIES:
+ * 
+ * Required Snippet Files:
+ * - snippets/number-format.liquid - Number formatting utilities
+ * - snippets/media-content-styles.liquid - Section-specific CSS styles
+ * - snippets/media-column.liquid - Media column rendering logic
+ * - snippets/content-column.liquid - Content column rendering logic
+ * 
+ * Block-Specific Snippet Dependencies:
+ * - snippets/block-custom-image.liquid - Custom image block rendering
+ * - snippets/block-heading.liquid - Heading block rendering
+ * - snippets/block-text.liquid - Text block rendering
+ * - snippets/block-newsletter.liquid - Newsletter signup block
+ * - snippets/block-button.liquid - Button block rendering
+ * - snippets/block-countdown.liquid - Countdown timer block
+ * - snippets/block-bike-tab.liquid - Bike tab interface block
+ * - snippets/block-feature-column.liquid - Feature columns block
+ * - snippets/block-slide-footer.liquid - Slide footer block
+ * - snippets/custom-discount-info.liquid - Discount label block
+ * 
+ * Icon and Utility Snippets:
+ * - snippets/icon-location.liquid - Location pin icon
+ * - snippets/icon-highstep.liquid - High step bike icon
+ * - snippets/icon-lowstep.liquid - Low step bike icon
+ * - snippets/icon-stepthrough.liquid - Step through bike icon
+ * - snippets/image.liquid - Image rendering utility
+ * - snippets/localized-value.liquid - Multilingual value rendering
+ * 
+ * LAYOUT OPTIONS:
+ * - Desktop Layout: Media Left/Right positioning
+ * - Mobile Layout: Media Above/Below content
+ * - Full-width section support
+ * - Configurable section margins and heights
+ * - Responsive column heights (desktop/mobile)
+ * 
+ * MEDIA COLUMN FEATURES:
+ * - Background images (desktop/mobile specific)
+ * - Background videos (MP4 support)
+ * - Background colors and gradients
+ * - Image positioning and scaling options
+ * - Overlay text with custom styling
+ * - Dual button support with custom styling
+ * - Text background overlay for readability
+ * 
+ * CONTENT COLUMN FEATURES:
+ * - Dynamic block system with multiple content types
+ * - Custom image blocks with linking and styling
+ * - Heading blocks with H1 option and positioning
+ * - Rich text blocks with custom formatting
+ * - Custom Liquid content blocks
+ * - Newsletter signup with multilingual support
+ * - Button blocks with dual button support
+ * - Countdown timer with customizable styling
+ * - Bike tab interface for product showcasing
+ * - Feature columns for specifications
+ * - Slide footer with pricing information
+ * - Discount labels with custom shapes and positioning
+ * 
+ * MULTILINGUAL SUPPORT:
+ * - English (default)
+ * - German (de)
+ * - French (fr)
+ * - Finnish (fi)
+ * - Automatic locale detection and content switching
+ * - Fallback to default language when translations missing
+ * 
+ * CUSTOMIZATION OPTIONS:
+ * - Extensive color customization for all elements
+ * - Font size controls (desktop/mobile)
+ * - Spacing and margin controls
+ * - Border radius and styling options
+ * - Position controls (relative/absolute positioning)
+ * - Animation and transition support
+ * 
+ * RESPONSIVE DESIGN:
+ * - Mobile-first approach with desktop enhancements
+ * - Separate settings for mobile and desktop layouts
+ * - Configurable column ordering on mobile
+ * - Responsive typography scaling
+ * - Touch-friendly interface elements
+ * 
+ * PERFORMANCE CONSIDERATIONS:
+ * - Lazy loading support for images
+ * - Optimized CSS delivery through separate stylesheet
+ * - Conditional rendering based on content availability
+ * - Efficient Liquid template processing
+ * 
+ * BROWSER COMPATIBILITY:
+ * - Modern browsers with CSS Grid/Flexbox support
+ * - Progressive enhancement for older browsers
+ * - Touch device optimization
+ * - Accessibility features included
+ * 
+ * USAGE SCENARIOS:
+ * - Product showcases with detailed information
+ * - Brand storytelling with rich media
+ * - Feature highlights with specifications
+ * - Newsletter signup campaigns
+ * - Promotional content with countdown timers
+ * - Multi-product comparisons
+ * - Interactive product configurators
+ * - Landing page hero sections
+ * - About us pages with team information
+ * - Service descriptions with visual elements
+ */
+{%- endcomment -%}
+
+{% assign current_locale = request.locale.iso_code | default: 'en' %}
+{% assign locale_prefix = current_locale | slice: 0, 2 %}
+
+{% render 'number-format' %}
+{% render 'media-content-styles' %}
+{{ 'unified-button-styles.css' | asset_url | stylesheet_tag }}
+
+<div
+  id="shopify-section-{{ section.id }}"
+  class="full-width-section"
+  style="margin-top: {{ section.settings.margin_top }}px; margin-bottom: {{ section.settings.margin_bottom }}px;"
+>
+  <div class="container" style="max-width:none; padding:0">
+    <div class="flexible-layout valign-middle valign-{{ section.settings.content_vertical_alignment | default: 'center' }}">
+      {% render 'media-column', section: section %}
+      {% render 'content-column', section: section %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Media & Content Section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Margins"
+    },
+    {
+      "type": "text",
+      "id": "margin_top",
+      "label": "Margin Top (px)",
+      "default": "0"
+    },
+    {
+      "type": "text",
+      "id": "margin_bottom",
+      "label": "Margin Bottom (px)",
+      "default": "0"
+    },
+    {
+      "type": "header",
+      "content": "Section Height"
+    },
+    {
+      "type": "range",
+      "id": "min_section_height",
+      "min": 300,
+      "max": 1200,
+      "step": 50,
+      "unit": "px",
+      "label": "Minimum Section Height (Desktop)",
+      "default": 700
+    },
+    {
+      "type": "range",
+      "id": "min_column_height",
+      "min": 300,
+      "max": 1200,
+      "step": 50,
+      "unit": "px",
+      "label": "Minimum Column Height (Desktop)",
+      "default": 700
+    },
+    {
+      "type": "range",
+      "id": "min_section_height_mobile",
+      "min": 200,
+      "max": 800,
+      "step": 25,
+      "unit": "px",
+      "label": "Minimum Section Height (Mobile)",
+      "default": 400
+    },
+    {
+      "type": "range",
+      "id": "min_column_height_mobile",
+      "min": 200,
+      "max": 800,
+      "step": 25,
+      "unit": "px",
+      "label": "Minimum Column Height (Mobile)",
+      "default": 400
+    },
+    {
+      "type": "header",
+      "content": "Media Column Visibility"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_media_column",
+      "label": "Display Media Column",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Media Column Background"
+    },
+    {
+      "type": "color",
+      "id": "media_bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "image_picker",
+      "id": "media_bg_image",
+      "label": "Background Image (Desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "media_mobile_bg",
+      "label": "Background Image (Mobile)"
+    },
+    {
+      "type": "text",
+      "id": "media_bg_video",
+      "label": "Background Video URL",
+      "info": "Paste direct link to MP4 video file"
+    },
+    {
+      "type": "select",
+      "id": "media_position",
+      "label": "Image Position",
+      "default": "center center",
+      "options": [
+        {
+          "value": "left top",
+          "label": "Top Left"
+        },
+        {
+          "value": "left center",
+          "label": "Left"
+        },
+        {
+          "value": "left bottom",
+          "label": "Bottom Left"
+        },
+        {
+          "value": "center top",
+          "label": "Top"
+        },
+        {
+          "value": "center center",
+          "label": "Center"
+        },
+        {
+          "value": "center bottom",
+          "label": "Bottom"
+        },
+        {
+          "value": "right top",
+          "label": "Top Right"
+        },
+        {
+          "value": "right center",
+          "label": "Right"
+        },
+        {
+          "value": "right bottom",
+          "label": "Bottom Right"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "media_size",
+      "label": "Image Scaling",
+      "default": "cover",
+      "options": [
+        {
+          "value": "cover",
+          "label": "Cover"
+        },
+        {
+          "value": "contain",
+          "label": "Contain"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "media_position_setting",
+      "label": "Desktop Layout",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "Media Left"
+        },
+        {
+          "value": "right",
+          "label": "Media Right"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "mobile_media_position",
+      "label": "Mobile Media Position",
+      "default": "below",
+      "options": [
+        {
+          "value": "top",
+          "label": "Above Content"
+        },
+        {
+          "value": "below",
+          "label": "Below Content"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Media Column Content"
+    },
+    {
+      "type": "header",
+      "content": "Heading Settings"
+    },
+    {
+      "type": "text",
+      "id": "media_heading",
+      "label": "Heading (Default)",
+      "default": "Media Heading"
+    },
+    {
+      "type": "text",
+      "id": "media_heading_de",
+      "label": "Heading (German)"
+    },
+    {
+      "type": "text",
+      "id": "media_heading_fr",
+      "label": "Heading (French)"
+    },
+    {
+      "type": "text",
+      "id": "media_heading_fi",
+      "label": "Heading (Finnish)"
+    },
+    {
+      "type": "color",
+      "id": "media_heading_color",
+      "label": "Color",
+      "default": "#ffffff"
+    },
+    {
+          "type": "range",
+          "id": "media_desktop_heading_size",
+          "min": 8,
+          "max": 108,
+          "step": 1,
+          "unit": "px",
+          "label": "Desktop Size",
+          "default": 36
+        },
+    {
+      "type": "range",
+      "id": "media_mobile_heading_size",
+      "min": 8,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile Size",
+      "default": 24
+    },
+    {
+      "type": "checkbox",
+      "id": "media_use_h1",
+      "label": "Set as primary heading",
+      "info": "Use <h1> tag. One per page recommended.",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Text Settings"
+    },
+    {
+      "type": "richtext",
+      "id": "media_text",
+      "label": "Text (Default)",
+      "default": "<p>Text in media column</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "media_text_de",
+      "label": "Text (German)"
+    },
+    {
+      "type": "richtext",
+      "id": "media_text_fr",
+      "label": "Text (French)"
+    },
+    {
+      "type": "richtext",
+      "id": "media_text_fi",
+      "label": "Text (Finnish)"
+    },
+    {
+      "type": "color",
+      "id": "media_text_color",
+      "label": "Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "media_desktop_text_size",
+      "min": 8,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "Desktop Size",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "media_mobile_text_size",
+      "min": 8,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile Size",
+      "default": 16
+    },
+    {
+      "type": "checkbox",
+      "id": "media_enlarge_text",
+      "label": "Enlarge text",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "media_text_bg_enabled",
+      "label": "Enable Text Background",
+      "info": "Add semi-transparent black background to improve text readability",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "media_text_font_family",
+      "label": "Text Font Family",
+      "options": [
+        {
+          "value": "sans-serif",
+          "label": "Sans-serif"
+        },
+        {
+          "value": "monospace",
+          "label": "Monospace"
+        }
+      ],
+      "default": "monospace"
+    },
+    {
+      "type": "select",
+      "id": "media_text_alignment",
+      "label": "Text Alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "media_content_alignment",
+      "label": "Content Horizontal Alignment",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "flex-end",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "media_content_vertical_alignment",
+      "label": "Content Vertical Alignment",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "Top"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "flex-end",
+          "label": "Bottom"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Button 1 Settings"
+    },
+    {
+      "type": "text",
+      "id": "media_button1_label",
+      "label": "Button Label (Default)",
+      "default": "Button 1"
+    },
+    {
+      "type": "text",
+      "id": "media_button1_label_de",
+      "label": "Button Label (German)"
+    },
+    {
+      "type": "text",
+      "id": "media_button1_label_fr",
+      "label": "Button Label (French)"
+    },
+    {
+      "type": "text",
+      "id": "media_button1_label_fi",
+      "label": "Button Label (Finnish)"
+    },
+    {
+      "type": "url",
+      "id": "media_button1_link",
+      "label": "Link"
+    },
+    {
+      "type": "color",
+      "id": "media_button1_text_color",
+      "label": "Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "media_button1_bg_color",
+      "label": "Background Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "media_button1_border_color",
+      "label": "Border Color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Button 2 Settings"
+    },
+    {
+      "type": "text",
+      "id": "media_button2_label",
+      "label": "Button Label (Default)",
+      "default": "Button 2"
+    },
+    {
+      "type": "text",
+      "id": "media_button2_label_de",
+      "label": "Button Label (German)"
+    },
+    {
+      "type": "text",
+      "id": "media_button2_label_fr",
+      "label": "Button Label (French)"
+    },
+    {
+      "type": "text",
+      "id": "media_button2_label_fi",
+      "label": "Button Label (Finnish)"
+    },
+    {
+      "type": "url",
+      "id": "media_button2_link",
+      "label": "Link"
+    },
+    {
+      "type": "color",
+      "id": "media_button2_text_color",
+      "label": "Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "media_button2_bg_color",
+      "label": "Background Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "media_button2_border_color",
+      "label": "Border Color",
+      "default": "#000000"
+    },
+    {
+      "type": "select",
+      "id": "media_button_alignment",
+      "label": "Buttons Alignment",
+      "default": "center",
+      "options": [
+        {
+          "label": "Left",
+          "value": "flex-start"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Right",
+          "value": "flex-end"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "media_desktop_button_size",
+      "min": 14,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Desktop Size",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "media_mobile_button_size",
+      "min": 12,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile Size",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Content Column Settings"
+    },
+    {
+      "type": "color",
+      "id": "content_text_bg_color",
+      "label": "Text Wrapper Background Color"
+    },
+    {
+      "type": "range",
+      "id": "content_text_bg_opacity",
+      "label": "Text Wrapper Background Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "color",
+      "id": "content_bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "image_picker",
+      "id": "content_bg_image",
+      "label": "Background Image (Desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "content_mobile_bg",
+      "label": "Background Image (Mobile)"
+    },
+    {
+      "type": "text",
+      "id": "content_bg_video",
+      "label": "Background Video URL",
+      "info": "Paste direct link to MP4 video file"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "label": "Text Alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "content_vertical_alignment",
+      "label": "Content Vertical Position",
+      "options": [
+        {
+          "value": "top",
+          "label": "Top"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "bottom",
+          "label": "Bottom"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Content Column Padding"
+    },
+    {
+      "type": "text",
+      "id": "content_padding_top",
+      "label": "Padding Top (px)",
+      "default": "60",
+      "info": "Enter a number between 0-500. Invalid values will use default (60px)",
+      "placeholder": "60"
+    },
+    {
+      "type": "text",
+      "id": "content_padding_right",
+      "label": "Padding Right (px)",
+      "default": "60",
+      "info": "Enter a number between 0-500. Invalid values will use default (60px)",
+      "placeholder": "60"
+    },
+    {
+      "type": "text",
+      "id": "content_padding_bottom",
+      "label": "Padding Bottom (px)",
+      "default": "60",
+      "info": "Enter a number between 0-500. Invalid values will use default (60px)",
+      "placeholder": "60"
+    },
+    {
+      "type": "text",
+      "id": "content_padding_left",
+      "label": "Padding Left (px)",
+      "default": "60",
+      "info": "Enter a number between 0-500. Invalid values will use default (60px)",
+      "placeholder": "60"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "custom_image",
+      "name": "Custom Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "image_width",
+          "label": "Image Width (px)",
+          "default": "400",
+          "info": "Enter a number in pixels"
+        },
+        {
+          "type": "range",
+          "id": "border_radius",
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "unit": "px",
+          "label": "Border Radius",
+          "default": 0
+        },
+        {
+          "type": "select",
+          "id": "alignment",
+          "label": "Alignment",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link",
+          "info": "Optional"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_in_new_tab",
+          "label": "Open in new tab",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "Margin Settings"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Top",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_right",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Right",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Bottom",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "margin_left",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Left",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "name": "Heading",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading (Default)",
+          "default": "Content Column Heading"
+        },
+        {
+          "type": "text",
+          "id": "title_de",
+          "label": "Heading (German)"
+        },
+        {
+          "type": "text",
+          "id": "title_fr",
+          "label": "Heading (French)"
+        },
+        {
+          "type": "text",
+          "id": "title_fi",
+          "label": "Heading (Finnish)"
+        },
+        {
+          "type": "color",
+          "id": "heading_color",
+          "label": "Color",
+          "default": "#000000"
+        },
+        {
+          "type": "select",
+          "id": "font_family",
+          "label": "Font Family",
+          "options": [
+            {
+              "value": "sans-serif",
+              "label": "Sans-serif"
+            },
+            {
+              "value": "monospace",
+              "label": "Monospace"
+            }
+          ],
+          "default": "sans-serif"
+        },
+        {
+          "type": "range",
+          "id": "desktop_font_size",
+          "min": 20,
+          "max": 60,
+          "step": 1,
+          "unit": "px",
+          "label": "Desktop Size",
+          "default": 36
+        },
+        {
+          "type": "range",
+          "id": "mobile_font_size",
+          "min": 12,
+          "max": 50,
+          "step": 1,
+          "unit": "px",
+          "label": "Mobile Size",
+          "default": 24
+        },
+        {
+          "type": "checkbox",
+          "id": "use_h1",
+          "label": "Set as primary heading",
+          "info": "Use <h1> tag. One per page recommended.",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "position_mode",
+          "label": "Position Mode",
+          "options": [
+            {
+              "value": "relative",
+              "label": "Relative (Normal Flow)"
+            },
+            {
+              "value": "absolute",
+              "label": "Absolute (Free Positioning)"
+            }
+          ],
+          "default": "relative"
+        },
+        {
+          "type": "select",
+          "id": "position",
+          "label": "Absolute Position",
+          "info": "Only applies in Absolute mode",
+          "options": [
+            { "value": "top-left", "label": "Top Left" },
+            { "value": "top-center", "label": "Top Center" },
+            { "value": "top-right", "label": "Top Right" },
+            { "value": "middle-left", "label": "Middle Left" },
+            { "value": "middle-center", "label": "Center" },
+            { "value": "middle-right", "label": "Middle Right" },
+            { "value": "bottom-left", "label": "Bottom Left" },
+            { "value": "bottom-center", "label": "Bottom Center" },
+            { "value": "bottom-right", "label": "Bottom Right" },
+            { "value": "custom", "label": "Custom Position" }
+          ],
+          "default": "middle-center"
+        },
+        {
+          "type": "range",
+          "id": "offset_x",
+          "min": -50,
+          "max": 50,
+          "step": 1,
+          "unit": "%",
+          "label": "Horizontal Offset",
+          "info": "Only applies in Custom position",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "offset_y",
+          "min": -50,
+          "max": 50,
+          "step": 1,
+          "unit": "%",
+          "label": "Vertical Offset",
+          "info": "Only applies in Custom position",
+          "default": 0
+        },
+        {
+          "type": "header",
+          "content": "Margin Settings"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Top",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_right",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Right",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Bottom",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_left",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Left",
+          "default": 0
+        },
+        {
+          "type": "header",
+          "content": "Text Alignment"
+        },
+        {
+          "type": "select",
+          "id": "text_align",
+          "label": "Text Alignment",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "center"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text (Default)",
+          "default": "<p>Text in content column</p>"
+        },
+        {
+          "type": "richtext",
+          "id": "text_de",
+          "label": "Text (German)"
+        },
+        {
+          "type": "richtext",
+          "id": "text_fr",
+          "label": "Text (French)"
+        },
+        {
+          "type": "richtext",
+          "id": "text_fi",
+          "label": "Text (Finnish)"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Color",
+          "default": "#333333"
+        },
+        {
+          "type": "select",
+          "id": "font_family",
+          "label": "Font Family",
+          "options": [
+            {
+              "value": "sans-serif",
+              "label": "Sans-serif"
+            },
+            {
+              "value": "monospace",
+              "label": "Monospace"
+            }
+          ],
+          "default": "monospace"
+        },
+        {
+          "type": "range",
+          "id": "desktop_font_size",
+          "min": 14,
+          "max": 30,
+          "step": 1,
+          "unit": "px",
+          "label": "Desktop Size",
+          "default": 18
+        },
+        {
+          "type": "range",
+          "id": "mobile_font_size",
+          "min": 12,
+          "max": 30,
+          "step": 1,
+          "unit": "px",
+          "label": "Mobile Size",
+          "default": 16
+        },
+        {
+          "type": "checkbox",
+          "id": "enlarge_text",
+          "label": "Enlarge text",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "position_mode",
+          "label": "Position Mode",
+          "options": [
+            {
+              "value": "relative",
+              "label": "Relative (Normal Flow)"
+            },
+            {
+              "value": "absolute",
+              "label": "Absolute (Free Positioning)"
+            }
+          ],
+          "default": "relative"
+        },
+        {
+          "type": "select",
+          "id": "position",
+          "label": "Absolute Position",
+          "info": "Only applies in Absolute mode",
+          "options": [
+            { "value": "top-left", "label": "Top Left" },
+            { "value": "top-center", "label": "Top Center" },
+            { "value": "top-right", "label": "Top Right" },
+            { "value": "middle-left", "label": "Middle Left" },
+            { "value": "middle-center", "label": "Center" },
+            { "value": "middle-right", "label": "Middle Right" },
+            { "value": "bottom-left", "label": "Bottom Left" },
+            { "value": "bottom-center", "label": "Bottom Center" },
+            { "value": "bottom-right", "label": "Bottom Right" },
+            { "value": "custom", "label": "Custom Position" }
+          ],
+          "default": "middle-center"
+        },
+        {
+          "type": "range",
+          "id": "offset_x",
+          "min": -50,
+          "max": 50,
+          "step": 1,
+          "unit": "%",
+          "label": "Horizontal Offset",
+          "info": "Only applies in Custom position",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "offset_y",
+          "min": -50,
+          "max": 50,
+          "step": 1,
+          "unit": "%",
+          "label": "Vertical Offset",
+          "info": "Only applies in Custom position",
+          "default": 0
+        },
+        {
+          "type": "header",
+          "content": "Margin Settings"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Top",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "margin_right",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Right",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Bottom",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_left",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Left",
+          "default": 0
+        },
+        {
+          "type": "header",
+          "content": "Text Alignment"
+        },
+        {
+          "type": "select",
+          "id": "text_align",
+          "label": "Text Alignment",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" },
+            { "value": "justify", "label": "Justify" }
+          ],
+          "default": "left"
+        }
+      ]
+    },
+    {
+      "type": "liquid_content",
+      "name": "Custom Liquid",
+      "settings": [
+        {
+          "type": "liquid",
+          "id": "liquid_content",
+          "label": "Custom Liquid"
+        }
+      ]
+    },
+    {
+      "type": "newsletter",
+      "name": "Newsletter",
+      "settings": [
+        {
+          "type": "select",
+          "id": "alignment",
+          "label": "Form Alignment",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "text",
+          "id": "tags",
+          "label": "Contact Tags",
+          "info": "Comma separated list",
+          "default": "prospect,newsletter"
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Placeholder (Default)",
+          "default": "Your email"
+        },
+        {
+          "type": "text",
+          "id": "placeholder_de",
+          "label": "Placeholder (German)",
+          "default": "Ihre E-Mail"
+        },
+        {
+          "type": "text",
+          "id": "placeholder_fr",
+          "label": "Placeholder (French)",
+          "default": "Votre email"
+        },
+        {
+          "type": "text",
+          "id": "placeholder_fi",
+          "label": "Placeholder (Finnish)",
+          "default": "Sähköpostisi"
+        },
+        {
+          "type": "color",
+          "id": "input_bg_color",
+          "label": "Input Background",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "input_text_color",
+          "label": "Input Text Color",
+          "default": "#000000"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Subscribe"
+        },
+        {
+          "type": "text",
+          "id": "button_text_de",
+          "label": "Button Text (German)",
+          "default": "Abonnieren"
+        },
+        {
+          "type": "text",
+          "id": "button_text_fr",
+          "label": "Button Text (French)",
+          "default": "S'abonner"
+        },
+        {
+          "type": "text",
+          "id": "button_text_fi",
+          "label": "Button Text (Finnish)",
+          "default": "Tilaa"
+        },
+        {
+          "type": "color",
+          "id": "button_text_color",
+          "label": "Button Text Color",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color",
+          "id": "button_bg_color",
+          "label": "Button Background",
+          "default": "#000000"
+        }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "Buttons",
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button 1 Label (Default)",
+          "default": "Button 1"
+        },
+        {
+          "type": "text",
+          "id": "button_label_de",
+          "label": "Button 1 Label (German)"
+        },
+        {
+          "type": "text",
+          "id": "button_label_fr",
+          "label": "Button 1 Label (French)"
+        },
+        {
+          "type": "text",
+          "id": "button_label_fi",
+          "label": "Button 1 Label (Finnish)"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button 1 Link"
+        },
+        {
+          "type": "text",
+          "id": "button2_label",
+          "label": "Button 2 Label (Default)",
+          "default": "Button 2"
+        },
+        {
+          "type": "text",
+          "id": "button2_label_de",
+          "label": "Button 2 Label (German)"
+        },
+        {
+          "type": "text",
+          "id": "button2_label_fr",
+          "label": "Button 2 Label (French)"
+        },
+        {
+          "type": "text",
+          "id": "button2_label_fi",
+          "label": "Button 2 Label (Finnish)"
+        },
+        {
+          "type": "url",
+          "id": "button2_link",
+          "label": "Button 2 Link"
+        },
+        {
+          "type": "color",
+          "id": "button_text_color1",
+          "label": "Button 1 Text Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "button_bg_color1",
+          "label": "Button 1 Background",
+          "default": "#000000"
+        },
+        {
+          "type": "color",
+          "id": "button_border_color1",
+          "label": "Button 1 Border Color",
+          "default": "#000000"
+        },
+        {
+          "type": "color",
+          "id": "button_text_color2",
+          "label": "Button 2 Text Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "button_bg_color2",
+          "label": "Button 2 Background",
+          "default": "#000000"
+        },
+        {
+          "type": "color",
+          "id": "button_border_color2",
+          "label": "Button 2 Border Color",
+          "default": "#000000"
+        },
+        {
+          "type": "select",
+          "id": "button_alignment",
+          "label": "Alignment",
+          "default": "center",
+          "options": [
+            {
+              "label": "Left",
+              "value": "flex-start"
+            },
+            {
+              "label": "Center",
+              "value": "center"
+            },
+            {
+              "label": "Right",
+              "value": "flex-end"
+            }
+          ]
+        },
+        {
+          "type": "range",
+          "id": "desktop_font_size",
+          "min": 14,
+          "max": 30,
+          "step": 1,
+          "unit": "px",
+          "label": "Desktop Size",
+          "default": 18
+        },
+        {
+          "type": "range",
+          "id": "mobile_font_size",
+          "min": 12,
+          "max": 30,
+          "step": 1,
+          "unit": "px",
+          "label": "Mobile Size",
+          "default": 16
+        },
+        {
+          "type": "header",
+          "content": "Button Styling"
+        },
+        {
+          "type": "range",
+          "id": "button_border_radius",
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "unit": "px",
+          "label": "Border Radius",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "button_height",
+          "min": 30,
+          "max": 80,
+          "step": 2,
+          "unit": "px",
+          "label": "Button Height",
+          "default": 30
+        },
+        {
+          "type": "header",
+          "content": "Button Margin"
+        },
+        {
+          "type": "range",
+          "id": "button_margin_top",
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Top",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "button_margin_right",
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Right",
+          "default": 10
+        },
+        {
+          "type": "range",
+          "id": "button_margin_bottom",
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Bottom",
+          "default": 10
+        },
+        {
+          "type": "range",
+          "id": "button_margin_left",
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Left",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "type": "countdown",
+      "name": "Countdown",
+      "settings": [
+        {
+          "type": "text",
+          "id": "end_date",
+          "label": "End Date",
+          "info": "Format: YYYY-MM-DD",
+          "default": "2025-12-31"
+        },
+        {
+          "type": "text",
+          "id": "end_time",
+          "label": "End Time",
+          "info": "Format: HH:MM (24h)",
+          "default": "23:59"
+        },
+        {
+          "type": "checkbox",
+          "id": "hide_on_end",
+          "label": "Hide when completed",
+          "default": false
+        },
+        {
+          "type": "range",
+          "id": "number_size",
+          "min": 20,
+          "max": 60,
+          "step": 2,
+          "unit": "px",
+          "label": "Number Size",
+          "default": 40
+        },
+        {
+          "type": "select",
+          "id": "number_font",
+          "label": "Number Font",
+          "options": [
+            { "value": "base", "label": "Base" },
+            { "value": "heading", "label": "Heading" }
+          ],
+          "default": "base"
+        },
+        {
+          "type": "select",
+          "id": "divider_type",
+          "label": "Divider Style",
+          "options": [
+            { "value": "colon", "label": "Colon" },
+            { "value": "dot", "label": "Dot" },
+            { "value": "line", "label": "Line" },
+            { "value": "none", "label": "None" }
+          ],
+          "default": "colon"
+        },
+        {
+          "type": "color",
+          "id": "countdown_number_color",
+          "label": "Number Color",
+          "default": "#333333"
+        },
+        {
+          "type": "color",
+          "id": "countdown_label_color",
+          "label": "Label Color",
+          "default": "#666666"
+        },
+        {
+          "type": "header",
+          "content": "End Message Translations"
+        },
+        {
+          "type": "text",
+          "id": "end_text",
+          "label": "English Message",
+          "default": "Sale has ended!"
+        },
+        {
+          "type": "text",
+          "id": "end_text_de",
+          "label": "German Message",
+          "default": "Der Verkauf ist beendet!"
+        },
+        {
+          "type": "text",
+          "id": "end_text_fr",
+          "label": "French Message",
+          "default": "La vente est terminée !"
+        },
+        {
+          "type": "text",
+          "id": "end_text_fi",
+          "label": "Finnish Message",
+          "default": "Myynti on päättynyt!"
+        }
+      ]
+    },
+    {
+      "type": "bike_tab",
+      "name": "Bike Tab",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "product",
+          "id": "selected_product",
+          "label": "Assign product"
+        },
+        {
+          "type": "textarea",
+          "id": "description_en",
+          "label": "Description (English)",
+          "default": "Discover our collection of high-quality bicycles"
+        },
+        {
+          "type": "text",
+          "id": "description_de",
+          "label": "Description (German)"
+        },
+        {
+          "type": "text",
+          "id": "description_fr",
+          "label": "Description (French)"
+        },
+        {
+          "type": "text",
+          "id": "description_fi",
+          "label": "Description (Finnish)"
+        },
+        {
+          "type": "checkbox",
+          "id": "hide_banner_header_right",
+          "label": "Hide banner header right section",
+          "default": false,
+          "info": "When enabled, the right section with tabs will be hidden regardless of other settings"
+        },
+        {
+          "type": "header",
+          "content": "Main tab settings"
+        },
+        {
+          "type": "select",
+          "id": "tab_1_type",
+          "label": "Tab 1 type",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "step_through", "label": "Step Through" },
+            { "value": "high_step", "label": "High Step" },
+            { "value": "low_step", "label": "Low Step" }
+          ],
+          "default": "none"
+        },
+        {
+          "type": "select",
+          "id": "tab_2_type",
+          "label": "Tab 2 type",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "step_through", "label": "Step Through" },
+            { "value": "high_step", "label": "High Step" },
+            { "value": "low_step", "label": "Low Step" }
+          ],
+          "default": "none"
+        },
+        {
+          "type": "select",
+          "id": "tab_3_type",
+          "label": "Tab 3 type",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "step_through", "label": "Step Through" },
+            { "value": "high_step", "label": "High Step" },
+            { "value": "low_step", "label": "Low Step" }
+          ],
+          "default": "none"
+        },
+        {
+          "type": "header",
+          "content": "Sub tab settings - Tab 1"
+        },
+        {
+          "type": "color",
+          "id": "tab_1_sub_tab_1_bg_color",
+          "label": "Sub tab 1 background color"
+        },
+        {
+          "type": "image_picker",
+          "id": "tab_1_sub_tab_1_image",
+          "label": "Sub tab 1 image"
+        },
+        {
+          "type": "color",
+          "id": "tab_1_sub_tab_2_bg_color",
+          "label": "Sub tab 2 background color"
+        },
+        {
+          "type": "image_picker",
+          "id": "tab_1_sub_tab_2_image",
+          "label": "Sub tab 2 image"
+        },
+        {
+          "type": "color",
+          "id": "tab_1_sub_tab_3_bg_color",
+          "label": "Sub tab 3 background color"
+        },
+        {
+          "type": "image_picker",
+          "id": "tab_1_sub_tab_3_image",
+          "label": "Sub tab 3 image"
+        },
+        {
+          "type": "color",
+          "id": "tab_1_sub_tab_4_bg_color",
+          "label": "Sub tab 4 background color"
+        },
+        {
+          "type": "image_picker",
+          "id": "tab_1_sub_tab_4_image",
+          "label": "Sub tab 4 image"
+        },
+        {
+          "type": "header",
+          "content": "Sub tab settings - Tab 2"
+        },
+        {
+          "type": "color",
+          "id": "tab_2_sub_tab_1_bg_color",
+          "label": "Sub tab 1 background color"
+        },
+        {
+          "type": "image_picker",
+          "id": "tab_2_sub_tab_1_image",
+          "label": "Sub tab 1 image"
+        },
+        {
+          "type": "color",
+          "id": "tab_2_sub_tab_2_bg_color",
+          "label": "Sub tab 2 background color"
+        },
+        {
+          "type": "image_picker",
+          "id": "tab_2_sub_tab_2_image",
+          "label": "Sub tab 2 image"
+        },
+        {
+          "type": "color",
+          "id": "tab_2_sub_tab_3_bg_color",
+          "label": "Sub tab 3 background color"
+        },
+        {
+          "type": "image_picker",
+          "id": "tab_2_sub_tab_3_image",
+          "label": "Sub tab 3 image"
+        },
+        {
+          "type": "color",
+          "id": "tab_2_sub_tab_4_bg_color",
+          "label": "Sub tab 4 background color"
+        },
+        {
+          "type": "image_picker",
+          "id": "tab_2_sub_tab_4_image",
+          "label": "Sub tab 4 image"
+        },
+        {
+          "type": "header",
+          "content": "Sub tab settings - Tab 3"
+        },
+        {
+          "type": "color",
+          "id": "tab_3_sub_tab_1_bg_color",
+          "label": "Sub tab 1 background color"
+        },
+        {
+          "type": "image_picker",
+          "id": "tab_3_sub_tab_1_image",
+          "label": "Sub tab 1 image"
+        },
+        {
+          "type": "color",
+          "id": "tab_3_sub_tab_2_bg_color",
+          "label": "Sub tab 2 background color"
+        },
+        {
+          "type": "image_picker",
+          "id": "tab_3_sub_tab_2_image",
+          "label": "Sub tab 2 image"
+        },
+        {
+          "type": "color",
+          "id": "tab_3_sub_tab_3_bg_color",
+          "label": "Sub tab 3 background color"
+        },
+        {
+          "type": "image_picker",
+          "id": "tab_3_sub_tab_3_image",
+          "label": "Sub tab 3 image"
+        },
+        {
+          "type": "color",
+          "id": "tab_3_sub_tab_4_bg_color",
+          "label": "Sub tab 4 background color"
+        },
+        {
+          "type": "image_picker",
+          "id": "tab_3_sub_tab_4_image",
+          "label": "Sub tab 4 image"
+        }
+      ]
+    },
+    {
+      "type": "feature_column",
+      "name": "Feature Columns",
+      "settings": [
+        {
+          "type": "range",
+          "id": "columns_count",
+          "label": "Number of Columns",
+          "min": 1,
+          "max": 4,
+          "step": 1,
+          "default": 4
+        },
+        {
+          "type": "header",
+          "content": "Column 1"
+        },
+        {
+          "type": "text",
+          "id": "column_1_title",
+          "label": "Title",
+          "default": "Motor"
+        },
+        {
+          "type": "text",
+          "id": "column_1_title_de",
+          "label": "Title (German)"
+        },
+        {
+          "type": "text",
+          "id": "column_1_title_fr",
+          "label": "Title (French)"
+        },
+        {
+          "type": "text",
+          "id": "column_1_title_fi",
+          "label": "Title (Finnish)"
+        },
+        {
+          "type": "text",
+          "id": "column_1_description",
+          "label": "Description",
+          "default": "Description"
+        },
+        {
+          "type": "text",
+          "id": "column_1_description_de",
+          "label": "Description (German)"
+        },
+        {
+          "type": "text",
+          "id": "column_1_description_fr",
+          "label": "Description (French)"
+        },
+        {
+          "type": "text",
+          "id": "column_1_description_fi",
+          "label": "Description (Finnish)"
+        },
+        {
+          "type": "header",
+          "content": "Column 2"
+        },
+        {
+          "type": "text",
+          "id": "column_2_title",
+          "label": "Title",
+          "default": "Battery"
+        },
+        {
+          "type": "text",
+          "id": "column_2_title_de",
+          "label": "Title (German)"
+        },
+        {
+          "type": "text",
+          "id": "column_2_title_fr",
+          "label": "Title (French)"
+        },
+        {
+          "type": "text",
+          "id": "column_2_title_fi",
+          "label": "Title (Finnish)"
+        },
+        {
+          "type": "text",
+          "id": "column_2_description",
+          "label": "Description",
+          "default": "Description"
+        },
+        {
+          "type": "text",
+          "id": "column_2_description_de",
+          "label": "Description (German)"
+        },
+        {
+          "type": "text",
+          "id": "column_2_description_fr",
+          "label": "Description (French)"
+        },
+        {
+          "type": "text",
+          "id": "column_2_description_fi",
+          "label": "Description (Finnish)"
+        },
+        {
+          "type": "header",
+          "content": "Column 3"
+        },
+        {
+          "type": "text",
+          "id": "column_3_title",
+          "label": "Title",
+          "default": "Gears"
+        },
+        {
+          "type": "text",
+          "id": "column_3_title_de",
+          "label": "Title (German)"
+        },
+        {
+          "type": "text",
+          "id": "column_3_title_fr",
+          "label": "Title (French)"
+        },
+        {
+          "type": "text",
+          "id": "column_3_title_fi",
+          "label": "Title (Finnish)"
+        },
+        {
+          "type": "text",
+          "id": "column_3_description",
+          "label": "Description",
+          "default": "Description"
+        },
+        {
+          "type": "text",
+          "id": "column_3_description_de",
+          "label": "Description (German)"
+        },
+        {
+          "type": "text",
+          "id": "column_3_description_fr",
+          "label": "Description (French)"
+        },
+        {
+          "type": "text",
+          "id": "column_3_description_fi",
+          "label": "Description (Finnish)"
+        },
+        {
+          "type": "header",
+          "content": "Column 4"
+        },
+        {
+          "type": "text",
+          "id": "column_4_title",
+          "label": "Title",
+          "default": "Frame"
+        },
+        {
+          "type": "text",
+          "id": "column_4_title_de",
+          "label": "Title (German)"
+        },
+        {
+          "type": "text",
+          "id": "column_4_title_fr",
+          "label": "Title (French)"
+        },
+        {
+          "type": "text",
+          "id": "column_4_title_fi",
+          "label": "Title (Finnish)"
+        },
+        {
+          "type": "text",
+          "id": "column_4_description",
+          "label": "Description",
+          "default": "Description"
+        },
+        {
+          "type": "text",
+          "id": "column_4_description_de",
+          "label": "Description (German)"
+        },
+        {
+          "type": "text",
+          "id": "column_4_description_fr",
+          "label": "Description (French)"
+        },
+        {
+          "type": "text",
+          "id": "column_4_description_fi",
+          "label": "Description (Finnish)"
+        },
+        {
+          "type": "header",
+          "content": "Style Settings"
+        },
+        {
+          "type": "color",
+          "id": "column_title_color",
+          "label": "Title Color",
+          "default": "#000000"
+        },
+        {
+          "type": "range",
+          "id": "column_title_size_desktop",
+          "label": "Title Size (Desktop)",
+          "min": 10,
+          "max": 30,
+          "step": 1,
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "column_title_size_mobile",
+          "label": "Title Size (Mobile)",
+          "min": 10,
+          "max": 24,
+          "step": 1,
+          "default": 14
+        },
+        {
+          "type": "color",
+          "id": "column_description_color",
+          "label": "Description Color",
+          "default": "#333333"
+        },
+        {
+          "type": "range",
+          "id": "column_description_size_desktop",
+          "label": "Description Size (Desktop)",
+          "min": 10,
+          "max": 24,
+          "step": 1,
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "column_description_size_mobile",
+          "label": "Description Size (Mobile)",
+          "min": 10,
+          "max": 20,
+          "step": 1,
+          "default": 12
+        }
+      ]
+    },
+    {
+      "type": "slide_footer",
+      "name": "Slide Footer",
+      "settings": [
+        {
+          "type": "text",
+          "id": "footer_title",
+          "label": "Title",
+          "default": "Footer Title"
+        },
+        {
+          "type": "text",
+          "id": "footer_title_de",
+          "label": "Title (German)"
+        },
+        {
+          "type": "text",
+          "id": "footer_title_fr",
+          "label": "Title (French)"
+        },
+        {
+          "type": "text",
+          "id": "footer_title_fi",
+          "label": "Title (Finnish)"
+        },
+        {
+          "type": "text",
+          "id": "rrp_price",
+          "label": "RRP Price",
+          "info": "Enter numeric value (e.g. 299.99)"
+        },
+        {
+          "type": "text",
+          "id": "footer_description",
+          "label": "Description",
+          "default": "Footer Description"
+        },
+        {
+          "type": "text",
+          "id": "footer_description_de",
+          "label": "Description (German)"
+        },
+        {
+          "type": "text",
+          "id": "footer_description_fr",
+          "label": "Description (French)"
+        },
+        {
+          "type": "text",
+          "id": "footer_description_fi",
+          "label": "Description (Finnish)"
+        },
+        {
+          "type": "url",
+          "id": "footer_button_url",
+          "label": "Button URL"
+        },
+        {
+          "type": "text",
+          "id": "footer_button_text",
+          "label": "Button Text",
+          "default": "Shop Now"
+        },
+        {
+          "type": "text",
+          "id": "footer_button_text_de",
+          "label": "Button Text (German)"
+        },
+        {
+          "type": "text",
+          "id": "footer_button_text_fr",
+          "label": "Button Text (French)"
+        },
+        {
+          "type": "text",
+          "id": "footer_button_text_fi",
+          "label": "Button Text (Finnish)"
+        },
+        {
+          "type": "header",
+          "content": "Style Settings"
+        },
+        {
+          "type": "color",
+          "id": "footer_title_color",
+          "label": "Title Color",
+          "default": "#000000"
+        },
+        {
+          "type": "range",
+          "id": "footer_title_size_desktop",
+          "label": "Title Size (Desktop)",
+          "min": 10,
+          "max": 30,
+          "step": 1,
+          "default": 24
+        },
+        {
+          "type": "range",
+          "id": "footer_title_size_mobile",
+          "label": "Title Size (Mobile)",
+          "min": 10,
+          "max": 24,
+          "step": 1,
+          "default": 20
+        },
+        {
+          "type": "color",
+          "id": "footer_description_color",
+          "label": "Description Color",
+          "default": "#333333"
+        },
+        {
+          "type": "range",
+          "id": "footer_description_size_desktop",
+          "label": "Description Size (Desktop)",
+          "min": 10,
+          "max": 24,
+          "step": 1,
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "footer_description_size_mobile",
+          "label": "Description Size (Mobile)",
+          "min": 10,
+          "max": 20,
+          "step": 1,
+          "default": 12
+        },
+        {
+          "type": "color",
+          "id": "button_bg_color",
+          "label": "Button Background Color",
+          "default": "#000000"
+        },
+        {
+          "type": "color",
+          "id": "button_text_color",
+          "label": "Button Text Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "range",
+          "id": "button_font_size_desktop",
+          "label": "Button Font Size (Desktop)",
+          "min": 10,
+          "max": 24,
+          "step": 1,
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "button_font_size_mobile",
+          "label": "Button Font Size (Mobile)",
+          "min": 10,
+          "max": 20,
+          "step": 1,
+          "default": 14
+        }
+      ]
+    },
+    {
+      "type": "discount-label",
+      "name": "Discount Label",
+      "settings": [
+        {
+          "type": "text",
+          "id": "small_text",
+          "label": "Small Text (Default)",
+          "default": "Save up to"
+        },
+        {
+          "type": "text",
+          "id": "small_text_de",
+          "label": "Small Text (German)"
+        },
+        {
+          "type": "text",
+          "id": "small_text_fr",
+          "label": "Small Text (French)"
+        },
+        {
+          "type": "text",
+          "id": "small_text_fi",
+          "label": "Small Text (Finnish)"
+        },
+        {
+          "type": "header",
+          "content": "Large Text (Middle)"
+        },
+        {
+          "type": "text",
+          "id": "large_text",
+          "label": "Large Text (Default)",
+          "default": "1000 EUR"
+        },
+        {
+          "type": "text",
+          "id": "large_text_de",
+          "label": "Large Text (German)"
+        },
+        {
+          "type": "text",
+          "id": "large_text_fr",
+          "label": "Large Text (French)"
+        },
+        {
+          "type": "text",
+          "id": "large_text_fi",
+          "label": "Large Text (Finnish)"
+        },
+        {
+          "type": "header",
+          "content": "Extra Small Text (Bottom)"
+        },
+        {
+          "type": "text",
+          "id": "extra_small_text",
+          "label": "Extra Text (Default)",
+          "info": "Optional text below large text"
+        },
+        {
+          "type": "text",
+          "id": "extra_small_text_de",
+          "label": "Extra Text (German)"
+        },
+        {
+          "type": "text",
+          "id": "extra_small_text_fr",
+          "label": "Extra Text (French)"
+        },
+        {
+          "type": "text",
+          "id": "extra_small_text_fi",
+          "label": "Extra Text (Finnish)"
+        },
+        {
+          "type": "header",
+          "content": "Text Sizes"
+        },
+        {
+          "type": "range",
+          "id": "small_size",
+          "label": "Small Text Size",
+          "min": 8,
+          "max": 36,
+          "step": 1,
+          "unit": "px",
+          "default": 12
+        },
+        {
+          "type": "range",
+          "id": "large_size",
+          "label": "Large Text Size",
+          "min": 12,
+          "max": 72,
+          "step": 1,
+          "unit": "px",
+          "default": 24
+        },
+        {
+          "type": "range",
+          "id": "extra_small_size",
+          "label": "Extra Text Size",
+          "min": 6,
+          "max": 24,
+          "step": 1,
+          "unit": "px",
+          "default": 10,
+          "info": "Font size for extra text"
+        },
+        {
+          "type": "header",
+          "content": "Text Colors"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Default Text Color",
+          "default": "#FFFFFF",
+          "info": "Fallback color if specific colors not set"
+        },
+        {
+          "type": "color",
+          "id": "small_text_color",
+          "label": "Small Text Color",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color",
+          "id": "large_text_color",
+          "label": "Large Text Color",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color",
+          "id": "extra_text_color",
+          "label": "Extra Text Color",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Background Color",
+          "default": "#FF0000"
+        },
+        {
+          "type": "select",
+          "id": "shape",
+          "label": "Background Shape",
+          "options": [
+            { "value": "circle", "label": "Circle" },
+            { "value": "rectangle", "label": "Rectangle" },
+            { "value": "rounded", "label": "Rounded" }
+          ],
+          "default": "circle"
+        },
+        {
+          "type": "range",
+          "id": "circle_size",
+          "label": "Circle Size",
+          "min": 40,
+          "max": 200,
+          "step": 5,
+          "unit": "px",
+          "default": 80,
+          "info": "Only applies when shape is set to circle"
+        },
+        {
+          "type": "range",
+          "id": "rotation",
+          "label": "Rotation Angle",
+          "min": -45,
+          "max": 45,
+          "step": 1,
+          "unit": "deg",
+          "default": 0
+        },
+        {
+          "type": "number",
+          "id": "position_top",
+          "label": "Vertical Position",
+          "default": 10,
+          "info": "Vertical position in pixels. Negative values allowed for positioning outside container."
+        },
+        {
+          "type": "number",
+          "id": "position_left",
+          "label": "Horizontal Position",
+          "default": 10,
+          "info": "Horizontal position in pixels. Negative values allowed for positioning outside container."
+        },
+        {
+          "type": "range",
+          "id": "padding_horizontal",
+          "label": "Horizontal Padding",
+          "min": 5,
+          "max": 50,
+          "step": 1,
+          "unit": "px",
+          "default": 15
+        },
+        {
+          "type": "range",
+          "id": "padding_vertical",
+          "label": "Vertical Padding",
+          "min": 5,
+          "max": 50,
+          "step": 1,
+          "unit": "px",
+          "default": 8
+        },
+        {
+          "type": "header",
+          "content": "Mobile Settings"
+        },
+        {
+          "type": "select",
+          "id": "mobile_position_mode",
+          "label": "Mobile Position Mode",
+          "options": [
+            { "value": "absolute", "label": "Absolute (Free positioning)" },
+            { "value": "relative", "label": "Relative (Document flow)" }
+          ],
+          "default": "absolute",
+          "info": "Choose how the label is positioned on mobile devices"
+        },
+        {
+          "type": "number",
+          "id": "mobile_position_top",
+          "label": "Mobile Vertical Position",
+          "default": 10,
+          "info": "Vertical position in pixels on mobile devices. Negative values allowed."
+        },
+        {
+          "type": "number",
+          "id": "mobile_position_left",
+          "label": "Mobile Horizontal Position",
+          "default": 10,
+          "info": "Horizontal position in pixels on mobile devices. Negative values allowed."
+        },
+        {
+          "type": "range",
+          "id": "mobile_rotation",
+          "label": "Mobile Rotation Angle",
+          "min": -45,
+          "max": 45,
+          "step": 1,
+          "default": 0,
+          "unit": "deg",
+          "info": "Rotation angle on mobile devices. Leave empty to use desktop value."
+        },
+                {
+          "type": "range",
+          "id": "mobile_margin_top",
+          "label": "Mobile Top Margin",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 10,
+          "unit": "px",
+          "info": "Top margin for relative positioning mode"
+        },
+        {
+          "type": "range",
+          "id": "mobile_margin_left",
+          "label": "Mobile Left Margin",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 10,
+          "unit": "px",
+          "info": "Left margin for relative positioning mode"
+        },
+        {
+          "type": "header",
+          "content": "Mobile Text Sizes"
+        },
+        {
+          "type": "range",
+          "id": "mobile_small_size",
+          "label": "Mobile Small Text Size",
+          "min": 6,
+          "max": 24,
+          "step": 1,
+          "default": 10,
+          "unit": "px",
+          "info": "Small text size on mobile. Leave empty to use desktop value."
+        },
+        {
+          "type": "range",
+          "id": "mobile_large_size",
+          "label": "Mobile Large Text Size",
+          "min": 8,
+          "max": 48,
+          "step": 1,
+          "default": 18,
+          "unit": "px",
+          "info": "Large text size on mobile. Leave empty to use desktop value."
+        },
+        {
+          "type": "range",
+          "id": "mobile_extra_small_size",
+          "label": "Mobile Extra Text Size",
+          "min": 4,
+          "max": 16,
+          "step": 1,
+          "default": 10,
+          "unit": "px",
+          "info": "Extra text size on mobile. Leave empty to use desktop value."
+        },
+        {
+          "type": "header",
+          "content": "Mobile Shape & Padding"
+        },
+        {
+          "type": "range",
+          "id": "mobile_circle_size",
+          "label": "Mobile Circle Size",
+          "min": 30,
+          "max": 120,
+          "step": 5,
+          "default": 60,
+          "unit": "px",
+          "info": "Circle size on mobile devices. Only applies when shape is circle. Leave empty to use desktop value."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Media & Content Section",
+      "blocks": [
+        {
+          "type": "heading"
+        },
+        {
+          "type": "text"
+        },
+        {
+          "type": "button"
+        }
+      ],
+      "settings": {
+        "mobile_media_position": "below",
+        "media_heading": "Media Heading",
+        "media_text": "<p>Text in media column</p>",
+        "media_button1_label": "Button 1"
+      }
+    }
+  ]
+}
+{% endschema %}

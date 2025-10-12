@@ -1,0 +1,85 @@
+{%- assign container_css = container_class | default: 'content-module' -%}
+{%- assign title_element = title_tag | default: 'h3' -%}
+{%- assign show_desc = show_description | default: false -%}
+
+<div class="{{ container_css }}">
+  {%- if tag != blank -%}
+    <div class="content-module__tags">
+      {%- assign tag_array = tag | split: ',' -%}
+      {%- for tag_item in tag_array -%}
+        {%- assign trimmed_tag = tag_item | strip -%}
+        {%- if trimmed_tag != blank -%}
+          <span class="content-module__tag">{{ trimmed_tag }}</span>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  {%- if title != blank -%}
+    {%- assign style_string = '' -%}
+    
+    {%- if title_style -%}
+      {%- assign style_parts = title_style | split: ';' -%}
+      {%- for part in style_parts -%}
+        {%- assign key_value = part | split: ':' -%}
+        {%- if key_value.size == 2 -%}
+          {%- assign key = key_value[0] | strip -%}
+          {%- assign value = key_value[1] | strip -%}
+          {%- if key == 'font_size' -%}
+            {%- assign style_string = style_string | append: 'font-size: ' | append: value | append: 'px;' -%}
+          {%- elsif key == 'font_weight' -%}
+            {%- assign style_string = style_string | append: 'font-weight: ' | append: value | append: ';' -%}
+          {%- elsif key == 'color' -%}
+            {%- assign style_string = style_string | append: 'color: ' | append: value | append: ';' -%}
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+    
+    <{{ title_element }} class="content-module__title"
+      {%- if style_string != blank -%} style="{{ style_string }}"{%- endif -%}
+    >
+      {{ title }}
+    </{{ title_element }}>
+  {%- endif -%}
+
+  {%- if show_desc and description != blank -%}
+    {%- assign desc_style_string = '' -%}
+    
+    {%- if description_style -%}
+      {%- assign desc_style_parts = description_style | split: ';' -%}
+      {%- for part in desc_style_parts -%}
+        {%- assign key_value = part | split: ':' -%}
+        {%- if key_value.size == 2 -%}
+          {%- assign key = key_value[0] | strip -%}
+          {%- assign value = key_value[1] | strip -%}
+          {%- if key == 'font_size' -%}
+            {%- assign desc_style_string = desc_style_string | append: 'font-size: ' | append: value | append: 'px;' -%}
+          {%- elsif key == 'font_weight' -%}
+            {%- assign desc_style_string = desc_style_string | append: 'font-weight: ' | append: value | append: ';' -%}
+          {%- elsif key == 'color' -%}
+            {%- assign desc_style_string = desc_style_string | append: 'color: ' | append: value | append: ';' -%}
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+    
+    <div class="content-module__description"
+      {%- if desc_style_string != blank -%} style="{{ desc_style_string }}"{%- endif -%}
+    >
+      {{ description }}
+    </div>
+  {%- endif -%}
+
+  {%- if button_text != blank -%}
+    <div class="content-module__button-wrapper">
+      {% render 'unified-button',
+        text: button_text,
+        url: button_url,
+        bg_color: button_bg_color,
+        text_color: button_text_color,
+        class: 'content-module__button'
+      %}
+    </div>
+  {%- endif -%}
+</div>

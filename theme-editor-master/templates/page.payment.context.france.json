@@ -1,0 +1,18 @@
+{
+    "parent": "page.payment.json",
+    "context": {
+        "market": "france"
+    },
+    "sections": {
+        "collapsible_tab_7GAqw4": {
+            "disabled": true,
+            "settings": {},
+            "blocks": {}
+        },
+        "custom_imagerow_g6rfNh": {
+            "disabled": true,
+            "settings": {},
+            "blocks": {}
+        }
+    }
+}

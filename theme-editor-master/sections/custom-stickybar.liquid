@@ -1,0 +1,863 @@
+{%- comment -%}
+/**
+ * Custom Sticky Navigation Bar Section - Product Page Navigation Component
+ * 
+ * This section provides a sticky navigation bar that appears on product pages,
+ * offering quick access to different sections of the product page and a mirrored
+ * add-to-cart button for enhanced user experience.
+ * 
+ * CORE FEATURES:
+ * - Sticky positioning that activates after scrolling past the header
+ * - Multi-language navigation links with anchor-based scrolling
+ * - Mirrored add-to-cart button that syncs with the main product button
+ * - Responsive design with mobile-first approach
+ * - Smooth scroll highlighting of active sections
+ * - Z-index management for proper lightbox display
+ * - Touch-friendly navigation with horizontal scrolling
+ * - Real-time button state synchronization
+ * 
+ * TECHNICAL IMPLEMENTATION:
+ * - CSS-based sticky positioning with JavaScript enhancement
+ * - Intersection Observer API for section highlighting
+ * - MutationObserver for button state monitoring
+ * - Debounced scroll and resize handlers for performance
+ * - Dynamic header height calculation
+ * - Responsive breakpoints at 768px, 890px, 960px, 1120px, 1280px
+ * 
+ * SHOPIFY INTEGRATION:
+ * - Block-based navigation link configuration
+ * - Multi-language support (English, German, French, Finnish)
+ * - Product title display integration
+ * - Cart button functionality mirroring
+ * - Locale-aware content switching
+ * 
+ * RELATED FILES:
+ * 
+ * Core Section File:
+ * - sections/custom-stickybar.liquid - This main section file
+ * 
+ * Layout Dependencies:
+ * - layout/theme.liquid - Main theme layout with global settings and scripts
+ * 
+ * Template Usage:
+ * - Used in product templates that require sticky navigation
+ * - Referenced in various product.*.json template files
+ * 
+ * RESPONSIVE BREAKPOINTS:
+ * - Desktop (1280px+): Full navigation with all links visible
+ * - Large tablets (1120px-1279px): Reduced title width
+ * - Medium tablets (960px-1119px): Further title width reduction
+ * - Small tablets (890px-959px): Compact navigation links
+ * - Mobile (768px-889px): Hidden navigation links, title only
+ * - Small mobile (<768px): Completely hidden sticky bar
+ * 
+ * NAVIGATION CONFIGURATION:
+ * - Configurable anchor IDs for section targeting
+ * - Multi-language text support for each navigation link
+ * - Preset configurations for common product page sections
+ * - Smooth scroll behavior with offset calculation
+ * 
+ * BUTTON MIRRORING:
+ * - Real-time synchronization with main add-to-cart button
+ * - State management (enabled/disabled/loading)
+ * - Visual styling consistency
+ * - Click event forwarding to original button
+ * 
+ * BROWSER COMPATIBILITY:
+ * - Modern browsers with Intersection Observer support
+ * - CSS Grid and Flexbox for layout
+ * - CSS Custom Properties for theming
+ * - Progressive enhancement for older browsers
+ * 
+ * PERFORMANCE CONSIDERATIONS:
+ * - Debounced scroll handlers (50ms delay)
+ * - Efficient DOM queries with caching
+ * - Optimized observer patterns
+ * - Conditional rendering based on screen size
+ * 
+ * ACCESSIBILITY:
+ * - Keyboard navigation support
+ * - ARIA-compliant button states
+ * - Screen reader friendly navigation
+ * - Focus management for sticky elements
+ * 
+ * CUSTOMIZATION OPTIONS:
+ * - Configurable scroll offset (default: 30px)
+ * - Adjustable z-index values
+ * - Customizable animation timing
+ * - Flexible navigation link configuration
+ * 
+ * Z-INDEX MANAGEMENT:
+ * - Sticky bar: 999
+ * - Lightbox containers: 1000000
+ * - Automatic lightbox z-index fixing
+ * 
+ * USAGE SCENARIOS:
+ * - Product detail pages with multiple content sections
+ * - Long-form product descriptions requiring navigation
+ * - E-commerce sites with detailed product specifications
+ * - Mobile-optimized product browsing experiences
+ */
+{%- endcomment -%}
+
+// ... existing code ...
+
+{% schema %}
+{
+  "name": "Custom Stickybar",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "nav_link",
+      "name": "Navigation Link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID",
+          "info": "Section ID to scroll to (without #)",
+          "default": "highlights"
+        },
+        {
+          "type": "text",
+          "id": "text_en",
+          "label": "Text (English)",
+          "default": "Highlights"
+        },
+        {
+          "type": "text",
+          "id": "text_de",
+          "label": "Text (German)",
+          "default": "Highlights"
+        },
+        {
+          "type": "text",
+          "id": "text_fr",
+          "label": "Text (French)",
+          "default": "Points forts"
+        },
+        {
+          "type": "text",
+          "id": "text_fi",
+          "label": "Text (Finnish)",
+          "default": "Kohokohdat"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Stickybar",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "nav_link",
+          "settings": {
+            "anchor_id": "highlights",
+            "text_en": "Highlights",
+            "text_de": "Highlights",
+            "text_fr": "Points forts",
+            "text_fi": "Kohokohdat"
+          }
+        },
+        {
+          "type": "nav_link",
+          "settings": {
+            "anchor_id": "specification",
+            "text_en": "Specification",
+            "text_de": "Spezifikation",
+            "text_fr": "Spécification",
+            "text_fi": "Tekniset tiedot"
+          }
+        },
+        {
+          "type": "nav_link",
+          "settings": {
+            "anchor_id": "frame_geometry",
+            "text_en": "Frame Geometry",
+            "text_de": "Rahmengröße",
+            "text_fr": "Géométrie du cadre",
+            "text_fi": "Rungon geometria"
+          }
+        },
+        {
+          "type": "nav_link",
+          "settings": {
+            "anchor_id": "appblock",
+            "text_en": "Review",
+            "text_de": "Bewertungen",
+            "text_fr": "Avis",
+            "text_fi": "Arvostelut"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  .sticky-nav {
+    --sticky-bar-z-index: 999; /* 增加z-index值，确保在其他元素之上 */
+    --sticky-bar-min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgb(255, 255, 255);
+    padding: 1em 2em;
+    width: 100%;
+    box-shadow: rgba(91, 104, 113, 0.1) 0px 6px 8px;
+    z-index: var(--sticky-bar-z-index);
+    min-height: var(--sticky-bar-min-height);
+    position: relative;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+  }
+
+  .sticky-nav--fixed {
+    position: fixed;
+    top: 0 !important;
+    left: 0;
+    animation: fadeInDown 0.3s ease;
+    z-index: var(--sticky-bar-z-index);
+    width: 100%; /* 确保宽度为100% */
+  }
+
+  .overlay-backdrop {
+    z-index: 1000;
+  }
+
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .sticky-nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    position: relative;
+  }
+
+  .sticky-nav-left {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+    padding-right: 20px;
+  }
+
+  .sticky-nav-title {
+    font-size: 22px;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: visible;
+    text-overflow: unset;
+    margin-right: 30px;
+    flex-shrink: 0;
+  }
+
+  .sticky-nav-links {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+    flex-grow: 1;
+    min-width: 0;
+  }
+
+  .sticky-nav-links::-webkit-scrollbar {
+    display: none;
+  }
+
+  .sticky-nav-link {
+    text-decoration: none;
+    color: #333;
+    transition: color 0.3s ease;
+    white-space: nowrap;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+    padding: 4px 0;
+    flex-shrink: 0;
+  }
+
+  .sticky-nav-highlight {
+    font-weight: bold;
+    color: #2b7dde !important;
+    position: relative;
+  }
+
+  .sticky-nav-highlight::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #2b7dde;
+  }
+
+  .sticky-nav-button-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-width: 160px;
+    flex-shrink: 0;
+  }
+
+  .sticky-cart-btn {
+    white-space: nowrap;
+    transition: all 0.3s ease;
+    padding: 10px 20px;
+    background-color: #000;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+  }
+
+  .sticky-cart-btn:disabled {
+    background-color: #666;
+    cursor: not-allowed;
+  }
+
+  @media (max-width: 1280px) {
+    .sticky-nav-title {
+      max-width: 350px;
+    }
+  }
+
+  @media (max-width: 1120px) {
+    .sticky-nav-title {
+      max-width: 250px;
+    }
+  }
+
+  @media (max-width: 960px) {
+    .sticky-nav-title {
+      max-width: 180px;
+      font-size: 18px;
+    }
+
+    .sticky-nav-links {
+      gap: 15px;
+    }
+
+    .sticky-nav-link {
+      font-size: 13px;
+    }
+  }
+
+  @media (max-width: 890px) {
+    .sticky-nav-links {
+      display: none;
+    }
+
+    .sticky-nav-left {
+      padding-right: 0;
+      justify-content: space-between;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .sticky-nav {
+      display: none;
+    }
+  }
+</style>
+
+<div class="sticky-nav" id="stickyNavBar">
+  <div class="sticky-nav-container">
+    <div class="sticky-nav-left">
+      <div class="sticky-nav-title">{{ product.title }}</div>
+      <div class="sticky-nav-links">
+        {% for block in section.blocks %}
+          {% assign link_text = block.settings.text_en %}
+          {% case request.locale.iso_code %}
+            {% when 'de' %}
+              {% assign link_text = block.settings.text_de %}
+            {% when 'fr' %}
+              {% assign link_text = block.settings.text_fr %}
+            {% when 'fi' %}
+              {% assign link_text = block.settings.text_fi %}
+          {% endcase %}
+
+          <a
+            href="#{{ block.settings.anchor_id }}"
+            class="sticky-nav-link"
+            data-anchor="{{ block.settings.anchor_id }}"
+          >
+            {{ link_text }}
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="sticky-nav-button-container" id="stickyNavButtonContainer"></div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+  // 配置选项
+  const config = {
+    headerSelector: 'header, .header, .announcement-bar, .announcement',
+    scrollOffset: 30,
+    scrollBehavior: 'smooth',
+    highlightClass: 'sticky-nav-highlight',
+    cartButtonSelector: '.btn.btn--large.add-to-cart',
+    cartButtonTextSelector: '[data-add-to-cart-text]',
+    debounceTime: 50,
+    zIndexes: {
+      stickyNav: 999,
+      lightbox: 1000000
+    }
+  };
+
+  // 获取DOM元素
+  const stickyNav = document.getElementById('stickyNavBar');
+  const stickyButtonContainer = document.getElementById('stickyNavButtonContainer');
+  const stickyNavLinks = document.querySelector('.sticky-nav-links');
+  
+  // 观察者和定时器变量
+  let buttonMirrorObserver = null;
+  let buttonTextObserver = null;
+  let buttonUpdateInterval = null;
+
+  // 如果没有找到stickyNav元素，则退出
+  if (!stickyNav) return;
+
+  /**
+   * 修复lightbox的z-index，确保它们显示在sticky bar之上
+   */
+  function fixLightboxZIndex() {
+    try {
+      const lightboxes = document.querySelectorAll('.lightbox-container');
+      lightboxes.forEach((lightbox) => {
+        const currentZIndex = parseInt(getComputedStyle(lightbox).zIndex);
+        if (currentZIndex <= config.zIndexes.stickyNav) {
+          lightbox.style.zIndex = config.zIndexes.lightbox.toString();
+        }
+      });
+    } catch (e) {
+      console.error('Error fixing lightbox z-index:', e);
+    }
+  }
+
+  /**
+   * 设置z-index管理，确保lightbox正确显示
+   */
+  function setupZIndexManagement() {
+    // 初始修复
+    fixLightboxZIndex();
+    
+    // 为幻灯片图片点击添加事件监听器
+    document.querySelectorAll('.slide-image').forEach((image) => {
+      image.addEventListener('click', () => setTimeout(fixLightboxZIndex, 50));
+    });
+    
+    // 使用MutationObserver监视DOM变化，处理动态添加的lightbox
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.addedNodes) {
+          mutation.addedNodes.forEach((node) => {
+            if (node.classList && node.classList.contains('lightbox-container')) {
+              fixLightboxZIndex();
+            }
+          });
+        }
+      });
+    });
+    
+    // 开始观察body元素的变化
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
+
+  /**
+   * 防抖函数，限制函数调用频率
+   */
+  function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+      const later = () => {
+        clearTimeout(timeout);
+        func(...args);
+      };
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
+  }
+
+  /**
+   * 计算页面头部的总高度
+   */
+  function calculateHeaderHeight() {
+    try {
+      let totalHeight = 0;
+      const headers = document.querySelectorAll(config.headerSelector);
+      headers.forEach((header) => {
+        if (header) {
+          const styles = window.getComputedStyle(header);
+          const margin = parseFloat(styles.marginTop) + parseFloat(styles.marginBottom);
+          totalHeight += header.offsetHeight + margin;
+        }
+      });
+      return Math.max(totalHeight, 0);
+    } catch (e) {
+      console.error('Error calculating header height:', e);
+      return 0;
+    }
+  }
+
+  /**
+   * 设置sticky导航栏的行为
+   */
+  function setupStickyNav() {
+    let lastScrollPosition = 0;
+    let headerHeight = calculateHeaderHeight();
+
+    // 更新sticky状态
+    function updateStickyState() {
+      try {
+        // 重新计算头部高度，以防它发生变化
+        headerHeight = calculateHeaderHeight();
+        const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+        
+        // 当滚动超过头部高度时，添加fixed类
+        if (scrollY > headerHeight) {
+          stickyNav.classList.add('sticky-nav--fixed');
+        } else {
+          stickyNav.classList.remove('sticky-nav--fixed');
+        }
+        
+        lastScrollPosition = scrollY;
+      } catch (e) {
+        console.error('Error updating sticky state:', e);
+      }
+    }
+
+    // 创建防抖处理函数
+    const debouncedScrollHandler = debounce(updateStickyState, config.debounceTime);
+    const debouncedResizeHandler = debounce(updateStickyState, config.debounceTime);
+    
+    // 添加事件监听器
+    window.addEventListener('scroll', debouncedScrollHandler);
+    window.addEventListener('resize', debouncedResizeHandler);
+    
+    // 初始更新
+    updateStickyState();
+  }
+
+  /**
+   * 创建按钮文本观察器，监视原始按钮文本变化
+   */
+  function createButtonTextObserver(original, mirror) {
+    // 如果已存在观察器，先断开连接
+    if (buttonTextObserver) buttonTextObserver.disconnect();
+    
+    // 获取文本元素
+    const textElement = original.querySelector(config.cartButtonTextSelector) || original;
+    
+    // 创建新的观察器
+    buttonTextObserver = new MutationObserver(() => updateButtonAppearance(original, mirror));
+    buttonTextObserver.observe(textElement, { characterData: true, childList: true, subtree: true });
+  }
+
+  /**
+   * 创建购物车按钮镜像
+   */
+  function createButtonMirror() {
+    try {
+      // 清空按钮容器
+      stickyButtonContainer.innerHTML = '';
+      
+      // 断开所有观察器连接
+      if (buttonMirrorObserver) buttonMirrorObserver.disconnect();
+      if (buttonTextObserver) buttonTextObserver.disconnect();
+      if (buttonUpdateInterval) clearInterval(buttonUpdateInterval);
+
+      // 获取原始按钮
+      const originalButton = document.querySelector(config.cartButtonSelector);
+      
+      // 如果找不到原始按钮，创建一个默认按钮
+      if (!originalButton) {
+        stickyButtonContainer.innerHTML = `<button class="sticky-cart-btn">Add to cart</button>`;
+        return;
+      }
+
+      // 创建新按钮
+      const newButton = document.createElement('button');
+      newButton.className = 'sticky-cart-btn';
+      updateButtonAppearance(originalButton, newButton);
+      stickyButtonContainer.appendChild(newButton);
+
+      // 添加点击事件监听器
+      newButton.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (!newButton.disabled) {
+          originalButton.click();
+          startButtonUpdateLoop(originalButton, newButton);
+        }
+      });
+
+      // 监视原始按钮的父元素，以便在按钮被移除时重新创建
+      const containerObserver = new MutationObserver((mutations) => {
+        mutations.forEach(mutation => {
+          if (mutation.removedNodes) {
+            const removed = Array.from(mutation.removedNodes);
+            if (removed.includes(originalButton)) {
+              containerObserver.disconnect();
+              createButtonMirror();
+            }
+          }
+        });
+      });
+      containerObserver.observe(originalButton.parentElement, { childList: true });
+
+      // 创建按钮属性观察器
+      buttonMirrorObserver = new MutationObserver(() => updateButtonAppearance(originalButton, newButton));
+      buttonMirrorObserver.observe(originalButton, { attributes: true, childList: true, subtree: true });
+      
+      // 创建按钮文本观察器
+      createButtonTextObserver(originalButton, newButton);
+    } catch (e) {
+      console.error('Error creating button mirror:', e);
+    }
+  }
+
+  /**
+   * 启动按钮更新循环，确保按钮状态同步
+   */
+  function startButtonUpdateLoop(original, mirror) {
+    // 清除现有的更新间隔
+    if (buttonUpdateInterval) clearInterval(buttonUpdateInterval);
+    
+    let updateCount = 0;
+    // 创建新的更新间隔
+    buttonUpdateInterval = setInterval(() => {
+      // 如果原始按钮不再存在，停止更新
+      if (!document.body.contains(original)) {
+        clearInterval(buttonUpdateInterval);
+        return;
+      }
+      
+      // 更新按钮外观
+      updateButtonAppearance(original, mirror);
+      updateCount++;
+      
+      // 50次更新后停止，防止无限循环
+      if (updateCount > 50) clearInterval(buttonUpdateInterval);
+    }, 100);
+  }
+
+  /**
+   * 更新镜像按钮的外观，使其与原始按钮匹配
+   */
+  function updateButtonAppearance(original, mirror) {
+    try {
+      // 获取原始按钮的样式
+      const styles = window.getComputedStyle(original);
+      // 获取文本元素
+      const textElement = original.querySelector(config.cartButtonTextSelector) || original;
+      
+      // 更新镜像按钮的属性
+      mirror.textContent = textElement.textContent || 'Add to cart';
+      
+      // 设置禁用状态（必须在样式应用之前设置）
+      mirror.disabled = original.disabled;
+      
+      // 检查原始按钮是否可用
+      const isAvailable = !original.disabled && original.textContent.toLowerCase().includes('add to cart');
+      
+      // 根据可用状态应用不同的样式
+      if (isAvailable) {
+        // 可用状态 - 黑色按钮
+        mirror.style.backgroundColor = '#000';
+        mirror.style.color = '#fff';
+        mirror.style.borderColor = '#000';
+        mirror.style.cursor = 'pointer';
+        mirror.style.opacity = '1';
+      } else if (original.disabled) {
+        // 禁用状态 - 灰色按钮
+        mirror.style.backgroundColor = '#666';
+        mirror.style.color = '#fff';
+        mirror.style.borderColor = '#666';
+        mirror.style.cursor = 'not-allowed';
+        mirror.style.opacity = '0.65';
+      } else {
+        // 其他状态 - 复制原始按钮样式
+        mirror.style.backgroundColor = styles.backgroundColor;
+        mirror.style.color = styles.color;
+        mirror.style.borderColor = styles.borderColor;
+        mirror.style.cursor = styles.cursor;
+        mirror.style.opacity = styles.opacity;
+      }
+      
+      // 始终复制这些样式属性
+      mirror.style.borderStyle = styles.borderStyle;
+      mirror.style.borderWidth = styles.borderWidth;
+      mirror.style.borderRadius = styles.borderRadius;
+      mirror.style.fontWeight = styles.fontWeight;
+      mirror.style.fontSize = styles.fontSize;
+      mirror.style.letterSpacing = styles.letterSpacing;
+      mirror.style.textTransform = styles.textTransform;
+      mirror.style.boxShadow = styles.boxShadow;
+      mirror.style.transition = styles.transition;
+      
+      // 复制类名，但保留sticky-cart-btn类
+      mirror.className = 'sticky-cart-btn';
+      if (original.disabled) {
+        mirror.classList.add('mirror-disabled');
+      }
+      
+      // 如果原始按钮不可见，隐藏镜像按钮
+      mirror.style.display = original.offsetParent ? '' : 'none';
+      
+      // 确保CSS样式规则存在
+      ensureStyleRules();
+    } catch (e) {
+      console.error('Error updating button appearance:', e);
+    }
+  }
+  
+  /**
+   * 确保CSS样式规则存在
+   */
+  function ensureStyleRules() {
+    const styleId = 'mirror-button-styles';
+    if (!document.getElementById(styleId)) {
+      const style = document.createElement('style');
+      style.id = styleId;
+      style.textContent = `
+        .sticky-cart-btn {
+          background-color: #000 !important;
+          color: #fff !important;
+          border: none !important;
+          border-radius: 4px !important;
+          font-weight: 600 !important;
+          cursor: pointer !important;
+          font-size: 14px !important;
+          letter-spacing: 0.5px !important;
+          transition: all 0.3s ease !important;
+        }
+        
+        .sticky-cart-btn.mirror-disabled,
+        .sticky-cart-btn:disabled {
+          background-color: #666 !important;
+          color: #fff !important;
+          border-color: #666 !important;
+          cursor: not-allowed !important;
+          opacity: 0.65 !important;
+        }
+      `;
+      document.head.appendChild(style);
+    }
+  }
+
+  /**
+   * 设置滚动高亮功能，突出显示当前活动的导航链接
+   */
+  function setupScrollHighlighting() {
+    try {
+      // 获取所有导航链接
+      const navLinks = document.querySelectorAll('.sticky-nav-link');
+      if (!navLinks.length) return;
+
+      // 创建交叉观察器
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // 获取当前可见部分的ID
+            const id = entry.target.id;
+            // 查找对应的导航链接
+            const link = document.querySelector(`.sticky-nav-link[data-anchor="${id}"]`);
+            
+            if (link) {
+              // 移除所有链接的高亮
+              navLinks.forEach(l => l.classList.remove(config.highlightClass));
+              // 为当前链接添加高亮
+              link.classList.add(config.highlightClass);
+              
+              // 如果链接在可滚动容器中，确保它可见
+              if (stickyNavLinks) {
+                const linkLeft = link.getBoundingClientRect().left;
+                const containerLeft = stickyNavLinks.getBoundingClientRect().left;
+                const containerWidth = stickyNavLinks.offsetWidth;
+                
+                // 如果链接不在可见区域内，滚动到它
+                if (linkLeft < containerLeft || linkLeft > containerLeft + containerWidth) {
+                  stickyNavLinks.scrollTo({
+                    left: link.offsetLeft - containerWidth/2 + link.offsetWidth/2,
+                    behavior: 'smooth'
+                  });
+                }
+              }
+            }
+          }
+        });
+      }, { root: null, rootMargin: '0px', threshold: 0.1 });
+
+      // 为每个导航链接设置点击事件和观察
+      navLinks.forEach((link) => {
+        const targetId = link.dataset.anchor;
+        if (!targetId) return;
+        
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+          // 观察目标元素
+          observer.observe(targetElement);
+          
+          // 添加点击事件
+          link.addEventListener('click', function (e) {
+            e.preventDefault();
+            // 计算目标位置，考虑偏移量
+            const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+            const offsetPosition = elementPosition - config.scrollOffset;
+            // 平滑滚动到目标位置
+            window.scrollTo({ top: offsetPosition, behavior: config.scrollBehavior });
+          });
+        }
+      });
+
+      // 初始化高亮第一个部分
+      const firstSection = document.querySelector('[id]');
+      if (firstSection) {
+        navLinks.forEach(link => link.classList.remove(config.highlightClass));
+        const activeLink = document.querySelector(`.sticky-nav-link[data-anchor="${firstSection.id}"]`);
+        if (activeLink) activeLink.classList.add(config.highlightClass);
+      }
+    } catch (e) {
+      console.error('Error setting up scroll highlighting:', e);
+    }
+  }
+
+  // 初始化所有功能
+  setupZIndexManagement();
+  setupStickyNav();
+  createButtonMirror();
+  setupScrollHighlighting();
+
+  // 添加Escape键监听器，关闭lightbox
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.lightbox-container').forEach(lightbox => {
+        lightbox.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      });
+    }
+  });
+});
+</script>

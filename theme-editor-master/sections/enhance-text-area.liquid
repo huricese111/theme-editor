@@ -1,0 +1,584 @@
+{%- comment -%}
+/**
+ * Enhanced Text Area Section
+ * 
+ * A comprehensive content section that combines rich text content with customizable
+ * icon-based list items, supporting multiple layout configurations and extensive
+ * multi-language functionality for creating engaging informational content.
+ * 
+ * CORE FEATURES:
+ * • Rich text content with HTML formatting support
+ * • Customizable icon-based list items with 5 icon options
+ * • Two distinct layout configurations (title above/left)
+ * • Multi-language support (EN, DE, FR, FI) with automatic detection
+ * • Responsive design with mobile-optimized typography
+ * • Typography customization (font sizes, colors)
+ * • Icon selection and color styling
+ * • Flexible content positioning and spacing
+ * • Block-based list item management
+ * • Mobile-specific font size controls
+ * 
+ * TECHNICAL IMPLEMENTATION:
+ * • Liquid templating with language detection logic
+ * • CSS Grid and Flexbox for responsive layouts
+ * • CSS custom properties for dynamic styling
+ * • Semantic HTML structure with proper heading hierarchy
+ * • SVG icon system with scalable rendering
+ * • Mobile-first responsive design approach
+ * • Shopify block attributes integration
+ * 
+ * SHOPIFY INTEGRATION:
+ * • Section schema with comprehensive settings
+ * • Multi-language field support for all text elements
+ * • Block-based content management for list items
+ * • Color picker integration for styling
+ * • Range sliders for typography controls
+ * • Preset configuration for quick setup
+ * • Category classification as "Content" section
+ * 
+ * RELATED FILES:
+ * • sections/enhance-text-area.liquid (this file)
+ * • snippets/list-icon.liquid (icon rendering component)
+ * • layout/theme.liquid (main theme layout)
+ * • templates/page.city-collection.json (City collection page)
+ * • templates/page.trekking-collection.json (Trekking collection page)
+ * • templates/page.mountain-collection.json (Mountain collection page)
+ * • templates/page.mountain-carbon-collection.json (Mountain Carbon collection page)
+ * • templates/product.trekking-7-2024-pr.json (Trekking 7 2024 PR product)
+ * • templates/product.trekking-7-2024-model.json (Trekking 7 2024 model product)
+ * 
+ * LAYOUT OPTIONS:
+ * 1. Title Above Layout (title_above):
+ *    • Section title positioned at the top
+ *    • Description and list items displayed side by side
+ *    • Responsive stacking on mobile devices
+ *    • Optimal for balanced content distribution
+ * 
+ * 2. Title Left Layout (title_left):
+ *    • Section title positioned on the left side
+ *    • Description and list items in right column
+ *    • Vertical stacking on mobile devices
+ *    • Ideal for prominent title emphasis
+ * 
+ * RESPONSIVE BREAKPOINTS:
+ * • Desktop (769px+): Grid layouts with side-by-side content
+ * • Mobile (768px-): Vertical stacking with optimized spacing
+ * • Mobile typography: Separate font size controls
+ * • Adaptive icon sizing based on text size
+ * 
+ * ICON SYSTEM:
+ * • Arrow: Directional indicator with stroke styling
+ * • Checkmark: Circular checkmark for completed items
+ * • Star: Filled star shape for featured content
+ * • Info: Information circle with dot and line
+ * • Solid Dot: Simple filled circle (default)
+ * • Scalable SVG rendering with color customization
+ * • Consistent sizing and alignment across all icons
+ * 
+ * MULTI-LANGUAGE SUPPORT:
+ * • English (default/fallback language)
+ * • German (DE) with complete translation support
+ * • French (FR) with complete translation support
+ * • Finnish (FI) with complete translation support
+ * • Automatic locale detection via request.locale.iso_code
+ * • Graceful fallback to default language when translations unavailable
+ * • Individual language variants for all text elements
+ * 
+ * BROWSER COMPATIBILITY:
+ * • Modern browsers with CSS Grid and Flexbox support
+ * • SVG rendering capabilities required
+ * • CSS custom properties support
+ * • Progressive enhancement for older browsers
+ * • Touch-friendly interface for mobile devices
+ * 
+ * PERFORMANCE CONSIDERATIONS:
+ * • Efficient CSS with scoped styling per section
+ * • Minimal DOM manipulation with pure CSS layouts
+ * • Optimized SVG icons with minimal markup
+ * • Responsive images and typography scaling
+ * • Liquid template caching for language detection
+ * 
+ * ACCESSIBILITY FEATURES:
+ * • Semantic HTML structure with proper heading hierarchy
+ * • ARIA-hidden attributes for decorative icons
+ * • High contrast color options
+ * • Keyboard navigation support
+ * • Screen reader friendly content structure
+ * • Scalable typography for visual accessibility
+ * 
+ * CUSTOMIZATION OPTIONS:
+ * • Section title with multi-language variants
+ * • Rich text description with HTML formatting support
+ * • Typography controls (desktop and mobile font sizes)
+ * • Color customization (title, text, icons)
+ * • List item visibility toggle
+ * • Icon selection from 5 predefined options
+ * • Layout selection between two configurations
+ * • Individual list items with multi-language support
+ * 
+ * CONTENT BLOCKS:
+ * • List Item Block: Multi-language text with icon display
+ * • Unlimited list items can be added via Shopify admin
+ * • Individual language variants for each list item
+ * • Block-level Shopify attributes support
+ * • Dynamic rendering based on content availability
+ * 
+ * DEFAULT PRESET:
+ * • Pre-configured "Enhanced Text Area" in Content category
+ * • Sample content for immediate use
+ * • Optimized default settings for common use cases
+ * 
+ * USE CASES:
+ * • Product feature listings with icons
+ * • Service descriptions with bullet points
+ * • FAQ sections with structured content
+ * • About us pages with company highlights
+ * • Landing pages with key benefits
+ * • Multi-language content presentation
+ * • Informational sections with visual hierarchy
+ */
+{%- endcomment -%}
+
+{% schema %}
+{
+  "name": "Enhanced Text Area",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title (Default)",
+      "default": "Your Section Title"
+    },
+    {
+      "type": "text",
+      "id": "section_title_de",
+      "label": "Section Title (German)",
+      "default": "Ihr Abschnittsüberschrift"
+    },
+    {
+      "type": "text",
+      "id": "section_title_fr",
+      "label": "Section Title (French)",
+      "default": "Votre titre de section"
+    },
+    {
+      "type": "text",
+      "id": "section_title_fi",
+      "label": "Section Title (Finland)"
+    },
+    {
+      "type": "richtext",
+      "id": "text_description",
+      "label": "Text Description (Default)",
+      "default": "<p>This is a description of the section.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "text_description_de",
+      "label": "Text Description (German)",
+      "default": "<p>Dies ist eine Beschreibung des Abschnitts.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "text_description_fr",
+      "label": "Text Description (French)",
+      "default": "<p>Ceci est une description de la section.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "text_description_fi",
+      "label": "Text Description (Finland)"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "label": "Title Font Size (px)",
+      "default": 24,
+      "min": 10,
+      "max": 100,
+      "step": 1
+    },
+    {
+      "type": "range",
+      "id": "text_font_size",
+      "label": "Text Font Size (px)",
+      "default": 16,
+      "min": 10,
+      "max": 100,
+      "step": 1
+    },
+    {
+      "type": "checkbox",
+      "id": "show_item_list",
+      "label": "Show List Items",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "title_left",
+          "label": "Title Left, Description Right, Items Below"
+        },
+        {
+          "value": "title_above",
+          "label": "Title Above, Description Below, Items Below"
+        }
+      ],
+      "default": "title_above"
+    },
+    {
+      "type": "range",
+      "id": "item_font_size",
+      "label": "Item Font Size (px)",
+      "default": 16,
+      "min": 10,
+      "max": 100,
+      "step": 1
+    },
+    {
+      "type": "select",
+      "id": "custom_icon",
+      "label": "Select list-item icon",
+      "options": [
+        {
+          "value": "arrow",
+          "label": "Arrow"
+        },
+        {
+          "value": "checkmark",
+          "label": "Checkmark"
+        },
+        {
+          "value": "star",
+          "label": "Star"
+        },
+        {
+          "value": "info",
+          "label": "Info"
+        },
+        {
+          "value": "solid_dot",
+          "label": "Solid Dot"
+        }
+      ],
+      "default": "solid_dot"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon Color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Mobile Font Sizes"
+    },
+    {
+      "type": "range",
+      "id": "mobile_title_font_size",
+      "label": "Mobile Title Font Size (px)",
+      "default": 40,
+      "min": 10,
+      "max": 60,
+      "step": 1
+    },
+    {
+      "type": "range",
+      "id": "mobile_text_font_size",
+      "label": "Mobile Text Font Size (px)",
+      "default": 16,
+      "min": 10,
+      "max": 40,
+      "step": 1
+    },
+    {
+      "type": "range",
+      "id": "mobile_item_font_size",
+      "label": "Mobile Item Font Size (px)",
+      "default": 14,
+      "min": 10,
+      "max": 40,
+      "step": 1
+    }
+  ],
+  "blocks": [
+    {
+      "type": "list_item",
+      "name": "List Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "item_text",
+          "label": "Item Text (Default)"
+        },
+        {
+          "type": "text",
+          "id": "item_text_de",
+          "label": "Item Text (German)"
+        },
+        {
+          "type": "text",
+          "id": "item_text_fr",
+          "label": "Item Text (French)"
+        },
+        {
+          "type": "text",
+          "id": "item_text_fi",
+          "label": "Item Text (Finland)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Enhanced Text Area",
+      "category": "Content"
+    }
+  ]
+}
+{% endschema %}
+
+{%- liquid
+  # Language detection with fallback
+  assign lang = request.locale.iso_code
+  assign section_title = section.settings.section_title
+  assign section_description = section.settings.text_description
+
+  case lang
+    when 'de'
+      assign section_title = section.settings.section_title_de | default: section_title
+      assign section_description = section.settings.text_description_de | default: section_description
+    when 'fr'
+      assign section_title = section.settings.section_title_fr | default: section_title
+      assign section_description = section.settings.text_description_fr | default: section_description
+    when 'fi'
+      assign section_title = section.settings.section_title_fi | default: section_title
+      assign section_description = section.settings.text_description_fi | default: section_description
+  endcase
+
+  assign title_tag = 'h2'
+-%}
+
+<div class="enhanced-text-area" id="custom-enhance-text-area-{{ section.id }}">
+  <div class="container">
+    {%- if section.settings.layout == 'title_above' -%}
+      <div class="title-above-layout">
+        <{{ title_tag }}
+          class="textarea-section-title"
+          style="font-size: {{ section.settings.title_font_size }}px; color: {{ section.settings.title_color }};"
+        >
+          {{ section_title }}
+        </{{ title_tag }}>
+        <div class="content-grid">
+          <div class="description-content">
+            <div
+              class="rich-text-content"
+              style="font-size: {{ section.settings.text_font_size }}px; color: {{ section.settings.text_color }};"
+            >
+              {{ section_description }}
+            </div>
+          </div>
+          {%- if section.settings.show_item_list and section.blocks.size > 0 -%}
+            <div class="item-list-container">
+              <ul class="icon-list">
+                {%- for block in section.blocks -%}
+                  {%- assign item_text = block.settings.item_text -%}
+                  {%- case lang -%}
+                    {%- when 'de' -%}
+                      {%- assign item_text = block.settings.item_text_de | default: item_text -%}
+                    {%- when 'fr' -%}
+                      {%- assign item_text = block.settings.item_text_fr | default: item_text -%}
+                    {%- when 'fi' -%}
+                      {%- assign item_text = block.settings.item_text_fi | default: item_text -%}
+                  {%- endcase -%}
+                  <li
+                    class="list-item"
+                    style="font-size: {{ section.settings.item_font_size }}px;"
+                    {{ block.shopify_attributes }}
+                  >
+                    <span
+                      class="icon"
+                      style="color: {{ section.settings.icon_color }}; width: {{ section.settings.item_font_size }}px; height: {{ section.settings.item_font_size }}px;"
+                    >
+                      {%- render 'list-icon', icon: section.settings.custom_icon, size: section.settings.item_font_size -%}
+                    </span>
+                    <span class="item-text">{{ item_text }}</span>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- elsif section.settings.layout == 'title_left' -%}
+      <div class="header-layout">
+        <{{ title_tag }}
+          class="textarea-section-title"
+          style="font-size: {{ section.settings.title_font_size }}px; color: {{ section.settings.title_color }};"
+        >
+          {{ section_title }}
+        </{{ title_tag }}>
+        <div class="content-container">
+          <div
+            class="rich-text-content"
+            style="font-size: {{ section.settings.text_font_size }}px; color: {{ section.settings.text_color }};"
+          >
+            {{ section_description }}
+          </div>
+          {%- if section.settings.show_item_list and section.blocks.size > 0 -%}
+            <div class="item-list-container">
+              <ul class="icon-list">
+                {%- for block in section.blocks -%}
+                  {%- assign item_text = block.settings.item_text -%}
+                  {%- case lang -%}
+                    {%- when 'de' -%}
+                      {%- assign item_text = block.settings.item_text_de | default: item_text -%}
+                    {%- when 'fr' -%}
+                      {%- assign item_text = block.settings.item_text_fr | default: item_text -%}
+                    {%- when 'fi' -%}
+                      {%- assign item_text = block.settings.item_text_fi | default: item_text -%}
+                  {%- endcase -%}
+                  <li
+                    class="list-item"
+                    style="font-size: {{ section.settings.item_font_size }}px;"
+                    {{ block.shopify_attributes }}
+                  >
+                    <span class="icon" style="color: {{ section.settings.icon_color }}; width: {{ section.settings.item_font_size }}px; height: {{ section.settings.item_font_size }}px;">
+                      {%- render 'list-icon', icon: section.settings.custom_icon, size: section.settings.item_font_size -%}
+                    </span>
+                    <span class="item-text">{{ item_text }}</span>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+<style>
+  #custom-enhance-text-area-{{ section.id }} .container {
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+
+  #custom-enhance-text-area-{{ section.id }} .textarea-section-title {
+    margin-bottom: 20px;
+    line-height: 1.3;
+    text-align: left;
+  }
+
+  #custom-enhance-text-area-{{ section.id }} .content-grid {
+    display: flex;
+    gap: 40px;
+  }
+
+  #custom-enhance-text-area-{{ section.id }} .description-content {
+    flex: 7;
+  }
+
+  #custom-enhance-text-area-{{ section.id }} .rich-text-content {
+    line-height: 1.6;
+    text-align: left;
+  }
+
+  #custom-enhance-text-area-{{ section.id }} .rich-text-content p {
+    margin-bottom: 15px;
+  }
+
+  #custom-enhance-text-area-{{ section.id }} .item-list-container {
+    flex: 3;
+    margin-top: 0;
+  }
+
+  #custom-enhance-text-area-{{ section.id }} .icon-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+  }
+
+  #custom-enhance-text-area-{{ section.id }} .list-item {
+    position: relative;
+    padding-left: 30px;
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 10px;
+  }
+
+  #custom-enhance-text-area-{{ section.id }} .icon {
+    position: absolute;
+    left: 0;
+    top: 0.2em;
+    margin-right: 12px;
+    display: inline-flex;
+  }
+  
+  #custom-enhance-text-area-{{ section.id }} .header-layout {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 30px;
+    align-items: center; 
+  }
+  
+  #custom-enhance-text-area-{{ section.id }} .header-layout .content-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  #custom-enhance-text-area-{{ section.id }} .header-layout .textarea-section-title {
+    margin-bottom: 0; 
+  }
+
+  @media (max-width: 768px) {
+    #custom-enhance-text-area-{{ section.id }} .content-grid {
+      flex-direction: column;
+      gap: 30px;
+    }
+    
+    #custom-enhance-text-area-{{ section.id }} .header-layout {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    #custom-enhance-text-area-{{ section.id }} .container {
+      padding: 30px 15px;
+    }
+    
+    /* Mobile font size overrides */
+    #custom-enhance-text-area-{{ section.id }} .textarea-section-title {
+      font-size: {{ section.settings.mobile_title_font_size }}px !important;
+    }
+    
+    #custom-enhance-text-area-{{ section.id }} .rich-text-content {
+      font-size: {{ section.settings.mobile_text_font_size }}px !important;
+    }
+    
+    #custom-enhance-text-area-{{ section.id }} .list-item {
+      font-size: {{ section.settings.mobile_item_font_size }}px !important;
+    }
+    
+    #custom-enhance-text-area-{{ section.id }} .icon {
+      width: {{ section.settings.mobile_item_font_size }}px !important;
+      height: {{ section.settings.mobile_item_font_size }}px !important;
+    }
+  }
+</style>

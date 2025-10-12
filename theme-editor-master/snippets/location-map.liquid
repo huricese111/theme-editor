@@ -1,0 +1,8 @@
+<location-map class="map" 
+  data-api-key="{{ api_key }}" 
+  data-address="{{ address | escape }}"
+  {% if map_id != blank %}data-map-id="{{ map_id }}"{% endif %}
+  {% if map_style != blank %}data-map-style="{{ map_style }}"{% endif %}
+  {% if language != blank %}data-language="{{ language }}"{% endif %}
+  {% if region != blank %}data-region="{{ region }}"{% endif %}>
+</location-map>

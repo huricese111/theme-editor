@@ -1,0 +1,89 @@
+{% if localization.country.iso_code == 'DE' %}
+  <div class="leasingcontent">
+    <img
+      alt="Zinia"
+      src="https://cdn.shopify.com/s/files/1/0560/0080/6985/files/PayPal.svg?v=1751531389"
+      width="120px"
+    >
+    {% if request.locale.iso_code == 'de' %}
+      <span><b>Finanzierung mit PayPal</b></span>
+      <span
+        >Bezahlen Sie in bis zu 24 monatlichen Raten mit PayPal.
+      </span>
+    {% else %}
+      <span><b>Financing with PayPal</b></span>
+      <span
+        >Pay in instalments of up to 24 months via PayPal.
+      </span>
+    {% endif %}
+  </div>
+  <div class="leasingcontent">
+    <img
+      alt="Zinia"
+      src="https://cdn.shopify.com/s/files/1/0560/0080/6985/files/20250214-163529.png?v=1739522191"
+      width="100px"
+    >
+    {% if request.locale.iso_code == 'de' %}
+      <span><b>Finanzierung mit Zinia</b></span>
+      <span
+        >Finanzieren Sie Ihr E-Bike und Zubehör mit Zinia, das flexible Ratenpläne von 6 bis 48 Monaten anbietet.
+      </span>
+    {% else %}
+      <span><b>Financing with Zinia</b></span>
+      <span
+        >Finance your bike and accessories with Zinia, offering flexible installment plans from 6 to 48 months.
+      </span>
+    {% endif %}
+  </div>
+  <div class="leasingcontent">
+    <img
+      alt="Klarna"
+      src="https://cdn.shopify.com/s/files/1/0560/0080/6985/files/Klarna_Payment_Badge_svg.png?v=1739522386"
+      width="100px"
+    >
+    {% if request.locale.iso_code == 'de' %}
+      <span><b>Finanzierung mit Klarna</b></span>
+      <span
+        >Klarna bietet direkte Zahlungen, Optionen zum späteren Bezahlen oder Ratenpläne von 6 bis 36 Monaten an.
+      </span>
+    {% else %}
+      <span><b>Financing with Klarna</b></span>
+      <span>Klarna offers direct payments, pay later options, or installment plans ranging from 6 to 36 months. </span>
+    {% endif %}
+{% elsif localization.country.iso_code == 'AT' %}
+   <div class="leasingcontent">
+  <img
+    alt="Klarna"
+    src="https://cdn.shopify.com/s/files/1/0560/0080/6985/files/Klarna_Payment_Badge_svg.png?v=1739522386"
+    width="100px"
+  >
+  {% if request.locale.iso_code == 'de' %}
+    <span><b>Finanzierung mit Klarna</b></span>
+    <span
+      >Klarna bietet direkte Zahlungen, Optionen zum späteren Bezahlen oder Ratenpläne von 6 bis 36 Monaten an.
+    </span>
+  {% else %}
+    <span><b>Financing with Klarna</b></span>
+    <span>Klarna offers direct payments, pay later options, or installment plans ranging from 6 to 36 months. </span>
+  {% endif %}
+     </div>
+{% else %}
+    <div class="leasingcontent">
+  <img
+    alt="Klarna"
+    src="https://cdn.shopify.com/s/files/1/0560/0080/6985/files/Klarna_Payment_Badge_svg.png?v=1739522386"
+    width="100px"
+  >
+  {% if request.locale.iso_code == 'fr' %}
+    <span><b>Financement avec klarna</b><br>
+      Payer maintenant ou payer dans 30 jours<br>
+      Payer en 3 fois sans frais
+    </span>
+  {% else %}
+    <span><b>Financing with Klarna</b><br>
+    Pay now or pay later<br>
+      Pay in 3 interest-free
+    </span>
+  {% endif %}
+      </div>
+{% endif %}

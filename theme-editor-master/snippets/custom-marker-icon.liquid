@@ -1,0 +1,92 @@
+{%- comment -%}
+  Custom Marker Icon for Dealer Search
+  Parameters:
+  - store_type: dealer, rental, service, click-collect, or array like "dealer,service"
+  - size: small, medium, large (default: medium)
+{%- endcomment -%}
+
+{%- assign store_type = store_type | default: 'dealer' -%}
+{%- assign size = size | default: 'medium' -%}
+
+{%- comment -%} 处理多种商店类型 {%- endcomment -%}
+{%- assign store_types = store_type | split: ',' -%}
+{%- assign has_multiple_types = false -%}
+{%- if store_types.size > 1 -%}
+  {%- assign has_multiple_types = true -%}
+{%- endif -%}
+
+{%- comment -%} 设置颜色 {%- endcomment -%}
+{%- if has_multiple_types -%}
+  {%- if store_types contains 'dealer' and store_types contains 'service' -%}
+    {%- assign marker_color = '#2b7dde' -%}
+  {%- elsif store_types contains 'dealer' and store_types contains 'rental' -%}
+    {%- assign marker_color = '#66ad78' -%}
+  {%- else -%}
+    {%- assign marker_color = '#2b7dde' -%}
+  {%- endif -%}
+{%- else -%}
+  {%- case store_types[0] -%}
+    {%- when 'dealer' -%}
+      {%- assign marker_color = '#2b7dde' -%}
+    {%- when 'rental' -%}
+      {%- assign marker_color = '#66ad78' -%}
+    {%- when 'service' -%}
+      {%- assign marker_color = '#fa6959' -%}
+    {%- when 'click-collect' -%}
+      {%- assign marker_color = '#f2a112' -%}
+    {%- else -%}
+      {%- assign marker_color = '#a38aa3' -%}
+  {%- endcase -%}
+{%- endif -%}
+
+{%- case size -%}
+  {%- when 'small' -%}
+    {%- assign width = 32 -%}
+    {%- assign height = 32 -%}
+    {%- assign scale_factor = 0.112 -%}
+  {%- when 'large' -%}
+    {%- assign width = 44 -%}
+    {%- assign height = 44 -%}
+    {%- assign scale_factor = 0.154 -%}
+  {%- else -%}
+    {%- assign width = 40 -%}
+    {%- assign height = 40 -%}
+    {%- assign scale_factor = 0.140 -%}
+{%- endcase -%}
+
+{%- case store_type -%}
+  {%- when 'dealer' -%}
+      {%- assign marker_color = '#2b7dde' -%}
+    {%- when 'rental' -%}
+      {%- assign marker_color = '#66ad78' -%}
+    {%- when 'service' -%}
+      {%- assign marker_color = '#fa6959' -%}
+    {%- when 'click-collect' -%}
+      {%- assign marker_color = '#f2a112' -%}
+    {%- else -%}
+      {%- assign marker_color = '#a38aa3' -%}
+{%- endcase -%}
+
+{%- assign unique_id = store_type | append: '-' | append: size | append: '-' | append: 'now' | date: '%s' -%}
+
+<svg width="{{ width }}" height="{{ height }}" viewBox="0 0 {{ width }} {{ height }}" fill="none" xmlns="http://www.w3.org/2000/svg" class="custom-marker custom-marker--{{ store_type }}">
+  <g clip-path="url(#clip{{ unique_id }})">
+    <!-- 主体路径 -->
+    <path d="M{{ width | times: 0.861 | round: 3 }} {{ height | times: 0.332 | round: 3 }}C{{ width | times: 0.841 | round: 3 }} {{ height | times: 0.151 | round: 3 }} {{ width | times: 0.686 | round: 3 }} {{ height | times: 0.014 | round: 3 }} {{ width | times: 0.5 | round: 3 }} {{ height | times: 0.014 | round: 3 }}C{{ width | times: 0.314 | round: 3 }} {{ height | times: 0.014 | round: 3 }} {{ width | times: 0.158 | round: 3 }} {{ height | times: 0.151 | round: 3 }} {{ width | times: 0.139 | round: 3 }} {{ height | times: 0.332 | round: 3 }}C{{ width | times: 0.137 | round: 3 }} {{ height | times: 0.346 | round: 3 }} {{ width | times: 0.136 | round: 3 }} {{ height | times: 0.360 | round: 3 }} {{ width | times: 0.136 | round: 3 }} {{ height | times: 0.375 | round: 3 }}C{{ width | times: 0.136 | round: 3 }} {{ height | times: 0.438 | round: 3 }} {{ width | times: 0.150 | round: 3 }} {{ height | times: 0.500 | round: 3 }} {{ width | times: 0.178 | round: 3 }} {{ height | times: 0.558 | round: 3 }}C{{ width | times: 0.190 | round: 3 }} {{ height | times: 0.583 | round: 3 }} {{ width | times: 0.204 | round: 3 }} {{ height | times: 0.608 | round: 3 }} {{ width | times: 0.220 | round: 3 }} {{ height | times: 0.632 | round: 3 }}L{{ width | times: 0.448 | round: 3 }} {{ height | times: 0.971 | round: 3 }}C{{ width | times: 0.459 | round: 3 }} {{ height | times: 0.988 | round: 3 }} {{ width | times: 0.478 | round: 3 }} {{ height | times: 0.999 | round: 3 }} {{ width | times: 0.499 | round: 3 }} {{ height | times: 0.999 | round: 3 }}C{{ width | times: 0.521 | round: 3 }} {{ height | times: 0.999 | round: 3 }} {{ width | times: 0.540 | round: 3 }} {{ height | times: 0.988 | round: 3 }} {{ width | times: 0.551 | round: 3 }} {{ height | times: 0.971 | round: 3 }}L{{ width | times: 0.780 | round: 3 }} {{ height | times: 0.633 | round: 3 }}C{{ width | times: 0.796 | round: 3 }} {{ height | times: 0.608 | round: 3 }} {{ width | times: 0.810 | round: 3 }} {{ height | times: 0.583 | round: 3 }} {{ width | times: 0.822 | round: 3 }} {{ height | times: 0.557 | round: 3 }}C{{ width | times: 0.857 | round: 3 }} {{ height | times: 0.487 | round: 3 }} {{ width | times: 0.870 | round: 3 }} {{ height | times: 0.409 | round: 3 }} {{ width | times: 0.861 | round: 3 }} {{ height | times: 0.332 | round: 3 }}Z" fill="{{ marker_color }}"/>
+    
+    <!-- Hepha图标 -->
+    <path d="M{{ width | times: 0.677 | round: 3 }} {{ width | times: 0.316 | round: 3 }}C{{ width | times: 0.677 | round: 3 }} {{ width | times: 0.315 | round: 3 }} {{ width | times: 0.675 | round: 3 }} {{ width | times: 0.314 | round: 3 }} {{ width | times: 0.674 | round: 3 }} {{ width | times: 0.315 | round: 3 }}C{{ width | times: 0.657 | round: 3 }} {{ width | times: 0.332 | round: 3 }} {{ width | times: 0.531 | round: 3 }} {{ width | times: 0.456 | round: 3 }} {{ width | times: 0.531 | round: 3 }} {{ width | times: 0.456 | round: 3 }}C{{ width | times: 0.513 | round: 3 }} {{ width | times: 0.474 | round: 3 }} {{ width | times: 0.484 | round: 3 }} {{ width | times: 0.474 | round: 3 }} {{ width | times: 0.466 | round: 3 }} {{ width | times: 0.456 | round: 3 }}C{{ width | times: 0.448 | round: 3 }} {{ width | times: 0.439 | round: 3 }} {{ width | times: 0.448 | round: 3 }} {{ width | times: 0.410 | round: 3 }} {{ width | times: 0.466 | round: 3 }} {{ width | times: 0.392 | round: 3 }}C{{ width | times: 0.466 | round: 3 }} {{ width | times: 0.392 | round: 3 }} {{ width | times: 0.519 | round: 3 }} {{ width | times: 0.340 | round: 3 }} {{ width | times: 0.553 | round: 3 }} {{ width | times: 0.306 | round: 3 }}C{{ width | times: 0.570 | round: 3 }} {{ width | times: 0.289 | round: 3 }} {{ width | times: 0.581 | round: 3 }} {{ width | times: 0.266 | round: 3 }} {{ width | times: 0.581 | round: 3 }} {{ width | times: 0.242 | round: 3 }}L{{ width | times: 0.581 | round: 3 }} {{ width | times: 0.132 | round: 3 }}C{{ width | times: 0.581 | round: 3 }} {{ width | times: 0.130 | round: 3 }} {{ width | times: 0.579 | round: 3 }} {{ width | times: 0.129 | round: 3 }} {{ width | times: 0.577 | round: 3 }} {{ width | times: 0.130 | round: 3 }}L{{ width | times: 0.456 | round: 3 }} {{ width | times: 0.249 | round: 3 }}C{{ width | times: 0.454 | round: 3 }} {{ width | times: 0.251 | round: 3 }} {{ width | times: 0.452 | round: 3 }} {{ width | times: 0.249 | round: 3 }} {{ width | times: 0.452 | round: 3 }} {{ width | times: 0.248 | round: 3 }}V{{ width | times: 0.182 | round: 3 }}C{{ width | times: 0.452 | round: 3 }} {{ width | times: 0.180 | round: 3 }} {{ width | times: 0.450 | round: 3 }} {{ width | times: 0.179 | round: 3 }} {{ width | times: 0.449 | round: 3 }} {{ width | times: 0.180 | round: 3 }}L{{ width | times: 0.347 | round: 3 }} {{ width | times: 0.280 | round: 3 }}H{{ width | times: 0.348 | round: 3 }}C{{ width | times: 0.267 | round: 3 }} {{ width | times: 0.361 | round: 3 }} {{ width | times: 0.268 | round: 3 }} {{ width | times: 0.491 | round: 3 }} {{ width | times: 0.350 | round: 3 }} {{ width | times: 0.572 | round: 3 }}C{{ width | times: 0.432 | round: 3 }} {{ width | times: 0.652 | round: 3 }} {{ width | times: 0.566 | round: 3 }} {{ width | times: 0.651 | round: 3 }} {{ width | times: 0.647 | round: 3 }} {{ width | times: 0.571 | round: 3 }}C{{ width | times: 0.718 | round: 3 }} {{ width | times: 0.501 | round: 3 }} {{ width | times: 0.728 | round: 3 }} {{ width | times: 0.395 | round: 3 }} {{ width | times: 0.677 | round: 3 }} {{ width | times: 0.316 | round: 3 }}Z" fill="white"/>
+  </g>
+  
+  <defs>
+    <clipPath id="clip{{ unique_id }}">
+      <rect width="{{ width }}" height="{{ height }}" fill="white"/>
+    </clipPath>
+  </defs>
+</svg>
+{%- comment -%} 添加组合类型标识 {%- endcomment -%}
+{%- if has_multiple_types -%}
+  <!-- 组合类型标识 -->
+  <circle cx="{{ width | times: 0.8 | round: 1 }}" cy="{{ height | times: 0.2 | round: 1 }}" r="{{ width | times: 0.1 | round: 1 }}" fill="white" stroke="{{ marker_color }}" stroke-width="1"/>
+  <text x="{{ width | times: 0.8 | round: 1 }}" y="{{ height | times: 0.25 | round: 1 }}" text-anchor="middle" font-size="{{ width | times: 0.12 | round: 1 }}" fill="{{ marker_color }}">+</text>
+{%- endif -%}

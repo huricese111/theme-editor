@@ -1,0 +1,41 @@
+{% assign current_locale = request.locale.iso_code | default: 'en' %}
+{% assign locale_prefix = current_locale | slice: 0, 2 %}
+<div class="button-container lightly-spaced-row" style="justify-content: {{ block.settings.button_alignment | default: 'center' }}; display: flex; gap: 10px;">
+  {% for i in (1..2) %}
+    {% assign button_label_key = 'button_label' %}
+    {% assign button_link_key = 'button_link' %}
+    {% assign button_bg_color_key = 'button_bg_color1' %}
+    {% assign button_text_color_key = 'button_text_color1' %}
+    {% assign button_class = 'content-button-1' %}
+
+    {% if i == 2 %}
+      {% assign button_label_key = 'button2_label' %}
+      {% assign button_link_key = 'button2_link' %}
+      {% assign button_bg_color_key = 'button_bg_color2' %}
+      {% assign button_text_color_key = 'button_text_color2' %}
+      {% assign button_class = 'content-button-2' %}
+    {% endif %}
+
+    {% assign translated_label_key = button_label_key | append: '_' | append: locale_prefix %}
+    {% assign translated_label = block.settings[translated_label_key] %}
+    {% assign default_label = block.settings[button_label_key] %}
+
+    {% if translated_label == blank %}
+      {% assign translated_label = default_label -%}
+    {%- endif %}
+
+    {% if translated_label != blank and block.settings[button_link_key] != blank %}
+      {% render 'unified-button',
+        text: translated_label,
+        url: block.settings[button_link_key],
+        bg_color: block.settings[button_bg_color_key],
+        text_color: block.settings[button_text_color_key],
+        class: button_class,
+        margin_top: block.settings.button_margin_top,
+        margin_right: block.settings.button_margin_right,
+        margin_bottom: block.settings.button_margin_bottom,
+        margin_left: block.settings.button_margin_left
+      %}
+    {% endif %}
+  {% endfor %}
+</div>

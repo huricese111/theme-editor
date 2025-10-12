@@ -1,0 +1,715 @@
+{%- comment -%}
+/**
+ * DEALER SEARCH SECTION
+ * 
+ * This section provides a comprehensive dealer/store locator functionality with interactive map integration.
+ * It allows users to search for nearby dealers, rental stations, and service centers with advanced filtering
+ * and multi-language support.
+ * 
+ * MAIN FEATURES:
+ * - Interactive Google Maps integration with custom markers
+ * - Advanced search with location-based filtering
+ * - Multi-language support (English, German, French, Finnish)
+ * - Store type filtering (Dealer, Rental Station, Service Center)
+ * - Distance and results limit controls
+ * - Responsive design with split-screen layout
+ * - Search suggestions and history
+ * - Custom map styles (Default, Silver, Retro, Dark, Night, Aubergine)
+ * 
+ * DEPENDENCIES AND RELATED FILES:
+ * 
+ * CSS Files:
+ * - /assets/dealer-search.css - Main stylesheet for dealer search functionality
+ * 
+ * JavaScript Files:
+ * - /assets/dealer-search.js - Core search functionality, filtering, and UI interactions
+ * - /assets/location-map.js - Google Maps integration and custom map controls
+ * 
+ * Liquid Snippets:
+ * - /snippets/icon-location.liquid - Location pin icon SVG
+ * - /snippets/location-map.liquid - Google Maps component wrapper
+ * - /snippets/animation-attrs.liquid - Animation attributes for section elements
+  * -/snippets/custom-marker-icon.liquid - Custom marker icon
+ * 
+ * External Dependencies:
+ * - Google Maps JavaScript API - For map rendering and geocoding services
+ * - Google Maps Embed API - For fallback iframe maps
+ * 
+ * CONFIGURATION:
+ * The section supports the following settings:
+ * - Multi-language section titles
+ * - Google Maps API key configuration
+ * - Map type selection (Dynamic/Embed)
+ * - Custom map styling options
+ * - Full-width layout toggle
+ * - Color scheme selection
+ * 
+ * BLOCK STRUCTURE:
+ * Each location is defined as a 'location' block with the following data:
+ * - Store name and type (dealer/rental/service/click-collect)
+ * - Complete address information (street, city, state, postal code, country)
+ * - Contact details (phone, fax, email, website)
+ * - Business hours
+ * - Map pin display settings
+ * 
+ * LOCALIZATION:
+ * Supports 4 languages with complete UI translation:
+ * - English (en) - Default language
+ * - German (de) - Händlersuche
+ * - French (fr) - Recherche de Revendeur  
+ * - Finnish (fi) - Jälleenmyyjähaku
+ * 
+ * SEARCH FUNCTIONALITY:
+ * - Real-time search with autocomplete suggestions
+ * - Search history storage in localStorage
+ * - Filter by store type (dealer, rental, service)
+ * - Distance radius selection (25km, 50km, 100km, 200km)
+ * - Results limit control (25, 50, 100, all)
+ * - Advanced search panel with collapsible interface
+ * 
+ * MAP INTEGRATION:
+ * - Dynamic Google Maps with custom markers per store type
+ * - Fallback to embedded iframe maps
+ * - Custom map styles and themes
+ * - Interactive info windows with store details
+ * - Automatic geocoding and location centering
+ * - Responsive map container with proper aspect ratios
+ * 
+ * RESPONSIVE DESIGN:
+ * - Desktop: Split-screen layout (3:7 ratio) with fixed sidebar
+ * - Mobile: Stacked layout with scrollable results
+ * - Touch-friendly controls and interactions
+ * - Optimized for various screen sizes
+ * 
+ * PERFORMANCE CONSIDERATIONS:
+ * - Lazy loading of Google Maps API
+ * - Efficient DOM manipulation for search results
+ * - Debounced search input for better performance
+ * - Minimal re-renders during filtering operations
+ * 
+ * ACCESSIBILITY:
+ * - Proper ARIA labels and roles
+ * - Keyboard navigation support
+ * - Screen reader compatible
+ * - High contrast support
+ * - Focus management for interactive elements
+ */
+{%- endcomment -%}
+
+{{ 'dealer-search.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'dealer-search.js' | asset_url }}" defer></script>
+
+{% style %}
+  :root {
+    --header-height: 70px;
+    --announcement-height: 45px;
+  }
+  
+  .no-announcement {
+    --announcement-height: 0px;
+  }
+  
+  .dynamic-heights {
+    --actual-header-height: var(--theme-header-height, 70px);
+    --actual-announcement-height: var(--announcement-bar-height, 45px);
+  }
+{% endstyle %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    function isDesktop() {
+      return window.innerWidth > 768;
+    }
+    
+    function updateHeights() {
+      if (!isDesktop()) {
+        updateMobileSectionHeight();
+        return;
+      }
+      
+      const headerElement = document.querySelector('.section-header, .pageheader');
+      const announcementElement = document.querySelector('.announcement-bar, .section-announcement-bar');
+      
+      let headerHeight = 70; 
+      let announcementHeight = 0; 
+      
+      if (headerElement) {
+        headerHeight = headerElement.offsetHeight;
+        document.documentElement.style.setProperty('--actual-header-height', headerHeight + 'px');
+      }
+      
+      if (announcementElement && announcementElement.offsetHeight > 0) {
+        announcementHeight = announcementElement.offsetHeight;
+        document.documentElement.style.setProperty('--actual-announcement-height', announcementHeight + 'px');
+      } else {
+        document.documentElement.style.setProperty('--actual-announcement-height', '0px');
+      }
+      
+      const totalTopHeight = headerHeight + announcementHeight;
+      document.documentElement.style.setProperty('--total-top-height', totalTopHeight + 'px');
+    }
+    
+    function updateMobileSectionHeight() {
+      const mapSection = document.querySelector('.map-section');
+      const mapSectionLocations = document.querySelector('.map-section__locations');
+      const mapSectionMap = document.querySelector('.map-section__map');
+      
+      if (mapSection && mapSectionLocations && mapSectionMap) {
+        setTimeout(() => {
+          const locationsHeight = mapSectionLocations.offsetHeight;
+          const mapHeight = mapSectionMap.offsetHeight;
+          const totalHeight = locationsHeight + mapHeight;
+          
+          mapSection.style.height = totalHeight + 'px';
+          mapSection.style.minHeight = totalHeight + 'px';
+        }, 100);
+      }
+    }
+    
+    if (isDesktop()) {
+      updateHeights();
+    } else {
+      updateMobileSectionHeight();
+    }
+    
+    window.addEventListener('resize', function() {
+      updateHeights();
+    });
+    
+    if (window.Shopify && window.Shopify.designMode) {
+      document.addEventListener('shopify:section:load', updateHeights);
+      document.addEventListener('shopify:section:reorder', updateHeights);
+    }
+  });
+</script>
+
+{% assign display_map = false %}
+{%- if section.settings.api_key != blank -%}
+{% assign display_map = true %}
+<script src="{{ 'location-map.js' | asset_url }}" defer></script>
+{%- endif -%}
+
+{%- assign section_title = section.settings.section_title_en -%}
+{%- case request.locale.iso_code -%}
+  {%- when 'de' -%}
+    {%- assign section_title = section.settings.section_title_de -%}
+  {%- when 'fr' -%}
+    {%- assign section_title = section.settings.section_title_fr -%}
+  {%- when 'fi' -%}
+    {%- assign section_title = section.settings.section_title_fi -%}
+  {%- else -%}
+    {%- assign section_title = section.settings.section_title_en -%}
+{%- endcase -%}
+
+{%- assign direction_text = 'Directions' -%}
+{%- case request.locale.iso_code -%}
+  {%- when 'de' -%}
+    {%- assign direction_text = 'Wegbeschreibung' -%}
+  {%- when 'fr' -%}
+    {%- assign direction_text = 'Itinéraire' -%}
+  {%- when 'fi' -%}
+    {%- assign direction_text = 'Reittiohjeet' -%}
+  {%- else -%}
+    {%- assign direction_text = 'Directions' -%}
+{%- endcase -%}
+
+{%- assign placeholder_text = 'Sites nearby' -%}
+{%- assign use_location_text = 'Use My Location' -%}
+{%- assign distance_label = 'Distance' -%}
+{%- assign results_label = 'Results' -%}
+{%- assign search_button_text = 'Search' -%}
+{%- assign search_filters_title = 'Search Filters' -%}
+{%- assign dealer_text = 'Dealer' -%}
+{%- assign rental_station_text = 'Rental Station' -%}
+{%- assign service_center_text = 'Service Center' -%}
+{%- assign all_text = 'All' -%}
+{%- assign phone_label = 'Phone' -%}
+{%- assign email_label = 'Email' -%}
+{%- assign address_label = 'Address' -%}
+{%- assign website_label = 'Website' -%}
+{%- assign store_type_label = 'Store Type' -%}
+{%- assign more_text = 'More' -%}
+{%- assign less_text = 'Less' -%}
+
+{%- case request.locale.iso_code -%}
+  {%- when 'de' -%}
+    {%- assign use_location_text = 'Meinen Standort verwenden' -%}
+    {%- assign placeholder_text = 'Standorte in der Nähe' -%}
+    {%- assign distance_label = 'Distanz' -%}
+    {%- assign results_label = 'Ergebnisse' -%}
+    {%- assign search_button_text = 'Suchen' -%}
+    {%- assign search_filters_title = 'Such-Filter' -%}
+    {%- assign dealer_text = 'Händler' -%}
+    {%- assign rental_station_text = 'Verleihstation' -%}
+    {%- assign service_center_text = 'Servicezentrum' -%}
+    {%- assign all_text = 'Alle' -%}
+    {%- assign phone_label = 'Telefon' -%}
+    {%- assign email_label = 'E-Mail' -%}
+    {%- assign address_label = 'Adresse' -%}
+    {%- assign website_label = 'Webseite' -%}
+    {%- assign store_type_label = 'Geschäftstyp' -%}
+  {%- when 'fr' -%}
+    {%- assign use_location_text = 'Utiliser ma position' -%}
+    {%- assign placeholder_text = 'Sites à proximité' -%}
+    {%- assign distance_label = 'Distance' -%}
+    {%- assign results_label = 'Ergebnisse' -%}
+    {%- assign search_button_text = 'Recherche' -%}
+    {%- assign search_filters_title = 'Filtres de recherche' -%}
+    {%- assign dealer_text = 'Revendeur' -%}
+    {%- assign rental_station_text = 'Point de location' -%}
+    {%- assign service_center_text = 'Centre de service' -%}
+    {%- assign all_text = 'Tous' -%}
+    {%- assign phone_label = 'Téléphone' -%}
+    {%- assign email_label = 'E-mail' -%}
+    {%- assign address_label = 'Adresse' -%}
+    {%- assign website_label = 'Site Web' -%}
+    {%- assign store_type_label = 'Type de Magasin' -%}
+  {%- when 'fi' -%}
+    {%- assign use_location_text = 'Käytä sijaintiani' -%}
+    {%- assign placeholder_text = 'Sivustoja lähellä' -%}
+    {%- assign distance_label = 'Etäisyys' -%}
+    {%- assign results_label = 'Tulokset' -%}
+    {%- assign search_button_text = 'Haku' -%}
+    {%- assign search_filters_title = 'Hakusuodattimet' -%}
+    {%- assign dealer_text = 'Jälleenmyyjä' -%}
+    {%- assign rental_station_text = 'Vuokraamo' -%}
+    {%- assign service_center_text = 'Huoltokeskus' -%}
+    {%- assign all_text = 'Kaikki' -%}
+    {%- assign phone_label = 'Puhelin' -%}
+    {%- assign email_label = 'Sähköposti' -%}
+    {%- assign address_label = 'Osoite' -%}
+    {%- assign website_label = 'Verkkosivusto' -%}
+    {%- assign store_type_label = 'Myymälän Tyyppi' -%}
+{%- endcase -%}
+
+{%- case request.locale.iso_code -%}
+  {%- when 'de' -%}
+    {%- assign more_text = 'Mehr' -%}
+    {%- assign less_text = 'Weniger' -%}
+  {%- when 'fr' -%}
+    {%- assign more_text = 'Plus' -%}
+    {%- assign less_text = 'Moins' -%}
+  {%- when 'fi' -%}
+    {%- assign more_text = 'Lisää' -%}
+    {%- assign less_text = 'Vähemmän' -%}
+  {%- else -%}
+    {%- assign more_text = 'More' -%}
+    {%- assign less_text = 'Less' -%}
+{%- endcase -%}
+
+{%- assign dealer_tooltip = 'Dealer - Official HEPHA dealer: Your perfect contact to buy or maintain your bike' -%}
+{%- assign rental_tooltip = 'Rental station - You want to rent a HEPHA bike? No problem, this is the right location to go to.' -%}
+{%- assign service_tooltip = 'Servicestation - HEPHA service partner: Here you can do service only' -%}
+
+{%- case request.locale.iso_code -%}
+  {%- when 'de' -%}
+    {%- assign dealer_tooltip = 'Händler – Offizieller HEPHA-Händler: Ihr perfekter Ansprechpartner für den Kauf oder die Wartung Ihres Fahrrads.' -%}
+    {%- assign rental_tooltip = 'Verleihstation – Sie möchten ein HEPHA-Fahrrad mieten? Kein Problem, hier sind Sie genau richtig.' -%}
+    {%- assign service_tooltip = 'Servicestation – HEPHA-Servicepartner: Hier können Sie ausschließlich Serviceleistungen in Anspruch nehmen.' -%}
+  {%- when 'fr' -%}
+    {%- assign dealer_tooltip = 'Concessionnaire - Concessionnaire officiel HEPHA : votre interlocuteur idéal pour acheter ou entretenir votre vélo.' -%}
+    {%- assign rental_tooltip = 'Station de location - Vous souhaitez louer un vélo HEPHA ? Pas de problème, vous êtes au bon endroit.' -%}
+    {%- assign service_tooltip = 'Station-service - Partenaire de service HEPHA : ici, vous pouvez uniquement faire entretenir votre vélo.' -%}
+  {%- when 'fi' -%}
+    {%- assign dealer_tooltip = 'Jälleenmyyjä - Virallinen HEPHA-jälleenmyyjä: Täydellinen yhteyshenkilösi pyörän ostamiseen tai huoltamiseen' -%}
+    {%- assign rental_tooltip = 'Vuokraamo - Haluatko vuokrata HEPHA-pyörän? Ei ongelmaa, tämä on oikea paikka.' -%}
+    {%- assign service_tooltip = 'Huoltoasema - HEPHA-huoltokumppani: Täällä voit tehdä vain huoltoa' -%}
+{%- endcase -%}
+
+
+<div class="section-id-{{ section.id }} map-section {% unless section.settings.full_width %} map-section--map-constrained{% endunless %}{% if display_map %} map-section--display-map{% endif %}" {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
+  <div class="container">
+    <div class="map-section__wrapper">
+      <div class="map-section__locations">
+        <div class="dealer-search__fixed-header">
+          <div class="dealer-search__form">
+            <div class="location-and-distance-wrapper">
+              <div class="location-button-wrapper">
+                <button type="button" id="use-location-btn" class="use-location-btn">
+                  <svg class="location-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>
+                  <span>{{ use_location_text }}</span>
+                </button>
+              </div>
+              
+              <div class="distance-filter-wrapper">
+                <label for="distance-filter" class="distance-filter-label">{{ distance_label }}</label>
+                <select id="distance-filter" class="distance-filter">
+                  <option value="all">{{ all_text }}</option>
+                  <option value="25">25 KM</option>
+                  <option value="50">50 KM</option>
+                  <option value="100">100 KM</option>
+                  <option value="200">200 KM</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="search-input-group search-input-group--simple">
+              <div class="search-input-wrapper">
+                <input type="text" id="location-search" placeholder="{{ placeholder_text }}" class="search-input" style="width:100%;">
+              </div>
+              <div class="search-simple-controls">
+                <button type="button" id="search-btn" class="dealer-search-btn">{{ search_button_text }}</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="search-advanced" id="search-advanced">
+            <div class="search-filters">
+              <div class="filter-options">
+                <label class="filter-option" data-tooltip="{{ dealer_tooltip }}">
+                  <input type="checkbox" id="filter-dealer" value="dealer">
+                  <span class="filter-marker-icon" data-store-type="dealer">
+                    <svg width="16" height="20" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M34.4 13.3C33.6 6.1 27.4 0.6 20 0.6C12.6 0.6 6.4 6.1 5.6 13.3C5.5 13.9 5.4 14.5 5.4 15.0C5.3 17.5 6.0 20.0 7.1 22.3C7.6 23.3 8.2 24.3 8.8 25.3L17.9 38.9C18.5 39.6 19.2 40.0 20.0 40.0C20.8 40.0 21.5 39.6 22.1 38.9L31.2 25.3C31.8 24.3 32.4 23.3 32.9 22.3C34.9 19.5 35.1 16.4 34.4 13.3Z" fill="#2b7dde"/>
+                      <path d="M27.1 12.6C27.0 12.5 26.9 12.5 26.9 12.5C25.9 13.3 21.2 18.2 21.2 18.2C20.5 18.9 19.3 18.9 18.6 18.2C17.9 17.5 17.9 16.4 18.6 15.7C18.6 15.7 20.7 13.6 22.1 12.2C22.8 11.5 23.2 10.6 23.2 9.6L23.2 5.3C23.2 5.2 23.1 5.1 23.0 5.2L18.2 10.0C18.1 10.1 18.0 10.0 18.0 9.9V7.3C18.0 7.2 17.9 7.1 17.8 7.2L13.9 11.2H13.9C10.7 14.4 10.8 19.6 14.0 22.8C17.2 26.0 22.6 25.9 25.8 22.8C28.7 20.0 29.1 15.8 27.1 12.6Z" fill="white"/>
+                    </svg>
+                  </span>
+                  <span>{{ dealer_text }}</span>
+                </label>
+                <label class="filter-option" data-tooltip="{{ rental_tooltip }}">
+                  <input type="checkbox" id="filter-rental" value="rental">
+                  <span class="filter-marker-icon" data-store-type="rental">
+                    <svg width="16" height="20" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M34.4 13.3C33.6 6.1 27.4 0.6 20 0.6C12.6 0.6 6.4 6.1 5.6 13.3C5.5 13.9 5.4 14.5 5.4 15.0C5.3 17.5 6.0 20.0 7.1 22.3C7.6 23.3 8.2 24.3 8.8 25.3L17.9 38.9C18.5 39.6 19.2 40.0 20.0 40.0C20.8 40.0 21.5 39.6 22.1 38.9L31.2 25.3C31.8 24.3 32.4 23.3 32.9 22.3C34.9 19.5 35.1 16.4 34.4 13.3Z" fill="#66ad78"/>
+                      <path d="M27.1 12.6C27.0 12.5 26.9 12.5 26.9 12.5C25.9 13.3 21.2 18.2 21.2 18.2C20.5 18.9 19.3 18.9 18.6 18.2C17.9 17.5 17.9 16.4 18.6 15.7C18.6 15.7 20.7 13.6 22.1 12.2C22.8 11.5 23.2 10.6 23.2 9.6L23.2 5.3C23.2 5.2 23.1 5.1 23.0 5.2L18.2 10.0C18.1 10.1 18.0 10.0 18.0 9.9V7.3C18.0 7.2 17.9 7.1 17.8 7.2L13.9 11.2H13.9C10.7 14.4 10.8 19.6 14.0 22.8C17.2 26.0 22.6 25.9 25.8 22.8C28.7 20.0 29.1 15.8 27.1 12.6Z" fill="white"/>
+                    </svg>
+                  </span>
+                  <span>{{ rental_station_text }}</span>
+                </label>
+                <label class="filter-option" data-tooltip="{{ service_tooltip }}">
+                  <input type="checkbox" id="filter-service" value="service">
+                  <span class="filter-marker-icon" data-store-type="service">
+                    <svg width="16" height="20" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M34.4 13.3C33.6 6.1 27.4 0.6 20 0.6C12.6 0.6 6.4 6.1 5.6 13.3C5.5 13.9 5.4 14.5 5.4 15.0C5.3 17.5 6.0 20.0 7.1 22.3C7.6 23.3 8.2 24.3 8.8 25.3L17.9 38.9C18.5 39.6 19.2 40.0 20.0 40.0C20.8 40.0 21.5 39.6 22.1 38.9L31.2 25.3C31.8 24.3 32.4 23.3 32.9 22.3C34.9 19.5 35.1 16.4 34.4 13.3Z" fill="#fa6959"/>
+                      <path d="M27.1 12.6C27.0 12.5 26.9 12.5 26.9 12.5C25.9 13.3 21.2 18.2 21.2 18.2C20.5 18.9 19.3 18.9 18.6 18.2C17.9 17.5 17.9 16.4 18.6 15.7C18.6 15.7 20.7 13.6 22.1 12.2C22.8 11.5 23.2 10.6 23.2 9.6L23.2 5.3C23.2 5.2 23.1 5.1 23.0 5.2L18.2 10.0C18.1 10.1 18.0 10.0 18.0 9.9V7.3C18.0 7.2 17.9 7.1 17.8 7.2L13.9 11.2H13.9C10.7 14.4 10.8 19.6 14.0 22.8C17.2 26.0 22.6 25.9 25.8 22.8C28.7 20.0 29.1 15.8 27.1 12.6Z" fill="white"/>
+                    </svg>
+                  </span>
+                  <span>{{ service_center_text }}</span>
+                </label>
+              </div>              
+            </div>
+          </div>
+        </div>
+
+        <div class="dealer-search__scrollable-results">
+          <div class="location-results" id="location-results">
+          </div>        
+        </div>
+
+        <div class="pagination-container" id="pagination-container">
+            <div class="pagination-info">
+              <span class="pagination-stats" id="pagination-stats"></span>
+            </div>
+            
+            <div class="pagination-controls">
+              <div class="pagination-size-selector">
+                <label for="page-size-select" class="page-size-label"></label>
+                <select id="page-size-select" class="page-size-select">
+                  <option value="10" selected>10</option>
+                  <option value="30">30</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+              </div>
+              
+              <div class="pagination-navigation">
+                <button class="pagination-btn pagination-btn--prev" id="prev-page" disabled>
+                  <svg class="pagination-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <polyline points="15,18 9,12 15,6"></polyline>
+                  </svg>
+                  <span class="prev-text"></span>
+                </button>
+                
+                <div class="pagination-pages">
+                  <input type="number" class="page-input" id="page-input" value="1" min="1">
+                  <span class="page-separator">/</span>
+                  <span class="total-pages" id="total-pages">1</span>
+                </div>
+                
+                <button class="pagination-btn pagination-btn--next" id="next-page">
+                  <span class="next-text"></span>
+                  <svg class="pagination-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <polyline points="9,18 15,12 9,6"></polyline>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+      </div>
+
+      <div class="map-section__content map-section__map">
+        {%- if display_map -%}
+          <div id="map-container" data-api-key="{{ section.settings.api_key }}" data-map-type="{{ section.settings.map_type }}" data-map-style="{{ section.settings.map_style }}" data-dealers-url="{{ 'dealers-data.json' | asset_url }}">
+            {%- if section.settings.map_type == 'dynamic' -%}
+              {% render 'location-map', api_key: section.settings.api_key, address: 'Germany', map_style: section.settings.map_style, language: request.locale.iso_code, region: region_code %}
+            {%- else -%}
+              <iframe id="map-iframe" class="map" src="https://www.google.com/maps/embed/v1/place?key={{ section.settings.api_key }}&q={{ first_map_address }}&zoom=14&language={{ request.locale.iso_code }}&region={{ region_code }}" width="100%" height="100%" frameborder="0" style="border:0" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Find a dealer",
+  "class": "section-map",
+  "disabled_on": {
+    "groups": ["aside"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Title"
+    },
+    {
+      "type": "text",
+      "id": "section_title_en",
+      "label": "Section Title (English)",
+      "default": "Dealer Search"
+    },
+    {
+      "type": "text",
+      "id": "section_title_de",
+      "label": "Section Title (German)",
+      "default": "Händlersuche"
+    },
+    {
+      "type": "text",
+      "id": "section_title_fr",
+      "label": "Section Title (French)",
+      "default": "Recherche de Revendeur"
+    },
+    {
+      "type": "text",
+      "id": "section_title_fi",
+      "label": "Section Title (Finnish)",
+      "default": "Jälleenmyyjähaku"
+    },
+    {
+      "id": "full_width",
+      "type": "checkbox",
+      "label": "Full page width",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "1",
+      "options": [
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Map"
+    },
+    {
+      "id": "api_key",
+      "type": "text",
+      "label": "Google Maps API key",
+      "default": "AIzaSyBo8kZy19ByPFrx0XR0jrTR5Z6PO5mlaCU",
+      "info": "You'll need to [register a Google Maps API Key](https://help.shopify.com/manual/using-themes/troubleshooting/map-section-api-key) to display the map"
+    },
+    {
+      "type": "select",
+      "id": "map_type",
+      "label": "Map type",
+      "info": "The type of map to add. [Learn more](https://mapsplatform.google.com/maps-products/#maps)",
+      "options": [
+        {
+          "value": "dynamic",
+          "label": "Dynamic"
+        },
+        {
+          "value": "embed",
+          "label": "Embed (free)"
+        }
+      ],
+      "default": "dynamic"
+    },
+    {
+      "type": "select",
+      "id": "map_style",
+      "label": "Map style",
+      "info": "Dynamic map only",
+      "default": "default",
+      "options": [
+        {
+          "label": "Default",
+          "value": "default"
+        },
+        {
+          "label": "Silver",
+          "value": "silver"
+        },
+        {
+          "label": "Retro",
+          "value": "retro"
+        },
+        {
+          "label": "Dark",
+          "value": "dark"
+        },
+        {
+          "label": "Night",
+          "value": "night"
+        },
+        {
+          "label": "Aubergine",
+          "value": "aubergine"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "type": "location",
+      "name": "Location",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Basic Information"
+        },
+        {
+          "type": "text",
+          "id": "store_name",
+          "label": "Store Name",
+          "default": "Sportshop Bittner"
+        },
+        {
+          "type": "select",
+          "id": "store_type",
+          "label": "Store Type",
+          "options": [
+            {
+              "value": "dealer",
+              "label": "Dealer"
+            },
+            {
+              "value": "rental",
+              "label": "Rental Station"
+            },
+            {
+              "value": "service",
+              "label": "Service Center"
+            },
+            {
+              "value": "click-collect",
+              "label": "Click and Collect"
+            }
+          ],
+          "default": "dealer"
+        },
+        {
+          "type": "header",
+          "content": "Address Information"
+        },
+        {
+          "type": "text",
+          "id": "address",
+          "label": "Address",
+          "default": "Weißestr. 26"
+        },
+        {
+          "type": "text",
+          "id": "city",
+          "label": "City",
+          "default": "Leipzig"
+        },
+        {
+          "type": "text",
+          "id": "province_state",
+          "label": "Province/State",
+          "default": "Sachsen"
+        },
+        {
+          "type": "text",
+          "id": "postal_code",
+          "label": "Postal/Zip Code",
+          "default": "4299"
+        },
+        {
+          "type": "text",
+          "id": "country",
+          "label": "Country",
+          "default": "Germany"
+        },
+        {
+          "type": "header",
+          "content": "Contact Information"
+        },
+        {
+          "type": "text",
+          "id": "phone",
+          "label": "Phone",
+          "default": "+49 (0)341 59097850"
+        },
+        {
+          "type": "text",
+          "id": "fax",
+          "label": "Fax"
+        },
+        {
+          "type": "text",
+          "id": "email",
+          "label": "Email",
+          "default": "steffen@sportshop-bittner.de"
+        },
+        {
+          "type": "text",
+          "id": "website",
+          "label": "Website",
+          "default": "https://sportshop-bittner.de/"
+        },
+        {
+          "type": "header",
+          "content": "Business Hours"
+        },
+        {
+          "type": "textarea",
+          "id": "hours_of_operation",
+          "label": "Hours of Operations",
+          "default": "Monday - Friday 10:00 - 18:00\nThursday 10:00 - 19:00\nSaturday 09:00 - 13:00"
+        },
+        {
+          "type": "header",
+          "content": "Map Settings"
+        },
+        {
+          "id": "show_pin",
+          "type": "checkbox",
+          "label": "Show pin",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Find a dealer",
+      "blocks": [
+        {
+          "type": "location"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

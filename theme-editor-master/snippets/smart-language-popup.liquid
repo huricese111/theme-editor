@@ -1,0 +1,941 @@
+{% comment %}
+  Smart Language Selection Popup
+  Features:
+  - Shopify native geolocation detection with caching
+  - Auto-detect user location and language
+  - Show popup on first visit or language mismatch
+  - Two-tier country selection (detected + manual)
+{% endcomment %}
+
+<div id="language-popup" class="language-popup hidden" data-popup>
+  <div class="language-popup__overlay"></div>
+  <div class="language-popup__content">
+    <div class="language-popup__header">
+      <h2 class="language-popup__title" id="popup-title">Choose your location and language</h2>
+      <button class="language-popup__close" data-close-popup aria-label="Close">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="language-popup__body">
+      <!-- Detected Location Section -->
+      <div class="language-popup__section">
+        <h3 class="language-popup__section-title" id="section-title">Your current location and available languages</h3>
+        <div class="language-popup__detected" id="detected-location">
+          <div class="language-option" data-loading>
+            <span class="language-option__flag">🌍</span>
+            <span class="language-option__country">Detecting location...</span>
+            <div class="language-option__languages">
+              <span class="language-option__lang detecting">Loading...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <hr class="language-popup__divider">
+      
+      <!-- Manual Selection Section -->
+      <div class="language-popup__section">
+        <h3 class="language-popup__section-title">Europe</h3>
+        <div class="language-popup__countries">
+          <!-- Germany -->
+          <div class="language-option" data-country="DE">
+            <span class="language-option__flag">
+              <svg class="flag-icon" viewBox="0 0 640 480">
+                <rect width="640" height="160" fill="#000"/>
+                <rect y="160" width="640" height="160" fill="#dd0000"/>
+                <rect y="320" width="640" height="160" fill="#ffce00"/>
+              </svg>
+            </span>
+            <span class="language-option__country">Deutschland</span>
+            <div class="language-option__languages">
+              <button class="language-option__lang" data-locale="de-DE" data-country="DE">Deutsch</button>
+              <button class="language-option__lang" data-locale="en-DE" data-country="DE">English</button>
+            </div>
+          </div>
+          
+          <!-- France -->
+          <div class="language-option" data-country="FR">
+            <span class="language-option__flag">
+              <svg class="flag-icon" viewBox="0 0 640 480">
+                <rect width="213.3" height="480" fill="#002654"/>
+                <rect x="213.3" width="213.3" height="480" fill="#fff"/>
+                <rect x="426.6" width="213.4" height="480" fill="#ce1126"/>
+              </svg>
+            </span>
+            <span class="language-option__country">France</span>
+            <div class="language-option__languages">
+              <button class="language-option__lang" data-locale="fr-FR" data-country="FR">Français</button>
+              <button class="language-option__lang" data-locale="en-FR" data-country="FR">English</button>
+            </div>
+          </div>
+          
+          <!-- Austria -->
+          <div class="language-option" data-country="AT">
+            <span class="language-option__flag">
+              <svg class="flag-icon" viewBox="0 0 640 480">
+                <rect width="640" height="160" fill="#c8102e"/>
+                <rect y="160" width="640" height="160" fill="#fff"/>
+                <rect y="320" width="640" height="160" fill="#c8102e"/>
+              </svg>
+            </span>
+            <span class="language-option__country">Österreich</span>
+            <div class="language-option__languages">
+              <button class="language-option__lang" data-locale="de-AT" data-country="AT">Deutsch</button>
+              <button class="language-option__lang" data-locale="en-AT" data-country="AT">English</button>
+            </div>
+          </div>
+          
+          <!-- Finland -->
+          <div class="language-option" data-country="FI">
+            <span class="language-option__flag">
+              <svg class="flag-icon" viewBox="0 0 640 480">
+                <rect width="640" height="480" fill="#fff"/>
+                <rect y="175" width="640" height="130" fill="#003580"/>
+                <rect x="175" width="130" height="480" fill="#003580"/>
+              </svg>
+            </span>
+            <span class="language-option__country">Finland</span>
+            <div class="language-option__languages">
+              <button class="language-option__lang" data-locale="fi-FI" data-country="FI">Suomi</button>
+              <button class="language-option__lang" data-locale="en-FI" data-country="FI">English</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.language-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.language-popup.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.language-popup__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+}
+
+.language-popup__content {
+  position: relative;
+  background: white;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.language-popup__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 24px 0;
+}
+
+.language-popup__title {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0;
+  color: #111;
+}
+
+.language-popup__close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
+  color: #666;
+  transition: background-color 0.2s ease;
+}
+
+.language-popup__close:hover {
+  background-color: #f3f4f6;
+}
+
+.language-popup__body {
+  padding: 24px;
+}
+
+.language-popup__section {
+  margin-bottom: 24px;
+}
+
+.language-popup__section:last-child {
+  margin-bottom: 0;
+}
+
+.language-popup__section-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 16px 0;
+  color: #374151;
+}
+
+.language-popup__divider {
+  border: none;
+  height: 1px;
+  background: #e5e7eb;
+  margin: 24px 0;
+}
+
+.language-popup__countries {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.language-option {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.language-option:hover {
+  border-color: #d1d5db;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.language-option__flag {
+  font-size: 24px;
+  margin-right: 12px;
+}
+
+.language-option__country {
+  font-weight: 500;
+  color: #111;
+  min-width: 120px;
+}
+
+.language-option__languages {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.language-option__lang {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.language-option__lang:hover {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+}
+
+.lang-flag .flag-icon {
+  width: 20px;
+  height: 15px;
+  border-radius: 2px;
+}
+
+.lang-name {
+  font-weight: 500;
+}
+
+.lang-flag {
+  width: 16px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
+.lang-flag .flag-icon {
+  width: 16px;
+  height: 12px;
+}
+
+.lang-name {
+  white-space: nowrap;
+}
+
+.language-option__lang:hover {
+  background: #e5e7eb;
+  border-color: #9ca3af;
+}
+
+.language-option__lang.active {
+  background: #3b82f6;
+  border-color: #3b82f6;
+  color: white;
+}
+
+.language-option__lang.detecting {
+  background: #f59e0b;
+  border-color: #f59e0b;
+  color: white;
+  cursor: default;
+  animation: pulse 2s infinite;
+}
+
+.flag-icon {
+  width: 24px;
+  height: 18px;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.language-option__flag {
+  margin-right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+}
+
+.country-code {
+  font-size: 12px;
+  font-weight: 600;
+  color: #666;
+  background: #f3f4f6;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-right: 8px;
+  min-width: 24px;
+  text-align: center;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@media (max-width: 768px) {
+  .language-popup__content {
+    width: 95%;
+    margin: 20px;
+  }
+  
+  .language-popup__header {
+    padding: 20px 20px 0;
+  }
+  
+  .language-popup__title {
+    font-size: 20px;
+  }
+  
+  .language-popup__body {
+    padding: 20px;
+  }
+  
+  .language-option {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  
+  .language-option__languages {
+    margin-left: 0;
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+</style>
+
+<script>
+class SmartLanguagePopup {
+  constructor() {
+    this.popup = document.getElementById('language-popup');
+    this.overlay = this.popup?.querySelector('.language-popup__overlay');
+    this.closeBtn = this.popup?.querySelector('[data-close-popup]');
+    this.detectedSection = document.getElementById('detected-location');
+    
+    // 多语言文案映射
+    this.translations = {
+      'DE': {
+        title: 'Wählen Sie Ihren Standort und Ihre Sprache',
+        sectionTitle: 'Ihr aktueller Standort und verfügbare Sprachen',
+        detecting: 'Standort wird erkannt...',
+        loading: 'Wird geladen...'
+      },
+      'FR': {
+        title: 'Choisissez votre localisation et votre langue',
+        sectionTitle: 'Votre localisation actuelle et les langues disponibles',
+        detecting: 'Détection de la localisation...',
+        loading: 'Chargement...'
+      },
+      'FI': {
+        title: 'Valitse sijaintisi ja kielesi',
+        sectionTitle: 'Nykyinen sijaintisi ja käytettävissä olevat kielet',
+        detecting: 'Sijaintia tunnistetaan...',
+        loading: 'Ladataan...'
+      },
+      'AT': {
+        title: 'Wählen Sie Ihren Standort und Ihre Sprache',
+        sectionTitle: 'Ihr aktueller Standort und verfügbare Sprachen',
+        detecting: 'Standort wird erkannt...',
+        loading: 'Wird geladen...'
+      },
+      // 新增中文翻译
+      'CN': {
+        title: 'Choose your location and language',
+        sectionTitle: 'Your current location and available languages',
+        detecting: 'Detecting location...',
+        loading: 'Loading...'
+      },
+      'HK': {
+        title: 'Choose your location and language',
+        sectionTitle: 'Your current location and available languages',
+        detecting: 'Detecting location...',
+        loading: 'Loading...'
+      },
+      'TW': {
+        title: 'Choose your location and language',
+        sectionTitle: 'Your current location and available languages',
+        detecting: 'Detecting location...',
+        loading: 'Loading...'
+      },
+      'MO': {
+        title: 'Choose your location and language',
+        sectionTitle: 'Your current location and available languages',
+        detecting: 'Detecting location...',
+        loading: 'Loading...'
+      },
+      'US': {
+        title: 'Choose your location and language',
+        sectionTitle: 'Your current location and available languages',
+        detecting: 'Detecting location...',
+        loading: 'Loading...'
+      },
+      'default': {
+        title: 'Choose your location and language',
+        sectionTitle: 'Your current location and available languages',
+        detecting: 'Detecting location...',
+        loading: 'Loading...'
+      }
+    };
+    
+    // Country URL mapping for supported countries (更新为默认语言)
+    this.countryUrlMap = {
+      'DE': '/de',     // 德国默认德语
+      'FR': '/fr-fr',  // 法国默认法语 
+      'AT': '/de-at',  // 奥地利默认德语
+      'FI': '/fi-fi',  // 芬兰默认芬兰语
+      // 新增国家/地区URL映射
+      'CN': '/zh-cn',  // 中国默认简体中文
+      'HK': '/zh-hk',  // 香港默认繁体中文
+      'TW': '/zh-tw',  // 台湾默认繁体中文
+      'MO': '/zh-mo',  // 澳门默认繁体中文
+      'US': '/en-us'   // 美国默认英语
+    };
+    
+    this.init();
+  }
+  
+  init() {
+    if (!this.popup) return;
+    
+    this.bindEvents();
+    this.checkShouldShow();
+  }
+  
+  bindEvents() {
+    // Close popup events
+    this.closeBtn?.addEventListener('click', () => this.hidePopup());
+    this.overlay?.addEventListener('click', () => this.hidePopup());
+    
+    // Language selection events
+    this.popup.addEventListener('click', (e) => {
+      const langBtn = e.target.closest('[data-locale]');
+      if (langBtn && !langBtn.classList.contains('detecting')) {
+        this.selectLanguage(langBtn.dataset.locale, langBtn.dataset.country);
+      }
+    });
+    
+    // Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !this.popup.classList.contains('hidden')) {
+        this.hidePopup();
+      }
+    });
+  }
+  
+  async checkShouldShow() {
+    // 始终加载和显示位置信息
+    await this.loadAndDisplayLocation();
+    
+    // 检查用户是否已经做过选择
+    const hasSelection = localStorage.getItem('language-selection-made');
+    if (hasSelection) return;
+    
+    // 检查是否应该显示弹窗
+    const shouldShow = this.shouldShowPopup();
+    if (shouldShow) {
+      setTimeout(() => this.showPopup(), 1000);
+    }
+  }
+  
+  async loadAndDisplayLocation() {
+    try {
+      console.log('Loading Shopify geolocation...');
+      const response = await fetch('/browsing_context_suggestions.json');
+      
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Shopify API full response:', data);
+        
+        // Try to extract country from different possible locations in the response
+        let countryCode = null;
+        let countryName = null;
+        
+        // Check various possible response structures
+        if (data.detected_values?.country) {
+          countryCode = data.detected_values.country.handle || data.detected_values.country.iso_code;
+          countryName = data.detected_values.country.name;
+        } else if (data.country) {
+          if (typeof data.country === 'string') {
+            countryCode = data.country;
+            countryName = data.country;
+          } else {
+            countryCode = data.country.handle || data.country.iso_code || data.country.code;
+            countryName = data.country.name || data.country.label;
+          }
+        } else if (data.recommendations?.country) {
+          countryCode = data.recommendations.country.handle || data.recommendations.country.iso_code;
+          countryName = data.recommendations.country.name;
+        }
+        
+        console.log('Extracted country:', { countryCode, countryName });
+        
+        if (countryName) {
+          this.displayDetectedCountry(countryCode, countryName);
+        } else {
+          this.displayDetectedCountry('INT', 'International');
+        }
+      } else {
+        console.warn('Shopify API failed with status:', response.status);
+        this.displayDetectedCountry('INT', 'International');
+      }
+    } catch (error) {
+      console.error('Error loading Shopify location:', error);
+      this.displayDetectedCountry('INT', 'International');
+    }
+  }
+  
+  updatePopupTexts(countryCode) {
+    const texts = this.translations[countryCode] || this.translations['default'];
+    
+    // 更新弹窗标题
+    const titleElement = document.getElementById('popup-title');
+    if (titleElement) {
+      titleElement.textContent = texts.title;
+    }
+    
+    // 更新章节标题
+    const sectionTitleElement = document.getElementById('section-title');
+    if (sectionTitleElement) {
+      sectionTitleElement.textContent = texts.sectionTitle;
+    }
+    
+    // 更新加载状态文本
+    const detectingElements = this.popup.querySelectorAll('.language-option__country');
+    detectingElements.forEach(el => {
+      if (el.textContent.includes('Detecting') || el.textContent.includes('location')) {
+        el.textContent = texts.detecting;
+      }
+    });
+    
+    const loadingElements = this.popup.querySelectorAll('.detecting');
+    loadingElements.forEach(el => {
+      if (el.textContent.includes('Loading')) {
+        el.textContent = texts.loading;
+      }
+    });
+  }
+  
+  displayDetectedCountry(countryCode, countryName) {
+    console.log('Displaying country:', countryName);
+    
+    // 首先更新弹窗文案
+    this.updatePopupTexts(countryCode);
+    
+    // SVG国旗图标映射
+    const flagSvgMap = {
+      'DE': `<svg class="flag-icon" viewBox="0 0 640 480">
+               <rect width="640" height="160" fill="#000"/>
+               <rect y="160" width="640" height="160" fill="#dd0000"/>
+               <rect y="320" width="640" height="160" fill="#ffce00"/>
+             </svg>`,
+      'FR': `<svg class="flag-icon" viewBox="0 0 640 480">
+               <rect width="213.3" height="480" fill="#002654"/>
+               <rect x="213.3" width="213.3" height="480" fill="#fff"/>
+               <rect x="426.6" width="213.4" height="480" fill="#ce1126"/>
+             </svg>`,
+      'AT': `<svg class="flag-icon" viewBox="0 0 640 480">
+               <rect width="640" height="160" fill="#c8102e"/>
+               <rect y="160" width="640" height="160" fill="#fff"/>
+               <rect y="320" width="640" height="160" fill="#c8102e"/>
+             </svg>`,
+      'FI': `<svg class="flag-icon" viewBox="0 0 640 480">
+               <rect width="640" height="480" fill="#fff"/>
+               <rect y="175" width="640" height="130" fill="#003580"/>
+               <rect x="175" width="130" height="480" fill="#003580"/>
+             </svg>`,
+      // 新增国旗SVG - 仅用于检测显示
+      'CN': `<svg class="flag-icon" viewBox="0 0 640 480">
+               <rect width="640" height="480" fill="#de2910"/>
+               <g fill="#ffde00">
+                 <g id="star">
+                   <g id="cone">
+                     <polygon points="0,0 0,1 .5,.309" transform="translate(0,-1)rotate(18)"/>
+                   </g>
+                   <use href="#cone" transform="scale(-1,1)"/>
+                   <use href="#cone" transform="rotate(72)"/>
+                   <use href="#cone" transform="scale(-1,1)rotate(72)"/>
+                   <use href="#cone" transform="rotate(144)"/>
+                   <use href="#cone" transform="scale(-1,1)rotate(144)"/>
+                   <use href="#cone" transform="rotate(216)"/>
+                   <use href="#cone" transform="scale(-1,1)rotate(216)"/>
+                   <use href="#cone" transform="rotate(288)"/>
+                   <use href="#cone" transform="scale(-1,1)rotate(288)"/>
+                 </g>
+                 <use href="#star" transform="translate(128,96)scale(48)"/>
+                 <use href="#star" transform="translate(208,64)scale(16)rotate(23.036)"/>
+                 <use href="#star" transform="translate(208,128)scale(16)rotate(45.87)"/>
+                 <use href="#star" transform="translate(176,176)scale(16)rotate(69.945)"/>
+                 <use href="#star" transform="translate(128,176)scale(16)rotate(20.659)"/>
+               </g>
+             </svg>`,
+      'HK': `<svg class="flag-icon" viewBox="0 0 640 480">
+               <rect width="640" height="480" fill="#de2910"/>
+               <g fill="#fff" transform="translate(320,240)scale(80)">
+                 <g id="petal">
+                   <path d="M0,-1 Q.2,-.8 .5,-.6 Q.8,-.4 1,0 Q.8,.4 .5,.6 Q.2,.8 0,1 Q-.2,.8 -.5,.6 Q-.8,.4 -1,0 Q-.8,-.4 -.5,-.6 Q-.2,-.8 0,-1z"/>
+                 </g>
+                 <use href="#petal" transform="rotate(72)"/>
+                 <use href="#petal" transform="rotate(144)"/>
+                 <use href="#petal" transform="rotate(216)"/>
+                 <use href="#petal" transform="rotate(288)"/>
+                 <circle r=".2" fill="#de2910"/>
+               </g>
+             </svg>`,
+      'TW': `<svg class="flag-icon" viewBox="0 0 640 480">
+               <rect width="640" height="480" fill="#fe0000"/>
+               <rect width="320" height="240" fill="#000095"/>
+               <g fill="#fff" transform="translate(160,120)">
+                 <circle r="60" fill="#000095"/>
+                 <circle r="50" fill="#fe0000"/>
+                 <g id="sun">
+                   <g id="ray">
+                     <polygon points="0,-50 8,-25 -8,-25" fill="#fff"/>
+                   </g>
+                   <use href="#ray" transform="rotate(30)"/>
+                   <use href="#ray" transform="rotate(60)"/>
+                   <use href="#ray" transform="rotate(90)"/>
+                   <use href="#ray" transform="rotate(120)"/>
+                   <use href="#ray" transform="rotate(150)"/>
+                   <use href="#ray" transform="rotate(180)"/>
+                   <use href="#ray" transform="rotate(210)"/>
+                   <use href="#ray" transform="rotate(240)"/>
+                   <use href="#ray" transform="rotate(270)"/>
+                   <use href="#ray" transform="rotate(300)"/>
+                   <use href="#ray" transform="rotate(330)"/>
+                 </g>
+                 <circle r="25" fill="#000095"/>
+               </g>
+             </svg>`,
+      'MO': `<svg class="flag-icon" viewBox="0 0 640 480">
+               <rect width="640" height="480" fill="#00785a"/>
+               <g fill="#ffd100" transform="translate(320,160)">
+                 <g id="lotus">
+                   <path d="M0,-40 Q20,-30 30,-10 Q20,10 0,20 Q-20,10 -30,-10 Q-20,-30 0,-40z"/>
+                 </g>
+                 <use href="#lotus" transform="rotate(72)"/>
+                 <use href="#lotus" transform="rotate(144)"/>
+                 <use href="#lotus" transform="rotate(216)"/>
+                 <use href="#lotus" transform="rotate(288)"/>
+                 <circle r="8" fill="#00785a"/>
+               </g>
+               <g fill="#ffd100" transform="translate(160,320)scale(0.8)">
+                 <g id="star-mo">
+                   <polygon points="0,-10 3,-3 10,-3 5,1 7,8 0,4 -7,8 -5,1 -10,-3 -3,-3"/>
+                 </g>
+               </g>
+               <g fill="#ffd100" transform="translate(480,320)scale(0.8)">
+                 <use href="#star-mo"/>
+               </g>
+               <g fill="#ffd100" transform="translate(320,360)scale(0.8)">
+                 <use href="#star-mo"/>
+               </g>
+               <g fill="#ffd100" transform="translate(240,400)scale(0.6)">
+                 <use href="#star-mo"/>
+               </g>
+               <g fill="#ffd100" transform="translate(400,400)scale(0.6)">
+                 <use href="#star-mo"/>
+               </g>
+             </svg>`,
+      'US': `<svg class="flag-icon" viewBox="0 0 640 480">
+               <defs>
+                 <g id="star-us">
+                   <polygon points="0,-1 .588,-.809 .951,-.309 .309,-.309 .951,.309 .588,.809 0,1 -.588,.809 -.951,.309 -.309,.309 -.951,-.309 -.588,-.809" fill="#fff"/>
+                 </g>
+               </defs>
+               <rect width="640" height="480" fill="#b22234"/>
+               <g fill="#fff">
+                 <rect y="37" width="640" height="37"/>
+                 <rect y="111" width="640" height="37"/>
+                 <rect y="185" width="640" height="37"/>
+                 <rect y="259" width="640" height="37"/>
+                 <rect y="333" width="640" height="37"/>
+                 <rect y="407" width="640" height="37"/>
+               </g>
+               <rect width="256" height="185" fill="#3c3b6e"/>
+               <g fill="#fff" transform="translate(128,92.5)scale(12.8)">
+                 <use href="#star-us" transform="translate(-5,-3)"/>
+                 <use href="#star-us" transform="translate(-3,-3)"/>
+                 <use href="#star-us" transform="translate(-1,-3)"/>
+                 <use href="#star-us" transform="translate(1,-3)"/>
+                 <use href="#star-us" transform="translate(3,-3)"/>
+                 <use href="#star-us" transform="translate(5,-3)"/>
+                 <use href="#star-us" transform="translate(-4,-2)"/>
+                 <use href="#star-us" transform="translate(-2,-2)"/>
+                 <use href="#star-us" transform="translate(0,-2)"/>
+                 <use href="#star-us" transform="translate(2,-2)"/>
+                 <use href="#star-us" transform="translate(4,-2)"/>
+                 <use href="#star-us" transform="translate(-5,-1)"/>
+                 <use href="#star-us" transform="translate(-3,-1)"/>
+                 <use href="#star-us" transform="translate(-1,-1)"/>
+                 <use href="#star-us" transform="translate(1,-1)"/>
+                 <use href="#star-us" transform="translate(3,-1)"/>
+                 <use href="#star-us" transform="translate(5,-1)"/>
+                 <use href="#star-us" transform="translate(-4,0)"/>
+                 <use href="#star-us" transform="translate(-2,0)"/>
+                 <use href="#star-us" transform="translate(0,0)"/>
+                 <use href="#star-us" transform="translate(2,0)"/>
+                 <use href="#star-us" transform="translate(4,0)"/>
+                 <use href="#star-us" transform="translate(-5,1)"/>
+                 <use href="#star-us" transform="translate(-3,1)"/>
+                 <use href="#star-us" transform="translate(-1,1)"/>
+                 <use href="#star-us" transform="translate(1,1)"/>
+                 <use href="#star-us" transform="translate(3,1)"/>
+                 <use href="#star-us" transform="translate(5,1)"/>
+                 <use href="#star-us" transform="translate(-4,2)"/>
+                 <use href="#star-us" transform="translate(-2,2)"/>
+                 <use href="#star-us" transform="translate(0,2)"/>
+                 <use href="#star-us" transform="translate(2,2)"/>
+                 <use href="#star-us" transform="translate(4,2)"/>
+                 <use href="#star-us" transform="translate(-5,3)"/>
+                 <use href="#star-us" transform="translate(-3,3)"/>
+                 <use href="#star-us" transform="translate(-1,3)"/>
+                 <use href="#star-us" transform="translate(1,3)"/>
+                 <use href="#star-us" transform="translate(3,3)"/>
+                 <use href="#star-us" transform="translate(5,3)"/>
+                 <use href="#star-us" transform="translate(-4,4)"/>
+                 <use href="#star-us" transform="translate(-2,4)"/>
+                 <use href="#star-us" transform="translate(0,4)"/>
+                 <use href="#star-us" transform="translate(2,4)"/>
+                 <use href="#star-us" transform="translate(4,4)"/>
+                 <use href="#star-us" transform="translate(-5,5)"/>
+                 <use href="#star-us" transform="translate(-3,5)"/>
+                 <use href="#star-us" transform="translate(-1,5)"/>
+                 <use href="#star-us" transform="translate(1,5)"/>
+                 <use href="#star-us" transform="translate(3,5)"/>
+                 <use href="#star-us" transform="translate(5,5)"/>
+               </g>
+             </svg>`,
+      'INT': `<svg class="flag-icon" viewBox="0 0 640 480">
+                <defs>
+                  <radialGradient id="earthGradPopup" cx="50%" cy="30%" r="70%">
+                    <stop offset="0%" style="stop-color:#87CEEB;stop-opacity:1" />
+                    <stop offset="70%" style="stop-color:#4682B4;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#191970;stop-opacity:1" />
+                  </radialGradient>
+                </defs>
+                <circle cx="320" cy="240" r="200" fill="url(#earthGradPopup)"/>
+                <path d="M200 180 Q280 160 360 200 Q400 240 380 300 Q320 320 260 300 Q220 260 200 180" fill="#228B22" opacity="0.8"/>
+                <path d="M380 160 Q440 180 460 220 Q450 260 420 240 Q400 200 380 160" fill="#32CD32" opacity="0.7"/>
+                <path d="M160 280 Q200 300 240 340 Q220 380 180 360 Q140 320 160 280" fill="#228B22" opacity="0.8"/>
+                <path d="M440 300 Q480 320 500 360 Q480 400 450 380 Q420 340 440 300" fill="#32CD32" opacity="0.7"/>
+                <ellipse cx="280" cy="200" rx="40" ry="15" fill="white" opacity="0.3"/>
+                <ellipse cx="380" cy="280" rx="35" ry="12" fill="white" opacity="0.3"/>
+                <ellipse cx="240" cy="320" rx="30" ry="10" fill="white" opacity="0.2"/>
+              </svg>`
+    };
+    
+    const countryLanguageMap = {
+      'DE': [{ code: 'de-DE', name: 'Deutsch', flag: 'DE' }, { code: 'en-DE', name: 'English', flag: 'DE' }],
+      'FR': [{ code: 'fr-FR', name: 'Français', flag: 'FR' }, { code: 'en-FR', name: 'English', flag: 'FR' }],
+      'AT': [{ code: 'de-AT', name: 'Deutsch', flag: 'AT' }, { code: 'en-AT', name: 'English', flag: 'AT' }],
+      'FI': [{ code: 'fi-FI', name: 'Suomi', flag: 'FI' }, { code: 'en-FI', name: 'English', flag: 'FI' }]
+    };
+    
+    const flagSvg = flagSvgMap[countryCode] || flagSvgMap['INT'];
+    const supportedLanguages = countryLanguageMap[countryCode];
+    
+    if (supportedLanguages) {
+      const languageButtons = supportedLanguages.map(lang => {
+        return `<button class="language-option__lang" data-locale="${lang.code}" data-country="${countryCode}">
+                  <span class="lang-name">${lang.name}</span>
+                </button>`;
+      }).join('');
+      
+      this.detectedSection.innerHTML = `
+        <div class="language-option">
+          <span class="language-option__flag">${flagSvg}</span>
+          <span class="language-option__country">${countryName}</span>
+          <div class="language-option__languages">
+            ${languageButtons}
+          </div>
+        </div>
+      `;
+    } else {
+      // 所有其他国家/地区显示"View main site"按钮
+      this.detectedSection.innerHTML = `
+        <div class="language-option">
+          <span class="language-option__flag">${flagSvg}</span>
+          <span class="language-option__country">${countryName}</span>
+          <div class="language-option__languages">
+            <button class="language-option__lang" data-locale="en-DE" data-country="${countryCode}">
+              <span class="lang-name">View main site</span>
+            </button>
+          </div>
+        </div>
+      `;
+    }
+  }
+  
+  shouldShowPopup() {
+    // Check if current page language matches user's preferred language
+    const currentLang = document.documentElement.lang || 'en';
+    const browserLang = navigator.language.split('-')[0];
+    
+    // Show popup if languages don't match or it's first visit
+    return currentLang !== browserLang || !localStorage.getItem('language-popup-shown');
+  }
+  
+  showPopup() {
+    this.popup.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    localStorage.setItem('language-popup-shown', 'true');
+  }
+  
+  hidePopup() {
+    this.popup.classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+  
+  selectLanguage(locale, country) {
+    // Store user selection
+    localStorage.setItem('language-selection-made', 'true');
+    localStorage.setItem('selected-locale', locale);
+    localStorage.setItem('selected-country', country);
+    
+    // Submit localization form or redirect
+    this.applyLanguageSelection(locale, country);
+    
+    this.hidePopup();
+  }
+  
+  buildRelativeUrl(urlPrefix) {
+    const currentPath = window.location.pathname;
+    const currentSearch = window.location.search;
+    
+    // 移除所有可能的语言前缀
+    const cleanPath = currentPath.replace(/^\/(de|fr|fi|de-at|fr-fr|en-de|en-fr|en-at|fi-fi|en-fi)/, '') || '/';
+    
+    // 构建新的URL
+    return urlPrefix + cleanPath + currentSearch;
+  }
+  
+  applyLanguageSelection(locale, country) {
+    // 根据locale确定正确的URL前缀
+    const localeUrlMap = {
+      'de-DE': '/de',
+      'en-DE': '/',
+      'fr-FR': '/fr-fr',
+      'en-FR': '/en-fr',
+      'de-AT': '/de-at', 
+      'en-AT': '/en-at',
+      'fi-FI': '/fi-fi',
+      'en-FI': '/en-fi'
+    };
+    
+    const newUrlPrefix = localeUrlMap[locale];
+    
+    if (newUrlPrefix !== undefined) {
+      // 获取当前完整URL信息
+      const currentPath = window.location.pathname;
+      const currentSearch = window.location.search;
+      const currentOrigin = window.location.origin;
+      
+      // 定义所有可能的语言前缀（按长度降序排列，确保先匹配较长的前缀）
+      const allPrefixes = [
+        '/fr-fr', '/en-fr', '/de-at', '/en-at', '/fi-fi', '/en-fi',
+        '/de', '/fr', '/fi'
+      ];
+      
+      // 检查当前路径是否以任何语言前缀开头
+      let cleanPath = currentPath;
+      for (const prefix of allPrefixes) {
+        if (currentPath.startsWith(prefix + '/') || currentPath === prefix) {
+          cleanPath = currentPath.substring(prefix.length) || '/';
+          break;
+        }
+      }
+      
+      // 构建新的完整URL
+      let newUrl;
+      if (newUrlPrefix === '/') {
+        // 对于根路径（en-DE），直接使用域名 + 清理后的路径
+        newUrl = currentOrigin + (cleanPath === '/' ? '/' : cleanPath) + currentSearch;
+      } else {
+        // 对于其他语言前缀，添加前缀
+        newUrl = currentOrigin + newUrlPrefix + (cleanPath === '/' ? '' : cleanPath) + currentSearch;
+      }
+      
+      window.location.href = newUrl;
+    } else {
+      // 对于国际用户，重定向到主站
+      window.location.href = window.location.origin + '/';
+    }
+  }
+}
+
+// Initialize when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    new SmartLanguagePopup();
+  });
+} else {
+  new SmartLanguagePopup();
+}
+</script>

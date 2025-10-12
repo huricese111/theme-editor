@@ -1,0 +1,1597 @@
+{% comment %}
+  ============================================================================
+  Adaptive Content Grid Section - Enhanced Documentation
+  ============================================================================
+  
+  DESCRIPTION:
+  A comprehensive and flexible content grid component for Shopify themes that
+  creates responsive, customizable grid layouts. This section supports multiple
+  content types including products, collections, custom content, related products,
+  and advertisement blocks with extensive customization options.
+  
+  KEY FEATURES:
+  • Responsive Grid System: 1-5 columns on desktop, 1-2 columns on mobile
+  • Multiple Content Types: Products, collections, custom content, related products, advertisements
+  • Image Aspect Ratios: Natural, square (1:1), landscape (16:9), standard (4:3), portrait (3:4)
+  • Content Layout Options: Image top/bottom/left/right arrangements
+  • Multi-language Support: English, German, French, Finnish with automatic locale detection
+  • Typography Controls: Customizable font sizes for titles, subtitles, and descriptions
+  • Visual Customization: Border controls, padding, background colors, text alignment
+  • Mobile Optimization: Responsive design with separate mobile settings
+  • Section Container: Optional max-width container with customizable width
+  • Buy Button Integration: Configurable purchase buttons for product blocks
+  
+  BLOCK TYPES:
+  1. Single Product Block: Display individual products with buy buttons
+  2. Collection Products Block: Show multiple products from a selected collection
+  3. Custom Content Block: Flexible content with images, text, and buttons
+  4. Related Products Block: Display products related via metafields
+  5. Advertisement Block: Promotional content with background images and CTAs
+  
+  CONFIGURATION OPTIONS:
+  • Section Heading: Multilingual titles and subtitles with size/color controls
+  • Layout Settings: Grid columns, image ratios, content arrangement, padding, borders
+  • Text Sizing: Separate desktop/mobile font sizes for all text elements
+  • General Settings: Section width, container options, buy button visibility
+  
+  LOCALIZATION:
+  • Automatic language detection based on request.locale.iso_code
+  • Fallback to English for unsupported languages
+  • Supported languages: English (default), German (de), French (fr), Finnish (fi)
+  • Localized buy button text with language-specific translations
+  
+  RESPONSIVE DESIGN:
+  • Desktop: 1-5 column grid with customizable gaps and sizing
+  • Mobile: 1-2 column grid with optimized spacing and typography
+  • Flexible image sizing with multiple object-fit options
+  • Adaptive content ordering for different screen sizes
+  
+  PERFORMANCE CONSIDERATIONS:
+  • Lazy loading for images with optimized image URLs
+  • CSS Grid for efficient layout rendering
+  • Minimal JavaScript dependencies
+  • Optimized image delivery with Shopify's image transformation
+  
+  ACCESSIBILITY:
+  • Semantic HTML structure with proper heading hierarchy
+  • Alt text support for images
+  • Keyboard navigation support
+  • Screen reader friendly markup
+  
+  RELATED FILES:
+  ============================================================================
+  
+  CSS Dependencies:
+  • assets/section-basestyles.css
+    - Base container styles and responsive utilities
+    - Section title and subtitle styling
+    - Mobile breakpoint definitions
+  
+  Liquid Snippets:
+  • snippets/product-block.liquid
+    - Product display component with image galleries
+    - Product metadata and pricing display
+    - Hover effects and image transitions
+    - Product comparison data attributes
+  
+  • snippets/localized-value.liquid
+    - Universal localization utility
+    - Automatic language detection
+    - Fallback value handling
+    - Multi-source value retrieval (settings/section/block)
+  
+  External Dependencies:
+  • Shopify Liquid templating engine
+  • CSS Grid and Flexbox browser support
+  • Shopify image transformation API
+  • Browser support for CSS custom properties
+  
+  Template Integration:
+  • Can be used on any Shopify template
+  • Supports product page context for related products
+  • Collection context for within-collection URLs
+  • Compatible with Shopify's section groups
+  
+  Metafield Dependencies:
+  • custom.related_products (for related products block)
+  • Various product metafields for specifications
+  • Collection metafields for enhanced product data
+  
+  Browser Compatibility:
+  • Modern browsers with CSS Grid support
+  • Fallback styles for older browsers
+  • Progressive enhancement approach
+  
+  ============================================================================
+{% endcomment %}
+
+{{ 'section-basestyles.css' | asset_url | stylesheet_tag }}
+
+{% schema %}
+{
+  "name": "Adaptive Content Grid",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Heading"
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title (English)",
+      "default": "Adaptive Content Grid"
+    },
+    {
+      "type": "text",
+      "id": "section_title_de",
+      "label": "Section Title (German)",
+      "default": "Adaptives Inhaltsraster"
+    },
+    {
+      "type": "text",
+      "id": "section_title_fr",
+      "label": "Section Title (French)",
+      "default": "Grille de contenu adaptative"
+    },
+    {
+      "type": "text",
+      "id": "section_title_fi",
+      "label": "Section Title (Finnish)",
+      "default": "Mukautuva sisältöruudukko"
+    },
+    {
+      "type": "text",
+      "id": "section_subtitle",
+      "label": "Section Subtitle (English)",
+      "default": "Explore our featured content"
+    },
+    {
+      "type": "text",
+      "id": "section_subtitle_de",
+      "label": "Section Subtitle (German)",
+      "default": "Entdecken Sie unsere vorgestellten Inhalte"
+    },
+    {
+      "type": "text",
+      "id": "section_subtitle_fr",
+      "label": "Section Subtitle (French)",
+      "default": "Explorez notre contenu en vedette"
+    },
+    {
+      "type": "text",
+      "id": "section_subtitle_fi",
+      "label": "Section Subtitle (Finnish)",
+      "default": "Tutustu esiteltyyn sisältöömme"
+    },
+    {
+      "type": "range",
+      "id": "desktop_section_title_size",
+      "label": "Desktop Section Title Size (px)",
+      "min": 20,
+      "max": 80,
+      "step": 1,
+      "default": 40,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "mobile_section_title_size",
+      "label": "Mobile Section Title Size (px)",
+      "min": 16,
+      "max": 60,
+      "step": 1,
+      "default": 30,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "desktop_section_subtitle_size",
+      "label": "Desktop Section Subtitle Size (px)",
+      "min": 14,
+      "max": 40,
+      "step": 1,
+      "default": 20,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "mobile_section_subtitle_size",
+      "label": "Mobile Section Subtitle Size (px)",
+      "min": 12,
+      "max": 30,
+      "step": 1,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "color",
+      "id": "section_title_color",
+      "label": "Section Title Color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "section_subtitle_color",
+      "label": "Section Subtitle Color",
+      "default": "#666666"
+    },
+    {
+      "type": "select",
+      "id": "section_heading_alignment",
+      "label": "Section Heading Alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Layout Settings"
+    },
+    {
+      "type": "range",
+      "id": "block_padding",
+      "label": "Block Padding (px)",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "default": 20,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "image_aspect_ratio",
+      "label": "Image Aspect Ratio",
+      "options": [
+        {
+          "value": "natural",
+          "label": "Natural"
+        },
+        {
+          "value": "1-1",
+          "label": "Square (1:1)"
+        },
+        {
+          "value": "16-9",
+          "label": "Landscape (16:9)"
+        },
+        {
+          "value": "4-3",
+          "label": "Standard (4:3)"
+        },
+        {
+          "value": "3-4",
+          "label": "Portrait (3:4)"
+        }
+      ],
+      "default": "16-9"
+    },
+    {
+      "type": "select",
+      "id": "content_layout",
+      "label": "Content Layout",
+      "options": [
+        {
+          "value": "image-top",
+          "label": "Image Top, Text Bottom"
+        },
+        {
+          "value": "text-top",
+          "label": "Text Top, Image Bottom"
+        },
+        {
+          "value": "image-left",
+          "label": "Image Left, Text Right"
+        },
+        {
+          "value": "image-right",
+          "label": "Text Left, Image Right"
+        }
+      ],
+      "default": "image-top"
+    },
+    {
+      "type": "select",
+      "id": "desktop_columns",
+      "label": "Desktop Columns",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        },
+        {
+          "value": "5",
+          "label": "5"
+        }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "select",
+      "id": "mobile_columns",
+      "label": "Mobile Columns",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "Border Width (px)",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border Color",
+      "default": "#cccccc"
+    },
+    {
+      "type": "header",
+      "content": "Text Sizes"
+    },
+    {
+      "type": "paragraph",
+      "content": "The following text size settings only affect Custom Content blocks, not other block types."
+    },
+    {
+      "type": "range",
+      "id": "desktop_title_size",
+      "label": "Desktop Title (px)",
+      "min": 10,
+      "max": 50,
+      "step": 1,
+      "default": 25
+    },
+    {
+      "type": "range",
+      "id": "mobile_title_size",
+      "label": "Mobile Title (px)",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "desktop_desc_size",
+      "label": "Desktop Description (px)",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "mobile_desc_size",
+      "label": "Mobile Description (px)",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "desktop_big_title_size",
+      "label": "Desktop Big Title (px)",
+      "min": 30,
+      "max": 100,
+      "step": 1,
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "mobile_big_title_size",
+      "label": "Mobile Big Title (px)",
+      "min": 20,
+      "max": 60,
+      "step": 1,
+      "default": 35
+    },
+    {
+      "type": "header",
+      "content": "General Settings"
+    },
+    {
+      "type": "number",
+      "id": "section_width",
+      "label": "Section Width (Desktop)",
+      "default": 1200,
+      "info": "px"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_buy_button",
+      "label": "Show Buy Button on Products",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_section_container",
+      "label": "Enable Section Container",
+      "default": true,
+      "info": "Adds a container with max-width around the section"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_block",
+      "name": "Single Product",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Product Selection"
+        },
+        {
+          "type": "product",
+          "id": "selected_product",
+          "label": "Select Product"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_buy_button",
+          "label": "Enable buy button",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "collection_block",
+      "name": "Collection Products",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Collection Selection"
+        },
+        {
+          "type": "collection",
+          "id": "selected_collection",
+          "label": "Select Collection"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_buy_button",
+          "label": "Enable buy button",
+          "default": true
+        },
+        {
+          "type": "range",
+          "id": "products_limit",
+          "label": "Number of products to show",
+          "min": 1,
+          "max": 12,
+          "step": 1,
+          "default": 4
+        }
+      ]
+    },
+    {
+      "type": "custom_block",
+      "name": "Custom Content",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "color",
+          "id": "image_background_color",
+          "label": "Image Background Color",
+          "default": "#eeeeee"
+        },
+        {
+          "type": "select",
+          "id": "image_size",
+          "label": "Image Size",
+          "options": [
+            {
+              "value": "auto",
+              "label": "Original"
+            },
+            {
+              "value": "contain",
+              "label": "Contain"
+            },
+            {
+              "value": "cover",
+              "label": "Cover"
+            },
+            {
+              "value": "75",
+              "label": "75%"
+            },
+            {
+              "value": "50",
+              "label": "50%"
+            },
+            {
+              "value": "25",
+              "label": "25%"
+            },
+            {
+              "value": "15",
+              "label": "15%"
+            },
+            {
+              "value": "10",
+              "label": "10%"
+            }
+          ],
+          "default": "auto"
+        },
+        {
+          "type": "header",
+          "content": "Titles"
+        },
+        {
+          "type": "text",
+          "id": "big_number",
+          "label": "Big Number"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title (English)",
+          "default": "Default Title"
+        },
+        {
+          "type": "text",
+          "id": "title_de",
+          "label": "Title (German)",
+          "default": "Standardtitel"
+        },
+        {
+          "type": "text",
+          "id": "title_fr",
+          "label": "Title (French)",
+          "default": "Titre par défaut"
+        },
+        {
+          "type": "text",
+          "id": "title_fi",
+          "label": "Title (Finnish)"
+        },
+        {
+          "type": "header",
+          "content": "Description"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description (English)"
+        },
+        {
+          "type": "richtext",
+          "id": "description_de",
+          "label": "Description (German)"
+        },
+        {
+          "type": "richtext",
+          "id": "description_fr",
+          "label": "Description (French)"
+        },
+        {
+          "type": "richtext",
+          "id": "description_fi",
+          "label": "Description (Finnish)"
+        },
+        {
+          "type": "header",
+          "content": "Buttons"
+        },
+        {
+          "type": "text",
+          "id": "button1_text",
+          "label": "Button 1 Text (English)"
+        },
+        {
+          "type": "text",
+          "id": "button1_text_de",
+          "label": "Button 1 Text (German)"
+        },
+        {
+          "type": "text",
+          "id": "button1_text_fr",
+          "label": "Button 1 Text (French)"
+        },
+        {
+          "type": "text",
+          "id": "button1_text_fi",
+          "label": "Button 1 Text (Finnish)"
+        },
+        {
+          "type": "url",
+          "id": "button1_url",
+          "label": "Button 1 URL"
+        },
+        {
+          "type": "text",
+          "id": "button2_text",
+          "label": "Button 2 Text (English)"
+        },
+        {
+          "type": "text",
+          "id": "button2_text_de",
+          "label": "Button 2 Text (German)"
+        },
+        {
+          "type": "text",
+          "id": "button2_text_fr",
+          "label": "Button 2 Text (French)"
+        },
+        {
+          "type": "text",
+          "id": "button2_text_fi",
+          "label": "Button 2 Text (Finnish)"
+        },
+        {
+          "type": "url",
+          "id": "button2_url",
+          "label": "Button 2 URL"
+        },
+        {
+          "type": "header",
+          "content": "Style"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "Background Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "select",
+          "id": "text_alignment",
+          "label": "Text Alignment",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ],
+          "default": "center"
+        }
+      ]
+    },
+    {
+      "type": "related_products_block",
+      "name": "Related Products",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Product Selection"
+        },
+        {
+          "type": "product",
+          "id": "related_products_source",
+          "label": "Select Product for Related Products",
+          "info": "Only used when not on product page"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_buy_button",
+          "label": "Enable buy button",
+          "default": true
+        }
+      ]
+    },
+     {
+      "type": "advertisement_block",
+      "name": "Advertisement Content",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Background Settings"
+        },
+        {
+          "type": "image_picker",
+          "id": "background_image",
+          "label": "Background Image"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "Background Color",
+          "default": "#f5f5f5"
+        },
+        {
+          "type": "select",
+          "id": "background_size",
+          "label": "Background Image Size",
+          "options": [
+            {
+              "value": "cover",
+              "label": "Cover"
+            },
+            {
+              "value": "contain",
+              "label": "Contain"
+            },
+            {
+              "value": "100",
+              "label": "100%"
+            },
+            {
+              "value": "75",
+              "label": "75%"
+            },
+            {
+              "value": "50",
+              "label": "50%"
+            }
+          ],
+          "default": "cover"
+        },
+        {
+          "type": "select",
+          "id": "background_position",
+          "label": "Background Image Position",
+          "options": [
+            {
+              "value": "center center",
+              "label": "Center"
+            },
+            {
+              "value": "top center",
+              "label": "Top Center"
+            },
+            {
+              "value": "bottom center",
+              "label": "Bottom Center"
+            },
+            {
+              "value": "center left",
+              "label": "Center Left"
+            },
+            {
+              "value": "center right",
+              "label": "Center Right"
+            }
+          ],
+          "default": "center center"
+        },
+        {
+          "type": "range",
+          "id": "min_height",
+          "label": "Minimum Height",
+          "min": 100,
+          "max": 800,
+          "step": 10,
+          "default": 400,
+          "unit": "px"
+        },
+        {
+          "type": "header",
+          "content": "Content Settings"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title (English)",
+          "default": "Refer a friend - get 5% off"
+        },
+        {
+          "type": "text",
+          "id": "title_de",
+          "label": "Title (German)"
+        },
+        {
+          "type": "text",
+          "id": "title_fr",
+          "label": "Title (French)"
+        },
+        {
+          "type": "text",
+          "id": "title_fi",
+          "label": "Title (Finnish)"
+        },
+        {
+          "type": "range",
+          "id": "title_size",
+          "label": "Title Font Size",
+          "min": 20,
+          "max": 80,
+          "step": 2,
+          "default": 48,
+          "unit": "px"
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Title Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "select",
+          "id": "text_alignment",
+          "label": "Text Alignment",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "header",
+          "content": "Button Settings"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text (English)",
+          "default": "Refer a friend"
+        },
+        {
+          "type": "text",
+          "id": "button_text_de",
+          "label": "Button Text (German)"
+        },
+        {
+          "type": "text",
+          "id": "button_text_fr",
+          "label": "Button Text (French)"
+        },
+        {
+          "type": "text",
+          "id": "button_text_fi",
+          "label": "Button Text (Finnish)"
+        },
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "Button URL"
+        },
+        {
+          "type": "color",
+          "id": "button_bg_color",
+          "label": "Button Background Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "button_text_color",
+          "label": "Button Text Color",
+          "default": "#000000"
+        },
+        {
+          "type": "range",
+          "id": "padding_top",
+          "label": "Top Padding",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "default": 40,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "padding_bottom",
+          "label": "Bottom Padding",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "default": 40,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "padding_left",
+          "label": "Left Padding",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "default": 40,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "padding_right",
+          "label": "Right Padding",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "default": 40,
+          "unit": "px"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Adaptive Content Grid",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+
+{%- liquid
+  assign block_padding = section.settings.block_padding
+  assign image_aspect_ratio = section.settings.image_aspect_ratio
+  assign content_layout = section.settings.content_layout
+  assign desktop_columns = section.settings.desktop_columns | plus: 0
+  assign mobile_columns = section.settings.mobile_columns | plus: 0
+  assign border_width = section.settings.border_width
+  assign border_color = section.settings.border_color
+  assign desktop_title_size = section.settings.desktop_title_size
+  assign mobile_title_size = section.settings.mobile_title_size
+  assign desktop_desc_size = section.settings.desktop_desc_size
+  assign mobile_desc_size = section.settings.mobile_desc_size
+  assign desktop_big_title_size = section.settings.desktop_big_title_size
+  assign mobile_big_title_size = section.settings.mobile_big_title_size
+  assign section_width = section.settings.section_width
+
+  assign current_lang = request.locale.iso_code
+  assign locale_code = current_lang
+
+  assign desktop_section_title_size = section.settings.desktop_section_title_size
+  assign mobile_section_title_size = section.settings.mobile_section_title_size
+  assign desktop_section_subtitle_size = section.settings.desktop_section_subtitle_size
+  assign mobile_section_subtitle_size = section.settings.mobile_section_subtitle_size
+  assign section_title_color = section.settings.section_title_color
+  assign section_subtitle_color = section.settings.section_subtitle_color
+  assign section_heading_alignment = section.settings.section_heading_alignment
+
+  assign buy_button_text = 'Buy now'
+  case current_lang
+    when 'de'
+      assign buy_button_text = 'Jetzt kaufen'
+    when 'fr'
+      assign buy_button_text = 'Acheter maintenant'
+    when 'fi'
+      assign buy_button_text = 'Osta nyt'
+  endcase
+
+  assign no_padding_class = ''
+  if block_padding == 0
+    assign no_padding_class = 'no-block-padding'
+  endif
+-%}
+
+<style>
+    #custom-adaptive-grid-{{ section.id }} .advanced-grid-section {
+      padding: 50px 0;
+    }
+
+    #custom-adaptive-grid-{{ section.id }} .section-heading {
+      text-align: {{ section_heading_alignment }};
+      margin-bottom: 40px;
+    }
+
+    #custom-adaptive-grid-{{ section.id }} .section-title {
+      color: {{ section_title_color }};
+    }
+
+    #custom-adaptive-grid-{{ section.id }} .section-subtitle {
+      color: {{ section_subtitle_color }};
+    }
+
+    #custom-adaptive-grid-{{ section.id }} .advanced-grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(calc((100% - ({{ desktop_columns }} - 1) * 20px) / {{ desktop_columns }}), 1fr));
+      gap: 20px;
+    }
+
+    #custom-adaptive-grid-{{ section.id }} .advanced-grid-block {
+      border: {{ border_width }}px solid {{ border_color }};
+      border-radius: 8px;
+      padding: {{ block_padding }}px;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #custom-adaptive-grid-{{ section.id }} .advanced-grid-block.no-block-padding {
+      padding: 0;
+    }
+
+    #custom-adaptive-grid-{{ section.id }} .advanced-grid-block.no-block-padding .custom-big-title,
+    #custom-adaptive-grid-{{ section.id }} .advanced-grid-block.no-block-padding .custom-title,
+    #custom-adaptive-grid-{{ section.id }} .advanced-grid-block.no-block-padding .custom-description,
+    #custom-adaptive-grid-{{ section.id }} .advanced-grid-block.no-block-padding .custom-button-container {
+      margin: 0;
+    }
+
+    #custom-adaptive-grid-{{ section.id }} .advanced-grid-block.no-block-padding .custom-button-container {
+      margin-top: 10px;
+    }
+
+    #custom-adaptive-grid-{{ section.id }} .product-block-container {
+      position: relative;
+      flex: 1;
+    }
+
+    #custom-adaptive-grid-{{ section.id }} .product-block-wrapper {
+      width: 100%;
+      height: 100%;
+      padding: 0 !important;
+      margin: 0 !important;
+      border: none !important;
+      background: transparent !important;
+      font-size: initial !important;
+      line-height: initial !important;
+    }
+
+    #custom-adaptive-grid-{{ section.id }} .advanced-grid-block .product-block-wrapper .description-box {
+      padding: 0 20px 0 30px !important;
+    }
+
+    #custom-adaptive-grid-{{ section.id }} .custom-content-wrapper {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      flex: 1;
+    }
+
+    #custom-adaptive-grid-{{ section.id }} .product-content-wrapper {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    #custom-adaptive-grid-{{ section.id }} .product-content-wrapper .product-button-container {
+      padding: 10px 20px 20px;
+    }
+
+    #custom-adaptive-grid-{{ section.id }} .product-buy-button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #333;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+
+    #custom-adaptive-grid-{{ section.id }} .product-buy-button:hover {
+      background-color: #555;
+    }
+
+    #custom-adaptive-grid-{{ section.id }} .text-left .custom-button-container {
+      justify-content: flex-start;
+    }
+
+    #custom-adaptive-grid-{{ section.id }} .text-center .custom-button-container {
+      justify-content: center;
+    }
+
+    #custom-adaptive-grid-{{ section.id }} .text-right .custom-button-container {
+      justify-content: flex-end;
+    }
+
+    #custom-adaptive-grid-{{ section.id }} .custom-image-wrapper {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    #custom-adaptive-grid-{{ section.id }} .custom-content-text {
+    padding: 30px;
+  }
+  
+  #custom-adaptive-grid-{{ section.id }} .advanced-grid-block .custom-content-text .custom-title {
+    margin: 0 0 16px 0;
+  }
+  
+  #custom-adaptive-grid-{{ section.id }} .advanced-grid-block .custom-content-text .custom-description {
+    margin: 0 0 24px 0;
+  }
+  
+  #custom-adaptive-grid-{{ section.id }} .advanced-grid-block .custom-content-text .custom-button-container {
+    margin-top: 24px;
+  }
+
+    {% case image_aspect_ratio %}
+    {% when '1-1' %}
+    #custom-adaptive-grid-{{ section.id }} .custom-image-wrapper {
+      aspect-ratio: 1 / 1;
+    }
+  {% when '16-9' %}
+  #custom-adaptive-grid-{{ section.id }} .custom-image-wrapper {
+    aspect-ratio: 16 / 9;
+  }
+  {% when '4-3' %}
+  #custom-adaptive-grid-{{ section.id }} .custom-image-wrapper {
+    aspect-ratio: 4 / 3;
+  }
+  {% when '3-4' %}
+  #custom-adaptive-grid-{{ section.id }} .custom-image-wrapper {
+    aspect-ratio: 3 / 4;
+  }
+  {% else %}
+  #custom-adaptive-grid-{{ section.id }} .custom-image-wrapper {
+    aspect-ratio: auto;
+  }
+  {% endcase %}
+
+  #custom-adaptive-grid-{{ section.id }} .custom-image {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border-radius: 4px;
+  }
+  
+  #custom-adaptive-grid-{{ section.id }} .image-size-auto {
+    object-fit: auto;
+  }
+  
+  #custom-adaptive-grid-{{ section.id }} .image-size-contain {
+    object-fit: contain;
+  }
+  
+  #custom-adaptive-grid-{{ section.id }} .image-size-cover {
+    object-fit: cover;
+  }
+  
+  #custom-adaptive-grid-{{ section.id }} .image-size-75 {
+    object-fit: contain;
+    width: 75%;
+    margin: 0 auto;
+  }
+  
+  #custom-adaptive-grid-{{ section.id }} .image-size-50 {
+    object-fit: contain;
+    width: 50%;
+    margin: 0 auto;
+  }
+  
+  #custom-adaptive-grid-{{ section.id }} .image-size-25 {
+    object-fit: contain;
+    width: 25%;
+    margin: 0 auto;
+  }
+  
+  #custom-adaptive-grid-{{ section.id }} .image-size-15 {
+    object-fit: contain;
+    width: 15%;
+    margin: 0 auto;
+  }
+  
+  #custom-adaptive-grid-{{ section.id }} .image-size-10 {
+    object-fit: contain;
+    width: 10%;
+    margin: 0 auto;
+  }
+
+  #custom-adaptive-grid-{{ section.id }} .advanced-grid-block .custom-big-title {
+    font-size: {{ desktop_big_title_size }}px;
+    margin: 0 0 20px 0;
+    line-height: 1.2;
+  }
+
+  #custom-adaptive-grid-{{ section.id }} .advanced-grid-block .custom-title {
+    font-size: {{ desktop_title_size }}px;
+    margin: 0 0 16px 0;
+    font-weight: 600;
+  }
+
+  #custom-adaptive-grid-{{ section.id }} .advanced-grid-block .custom-description {
+    font-size: {{ desktop_desc_size }}px;
+    margin: 0 0 24px 0;
+    line-height: 1.5;
+  }
+
+  #custom-adaptive-grid-{{ section.id }} .custom-grid-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+  }
+
+  #custom-adaptive-grid-{{ section.id }} .custom-grid-button:hover {
+    background-color: #555;
+  }
+
+  #custom-adaptive-grid-{{ section.id }} .advanced-grid-block .custom-button-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 24px;
+  }
+
+  #custom-adaptive-grid-{{ section.id }} .text-left {
+    text-align: left;
+  }
+
+  #custom-adaptive-grid-{{ section.id }} .text-center {
+    text-align: center;
+  }
+
+  #custom-adaptive-grid-{{ section.id }} .text-right {
+    text-align: right;
+  }
+
+  #custom-adaptive-grid-{{ section.id }} .advanced-grid-block.no-block-padding .custom-content-text {
+    padding: 20px !important;
+  }
+
+  @media (max-width: 768px) {
+    #custom-adaptive-grid-{{ section.id }} .advanced-grid-container {
+      grid-template-columns: repeat(auto-fill, minmax(calc((100% - ({{ mobile_columns }} - 1) * 20px) / {{ mobile_columns }}), 1fr));
+    }
+
+    #custom-adaptive-grid-{{ section.id }} .custom-big-title {
+      font-size: {{ mobile_big_title_size }}px;
+    }
+
+    #custom-adaptive-grid-{{ section.id }} .custom-title {
+      font-size: {{ mobile_title_size }}px;
+    }
+
+    #custom-adaptive-grid-{{ section.id }} .custom-description {
+      font-size: {{ mobile_desc_size }}px;
+    }
+
+    #custom-adaptive-grid-{{ section.id }} .custom-content-text {
+      padding: 20px;
+    }
+  }
+
+  #custom-adaptive-grid-{{ section.id }} .custom-content-wrapper {
+    flex-direction: column !important;
+  }
+  {% if content_layout == 'text-top' %}
+    #custom-adaptive-grid-{{ section.id }} .custom-content-text {
+      order: 1 !important;
+    }
+    #custom-adaptive-grid-{{ section.id }} .custom-content-image {
+      order: 2 !important;
+    }
+  {% else %}
+  #custom-adaptive-grid-{{ section.id }} .custom-content-text {
+    order: 2 !important;
+  }
+  #custom-adaptive-grid-{{ section.id }} .custom-content-image {
+    order: 1 !important;
+  }
+  {% endif %}
+  }
+</style>
+
+<div id="custom-adaptive-grid-{{ section.id }}" class="custom-adaptive-grid-section">
+  <div class="{% if section.settings.enable_section_container %}container{% endif %}" {% if section.settings.enable_section_container %}style="max-width: {{ section.settings.section_width }}px;"{% endif %}>
+    <div class="advanced-grid-section">
+  {% if section.settings.section_title != blank or section.settings.section_subtitle != blank %}
+    <div class="section-heading">
+      {% if section.settings.section_title != blank %}
+        <h2 class="section-title">
+          {% render 'localized-value', field: 'section_title', locale_code: locale_code, settings: section.settings %}
+        </h2>
+      {% endif %}
+      
+      {% if section.settings.section_subtitle != blank %}
+        <p class="section-subtitle">
+          {% render 'localized-value', field: 'section_subtitle', locale_code: locale_code, settings: section.settings %}
+        </p>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  <div class="advanced-grid-container">
+    {% for block in section.blocks %}
+      {%- assign settings = block.settings -%}
+      {%- assign text_alignment_class = 'text-' | append: settings.text_alignment -%}
+
+      {% case block.type %}
+        {% when 'collection_block' %}
+          {% if settings.selected_collection != blank %}
+            {%- assign collection = collections[settings.selected_collection] -%}
+
+            {% if collection != blank %}
+              {% for product in collection.products %}
+                <div
+                  class="advanced-grid-block {{ no_padding_class }}"
+                  style="background-color: {{ settings.background_color }};"
+                  {{ block.shopify_attributes }}
+                >
+                  <div class="product-content-wrapper">
+                    <div class="product-block-container">
+                      <div class="product-block-wrapper">
+                        {% render 'product-block', product: product %}
+                      </div>
+                    </div>
+
+                    {% if settings.enable_buy_button %}
+                      <div class="product-button-container">
+                        <a href="{{ product.url }}" class="product-buy-button">
+                          {{ buy_button_text }}
+                        </a>
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endif %}
+
+        {% when 'related_products_block' %}
+          {% if product != blank and template.name == 'product' %}
+            {% assign source_product = product %}
+          {% elsif settings.related_products_source != blank %}
+            {% assign source_product = all_products[settings.related_products_source] %}
+          {% else %}
+            {% assign source_product = nil %}
+          {% endif %}
+          
+          {% if source_product != blank %}
+            {% assign related_products = source_product.metafields.custom.related_products.value %}
+            {% if related_products %}
+              {% for related_product in related_products %}
+                <div
+                  class="advanced-grid-block {{ no_padding_class }}"
+                  style="background-color: {{ settings.background_color }};"
+                  {{ block.shopify_attributes }}
+                >
+                  <div class="product-content-wrapper">
+                    <div class="product-block-container">
+                      <div class="product-block-wrapper">
+                        {% render 'product-block', product: related_product %}
+                      </div>
+                    </div>
+
+                    {% if settings.enable_buy_button == 'true' %}
+                      <div class="product-button-container text-left">
+                        <a href="{{ related_product.url }}" class="product-buy-button">
+                          {{ buy_button_text }}
+                        </a>
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+              {% endfor %}
+            {% else %}
+              <div class="no-related-products">
+                <p>{{ "No related products found" | t }}</p>
+              </div>
+            {% endif %}
+          {% endif %}
+
+        {% when 'product_block' %}
+          <div
+            class="advanced-grid-block {{ no_padding_class }}"
+            style="background-color: {{ settings.background_color }};"
+            {{ block.shopify_attributes }}
+          >
+            {% if settings.selected_product != blank %}
+              {%- assign product = all_products[settings.selected_product] -%}
+
+              {% if product != blank %}
+                <div class="product-content-wrapper">
+                  <div class="product-block-container">
+                    <div class="product-block-wrapper">
+                      {% render 'product-block', product: product %}
+                    </div>
+                  </div>
+
+                  {% if settings.enable_buy_button %}
+                    <div class="product-button-container text-left">
+                      <a href="{{ product.url }}" class="product-buy-button">
+                        {{ buy_button_text }}
+                      </a>
+                    </div>
+                  {% endif %}
+                </div>
+              {% endif %}
+            {% endif %}
+          </div>
+
+        {% when 'custom_block' %}
+          <div
+            class="advanced-grid-block {{ no_padding_class }}"
+            style="background-color: {{ settings.background_color }};"
+            {{ block.shopify_attributes }}
+          >
+            <div class="custom-content-wrapper">
+              <div class="custom-content-image" style="background-color: {{ settings.image_background_color }}">
+                {% if settings.image != blank %}
+                  <div class="custom-image-wrapper">
+                    {% if settings.button1_url != blank %}
+                      <a href="{{ settings.button1_url }}">
+                    {% endif %}
+
+                    {% capture image_class %}custom-image image-size-{{ settings.image_size }}{% endcapture %}
+                    {{  
+                      settings.image
+                      | image_url: width: 1000
+                      | image_tag: class: image_class, loading: 'lazy', alt: settings.title
+                    }}
+
+                    {% if settings.button1_url != blank %}
+                      </a>
+                    {% endif %}
+                  </div>
+                {% endif %}
+              </div>
+
+              <div class="custom-content-text {{ text_alignment_class }}">
+                {% if settings.big_number != blank %}
+                  <h2 class="custom-big-title">
+                    {{ settings.big_number }}
+                  </h2>
+                {% endif %}
+
+                {% if settings.title != blank %}
+                  <h3 class="custom-title">
+                    {% render 'localized-value', field: 'title', locale_code: locale_code, settings: settings %}
+                  </h3>
+                {% endif %}
+
+                {% if settings.description != blank %}
+                  <div class="custom-description">
+                    {% render 'localized-value', field: 'description', locale_code: locale_code, settings: settings %}
+                  </div>
+                {% endif %}
+
+                <div class="custom-button-container">
+                  {% if settings.button1_text != blank and settings.button1_url != blank %}
+                    <a href="{{ settings.button1_url }}" class="custom-grid-button">
+                      {% render 'localized-value', field: 'button1_text', locale_code: locale_code, settings: settings %}
+                    </a>
+                  {% endif %}
+
+                  {% if settings.button2_text != blank and settings.button2_url != blank %}
+                    <a href="{{ settings.button2_url }}" class="custom-grid-button">
+                      {% render 'localized-value', field: 'button2_text', locale_code: locale_code, settings: settings %}
+                    </a>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {% when 'advertisement_block' %}
+    <div
+      class="advanced-grid-block {{ no_padding_class }}"
+      style="padding: 0; overflow: hidden; border: none;"
+      {{ block.shopify_attributes }}
+    >
+      <div class="advertisement-wrapper">
+        <a href="{{ settings.button_url }}" style="display: block; text-decoration: none;">
+          <div
+            class="advertisement-content"
+            style="
+              display: flex;
+              flex-direction: column;
+              justify-content: flex-end;
+              background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 100%), 
+                {% if settings.background_image != blank %} 
+                  url('{{ settings.background_image | img_url: '3000x3000' }}') 
+                {% else %} 
+                  none 
+                {% endif %};
+              background-color: {{ settings.background_color }};
+              background-repeat: no-repeat;
+              background-position: {{ settings.background_position }};
+              background-size: {% if settings.background_size == 'cover' or settings.background_size == 'contain' %} 
+                {{ settings.background_size }} 
+              {% else %} 
+                {{ settings.background_size }}% 
+              {% endif %};
+              min-height: {{ settings.min_height }}px;
+              padding-top: {{ settings.padding_top }}px;
+              padding-bottom: {{ settings.padding_bottom }}px;
+              padding-left: {{ settings.padding_left }}px;
+              padding-right: {{ settings.padding_right }}px;
+              text-align: {{ settings.text_alignment }};
+            "
+          >
+            {% if settings.title != blank %}
+              <h2 
+                class="advertisement-title"
+                style="
+                  font-size: {{ settings.title_size }}px; 
+                  line-height: {{ settings.title_size | times: 1.2 }}px; 
+                  color: {{ settings.title_color }}; 
+                  font-weight: 700;
+                  margin-bottom: 20px;
+                "
+              >
+                {% if request.locale.iso_code == 'de' and settings.title_de != blank %}
+                  {{ settings.title_de }}
+                {% elsif request.locale.iso_code == 'fr' and settings.title_fr != blank %}
+                  {{ settings.title_fr }}
+                {% elsif request.locale.iso_code == 'fi' and settings.title_fi != blank %}
+                  {{ settings.title_fi }}
+                {% else %}
+                  {{ settings.title }}
+                {% endif %}
+              </h2>
+            {% endif %}
+            
+            {% if settings.button_text != blank and settings.button_url != blank %}
+              <div class="advertisement-button-container">
+                <span 
+                  class="advertisement-button"
+                  style="
+                    display: inline-block;
+                    padding: 12px 24px;
+                    background-color: {{ settings.button_bg_color }};
+                    color: {{ settings.button_text_color }};
+                    border-radius: 4px;
+                    font-weight: 600;
+                    text-decoration: none;
+                  "
+                >
+                  {% if request.locale.iso_code == 'de' and settings.button_text_de != blank %}
+                    {{ settings.button_text_de }}
+                  {% elsif request.locale.iso_code == 'fr' and settings.button_text_fr != blank %}
+                    {{ settings.button_text_fr }}
+                  {% elsif request.locale.iso_code == 'fi' and settings.button_text_fi != blank %}
+                    {{ settings.button_text_fi }}
+                  {% else %}
+                    {{ settings.button_text }}
+                  {% endif %}
+                </span>
+              </div>
+            {% endif %}
+          </div>
+        </a>
+      </div>
+    </div>
+      {% endcase %}
+    {% endfor %}
+  </div>
+    </div>
+  </div>
+</div>

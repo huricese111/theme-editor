@@ -1,0 +1,941 @@
+{%- comment -%}
+/**
+ * Custom Product Tabs Section
+ * 
+ * An interactive tabbed interface for displaying product collections with an integrated
+ * advertisement block. This section creates a sophisticated product showcase with
+ * multilingual support and responsive design optimized for e-commerce stores.
+ * 
+ * Key Features:
+ * - Dynamic tab-based product display system
+ * - Multilingual content support (English, German, French, Finnish)
+ * - Flexible product source options (collections or custom product lists)
+ * - Integrated advertisement block with customizable styling
+ * - Responsive grid layout with mobile-optimized horizontal scrolling
+ * - Interactive hover effects and smooth transitions
+ * 
+ * Tab System:
+ * - Multiple product tabs with custom titles per language
+ * - Active tab highlighting with smooth transitions
+ * - Click-based tab switching functionality
+ * - Support for both collection-based and custom product selection
+ * 
+ * Product Display:
+ * - Desktop: 2-column grid layout with hover effects
+ * - Mobile: Horizontal scrolling carousel with snap-to-grid
+ * - Product blocks rendered via 'product-block' snippet
+ * - Automatic product loading from collections or custom lists
+ * 
+ * Advertisement Integration:
+ * - Dedicated advertisement block (limit: 1 per section)
+ * - Customizable background image, color, and positioning
+ * - Multilingual heading and button text support
+ * - Flexible padding and alignment controls
+ * - Rendered via 'custom-ads-block' snippet
+ * 
+ * Responsive Behavior:
+ * - Desktop (≥769px): Side-by-side layout with grid product display
+ * - Mobile (≤768px): Stacked layout with horizontal product scrolling
+ * - Touch-optimized scrolling with visual scroll hints
+ * - Adaptive tab sizing and spacing
+ * 
+ * Localization:
+ * - Automatic language detection via request.locale.iso_code
+ * - Fallback to default language if translation unavailable
+ * - Supports section title, tab titles, and advertisement content
+ * - Language-specific rich text content for advertisements
+ * 
+ * Interactive Features:
+ * - Tab switching with active state management
+ * - Product hover effects (desktop only)
+ * - Touch-friendly mobile navigation
+ * - Scroll hint animations for mobile users
+ * - Smooth CSS transitions throughout
+ * 
+ * Customization Options:
+ * - Section title with multilingual variants
+ * - Unlimited product tabs with custom titles
+ * - Product source selection (collection vs. custom)
+ * - Advertisement styling and content customization
+ * - Background positioning and sizing controls
+ * 
+ * Default Presets:
+ * - Pre-configured with HEPHA e-bike product categories
+ * - Sample advertisement promoting full product range
+ * - Multilingual content examples for all supported languages
+ * - Optimized for bicycle/e-bike product showcases
+ * 
+ * Technical Features:
+ * - CSS Grid and Flexbox for modern layouts
+ * - Touch event handling for mobile interactions
+ * - Scroll behavior optimization for performance
+ * - CSS custom properties for dynamic styling
+ * - Semantic HTML structure with proper ARIA roles
+ * 
+ * Dependencies:
+ * - Requires 'product-block' snippet for product rendering
+ * - Requires 'custom-ads-block' snippet for advertisement display
+ * - Uses Shopify's collection and product APIs
+ * - Relies on Liquid templating engine
+ * 
+ * Browser Support:
+ * - Modern browsers with CSS Grid support
+ * - Touch events for mobile devices
+ * - CSS scroll-snap for enhanced mobile experience
+ * - Flexbox support required
+ * 
+ * @author [Your Name]
+ * @created [Creation Date]
+ * @modified [Last Modified Date]
+ * @version 1.0.0
+ * 
+ * Note: This comment block provides comprehensive documentation for the
+ * Custom Product Tabs section. Customize the author, dates, and version
+ * information as needed for your project.
+ */
+{%- endcomment -%}
+
+<style>
+  .flex-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .custom-tabs {
+    display: flex;
+  }
+
+  .ads-block {
+    flex: 0 0 auto;
+    width: 300px;
+  }
+
+  .product-content-section {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 100px 0;
+  }
+
+  .explore-title {
+    font-size: 30px;
+    margin-bottom: 60px;
+    text-align: left;
+  }
+
+  .tab-content-section {
+    max-width: 1400px;
+    margin: 0 20px 0 auto;
+    display: flex;
+    flex: 2;
+  }
+
+  .ad-image {
+    flex: 0.6;
+    position: relative;
+    border-radius: 10px;
+    margin-top: 72px;
+  }
+
+  .ad-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 10;
+  }
+
+  .tab-area {
+    flex: 2;
+  }
+
+  .tab-item {
+    padding: 10px 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
+    font-weight: 500;
+  }
+
+  .tab-item.active {
+    background: #000;
+    color: #fff;
+  }
+
+  .tab-item:hover:not(.active) {
+    background: #e6e6e6;
+  }
+
+  .custom-taps {
+    display: flex;
+    cursor: pointer;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+    overflow-x: auto;
+    padding: 5px;
+    scrollbar-width: none;
+  }
+
+  .custom-taps::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tab-panel {
+    display: none;
+  }
+
+  .tab-panel.active {
+    display: block;
+  }
+
+  .product-columns {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    padding: 0 20px 20px;
+    gap: 0;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 0 20px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .product-columns::-webkit-scrollbar {
+    display: none;
+  }
+
+  .product-column {
+    position: relative;
+    border: 1px solid #bababa;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    background: #fff;
+    flex: 0 0 calc(98% - 15px);
+    min-width: calc(85% - 15px);
+    margin-right: 15px;
+    scroll-snap-align: start;
+    overflow: hidden;
+  }
+
+  .product-column:last-child {
+    min-width: calc(85% - 5px);
+    margin-right: 5px;
+  }
+
+  .product-column:hover {
+    border-color: #d0d0d0;
+  }
+
+  .product-column img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9 !important;
+    object-fit: contain;
+    background: #f8f8f8;
+    border-radius: 0;
+    padding: 20px;
+  }
+
+  .product-column .product-content {
+    padding: 15px;
+  }
+
+  .producttitle {
+    color: #000;
+    font-size: 16px;
+    margin: 0 0 5px;
+    font-weight: 600;
+  }
+
+  .product-block {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+  }
+
+  .product-block__image .theme-img {
+    object-position: var(--product-block-crop-align) center;
+    padding: 10px;
+  }
+
+  @media (min-width: 769px) {
+    .tab-item {
+      padding: 10px 24px;
+    }
+
+    .product-columns {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      padding: 20px 0 0;
+      margin: 0;
+      overflow-x: visible;
+      scroll-snap-type: none;
+      flex-wrap: wrap;
+    }
+
+    .product-column {
+      flex: none;
+      width: 100%;
+      min-width: auto;
+      margin-right: 0;
+      scroll-snap-align: none;
+      margin-bottom: 0;
+    }
+
+    .product-column:last-child {
+      min-width: auto;
+      margin-right: 0;
+    }
+
+    .product-columns .product-column:hover {
+      transform: translateY(-5px) !important;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .tab-content-area {
+      width: 100vw;
+    }
+
+    .custom-tabs {
+      flex-wrap: wrap;
+      padding: 20px;
+    }
+
+    .explore-title {
+      font-size: 24px;
+      margin-bottom: 30px;
+      padding: 0 15px;
+    }
+
+    .flex-container {
+      flex-direction: column;
+    }
+
+    .tab-item {
+      display: inline-block;
+      margin-bottom: 0;
+      font-size: 16px;
+      padding: 14px 20px;
+      line-height: 1;
+    }
+
+    .product-slider {
+      position: relative;
+    }
+
+    .product-columns {
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      gap: 10px;
+    }
+
+    .scrolling-hint {
+      opacity: 1;
+      animation: fadeHint 1.5s ease infinite;
+    }
+
+    @keyframes fadeHint {
+      0,
+      100% {
+        opacity: 0.6;
+      }
+      50% {
+        opacity: 0.9;
+      }
+    }
+
+    .ads-block {
+      width: 100%;
+      padding: 0 15px;
+      margin-top: 30px;
+    }
+
+    .ad-image {
+      margin-top: 0;
+      margin-bottom: 30px;
+    }
+
+    .orderbutton {
+      padding: 8px 15px;
+      font-size: 14px;
+    }
+
+    .product-block {
+      min-width: 320px;
+    }
+  }
+</style>
+
+<div class="product-content-section" id="peoduct-card">
+  {%- assign lang = request.locale.iso_code -%}
+  <h2 class="explore-title">
+    {% case lang %}
+      {% when 'de' -%}
+        {{- section.settings.title_de }}
+      {% when 'fr' -%}
+        {{- section.settings.title_fr }}
+      {% when 'fi' -%}
+        {{- section.settings.title_fi }}
+      {% else -%}
+        {{- section.settings.title }}
+    {% endcase %}
+  </h2>
+
+  <div class="flex-container">
+    <div class="tab-content-section">
+      <div class="tab-area">
+        <div class="custom-tabs" role="tablist">
+          {% for block in section.blocks %}
+            {% if block.type == 'tab' %}
+              {% assign tab_id = 'tab-' | append: block.id %}
+              <div
+                class="tab-item{% if forloop.first %} active{% endif %}"
+                role="tab"
+                data-target="{{ tab_id }}"
+                data-block-id="{{ block.id }}"
+              >
+                {% if request.locale.iso_code == 'de' and block.settings.title_de != blank %}
+                  {{ block.settings.title_de }}
+                {% elsif request.locale.iso_code == 'fr' and block.settings.title_fr != blank %}
+                  {{ block.settings.title_fr }}
+                {% elsif request.locale.iso_code == 'fi' and block.settings.title_fi != blank %}
+                  {{ block.settings.title_fi }}
+                {% else %}
+                  {{ block.settings.title | default: 'New Tab' }}
+                {% endif %}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        <div class="tab-content-area">
+          {% for block in section.blocks %}
+            {% if block.type == 'tab' %}
+              {% assign tab_id = 'tab-' | append: block.id %}
+              <div
+                id="{{ tab_id }}"
+                class="tab-panel{% if forloop.first %} active{% endif %}"
+                role="tabpanel"
+                {{ block.shopify_attributes }}
+              >
+                {% if block.settings.product_source == 'collection' %}
+                  {% assign target_collection = collections[block.settings.collection] %}
+                  {% if target_collection and target_collection.products.size > 0 %}
+                    <div class="product-slider">
+                      <div class="product-columns">
+                        {% for product in target_collection.products %}
+                          {% render 'product-block', product: product, animate: true, force_hover_image: true %}
+                        {% endfor %}
+                      </div>
+                    </div>
+                  {% endif %}
+                {% else %}
+                  <div class="product-slider">
+                    <div class="product-columns">
+                      {% for product in block.settings.products %}
+                        {% render 'product-block', product: product, animate: true, force_hover_image: true %}
+                      {% endfor %}
+                    </div>
+                  </div>
+                {% endif %}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class="ads-block">
+      {% for block in section.blocks %}
+        {% if block.type == 'advertisement' %}
+          {%
+            render 'custom-ads-block' with ad_link: block.settings.ad_link
+            , image: block.settings.image
+            , background_color: block.settings.background_color
+            , background_position: block.settings.background_position
+            , background_size: block.settings.background_size
+            , background_align_items: block.settings.background_align_items
+            , background_padding_top: block.settings.background_padding_top
+            , background_padding_left: block.settings.background_padding_left
+            , background_padding_right: block.settings.background_padding_right
+            , background_padding_bottom: block.settings.background_padding_bottom
+            , title_1: block.settings.title_1
+            , heading_color_1: block.settings.heading_color_1
+            , heading_size_1: block.settings.heading_size_1
+            , title_1_de: block.settings.title_1_de
+            , title_1_fr: block.settings.title_1_fr
+            , title_1_fi: block.settings.title_1_fi
+            , button_label: block.settings.button_label
+            , button_label_de: block.settings.button_label_de
+            , button_label_fr: block.settings.button_label_fr
+            , button_label_fi: block.settings.button_label_fi
+            , button_bg_color: block.settings.button_bg_color
+            , button_text_color: block.settings.button_text_color
+          %}
+          {% break %}
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const tabContainer = document.querySelector('.custom-tabs');
+    if (tabContainer) {
+      tabContainer.addEventListener('click', function (event) {
+        const tabItem = event.target.closest('.tab-item');
+        if (!tabItem) return;
+
+        const targetId = tabItem.dataset.target;
+        if (!targetId) return;
+
+        document.querySelectorAll('.tab-panel, .tab-item').forEach((el) => {
+          el.classList.remove('active');
+        });
+
+        tabItem.classList.add('active');
+        document.getElementById(targetId).classList.add('active');
+      });
+    }
+
+    if ('ontouchstart' in window) {
+      const sliders = document.querySelectorAll('.product-columns');
+
+      sliders.forEach((slider) => {
+        const scrollHint = slider.previousElementSibling;
+
+        slider.addEventListener('scroll', () => {
+          if (slider.scrollLeft > 20) {
+            if (scrollHint) scrollHint.style.opacity = 0;
+          } else {
+            if (scrollHint) scrollHint.style.opacity = 1;
+          }
+        });
+      });
+    }
+    const productColumns = document.querySelectorAll('.product-column');
+    productColumns.forEach((column) => {
+      column.addEventListener('mouseenter', function () {
+        this.style.transform = 'translateY(-5px)';
+        this.style.boxShadow = '0 10px 25px rgba(0,0,0,0.1)';
+      });
+
+      column.addEventListener('mouseleave', function () {
+        this.style.transform = '';
+        this.style.boxShadow = '';
+      });
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Custom Product Tabs New",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Related Products"
+    },
+    {
+      "type": "text",
+      "id": "title_de",
+      "label": "Title in German",
+      "default": "Ähnliche Modelle"
+    },
+    {
+      "type": "text",
+      "id": "title_fr",
+      "label": "Title in French",
+      "default": "Modèles associés"
+    },
+    {
+      "type": "text",
+      "id": "title_fi",
+      "label": "Title in Finland",
+      "default": "Liittyvät tuotteet"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Product Tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Tab Title (Default)",
+          "default": "New Tab"
+        },
+        {
+          "type": "text",
+          "id": "title_de",
+          "label": "Tab Title (German)"
+        },
+        {
+          "type": "text",
+          "id": "title_fr",
+          "label": "Tab Title (French)"
+        },
+        {
+          "type": "text",
+          "id": "title_fi",
+          "label": "Tab Title (Finland)"
+        },
+        {
+          "type": "radio",
+          "id": "product_source",
+          "label": "Product Source",
+          "options": [
+            {
+              "value": "collection",
+              "label": "Collection"
+            },
+            {
+              "value": "custom",
+              "label": "Custom Products"
+            }
+          ],
+          "default": "collection"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Select Collection"
+        },
+        {
+          "type": "product_list",
+          "id": "products",
+          "label": "Products",
+          "info": "Select products for this tab"
+        }
+      ]
+    },
+    {
+      "type": "advertisement",
+      "name": "Advertisement",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "url",
+          "id": "ad_link",
+          "label": "Ad Link"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Background Image"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "Background Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "select",
+          "id": "background_position",
+          "label": "Background Position",
+          "options": [
+            {
+              "value": "top left",
+              "label": "Top Left"
+            },
+            {
+              "value": "top center",
+              "label": "Top Center"
+            },
+            {
+              "value": "top right",
+              "label": "Top Right"
+            },
+            {
+              "value": "center left",
+              "label": "Center Left"
+            },
+            {
+              "value": "center center",
+              "label": "Center"
+            },
+            {
+              "value": "center right",
+              "label": "Center Right"
+            },
+            {
+              "value": "bottom left",
+              "label": "Bottom Left"
+            },
+            {
+              "value": "bottom center",
+              "label": "Bottom Center"
+            },
+            {
+              "value": "bottom right",
+              "label": "Bottom Right"
+            }
+          ],
+          "default": "center center"
+        },
+        {
+          "type": "select",
+          "id": "background_size",
+          "label": "Background Size",
+          "options": [
+            {
+              "value": "cover",
+              "label": "Cover"
+            },
+            {
+              "value": "contain",
+              "label": "Contain"
+            },
+            {
+              "value": "auto",
+              "label": "Auto"
+            }
+          ],
+          "default": "cover"
+        },
+        {
+          "type": "select",
+          "id": "background_align_items",
+          "label": "Vertical Alignment",
+          "options": [
+            {
+              "value": "flex-start",
+              "label": "Top"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "flex-end",
+              "label": "Bottom"
+            }
+          ],
+          "default": "center"
+        },
+        {
+          "type": "range",
+          "id": "background_padding_top",
+          "label": "Top Padding",
+          "unit": "px",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "background_padding_left",
+          "label": "Left Padding",
+          "unit": "px",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "background_padding_right",
+          "label": "Right Padding",
+          "unit": "px",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "background_padding_bottom",
+          "label": "Bottom Padding",
+          "unit": "px",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "default": 20
+        },
+        {
+          "type": "richtext",
+          "id": "title_1",
+          "label": "Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "title_1_de",
+          "label": "Heading (DE)"
+        },
+        {
+          "type": "richtext",
+          "id": "title_1_fr",
+          "label": "Heading (FR)"
+        },
+        {
+          "type": "richtext",
+          "id": "title_1_fi",
+          "label": "Heading (FI)"
+        },
+        {
+          "type": "color",
+          "id": "heading_color_1",
+          "label": "Heading Color",
+          "default": "#000000"
+        },
+        {
+          "type": "range",
+          "id": "heading_size_1",
+          "label": "Heading Size",
+          "unit": "px",
+          "min": 12,
+          "max": 50,
+          "step": 1,
+          "default": 24
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button Label"
+        },
+        {
+          "type": "text",
+          "id": "button_label_de",
+          "label": "Button Label (DE)"
+        },
+        {
+          "type": "text",
+          "id": "button_label_fr",
+          "label": "Button Label (FR)"
+        },
+        {
+          "type": "text",
+          "id": "button_label_fi",
+          "label": "Button Label (FI)"
+        },
+        {
+          "type": "color",
+          "id": "button_bg_color",
+          "label": "Button Background Color",
+          "default": "#000000"
+        },
+        {
+          "type": "color",
+          "id": "button_text_color",
+          "label": "Button Text Color",
+          "default": "#ffffff"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Product Tabs New",
+      "category": "Custom",
+      "settings": {
+        "title": "Explore more HEPHA E-Bikes",
+        "title_de": "Entdecken Sie mehr HEPHA E-Bikes",
+        "title_fr": "Découvrez d'autres vélos électriques HEPHA",
+        "title_fi": "Tutustu lisää HEPHA E-Bike-malleihin"
+      },
+      "blocks": [
+        {
+          "type": "tab",
+          "settings": {
+            "title": "Sale",
+            "title_de": "Sale",
+            "title_fr": "Sale",
+            "title_fi": "Sale",
+            "product_source": "collection",
+            "collection": "trekking-7-my23",
+            "products": []
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "title": "City",
+            "title_de": "City",
+            "title_fr": "City",
+            "title_fi": "City",
+            "product_source": "collection",
+            "collection": "city-e-bike",
+            "products": []
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "title": "Trekking",
+            "title_de": "Trekking",
+            "title_fr": "Trekking",
+            "title_fi": "Trekking",
+            "product_source": "collection",
+            "collection": "new-bike-2024",
+            "products": []
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "title": "Mountain",
+            "title_de": "Mountain",
+            "title_fr": "Mountain",
+            "title_fi": "Mountain",
+            "product_source": "collection",
+            "collection": "mountain-7-2024",
+            "products": []
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "title": "All Mountain Carbon",
+            "title_de": "All Mountain Carbon",
+            "title_fr": "All Mountain Carbon",
+            "title_fi": "All Mountain Carbon",
+            "product_source": "collection",
+            "collection": "all-mountain-7-carbon",
+            "products": []
+          }
+        },
+        {
+          "type": "advertisement",
+          "settings": {
+            "ad_link": "shopify://collections/hepha-ebikes",
+            "image": "shopify://shop_images/HEPHA-Trekking7_01_grey_7ff138ad-9f41-4981-b752-1bd80fee72c0.jpg",
+            "background_color": "#ffffff",
+            "background_position": "center center",
+            "background_size": "cover",
+            "background_align_items": "center",
+            "background_padding_top": 20,
+            "background_padding_left": 20,
+            "background_padding_right": 20,
+            "background_padding_bottom": 20,
+            "title_1": "<p>Not sure which E-Bike is right for you? Discover and compare our full range of E-Bikes to find the perfect model for your adventures.</p>",
+            "title_1_de": "<p>Nicht sicher, welches E-Bike das richtige für Sie ist? Entdecken und vergleichen Sie unser gesamtes Sortiment an E-Bikes, um das perfekte Modell für Ihre Abenteuer zu finden.</p>",
+            "title_1_fr": "<p>Vous n’êtes pas sûr de quel vélo électrique est fait pour vous ? Découvrez et comparez notre gamme complète de vélos électriques pour trouver le modèle parfait pour vos aventures.</p>",
+            "title_1_fi": "<p>Etkö ole varma, mikä sähköpyörämalli sopii sinulle? Tutustu ja vertaa koko valikoimaamme löytääksesi täydellisen pyörän omaan käyttötarkoitukseesi.</p>",
+            "heading_color_1": "#ffffff",
+            "heading_size_1": 18,
+            "button_label": "Explore all E-Bikes!",
+            "button_label_de": "Entdecke alle E-Bikes!",
+            "button_label_fr": "Découvrez tous modèles !",
+            "button_label_fi": "Tutki koko mallistoa!"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

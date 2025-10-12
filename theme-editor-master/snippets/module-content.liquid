@@ -1,0 +1,58 @@
+{% assign title_class = 'module__title' %}
+{% assign title_tag = title_element | default: 'div' %}
+{% assign btn_class = button_class | default: 'module__button' %}
+
+{% if title_size == 'medium' %}
+  {% assign title_class = 'module__title--medium' %}
+{% elsif title_size == 'small' %}
+  {% assign title_class = 'module__title--small' %}
+{% endif %}
+
+<div class="{% if wrapper_class %}{{ wrapper_class }}{% else %}module__content{% endif %}">
+  {% if tag != blank %}
+    {% if use_salestagrow %}
+      <div class="salestagrow">
+        <span class="salestag">{{ tag }}</span>
+      </div>
+    {% else %}
+      <div class="module__tag">{{ tag }}</div>
+    {% endif %}
+  {% endif %}
+  
+  {% if title != blank %}
+    <{{ title_tag }}
+      class="{{ title_class }}"
+      style="
+        {% if title_font_size %}font-size: {{ title_font_size }}px;{% endif %}
+        {% if title_font_weight %}font-weight: {{ title_font_weight }};{% endif %}
+        {% if title_color %}color: {{ title_color }};{% endif %}
+      "
+      {% if title_mobile_font_size %}data-mobile-font-size="{{ title_mobile_font_size }}"{% endif %}
+    >
+      {{ title }}
+    </{{ title_tag }}>
+  {% endif %}
+  
+  {% if description != blank %}
+    <p
+      class="{% if wrapper_class == 'text-container' %}description{% else %}module__description{% endif %}"
+      style="
+        {% if description_font_size %}font-size: {{ description_font_size }}px;{% endif %}
+        {% if description_font_weight %}font-weight: {{ description_font_weight }};{% endif %}
+        {% if description_color %}color: {{ description_color }};{% endif %}
+      "
+    >
+      {{ description }}
+    </p>
+  {% endif %}
+  
+  {% if button_text != blank %}
+    {% render 'unified-button',
+      text: button_text,
+      url: button_url,
+      bg_color: button_bg_color,
+      text_color: button_text_color,
+      class: btn_class
+    %}
+  {% endif %}
+</div>

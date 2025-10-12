@@ -1,0 +1,119 @@
+{% schema %}
+{
+  "name": "Mobile Bottom Bar",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "icon_homeunclicked",
+      "label": "Home Icon (Unclicked)"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_homeclicked",
+      "label": "Home Icon (Clicked)"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu_item",
+      "name": "Menu Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon_unclicked",
+          "label": "Icon (Unclicked)"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_clicked",
+          "label": "Icon (Clicked)"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Select Page"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label"
+        }
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "Mobile Bottom Bar",
+    "category": "Custom"
+  }]
+}
+{% endschema %}
+
+<style>
+  .bottom-bar {
+    display: flex;
+    justify-content: space-around;
+    background-color: #fff;
+    border-top: 1px solid #ccc;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+  }
+  .bottom-bar a {
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+    color: #333;
+    text-align: center;
+    flex: 1;
+    padding: 10px 0;
+    position: relative;
+    background-size: 32px 32px;
+    background-repeat: no-repeat;
+    background-position: top center;
+    margin-top: 5px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  .bottom-bar a span {
+    display: block;
+    font-size: 12px;
+    position: relative;
+    top: 24px;
+  }
+
+  .bottom-bar a:hover,
+  .bottom-bar a.active {
+    background-color: #f0f0f0;
+  }
+
+  .bottom-bar a.active {
+    background-image: url('{{ section.settings.icon_homeclicked | img_url: '2048x2048' }}');
+  }
+
+  @media (min-width: 768px) {
+    .bottom-bar {
+      display: none;
+    }
+  }
+</style>
+
+<div class="bottom-bar">
+  <a href="{{ routes.root_url }}" 
+     style="background-image: url('{{ section.settings.icon_homeunclicked | img_url: '2048x2048' }}');" >
+      <span class="label">{{ section.settings.label }}</span>
+    </a>
+  {% for block in section.blocks %}
+    <a href="{{ block.settings.link | url }}" 
+       style="background-image: url('{{ block.settings.icon_unclicked | img_url: '2048x2048' }}');" >
+      <span class="label">{{ block.settings.label }}</span>
+    </a>
+  {% endfor %}
+</div>

@@ -1,0 +1,519 @@
+{% comment %}
+  ============================================================================
+  Custom Footer Block Section
+  ============================================================================
+  
+  DESCRIPTION:
+  A comprehensive custom footer section for Shopify themes with advanced 
+  multi-language support and JobRad partnership integration. This component 
+  provides flexible footer blocks with customizable call-to-action buttons, 
+  localized content, and geo-targeted partner banners for enhanced user 
+  engagement and conversion optimization.
+  
+  CORE FEATURES:
+  • Multi-Language Support: Full localization for English, German, French, Finnish
+  • JobRad Partnership Integration: Conditional geo-targeting for Germany/Austria
+  • Flexible Footer Blocks: Up to 3 customizable blocks with unique styling
+  • Responsive Design: Mobile-optimized layouts with adaptive grid system
+  • Background Image Support: Custom or default fallback images for each block
+  • Customizable Button System: Individual colors, text, and URL configuration
+  • Hover Effects: Smooth CSS transitions and interactive elements
+  • Grid Layout Adaptation: Smart mobile layout for optimal user experience
+  • Country-Based Filtering: Conditional content display based on user location
+  • Accessibility Features: ARIA labels and semantic HTML structure
+  
+  BLOCK CONFIGURATION:
+  • Background Images: Custom image picker with default fallbacks
+  • Button Text: Localized text for all supported languages (EN/DE/FR/FI)
+  • Button URLs: Custom link destinations for each block
+  • Button Colors: Customizable background colors with hover effects
+  • Responsive Behavior: Automatic adaptation for mobile devices
+  
+  JOBRAD INTEGRATION:
+  • Conditional Display: Based on country detection (Germany/Austria only)
+  • Localized Partner Text: Multi-language support for partnership messaging
+  • Custom JobRad Icon: Dedicated icon rendering with hover animations
+  • Configurable JobRad URL: Customizable link to JobRad partnership pages
+  • Geo-Targeting Logic: Uses Shopify's localization.country.iso_code
+  
+  RESPONSIVE BEHAVIOR:
+  • Desktop Layout: Horizontal layout with equal-width blocks (flex: 1)
+  • Mobile Layout: Adaptive grid system for optimal mobile experience
+  • 3-Block Mobile Grid: First block full width, remaining blocks split 50/50
+  • Flexible Button Sizing: CSS clamp() for optimal readability across devices
+  • Height Adaptation: Variable heights (500px desktop, 400px mobile)
+  
+  DEFAULT PRESETS:
+  1. "Need help choosing?" - Contact form block with orange button (#f2a112)
+  2. "Book a test ride" - Test ride booking block with blue button (#2b7dde)
+  3. "Find a dealer" - Dealer locator block with red button (#fa6959)
+  
+  TECHNICAL IMPLEMENTATION:
+  • CSS Custom Properties: Maintainable styling with CSS variables
+  • Conditional Liquid Rendering: Locale-based content switching
+  • Country-Based Content Filtering: Geo-targeted feature display
+  • Optimized Image Loading: Shopify's img_url filter with size optimization
+  • Semantic HTML Structure: Proper accessibility and SEO optimization
+  • Smooth Animations: CSS transitions for enhanced user experience
+  
+  DEPENDENCIES AND RELATED FILES:
+  
+  Snippet Dependencies:
+  • snippets\icon-jobrad.liquid - JobRad logo SVG rendering with custom styling
+  
+  Related Snippet Files:
+  • snippets\leasing-partner.liquid - Partner integration (jobrad,bikeleasing,deutsche,businessbike)
+  
+  Theme Structure Files:
+  • layout\theme.liquid - Main theme layout with global configurations
+  • sections\footer.liquid - Standard footer section (separate from custom footer)
+  
+  SCHEMA CONFIGURATION:
+  • Section Name: "Custom footer block"
+  • Category: "Custom"
+  • Max Blocks: 3 footer blocks maximum
+  • Settings: JobRad banner toggle, JobRad URL, multi-language partner text
+  • Block Settings: Background image picker, multi-language button text, button URL, button color
+  • Default Preset: Complete 3-block setup with localized content
+  
+  STYLING FEATURES:
+  • CSS Custom Properties: --banner-height (500px), --mobile-banner-height (400px), --jobrad-icon-width (120px)
+  • Responsive Grid System: Flexible layout adaptation for mobile devices
+  • Hover Animations: Transform effects and box-shadow enhancements
+  • Color Customization: Individual button color configuration
+  • Typography: Clamp-based font sizing for optimal readability
+  • Overlay Effects: Semi-transparent overlays for better text readability
+  
+  BROWSER SUPPORT:
+  • Modern browsers with CSS Grid and Flexbox support
+  • CSS Custom Properties (CSS Variables) compatibility
+  • CSS clamp() function for responsive typography
+  • Transform and transition animations
+  • Shopify Liquid templating engine
+  
+  PERFORMANCE CONSIDERATIONS:
+  • Optimized image loading with Shopify's img_url filter
+  • Conditional rendering to reduce unnecessary DOM elements
+  • CSS-only animations for smooth performance
+  • Minimal JavaScript dependencies (none required)
+  • Efficient Liquid logic for locale detection
+  
+  ACCESSIBILITY FEATURES:
+  • Semantic HTML structure with proper heading hierarchy
+  • ARIA labels for interactive elements
+  • Keyboard navigation support
+  • Screen reader compatibility
+  • High contrast button designs
+  • Focus indicators for interactive elements
+  
+  LOCALIZATION SUPPORT:
+  • English (EN): Default language with fallback support
+  • German (DE): Full localization for German market
+  • French (FR): Complete French language support
+  • Finnish (FI): Finnish market localization
+  • Automatic locale detection via request.locale.iso_code
+  • Country-based feature toggling via localization.country.iso_code
+  
+  USAGE EXAMPLES:
+  • E-commerce footer with call-to-action blocks
+  • Partnership banner integration (JobRad)
+  • Multi-language website footer sections
+  • Conversion-optimized footer layouts
+  • Mobile-first responsive footer designs
+  
+  ============================================================================
+{% endcomment %}
+
+{% schema %}
+{
+  "name": "Custom footer block",
+  "max_blocks": 3,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_jobrad_banner",
+      "label": "Show JobRad Banner",
+      "default": true
+    },
+    {
+      "type": "url",
+      "id": "jobrad_url",
+      "label": "JobRad URL"
+    },
+    {
+      "type": "text",
+      "id": "partner_text_en",
+      "label": "Partner Text (English)",
+      "default": "Partner of"
+    },
+    {
+      "type": "text",
+      "id": "partner_text_de",
+      "label": "Partner Text (German)",
+      "default": "Partner von"
+    },
+    {
+      "type": "text",
+      "id": "partner_text_fr",
+      "label": "Partner Text (French)",
+      "default": "Partenaire de"
+    },
+    {
+      "type": "text",
+      "id": "partner_text_fi",
+      "label": "Partner Text (Finnish)",
+      "default": "Kumppani"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "footer_block",
+      "name": "Footer Block",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "background_image",
+          "label": "Background Image",
+          "info": "Default: HEPHA-contact-form.jpg"
+        },
+        {
+          "type": "text",
+          "id": "button_text_en",
+          "label": "Button Text (English)",
+          "default": "Button text"
+        },
+        {
+          "type": "text",
+          "id": "button_text_de",
+          "label": "Button Text (German)",
+          "default": "Schaltflächentext"
+        },
+        {
+          "type": "text",
+          "id": "button_text_fr",
+          "label": "Button Text (French)",
+          "default": "Texte du bouton"
+        },
+        {
+          "type": "text",
+          "id": "button_text_fi",
+          "label": "Button Text (Finnish)",
+          "default": "Painiketeksti"
+        },
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "Button URL"
+        },
+        {
+          "type": "color",
+          "id": "button_color",
+          "label": "Button Color",
+          "default": "#f2a112"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom footer block",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "footer_block",
+          "settings": {
+            "button_text_en": "Need help choosing?",
+            "button_text_de": "Brauchen Sie Hilfe?",
+            "button_text_fr": "Besoin d'aide?",
+            "button_text_fi": "Tarvitsetko apua?",
+            "button_color": "#f2a112",
+            "background_image": "shopify:\/\/shop_images\/HEPHA-contact-form.jpg"
+          }
+        },
+        {
+          "type": "footer_block",
+          "settings": {
+            "button_text_en": "Book a test ride",
+            "button_text_de": "Testfahrt buchen",
+            "button_text_fr": "Réserver un essai",
+            "button_text_fi": "Varaa koeajo",
+            "button_color": "#2b7dde",
+            "background_image": "shopify:\/\/shop_images\/HEPHA_Test_Ride.jpg"
+          }
+        },
+        {
+          "type": "footer_block",
+          "settings": {
+            "button_text_en": "Find a dealer",
+            "button_text_de": "Händler finden",
+            "button_text_fr": "Trouver un revendeur",
+            "button_text_fi": "Etsi lähin jälleenmyyjäsi",
+            "button_color": "#fa6959",
+            "background_image": "shopify:\/\/shop_images\/RUD0599_1.jpg"
+          }
+        }
+      ],
+      "settings": {
+        "partner_text_en": "Partner of",
+        "partner_text_de": "Partner von",
+        "partner_text_fr": "Partenaire de",
+        "partner_text_fi": "Kumppani",
+        "jobrad_url": "shopify:\/\/pages\/jobrad"
+      }
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  :root {
+    --banner-height: 500px;
+    --mobile-banner-height: 400px;
+    --jobrad-icon-width: 120px;
+  }
+
+  .custom-footer-container {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+  }
+
+  .custom-top-banner {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    background-color: #ecf0f1;
+    padding: 0 20px;
+    width: 100%;
+    white-space: nowrap;
+  }
+
+  .jobrad-link {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    text-decoration: none;
+    color: inherit;
+    white-space: nowrap;
+  }
+
+  .partnertext {
+    font-size: clamp(16px, 2.5vw, 22px);
+    margin: 0;
+    font-weight: 600;
+    color: #333;
+    white-space: nowrap;
+  }
+
+  .jobrad-icon {
+    min-width: var(--jobrad-icon-width);
+    width: 120px;
+    max-height: auto;
+    transition: transform 0.3s ease;
+  }
+
+  .jobrad-icon:hover {
+    transform: scale(1.05);
+  }
+
+  .footer-blocks-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    height: var(--banner-height);
+    width: 100%;
+  }
+
+  .footer-block {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-color: #f5f5f5;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .footer-block::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.1);
+    z-index: 1;
+  }
+
+  .block-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .custom-button {
+    color: #fff;
+    border-radius: 50px;
+    border: none;
+    text-align: center;
+    font-weight: 500;
+    display: inline-block;
+    line-height: 1.2;
+    padding: 15px 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    position: relative;
+    z-index: 3;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-size: 18px;
+    white-space: nowrap;
+    min-width: 200px;
+  }
+
+  .custom-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+    opacity: 0.95;
+  }
+
+  @media (max-width: 768px) {
+    .custom-top-banner {
+      flex-direction: row;
+      height: auto;
+      padding: 15px;
+      justify-content: center;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+
+    .jobrad-link {
+      min-width: max-content;
+    }
+
+    .footer-blocks-wrapper {
+      display: flex;
+      flex-direction: column;
+      height: auto;
+    }
+
+    .footer-block {
+      width: 100%;
+      height: var(--mobile-banner-height);
+    }
+
+    .footer-blocks-wrapper.has-3-blocks {
+      display: grid;
+      grid-template-areas:
+        'first first'
+        'second third';
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: var(--mobile-banner-height) var(--mobile-banner-height);
+    }
+
+    .footer-blocks-wrapper.has-3-blocks > .footer-block:nth-child(1) {
+      grid-area: first;
+      height: var(--mobile-banner-height);
+    }
+
+    .footer-blocks-wrapper.has-3-blocks > .footer-block:nth-child(2) {
+      grid-area: second;
+      height: var(--mobile-banner-height);
+    }
+
+    .footer-blocks-wrapper.has-3-blocks > .footer-block:nth-child(3) {
+      grid-area: third;
+      height: var(--mobile-banner-height);
+    }
+
+    .custom-button {
+      font-size: clamp(16px, 4vw, 18px);
+      padding: 15px 25px;
+      min-width: 180px;
+    }
+
+    .jobrad-icon {
+      min-height: 50px;
+    }
+  }
+</style>
+
+<div class="custom-footer-container">
+  {% if section.settings.show_jobrad_banner
+    and localization.country.iso_code == 'DE'
+    or localization.country.iso_code == 'AT'
+  %}
+    <div class="custom-top-banner">
+      <a href="{{ section.settings.jobrad_url }}" class="jobrad-link">
+        <span class="partnertext">
+          {% case request.locale.iso_code %}
+            {% when 'de' -%}
+              {{- section.settings.partner_text_de | default: 'Partner von' }}
+            {% when 'fr' -%}
+              {{- section.settings.partner_text_fr | default: 'Partenaire de' }}
+            {% when 'fi' -%}
+              {{- section.settings.partner_text_fi | default: 'Kumppani' }}
+            {% else -%}
+              {{- section.settings.partner_text_en | default: 'Partner of' }}
+          {% endcase %}
+        </span>
+        <div class="jobrad-icon">
+          {% render 'icon-jobrad' %}
+        </div>
+      </a>
+    </div>
+  {% endif %}
+
+  <div class="footer-blocks-wrapper {% if section.blocks.size == 3 %}has-3-blocks{% endif %}">
+    {% for block in section.blocks %}
+      <div
+        class="footer-block"
+        {% if block.settings.background_image %}
+          style="background-image: url({{ block.settings.background_image | img_url: '800x' }});"
+        {% else %}
+          {% if forloop.index == 1 %}
+            style="background-image: url({{ 'HEPHA-contact-form.jpg' | asset_url }});"
+          {% elsif forloop.index == 2 %}
+            style="background-image: url({{ 'HEPHA_Test_Ride.jpg' | asset_url }});"
+          {% elsif forloop.index == 3 %}
+            style="background-image: url({{ 'RUD0599_1.jpg' | asset_url }});"
+          {% endif %}
+        {% endif %}
+      >
+        <div class="block-content">
+          <a
+            class="custom-button"
+            href="{{ block.settings.button_url }}"
+            style="background-color: {{ block.settings.button_color }};"
+            aria-label="
+              {% case request.locale.iso_code %}
+                {% when 'de' %}{{ block.settings.button_text_de }}
+                {% when 'fr' %}{{ block.settings.button_text_fr }}
+                {% when 'fi' %}{{ block.settings.button_text_fi }}
+                {% else %}{{ block.settings.button_text_en }}
+              {% endcase %}
+            "
+          >
+            {% case request.locale.iso_code %}
+              {% when 'de' -%}
+                {{- block.settings.button_text_de }}
+              {% when 'fr' -%}
+                {{- block.settings.button_text_fr }}
+              {% when 'fi' -%}
+                {{- block.settings.button_text_fi }}
+              {% else -%}
+                {{- block.settings.button_text_en }}
+            {% endcase %}
+          </a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>

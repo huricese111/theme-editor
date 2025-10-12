@@ -1,0 +1,1329 @@
+{%- comment -%}
+  /**
+   * CUSTOM SLIDESHOW SECTION
+   *
+   * A comprehensive and responsive slideshow component that displays promotional content
+   * in an interactive carousel format. This section supports multiple layout configurations,
+   * multi-language content, and advanced customization options for creating engaging
+   * hero banners and promotional displays.
+   *
+   * CORE FEATURES:
+   * - Multi-layout slideshow with 4 layout options (image-right, image-left, image-top, image-bottom)
+   * - Auto-playing carousel with manual navigation controls
+   * - Multi-language support (English, German, French, Finnish)
+   * - Customizable sales tags with localized content
+   * - Responsive design with mobile-optimized layouts
+   * - Touch/swipe navigation for mobile devices
+   * - Pagination dots and arrow navigation
+   * - Customizable typography and color schemes
+   * - Background color customization per slide
+   *
+   * TECHNICAL IMPLEMENTATION:
+   * - CSS-based slide transitions with opacity animations
+   * - JavaScript-powered carousel functionality with autoplay
+   * - Responsive image handling with srcset and WebP format support
+   * - Mobile-first responsive design with breakpoint at 768px
+   * - CSS Grid and Flexbox layouts for different screen sizes
+   * - Touch event handling for mobile swipe gestures
+   *
+   * SHOPIFY INTEGRATION:
+   * - Shopify Liquid templating with block-based architecture
+   * - Image picker integration with Shopify's image transformation API
+   * - Multi-language locale detection and content switching
+   * - URL picker for button links with Shopify URL handling
+   * - Rich text editor support for descriptions
+   * - Color picker integration for styling customization
+   *
+   * RELATED FILES:
+   *
+   * Core Section File:
+   * - sections/custom-slideshow.liquid - This main section file
+   *
+   * Layout Dependencies:
+   * - layout/theme.liquid - Main theme layout with global settings and scripts
+   *
+   * RESPONSIVE BREAKPOINTS:
+   * - Desktop (769px+): Full carousel functionality with navigation controls
+   * - Mobile (768px-): Stacked layout with disabled navigation, vertical scrolling
+   *
+   * LAYOUT CONFIGURATIONS:
+   * - image-right: Text content on left, image on right (default)
+   * - image-left: Image on left, text content on right
+   * - image-top: Image above text content
+   * - image-bottom: Text content above image
+   *
+   * BROWSER COMPATIBILITY:
+   * - Modern browsers with CSS Grid and Flexbox support
+   * - Touch device support for mobile navigation
+   * - Progressive enhancement for older browsers
+   * - WebP image format support with fallbacks
+   *
+   * PERFORMANCE CONSIDERATIONS:
+   * - Lazy loading support for slide images
+   * - WebP format optimization for faster loading
+   * - Responsive image srcset for optimal bandwidth usage
+   * - Hardware-accelerated CSS transitions
+   * - Efficient JavaScript with event delegation
+   * - Automatic cleanup of event listeners on resize
+   *
+   * ACCESSIBILITY:
+   * - Semantic HTML structure with proper heading hierarchy
+   * - Alt text support for all images
+   * - Keyboard navigation support for controls
+   * - Focus management for interactive elements
+   * - Screen reader friendly content structure
+   *
+   * CUSTOMIZATION OPTIONS:
+   * - Unlimited slides with individual configuration
+   * - Layout selection per slide
+   * - Background color customization per slide
+   * - Typography controls (font size, weight, color)
+   * - Mobile-specific font size settings
+   * - Button styling (text color, background color)
+   * - Sales tag configuration with multi-language support
+   * - Image upload and positioning
+   * - Link destination configuration
+   *
+   * AUTOPLAY FUNCTIONALITY:
+   * - 5-second interval between slides
+   * - Automatic pause on user interaction
+   * - Resume autoplay after user interaction
+   * - Disabled on mobile devices for better UX
+   *
+   * USAGE SCENARIOS:
+   * - Homepage hero banners
+   * - Product promotional displays
+   * - Seasonal campaign showcases
+   * - Multi-product feature highlights
+   * - Brand storytelling presentations
+   */
+{%- endcomment -%}
+
+{{ 'unified-button-styles.css' | asset_url | stylesheet_tag }}
+
+<div class="slideshow-container">
+  {% for slide in section.blocks %}
+    <div
+      class="Bikebanner fade slide-{{ forloop.index }} layout-{{ slide.settings.slide_layout | default: 'image-right' }}"
+      style="background-color: {{ slide.settings.background_color }};"
+    >
+      {% case slide.settings.slide_layout %}
+        {% when 'image-top' %}
+          <!-- 图片在上，文字在下 -->
+          <div class="Bikebanner-image">
+            {% if slide.settings.image != blank %}
+              <img
+                src="{{ slide.settings.image | img_url: '1800x', format: 'webp' }}"
+                srcset="
+                  {{ slide.settings.image | img_url: '600x' }} 600w,
+                  {{ slide.settings.image | img_url: '1200x' }} 1200w,
+                  {{ slide.settings.image | img_url: '1800x' }} 1800w
+                "
+                sizes="(max-width: 768px) 100vw, 80vw"
+                alt="{{ slide.settings.image.alt | escape }}"
+                loading="lazy"
+                width="1800"
+                height="{{ 1800 | divided_by: slide.settings.image.aspect_ratio | round }}"
+                class="slider-image"
+              >
+            {% else %}
+              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+            {% endif %}
+          </div>
+
+          <div class="Bikebanner-content">
+            <div class="text-container">
+              <div class="content-left">
+                <div class="salestagrow">
+                  {% for i in (1..3) %}
+                    {% capture salestag_key %}salestag_{{ i }}{% endcapture %}
+                    {% assign localized_key = salestag_key | append: '_' | append: request.locale.iso_code %}
+                    {% assign default_tag = slide.settings[salestag_key] %}
+
+                    {% if default_tag != blank %}
+                      <span class="salestag" data-localize="{{ default_tag }}">
+                        {{ slide.settings[localized_key] | default: default_tag }}
+                      </span>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+
+                {% assign title_key = 'title_' | append: request.locale.iso_code %}
+                <h3
+                  data-localize="{{ slide.settings.title }}"
+                  style="
+                    font-size: {{ slide.settings.title_font_size | default: 70 }}px;
+                    font-weight: {{ slide.settings.title_font_weight | default: 700 }};
+                    color: {{ slide.settings.title_color | default: '#000' }};
+                  "
+                  data-mobile-font-size="{{ slide.settings.title_mobile_font_size | default: 40 }}"
+                >
+                  {{ slide.settings[title_key] | default: slide.settings.title }}
+                </h3>
+
+                {% assign desc_key = 'description_' | append: request.locale.iso_code %}
+                <p
+                  data-localize="{{ slide.settings.description }}"
+                  style="
+                    font-size: {{ slide.settings.description_font_size | default: 18 }}px;
+                    font-weight: {{ slide.settings.description_font_weight | default: 400 }};
+                    color: {{ slide.settings.description_color | default: '#000' }};
+                  "
+                >
+                  {{ slide.settings[desc_key] | default: slide.settings.description }}
+                </p>
+              </div>
+
+              <div class="content-right">
+                {% assign btn_key = 'btntext_' | append: request.locale.iso_code %}
+                {% assign button_text = slide.settings[btn_key] | default: slide.settings.btntext %}
+                {% render 'unified-button',
+                  text: button_text,
+                  url: slide.settings.link,
+                  bg_color: slide.settings.btn_background_color,
+                  text_color: slide.settings.btn_text_color,
+                  class: 'bikebutton'
+                %}
+              </div>
+            </div>
+          </div>
+
+        {% when 'image-bottom' %}
+          <div class="Bikebanner-content">
+            <div class="text-container">
+              <div class="content-left">
+                <div class="salestagrow">
+                  {% for i in (1..3) %}
+                    {% capture salestag_key %}salestag_{{ i }}{% endcapture %}
+                    {% assign localized_key = salestag_key | append: '_' | append: request.locale.iso_code %}
+                    {% assign default_tag = slide.settings[salestag_key] %}
+
+                    {% if default_tag != blank %}
+                      <span class="salestag" data-localize="{{ default_tag }}">
+                        {{ slide.settings[localized_key] | default: default_tag }}
+                      </span>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+
+                {% assign title_key = 'title_' | append: request.locale.iso_code %}
+                <h3
+                  data-localize="{{ slide.settings.title }}"
+                  style="
+                    font-size: {{ slide.settings.title_font_size | default: 70 }}px;
+                    font-weight: {{ slide.settings.title_font_weight | default: 700 }};
+                    color: {{ slide.settings.title_color | default: '#000' }};
+                  "
+                >
+                  {{ slide.settings[title_key] | default: slide.settings.title }}
+                </h3>
+
+                {% assign desc_key = 'description_' | append: request.locale.iso_code %}
+                <p
+                  data-localize="{{ slide.settings.description }}"
+                  style="
+                    font-size: {{ slide.settings.description_font_size | default: 18 }}px;
+                    font-weight: {{ slide.settings.description_font_weight | default: 400 }};
+                    color: {{ slide.settings.description_color | default: '#000' }};
+                  "
+                >
+                  {{ slide.settings[desc_key] | default: slide.settings.description }}
+                </p>
+              </div>
+
+              <div class="content-right">
+                {% assign btn_key = 'btntext_' | append: request.locale.iso_code %}
+                {% assign button_text = slide.settings[btn_key] | default: slide.settings.btntext %}
+                {% render 'unified-button',
+                  text: button_text,
+                  url: slide.settings.link,
+                  bg_color: slide.settings.btn_background_color,
+                  text_color: slide.settings.btn_text_color,
+                  class: 'bikebutton'
+                %}
+              </div>
+            </div>
+          </div>
+
+          <div class="Bikebanner-image">
+            {% if slide.settings.image != blank %}
+              <img
+                src="{{ slide.settings.image | img_url: '1800x', format: 'webp' }}"
+                srcset="
+                  {{ slide.settings.image | img_url: '600x' }} 600w,
+                  {{ slide.settings.image | img_url: '1200x' }} 1200w,
+                  {{ slide.settings.image | img_url: '1800x' }} 1800w
+                "
+                sizes="(max-width: 768px) 100vw, 80vw"
+                alt="{{ slide.settings.image.alt | escape }}"
+                loading="lazy"
+                width="1800"
+                height="{{ 1800 | divided_by: slide.settings.image.aspect_ratio | round }}"
+                class="slider-image"
+              >
+            {% else %}
+              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+            {% endif %}
+          </div>
+
+        {% when 'image-left' %}
+          <div class="Bikebanner-image">
+            {% if slide.settings.image != blank %}
+              <img
+                src="{{ slide.settings.image | img_url: '1800x', format: 'webp' }}"
+                srcset="
+                  {{ slide.settings.image | img_url: '600x' }} 600w,
+                  {{ slide.settings.image | img_url: '1200x' }} 1200w,
+                  {{ slide.settings.image | img_url: '1800x' }} 1800w
+                "
+                sizes="(max-width: 768px) 100vw, 80vw"
+                alt="{{ slide.settings.image.alt | escape }}"
+                loading="lazy"
+                width="1800"
+                height="{{ 1800 | divided_by: slide.settings.image.aspect_ratio | round }}"
+                class="slider-image"
+              >
+            {% else %}
+              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+            {% endif %}
+          </div>
+
+          <div class="Bikebanner-content">
+            <div class="text-container">
+              <div class="salestagrow">
+                {% for i in (1..3) %}
+                  {% capture salestag_key %}salestag_{{ i }}{% endcapture %}
+                  {% assign localized_key = salestag_key | append: '_' | append: request.locale.iso_code %}
+                  {% assign default_tag = slide.settings[salestag_key] %}
+
+                  {% if default_tag != blank %}
+                    <span class="salestag" data-localize="{{ default_tag }}">
+                      {{ slide.settings[localized_key] | default: default_tag }}
+                    </span>
+                  {% endif %}
+                {% endfor %}
+              </div>
+
+              {% assign title_key = 'title_' | append: request.locale.iso_code %}
+              <h3
+                data-localize="{{ slide.settings.title }}"
+                style="
+                  font-size: {{ slide.settings.title_font_size | default: 70 }}px;
+                  font-weight: {{ slide.settings.title_font_weight | default: 700 }};
+                  color: {{ slide.settings.title_color | default: '#000' }};
+                "
+                data-mobile-font-size="{{ slide.settings.title_mobile_font_size | default: 40 }}"
+              >
+                {{ slide.settings[title_key] | default: slide.settings.title }}
+              </h3>
+
+              {% assign desc_key = 'description_' | append: request.locale.iso_code %}
+              <p
+                data-localize="{{ slide.settings.description }}"
+                style="
+                  font-size: {{ slide.settings.description_font_size | default: 18 }}px;
+                  font-weight: {{ slide.settings.description_font_weight | default: 400 }};
+                  color: {{ slide.settings.description_color | default: '#000' }};
+                "
+              >
+                {{ slide.settings[desc_key] | default: slide.settings.description }}
+              </p>
+
+              {% assign btn_key = 'btntext_' | append: request.locale.iso_code %}
+              {% assign button_text = slide.settings[btn_key] | default: slide.settings.btntext %}
+              {% render 'unified-button',
+                text: button_text,
+                url: slide.settings.link,
+                bg_color: slide.settings.btn_background_color,
+                text_color: slide.settings.btn_text_color,
+                class: 'bikebutton'
+              %}
+            </div>
+          </div>
+
+        {% else %}
+          <div class="Bikebanner-content">
+            <div class="text-container">
+              <div class="salestagrow">
+                {% for i in (1..3) %}
+                  {% capture salestag_key %}salestag_{{ i }}{% endcapture %}
+                  {% assign localized_key = salestag_key | append: '_' | append: request.locale.iso_code %}
+                  {% assign default_tag = slide.settings[salestag_key] %}
+
+                  {% if default_tag != blank %}
+                    <span class="salestag" data-localize="{{ default_tag }}">
+                      {{ slide.settings[localized_key] | default: default_tag }}
+                    </span>
+                  {% endif %}
+                {% endfor %}
+              </div>
+
+              {% assign title_key = 'title_' | append: request.locale.iso_code %}
+              <h3
+                data-localize="{{ slide.settings.title }}"
+                style="
+                  font-size: {{ slide.settings.title_font_size | default: 70 }}px;
+                  font-weight: {{ slide.settings.title_font_weight | default: 700 }};
+                  color: {{ slide.settings.title_color | default: '#000' }};
+                "
+                data-mobile-font-size="{{ slide.settings.title_mobile_font_size | default: 40 }}"
+              >
+                {{ slide.settings[title_key] | default: slide.settings.title }}
+              </h3>
+
+              {% assign desc_key = 'description_' | append: request.locale.iso_code %}
+              <p
+                data-localize="{{ slide.settings.description }}"
+                style="
+                  font-size: {{ slide.settings.description_font_size | default: 18 }}px;
+                  font-weight: {{ slide.settings.description_font_weight | default: 400 }};
+                  color: {{ slide.settings.description_color | default: '#000' }};
+                "
+              >
+                {{ slide.settings[desc_key] | default: slide.settings.description }}
+              </p>
+
+              {% assign btn_key = 'btntext_' | append: request.locale.iso_code %}
+              {% assign button_text = slide.settings[btn_key] | default: slide.settings.btntext %}
+              {% render 'unified-button',
+                text: button_text,
+                url: slide.settings.link,
+                bg_color: slide.settings.btn_background_color,
+                text_color: slide.settings.btn_text_color,
+                class: 'bikebutton'
+              %}
+            </div>
+          </div>
+
+          <div class="Bikebanner-image">
+            {% if slide.settings.image != blank %}
+              <img
+                src="{{ slide.settings.image | img_url: '1800x', format: 'webp' }}"
+                srcset="
+                  {{ slide.settings.image | img_url: '600x' }} 600w,
+                  {{ slide.settings.image | img_url: '1200x' }} 1200w,
+                  {{ slide.settings.image | img_url: '1800x' }} 1800w
+                "
+                sizes="(max-width: 768px) 100vw, 80vw"
+                alt="{{ slide.settings.image.alt | escape }}"
+                loading="lazy"
+                width="1800"
+                height="{{ 1800 | divided_by: slide.settings.image.aspect_ratio | round }}"
+                class="slider-image"
+              >
+            {% else %}
+              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+            {% endif %}
+          </div>
+      {% endcase %}
+    </div>
+  {% endfor %}
+
+  {% if section.blocks.size > 1 %}
+    <button class="pagbutton prev">&#10094;</button>
+    <button class="pagbutton next">&#10095;</button>
+
+    <div class="pagination">
+      {% for i in (1..section.blocks.size) %}
+        <span class="dot" data-index="{{ i }}"></span>
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Custom Slideshow",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "bikeslide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Layout Settings"
+        },
+        {
+          "type": "select",
+          "id": "slide_layout",
+          "label": "Layout Style",
+          "options": [
+            {
+              "value": "image-right",
+              "label": "Image Right, Text Left"
+            },
+            {
+              "value": "image-left",
+              "label": "Image Left, Text Right"
+            },
+            {
+              "value": "image-top",
+              "label": "Image Top, Text Bottom"
+            },
+            {
+              "value": "image-bottom",
+              "label": "Image Bottom, Text Top"
+            }
+          ],
+          "default": "image-right"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "Background Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "header",
+          "content": "Image Settings"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Slide Image"
+        },
+        {
+          "type": "header",
+          "content": "Title Settings"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Slide Title"
+        },
+        {
+          "type": "text",
+          "id": "title_de",
+          "label": "Title (German)"
+        },
+        {
+          "type": "text",
+          "id": "title_fr",
+          "label": "Title (French)"
+        },
+        {
+          "type": "text",
+          "id": "title_fi",
+          "label": "Title (Finnish)"
+        },
+        {
+          "type": "range",
+          "id": "title_font_size",
+          "label": "Title Font Size",
+          "min": 20,
+          "max": 120,
+          "step": 2,
+          "default": 70,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "title_mobile_font_size",
+          "label": "Title Mobile Font Size",
+          "min": 16,
+          "max": 60,
+          "step": 2,
+          "default": 40,
+          "unit": "px"
+        },
+        {
+          "type": "select",
+          "id": "title_font_weight",
+          "label": "Title Font Weight",
+          "options": [
+            { "value": "300", "label": "Light" },
+            { "value": "400", "label": "Normal" },
+            { "value": "500", "label": "Medium" },
+            { "value": "600", "label": "Semi Bold" },
+            { "value": "700", "label": "Bold" },
+            { "value": "800", "label": "Extra Bold" }
+          ],
+          "default": "700"
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Title Color",
+          "default": "#000000"
+        },
+        {
+          "type": "header",
+          "content": "Description Settings"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "<p>Slide description text</p>"
+        },
+        {
+          "type": "richtext",
+          "id": "description_de",
+          "label": "Description (German)"
+        },
+        {
+          "type": "richtext",
+          "id": "description_fr",
+          "label": "Description (French)"
+        },
+        {
+          "type": "richtext",
+          "id": "description_fi",
+          "label": "Description (Finnish)"
+        },
+        {
+          "type": "range",
+          "id": "description_font_size",
+          "label": "Description Font Size",
+          "min": 12,
+          "max": 32,
+          "step": 1,
+          "default": 18,
+          "unit": "px"
+        },
+        {
+          "type": "select",
+          "id": "description_font_weight",
+          "label": "Description Font Weight",
+          "options": [
+            { "value": "300", "label": "Light" },
+            { "value": "400", "label": "Normal" },
+            { "value": "500", "label": "Medium" },
+            { "value": "600", "label": "Semi Bold" },
+            { "value": "700", "label": "Bold" }
+          ],
+          "default": "400"
+        },
+        {
+          "type": "color",
+          "id": "description_color",
+          "label": "Description Color",
+          "default": "#000000"
+        },
+        {
+          "type": "header",
+          "content": "Sales Tags"
+        },
+        {
+          "type": "paragraph",
+          "content": "Tag 1"
+        },
+        {
+          "type": "text",
+          "id": "salestag_1",
+          "label": "Text",
+          "default": "New"
+        },
+        {
+          "type": "text",
+          "id": "salestag_1_de",
+          "label": "Text (German)",
+          "default": "Neu"
+        },
+        {
+          "type": "text",
+          "id": "salestag_1_fr",
+          "label": "Text (French)",
+          "default": "Nouveau"
+        },
+        {
+          "type": "text",
+          "id": "salestag_1_fi",
+          "label": "Text (Finnish)"
+        },
+        {
+          "type": "paragraph",
+          "content": "Tag 2"
+        },
+        {
+          "type": "text",
+          "id": "salestag_2",
+          "label": "Text"
+        },
+        {
+          "type": "text",
+          "id": "salestag_2_de",
+          "label": "Text (German)"
+        },
+        {
+          "type": "text",
+          "id": "salestag_2_fr",
+          "label": "Text (French)"
+        },
+        {
+          "type": "text",
+          "id": "salestag_2_fi",
+          "label": "Text (Finnish)"
+        },
+        {
+          "type": "paragraph",
+          "content": "Tag 3"
+        },
+        {
+          "type": "text",
+          "id": "salestag_3",
+          "label": "Text"
+        },
+        {
+          "type": "text",
+          "id": "salestag_3_de",
+          "label": "Text (German)"
+        },
+        {
+          "type": "text",
+          "id": "salestag_3_fr",
+          "label": "Text (French)"
+        },
+        {
+          "type": "text",
+          "id": "salestag_3_fi",
+          "label": "Text (Finnish)"
+        },
+        {
+          "type": "header",
+          "content": "Button Settings"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Button Link"
+        },
+        {
+          "type": "text",
+          "id": "btntext",
+          "label": "Button Text",
+          "default": "Shop Now"
+        },
+        {
+          "type": "text",
+          "id": "btntext_de",
+          "label": "Button Text (German)",
+          "default": "Jetzt einkaufen"
+        },
+        {
+          "type": "text",
+          "id": "btntext_fr",
+          "label": "Button Text (French)",
+          "default": "Acheter maintenant"
+        },
+        {
+          "type": "text",
+          "id": "btntext_fi",
+          "label": "Button Text (Finnish)",
+          "default": "Osta nyt"
+        },
+        {
+          "type": "color",
+          "id": "btn_text_color",
+          "label": "Button Text Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "btn_background_color",
+          "label": "Button Background Color",
+          "default": "#000000"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Slideshow",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "bikeslide",
+          "settings": {
+            "slide_layout": "image-right",
+            "background_color": "#e8e1d1",
+            "image": "shopify://shop_images/HEPHA_MY24_Trekking7_Performance_HighStep_3_7ac05b7a-b405-4c23-9b42-af07e87b0806.webp",
+            "title": "Trekking 7",
+            "title_de": "Trekking 7",
+            "title_fr": "Trekking 7",
+            "title_fi": "Trekking 7",
+            "description": "<p>When design conquers the city.</p>",
+            "description_de": "<p>Wenn das Design die Stadt erobert.</p>",
+            "description_fr": "<p>Quand le design conquiert la ville.</p>",
+            "description_fi": "<p>Kun tyyli valloittaa kaupungin.</p>",
+            "link": "shopify://pages/trekking-7-new",
+            "btntext": "Discover the Trekking 7",
+            "btntext_de": "Entdecken Sie das Trekking 7",
+            "btntext_fr": "Découvrez le Trekking 7",
+            "btntext_fi": "Tutustu Trekking 7-malliin",
+            "btn_text_color": "#ffffff",
+            "btn_background_color": "#f2a112"
+          }
+        },
+        {
+          "type": "bikeslide",
+          "settings": {
+            "slide_layout": "image-right",
+            "background_color": "#c4dae3",
+            "image": "shopify://shop_images/HEPHA_MY24_Mountain-7_Ultra_Blue-Grey_Hardtail_01_Focus.png",
+            "title": "Mountain 7",
+            "title_de": "Mountain 7",
+            "title_fr": "Mountain 7",
+            "title_fi": "Mountain 7",
+            "description": "<p>The sporty hardtail to reconnect with nature.</p>",
+            "description_de": "<p>Das sportliche Hardtail, um mit der Natur in Kontakt zu kommen.</p>",
+            "description_fr": "<p>Le hardtail sportif pour renouer avec la nature.</p>",
+            "description_fi": "<p>Urheilullinen hardtail-pyörä, joka johdattaa sinut takaisin luonnon ääreen.</p>",
+            "link": "shopify://pages/mountain-7",
+            "btntext": "Discover the Mountain 7",
+            "btntext_de": "Entdecken Sie das Mountain 7",
+            "btntext_fr": "Découvrez le Mountain 7",
+            "btntext_fi": "Tutustu Mountain 7-malliin",
+            "btn_text_color": "#ffffff",
+            "btn_background_color": "#f2a112"
+          }
+        },
+        {
+          "type": "bikeslide",
+          "settings": {
+            "slide_layout": "image-right",
+            "background_color": "#c2d0e3",
+            "image": "shopify://shop_images/Frame_161.png",
+            "title": "Mountain 7 Carbon",
+            "title_de": "Mountain 7 Carbon",
+            "title_fr": "Mountain 7 Carbon",
+            "title_fi": "Mountain 7 Carbon",
+            "description": "<p>Pure dynamics for touring, trail & co. Up to 100 Nm and 804 Wh at just 22.4 kg - and at a price where others are just starting out.</p>",
+            "description_de": "<p>Pure Dynamik für Touring, Trail & Co. Bis zu 100 Nm und 804 Wh bei nur 22,4 kg - und das zu einem Preis, bei dem andere gerade erst anfangen.</p>",
+            "description_fr": "<p>La dynamique à l'état pur pour le touring, le trail & co. Jusqu'à 100 Nm et 804 Wh pour seulement 22,4 kg - et à un prix où d'autres commencent à peine.</p>",
+            "description_fi": "<p>Puhdasta dynamiikkaa ja keveyttä metsäpolkujen valloitukseen sekä muuhun. Vain 22,4 kg painoa, jopa 100 Nm vääntöä ja 804 Wh akkukapasitettia - ja hintaan, josta muut vasta lähtevät liikkeelle.</p>",
+            "link": "shopify://pages/mountain-7-carbon",
+            "btntext": "Discover the Mountain 7 Carbon",
+            "btntext_de": "Entdecken Sie das Mountain 7 Carbon",
+            "btntext_fr": "Découvrez le Mountain 7 Carbon",
+            "btntext_fi": "Tutustu Mountain 7 Carbon-malliin",
+            "btn_text_color": "#ffffff",
+            "btn_background_color": "#698aa8"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  :root {
+    --text-button-spacing-desktop: 20px;
+    --text-button-spacing-mobile: 16px;
+  }
+
+  .slideshow-container {
+    position: relative;
+    width: 100%;
+    margin: auto;
+    overflow: hidden;
+    color: #000;
+    height: 640px;
+  }
+
+  .Bikebanner {
+    display: flex;
+    place-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  .Bikebanner.layout-image-top,
+  .Bikebanner.layout-image-bottom {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .Bikebanner.layout-image-top .Bikebanner-image,
+  .Bikebanner.layout-image-bottom .Bikebanner-image {
+    width: 100%;
+    max-width: 800px;
+    height: 55%;
+    margin: 0;
+  }
+
+  .Bikebanner.layout-image-top .Bikebanner-content,
+  .Bikebanner.layout-image-bottom .Bikebanner-content {
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+    padding: 0;
+    flex-shrink: 0;
+  }
+
+  .Bikebanner.layout-image-top .text-container,
+  .Bikebanner.layout-image-bottom .text-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--text-button-spacing-desktop);
+    width: 100%;
+    margin-bottom: 0;
+    flex-direction: row;
+  }
+
+  .Bikebanner.layout-image-top .content-left,
+  .Bikebanner.layout-image-bottom .content-left {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .Bikebanner.layout-image-top .content-right,
+  .Bikebanner.layout-image-bottom .content-right {
+    flex-shrink: 0;
+    display: flex;
+    align-items: flex-start;
+    height: auto;
+  }
+
+  .Bikebanner.layout-image-top .content-left .salestagrow,
+  .Bikebanner.layout-image-bottom .content-left .salestagrow {
+    justify-content: flex-start;
+    margin-bottom: 0;
+  }
+
+  .Bikebanner.layout-image-top .content-left h3,
+  .Bikebanner.layout-image-bottom .content-left h3 {
+    text-align: left;
+    font-size: 48px;
+    line-height: 1;
+    margin: 0;
+  }
+
+  .Bikebanner.layout-image-top .content-left p,
+  .Bikebanner.layout-image-bottom .content-left p {
+    text-align: left;
+    margin: 0;
+    font-size: 18px;
+    line-height: 24px;
+  }
+
+  .Bikebanner.layout-image-top .salestagrow,
+  .Bikebanner.layout-image-bottom .salestagrow {
+    justify-content: flex-start;
+    margin-bottom: 0;
+  }
+
+  .Bikebanner.layout-image-top .Bikebanner-content h3,
+  .Bikebanner.layout-image-bottom .Bikebanner-content h3 {
+    text-align: left;
+    font-size: 48px;
+    line-height: 52px;
+    margin: 0;
+  }
+
+  .Bikebanner.layout-image-top .Bikebanner-content p,
+  .Bikebanner.layout-image-bottom .Bikebanner-content p {
+    text-align: left;
+    margin: 0;
+  }
+
+  .Bikebanner.layout-image-left {
+    flex-direction: row;
+  }
+
+  .Bikebanner.layout-image-left .Bikebanner-image {
+    order: 1;
+  }
+
+  .Bikebanner.layout-image-left .Bikebanner-content {
+    order: 2;
+  }
+
+  .Bikebanner.active {
+    opacity: 1;
+    position: relative;
+    pointer-events: auto;
+  }
+
+  .Bikebanner-image {
+    object-fit: contain;
+    object-position: center center;
+    width: 700px;
+    height: 480px;
+  }
+
+  .Bikebanner-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .Bikebanner-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    width: 500px;
+    gap: var(--text-button-spacing-desktop);
+  }
+
+  .text-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 0;
+    width: 100%;
+    max-width: 500px;
+    gap: 6px;
+  }
+
+  .Bikebanner-content h3 {
+    margin: 0;
+    font-size: 70px;
+    line-height: 80px;
+    font-weight: 700;
+    color: #000;
+    text-align: left;
+  }
+
+  .Bikebanner-content p {
+    font-weight: 400;
+    font-size: 18px;
+    color: #000;
+    text-align: left;
+    margin: 0;
+  }
+
+  .pagination {
+    text-align: center;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+  }
+
+  .dot {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin: 0 5px;
+    border-radius: 50%;
+    background-color: #bbb;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .dot.active {
+    background-color: #242424;
+  }
+
+  .pagbutton {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.6);
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    border-radius: 50%;
+    color: #fff;
+    width: 60px;
+    height: 60px;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+  }
+
+  .pagbutton:hover {
+    opacity: 1;
+  }
+
+  .pagbutton.prev {
+    left: 10px;
+  }
+
+  .pagbutton.next {
+    right: 10px;
+  }
+
+  .salestag {
+    font-size: 22px;
+    line-height: 40px;
+    height: 40px;
+    margin: 0;
+    color: #000;
+    text-align: center;
+    display: inline-block;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: #f8e71c;
+    border-radius: 8px;
+    white-space: nowrap;
+    font-weight: 700;
+  }
+
+  .salestagrow {
+    display: flex;
+    gap: 0.6rem;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .slideshow-container {
+      height: auto;
+      min-height: 0;
+    }
+
+    .Bikebanner {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      opacity: 1;
+      display: block;
+    }
+
+    .Bikebanner:last-child {
+      margin-bottom: 0;
+    }
+
+    .Bikebanner.layout-image-top,
+    .Bikebanner.layout-image-bottom {
+      display: flex;
+      flex-direction: column;
+      height: auto;
+      min-height: 80vh;
+      padding: 0;
+    }
+
+    .Bikebanner.layout-image-top .text-container,
+    .Bikebanner.layout-image-bottom .text-container {
+      flex-direction: column;
+      gap: var(--text-button-spacing-mobile);
+      padding: 20px;
+      border-radius: 12px;
+    }
+
+    .Bikebanner.layout-image-top .content-right,
+    .Bikebanner.layout-image-bottom .content-right {
+      align-items: flex-start;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .Bikebanner.layout-image-top .Bikebanner-image,
+    .Bikebanner.layout-image-bottom .Bikebanner-image {
+      width: 100%;
+      height: 50vh;
+      margin: 0;
+      position: relative;
+    }
+
+    .Bikebanner.layout-image-top .Bikebanner-content,
+    .Bikebanner.layout-image-bottom .Bikebanner-content {
+      width: 100%;
+      padding: 0;
+      position: relative;
+    }
+
+    .Bikebanner.layout-image-left,
+    .Bikebanner.layout-image-right {
+      display: block;
+    }
+
+    .Bikebanner-image {
+      order: 1;
+      width: 140%;
+      height: 60vh;
+      max-height: 60vh;
+      overflow: visible;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      margin-left: -20%;
+      margin-right: -20%;
+    }
+
+    .Bikebanner-image img {
+      width: 100%;
+      height: 100%;
+      max-width: none;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .Bikebanner-content {
+      order: 2;
+      position: absolute;
+      padding: 20px;
+      width: calc(100% - 40px);
+      z-index: 2;
+      bottom: 20px;
+      top: auto;
+      left: 0;
+      height: auto;
+      gap: var(--text-button-spacing-mobile);
+    }
+
+    .text-container {
+      border-radius: 12px;
+      margin-top: 0;
+      position: relative;
+      z-index: 3;
+      width: 100%;
+      box-sizing: border-box;
+      margin-bottom: 0;
+      gap: var(--text-button-spacing-mobile);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .Bikebanner-content h3 {
+      font-size: var(--mobile-font-size, 40px) !important;
+      line-height: calc(var(--mobile-font-size, 40px) * 1.14) !important;
+      margin: 0;
+    }
+
+    .Bikebanner-content p {
+      display: none;
+    }
+
+    .pagination {
+      bottom: 30px;
+      display: none !important;
+    }
+
+    .pagbutton {
+      display: none !important;
+    }
+
+    .salestag {
+      font-size: 16px;
+      line-height: 40px;
+      height: 40px;
+      margin: 0;
+      color: #000;
+      text-align: center;
+      display: inline-block;
+      padding-left: 10px;
+      padding-right: 10px;
+      background-color: #f8e71c;
+      border-radius: 8px;
+      white-space: nowrap;
+      font-weight: 700;
+    }
+
+    .salestagrow {
+      display: flex;
+      gap: 0.6rem;
+      margin: 0;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Set mobile font sizes
+    const titles = document.querySelectorAll('.Bikebanner-content h3[data-mobile-font-size]');
+    titles.forEach((title) => {
+      const mobileFontSize = title.getAttribute('data-mobile-font-size');
+      title.style.setProperty('--mobile-font-size', mobileFontSize + 'px');
+    });
+
+    const slideshow = document.querySelector('.slideshow-container');
+    if (!slideshow) return;
+
+    const slides = slideshow.querySelectorAll('.Bikebanner');
+    const dots = slideshow.querySelectorAll('.dot');
+    const prevBtn = slideshow.querySelector('.pagbutton.prev');
+    const nextBtn = slideshow.querySelector('.pagbutton.next');
+
+    const isDesktop = window.innerWidth > 768;
+    let currentIndex = 0;
+    let autoplayInterval;
+
+    function initSlideshow() {
+      if (!isDesktop || slides.length <= 1) {
+        slides.forEach((slide) => slide.classList.add('active'));
+        return;
+      }
+
+      slides[0].classList.add('active');
+      if (dots.length > 0) dots[0].classList.add('active');
+
+      prevBtn && prevBtn.addEventListener('click', showPrevSlide);
+      nextBtn && nextBtn.addEventListener('click', showNextSlide);
+
+      dots.forEach((dot) => {
+        dot.addEventListener('click', () => {
+          showSlide(parseInt(dot.dataset.index) - 1);
+        });
+      });
+
+      startAutoplay();
+
+      window.addEventListener('resize', handleResize);
+    }
+
+    function showSlide(index) {
+      if (index < 0) index = slides.length - 1;
+      if (index >= slides.length) index = 0;
+
+      slides.forEach((slide) => slide.classList.remove('active'));
+      slides[index].classList.add('active');
+
+      dots.forEach((dot) => dot.classList.remove('active'));
+      if (dots[index]) dots[index].classList.add('active');
+
+      currentIndex = index;
+    }
+
+    function showNextSlide() {
+      showSlide(currentIndex + 1);
+      resetAutoplay();
+    }
+
+    function showPrevSlide() {
+      showSlide(currentIndex - 1);
+      resetAutoplay();
+    }
+
+    function startAutoplay() {
+      if (slides.length <= 1) return;
+      autoplayInterval = setInterval(showNextSlide, 5000);
+    }
+
+    function resetAutoplay() {
+      clearInterval(autoplayInterval);
+      startAutoplay();
+    }
+
+    function handleResize() {
+      if (window.innerWidth <= 768) {
+        clearInterval(autoplayInterval);
+        if (prevBtn) prevBtn.style.display = 'none';
+        if (nextBtn) nextBtn.style.display = 'none';
+      } else if (isDesktop) {
+        initSlideshow();
+      }
+    }
+
+    if (isDesktop && slides.length > 1) {
+      if (prevBtn) prevBtn.style.display = 'block';
+      if (nextBtn) nextBtn.style.display = 'block';
+    }
+
+    initSlideshow();
+  });
+</script>

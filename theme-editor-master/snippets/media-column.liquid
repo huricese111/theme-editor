@@ -1,0 +1,105 @@
+{% assign current_locale = request.locale.iso_code | default: 'en' %}
+{% assign locale_prefix = current_locale | slice: 0, 2 %}
+
+{% if section.settings.show_media_column %}
+  <div class="column column--media media-column {% if section.settings.media_position_setting == 'right' %}column--order-push-desktop{% endif %}">
+    <div class="background-container">
+      {% if section.settings.media_bg_video != blank %}
+        <video class="background-video" autoplay muted loop playsinline>
+          <source src="{{ section.settings.media_bg_video }}" type="video/mp4">
+        </video>
+      {% endif %}
+
+      <div
+        class="media-overlap__background"
+        style="background-color: {{ section.settings.media_bg_color }};{% if section.settings.media_bg_image != blank %}background-image: url('{{ section.settings.media_bg_image | img_url: '2000x' }}');{% endif %}background-position: {{ section.settings.media_position | replace: '-', ' ' }};background-size: {{ section.settings.media_size }};"
+      ></div>
+    </div>
+
+    <div 
+      class="media-text-wrapper text-align media-align-{{ section.settings.media_content_alignment }} media-valign-{{ section.settings.media_content_vertical_alignment }}" 
+      data-cc-animate
+      style="{% if section.settings.media_text_bg_color != blank %}background-color: {{ section.settings.media_text_bg_color }};{% endif %}{% if section.settings.media_text_bg_opacity != blank %}opacity: {{ section.settings.media_text_bg_opacity | divided_by: 100.0 }};{% endif %}"
+    >
+      {% if section.settings.media_heading != blank %}
+        {% capture media_heading %}
+          {% case locale_prefix %}
+            {% when 'de' %}{{ section.settings.media_heading_de | default: section.settings.media_heading }}
+            {% when 'fr' %}{{ section.settings.media_heading_fr | default: section.settings.media_heading }}
+            {% when 'fi' %}{{ section.settings.media_heading_fi | default: section.settings.media_heading }}
+            {% else %}{{ section.settings.media_heading }}
+          {% endcase %}
+        {% endcapture %}
+
+        {% if section.settings.media_use_h1 %}
+          <h1 class="majortitle in-content" data-format-number>{{ media_heading | escape }}</h1>
+        {% else %}
+          <h2 class="majortitle in-content h1" data-format-number>{{ media_heading | escape }}</h2>
+        {% endif %}
+      {% endif %}
+
+      {% if section.settings.media_text != blank %}
+        {% capture media_text %}
+          {% case locale_prefix %}
+            {% when 'de' %}{{ section.settings.media_text_de | default: section.settings.media_text }}
+            {% when 'fr' %}{{ section.settings.media_text_fr | default: section.settings.media_text }}
+            {% when 'fi' %}{{ section.settings.media_text_fi | default: section.settings.media_text }}
+            {% else %}{{ section.settings.media_text }}
+          {% endcase %}
+        {% endcapture %}
+        
+        {% assign media_font_family_style = '' %}
+        {% if section.settings.media_text_font_family == 'sans-serif' %}
+          {% assign media_font_family_style = 'font-family: Helvetica, "Helvetica Neue", Arial, "Lucida Grande", sans-serif;' %}
+        {% else %}
+          {% assign media_font_family_style = 'font-family: "SF Mono", Menlo, Consolas, Monaco, "Liberation Mono", "Lucida Console", monospace, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";' %}
+        {% endif %}
+        
+        <div
+          class="rte {% if section.settings.media_enlarge_text %}large-text{% endif %}"
+          style="{% if section.settings.media_text_bg_enabled %}background-color: rgba(0, 0, 0, 0.5); padding: 20px;{% else %}padding: 15px;{% endif %}{{ media_font_family_style }}"
+        >
+          {{ media_text }}
+        </div>
+      {% endif %}
+
+      <div class="button-container" style="justify-content: {{ section.settings.media_button_alignment | default: 'center' }}; display: flex; gap: 10px;">
+        {% if section.settings.media_button1_label != blank and section.settings.media_button1_link != blank %}
+          {% capture media_button1_label %}
+            {% case locale_prefix %}
+              {% when 'de' %}{{ section.settings.media_button1_label_de | default: section.settings.media_button1_label }}
+              {% when 'fr' %}{{ section.settings.media_button1_label_fr | default: section.settings.media_button1_label }}
+              {% when 'fi' %}{{ section.settings.media_button1_label_fi | default: section.settings.media_button1_label }}
+              {% else %}{{ section.settings.media_button1_label }}
+            {% endcase %}
+          {% endcapture %}
+          {% render 'unified-button',
+            text: media_button1_label,
+            url: section.settings.media_button1_link,
+            bg_color: section.settings.media_button1_bg_color,
+            text_color: section.settings.media_button1_text_color,
+            class: 'media-button-1'
+          %}
+        {% endif %}
+
+        {% if section.settings.media_button2_label != blank and section.settings.media_button2_link != blank %}
+          {% capture media_button2_label %}
+            {% case locale_prefix %}
+              {% when 'de' %}{{ section.settings.media_button2_label_de | default: section.settings.media_button2_label }}
+              {% when 'fr' %}{{ section.settings.media_button2_label_fr | default: section.settings.media_button2_label }}
+              {% when 'fi' %}{{ section.settings.media_button2_label_fi | default: section.settings.media_button2_label }}
+              {% else %}{{ section.settings.media_button2_label }}
+            {% endcase %}
+          {% endcapture %}
+          {% render 'unified-button',
+            text: media_button2_label,
+            url: section.settings.media_button2_link,
+            bg_color: section.settings.media_button2_bg_color,
+            text_color: section.settings.media_button2_text_color,
+            class: 'media-button-2'
+          %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endif %}

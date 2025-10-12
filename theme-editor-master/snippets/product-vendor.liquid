@@ -1,0 +1,12 @@
+{%- liquid
+  assign product_vendor_handle = product.vendor | handle
+  if collections[product_vendor_handle].handle == product_vendor_handle
+    assign vendor_url = collections[product_vendor_handle].url
+  else
+    assign vendor_url = product.vendor | url_for_vendor
+  endif
+-%}
+<div class="vendor lightly-spaced-row" {{ block.shopify_attributes }}>
+  <span class="product-info-label">{{ 'products.product.vendor' | t }}</span>
+  {{ product.vendor | link_to: vendor_url, class: 'underline' }}
+</div>

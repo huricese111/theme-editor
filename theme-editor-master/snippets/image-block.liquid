@@ -1,0 +1,24 @@
+{% if block.settings.image != blank %}
+  <div
+    class="lightly-spaced-row inline-width-container{% unless block.settings.show_in_quickbuy %} not-in-quickbuy{% endunless %}"
+    style="width: {{ block.settings.image_width }}px"
+    {{ block.shopify_attributes }}
+  >
+    {% if block.settings.url != blank -%}
+      <a
+        href="{{ block.settings.url }}"
+        {% if block.settings.open_in_new_tab %}
+          target="_blank"
+        {% endif %}
+      >
+    {%- endif %}
+    {%- assign image_max_width = block.settings.image_width | at_most: 490 -%}
+    {%- capture image_sizes -%}(min-width: {{ image_max_width }}px) {{ image_max_width }}px, 100vw{%- endcapture -%}
+    {%- liquid
+      assign image_widths = '320, 480, 580, 640, 700' | append: image_max_width | append: ', '
+      assign image_widths = image_max_width | times: 2 | append: 'px' | prepend: image_widths
+      render 'image' with block.settings.image, sizes: image_sizes, widths: image_widths
+    -%}
+    {% if block.settings.url != blank %}</a>{% endif %}
+  </div>
+{% endif %}
