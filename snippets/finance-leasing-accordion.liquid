@@ -44,6 +44,26 @@
       <div class="accordion-content">
         <div class="accordion-body rte">
           {% render 'financing-options' %}
+          {%- if country == 'DE' or country == 'AT' -%}
+            <div class="leasingcontent">
+              <div class="leasing-icon-container" style="font-size: 1.5em;">
+                {% render 'icon-alma' %}
+              </div>
+              {%- if request.locale.iso_code == 'de' -%}
+                <p>
+                  <b>Finanzierung mit Alma</b>
+                  <br>
+                  2 bis 4 zinsfreie Raten für Beträge von 50 bis 5.000 Euro.
+                </p>
+              {%- else -%}
+                <p>
+                  <b>Financing with Alma</b>
+                  <br>
+                  2 to 4 interest-free installments for amounts from 50 to 5,000 euros.
+                </p>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
         </div>
       </div>
     </div>
