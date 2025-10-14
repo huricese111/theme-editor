@@ -1,19 +1,27 @@
 import csv
 import json
+import sys
+import os
 
-def convert_csv_to_json():
-    csv_file_path = 'd:/theme-editor-master/assets/20251008_dealers-data_LCH.csv'
-    json_file_path = 'd:/theme-editor-master/assets/dealers-data.json'
+def convert_csv_to_json(csv_file_path):
+    # Output JSON file will be in the 'assets' folder relative to the script.
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+    json_file_path = os.path.join(script_dir, 'assets', 'dealers-data.json')
     
+    # Ensure the output directory exists
+    os.makedirs(os.path.dirname(json_file_path), exist_ok=True)
+
     dealers = []
     
     # Try different encodings to read CSV file
     encodings = ['utf-8', 'latin-1', 'cp1252', 'iso-8859-1']
     csv_data = None
     
+    print(f"Reading CSV file: {csv_file_path}")
+
     for encoding in encodings:
         try:
-            with open(csv_file_path, 'r', encoding=encoding) as csv_file:
+            with open(csv_file_path, 'r', encoding=encoding, newline='') as csv_file:
                 csv_reader = csv.DictReader(csv_file)
                 csv_data = list(csv_reader)
                 print(f"Successfully read CSV with {encoding} encoding")
@@ -24,12 +32,15 @@ def convert_csv_to_json():
                 break
         except UnicodeDecodeError:
             continue
+        except FileNotFoundError:
+            print(f"Error: Input file not found at {csv_file_path}")
+            return
         except Exception as e:
             print(f"Error with {encoding}: {e}")
             continue
     
     if csv_data is None:
-        print("Error: Could not read CSV file with any supported encoding")
+        print("Error: Could not read CSV file with any of the attempted encodings.")
         return
     
     # Process the CSV data
@@ -67,8 +78,16 @@ def convert_csv_to_json():
     with open(json_file_path, 'w', encoding='utf-8') as json_file:
         json.dump(json_data, json_file, indent=2, ensure_ascii=False)
     
-    print(f"Successfully converted {len(dealers)} records from CSV to JSON")
+    print(f"\nSuccessfully converted {len(dealers)} records from CSV to JSON.")
     print(f"Output file: {json_file_path}")
 
 if __name__ == "__main__":
-    convert_csv_to_json()
+    if len(sys.argv) > 1:
+        csv_file_path = sys.argv[1]
+        convert_csv_to_json(csv_file_path)
+    else:
+        print("This script converts a CSV file to a JSON file.")
+        print("Usage: Drag and drop a CSV file onto this script to convert it.")
+    
+    # Keep the console window open to see the output
+    input("\nPress Enter to exit.")

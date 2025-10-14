@@ -106,7 +106,7 @@ def batch_convert(input_dir, output_dir=None, width=600, height=800):
 def main():
     # 创建命令行参数解析器
     parser = argparse.ArgumentParser(description='批量将图片转换为指定尺寸的JPG格式，保持原图比例并居中显示在白色背景上')
-    parser.add_argument('-i', '--input', required=True, help='输入图片目录路径')
+    parser.add_argument('-i', '--input', required=True, help='输入图片或目录路径')
     parser.add_argument('-o', '--output', help='输出图片目录路径，默认为输入目录下的output文件夹')
     parser.add_argument('-w', '--width', type=int, default=600, help='输出图片宽度，默认为600')
     parser.add_argument('-t', '--height', type=int, default=800, help='输出图片高度，默认为800')
@@ -114,8 +114,42 @@ def main():
     # 解析命令行参数
     args = parser.parse_args()
     
-    # 批量转换图片
-    batch_convert(args.input, args.output, args.width, args.height)
+    input_path = args.input
+    output_dir_arg = args.output
+    width = args.width
+    height = args.height
+
+    # Check if input path is a directory or a file
+    if os.path.isdir(input_path):
+        # 批量转换图片
+        batch_convert(input_path, output_dir_arg, width, height)
+    elif os.path.isfile(input_path):
+        # 处理单个文件
+        input_dir = os.path.dirname(input_path)
+        if output_dir_arg is None:
+            # If no output dir is specified, create an 'output' folder in the same dir as the input file
+            output_dir = os.path.join(input_dir, 'output')
+        else:
+            output_dir = output_dir_arg
+
+        # Create output directory if it doesn't exist
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
+
+        # Generate output file path
+        filename = os.path.basename(input_path)
+        name, ext = os.path.splitext(filename)
+        output_file_path = os.path.join(output_dir, f"{name}_3x4.jpg")
+
+        # Convert the single image
+        if convert_image(input_path, output_file_path, width, height):
+            print(f"成功转换图片: {input_path}")
+            print(f"转换后的图片保存在: {os.path.abspath(output_file_path)}")
+        else:
+            print(f"转换图片失败: {input_path}")
+    else:
+        print(f"输入的路径无效或不存在: {input_path}")
 
 if __name__ == '__main__':
     main()
+    input("\n处理完成，按 Enter 键退出。")
