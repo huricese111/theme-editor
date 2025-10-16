@@ -768,83 +768,70 @@
   }
 
   /**
-   * 设置滚动高亮功能，突出显示当前活动的导航链接
+   * 设置滚动高亮功能，当滚动到对应区域时，高亮导航链接
    */
   function setupScrollHighlighting() {
-    try {
-      // 获取所有导航链接
-      const navLinks = document.querySelectorAll('.sticky-nav-link');
-      if (!navLinks.length) return;
+    const links = stickyNav.querySelectorAll('.sticky-nav-link[data-anchor]');
+    if (links.length === 0) return;
 
-      // 创建交叉观察器
-      const observer = new IntersectionObserver((entries) => {
+    const observer = new IntersectionObserver(
+      (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            // 获取当前可见部分的ID
-            const id = entry.target.id;
-            // 查找对应的导航链接
-            const link = document.querySelector(`.sticky-nav-link[data-anchor="${id}"]`);
-            
-            if (link) {
-              // 移除所有链接的高亮
-              navLinks.forEach(l => l.classList.remove(config.highlightClass));
-              // 为当前链接添加高亮
+          const id = entry.target.dataset.scrollAnchor || entry.target.getAttribute('id');
+          const link = stickyNav.querySelector(`.sticky-nav-link[data-anchor="${id}"]`);
+          if (link) {
+            if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+              links.forEach((l) => l.classList.remove(config.highlightClass));
               link.classList.add(config.highlightClass);
-              
-              // 如果链接在可滚动容器中，确保它可见
-              if (stickyNavLinks) {
-                const linkLeft = link.getBoundingClientRect().left;
-                const containerLeft = stickyNavLinks.getBoundingClientRect().left;
-                const containerWidth = stickyNavLinks.offsetWidth;
-                
-                // 如果链接不在可见区域内，滚动到它
-                if (linkLeft < containerLeft || linkLeft > containerLeft + containerWidth) {
-                  stickyNavLinks.scrollTo({
-                    left: link.offsetLeft - containerWidth/2 + link.offsetWidth/2,
-                    behavior: 'smooth'
-                  });
-                }
-              }
+            } else {
+              link.classList.remove(config.highlightClass);
             }
           }
         });
-      }, { root: null, rootMargin: '0px', threshold: 0.1 });
-
-      // 为每个导航链接设置点击事件和观察
-      navLinks.forEach((link) => {
-        const targetId = link.dataset.anchor;
-        if (!targetId) return;
-        
-        const targetElement = document.getElementById(targetId);
-        if (targetElement) {
-          // 观察目标元素
-          observer.observe(targetElement);
-          
-          // 添加点击事件
-          link.addEventListener('click', function (e) {
-            e.preventDefault();
-            // 计算目标位置，考虑偏移量
-            const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
-            const offsetPosition = elementPosition - config.scrollOffset;
-            // 平滑滚动到目标位置
-            window.scrollTo({ top: offsetPosition, behavior: config.scrollBehavior });
-          });
-        }
-      });
-
-      // 初始化高亮第一个部分
-      const firstSection = document.querySelector('[id]');
-      if (firstSection) {
-        navLinks.forEach(link => link.classList.remove(config.highlightClass));
-        const activeLink = document.querySelector(`.sticky-nav-link[data-anchor="${firstSection.id}"]`);
-        if (activeLink) activeLink.classList.add(config.highlightClass);
+      },
+      {
+        rootMargin: `-${calculateHeaderHeight() + config.scrollOffset}px 0px 0px 0px`,
+        threshold: 0.5,
       }
-    } catch (e) {
-      console.error('Error setting up scroll highlighting:', e);
-    }
+    );
+
+    links.forEach((link) => {
+      const anchorId = link.getAttribute('data-anchor');
+      let targetElement;
+
+      if (anchorId === 'highlights') {
+        try {
+          const sections = document.querySelectorAll('.custom-image-text-section');
+          if (sections.length > 1) {
+            targetElement = sections[1];
+          } else {
+            targetElement = document.getElementById(anchorId);
+          }
+        } catch (e) {
+          console.error('Error finding custom section for highlights:', e);
+          targetElement = document.getElementById(anchorId);
+        }
+      } else {
+        targetElement = document.getElementById(anchorId);
+      }
+      
+      if (targetElement) {
+        if (targetElement.id !== anchorId) {
+          targetElement.dataset.scrollAnchor = anchorId;
+        }
+        observer.observe(targetElement);
+        link.addEventListener('click', function (e) {
+          e.preventDefault();
+          const y = targetElement.getBoundingClientRect().top + window.pageYOffset - calculateHeaderHeight() - config.scrollOffset;
+          window.scrollTo({ top: y, behavior: config.scrollBehavior });
+        });
+      }
+    });
   }
 
-  // 初始化所有功能
+  /**
+   * 初始化所有功能
+   */
   setupZIndexManagement();
   setupStickyNav();
   createButtonMirror();
