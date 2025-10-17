@@ -1,4 +1,5 @@
 import re
+import os
 
 def parse_bike_data(file_path):
     """
@@ -105,8 +106,12 @@ def main():
     """
     Main function to convert bike data and update liquid file
     """
-    bike_data_file = r'e:\Hepha theme editor\assets\bike type.txt'
-    liquid_file = r'e:\Hepha theme editor\sections\enhanced-form.liquid'
+    # Get the absolute path of the script
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    
+    # Construct relative paths to the files
+    bike_data_file = os.path.join(script_dir, 'assets', 'bike type.txt')
+    liquid_file = os.path.join(script_dir, 'sections', 'enhanced-form.liquid')
     
     try:
         # Parse bike data

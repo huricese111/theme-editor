@@ -1,8 +1,3 @@
-Trekking 7 LTD：
-Ultra | High step |  M  | Sand
-
----------------------------------------------------------------
-
 Trekking 7 SE：
 Long Range | Low step | L | Light Grey
 Long Range | Low step | M | Light Grey
@@ -76,7 +71,7 @@ Ultra/High Step/M/Grey
 Ultra/High Step/L/Grey
 Ultra/High Step/XL/Grey
 Ultra/Low Step/M/Grey
-Ultra/Low Step/L/Greyd
+Ultra/Low Step/L/Grey
 
 
 Ultra+/Step Through/M / Dark Blue
