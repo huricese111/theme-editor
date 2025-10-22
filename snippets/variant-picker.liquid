@@ -1,16 +1,28 @@
+{% comment %}
+  Parameters:
+  - product {Object} - Product object.
+  - product_form_id {String} - Product form ID.
+  - media_ratio {Number} - Media aspect ratio.
+  - block {Object} - Block object.
+  - dynamic_availability_mode {String} - Dynamic availability mode, 'selection' or 'down', default is 'selection'.
+
+  Dependencies:
+  - Custom select component
+
+  Usage:
+  {% render 'variant-picker', product: product, product_form_id: product_form_id, block: block %}
+{% endcomment %}
+
 {%- unless product.has_only_default_variant -%}
   {%- if product.variants.size > 1 or block.settings.show_single -%}
     <script src="{{ 'variant-picker.js' | asset_url }}" defer></script>
 
     <variant-picker
-      class="no-js-hidden"
-      data-url="{{ product.url }}"
-      data-update-url="{{ update_url | default: false }}"
-      data-availability="{{ block.settings.dynamic_availability }}"
-      data-availability-mode="{{ dynamic_availability_mode | default: 'selection' }}"
-      id="VariantPicker-{{ section.id }}"
-    >
-      <!-- Added unique ID -->
+        class="no-js-hidden"
+        data-url="{{ product.url }}"
+        data-update-url="{{ update_url | default: false }}"
+        data-availability="{{ block.settings.dynamic_availability }}"
+        data-availability-mode="{{ dynamic_availability_mode | default: 'selection' }}">
       {%- for option in product.options_with_values -%}
         {%- capture option_id %}{{ product_form_id }}-{{ option.name | handle }}{% endcapture -%}
         {%- liquid
@@ -127,38 +139,12 @@
                 {{ size_chart_link }}
               </div>
             {%- else -%}
-              <legend class="label">
-                {{- option.name -}}
-                {% if is_color_selector -%}
-                  :
-                  <span class="option-selector__label-value js-color-text">
-                    {%- if section.settings.select_first_variant
-                      or product.variants.size == 1
-                      or product.selected_variant
-                    -%}
-                      {{- option.selected_value -}}
-                    {%- endif -%}
-                  </span>
-                {%- endif %}
-              </legend>
+              <legend class="label">{{- option.name -}}{% if is_color_selector %}: <span class="option-selector__label-value js-color-text">{% if section.settings.select_first_variant or product.variants.size == 1 or product.selected_variant %}{{ option.selected_value }}{% endif %}</span>{% endif %}</legend>
             {%- endif -%}
             <div class="option-selector__btns flex flex-wrap">
               {%- for value in option.values -%}
                 {%- assign value_index0 = forloop.index0 -%}
-                <input
-                  type="radio"
-                  class="opt-btn visually-hidden focus-label js-option"
-                  name="{{ option_id }}-option"
-                  id="{{ option_id }}-opt-{{ value_index0 }}"
-                  value="{{ value | escape }}"
-                  required
-                  {% if section.settings.select_first_variant
-                    or product.variants.size == 1
-                    or product.selected_variant
-                  %}
-                    {%- if option.selected_value == value %} checked{% endif -%}
-                  {% endif %}
-                >
+                <input type="radio" class="opt-btn visually-hidden focus-label js-option" name="{{ option_id }}-option" id="{{ option_id }}-opt-{{ value_index0 }}" value="{{ value | escape }}" required{% if section.settings.select_first_variant or product.variants.size == 1 or product.selected_variant %}{% if option.selected_value == value %} checked{% endif %}{% endif %}>
                 {%- if is_variant_image_style -%}
                   {%- for variant in product.variants -%}
                     {%- if variant.options[option_index0] == value -%}
@@ -172,9 +158,7 @@
                             custom_crop: img_crop_align
                           -%}
                         </div>
-                        <span class="{% if settings.swatch_style != 'listed' %}visually-hidden {% endif %}js-value">
-                          {{- value -}}
-                        </span>
+                        <span class="{% if settings.swatch_style != 'listed' %}visually-hidden {% endif %}js-value">{{ value }}</span>
                       </label>
                       {%- break -%}
                     {%- endif -%}
@@ -190,21 +174,15 @@
                         custom_crop: img_crop_align
                       -%}
                     </div>
-                    <span class="{% if settings.swatch_style != 'listed' %}visually-hidden {% endif %}js-value">
-                      {{- value -}}
-                    </span>
+                    <span class="{% if settings.swatch_style != 'listed' %}visually-hidden {% endif %}js-value">{{ value }}</span>
                   </label>
 
                 {%- elsif settings.swatch_source == 'native' and value.swatch.color -%}
-                  <label
-                    class="opt-label opt-label--swatch btn relative"
+                  <label class="opt-label opt-label--swatch btn relative"
                     data-swatch="{{ value | replace: '"', '' | downcase }}"
                     for="{{ option_id }}-opt-{{ value_index0 }}"
-                    style="--swatch-background-color: rgb({{ value.swatch.color.rgb }})"
-                  >
-                    <span class="{% if settings.swatch_style != 'listed' %}visually-hidden {% endif %}js-value">
-                      {{- value -}}
-                    </span>
+                    style="--swatch-background-color: rgb({{ value.swatch.color.rgb }})">
+                    <span class="{% if settings.swatch_style != 'listed' %}visually-hidden {% endif %}js-value">{{ value }}</span>
                   </label>
 
                 {%- else -%}
@@ -214,16 +192,10 @@
                       assign is_swatch = true
                     endif
                   -%}
-                  <label
-                    class="opt-label {% if is_swatch %}opt-label--swatch{% else %}opt-label--btn{% endif %} btn relative text-center"
-                    {% if is_swatch %}
-                      data-swatch="{{ value | replace: '"', '' | downcase }}"
-                    {% endif %}
-                    for="{{ option_id }}-opt-{{ value_index0 }}"
-                  >
-                    <span class="{% if is_swatch and settings.swatch_style != 'listed' %}visually-hidden {% endif %}js-value">
-                      {{- value -}}
-                    </span>
+                  <label class="opt-label {% if is_swatch %}opt-label--swatch{% else %}opt-label--btn{% endif %} btn relative text-center"{% if is_swatch %}
+                    data-swatch="{{ value | replace: '"', '' | downcase }}"{% endif %}
+                    for="{{ option_id }}-opt-{{ value_index0 }}">
+                    <span class="{% if is_swatch and settings.swatch_style != 'listed' %}visually-hidden {% endif %}js-value">{{ value }}</span>
                   </label>
                 {%- endif -%}
               {%- endfor -%}
@@ -235,18 +207,7 @@
       <script type="application/json">
         {"variants": {{- product.variants | json -}},"formatted": {
           {%- for variant in product.variants -%}
-            "{{ variant.id }}":{
-              "id":{{ variant.id }},
-              "price":{% if settings.product_currency_code_enabled %}{{ variant.price | money_with_currency | json }}{% else %}{{ variant.price | money | json }}{% endif %},
-              "metafields": {
-                {%- for namespace in variant.metafields -%}
-                  "{{ namespace[0] }}": {
-                    {%- for key_value in namespace[1] -%}
-                      "{{ key_value[0] }}": {{ key_value[1] | json }}{% unless forloop.last %},{% endunless -%}
-                    {%- endfor -%}
-                  }{% unless forloop.last %},{% endunless -%}
-                {%- endfor -%}
-              }
+            "{{ variant.id }}":{"price":{% if settings.product_currency_code_enabled %}{{ variant.price | money_with_currency | json }}{% else %}{{ variant.price | money | json }}{% endif %}
               {%- if variant.compare_at_price > variant.price -%}
                 ,"compareAtPrice":{{ variant.compare_at_price | money | json -}}
               {%- endif -%}
@@ -262,67 +223,17 @@
       </script>
     </variant-picker>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        const variantPicker = document.getElementById('VariantPicker-{{ section.id }}');
-        if (!variantPicker) return;
-
-        variantPicker.querySelectorAll('.js-option').forEach((option) => {
-          option.addEventListener('change', function () {
-            const variantData = JSON.parse(variantPicker.querySelector('script[type="application/json"]').textContent);
-            const selectedOptions = [];
-
-            variantPicker.querySelectorAll('.option-selector').forEach((selector) => {
-              const selectedOption = selector.querySelector('.js-option:checked');
-              if (selectedOption) {
-                selectedOptions.push(selectedOption.value);
-              }
-            });
-
-            const matchedVariant = Object.values(variantData.variants).find((variant) => {
-              return variant.options.every((option, index) => option === selectedOptions[index]);
-            });
-
-            if (matchedVariant) {
-              const event = new CustomEvent('variant:changed', {
-                detail: {
-                  variant: matchedVariant,
-                },
-              });
-              document.dispatchEvent(event);
-            }
-          });
-        });
-      });
-    </script>
-
     <noscript>
-      <div
-        class="product-info__select"
-        {% if product.has_only_default_variant %}
-          hidden
-        {% endif %}
-      >
+      <div class="product-info__select"{% if product.has_only_default_variant %} hidden{% endif %}>
         <label class="label" for="variants-{{ product.id }}-{{ section.id }}">
           {{- 'products.product.product_variants' | t -}}
         </label>
         <div class="select relative">
-          <select
-            class="select w-full"
-            id="variants-{{ product.id }}-{{ section.id }}"
-            name="id"
-            form="{{ product_form_id }}"
-          >
+          <select class="select w-full" id="variants-{{ product.id }}-{{ section.id }}" name="id" form="{{ product_form_id }}">
             {%- for variant in product.variants -%}
-              <option
-                value="{{ variant.id }}"
-                {% if variant == current_variant %}
-                  selected
-                {% endif %}
-                {% if variant.available == false %}
-                  disabled
-                {% endif %}
-              >
+              <option value="{{ variant.id }}"
+                      {% if variant == current_variant %}selected{% endif %}
+                      {% if variant.available == false %}disabled{% endif %}>
                 {{- variant.title -}}
                 {%- if variant.available == false %} - {{ 'products.product.sold_out' | t }}{% endif %}
                 - {{ variant.price | money | strip_html }}

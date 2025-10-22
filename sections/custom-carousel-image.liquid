@@ -1,0 +1,255 @@
+{% schema %}
+{
+    "name": "Custom Carousel Images",
+    "settings": [],
+    "blocks": [
+        {
+            "type": "customslide",
+            "name": "Custom Slide",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Custom Carousel Images",
+            "category": "Custom"
+        }
+    ]
+}
+{% endschema %}
+
+<div class="ebike-carousel-wrapper">
+
+    <div class="ebike-carousel-container">
+        <div class="ebike-carousel-arrow left" onclick="slideLeft()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="white" width="20px" height="auto">
+                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="48" 
+                    d="M328 112L184 256l144 144"></path>
+            </svg>
+        </div>
+        <div class="ebike-carousel-arrow right" onclick="slideRight()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="white" width="20px" height="auto">
+                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="48"
+                    d="M184 112l144 144-144 144"></path>
+            </svg>
+        </div>
+        <div class="ebike-carousel">
+            <div class="ebike-carousel-inner" id="ebikecarouselimgInner">
+                {% for slide in section.blocks %}
+                <div class="ebike-carousel-item">
+                    <img src="{{ slide.settings.image | img_url: 'original' }}" alt="{{ slide.settings.title }}" onclick="showLightbox('{{ slide.settings.image | img_url: 'original' }}')">
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Lightbox HTML -->
+<div id="lightbox" class="lightbox" onclick="hideLightbox()">
+    <span class="close">&times;</span>
+    <img class="lightbox-content" id="lightboxImg">
+</div>
+
+<style>
+    .ebike-carousel-wrapper {
+        position: relative;
+        margin-bottom: 100px;
+        margin-top: 60px;
+    }
+
+    .ebike-carousel-container {
+        margin-left: 60px;
+        overflow: hidden;
+    }
+
+    .ebike-carousel {
+        overflow: auto;
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+
+    .ebike-carousel::-webkit-scrollbar {
+        display: none;
+    }
+
+    .ebike-carousel {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .ebike-carousel-inner {
+        display: flex;
+        transition: transform 0.3s ease;
+        height: 100%;
+    }
+
+    .ebike-carousel-item {
+        flex: 0 0 28%;
+        box-sizing: border-box;
+        padding: 10px;
+        border-radius: 5px;
+        margin-right: 10px;
+        text-align: left;
+    }
+
+    .ebike-carousel-title {
+        font-size: 30px;
+        margin-bottom: 20px;
+        text-align: left;
+    }
+
+    .ebike-carousel-item img {
+       ax-width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    object-fit: cover;
+    }
+
+    .ebike-carousel-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: black;
+        color: white;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        cursor: pointer;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .ebike-carousel-arrow.left {
+        left: 60px;
+    }
+
+    .ebike-carousel-arrow.right {
+        right: 10px;
+    }
+
+    .lightbox {
+        display: none; 
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        justify-content: center;
+        align-items: center;
+    }
+
+    .lightbox-content {
+        max-width: 90%;
+        max-height: 90%;
+        background: #fff;
+    }
+
+    .close {
+        position: absolute;
+        top: 20px;
+        right: 35px;
+        color: white;
+        font-size: 40px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+        .ebike-carousel-container {
+            margin-left: 20px;
+        }
+
+        .ebike-carousel-item {
+            flex: 0 0 300px;
+            margin-right: 0;
+        }
+
+        .ebike-carousel-arrow {
+            display: none;
+        }
+    }
+</style>
+
+<script>
+    let currentIndex = 0;
+    let startX = 0;
+    let isDragging = false;
+
+    const carouselimgContainer = document.querySelector('.ebike-carousel');
+    const carouselimgInner = document.getElementById('ebikecarouselimgInner');
+    const items = carouselimgInner.children;
+    let itemWidth = window.innerWidth < 768 ? 300 : (window.innerWidth / 4 + 10);
+    const maxIndex = items.length - 1;
+
+    function updateimgCarousel() {
+        carouselimgContainer.scrollLeft = currentIndex * itemWidth;
+    }
+
+    function slideLeft() {
+        if (currentIndex > 0) {
+            currentIndex--;
+            updateimgCarousel();
+        }
+    }
+
+    function slideRight() {
+        if (currentIndex < maxIndex) {
+            currentIndex++;
+            updateimgCarousel();
+        }
+    }
+
+    function showLightbox(imageSrc) {
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+        lightboxImg.src = imageSrc;
+        lightbox.style.display = 'flex'; // Show lightbox
+    }
+
+    function hideLightbox() {
+        const lightbox = document.getElementById('lightbox');
+        lightbox.style.display = 'none'; // Hide lightbox
+    }
+
+    // Touch event handlers
+    carouselimgContainer.addEventListener('touchstart', (event) => {
+        startX = event.touches[0].clientX;
+        isDragging = true;
+    });
+
+    carouselimgContainer.addEventListener('touchmove', (event) => {
+        if (!isDragging) return;
+        const currentX = event.touches[0].clientX;
+        const diffX = startX - currentX;
+
+        if (Math.abs(diffX) > 50) {
+            isDragging = false; 
+            if (diffX > 0) {
+                slideRight();
+            } else {
+                slideLeft();
+            }
+        }
+    });
+
+    carouselimgContainer.addEventListener('touchend', () => {
+        isDragging = false; 
+    });
+
+    window.addEventListener('resize', () => {
+        itemWidth = window.innerWidth < 768 ? 300 : (window.innerWidth / 4 + 10);
+        updateimgCarousel(); 
+    });
+</script>

@@ -1,6 +1,6 @@
 {%- if section.blocks.size > 0 -%}
   {%- unless section.settings.show_to_guests_only and customer and request.design_mode == false -%}
-    {%- if section.settings.trigger == 'delay' and section.settings.delay < 2 -%}
+    {%- if section.settings.trigger == "delay" and section.settings.delay < 2 -%}
       <link rel="stylesheet" href="{{ 'modal.css' | asset_url }}">
       <link rel="stylesheet" href="{{ 'pop-up.css' | asset_url }}">
     {%- else -%}
@@ -10,22 +10,9 @@
     <script src="{{ 'pop-up.js' | asset_url }}" defer></script>
 
     {%- liquid
-      assign current_locale = request.locale.iso_code
-      assign supported_locales = 'en,de,fr,fi' | split: ','
-      assign is_supported_locale = false
-      
-      for locale in supported_locales
-        if current_locale == locale
-          assign is_supported_locale = true
-          break
-        endif
-      endfor
-      
-      unless is_supported_locale
-        assign current_locale = 'en'
-      endunless
-
+      # constants
       assign breakpoint_md = 768
+
       assign bg_color = section.settings.bg_color
       assign bg = section.settings.bg_grad | default: bg_color
       assign heading_color = section.settings.heading_color
@@ -33,8 +20,8 @@
       assign popup_image = false
       assign image_block = section.blocks | where: 'type', 'image' | first
       if image_block
-        assign popup_image_position = image_block.settings.image_position_desktop
-        assign popup_image_mobile = image_block.settings.image_position_mobile
+      assign popup_image_position = image_block.settings.image_position_desktop
+      assign popup_image_mobile = image_block.settings.image_position_mobile
         if image_block.settings.image != blank
           assign popup_image = image_block.settings.image
         endif
@@ -89,28 +76,20 @@
       {%- endif -%}
     {%- endstyle -%}
 
-    <pop-up
-      class="modal popup-section invisible fixed top-0 left-0 w-full h-full flex {{ section.settings.position }}"
-      id="{{ section.id }}"
-      data-trigger="{{ section.settings.trigger }}"
-      data-delay="{{ section.settings.delay }}"
-      data-dismiss-days="{{ section.settings.dismiss_days }}"
-      data-mode="{{ section.settings.mode }}"
-      data-show-on-mobile="{{ section.settings.show_on_mobile }}"
-    >
-      <div
-        class="modal__window{% if popup_image == false %} modal__window--no-image-block{% endif %} flex relative text-start has-motion{% if image_block != blank %} flex flex-col{% if popup_image_position == 'left' %} md:flex-row modal__window--side-image{% endif %}{% if popup_image_position == 'right' %} md:flex-row-reverse modal__window--side-image{% endif %}{% endif %}"
-        role="dialog"
-        aria-labelledby="{{ section.id }}-heading"
-        aria-modal="true"
-        tabindex="-1"
-      >
+    <pop-up class="modal popup-section invisible fixed top-0 left-0 w-full h-full flex {{ section.settings.position }}"
+            id="{{ section.id }}"
+            data-trigger="{{ section.settings.trigger }}"
+            data-delay="{{ section.settings.delay }}"
+            data-dismiss-days="{{ section.settings.dismiss_days }}"
+            data-mode="{{ section.settings.mode }}"
+            data-show-on-mobile="{{ section.settings.show_on_mobile }}">
+      <div class="modal__window{% if popup_image == false %} modal__window--no-image-block{% endif %} flex relative text-start has-motion{% if image_block != blank %} flex flex-col{% if popup_image_position == 'left' %} md:flex-row modal__window--side-image{% endif %}{% if popup_image_position == 'right' %} md:flex-row-reverse modal__window--side-image{% endif %}{% endif %}" role="dialog" aria-labelledby="{{ section.id }}-heading" aria-modal="true" tabindex="-1">
         <button type="button" class="modal__close-btn absolute js-close-modal">
           {% render 'icon-close' %}
           <span class="visually-hidden">{{ 'accessibility.close' | t }}</span>
         </button>
         {%- if image_block != blank -%}
-          <div class="modal__image img-fill {{ popup_image_position }} {% if popup_image_mobile == 'hidden' %}desktop-only{% endif %}">
+          <div class="modal__image img-fill {{ popup_image_position }} {% if popup_image_mobile == 'hidden' %}desktop-only{% endif %}" >
             {%- if popup_image != false -%}
               {% render 'image',
                 image: popup_image,
@@ -130,10 +109,10 @@
           {%- if section.settings.bg_image != blank -%}
             <div class="popup-section__background-image img-fill absolute top-0 left-0 h-full w-full">
               {% render 'image',
-                image: section.settings.bg_image,
-                widths: '460, 640, 860, 1280',
-                sizes: '(min-width: 768px) 640px, (max-width: 767.98px) 95vw',
-                loading: 'lazy'
+              image: section.settings.bg_image,
+              widths: '460, 640, 860, 1280',
+              sizes: '(min-width: 768px) 640px, (max-width: 767.98px) 95vw',
+              loading: 'lazy'
               %}
             </div>
           {%- endif -%}
@@ -141,106 +120,56 @@
           {%- for block in section.blocks -%}
             {%- case block.type -%}
               {%- when 'heading' -%}
-                {%- if block.settings.heading_image != blank -%}
-                  <img
-                    src="{{ block.settings.heading_image | img_url: 'original' }}"
-                    alt="{{ block.settings.title }}"
-                    class="contentimg"
-                    width=" {{block.settings.heading_image_width}}px;height:auto;"
-                    style="margin-bottom:30px;"
-                  >
+              {%- if block.settings.heading_image != blank -%}
+              <img src="{{ block.settings.heading_image | img_url: 'original' }}" alt="{{ block.settings.title }}" class="contentimg" width=" {{block.settings.heading_image_width}}px;height:auto;" style="margin-bottom:30px;"/>
                 {%- endif -%}
                 {%- if block.settings.heading != blank -%}
-                  {%- liquid
-                    # 获取本地化标题，支持四种语言回退机制
-                    assign localized_heading = ''
-                    if current_locale == 'en'
-                      assign localized_heading = block.settings.heading
-                    elsif current_locale == 'de'
-                      assign localized_heading = block.settings.heading_de
-                    elsif current_locale == 'fr'
-                      assign localized_heading = block.settings.heading_fr
-                    elsif current_locale == 'fi'
-                      assign localized_heading = block.settings.heading_fi
-                    endif
-                    
-                    # 如果当前语言版本为空，回退到英语版本
-                    if localized_heading == blank
-                      assign localized_heading = block.settings.heading
-                    endif
-                  -%}
-                  <h2
-                    class="section__block section__block--heading {{ block.settings.heading_size }}"
-                    id="{{ section.id }}-heading"
-                    {{ block.shopify_attributes }}
-                  >
-                    {{- localized_heading | escape -}}
+                  <h2 class="section__block section__block--heading {{ block.settings.heading_size }}" id="{{ section.id }}-heading" {{ block.shopify_attributes }}>
+                    {% if request.locale.iso_code == 'de' %}
+                    {{- block.settings.heading_de | escape -}}
+                    {% elsif request.locale.iso_code == 'fr' %}
+                {{- block.settings.heading_fr | escape -}}
+                {% else %}
+                {{- block.settings.heading | escape -}}
+                {% endif %}
                   </h2>
                 {%- endif -%}
 
               {%- when 'subheading' -%}
-                {%- if block.settings.subheading != blank -%}
-                  {%- liquid
-                    assign localized_subheading = ''
-                    if current_locale == 'en'
-                      assign localized_subheading = block.settings.subheading
-                    elsif current_locale == 'de'
-                      assign localized_subheading = block.settings.subheading_de
-                    elsif current_locale == 'fr'
-                      assign localized_subheading = block.settings.subheading_fr
-                    elsif current_locale == 'fi'
-                      assign localized_subheading = block.settings.subheading_fi
-                    endif
-                    
-                    if localized_subheading == blank
-                      assign localized_subheading = block.settings.subheading
-                    endif
-                  -%}
+                {%- if block.settings.text != blank -%}
                   <p class="section__block subheading" {{ block.shopify_attributes }}>
-                    {{- localized_subheading | escape -}}
+                    {% if request.locale.iso_code == 'de' %}
+                    {{- block.settings.subheading_de | escape -}}
+                    {% elsif request.locale.iso_code == 'fr' %}
+                {{- block.settings.subheading_fr | escape -}}
+                {% else %}
+                {{- block.settings.subheading | escape -}}
+                {% endif %}
                   </p>
                 {%- endif -%}
 
               {%- when 'text' -%}
                 {%- if block.settings.text != blank -%}
-                  {%- liquid
-                    assign localized_text = ''
-                    if current_locale == 'en'
-                      assign localized_text = block.settings.text
-                    elsif current_locale == 'de'
-                      assign localized_text = block.settings.text_de
-                    elsif current_locale == 'fr'
-                      assign localized_text = block.settings.text_fr
-                    elsif current_locale == 'fi'
-                      assign localized_text = block.settings.text_fi
-                    endif
-                    
-                    # 如果当前语言版本为空，回退到英语版本
-                    if localized_text == blank
-                      assign localized_text = block.settings.text
-                    endif
-                  -%}
-                  <div class="section__block rte {{ block.settings.text_size }}" {{ block.shopify_attributes }}>
-                    {{ localized_text }}
+                <div class="section__block rte {{ block.settings.text_size }}" {{ block.shopify_attributes }}>
+                    {% if request.locale.iso_code == 'de' %}
+                    {{ block.settings.text_de }}
+                    {% elsif request.locale.iso_code == 'fr' %}
+                {{block.settings.text_fr }}
+                {% else %}
+                {{block.settings.text }}
+                {% endif %}
                   </div>
                 {%- endif -%}
 
               {%- when 'newsletter-signup' -%}
-                <div
-                  class="section__block form-width{% if section.settings.text_align == 'text-start' %} mie-auto{% elsif section.settings.text_align == 'text-end' %} mis-auto{% else %} mx-auto{% endif %}"
-                  {{ block.shopify_attributes }}
-                >
+                <div class="section__block form-width{% if section.settings.text_align == 'text-start' %} mie-auto{% elsif section.settings.text_align == 'text-end' %} mis-auto{% else %} mx-auto{% endif %}" {{ block.shopify_attributes }}>
                   {%- assign form_id = section.id | append: '-sign-up' -%}
                   {% render 'newsletter-signup', id: form_id, tags: 'pop-up', block: block %}
                 </div>
 
               {%- when 'countdown' -%}
                 <script src="{{ 'countdown-timer.js' | asset_url }}" defer></script>
-                <div
-                  class="section__block countdown__block countdown-font-{{ block.settings.number_font }} countdown-divider-{{ block.settings.divider_type }} no-js-hidden"
-                  id="{{ block.id }}"
-                  {{ block.shopify_attributes }}
-                >
+                <div class="section__block countdown__block countdown-font-{{ block.settings.number_font }} countdown-divider-{{ block.settings.divider_type }} no-js-hidden" id="{{ block.id }}" {{ block.shopify_attributes }}>
                   {% render 'countdown-timer',
                     end_date: block.settings.end_date,
                     end_time: block.settings.end_time,
@@ -279,69 +208,27 @@
                   }
                 {%- endstyle -%}
                 {%- if block.settings.button_1_label != blank or block.settings.button_2_label != blank -%}
-                  <div
-                    class="section__block section__block--buttons button-row inline-flex flex-wrap {% if section.settings.overlay_text_align == 'text-start' %} justify-start{% elsif section.settings.overlay_text_align == 'text-end' %} justify-end{% else %} justify-center{% endif %}{% if section.settings.mobile_centered %} md-down:center{% endif %}"
-                    {{ block.shopify_attributes }}
-                  >
+                  <div  class="section__block section__block--buttons button-row inline-flex flex-wrap {% if section.settings.overlay_text_align == 'text-start' %} justify-start{% elsif section.settings.overlay_text_align == 'text-end' %} justify-end{% else %} justify-center{% endif %}{% if section.settings.mobile_centered %} md-down:center{% endif %}" {{ block.shopify_attributes }}>
                     {%- if block.settings.button_1_label != blank %}
-                      {%- liquid
-                        # 获取本地化按钮1标签，支持四种语言回退机制
-                        assign localized_btn1_label = ''
-                        if current_locale == 'en'
-                          assign localized_btn1_label = block.settings.button_1_label
-                        elsif current_locale == 'de'
-                          assign localized_btn1_label = block.settings.button_1_label_de
-                        elsif current_locale == 'fr'
-                          assign localized_btn1_label = block.settings.button_1_label_fr
-                        elsif current_locale == 'fi'
-                          assign localized_btn1_label = block.settings.button_1_label_fi
-                        endif
-                        
-                        # 如果当前语言版本为空，回退到英语版本
-                        if localized_btn1_label == blank
-                          assign localized_btn1_label = block.settings.button_1_label
-                        endif
-                      -%}
-                      <a
-                        class="btn btn--primary btn--popup-1 button-row__btn"
-                        style="border:none;"
-                        {% if block.settings.button_1_link == blank %}
-                          role="link" aria-disabled="true"
-                        {% else %}
-                          href="{{ block.settings.button_1_link }}"
-                        {% endif %}
-                      >
-                        {{- localized_btn1_label | escape -}}
+                      <a class="btn btn--primary btn--popup-1 button-row__btn" style="border:none;" {% if block.settings.button_1_link == blank %}role="link" aria-disabled="true"{% else %}href="{{ block.settings.button_1_link }}"{% endif %}>
+                        {% if request.locale.iso_code == 'de' %}
+                        {{- block.settings.button_1_label_de | escape -}}
+                        {% elsif request.locale.iso_code == 'fr' %}
+                    {{- block.settings.button_1_label_fr | escape -}}
+                    {% else %}
+                    {{- block.settings.button_1_label | escape -}}
+                    {% endif %}
                       </a>
                     {%- endif -%}
                     {%- if block.settings.button_2_label != blank %}
-                      {%- liquid
-                        # 获取本地化按钮2标签，支持四种语言回退机制
-                        assign localized_btn2_label = ''
-                        if current_locale == 'en'
-                          assign localized_btn2_label = block.settings.button_2_label
-                        elsif current_locale == 'de'
-                          assign localized_btn2_label = block.settings.button_2_label_de
-                        elsif current_locale == 'fr'
-                          assign localized_btn2_label = block.settings.button_2_label_fr
-                        elsif current_locale == 'fi'
-                          assign localized_btn2_label = block.settings.button_2_label_fi
-                        endif
-                        
-                        # 如果当前语言版本为空，回退到英语版本
-                        if localized_btn2_label == blank
-                          assign localized_btn2_label = block.settings.button_2_label
-                        endif
-                      -%}
-                      <a
-                        class="btn btn--primary btn--popup-2 button-row__btn"
-                        {% if block.settings.button_2_link == blank %}
-                          role="link" aria-disabled="true"
-                        {% else %}
-                          href="{{ block.settings.button_2_link }}"
-                        {% endif %}
-                      >
-                        {{- localized_btn2_label | escape -}}
+                      <a class="btn btn--primary btn--popup-2 button-row__btn" {% if block.settings.button_2_link == blank %}role="link" aria-disabled="true"{% else %}href="{{ block.settings.button_2_link }}"{% endif %}>
+                        {% if request.locale.iso_code == 'de' %}
+                        {{- block.settings.button_2_label_de | escape -}}
+                        {% elsif request.locale.iso_code == 'fr' %}
+                    {{- block.settings.button_2_label_fr | escape -}}
+                    {% else %}
+                    {{- block.settings.button_2_label | escape -}}
+                    {% endif %}
                       </a>
                     {%- endif -%}
                   </div>
@@ -357,8 +244,9 @@
 <style>
   .large-text {
     font-size: 1.6em;
-  }
+}
 </style>
+
 
 {% schema %}
 {
@@ -529,16 +417,16 @@
       "name": "Heading",
       "limit": 1,
       "settings": [
-        {
-          "type": "image_picker",
-          "id": "heading_image",
-          "label": "Heading Image"
-        },
-        {
-          "type": "text",
-          "id": "heading_image_width",
-          "label": "Heading Image width"
-        },
+      {
+        "type": "image_picker",
+        "id": "heading_image",
+        "label": "Heading Image",
+      },
+      {
+        "type": "text",
+        "id": "heading_image_width",
+        "label": "Heading Image width"
+      },
         {
           "type": "text",
           "id": "heading",
@@ -547,12 +435,12 @@
         {
           "type": "text",
           "id": "heading_de",
-          "label": "Heading DE"
+          "label": "Heading DE",
         },
         {
           "type": "text",
           "id": "heading_fr",
-          "label": "Heading FR"
+          "label": "Heading FR",
         },
         {
           "type": "select",
@@ -593,21 +481,21 @@
       "name": "Subheading",
       "limit": 1,
       "settings": [
-        {
-          "type": "text",
-          "id": "subheading",
-          "label": "Subheading"
-        },
-        {
-          "type": "text",
-          "id": "subheading_de",
-          "label": "Subheading DE"
-        },
-        {
-          "type": "text",
-          "id": "subheading_fr",
-          "label": "Subheading FR"
-        }
+      {
+        "type": "text",
+        "id": "subheading",
+        "label": "Subheading"
+      },
+      {
+        "type": "text",
+        "id": "subheading_de",
+        "label": "Subheading DE",
+      },
+      {
+        "type": "text",
+        "id": "subheading_fr",
+        "label": "Subheading FR",
+      },
       ]
     },
     {
@@ -749,7 +637,7 @@
         {
           "type": "text",
           "id": "button_2_label",
-          "label": "Button label"
+          "label": "Button label",
         },
         {
           "type": "text",
@@ -907,7 +795,10 @@
     }
   ],
   "disabled_on": {
-    "groups": ["header", "footer"]
+    "groups": [
+      "header",
+      "footer"
+    ]
   }
 }
 {% endschema %}

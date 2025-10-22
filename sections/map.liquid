@@ -1,100 +1,13 @@
-{%- comment -%}
-/*
- * Map Section - Interactive Location Display Component
- * 
- * CORE FUNCTIONALITY:
- * This section creates an interactive map display for showing store locations, business addresses,
- * or any geographical points of interest. It supports both Google Maps integration and fallback
- * placeholder images, with customizable styling and layout options.
- * 
- * TECHNICAL IMPLEMENTATION:
- * - Liquid templating with conditional map rendering based on API key availability
- * - Google Maps Embed API and Dynamic Maps API integration
- * - Responsive CSS layout with flexible content arrangement
- * - JavaScript enhancement for dynamic map functionality
- * - Shopify image optimization and placeholder system
- * 
- * GOOGLE MAPS INTEGRATION:
- * - Dynamic Maps API for interactive map experience
- * - Embed Maps API for simple iframe-based maps (free option)
- * - Customizable map styles (Default, Silver, Retro, Dark, Night, Aubergine)
- * - Automatic geocoding and location centering
- * - Google Maps directions link integration
- * 
- * RELATED FILES:
- * 
- * Core Section File:
- * - sections/map.liquid - This main section file
- * 
- * Snippet Dependencies:
- * - snippets/animation-attrs.liquid - Animation attributes for scroll-triggered effects
- * - snippets/icon-location.liquid - Location pin icon for directions button
- * - snippets/image.liquid - Image rendering with optimization and responsive sizing
- * - snippets/location-map.liquid - Dynamic map component for interactive Google Maps
- * 
- * JavaScript Dependencies:
- * - assets/location-map.js - Dynamic map functionality and Google Maps API integration
- * 
- * LAYOUT OPTIONS:
- * - Full-width or constrained container layout
- * - Three-column content arrangement (text, feature image, map)
- * - Responsive design with mobile-optimized layout
- * - Color scheme selection with theme integration
- * 
- * CONTENT FEATURES:
- * - Customizable section heading
- * - Rich text address and hours display
- * - Google Maps directions button with optional location pin icon
- * - Optional feature image display with placeholder fallback
- * - Background image for map placeholder when API key is unavailable
- * 
- * MAP CONFIGURATION:
- * - Google Maps API key integration
- * - Map address input with automatic geocoding
- * - Map type selection (Dynamic vs Embed)
- * - Custom map styling options for dynamic maps
- * - Zoom level and display controls
- * 
- * CUSTOMIZATION OPTIONS:
- * - Full-width layout toggle
- * - Color scheme selection (Default, 1, 2)
- * - Feature image display control
- * - Location pin icon toggle for directions button
- * - Placeholder image customization
- * 
- * PERFORMANCE CONSIDERATIONS:
- * - Conditional JavaScript loading based on API key availability
- * - Deferred script loading for optimal page performance
- * - Optimized image delivery with responsive sizing
- * - Fallback placeholder system for offline functionality
- * 
- * BROWSER COMPATIBILITY:
- * - Modern browsers with iframe and JavaScript support
- * - Google Maps API compatibility requirements
- * - Progressive enhancement for map functionality
- * - Accessible markup with proper semantic structure
- * 
- * USE CASES:
- * - Store locator pages
- * - Contact page location display
- * - Business address presentation
- * - Event venue location mapping
- * - Multi-location business directories
- */
-{%- endcomment -%}
-
 {% assign display_map = false %}
 {%- if section.settings.api_key != blank and section.settings.map_address -%}
   {% assign display_map = true %}
   <script src="{{ 'location-map.js' | asset_url }}" defer></script>
 {%- endif -%}
 
-<div
-  class="section-id-{{ section.id }} map-section use-color-scheme use-color-scheme--{{ section.settings.color_scheme }}{% unless section.settings.full_width %} map-section--map-constrained{% endunless %}{% if display_map %} map-section--display-map{% endif %}{% if section.settings.show_feature_image %} map-section--has-feature-image{% endif %}"
-  {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}
->
+<div class="section-id-{{ section.id }} map-section use-color-scheme use-color-scheme--{{ section.settings.color_scheme }}{% unless section.settings.full_width %} map-section--map-constrained{% endunless %}{% if display_map %} map-section--display-map{% endif %}{% if section.settings.show_feature_image %} map-section--has-feature-image{% endif %}" {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
   <div class="container">
     <div class="map-section__wrapper">
+
       <div class="map-section__content map-section__text">
         {% if section.settings.heading != blank %}
           <h2>{{ section.settings.heading | escape }}</h2>
@@ -104,11 +17,7 @@
         {% endif %}
         {% if section.settings.button != blank and section.settings.map_address != blank %}
           <div>
-            <a
-              href="https://maps.google.com?daddr={{ section.settings.map_address | escape }}"
-              target="_blank"
-              class="btn btn--secondary"
-            >
+            <a href="https://maps.google.com?daddr={{ section.settings.map_address | escape }}" target="_blank" class="btn btn--secondary">
               {% if section.settings.show_pin %}
                 <span class="icon">{% render 'icon-location' %}</span>
               {% endif %}
@@ -151,19 +60,11 @@
               map_style: section.settings.map_style
             %}
           {%- else -%}
-            <iframe
-              class="map"
-              src="https://www.google.com/maps/embed/v1/place?key={{ section.settings.api_key }}&q={{ section.settings.map_address }}&zoom=14"
-              width="400"
-              height="300"
-              frameborder="0"
-              style="border:0"
-              referrerpolicy="no-referrer-when-downgrade"
-              allowfullscreen
-            ></iframe>
+            <iframe class="map" src="https://www.google.com/maps/embed/v1/place?key={{ section.settings.api_key }}&q={{ section.settings.map_address }}&zoom=14" width="400" height="300" frameborder="0" style="border:0" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
           {%- endif -%}
         {%- endif -%}
       </div>
+
     </div>
   </div>
 </div>
@@ -173,7 +74,9 @@
   "name": "Map",
   "class": "section-map",
   "disabled_on": {
-    "groups": ["aside"]
+    "groups": [
+      "aside"
+    ]
   },
   "settings": [
     {

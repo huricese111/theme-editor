@@ -1,0 +1,393 @@
+{% schema %}
+{
+"name": "Related Products",
+"settings": [
+],
+"presets": [
+{
+"name": "Related Products",
+"category": "Custom"
+}
+]
+}
+{% endschema %}
+
+<style>
+      .carousel-wrapper {
+          position: relative;
+          margin-bottom: 100px;
+          margin-top: 100px;
+      }
+
+      .highlightrelatedcarouselcontain {
+          margin-left: 60px;
+          overflow: hidden;
+      }
+
+      .highlightrelatedcarousel {
+          overflow: auto;
+          position: relative;
+          width: 100%;
+          height: 100%;
+      }
+
+      .highlightrelatedcarousel::-webkit-scrollbar {
+          display: none;
+      }
+
+      .highlightrelatedcarousel {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+      }
+
+      .highlightrelatedcarousel-inner {
+          display: flex;
+          transition: transform 0.3s ease;
+          height: 100%;
+      }
+
+      .explore-title {
+          font-size: 30px;
+          margin-bottom: 20px;
+          text-align: left;
+      }
+
+      .related-product {
+          flex: 0 0 25%;
+          box-sizing: border-box;
+          margin-right: 1rem;
+          position: relative;
+          transition: transform 0.3s;
+      }
+
+      .related-product img {
+          width: 100%;
+          height: auto;
+          aspect-ratio: 1;
+          object-fit: contain;
+          border-radius: 5px;
+          background: #eeeeee;
+          margin-bottom: 10px;
+      }
+
+      .related-product-name {
+          color: #000;
+          font-size: 20px;
+      }
+
+      .related-product-price {
+          font-size: 22px;
+      }
+
+      .add-to-cart-form input[type=submit] {
+          display: inline-block;
+          padding: 10px 20px;
+          background-color: white;
+          color: black;
+          text-decoration: none;
+          border-radius: 50px;
+          margin-top: 10px;
+          border: 1px solid black;
+          transition: background-color 0.3s, color 0.3s;
+          font-family: SF Pro Display, SF Pro Icons, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Droid Sans, Roboto Slab, Helvetica, Helvetica Neue, Arial, sans-serif !important;
+          font-size: 16px;
+          line-height: 1.5;
+      }
+
+    .orderbutton {
+          display: inline-block;
+          padding: 10px 20px;
+          background-color: white;
+          color: black;
+          text-decoration: none;
+          border-radius: 50px;
+          margin-top: 10px;
+          border: 1px solid black;
+      }
+
+      .orderbutton:hover {
+          background-color: black;
+          color: white;
+      }
+
+      .orderbutton.sold-out {
+          background-color: #ccc;
+          color: #666;
+          border: #666;
+          cursor: not-allowed;
+          pointer-events: none;
+      }
+
+      .add-to-cart-form input[type=submit]:hover {
+          background-color: black;
+          color: white;
+      }
+
+      .discount-labelss {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          background-color: #FFD200;
+          color: black;
+          padding: 5px 10px;
+          border-radius: 5px;
+          font-weight: bold;
+          z-index: 10;
+      }
+
+      .highlightrelated-arrow {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          background: black;
+          color: white;
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+          cursor: pointer;
+          z-index: 100;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          opacity: .8;     
+      }
+
+      .highlightrelated-arrow:hover {
+          background: #444;
+      }
+
+      .highlightrelated-arrow.left {
+          left: 60px;
+      }
+
+      .highlightrelated-arrow.right {
+          right: 60px;
+      }
+
+      .customprice {
+          margin: 20px 0;
+      }
+
+
+    .was-price {
+      margin-left: 10px;
+      text-decoration: line-through;
+      color: #bf3737;
+      font-size: 18px;
+  }
+
+  .current-price {
+      font-size: 18px;
+      margin: 0;
+      text-align: left;
+      font-weight: 700;
+      line-height: 30px;
+      color: #333 !important;
+  }
+
+      @media (max-width: 768px) {
+          .related-product {
+              flex: 0 0 80%;
+              margin-right: 10px;
+          }
+
+          .highlightrelated-arrow {
+              display: none;
+          }
+
+          .highlightrelatedcarouselcontain {
+              margin-left: 20px;
+          }
+      }
+</style>
+
+<div class="carousel-wrapper">
+  <div class="highlightrelatedcarouselcontain">
+    <h2 class="explore-title" data-localize="{{ section.settings.title }}">
+  {{ "ebike.related_products" | t }}
+    </h2>
+    <div class="highlightrelated-arrow left" onclick="moveLeft()">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="white" width="20px" height="auto">
+        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="48"
+            d="M328 112L184 256l144 144"></path>
+      </svg>
+    </div>
+    <div class="highlightrelated-arrow right" onclick="moveRight()">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="white" width="20px" height="auto">
+        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="48"
+            d="M184 112l144 144-144 144"></path>
+      </svg>
+    </div>
+    <div class="highlightrelatedcarousel">
+      <div class="highlightrelatedcarousel-inner" id="highlightRelatedCarouselInner">
+        {% assign related_products = product.metafields.custom.related_products.value %}
+        {% if related_products %}
+          {% for related_product in related_products %}
+            <div class="related-product">
+                       {% if localization.country.iso_code == 'DE' %}
+                  {% if request.locale.iso_code == 'de' %}
+                    <a href="{{ shop.url | append: '/de/products/' | append: related_product.handle }}">
+                  {% else %}
+                    <a href="{{ shop.url | append: '/products/' | append: related_product.handle }}">
+                 {% endif %}
+                {% elsif localization.country.iso_code == 'AT' %}
+                  {% if request.locale.iso_code == 'de' %}
+                    <a href="{{ shop.url | append: '/de-at/products/' | append: related_product.handle }}">
+                 {% else %}
+                     <a href="{{ shop.url | append: '/en-at/products/' | append: related_product.handle }}">
+                  {% endif %}
+                {% else %}
+                  {% if request.locale.iso_code == 'fr' %}
+                    <a href="{{ shop.url | append: '/fr-fr/products/' | append: related_product.handle }}">
+                 {% else %}
+                     <a href="{{ shop.url | append: '/en-fr/products/' | append: related_product.handle }}">
+                      {% endif %}
+                {% endif %}
+
+                {% assign featured_image = related_product.metafields.custom.featured_image
+                  | default: related_product.featured_image
+                  | img_url: 'original'
+                %}
+                <img src="{{ featured_image }}" alt="{{ related_product.title }}">
+                {% if related_product.metafields.custom.discount %}
+                  <div class="discount-labelss">{{ related_product.metafields.custom.discount }}</div>
+                {% endif %}
+                <h3 class="related-product-name">{{ related_product.title }}</h3>
+                <div class="customprice">
+                  {% if related_product.compare_at_price > related_product.price %}
+                    <span class="current-price theme-money">{{ related_product.price | money }}</span>
+                    <span class="was-price theme-money">{{ related_product.compare_at_price | money }}</span>
+                  {% else %}
+                    <span class="current-price theme-money">{{ related_product.price | money }}</span>
+                  {% endif %}
+                </div>
+              </a>
+
+              {% assign product_available = false %}
+              {% for variant in related_product.variants %}
+                {% if variant.inventory_quantity > 0 %}
+                  {% assign product_available = true %}
+                {% endif %}
+              {% endfor %}
+
+              {% if product_available %}
+                {% if localization.country.iso_code == 'DE' %}
+                  {% if request.locale.iso_code == 'de' %}
+                    <a
+                      href="{{ shop.url | append: '/de/products/' | append: related_product.handle }}"
+                      class="orderbutton"
+                    >
+                      {{- 'ebike.order_now' | t -}}
+                    </a>
+                  {% else %}
+                    <a
+                      href="{{ shop.url | append: '/products/' | append: related_product.handle }}"
+                      class="orderbutton"
+                    >
+                      {{- 'ebike.order_now' | t -}}
+                    </a>
+                  {% endif %}
+                {% elsif localization.country.iso_code == 'AT' %}
+                  {% if request.locale.iso_code == 'de' %}
+                    <a
+                      href="{{ shop.url | append: '/de-at/products/' | append: related_product.handle }}"
+                      class="orderbutton"
+                    >
+                      {{- 'ebike.order_now' | t -}}
+                    </a>
+                  {% else %}
+                    <a
+                      href="{{ shop.url | append: '/en-at/products/' | append: related_product.handle }}"
+                      class="orderbutton"
+                    >
+                      {{- 'ebike.order_now' | t -}}
+                    </a>
+                  {% endif %}
+                {% else %}
+                  {% if request.locale.iso_code == 'fr' %}
+                    <a
+                      href="{{ shop.url | append: '/fr-fr/products/' | append: related_product.handle }}"
+                      class="orderbutton"
+                    >
+                      {{- 'ebike.order_now' | t -}}
+                    </a>
+                  {% else %}
+                    <a
+                      href="{{ shop.url | append: '/en-fr/products/' | append: related_product.handle }}"
+                      class="orderbutton"
+                    >
+                      {{- 'ebike.order_now' | t -}}
+                    </a>
+                  {% endif %}
+                {% endif %}
+              {% else %}
+                <span class="orderbutton sold-out">{{ 'ebike.sold_out' | t }}</span>
+              {% endif %}
+            </div>
+          {% endfor %}
+        {% else %}
+          <p>No related products found.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let currentIndex = 0;
+  let startX = 0;
+  let isDragging = false;
+
+  const carouselContainer = document.querySelector('.highlightrelatedcarousel');
+  const carouselInner = document.getElementById('highlightRelatedCarouselInner');
+  const items = carouselInner.children;
+  let itemWidth = window.innerWidth < 768 ? 300 : (window.innerWidth / 4 + 10);
+  const maxIndex = items.length - 1;
+
+  function updateCarousel() {
+      carouselContainer.scrollLeft = currentIndex * itemWidth;
+  }
+
+  function moveLeft() {
+      if (currentIndex > 0) {
+          currentIndex--;
+          updateCarousel();
+      }
+  }
+
+  function moveRight() {
+      if (currentIndex < maxIndex) {
+          currentIndex++;
+          updateCarousel();
+      }
+  }
+
+  // Touch event handlers
+  carouselContainer.addEventListener('touchstart', (event) => {
+      startX = event.touches[0].clientX;
+      isDragging = true;
+  });
+
+  carouselContainer.addEventListener('touchmove', (event) => {
+      if (!isDragging) return;
+      const currentX = event.touches[0].clientX;
+      const diffX = startX - currentX;
+
+      if (Math.abs(diffX) > 50) {
+          isDragging = false; // Prevent further dragging
+          if (diffX > 0) {
+              moveRight();
+          } else {
+              moveLeft();
+          }
+      }
+  });
+
+  carouselContainer.addEventListener('touchend', () => {
+      isDragging = false; // Reset dragging state
+  });
+
+  carouselContainer.addEventListener('touchcancel', () => {
+      isDragging = false;
+  });
+</script>

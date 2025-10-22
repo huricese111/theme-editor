@@ -1,0 +1,31 @@
+{%- comment %}
+    Author: BSS B2B Login
+
+    DO NOT MODIFY. The contents of BSS B2B Login 
+    will overwrite any changes in the next update.
+
+    Updated at: Mon Jan 13 2025
+{% endcomment -%}
+{% assign bss_product_is_hide = false %}
+{% assign bss_hide_product_redirect_page = "/" %}
+{% assign bss_hide_product_redirect_type = 0 %}
+{% assign bss_hide_product_on_pages = "" %}
+{% assign bss_login_to_day_date = 'now' | date: '%s' %}
+{% assign bss_product_collection = "" | split: ',' %}
+
+{% for collection in product.collections %}
+    {% assign collection_id = collection.id | split:',' %}
+    {% assign delimeter = "|" | split:',' %}
+    {% assign bss_product_collection = bss_product_collection | concat:delimeter %}
+    {% assign bss_product_collection = bss_product_collection | concat:collection_id %}
+{% endfor %}
+{% if collec_id_custom %}
+    {% assign collection_id_custom = collec_id_custom | split: ',' %}
+    {% assign bss_product_collection = bss_product_collection | concat: collection_id_custom %}
+{% endif %}
+{% unless request.design_mode or request.visual_preview_mode %}
+    {% unless isHidePriceApplied  %} {% unless bss_product_is_hide %} {% assign bss_login_from_date_22974 = 'Fri Apr 07 2023 00:00:00 GMT+0700 (Indochina Time)' | date: '%s' %} {% assign bss_login_to_date_22974 = 'Sat Jun 01 2024 22:30:00 GMT+0700 (Indochina Time)' | date: '%s' %} {% if bss_login_from_date_22974 < bss_login_to_day_date and bss_login_to_day_date < bss_login_to_date_22974 %} {% unless false %} {% assign product_tags = product.tags | join: ',' | downcase  %} {% if product_tags contains "b2b" or  collection.id == 495243460876 %} {% assign lowercaseTags = customer.tags | join: ',' | downcase %} {% unless lowercaseTags contains "b2b" %}{% if true %} {% assign bss_product_is_hide = true %} {% assign bss_hide_product_redirect_page  = "" | strip %} {% assign bss_hide_product_redirect_type = 0 %} {% if bss_hide_product_redirect_type == 0 %} {% assign bss_hide_product_redirect_page  = "/" | strip %} {% endif %} {% if bss_hide_product_redirect_type == 2 %} {% assign bss_hide_product_redirect_page  = "" %} {% endif %} {% assign bss_hide_product_on_pages = "0,1,2,3" %} {% assign bss_product_is_hide = true %} {% assign bss_hide_product_on_gg_search = false %} {% if template.name == "product" %}{% assign bss_product_is_hide = true %}{% endif %} {% if template.name == "index" %}{% assign bss_product_is_hide = true %}{% endif %} {% if template.name == "collection" %}{% assign bss_product_is_hide = true %}{% endif %} {% if template.name == "list-collections" %}{% assign bss_product_is_hide = true %}{% endif %} {% if template.name == "search" %}{% assign bss_product_is_hide = true %}{% endif %} {% endif %}{% else %}{% assign isHidePriceApplied = true %}{% endunless %} {% endif %} {% endunless %} {% endif %} {% endunless %} {% endunless %}
+{% endunless %}
+{% unless no_data_returned %}
+    {{ bss_product_is_hide }}
+  {% endunless %}

@@ -1,0 +1,151 @@
+<script src="{{ 'stikcybar-promotion.js' | asset_url }}" defer></script>
+<style>
+    html {
+        scroll-behavior: smooth;
+    }
+
+    .stickyNavigation {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: rgb(255, 255, 255);
+        padding: 1em 2em;
+        width: 100%;
+        box-shadow: rgba(91, 104, 113, 0.1) 0px 6px 8px;
+        transform: translateY(0px);
+        transition: box-shadow 0.2s, transform 0.2s;
+        z-index: 100 !important;
+        min-height: 100px;
+    }
+
+    .stickyNavigationleft {
+        display: flex;
+        align-items: center;
+        gap: 4rem;
+    }
+
+    .stickyNavigation-title {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .stickyNavigation-links {
+        display: flex;
+        gap: 20px;
+        overflow-x: auto; /* 允许横向滚动 */
+        white-space: nowrap; /* 防止换行 */
+    }
+
+    .stickyNavigation-links a {
+        text-decoration: none;
+        color: #333;
+    }
+
+    .button.button--large {
+        white-space: nowrap !important;
+    }
+
+    .highlightitems {
+        font-weight: bold;
+        color: #2b7dde !important;
+    }
+
+    @media (max-width: 768px) {
+
+    .stickyNavigation-links::-webkit-scrollbar {
+        display: none; 
+    }
+      .stickyNavigation{
+        width:100%;
+            padding: 0;
+      }
+      .stickyNavigationleft {
+    gap: 0;
+    width: 100%;
+}
+        .stickyNavigation-title {
+            font-size: 18px;
+            line-height: 20px;
+        }
+
+        .stickyNavigation-links {
+            padding: 0 1em; 
+           overflow-x: auto;
+        white-space: nowrap; 
+        scrollbar-width: none;
+        }
+    }
+</style>
+
+<div class="stickyNavigation" id="stickyNavigation">
+    <div class="stickyNavigationleft">
+        <div class="stickyNavigation-title">{{ product.title }}</div>
+        <div class="stickyNavigation-links">
+            <a href="#shopify-section-template--23913512927500__rich_text_adyENd" class="nav-link">Trekking 7 LTD</a>
+            <a href="#shopify-section-template--23913512927500__rich_text_VV6wmp" class="nav-link">Trekking 7 SE</a>
+            <a href="#shopify-section-template--23913512927500__rich_text_i9G93E" class="nav-link">Mountain 7</a>
+            <!-- <a href="#shopify-section-template--23913512927500__news_sildeshow_HVwpi3" class="nav-link">
+                {% if request.locale.iso_code == 'de' %}
+                Nachrichten & Geschichten
+                {% elsif request.locale.iso_code == 'fr' %}
+                Nouvelles & Histoires
+                {% else %}
+                News & Stories
+                {% endif %}
+            </a> -->
+            <a href="#shopify-section-template--23913512927500__17415882502d62e51b" class="nav-link">
+                {% if request.locale.iso_code == 'de' %}
+                Kundenrezensionen
+                {% elsif request.locale.iso_code == 'fr' %}
+                Commentaires client
+                {% else %}
+                Customer reviews
+                {% endif %}
+            </a>
+            <a href="#shopify-section-template--23913512927500__collapsible_tabs_qETzUn" class="nav-link">FAQ</a>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const links = document.querySelectorAll('.nav-link');
+
+    // 创建一个 Intersection Observer
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            const id = entry.target.id;
+            const link = document.querySelector(`a[href="#${id}"]`);
+
+            if (entry.isIntersecting) {
+                links.forEach(link => link.classList.remove('highlightitems'));
+                if (link) {
+                    link.classList.add('highlightitems');
+                    // 移除自动滚动到相对位置的代码
+                    // link.scrollIntoView({ behavior: 'smooth', inline: 'center' });
+                }
+            }
+        });
+    }, {
+        threshold: 0.1 
+    });
+
+    links.forEach(link => {
+        const targetId = link.getAttribute('href').substring(1); // 去掉 #
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+            observer.observe(targetElement);
+        }
+    });
+
+    links.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+    });
+});
+
+</script>

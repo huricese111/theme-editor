@@ -43,6 +43,10 @@
                 window.gtag("event", "sign_up", eventParams);
                 window.localStorage.setItem("sign_up_event_fired_at", Date.now() + "")
             });
+            waitFor(() => !!window.fbq).then(() => {
+                window.fbq('track', 'CompleteRegistration');
+                window.localStorage.setItem("sign_up_event_fired_at", Date.now() + "")
+            });
         };
 
         // register method 1: hiko social login
@@ -72,7 +76,16 @@
             if (newsLetterSignupForms) {
                 newsLetterSignupForms.forEach(form => {
                     form.addEventListener("submit", () => {
-                        gtag('event', 'newsletter_signup');
+                        [
+                            () => gtag('event', 'newsletter_signup'),
+                            () => fbq('trackCustom', 'newsletter_signup')
+                        ].forEach(trackFn => {
+                            try {
+                                trackFn();
+                            } catch (e) {
+                                console.error(e)
+                            }
+                        });
                     });
                 })
             }
@@ -94,7 +107,16 @@
                 if (newsLetterSignupForms) {
                     newsLetterSignupForms.forEach(form => {
                         form.addEventListener("submit", () => {
-                            gtag('event', 'preheat_2024_newsletter_signup');
+                            [
+                                () => gtag('event', 'preheat_2024_newsletter_signup'),
+                                () => fbq('trackCustom', 'preheat_2024_newsletter_signup')
+                            ].forEach(trackFn => {
+                                try {
+                                    trackFn();
+                                } catch (e) {
+                                    console.error(e)
+                                }
+                            });
                         });
                     })
                 }

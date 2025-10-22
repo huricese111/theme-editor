@@ -2,95 +2,85 @@
 /**
  * Custom Image with Text Section
  * 
- * DESCRIPTION:
- * A highly configurable Shopify Liquid section that creates an interactive image carousel
- * with text content. This section displays a series of custom items, each containing an
- * image, title, description, and optional button. Features include responsive design,
- * touch/swipe navigation, lightbox functionality for image viewing, and comprehensive
- * multi-language support.
+ * A sophisticated carousel component that displays image-text pairs with comprehensive
+ * multilingual support and interactive features. This section creates a responsive
+ * carousel showcasing products, features, or content with rich customization options.
  * 
- * CORE FEATURES:
- * - Responsive image carousel with configurable aspect ratios (16:9, 9:16, 4:3, 3:4, 1:1, natural)
- * - Touch/swipe navigation for mobile devices
- * - Lightbox modal for full-size image viewing
- * - Multi-language content support (English, German, French, Finnish)
- * - Customizable button styling with hover effects
- * - Global visibility controls for titles, descriptions, and buttons
- * - Image linking and title linking capabilities
- * - Smooth CSS transitions and animations
- * - Keyboard accessibility (ESC key to close lightbox)
+ * Key Features:
+ * - Responsive carousel with touch/swipe support
+ * - Multilingual content support (English, German, French, Finnish)
+ * - Lightbox functionality for image viewing
+ * - Customizable aspect ratios (16:9, 3:4, 1:1, natural)
+ * - Interactive navigation arrows
+ * - Flexible content visibility controls
+ * - Custom button styling with hover effects
  * 
- * TECHNICAL IMPLEMENTATION:
- * - Uses CSS Grid and Flexbox for responsive layout
- * - JavaScript-powered carousel with touch event handling
- * - CSS custom properties for dynamic theming
- * - Intersection Observer for performance optimization
- * - Image preloading for improved user experience
- * - Responsive breakpoints: 1200px, 768px, 480px
+ * Carousel Behavior:
+ * - Desktop: Shows 3 slides per view
+ * - Tablet (≤1200px): Shows 2 slides per view
+ * - Mobile (≤768px): Shows 1 slide per view
+ * - Touch gestures enabled for mobile navigation
+ * - Smooth transitions and animations
  * 
- * SHOPIFY INTEGRATION:
- * - Shopify section schema with customizable settings
- * - Shopify image transformation and optimization
- * - Shopify localization system integration
- * - Block-based content management
+ * Localization:
+ * - Automatic language detection based on request.locale
+ * - Fallback to default language if translation unavailable
+ * - Supports title, text content, and button text translations
+ * - Language-specific rich text content support
  * 
- * RELATED FILES:
- * 
- * Core Template Files:
- * - sections/Custom-Image-with-Text.liquid - This main section file
- * 
- * Icon Dependencies:
- * - snippets/icon-prev-arrow.liquid - Previous/left navigation arrow icon
- * - snippets/icon-next-arrow.liquid - Next/right navigation arrow icon
- *
- * Utility Snippets:
- * - snippets/animation-attrs.liquid - Animation attributes for enhanced UX
- * - snippets/list-icon.liquid - Generic icon rendering utility
- * - snippets/custom-marker-icon.liquid - Custom marker icons
- * 
- * Layout Dependencies:
- * - layout/theme.liquid - Main theme layout with global settings
- * 
- * Asset Dependencies:
- * - CSS: Embedded within this file (lines 718-1180)
- * - JavaScript: Embedded within this file (lines 1182-1398)
- * - Images: Shopify CDN optimized images with multiple size variants
- * 
- * RESPONSIVE BREAKPOINTS:
- * - Desktop (>1200px): 3 slides visible
- * - Tablet (769px-1200px): 2 slides visible  
- * - Mobile (≤768px): 1 slide visible
- * - Small mobile (≤480px): Navigation arrows hidden
- * 
- * BROWSER COMPATIBILITY:
- * - Modern browsers with CSS Grid and Flexbox support
- * - Touch event support for mobile devices
- * - CSS custom properties support
- * - ES6+ JavaScript features
- * 
- * PERFORMANCE CONSIDERATIONS:
- * - Image lazy loading and optimization
- * - CSS transitions for smooth animations
- * - Touch event debouncing
- * - Efficient DOM manipulation
- * 
- * ACCESSIBILITY FEATURES:
- * - ARIA labels and semantic HTML structure
- * - Keyboard navigation support
- * - Screen reader friendly content
- * - High contrast hover states
- * 
- * CUSTOMIZATION OPTIONS:
- * - Section title and multi-language variants
+ * Customization Options:
+ * - Section title with visibility toggle
  * - Image aspect ratio selection
- * - Button styling (colors, borders, hover effects)
- * - Global visibility toggles for content elements
- * - Individual item configuration (image, title, text, links)
+ * - Content visibility controls (title, text, button)
+ * - Custom button colors and hover states
+ * - Individual item customization per block
  * 
- * USAGE EXAMPLE:
- * This section is typically used on product pages to showcase key features,
- * highlights, or specifications with accompanying images. Each item can link
- * to additional content or external resources.
+ * Block Configuration:
+ * - Image upload with optional linking
+ * - Multilingual titles with optional linking
+ * - Rich text content in multiple languages
+ * - Custom button text overrides per language
+ * - Button link configuration
+ * 
+ * Interactive Features:
+ * - Click-to-zoom lightbox for images
+ * - Keyboard navigation (ESC to close lightbox)
+ * - Touch/swipe navigation on mobile
+ * - Hover effects on slides and buttons
+ * - Preloading of lightbox images for performance
+ * 
+ * Technical Features:
+ * - CSS custom properties for dynamic styling
+ * - Responsive design with mobile-first approach
+ * - Performance optimized with lazy loading
+ * - Accessibility considerations with proper alt texts
+ * - Modern CSS Grid and Flexbox layouts
+ * 
+ * Default Presets:
+ * - Includes comprehensive product showcase examples
+ * - Pre-configured with HEPHA e-bike product data
+ * - Demonstrates multilingual content structure
+ * - Shows various product features and specifications
+ * 
+ * Dependencies:
+ * - Requires 'icon-prev-arrow' and 'icon-next-arrow' snippets
+ * - Uses Shopify's image transformation API
+ * - Relies on Liquid templating engine
+ * - Requires modern browser support for CSS Grid/Flexbox
+ * 
+ * Browser Support:
+ * - Modern browsers with CSS Grid support
+ * - Touch events for mobile devices
+ * - CSS custom properties support required
+ * 
+ * @author [Your Name]
+ * @created [Creation Date]
+ * @modified [Last Modified Date]
+ * @version 1.0.0
+ * 
+ * Note: This comment block provides comprehensive documentation for the
+ * Custom Image with Text carousel section. Customize the author, dates,
+ * and version information as needed for your project.
  */
 {%- endcomment -%}
 

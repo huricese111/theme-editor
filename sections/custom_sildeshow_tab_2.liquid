@@ -1,0 +1,1172 @@
+{% schema %}
+{
+"name": "Custom slideshow tab 2",
+"settings": [
+{
+"type": "image_picker",
+"id": "banner_left_image",
+"label": "Left Column Background Image"
+},
+{
+"type": "select",
+"id": "background_size",
+"label": "Background Image Size",
+"options": [
+{ "value": "cover", "label": "Cover" },
+{ "value": "contain", "label": "Contain" },
+{ "value": "auto", "label": "Auto" },
+{ "value": "100", "label": "100%" },
+{ "value": "80", "label": "80%" },
+{ "value": "60", "label": "60%" },
+{ "value": "40", "label": "40%" }
+],
+"default": "cover"
+},
+{
+"type": "select",
+"id": "background_position",
+"label": "Background Image Position",
+"options": [
+{ "value": "center", "label": "Center" },
+{ "value": "top", "label": "Top" },
+{ "value": "bottom", "label": "Bottom" },
+{ "value": "left", "label": "Left" },
+{ "value": "right", "label": "Right" }
+],
+"default": "center"
+},
+{
+"type": "text",
+"id": "banner_left_title",
+"label": "Left Column Title",
+},
+{
+"type": "text",
+"id": "banner_left_title_de",
+"label": "Left Column Title in German"
+},
+{
+"type": "text",
+"id": "banner_left_title_fr",
+"label": "Left Column Title in French"
+},
+{
+"type": "color",
+"id": "banner_left_text_color",
+"label": "Left Column Text Color",
+"default": "#ffffff"
+},
+{
+"type": "range",
+"id": "banner_left_text_size",
+"label": "Left Column Text Size",
+"min": 10,
+"max": 80,
+"step": 1,
+"default": 20
+},
+{
+"type": "richtext",
+"id": "banner_left_description",
+"label": "Left Column Description",
+},
+{
+"type": "richtext",
+"id": "banner_left_description_de",
+"label": "Left Column Description in German"
+},
+{
+"type": "richtext",
+"id": "banner_left_description_fr",
+"label": "Left Column Description in French"
+},
+{
+"type": "color",
+"id": "banner_left_description_color",
+"label": "Left Column Text Color",
+"default": "#ffffff"
+},
+{
+"type": "range",
+"id": "banner_left_description_size",
+"label": "Left Column Description Size",
+"min": 10,
+"max": 80,
+"step": 1,
+"default": 14
+},
+{
+"type": "color",
+"id": "banner_left_background_color",
+"label": "Left Column Background Color",
+},
+
+{
+"type": "text",
+"id": "banner_title",
+"label": "Banner Title",
+"default": "Banner Title"
+},
+{
+"type": "text",
+"id": "banner_title_de",
+"label": "Banner Title in German"
+},
+{
+"type": "text",
+"id": "banner_title_fr",
+"label": "Banner Title in French"
+},
+{
+"type": "text",
+"id": "banner_description",
+"label": "Banner Description",
+"default": "Banner Description"
+},
+{
+"type": "text",
+"id": "banner_description_de",
+"label": "Banner Description in German"
+},
+{
+"type": "text",
+"id": "banner_description_fr",
+"label": "Banner Description in French"
+},
+{
+"type": "text",
+"id": "column_1_title",
+"label": "Column 1 Title",
+"default": "Motor"
+},
+{
+"type": "text",
+"id": "column_1_title_de",
+"label": "Column 1 Title in German"
+},
+{
+"type": "text",
+"id": "column_1_title_fr",
+"label": "Column 1 Title in French"
+},
+{
+"type": "text",
+"id": "column_1_description",
+"label": "Column 1 Description",
+"default": "Description"
+},
+{
+"type": "text",
+"id": "column_1_description_de",
+"label": "Column 1 Description in German"
+},
+{
+"type": "text",
+"id": "column_1_description_fr",
+"label": "Column 1 Description in French"
+},
+{
+"type": "text",
+"id": "column_2_title",
+"label": "Column 2 Title",
+"default": "Battery"
+},
+{
+"type": "text",
+"id": "column_2_title_de",
+"label": "Column 2 Title in German"
+},
+{
+"type": "text",
+"id": "column_2_title_fr",
+"label": "Column 2 Title in French"
+},
+{
+"type": "text",
+"id": "column_2_description",
+"label": "Column 2 Description",
+"default": "Description"
+},
+{
+"type": "text",
+"id": "column_2_description_de",
+"label": "Column 2 Description in German"
+},
+{
+"type": "text",
+"id": "column_2_description_fr",
+"label": "Column 2 Description in French"
+},
+{
+"type": "text",
+"id": "column_3_title",
+"label": "Column 3 Title",
+"default": "Gears"
+},
+{
+"type": "text",
+"id": "column_3_title_de",
+"label": "Column 3 Title in German"
+},
+{
+"type": "text",
+"id": "column_3_title_fr",
+"label": "Column 3 Title in French"
+},
+{
+"type": "text",
+"id": "column_3_description",
+"label": "Column 3 Description",
+"default": "Description"
+},
+{
+"type": "text",
+"id": "column_3_description_de",
+"label": "Column 3 Description in German"
+},
+{
+"type": "text",
+"id": "column_3_description_fr",
+"label": "Column 3 Description in French"
+},
+{
+"type": "text",
+"id": "column_4_title",
+"label": "Column 4 Title",
+"default": "Frame"
+},
+{
+"type": "text",
+"id": "column_4_title_de",
+"label": "Column 4 Title in German"
+},
+{
+"type": "text",
+"id": "column_4_title_fr",
+"label": "Column 4 Title in French"
+},
+{
+"type": "text",
+"id": "column_4_description",
+"label": "Column 4 Description",
+"default": "Description"
+},
+{
+"type": "text",
+"id": "column_4_description_de",
+"label": "Column 4 Description in German"
+},
+{
+"type": "text",
+"id": "column_4_description_fr",
+"label": "Column 4 Description in French"
+},
+{
+"type": "text",
+"id": "footer_title",
+"label": "Footer Title",
+"default": "Footer Title"
+},
+{
+"type": "text",
+"id": "footer_title_de",
+"label": "Footer Title in German"
+},
+{
+"type": "text",
+"id": "footer_title_fr",
+"label": "Footer Title in French"
+},
+{
+"type": "text",
+"id": "footer_description",
+"label": "Footer Description",
+"default": "Footer Description"
+},
+{
+"type": "text",
+"id": "footer_description_de",
+"label": "Footer Description in German"
+},
+{
+"type": "text",
+"id": "footer_description_fr",
+"label": "Footer Description in French"
+},
+{
+"type": "url",
+"id": "footer_button_url",
+"label": "Footer Button URL"
+},
+{
+"type": "text",
+"id": "footer_button_text",
+"label": "Footer Button Text",
+"default": "button"
+},
+{
+"type": "text",
+"id": "footer_button_text_de",
+"label": "Footer Button Text in German"
+},
+{
+"type": "text",
+"id": "footer_button_text_fr",
+"label": "Footer Button Text in French"
+}
+],
+"blocks": [
+{
+"type": "tab",
+"name": "Tab",
+"settings": [
+{
+"type": "radio",
+"id": "tab_image",
+"label": "Select Tab Image",
+"options": [
+{
+"value": "step_through",
+"label": "Step Through"
+},
+{
+"value": "high_step",
+"label": "High Step"
+},
+{
+"value": "low_step",
+"label": "Low Step"
+}
+]
+},
+{
+"type": "color",
+"id": "sub_tab_bg_color_1",
+"label": "Sub Tab Background Color 1"
+},
+{
+"type": "image_picker",
+"id": "sub_tab_image_1",
+"label": "Sub Tab Image 1"
+},
+{
+"type": "color",
+"id": "sub_tab_bg_color_2",
+"label": "Sub Tab Background Color 2"
+},
+{
+"type": "image_picker",
+"id": "sub_tab_image_2",
+"label": "Sub Tab Image 2"
+},
+{
+"type": "color",
+"id": "sub_tab_bg_color_3",
+"label": "Sub Tab Background Color 3"
+},
+{
+"type": "image_picker",
+"id": "sub_tab_image_3",
+"label": "Sub Tab Image 3"
+},
+{
+"type": "color",
+"id": "sub_tab_bg_color_4",
+"label": "Sub Tab Background Color 4"
+},
+{
+"type": "image_picker",
+"id": "sub_tab_image_4",
+"label": "Sub Tab Image 4"
+}
+]
+}
+],
+"presets": [
+{
+"name": "Custom slideshow tab 2",
+"category": "Custom"
+}
+]
+}
+{% endschema %}
+
+<div class="banner-container" id="banner-{{ section.id }}">
+  {% assign title = '' %}
+  {% assign description = '' %}
+
+  {% if request.locale.iso_code == 'de' %}
+    {% assign title = section.settings.banner_left_title_de %}
+    {% assign description = section.settings.banner_left_description_de %}
+  {% elsif request.locale.iso_code == 'fr' %}
+    {% assign title = section.settings.banner_left_title_fr %}
+    {% assign description = section.settings.banner_left_description_fr %}
+  {% else %}
+    {% assign title = section.settings.banner_left_title %}
+    {% assign description = section.settings.banner_left_description %}
+  {% endif %}
+
+  <div
+    class="banner-left-column"
+    style="
+      background-image: url({{ section.settings.banner_left_image | img_url: '2048x2048' }}); background-repeat: no-repeat; background-position: {{ section.settings.background_position }}; background-size:
+      {% if section.settings.background_size == 'cover' or section.settings.background_size == 'contain' %} {{ section.settings.background_size }} {% else %} {{ section.settings.background_size }}% {% endif %}; place-content: center; height: 100%; align-items: center; padding: 100px;
+    "
+  >
+    {% if title != blank or description != blank %}
+      <div
+        style="background-color: {{ section.settings.banner_left_background_color }}80; display: block; padding: 20px;"
+      >
+        <h1
+          class="banner-left-column-title"
+          style="color: {{ section.settings.banner_left_text_color }}; font-size: {{ section.settings.banner_left_text_size }}px;"
+        >
+          {{ title }}
+        </h1>
+        <div
+          class="banner-left-column-description"
+          style="color: {{ section.settings.banner_left_description_color }}; font-size: {{ section.settings.banner_left_description_size }}px;"
+        >
+          {{ description }}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="banner-right-column">
+    <div class="bannertitle">
+      <h1>
+        {% if request.locale.iso_code == 'de' %}
+          {{ section.settings.banner_title_de }}
+        {% elsif request.locale.iso_code == 'fr' %}
+          {{ section.settings.banner_title_fr }}
+        {% else %}
+          {{ section.settings.banner_title }}
+        {% endif %}
+      </h1>
+      <p class="slidedescription">
+        {% if request.locale.iso_code == 'de' %}
+          {{ section.settings.banner_description_de }}
+        {% elsif request.locale.iso_code == 'fr' %}
+          {{ section.settings.banner_description_fr }}
+        {% else %}
+          {{ section.settings.banner_description }}
+        {% endif %}
+      </p>
+    </div>
+    <div class="banner-header">
+      <div class="banner-tabs">
+        {% for block in section.blocks %}
+          <div
+            class="banner-tab {% if forloop.first %}active{% endif %}"
+            onclick="openTab(event, 'tab{{ forloop.index }}')"
+          >
+            {% if block.settings.tab_image == 'step_through' %}
+              <img
+                src="https://cdn.shopify.com/s/files/1/0560/0080/6985/files/noun-frame-bicycle-4002006_5.png?v=1708600271"
+                alt="Step Through"
+                height="30px"
+                width="auto"
+              >
+            {% elsif block.settings.tab_image == 'high_step' %}
+              <img
+                src="https://cdn.shopify.com/s/files/1/0560/0080/6985/files/noun-frame-bicycle-4002006_6.png?v=1708600271"
+                alt="High Step"
+                height="30px"
+                width="auto"
+              >
+            {% elsif block.settings.tab_image == 'low_step' %}
+              <img
+                src="https://cdn.shopify.com/s/files/1/0560/0080/6985/files/noun-frame-bicycle-4002006_4.png?v=1708600271"
+                alt="Low Step"
+                height="30px"
+                width="auto"
+              >
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="banner-tab-content">
+      {% for block in section.blocks %}
+        <div id="tab{{ forloop.index }}" class="banner-content {% if forloop.first %}active{% endif %}">
+          <div class="sub-tabs">
+            {% if block.settings.sub_tab_bg_color_1 != blank %}
+              <div
+                class="sub-tab {% if forloop.index == 1 %}active{% endif %}"
+                onclick="openSubTab(event, 'subtab{{ forloop.index }}-1')"
+                style="background-color: {{ block.settings.sub_tab_bg_color_1 }};"
+              ></div>
+            {% endif %}
+
+            {% if block.settings.sub_tab_bg_color_2 != blank %}
+              <div
+                class="sub-tab"
+                onclick="openSubTab(event, 'subtab{{ forloop.index }}-2')"
+                style="background-color: {{ block.settings.sub_tab_bg_color_2 }};"
+              ></div>
+            {% endif %}
+
+            {% if block.settings.sub_tab_bg_color_3 != blank %}
+              <div
+                class="sub-tab"
+                onclick="openSubTab(event, 'subtab{{ forloop.index }}-3')"
+                style="background-color: {{ block.settings.sub_tab_bg_color_3 }};"
+              ></div>
+            {% endif %}
+
+            {% if block.settings.sub_tab_bg_color_4 != blank %}
+              <div
+                class="sub-tab"
+                onclick="openSubTab(event, 'subtab{{ forloop.index }}-4')"
+                style="background-color: {{ block.settings.sub_tab_bg_color_4 }};"
+              ></div>
+            {% endif %}
+          </div>
+
+          <div class="sub-content">
+            <div
+              id="subtab{{ forloop.index }}-1"
+              class="sub-content-item {% if forloop.index == 1 %}active{% endif %}"
+              style="background-image: url({{ block.settings.sub_tab_image_1 | img_url: '2048x2048' }});"
+            >
+              <a
+                href="{{ section.settings.footer_button_url }}"
+                style=" display: block; height: 100%;width: 100%;"
+              ></a>
+            </div>
+            <div
+              id="subtab{{ forloop.index }}-2"
+              class="sub-content-item"
+              style="background-image: url({{ block.settings.sub_tab_image_2 | img_url: '2048x2048' }});"
+            >
+              <a
+                href="{{ section.settings.footer_button_url }}"
+                style=" display: block; height: 100%;width: 100%;"
+              ></a>
+            </div>
+            <div
+              id="subtab{{ forloop.index }}-3"
+              class="sub-content-item"
+              style="background-image: url({{ block.settings.sub_tab_image_3 | img_url: '2048x2048' }});"
+            >
+              <a
+                href="{{ section.settings.footer_button_url }}"
+                style=" display: block; height: 100%;width: 100%;"
+              ></a>
+            </div>
+            <div
+              id="subtab{{ forloop.index }}-4"
+              class="sub-content-item"
+              style="background-image: url({{ block.settings.sub_tab_image_4 | img_url: '2048x2048' }});"
+            >
+              <a
+                href="{{ section.settings.footer_button_url }}"
+                style=" display: block; height: 100%;width: 100%;"
+              ></a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="columns-container">
+      <div class="column-item">
+        <h3 class="column-title">
+          {% if request.locale.iso_code == 'de' %}
+            {{ section.settings.column_1_title_de }}
+          {% elsif request.locale.iso_code == 'fr' %}
+            {{ section.settings.column_1_title_fr }}
+          {% else %}
+            {{ section.settings.column_1_title }}
+          {% endif %}
+        </h3>
+        <p class="column-slidedescription">
+          {% if request.locale.iso_code == 'de' %}
+            {{ section.settings.column_1_description_de }}
+          {% elsif request.locale.iso_code == 'fr' %}
+            {{ section.settings.column_1_description_fr }}
+          {% else %}
+            {{ section.settings.column_1_description }}
+          {% endif %}
+        </p>
+      </div>
+      <div class="column-item">
+        <h3 class="column-title">
+          {% if request.locale.iso_code == 'de' %}
+            {{ section.settings.column_2_title_de }}
+          {% elsif request.locale.iso_code == 'fr' %}
+            {{ section.settings.column_2_title_fr }}
+          {% else %}
+            {{ section.settings.column_2_title }}
+          {% endif %}
+        </h3>
+        <p class="column-slidedescription">
+          {% if request.locale.iso_code == 'de' %}
+            {{ section.settings.column_2_description_de }}
+          {% elsif request.locale.iso_code == 'fr' %}
+            {{ section.settings.column_2_description_fr }}
+          {% else %}
+            {{ section.settings.column_2_description }}
+          {% endif %}
+        </p>
+      </div>
+      <div class="column-item">
+        <h3 class="column-title">
+          {% if request.locale.iso_code == 'de' %}
+            {{ section.settings.column_3_title_de }}
+          {% elsif request.locale.iso_code == 'fr' %}
+            {{ section.settings.column_3_title_fr }}
+          {% else %}
+            {{ section.settings.column_3_title }}
+          {% endif %}
+        </h3>
+        <p class="column-slidedescription">
+          {% if request.locale.iso_code == 'de' %}
+            {{ section.settings.column_3_description_de }}
+          {% elsif request.locale.iso_code == 'fr' %}
+            {{ section.settings.column_3_description_fr }}
+          {% else %}
+            {{ section.settings.column_3_description }}
+          {% endif %}
+        </p>
+      </div>
+      <div class="column-item">
+        <h3 class="column-title">
+          {% if request.locale.iso_code == 'de' %}
+            {{ section.settings.column_4_title_de }}
+          {% elsif request.locale.iso_code == 'fr' %}
+            {{ section.settings.column_4_title_fr }}
+          {% else %}
+            {{ section.settings.column_4_title }}
+          {% endif %}
+        </h3>
+        <p class="column-slidedescription">
+          {% if request.locale.iso_code == 'de' %}
+            {{ section.settings.column_4_description_de }}
+          {% elsif request.locale.iso_code == 'fr' %}
+            {{ section.settings.column_4_description_fr }}
+          {% else %}
+            {{ section.settings.column_4_description }}
+          {% endif %}
+        </p>
+      </div>
+    </div>
+
+    <div class="slidefooter-row">
+      <div class="slidefooter-left">
+        <h3>
+          {% if request.locale.iso_code == 'de' %}
+            {{ section.settings.footer_title_de }}
+          {% elsif request.locale.iso_code == 'fr' %}
+            {{ section.settings.footer_title_fr }}
+          {% else %}
+            {{ section.settings.footer_title }}
+          {% endif %}
+        </h3>
+        <p>
+          {% if request.locale.iso_code == 'de' %}
+            {{ section.settings.footer_description_de }}
+          {% elsif request.locale.iso_code == 'fr' %}
+            {{ section.settings.footer_description_fr }}
+          {% else %}
+            {{ section.settings.footer_description }}
+          {% endif %}
+        </p>
+      </div>
+      <div class="slidefooter-right">
+        <a class="slidefooter-button" href="{{ section.settings.footer_button_url }}">
+          {% if request.locale.iso_code == 'de' %}
+            {{ section.settings.footer_button_text_de }}
+          {% elsif request.locale.iso_code == 'fr' %}
+            {{ section.settings.footer_button_text_fr }}
+          {% else %}
+            {{ section.settings.footer_button_text }}
+          {% endif %}
+          &rarr;
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+      .banner-container {
+          display: flex;
+          height: 700px;
+          transition: flex 0.3s;
+      }
+
+      .banner-left-column {
+          flex: 0 0 50%;
+          background-size: cover;
+          background-position: center;
+          transition: flex 0.3s;
+      }
+
+      .banner-right-column {
+          flex: 0 0 50%;
+          padding: 40px;
+          background-color: rgb(236, 240, 241);
+          box-sizing: border-box;
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+      }
+
+      .banner-header {
+          display: flex;
+          justify-content: end;
+          align-items: center;
+      }
+
+      .bannertitle {
+          display: flex;
+          flex-direction: column;
+          max-width: 500px;
+          position: absolute;
+      }
+
+      .bannertitle h1 {
+          font-size: 40px;
+      }
+
+      .bannertitle p {
+          font-size: 16px;
+          color: black;
+      }
+
+      .banner-tabs {
+          align-items: flex-start;
+          display: flex;
+      }
+
+      .banner-tab {
+          align-items: center;
+          justify-content: center;
+          padding: 6px 10px;
+          background-color: white;
+          margin-left: 5px;
+          border-radius: 50px;
+          transition: background-color 0.3s;
+          white-space: nowrap;
+          cursor: pointer;
+          color: black;
+          min-width: 60px;
+          max-height: 40px;
+          display: flex;
+      }
+
+      .banner-tab img {
+          width: 60%;
+      }
+
+      .banner-tab:hover,
+      .banner-tab.active {
+          background-color: #dedede;
+      }
+
+      .banner-tab-content {
+          flex: 1;
+          margin-top: -1px;
+      }
+
+      .banner-content {
+          display: none;
+          transition: height 0.3s ease, opacity 0.3s ease;
+          opacity: 0;
+          height: 0;
+          overflow: hidden;
+      }
+
+      .banner-content.active {
+          display: block;
+          opacity: 1;
+          height: auto;
+      }
+
+      .sub-tabs {
+          justify-content: flex-end;
+          margin-top: 10px;
+          display: flex;
+      }
+
+      .sub-tab {
+          padding: 10px;
+          margin-left: 5px;
+          border-radius: 24px;
+          cursor: pointer;
+          transition: background-color 0.3s;
+          min-width: 40px;
+          height: 40px;
+          align-items: center;
+          justify-content: center;
+      }
+
+      .banner-tab-content .sub-tab {
+          display: flex;
+      }
+
+      .sub-tab.active::before {
+          content: '\2713 ';
+          color: black;
+          font-weight: bold;
+      }
+
+      .sub-content {
+          padding-top: 10px;
+          overflow: hidden;
+          box-sizing: border-box;
+      }
+
+      .sub-content-item {
+          display: none;
+          background-size: contain;
+          background-repeat: no-repeat;
+          background-position: center;
+          width: 100%;
+          height: 400px;
+      }
+
+      .sub-content-item.active {
+          display: block;
+      }
+
+      .columns-container {
+          display: flex;
+          margin-bottom: 20px;
+          gap: 40px;
+          justify-content: center;
+      }
+
+      .column-item {
+          border-radius: 10px;
+          text-align: left;
+          font-size: 16px;
+          line-height: 15px;
+      }
+
+      .column-item h3 {
+          margin: 0 0 10px;
+      }
+
+      .column-item p {
+          margin: 0;
+      }
+
+      .column-item .column-title {
+          font-weight: 600;
+          margin: 0px 0px 10px;
+          font-size: 16px;
+          text-align: left;
+      }
+
+      .slidefooter-row {
+          margin-top: auto;
+          padding: 10px;
+          text-align: center;
+          display: flex;
+      }
+
+      .slidefooter-left {
+          flex: 0 0 70%;
+          text-align: left;
+      }
+
+      .slidefooter-left h3 {
+          font-weight: 700;
+          font-size: 24px;
+          margin: 0px;
+          white-space: nowrap;
+      }
+
+      .slidefooter-left p {
+          font-weight: 400;
+          font-size: 12px;
+          margin: 4px 0px 0px;
+          white-space: nowrap;
+      }
+
+      .slidefooter-right {
+          flex: 0 0 30%;
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+      }
+
+      .slidefooter-button {
+          padding: 10px 20px;
+          background-color: black;
+          color: white;
+          border: none;
+          border-radius: 25px;
+          cursor: pointer;
+          transition: background-color 0.3s;
+          white-space: nowrap;
+      }
+
+      .slidefooter-button:hover {
+          background-color: #333;
+      }
+
+      .slidedescription {
+          display: block;
+      }
+
+
+      @media (max-width: 768px) {
+          .banner-container {
+              flex-direction: column;
+              height: auto;
+              display: block;
+          }
+
+          .section-title {
+          font-size: 40px !important;
+          width: 100% !important;
+      }
+
+          .banner-container .banner-left-column {
+              flex: 0 0 100% !important;
+              height: 400px !important;
+              background-size: cover;
+              display: block;
+              opacity: 1;
+              padding: 20px !important;
+          }
+
+          .banner-right-column {
+              flex: 0 0 100%;
+              padding: 20px;
+          }
+
+          .columns-container {
+              flex-wrap: wrap !important;
+              display: grid !important;
+              grid-template-columns: repeat(2, 1fr);
+              gap: 0 !important;
+            width:100% !important;
+          }
+
+          .column-item {
+              padding: 10px;
+              box-sizing: border-box;
+          }
+
+          .slidefooter-row {
+              flex-direction: column;
+              align-items: center;
+          }
+
+          .slidefooter-left {
+              margin-bottom: 10px;
+              text-align: center;
+          }
+
+          .sub-content-item {
+              background-size: contain;
+              width: 100%;
+              height: 280px !important;
+          }
+
+          .banner-right-column.slidedescription {
+              display: flex;
+          }
+
+          bannertitle h1 {
+              font-size: 20px;
+          }
+
+          .sub-tab {
+              min-width: 30px;
+              height: 30px;
+          }
+
+          .sub-tab.active::before {
+              font-size: 12px;
+          }
+
+          .banner-tab {
+              padding: 4px 8px;
+              min-width: 40px;
+          }
+
+          .banner-left-column-title {
+              font-size: 20px !important;
+          }
+
+          .banner-left-column-description {
+              font-size: 12px !important;
+              line-height: 18px !important;
+          }
+
+        .bannertitle p {
+             font-size: 12px !important;
+          }
+
+        .bannertitle {
+            width: 100% !important;
+            margin-top: 20px;
+          }
+      }
+</style>
+
+<script>
+    let lastSelectedSubTab = {};
+
+    function openTab(event, tabName) {
+        const bannerContainer = event.currentTarget.closest('.banner-container');
+        const contents = bannerContainer.querySelectorAll('.banner-content');
+
+        // Hide all content and remove active class from all tabs
+        contents.forEach(content => {
+            content.classList.remove('active');
+        });
+
+        const tabs = bannerContainer.querySelectorAll('.banner-tab');
+        tabs.forEach(tab => {
+            tab.classList.remove('active');
+        });
+
+        // Show selected content and set active class on the clicked tab
+        const selectedContent = bannerContainer.querySelector(`#${tabName}`);
+        selectedContent.classList.add('active');
+        event.currentTarget.classList.add('active');
+
+        // Reset sub-tabs and content for the selected tab
+        const subTabs = selectedContent.querySelectorAll('.sub-tab');
+        const subContentItems = selectedContent.querySelectorAll('.sub-content-item');
+
+        subTabs.forEach(tab => tab.classList.remove('active'));
+        subContentItems.forEach(item => {
+            item.classList.remove('active');
+        });
+
+        // Activate last selected sub-tab if available
+        const lastSubTab = lastSelectedSubTab[tabName];
+        if (lastSubTab) {
+            const activeSubTab = selectedContent.querySelector(`#${lastSubTab}`);
+            if (activeSubTab) {
+                activeSubTab.classList.add('active');
+                const selectedSubContent = selectedContent.querySelector(`#${lastSubTab}`);
+                if (selectedSubContent) {
+                    selectedSubContent.classList.add('active');
+                }
+            }
+        } else if (subTabs.length > 0) {
+            subTabs[0].classList.add('active');
+            subContentItems[0].classList.add('active');
+            lastSelectedSubTab[tabName] = subTabs[0].id;
+        }
+    }
+
+    function openSubTab(event, subTabName) {
+        const bannerContainer = event.currentTarget.closest('.banner-container');
+        const parentContent = event.currentTarget.closest('.banner-content');
+
+        const subContents = parentContent.querySelectorAll('.sub-content-item');
+        const subTabs = parentContent.querySelectorAll('.sub-tab');
+
+        // Hide all sub-content and remove active class from all sub-tabs
+        subContents.forEach(content => {
+            content.classList.remove('active');
+        });
+
+        subTabs.forEach(tab => {
+            tab.classList.remove('active');
+        });
+
+        // Show the selected sub-content and set active class on the clicked sub-tab
+        const selectedSubContent = parentContent.querySelector(`#${subTabName}`);
+        if (selectedSubContent) {
+            selectedSubContent.classList.add('active');
+        } else {
+            console.error(`Sub-content with ID ${subTabName} not found.`);
+        }
+        event.currentTarget.classList.add('active');
+
+        const parentTabId = parentContent.id;
+        lastSelectedSubTab[parentTabId] = subTabName;
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const activeTabs = document.querySelectorAll('.banner-content.active');
+        activeTabs.forEach(tab => {
+            const subTabs = tab.querySelectorAll('.sub-tab');
+            const lastSubTab = lastSelectedSubTab[tab.id];
+            if (lastSubTab) {
+                const activeSubTab = tab.querySelector(`#${lastSubTab}`);
+                if (activeSubTab) {
+                    activeSubTab.classList.add('active');
+                    const selectedSubContent = tab.querySelector(`#${lastSubTab}`);
+                    if (selectedSubContent) {
+                        selectedSubContent.classList.add('active');
+                    }
+                }
+            } else if (subTabs.length > 0) {
+                subTabs[0].classList.add('active');
+                const subContentItems = tab.querySelectorAll('.sub-content-item');
+                subContentItems[0].classList.add('active');
+                lastSelectedSubTab[tab.id] = subTabs[0].id;
+            }
+        });
+
+        const columnsContainers = document.querySelectorAll('.columns-container');
+
+        function adjustColumnsDisplay() {
+            columnsContainers.forEach(container => {
+                if (window.innerWidth <= 768) {
+                    container.style.display = 'grid';
+                } else {
+                    container.style.display = '';
+                }
+                // Ensure all columns are visible
+                const subContentItems = container.querySelectorAll('.sub-content-item');
+                subContentItems.forEach(item => {
+                    if (item.classList.contains('active')) {
+                        item.style.display = 'block'; // Show active item
+                    } else {
+                        item.style.display = 'none'; // Hide inactive items
+                    }
+                });
+            });
+        }
+
+        adjustColumnsDisplay();
+
+        window.addEventListener('resize', adjustColumnsDisplay);
+    });
+
+    const bannerRightColumns = document.querySelectorAll('.banner-right-column');
+
+    bannerRightColumns.forEach(bannerRightColumn => {
+        const columnsContainer = bannerRightColumn.querySelector('.columns-container');
+
+        bannerRightColumn.addEventListener('mouseenter', () => {
+            columnsContainer.classList.add('active');
+            adjustSubContentHeight(columnsContainer);
+        });
+
+        bannerRightColumn.addEventListener('mouseleave', () => {
+            columnsContainer.classList.remove('active');
+            adjustSubContentHeight(columnsContainer);
+        });
+    });
+
+    function adjustSubContentHeight(columnsContainer) {
+        const subContentItems = columnsContainer.querySelectorAll('.sub-content-item');
+        subContentItems.forEach(item => {
+            if (columnsContainer.classList.contains('active')) {
+                item.style.height = '320px';
+            } else {
+                item.style.height = '460px';
+            }
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.columns-container').forEach(container => {
+            adjustSubContentHeight(container);
+        });
+    });
+</script>

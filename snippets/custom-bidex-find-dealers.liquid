@@ -3,9 +3,9 @@
 </button>
 
 <link rel="stylesheet" href="https://cdn.rawgit.com/jlong/css-spinners/master/css/spinners.css">
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-<script src="https://2.local.bidex.bike/Scripts/iframeResizer.min.js"></script>
-<script id="find-a-bidex-dealer-inline-js-xg23sdg5">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js" defer></script>
+<script src="https://2.local.bidex.bike/Scripts/iframeResizer.min.js" defer></script>
+<script id="find-a-bidex-dealer-inline-js-xg23sdg5" defer>
     (function () {
         const backendData = {
             hephaB2cApiHttpHost: "https://shopify-api.hepha.com",
@@ -169,7 +169,20 @@
                     });
                 }
             });
-            findADealerButtons.forEach(el => el.addEventListener('click', () => hephaCustomDialog.open()));
+            findADealerButtons.forEach(el => el.addEventListener('click', () => {
+                hephaCustomDialog.open();
+                const eventName = 'B2B_check_inventory';
+                [
+                    () => gtag('event', eventName),
+                    () => fbq('trackCustom', eventName)
+                ].forEach(trackFn => {
+                    try {
+                        trackFn();
+                    } catch (e) {
+                        console.error(e)
+                    }
+                });
+            }));
 
             const renderFindADealerButtonAccordingToSelectedProductVariant = async (currentVariant, findADealerButtons) => {
                 const isAvailableInNearbyShop =

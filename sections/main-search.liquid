@@ -1,3 +1,132 @@
+<style>
+  /* 搜索页面特异性样式 - 仅影响当前搜索页面 */
+  .section-search-template .product-block {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .section-search-template .product-block:hover {
+    border-color: #c0c0c0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* 确保图片容器使用4:3比例 */
+  .section-search-template .product-block .image-cont {
+    aspect-ratio: 4/3;
+    overflow: hidden;
+  }
+  
+  .section-search-template .product-block .image-cont img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  
+  /* 搜索页面特定样式 - product-compare-widget和description-box布局 */
+  .section-search-template .description-box {
+    padding: 0 20px !important;
+    flex-direction: column !important;
+  }
+  
+  .section-search-template .product-card__content {
+    padding-right: 0 !important;
+    width: 100% !important;
+  }
+  
+  .section-search-template .product-compare-widget {
+    width: 100% !important;
+    margin-top: 12px !important;
+    order: 999 !important;
+    display: flex !important;
+    justify-content: flex-start !important;
+  }
+  
+  /* 确保在所有屏幕尺寸下都保持这个布局 */
+   @media (min-width: 769px) {
+     .section-search-template .description-box {
+       flex-direction: column !important;
+     }
+     
+     .section-search-template .product-compare-widget {
+       width: 100% !important;
+       margin-top: 12px !important;
+       order: 999 !important;
+     }
+   }
+   
+   /* 搜索页面text-cont样式 - 用于没有图片的搜索结果 */
+   .section-search-template .text-cont {
+     padding: 20px !important;
+   }
+   
+   /* 为没有图片的搜索结果添加最小高度和更好的布局 */
+   .section-search-template .block-inner-inner {
+     min-height: 120px;
+     display: flex;
+     flex-direction: column;
+   }
+   
+   .section-search-template .block-inner-inner .text-cont {
+     flex: 1;
+     display: flex;
+     flex-direction: column;
+     justify-content: space-between;
+   }
+
+   /* 占位图标样式 */
+   .section-search-template .article-placeholder {
+     aspect-ratio: 4/3;
+     overflow: hidden;
+     border-radius: 8px;
+     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+     border: 1px solid #dee2e6;
+     transition: all 0.3s ease;
+   }
+
+   .section-search-template .article-placeholder:hover {
+     background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+     transform: translateY(-2px);
+     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+   }
+
+   .section-search-template .placeholder-content {
+     height: 100%;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     justify-content: center;
+     padding: 20px;
+     text-decoration: none;
+   }
+
+   .section-search-template .placeholder-icon {
+     color: #6c757d;
+     margin-bottom: 8px;
+     transition: color 0.3s ease;
+   }
+
+   .section-search-template .article-placeholder:hover .placeholder-icon {
+     color: #495057;
+   }
+
+   .section-search-template .placeholder-type {
+     font-size: 12px;
+     font-weight: 500;
+     color: #6c757d;
+     text-transform: uppercase;
+     letter-spacing: 0.5px;
+     text-align: center;
+   }
+
+   .section-search-template .article-placeholder:hover .placeholder-type {
+     color: #495057;
+   }
+
+
+</style>
+
 <div data-section-id="{{ section.id }}" {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
 {% paginate search.results by section.settings.coll_num_per_page_int %}
 
@@ -64,6 +193,10 @@
 
       <div class="utility-bar__centre">
         <div class="utility-bar__item">{{ 'general.search.results_with_count' | t: count: paginate.items }}</div>
+        <!-- Debug info: Pagination settings -->
+        <div class="utility-bar__item" style="font-size: 12px; color: #666; margin-left: 10px;">
+          Debug: Per page setting = {{ section.settings.coll_num_per_page_int }}, Current page size = {{ paginate.page_size }}, Total items = {{ paginate.items }}
+        </div>
       </div>
 
       <div class="utility-bar__right">
@@ -114,80 +247,112 @@
         {% else %}
           <div class="product-grid product-grid--per-row-3 product-grid--per-row-mob-{{ settings.prod_thumb_mob_per_row }}">
             {%- liquid
-              if settings.prod_thumb_shape == 'portrait-23'
-                assign chosen_product_aspect_ratio = 0.67
-              elsif settings.prod_thumb_shape == 'portrait-45'
-                assign chosen_product_aspect_ratio = 0.8
-              elsif settings.prod_thumb_shape == 'square'
-                assign chosen_product_aspect_ratio = 1.0
-              elsif settings.prod_thumb_shape == 'landscape-54'
-                assign chosen_product_aspect_ratio = 1.25
-              elsif settings.prod_thumb_shape == 'landscape-32'
-                assign chosen_product_aspect_ratio = 1.50
-              elsif settings.prod_thumb_shape == 'tallest'
-                assign chosen_product_aspect_ratio = 99
-                for product in search.results
-                  if product.object_type == 'product' and product.featured_media.preview_image.aspect_ratio < chosen_product_aspect_ratio
-                    assign chosen_product_aspect_ratio = product.featured_media.preview_image.aspect_ratio
-                  endif
-                endfor
-              else
-                assign chosen_product_aspect_ratio = 0
-                for product in search.results
-                  if product.object_type == 'product' and product.featured_media.preview_image.aspect_ratio > chosen_product_aspect_ratio
-                    assign chosen_product_aspect_ratio = product.featured_media.preview_image.aspect_ratio
-                  endif
-                endfor
-              endif
-
-              if settings.coll_grid_image_shape == 'portrait-23'
-                assign chosen_collection_aspect_ratio = 0.67
-              elsif settings.coll_grid_image_shape == 'portrait-45'
-                assign chosen_collection_aspect_ratio = 0.8
-              elsif settings.coll_grid_image_shape == 'square'
-                assign chosen_collection_aspect_ratio = 1.0
-              elsif settings.coll_grid_image_shape == 'landscape-54'
-                assign chosen_collection_aspect_ratio = 1.25
-              elsif settings.coll_grid_image_shape == 'landscape-32'
-                assign chosen_collection_aspect_ratio = 1.50
-              elsif settings.coll_grid_image_shape == 'tallest'
-                assign chosen_collection_aspect_ratio = 99
-                for collection in search.results
-                  if collection.object_type == 'collection'
-                    if collection.featured_image.aspect_ratio < chosen_collection_aspect_ratio
-                      assign chosen_collection_aspect_ratio = collection.featured_image.aspect_ratio
-                    endif
-                  endif
-                endfor
-              else
-                assign chosen_collection_aspect_ratio = 0
-                for collection in search.results
-                  if collection.object_type == 'collection'
-                    if collection.featured_image.aspect_ratio > chosen_collection_aspect_ratio
-                      assign chosen_collection_aspect_ratio = collection.featured_image.aspect_ratio
-                    endif
-                  endif
-                endfor
-              endif
+              comment
+                Force 4:3 aspect ratio (1.33) for search page products
+              endcomment
+              assign chosen_product_aspect_ratio = 1.33
             -%}
+
+            {% comment %} Add safety check to ensure we don't exceed the configured limit {% endcomment %}
+            {% assign max_items_per_page = section.settings.coll_num_per_page_int %}
+            {% assign current_item_count = 0 %}
+            
             {% for item in search.results %}
-              {% if item.object_type == 'product' %}
-                {% render 'product-block', product: item, custom_aspect_ratio: chosen_product_aspect_ratio, animate: true %}
-              {% elsif item.object_type == 'collection' %}
-                {% render 'collection-block', collection: item, custom_aspect_ratio: chosen_collection_aspect_ratio, animate: true %}
+              {% if current_item_count < max_items_per_page %}
+                {% if item.object_type == 'product' %}
+                  {% render 'product-block', product: item, custom_aspect_ratio: chosen_product_aspect_ratio, animate: true %}
+                  {% assign current_item_count = current_item_count | plus: 1 %}
+                {% elsif item.object_type == 'collection' %}
+                  {% render 'collection-block', collection: item, custom_aspect_ratio: chosen_collection_aspect_ratio, animate: true %}
+                  {% assign current_item_count = current_item_count | plus: 1 %}
               {% else %}
                 <div class="product-block page-block" {%- render 'animation-attrs', attrs: 'data-cc-animate', always: true -%}>
+                  {% assign current_item_count = current_item_count | plus: 1 %}
                   <div class="block-inner">
                     <div class="block-inner-inner">
-                      {% if item.object_type == 'article' and item.image %}
+                      {%- liquid
+                        assign has_image = false
+                        assign extracted_image_url = ''
+                        
+                        if item.object_type == 'article' and item.image
+                          assign has_image = true
+                        elsif item.object_type == 'page'
+                          if item.featured_image
+                            assign has_image = true
+                          else
+                            comment
+                              Try to extract first image from page content
+                            endcomment
+                            assign content_images = item.content | split: '<img'
+                            if content_images.size > 1
+                              assign first_img_tag = content_images[1] | split: '>' | first
+                              assign src_parts = first_img_tag | split: 'src="'
+                              if src_parts.size > 1
+                                assign src_with_quote = src_parts[1] | split: '"' | first
+                                if src_with_quote contains 'shopify://shop_images/' or src_with_quote contains '.jpg' or src_with_quote contains '.png' or src_with_quote contains '.webp'
+                                  assign extracted_image_url = src_with_quote
+                                  assign has_image = true
+                                endif
+                              endif
+                            endif
+                          endif
+                        endif
+                      -%}
+                      
+                      {% if has_image %}
                         <div class="article-image">
                           <a href="{{ item.url }}">
-                            {%- render 'image' with item.image, size_cols_mobile: 2, size_cols_desktop: section.settings.grid, custom_aspect_ratio: 1.33 -%}
+                            {% if item.object_type == 'article' %}
+                              {%- render 'image' with item.image, size_cols_mobile: 2, size_cols_desktop: section.settings.grid, custom_aspect_ratio: 1.33 -%}
+                            {% elsif item.object_type == 'page' and item.featured_image %}
+                              {%- render 'image' with item.featured_image, size_cols_mobile: 2, size_cols_desktop: section.settings.grid, custom_aspect_ratio: 1.33 -%}
+                            {% elsif item.object_type == 'page' and extracted_image_url != '' %}
+                              <div class="image-container" style="aspect-ratio: 1.33; overflow: hidden;">
+                                <img src="{{ extracted_image_url }}" alt="{{ item.title }}" style="width: 100%; height: 100%; object-fit: cover;">
+                              </div>
+                            {% endif %}
+                          </a>
+                        </div>
+                      {% else %}
+                        <div class="article-placeholder">
+                          <a href="{{ item.url }}">
+                            <div class="placeholder-content">
+                              <div class="placeholder-icon">
+                                {% if item.object_type == 'article' %}
+                                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14,2 14,8 20,8"></polyline>
+                                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                                    <polyline points="10,9 9,9 8,9"></polyline>
+                                  </svg>
+                                {% elsif item.object_type == 'page' %}
+                                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                                    <polyline points="13,2 13,9 20,9"></polyline>
+                                  </svg>
+                                {% else %}
+                                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <path d="M12 6v6l4 2"></path>
+                                  </svg>
+                                {% endif %}
+                              </div>
+                              <div class="placeholder-type">
+                                 {% if item.object_type == 'article' %}
+                                   Article
+                                 {% elsif item.object_type == 'page' %}
+                                   Page
+                                 {% else %}
+                                   Content
+                                 {% endif %}
+                               </div>
+                            </div>
                           </a>
                         </div>
                       {% endif %}
                       <div class="text-cont">
-                        <h6 class="page-block__title"><a href="{{ item.url }}">{{ item.title }}</a></h6>
+                        <h6 class="page-block__title" style="padding: 0;"><a href="{{ item.url }}">{{ item.title }}</a></h6>
                         {% unless item.object_type == 'article' and item.image %}
                           <p>{{ item.content | strip_html | truncatewords: 20 }}</p>
                         {% endunless %}
@@ -199,6 +364,7 @@
                     </div>
                   </div>
                 </div>
+              {% endif %}
               {% endif %}
             {% endfor %}
           </div>
@@ -212,6 +378,8 @@
 
 {% endpaginate %}
 </div>
+
+
 
 {% schema %}
 {
@@ -227,11 +395,11 @@
     {
       "type": "range",
       "id": "coll_num_per_page_int",
-      "min": 16,
-      "max": 50,
-      "step": 2,
+      "min": 9,
+      "max": 15,
+      "step": 3,
       "label": "Number of products to show per page",
-      "default": 24
+      "default": 15
     },
     {
       "type": "range",

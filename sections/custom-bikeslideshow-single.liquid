@@ -1,0 +1,371 @@
+<div class="slide-show-container">
+  {% for slide in section.blocks %}
+  <div class="Bike-banner fade slide{{ forloop.index }}" style="background-color: {{ slide.settings.background_color }};">
+      <div class="Bike-banner-content">
+          <div class="text-container">
+              <div class="salestagrow">
+                  {% for i in (1..3) %}
+                      {% capture salestag_key %}salestag_{{ i }}{% endcapture %}
+                      {% capture salestag_key_de %}salestag_{{ i }}_de{% endcapture %}
+                      {% capture salestag_key_fr %}salestag_{{ i }}_fr{% endcapture %}
+                      {% assign salestag = slide.settings[salestag_key] %}
+                      {% if salestag != blank %}
+                          <span class="salestag" data-localize="{{ salestag }}">
+                            {% if request.locale.iso_code == 'de' %}
+                              {{ slide.settings[salestag_key_de] }}
+                            {% elsif request.locale.iso_code == 'fr' %}
+                              {{ slide.settings[salestag_key_fr] }}
+                            {% else %}
+                              {{ salestag }}
+                            {% endif %}
+                          </span>
+                      {% endif %}
+                  {% endfor %}
+              </div>
+              <h3 data-localize="{{ slide.settings.title }}">
+                {% if request.locale.iso_code == 'de' %}
+                  {{ slide.settings.title_de }}
+                {% elsif request.locale.iso_code == 'fr' %}
+                  {{ slide.settings.title_fr }}
+                {% else %}
+                  {{ slide.settings.title }}
+                {% endif %}
+              </h3>
+              <p data-localize="{{ slide.settings.description }}">
+                {% if request.locale.iso_code == 'de' %}
+                  {{ slide.settings.description_de }}
+                {% elsif request.locale.iso_code == 'fr' %}
+                  {{ slide.settings.description_fr }}
+                {% else %}
+                  {{ slide.settings.description }}
+                {% endif %}
+              </p>
+              <a href="{{ slide.settings.link }}" target="_self" class="bikebutton" style="background-color: {{ slide.settings.btn_background_color }}; color: {{ slide.settings.btn_text_color }};">
+                {% if request.locale.iso_code == 'de' %}
+                  {{ slide.settings.btntext_de }}
+                {% elsif request.locale.iso_code == 'fr' %}
+                  {{ slide.settings.btntext_fr }}
+                {% else %}
+                  {{ slide.settings.btntext }}
+                {% endif %}
+                &rarr;
+              </a>
+          </div>
+      </div>
+      <div class="Bike-banner-image">
+          <img data-localize="{{ slide.settings.image }}" src="{{ slide.settings.image | img_url: 'original' }}" width="100%">
+      </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% schema %}
+{
+  "name": "Bike Slideshow single",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "bikeslide",
+      "name": "Bike Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Default Title"
+        },
+        {
+          "type": "text",
+          "id": "title_de",
+          "label": "Title (German)",
+          "default": "Standardtitel"
+        },
+        {
+          "type": "text",
+          "id": "title_fr",
+          "label": "Title (French)",
+          "default": "Titre par défaut"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Default description text."
+        },
+        {
+          "type": "textarea",
+          "id": "description_de",
+          "label": "Description (German)",
+          "default": "Standardbeschreibung."
+        },
+        {
+          "type": "textarea",
+          "id": "description_fr",
+          "label": "Description (French)",
+          "default": "Texte de description par défaut."
+        },
+        {
+          "type": "text",
+          "id": "salestag_1",
+          "label": "Sales Tag Text 1",
+          "default": "New"
+        },
+        {
+          "type": "text",
+          "id": "salestag_1_de",
+          "label": "Sales Tag Text 1 (German)",
+          "default": "Neu"
+        },
+        {
+          "type": "text",
+          "id": "salestag_1_fr",
+          "label": "Sales Tag Text 1 (French)",
+          "default": "Nouveau"
+        },
+        {
+          "type": "text",
+          "id": "salestag_2",
+          "label": "Sales Tag Text 2",
+          "default": "New"
+        },
+        {
+          "type": "text",
+          "id": "salestag_2_de",
+          "label": "Sales Tag Text 2 (German)",
+          "default": "Neu"
+        },
+        {
+          "type": "text",
+          "id": "salestag_2_fr",
+          "label": "Sales Tag Text 2 (French)",
+          "default": "Nouveau"
+        },
+        {
+          "type": "text",
+          "id": "salestag_3",
+          "label": "Sales Tag Text 3",
+          "default": "New"
+        },
+        {
+          "type": "text",
+          "id": "salestag_3_de",
+          "label": "Sales Tag Text 3 (German)",
+          "default": "Neu"
+        },
+        {
+          "type": "text",
+          "id": "salestag_3_fr",
+          "label": "Sales Tag Text 3 (French)",
+          "default": "Nouveau"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "Slide Background Color"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Button URL"
+        },
+        {
+          "type": "text",
+          "id": "btntext",
+          "label": "Button Text"
+        },
+        {
+          "type": "text",
+          "id": "btntext_de",
+          "label": "Button Text (German)",
+          "default": "Knopftext"
+        },
+        {
+          "type": "text",
+          "id": "btntext_fr",
+          "label": "Button Text (French)",
+          "default": "Texte du bouton"
+        },
+        {
+          "type": "color",
+          "id": "btn_text_color",
+          "label": "Button Text Color"
+        },
+        {
+          "type": "color",
+          "id": "btn_background_color",
+          "label": "Button Background Color"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bike Slideshow single",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+
+
+
+
+<style>
+  .slide-show-container {
+      position: relative;
+      width: 100%;
+      margin: auto;
+      overflow: hidden;
+      color: #000;
+  }
+
+  .Bike-banner {
+      display: flex;
+      place-content: center;
+      align-items: center;
+      height: 640px;
+  }
+
+  .bikebutton {
+      margin-top: 30px;
+      font-weight: 400;
+      border-radius: 50px;
+      display: inline-block;
+      line-height: 1;
+      padding: 12px 20px;
+      text-align: center;
+      cursor: pointer;
+      outline: 0;
+      text-decoration: none;
+  }
+
+  .bikebutton:hover {
+  opacity: 0.8;
+}
+
+  .Bike-banner-image {
+      object-fit: contain;
+      object-position: center center;
+      width: 700px;
+      height: 480px;
+  }
+
+  .Bike-banner-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      padding: 20px;
+      box-sizing: border-box;
+      width: 500px;
+  }
+
+  .text-container {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 20px;
+      width: 100%;
+      max-width: 500px;
+  }
+
+  .Bike-banner-content h3 {
+      margin: 0;
+      font-size: 70px;
+      line-height: 80px;
+      font-weight: 700;
+      color: #000;
+      text-align: left;
+  }
+
+  .Bike-banner-content p {
+      font-weight: 400;
+      font-size: 18px;
+      margin: 50px 0 0;
+      color: #000;
+      text-align: left;
+  }
+
+  .pagination {
+      text-align: center;
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+  }
+
+
+  .salestag {
+      font-size: 22px;
+      line-height: 40px;
+      height: 40px;
+      margin: 0 0 10px;
+      color: #000;
+      text-align: center;
+      display: inline-block;
+      padding-left: 10px;
+      padding-right: 10px;
+      background-color: #f8e71c;
+      border-radius: 8px;
+      white-space: nowrap;
+      font-weight: 700;
+  }
+
+  .salestagrow{
+      display: flex;
+      gap:.6rem;
+  }
+
+  @media (max-width: 768px) {
+      .Bike-banner {
+          flex-direction: column;
+          align-items: center; 
+          height: 90vh;
+      }
+
+      .Bike-banner-image {
+          order: 1;
+          display: flex; 
+          justify-content: center;
+      }
+
+      .Bike-banner-image img {
+          width: 90%;
+          height: auto;
+      }
+
+      .Bike-banner-content {
+          order: 2;
+          padding: 0 20px; 
+          width: 100%;
+      }
+
+      .Bike-banner-content h3 {
+          font-size: 36px;
+          margin-bottom: 10px;
+          line-height: 40px;
+      }
+
+      .Bike-banner-content p {
+          display: none;
+      }
+
+      .bikebutton {
+          margin-top: 10px;
+      }
+
+      .pagination {
+          display: none; 
+      }
+
+      .text-container {
+        margin-top: -60px;
+}
+  }
+</style>

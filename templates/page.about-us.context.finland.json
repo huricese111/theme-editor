@@ -1,1 +1,1 @@
-{"parent":"page.about-us.json","context":{"market":"finland"},"sections":{}}
+{"parent":"page.about-us.json","context":{"market":"finland"},"sections":{"adaptive_content_grid_HzmwTA":{"settings":{"desktop_columns":"1"},"blocks":{"custom_block_CGwAhg":{"settings":{"image_size":"10"}}},"block_order":["custom_block_CGwAhg"]}}}

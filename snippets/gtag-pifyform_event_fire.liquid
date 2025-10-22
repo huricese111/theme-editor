@@ -25,7 +25,16 @@
                 const formId = JSON.parse(evt.data).SubmittedFormId;
                 const eventName = formIdToEventMapping.get(formId);
                 if (eventName) {
-                    gtag('event', eventName);
+                    [
+                        () => gtag('event', eventName),
+                        () => fbq('trackCustom', eventName)
+                    ].forEach(trackFn => {
+                        try {
+                            trackFn();
+                        } catch (e) {
+                            console.error(e)
+                        }
+                    });
                 } else {
                     console.warn("no event name was found for form " + formId);
                 }

@@ -9,20 +9,11 @@
 {%- endcomment -%}
 
 <a class="filter-shade" href="#" data-toggle-filters></a>
-<div
-  class="filters{% if section.settings.enable_filtering == false or filter_context.filters == empty %} mobile-only{% endif %}"
-  data-auto-apply-hide-unavailable="{{ section.settings.auto_apply_hide_unavailable }}"
-  {%- if settings.swatch_option_name != blank %}
-    data-swatch-option-name="{{ settings.swatch_option_name | escape }}"
-  {% endif %}
-  {%- if section.settings.button_grid_filter_name != blank %}
-    data-button-grid-filter-name="{{ section.settings.button_grid_filter_name | escape }}"
-  {% endif %}
->
-  <div
-    class="filters__inner{% if section.settings.enable_sticky_filter %} sticky-content-container{% endif %}"
-    data-ajax-container
-  >
+<div class="filters{% if section.settings.enable_filtering == false or filter_context.filters == empty %} mobile-only{% endif %}"
+    data-auto-apply-hide-unavailable="{{ section.settings.auto_apply_hide_unavailable }}"
+    {%- if settings.swatch_option_name != blank %} data-swatch-option-name="{{ settings.swatch_option_name | escape }}"{% endif %}
+    {%- if section.settings.button_grid_filter_name != blank %} data-button-grid-filter-name="{{ section.settings.button_grid_filter_name | escape }}"{% endif %}>
+  <div class="filters__inner{% if section.settings.enable_sticky_filter %} sticky-content-container{% endif %}" data-ajax-container>
     <header class="filters__heading">
       <div class="filters__heading-text heading-font h4">{{ 'products.filtering.title' | t }}</div>
       <a class="filters__close" href="#" data-toggle-filters aria-label="{{ 'accessibility.close' | t }}">
@@ -96,30 +87,22 @@
                 <span class="filter-toggle__group-label">{{ 'products.filtering.out_of_stock_label' | t }}</span>
                 <div class="filter-toggle__options">
                   <label class="filter-toggle__input-label">
-                    <input
-                      class="filter-toggle__input"
+                    <input class="filter-toggle__input"
                       id="Filter-{{ filter.param_name }}-1"
                       type="radio"
                       name="{{ filter.param_name }}"
                       value=""
-                      {% if filter.active_values == empty %}
-                        checked
-                      {% endif %}
-                    >
+                      {% if filter.active_values == empty %}checked{% endif %}>
                     <span class="filter-toggle__input-label-text">{{ 'products.filtering.show_label' | t }}</span>
                   </label>
                   <label class="filter-toggle__input-label">
-                    <input
-                      class="filter-toggle__input"
+                    <input class="filter-toggle__input"
                       id="Filter-{{ filter.param_name }}-2"
                       type="radio"
                       name="{{ filter.param_name }}"
                       value="1"
-                      {% if filter.active_values != empty and filter.active_values.first.value == '1' %}
-                        checked
-                      {% endif %}
-                    >
-                    <span class="filter-toggle__input-label-text">{{ 'products.filtering.hide_label' | t }}</span>
+                      {% if filter.active_values != empty and filter.active_values.first.value == '1' %}checked{% endif %}>
+                      <span class="filter-toggle__input-label-text">{{ 'products.filtering.hide_label' | t }}</span>
                   </label>
                 </div>
               </div>
@@ -137,7 +120,7 @@
               endif
 
               assign filter_group_is_swatch = false
-              if settings.swatch_source == 'theme' and settings.enable_filter_swatches and settings.swatch_option_name contains filter.label and filter.type == 'list'
+              if settings.swatch_source == 'theme' and settings.enable_filter_swatches and settings.swatch_option_name contains filter.label and filter.type == "list"
                 assign filter_group_is_swatch = true
               endif
 
@@ -166,72 +149,55 @@
               if filter.active_values.size > 0
                 assign collapse_filters = false
               elsif filter.type == 'price_range'
-                if filter.min_value.value != null or filter.max_value.value != null
+                if filter.min_value.value != nil or filter.max_value.value != nil
                   assign collapse_filters = false
                 endif
               endif
             -%}
             {%- if filter_values_to_show_count > 0 -%}
               <div class="filter-group{% if filter_group_is_swatch %} filter-group--swatch filter-group--layout-{{ settings.filter_swatch_layout }}{% elsif filter_group_is_button_grid %} filter-group--button-grid filter-group--layout-three-column{% elsif section.settings.filter_two_columns %}{% if filter.type == 'boolean' or filter.type == 'list' %} filter-group--layout-two-column{% endif %}{% endif %}">
-                <toggle-target
-                  role="button"
-                  tabindex="0"
-                  class="filter-group__heading{% if collapse_filters %} toggle-target-toggler--is-hidden{% endif %}"
-                  data-toggle-target=".filter-group--{{ forloop.index | plus: 1 }}"
-                >
+                <toggle-target role="button" tabindex="0" class="filter-group__heading{% if collapse_filters %} toggle-target-toggler--is-hidden{% endif %}" data-toggle-target=".filter-group--{{ forloop.index | plus: 1 }}">
                   <div class="filter-group__heading__text">{{ filter.label | escape }}</div>
-                  <span class="filter-group__heading__indicator">
-                    {%- render 'icon-chevron-down', stroke_width: 1.3 -%}
-                  </span>
+                  <span class="filter-group__heading__indicator">{% render 'icon-chevron-down', stroke_width: 1.3 %}</span>
                 </toggle-target>
                 <div class="filter-group__items filter-group--{{ forloop.index | plus: 1 }} toggle-target--hidden{% if collapse_filters %} toggle-target{% endif %}">
                   <div class="toggle-target-container">
                     {% case filter.type %}
-                      {% when 'boolean', 'list' %}
-                        {%- for value in filter.values -%}
-                          <label
-                            class="filter-group__item{% if value.active %} filter-group__item--active{% endif %}{% if value.count == 0 and value.active == false %} filter-group__item--disabled{% endif %}"
+                    {% when 'boolean' or 'list' %}
+                      {%- for value in filter.values -%}
+                        <label class="filter-group__item{% if value.active %} filter-group__item--active{% endif %}{% if value.count == 0 and value.active == false %} filter-group__item--disabled{% endif %}"
                             data-tag="{{ value.label | handle }}"
-                            {%- if filter_group_is_swatch %}
-                              data-swatch="{{ value.label | replace: '"', '' | downcase }}"
+                            {%- if filter_group_is_swatch %} data-swatch="{{ value.label | replace: '"', '' | downcase }}"
                               {%- if value.swatch and value.swatch.image %}
                                 style="--swatch-background-image: url({{ value.swatch.image | image_url: width: 40, height: 40, crop: 'center' }})"
                               {%- elsif value.swatch and value.swatch.color %}
                                 style="--swatch-background-color: rgb({{ value.swatch.color.rgb }})"
                               {%- endif %}
-                            {% endif %}
-                          >
-                            <input
-                              class="filter-group__checkbox"
-                              id="Filter-{{ value.param_name }}-{{ value.value | handle }}"
-                              type="checkbox"
-                              name="{{ value.param_name }}"
-                              value="{{ value.value | escape }}"
-                              {% if value.active %}
-                                checked
-                              {% endif %}
-                              {% if value.count == 0 and value.active == false %}
-                                disabled
-                              {% endif %}
-                            >
-                            <span class="filter-group__item__text">
-                              {{ value.label | escape }}
-                              {% unless filter_group_is_swatch or filter_group_is_button_grid %}
-                                <svg class="filter-tick" role="presentation" viewBox="0 0 20 20">
-                                  <path d="M8.315 13.859l-3.182-3.417a.506.506 0 0 1 0-.684l.643-.683a.437.437 0 0 1 .642 0l2.22 2.393 4.942-5.327a.436.436 0 0 1 .643 0l.643.684a.504.504 0 0 1 0 .683l-5.91 6.35a.437.437 0 0 1-.642 0"></path>
-                                </svg>
-                              {% endunless %}
-                            </span>
-                            {% if section.settings.show_filter_counts %}
-                              {% unless filter_group_is_swatch or filter_group_is_button_grid %}
-                                <span class="filter-group__item__count">{{ value.count }}</span>
-                              {% endunless %}
-                            {% endif %}
-                          </label>
-                        {%- endfor -%}
+                            {% endif %}>
+                          <input class="filter-group__checkbox"
+                            id="Filter-{{ value.param_name }}-{{ value.value | handle }}"
+                            type="checkbox"
+                            name="{{ value.param_name }}"
+                            value="{{ value.value | escape }}"
+                            {% if value.active %}checked{% endif %}
+                            {% if value.count == 0 and value.active == false %}disabled{% endif %}>
+                          <span class="filter-group__item__text">
+                            {{ value.label | escape }}
+                            {% unless filter_group_is_swatch or filter_group_is_button_grid %}
+                              <svg class="filter-tick" role="presentation" viewBox="0 0 20 20"><path d="M8.315 13.859l-3.182-3.417a.506.506 0 0 1 0-.684l.643-.683a.437.437 0 0 1 .642 0l2.22 2.393 4.942-5.327a.436.436 0 0 1 .643 0l.643.684a.504.504 0 0 1 0 .683l-5.91 6.35a.437.437 0 0 1-.642 0"></path></svg>
+                            {% endunless %}
+                          </span>
+                          {% if section.settings.show_filter_counts %}
+                            {% unless filter_group_is_swatch or filter_group_is_button_grid %}
+                              <span class="filter-group__item__count">{{ value.count }}</span>
+                            {%  endunless %}
+                          {% endif %}
+                        </label>
+                      {%- endfor -%}
 
-                      {% when 'price_range' %}
-                        {% render 'price-range', filter: filter %}
+                    {% when 'price_range' %}
+                      {% render 'price-range', filter: filter %}
+
                     {% endcase %}
                   </div>
                 </div>
@@ -243,12 +209,7 @@
 
       {% if section.settings.show_sort %}
         <div class="filter-group mobile-only">
-          <toggle-target
-            role="button"
-            tabindex="0"
-            class="filter-group__heading"
-            data-toggle-target=".filter-group--sort"
-          >
+          <toggle-target role="button" tabindex="0" class="filter-group__heading" data-toggle-target=".filter-group--sort">
             <div class="filter-group__heading__text">{{ 'products.sorting.sort_by_label' | t }}</div>
             <span class="filter-group__heading__indicator">{% render 'icon-chevron-down', stroke_width: 1.3 %}</span>
           </toggle-target>
@@ -282,22 +243,16 @@
                   endif
                 -%}
                 <label class="filter-group__item{% if current_sort == option.value %} filter-group__item--active{% endif %}">
-                  <input
-                    class="filter-group__checkbox"
+                  <input class="filter-group__checkbox"
                     id="Filter-Sort-{{ option.value }}"
                     type="radio"
                     name="sort_by"
                     value="{{ option.value }}"
-                    {% if current_sort == option.value %}
-                      checked
-                    {% endif %}
-                  >
+                    {% if current_sort == option.value %}checked{% endif %}>
 
                   <span class="filter-group__item__text">
                     {{ option.name | escape }}
-                    <svg class="filter-tick" role="presentation" viewBox="0 0 20 20">
-                      <path d="M8.315 13.859l-3.182-3.417a.506.506 0 0 1 0-.684l.643-.683a.437.437 0 0 1 .642 0l2.22 2.393 4.942-5.327a.436.436 0 0 1 .643 0l.643.684a.504.504 0 0 1 0 .683l-5.91 6.35a.437.437 0 0 1-.642 0"></path>
-                    </svg>
+                    <svg class="filter-tick" role="presentation" viewBox="0 0 20 20"><path d="M8.315 13.859l-3.182-3.417a.506.506 0 0 1 0-.684l.643-.683a.437.437 0 0 1 .642 0l2.22 2.393 4.942-5.327a.436.436 0 0 1 .643 0l.643.684a.504.504 0 0 1 0 .683l-5.91 6.35a.437.437 0 0 1-.642 0"></path></svg>
                   </span>
                 </label>
               {%- endfor -%}

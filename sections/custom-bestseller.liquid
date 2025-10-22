@@ -1,0 +1,437 @@
+{% schema %}
+{
+"name": "Custom Bestseller",
+"settings": [
+    {
+"type": "text",
+"id": "title",
+"label": "Title",
+"default": "Best Seller"
+},
+{
+"type": "text",
+"id": "title_de",
+"label": "Title in German",
+"default": "Bestseller"
+},
+{
+"type": "text",
+"id": "title_fr",
+"label": "Title in French",
+"default": "Bestseller"
+},
+    {
+        "type": "radio",
+        "id": "product_source_trekking7ltd",
+        "label": "Select Product Source for Trekking 7 LTD",
+        "options": [
+            { "value": "collection", "label": "Load from Collection" },
+            { "value": "custom", "label": "Custom Products" }
+        ],
+        "default": "collection"
+    },
+    {
+        "type": "collection",
+        "id": "trekking7ltd_collection",
+        "label": "Select Collection for Trekking 7 LTD",
+    },
+    {
+        "type": "product_list",
+        "id": "trekking7ltd_products",
+        "label": "Trekking 7 LTD Products",
+        "info": "Select multiple products for this tab."
+    },
+    {
+        "type": "checkbox",
+        "id": "show_description",
+        "label": "Show Product Description",
+        "default": true
+    }
+],
+"presets": [
+    {
+        "name": "Custom Bestseller",
+        "category": "Custom"
+    }
+]
+}
+{% endschema %}
+
+<div class="tab-content-section">
+    <h2 class="explore-title" style="margin-bottom:0px;">
+     {% if request.locale.iso_code == 'de' %}
+            {{ section.settings.title_de }}
+            {% elsif request.locale.iso_code == 'fr' %}
+            {{ section.settings.title_fr }}
+            {% else %}
+            {{ section.settings.title }}
+            {% endif %}
+    </h2>
+    
+
+    <div class="tab-content-area">
+        <div id="trekking7ltd" class="tab-panel active" role="tabpanel">
+            <div class="product-columns">
+                {% assign trekking_ltd_source = section.settings.product_source_trekking7ltd %}
+                {% if trekking_ltd_source == 'collection' %}
+                    {% assign trekking_ltd_collection = collections[section.settings.trekking7ltd_collection] %}
+                    {% if trekking_ltd_collection and trekking_ltd_collection.products.size > 0 %}
+                        {% for product in trekking_ltd_collection.products %}
+                            <div class="product-column-4">
+                                <a href="{{ product.url }}">
+                                    {% if product.metafields.custom.featured_image %}
+                                        <img src="{{ product.metafields.custom.featured_image | file_url }}" alt="{{ product.title }}">
+                                    {% else %}
+                                        <img src="{{ product.featured_image | img_url: 'original' }}" alt="{{ product.title }}">
+                                    {% endif %}
+                                </a>
+                                {% if product.metafields.custom.discount_image %}
+                                <div class="discount-image">  <img src="{{ product.metafields.custom.discount_image | file_url }}" alt="{{ product.title }}" style="aspect-ratio: auto; height: 60px;"></div>
+                                {% endif %}
+                              {% if product.metafields.custom.discount_image3 %}
+          <div class="discount-image3" style="margin-left:0"
+            >
+            <img
+              src="{{ product.metafields.custom.discount_image3 | file_url }}"
+              alt="{{ product.title }}"
+              style="aspect-ratio: auto; height: 60px;bottom: 10px;position:absolute;"
+            >
+          </div>
+        {% endif %}
+                             
+                     {% if product.metafields.custom.discount_image2 %}
+          <div class="discount-image2">
+            <img
+              src="{{ product.metafields.custom.discount_image2 | file_url }}"
+              alt="{{ product.title }}"
+              style="aspect-ratio: auto; height: 120px;"
+            >
+          </div>
+        {% endif %}          
+                                {% if product.metafields.custom.discount %}
+                                    <div class="discount-label">{{ product.metafields.custom.discount }}</div>
+                                {% endif %}
+                                <h3><a href="{{ product.url }}" class="producttitle">{{ product.title }}</a></h3>
+                                <div class="customprice">
+                                    {% if product.compare_at_price > product.price %}
+                                        <span class="current-price theme-money">{{ product.price | money }}</span>
+                                        <span class="was-price theme-money">{{ product.compare_at_price | money }}</span>
+                                    {% else %}
+                                        <span class="current-price theme-money">{{ product.price | money }}</span>
+                                    {% endif %}
+                                </div>
+                                {% if section.settings.show_description %}
+                                    <div class="products-description">
+                                        <b>{{ 'ebike.motor' | t}}:</b> {{ product.metafields.custom.motor_torque.value }}</br>
+                                        <b>{{'ebike.frame' | t}}:</b> {{ product.metafields.custom.frame.value }}</br>
+                                        <b>{{ 'ebike.battery' | t}}:</b> {{ product.metafields.custom.battery.value }}</br>
+                                        <b>{{ 'ebike.display' | t}}:</b> {{ product.metafields.custom.display.value }}
+                                    </div>
+                                {% endif %}
+                                {% assign product_available = false %}
+                                {% for variant in product.variants %}
+                                    {% if variant.inventory_quantity > 0 %}
+                                        {% assign product_available = true %}
+                                    {% endif %}
+                                {% endfor %}
+                                {% if product_available %}
+                                    <a href="{{ product.url }}" class="orderbutton">{{ 'ebike.order_now' | t }}</a>
+                                {% else %}
+                                    <span class="orderbutton sold-out">{{ 'ebike.sold_out' | t }}</span>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% else %}
+                    {% for product in section.settings.trekking7ltd_products %}
+                        <div class="product-column-4">
+                            <a href="{{ product.url }}">
+                                {% if product.metafields.custom.featured_image %}
+                                    <img src="{{ product.metafields.custom.featured_image | file_url }}" alt="{{ product.title }}">
+                                {% else %}
+                                    <img src="{{ product.featured_image | img_url: 'original' }}" alt="{{ product.title }}">
+                                {% endif %}
+                            </a>
+                            {% if product.metafields.custom.discount_image %}
+                            <div class="discount-image">  <img src="{{ product.metafields.custom.discount_image | file_url }}" alt="{{ product.title }}" style="aspect-ratio: auto; height: 60px;"></div>
+                            {% endif %}
+                            {% if product.metafields.custom.discount %}
+                                <div class="discount-label">{{ product.metafields.custom.discount }}</div>
+                            {% endif %}
+                            <h3><a href="{{ product.url }}" class="producttitle">{{ product.title }}</a></h3>
+                            <div class="customprice">
+                                {% if product.compare_at_price > product.price %}
+                                    <span class="current-price theme-money">{{ product.price | money }}</span>
+                                    <span class="was-price theme-money">{{ product.compare_at_price | money }}</span>
+                                {% else %}
+                                    <span class="current-price theme-money">{{ product.price | money }}</span>
+                                {% endif %}
+                            </div>
+                            {% if section.settings.show_description %}
+                                <div class="products-description">
+                                    <b>{{ 'ebike.motor' | t}}:</b> {{ product.metafields.custom.motor_torque.value }}</br>
+                                    <b>{{ 'ebike.battery' | t}}:</b> {{ product.metafields.custom.battery.value }}</br>
+                                    <b>{{ 'ebike.shifting'| t}}:</b> {{ product.metafields.custom.shifting.value }}</br>
+                                    <b>{{ 'ebike.fork' | t}}:</b> {{ product.metafields.custom.fork.value }}</br>
+                                    <b>{{ 'ebike.display' | t}}:</b> {{ product.metafields.custom.display.value }}
+                                </div>
+                            {% endif %}
+                            {% assign product_available = false %}
+                            {% for variant in product.variants %}
+                                {% if variant.inventory_quantity > 0 %}
+                                    {% assign product_available = true %}
+                                {% endif %}
+                            {% endfor %}
+                            {% if product_available %}
+                                <a href="{{ product.url }}" class="orderbutton">{{ 'ebike.order_now' | t }}</a>
+                            {% else %}
+                                <span class="orderbutton sold-out">{{ 'ebike.sold_out' | t }}</span>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+
+        
+        
+    </div>
+</div>
+
+<style>
+    .explore-title {
+        font-size: 30px;
+        margin-bottom: 60px;
+        text-align: left;
+    }
+
+    .tab-content-section {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 100px 20px;
+    }
+
+    .tab-item {
+        padding: 10px 20px;
+        background: #fff;
+        margin-right: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    .tab-item.active {
+        background: #000000;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    .custom-tabs {
+        display: flex;
+        cursor: pointer;
+        flex-wrap: wrap;
+        margin-bottom: 10px;
+    }
+
+    .tab-panel {
+        display: none;
+    }
+
+    .tab-panel.active {
+        display: block;
+    }
+
+    .product-columns {
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 1rem;
+        padding-top: 20px;
+    }
+
+    .product-column {
+        width: 32%;
+        text-align: left;
+        margin-bottom: 30px;
+    }
+
+    .product-column-4 {
+        width: 23%;
+        text-align: left;
+        margin-bottom: 30px;
+        position: relative;
+    }
+
+  .benefits-container {
+  display: flex;
+  height: 60px;
+    align-items: center;
+}
+
+    .producttitle {
+        color: #000;
+    }
+
+    .product-column img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1 / 1;
+        object-fit: contain;
+        border-radius: 5px;
+        background: #eeeeee;
+        margin-bottom: 10px;
+      border-radius: 0;
+    }
+
+    .product-column h3,.product-column-4 h3{
+        font-size: 20px;
+    }
+
+    .orderbutton {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: white;
+        color: black;
+        text-decoration: none;
+        border-radius: 50px;
+        margin-top: 10px;
+        border: 1px solid black;
+    }
+
+    .orderbutton:hover {
+        background-color: black;
+        color: white;
+    }
+
+    .orderbutton.sold-out {
+        background-color: #ccc;
+        color: #666;
+        border: #666;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+
+    .customprice {
+        margin: 20px 0;
+    }
+
+    .current-price {
+        font-size: 18px;
+    }
+
+    .was-price {
+        font-size: 18px;
+    }
+
+    .products-description {
+        margin: 16px 0;
+    }
+
+    .discount-image {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    max-width: 120px;  
+    max-height: 60px;
+    height: 100%; 
+    object-fit: contain; 
+}
+ .discount-image2 {
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      max-width: 120px;
+      max-height: 140px;
+      height: 100%;
+      object-fit: contain;
+  }
+
+.discount-image3 {
+        position: relative;
+    margin-bottom: 0;
+    left: 0px;
+    width: 100%;
+    max-height: 0;
+    height: 0;
+    object-fit: contain;
+    margin-left: -130px;
+}
+  
+    .discount-label {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: #FFD200;
+        color: black;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-weight: bold;
+        z-index: 10;
+    }
+
+    .product-column {
+        position: relative;
+    }
+
+    .product-column-4 {
+    width: 23%;
+    text-align: left;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.product-column img, .product-column-4 img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+    border-radius: 5px;
+    background: #eee;
+    margin-bottom: 10px;
+  border-radius: 0;
+}
+
+.was-price {
+    margin-left: 10px;
+    text-decoration: line-through;
+    color: #bf3737;
+    font-size: 18px;
+}
+
+.current-price {
+    font-size: 18px;
+    margin: 0;
+    text-align: left;
+    font-weight: 700;
+    line-height: 30px;
+    color: #333 !important;
+}
+
+    @media (max-width: 768px) {
+        .product-column, .product-column-4 {
+            width: 100% !important;
+        }
+
+        .custom-size-tabs {
+            flex-direction: column;
+        }
+
+        .explore-title {
+            margin-left: 0;
+        }
+
+        .tab-content-area {
+            padding: 0;
+            border-radius: 5px;
+            background: #fff;
+        }
+
+        .tab-item {
+            padding: 10px;
+            background: #fff;
+            margin-right: 5px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+    }
+</style>

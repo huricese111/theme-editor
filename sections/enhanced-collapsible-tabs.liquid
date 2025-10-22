@@ -41,13 +41,10 @@
 {%- if has_faq_header -%}
   {%- assign faq_sections_count = 0 -%}
   {%- for section_item in template.sections -%}
-    {%- if section_item.settings.enable_faq_header -%}
+    {%- if section_item.type == 'enhanced-collapsible-tabs' and section_item.settings.enable_faq_header -%}
       {%- assign faq_sections_count = faq_sections_count | plus: 1 -%}
-      {%- if section_item.id == section.id -%}
-        {%- if faq_sections_count == 1 -%}
-          {%- assign is_first_faq_section = true -%}
-        {%- endif -%}
-        {%- break -%}
+      {%- if section_item.id == section.id and faq_sections_count == 1 -%}
+        {%- assign is_first_faq_section = true -%}
       {%- endif -%}
     {%- endif -%}
   {%- endfor -%}

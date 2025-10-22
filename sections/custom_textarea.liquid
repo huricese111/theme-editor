@@ -1,0 +1,348 @@
+{% schema %}
+{
+  "name": "Custom Text Area",
+  "settings": [
+  {
+    "type": "text",
+    "id": "section_title",
+    "label": "Section Title (Default)",
+    "default": "Your Section Title"
+  },
+    {
+      "type": "text",
+      "id": "section_title_de",
+      "label": "Section Title (German)",
+      "default": "Ihr Abschnittsüberschrift"
+    },
+    {
+      "type": "text",
+      "id": "section_title_fr",
+      "label": "Section Title (French)",
+      "default": "Votre titre de section"
+    },
+    {
+      "type": "text",
+      "id": "section_title_fi",
+      "label": "Section Title (Finland)",
+    },
+    {
+      "type": "textarea",
+      "id": "text_description",
+      "label": "Text Description (Default)",
+      "default": "This is a description of the section."
+    },
+    {
+      "type": "textarea",
+      "id": "text_description_de",
+      "label": "Text Description (German)",
+      "default": "Dies ist eine Beschreibung des Abschnitts."
+    },
+    {
+      "type": "textarea",
+      "id": "text_description_fr",
+      "label": "Text Description (French)",
+      "default": "Ceci est une description de la section."
+    },
+    {
+      "type": "textarea",
+      "id": "text_description_fi",
+      "label": "Text Description (Finland)",
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "label": "Title Font Size (px)",
+      "default": 24,
+      "min": 10,
+      "max": 100,
+      "step": 1
+    },
+    {
+      "type": "range",
+      "id": "text_font_size",
+      "label": "Text Font Size (px)",
+      "default": 16,
+      "min": 10,
+      "max": 100,
+      "step": 1
+    },
+    {
+      "type": "checkbox",
+      "id": "show_item_list",
+      "label": "Show List Items",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "title_left",
+          "label": "Title Left, Description Right, Items Below"
+        },
+        {
+          "value": "title_above",
+          "label": "Title Above, Description Below, Items Below"
+        }
+      ],
+      "default": "title_above"
+    },
+    {
+      "type": "range",
+      "id": "item_font_size",
+      "label": "Item Font Size (px)",
+      "default": 16,
+      "min": 10,
+      "max": 100,
+      "step": 1
+    },
+    {
+      "type": "select",
+      "id": "custom_icon",
+      "label": "Select list-item icon",
+      "options": [
+        {
+          "value": "arrow",
+          "label": "Arrow"
+        },
+        {
+          "value": "checkmark",
+          "label": "Checkmark"
+        },
+        {
+          "value": "star",
+          "label": "Star"
+        },
+        {
+          "value": "info",
+          "label": "Info"
+        },
+        {
+          "value": "solid_dot",
+          "label": "Solid Dot"
+        }
+      ],
+      "default": "solid_dot"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "list_item",
+      "name": "List Item",
+      "settings": [
+      {
+        "type": "text",
+        "id": "item_text",
+        "label": "Item Text (Default)"
+      },
+        {
+          "type": "text",
+          "id": "item_text_de",
+          "label": "Item Text (German)"
+        },
+        {
+          "type": "text",
+          "id": "item_text_fr",
+          "label": "Item Text (French)"
+        },
+         {
+          "type": "text",
+          "id": "item_text_fi",
+          "label": "Item Text (Finland)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Text Area",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+
+<div class="custom-tab-container" style="margin-bottom: 50px;">
+  <div class="custom-text-area" id="custom-text-area">
+    {% assign title = section.settings.section_title %}
+    {% assign description = section.settings.text_description %}
+    
+    {% if request.locale.iso_code == 'de' %}
+      {% assign title = section.settings.section_title_de %}
+      {% assign description = section.settings.text_description_de %}
+{% elsif request.locale.iso_code == 'fr' %}
+      {% assign title = section.settings.section_title_fr %}
+      {% assign description = section.settings.text_description_fr %}
+{% elsif request.locale.iso_code == 'fi' %}
+      {% assign title = section.settings.section_title_fi %}
+      {% assign description = section.settings.text_description_fi %}
+{% endif %}
+
+
+    {% if section.settings.layout == 'title_above' %}
+      <h2 class="section-title" style="font-size: {{ section.settings.title_font_size }}px; width: 100%;">{{ title }}</h2>
+      <div class="description-and-items" style="display: flex; width: 100%;">
+        <div class="text-description" style="width: 60%;">
+          <p style="font-size: {{ section.settings.text_font_size }}px;">{{ description }}</p>
+        </div>
+        {% if section.settings.show_item_list and section.blocks.size > 0 %}
+          <div class="item-list" style="width: 40%;">
+            <ul>
+              {% for block in section.blocks %}
+                {% assign item_text = block.settings.item_text %}
+                {% if request.locale.iso_code == 'de' %}
+                  {% assign item_text = block.settings.item_text_de %}
+                {% elsif request.locale.iso_code == 'fr' %}
+                  {% assign item_text = block.settings.item_text_fr %}
+                 {% elsif request.locale.iso_code == 'fi' %}
+                  {% assign item_text = block.settings.item_text_fi %}
+                {% endif %}
+                <li style="font-size: {{ section.settings.item_font_size }}px;" class="list-item">
+                  <span class="icon">
+                    {% if section.settings.custom_icon == 'arrow' %}
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M11.3 8l-4.5-4.5a.5.5 0 0 1 .7-.7l5 5a.5.5 0 0 1 0 .7l-5 5a.5.5 0 0 1-.7-.7L11.3 8z"/></svg>
+                    {% elsif section.settings.custom_icon == 'checkmark' %}
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 30 30">
+                        <path d="M12 0c6.623 0 12 5.377 12 12s-5.377 12-12 12-12-5.377-12-12 5.377-12 12-12zm0 1c6.071 0 11 4.929 11 11s-4.929 11-11 11-11-4.929-11-11 4.929-11 11-11zm7 7.457l-9.005 9.565-4.995-5.865.761-.649 4.271 5.016 8.24-8.752.728.685z"></path>
+                      </svg>
+                    {% elsif section.settings.custom_icon == 'star' %}
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16"><path d="M2.866 14.85c-.1.1-.234.15-.366.15-.1 0-.2-.03-.287-.086a.5.5 0 0 1-.147-.147c-.056-.087-.086-.187-.086-.287 0-.132.05-.266.15-.366l8.5-8.5a.5.5 0 0 1 .707 0l8.5 8.5c.1.1.15.234.15.366 0 .1-.03.2-.086.287a.5.5 0 0 1-.147.147c-.087.056-.187.086-.287.086-.132 0-.266-.05-.366-.15L8 8.5 2.866 14.85z"/></svg>
+                    {% elsif section.settings.custom_icon == 'info' %}
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16"><path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm0 15a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm-.93-4.412a.5.5 0 0 1 .93-.058l.058.057 1 1a.5.5 0 0 1-.707.707l-1-1a.5.5 0 0 1-.058-.93l.058-.058zm1.5-3.5a.5.5 0 0 1-.5.5H8.5a.5.5 0 0 1-.5-.5V5.5a.5.5 0 0 1 1 0v2.088l.5.5z"/></svg>
+                    {% elsif section.settings.custom_icon == 'solid_dot' %}
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-circle-fill" viewBox="0 0 16 16"><path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0z"/></svg>
+                    {% endif %}
+                  </span>
+                  <span class="item-text">{{ item_text }}</span>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+      </div>
+    {% elsif section.settings.layout == 'title_left' %}
+      <div class="header" style="display: flex; align-items: flex-start; width: 100%;">
+        <h2 class="section-title" style="font-size: {{ section.settings.title_font_size }}px; width: 40%; margin-right: 20px;">{{ title }}</h2>
+        <div class="text-description" style="width: 60%;">
+          <p style="font-size: {{ section.settings.text_font_size }}px;">{{ description }}</p>
+          {% if section.settings.show_item_list and section.blocks.size > 0 %}
+            <div class="item-list">
+              <ul>
+                {% for block in section.blocks %}
+                  <li style="font-size: {{ section.settings.item_font_size }}px;" class="list-item">
+                    <span class="icon">
+                      {% if section.settings.custom_icon == 'arrow' %}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M11.3 8l-4.5-4.5a.5.5 0 0 1 .7-.7l5 5a.5.5 0 0 1 0 .7l-5 5a.5.5 0 0 1-.7-.7L11.3 8z"/></svg>
+                      {% elsif section.settings.custom_icon == 'checkmark' %}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 30 30">
+                          <path d="M12 0c6.623 0 12 5.377 12 12s-5.377 12-12 12-12-5.377-12-12 5.377-12 12-12zm0 1c6.071 0 11 4.929 11 11s-4.929 11-11 11-11-4.929-11-11 4.929-11 11-11zm7 7.457l-9.005 9.565-4.995-5.865.761-.649 4.271 5.016 8.24-8.752.728.685z"></path>
+                        </svg>
+                      {% elsif section.settings.custom_icon == 'star' %}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16"><path d="M2.866 14.85c-.1.1-.234.15-.366.15-.1 0-.2-.03-.287-.086a.5.5 0 0 1-.147-.147c-.056-.087-.086-.187-.086-.287 0-.132.05-.266.15-.366l8.5-8.5a.5.5 0 0 1 .707 0l8.5 8.5c.1.1.15.234.15.366 0 .1-.03.2-.086.287a.5.5 0 0 1-.147.147c-.087.056-.187.086-.287.086-.132 0-.266-.05-.366-.15L8 8.5 2.866 14.85z"/></svg>
+                      {% elsif section.settings.custom_icon == 'info' %}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16"><path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm0 15a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm-.93-4.412a.5.5 0 0 1 .93-.058l.058.057 1 1a.5.5 0 0 1-.707.707l-1-1a.5.5 0 0 1-.058-.93l.058-.058zm1.5-3.5a.5.5 0 0 1-.5.5H8.5a.5.5 0 0 1-.5-.5V5.5a.5.5 0 0 1 1 0v2.088l.5.5z"/></svg>
+                      {% elsif section.settings.custom_icon == 'solid_dot' %}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-circle-fill" viewBox="0 0 16 16"><path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0z"/></svg>
+                      {% endif %}
+                    </span>
+                    <span class="item-text">{{ block.settings.item_text }}</span>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+  
+  <style>
+  .custom-tab-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 0;
+  }
+  
+  .custom-text-area {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .section-title {
+    width: 100%; 
+    margin-bottom: 20px; 
+  }
+  
+  .description-and-items {
+    display: flex;
+    width: 100%;
+  }
+  
+  .text-description {
+    width: 60%; 
+  }
+  
+  .item-list {
+    width: 100%; 
+    list-style: none;
+    padding: 0;
+    margin: 10px; 
+  }
+  
+  .item-list li {
+    position: relative;
+    padding-left: 30px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .item-list .icon {
+    margin-right: 10px; 
+  }
+  
+  @media (max-width: 768px) {
+    .description-and-items {
+      flex-direction: column; 
+    }
+  
+    .text-description, .item-list {
+      width: 100% !important; 
+    }
+  
+    .item-list {
+      margin-top: 10px; 
+    }
+    .section-title{
+      font-size: 26px !important;
+    }
+    .custom-text-area{
+      padding: 20px !important;
+    }
+    .item-list li {
+      padding-left: 0;
+}
+  }
+  </style>
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const titleFontSize = {{ section.settings.title_font_size }};
+      const textFontSize = {{ section.settings.text_font_size }};
+      const itemFontSize = {{ section.settings.item_font_size }};
+  
+      document.querySelector('.section-title').style.fontSize = titleFontSize + 'px';
+  
+      const description = document.querySelector('.text-description p');
+      if (description) {
+        description.style.fontSize = textFontSize + 'px';
+      }
+  
+      const items = document.querySelectorAll('.item-list li');
+      items.forEach(item => {
+        item.style.fontSize = itemFontSize + 'px';
+      });
+    });
+  </script>

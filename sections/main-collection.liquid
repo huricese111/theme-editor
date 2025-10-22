@@ -1,144 +1,3 @@
-{%- comment -%}
-/**
- * Main Collection Section - Product Collection Display and Filtering Component
- * 
- * CORE FUNCTIONALITY:
- * - Product collection page layout with filtering, sorting, and pagination
- * - Collection header with title, description, and featured image display
- * - Advanced product filtering system with faceted search capabilities
- * - Product grid layout with responsive design and layout switching
- * - Related collections display with button or gallery styles
- * - Product sorting with customizable sort options
- * - Mobile-optimized layout with touch-friendly controls
- * - Integration with Shopify's native filtering and pagination systems
- * 
- * TECHNICAL IMPLEMENTATION:
- * - Liquid template with Shopify collection and product objects
- * - CSS Grid and Flexbox for responsive product layouts
- * - JavaScript-enhanced filtering and sorting functionality
- * - AJAX-powered product loading and pagination
- * - Custom CSS variables for dynamic styling
- * - Responsive breakpoints for mobile, tablet, and desktop
- * 
- * SHOPIFY INTEGRATION:
- * - Native Shopify collection filtering system
- * - Product pagination with configurable items per page
- * - Collection metafields for related collections
- * - Product variant and inventory management
- * - Shopify image transformation and optimization
- * - Multi-language support through Shopify's localization
- * 
- * RELATED FILES:
- * 
- * Core Template Files:
- * - sections/main-collection.liquid - This main section file
- * 
- * Snippet Dependencies:
- * - snippets/image.liquid - Image rendering with optimization and responsive sizing
- * - snippets/animation-attrs.liquid - Animation attributes for scroll-triggered effects
- * - snippets/product-block.liquid - Individual product card rendering component
- * - snippets/main-nav-links.liquid - Navigation links for mobile menu integration
- * 
- * Icon Dependencies:
- * - snippets/icon-filter.liquid - Filter toggle icon for mobile and desktop
- * - snippets/icon-chevron-down.liquid - Dropdown arrow for sort selector
- * - snippets/icon-chevron-right.liquid - Right arrow for filter toggle
- * - snippets/icon-chevron-left.liquid - Left arrow for related collections carousel
- * - snippets/icon-grid.liquid - Grid layout switcher icon
- * - snippets/icon-box.liquid - Single column layout switcher icon
- * 
- * Missing Dependencies (Referenced but not found):
- * - snippets/pagination-control.liquid - Pagination controls component
- * - snippets/collection-block.liquid - Collection display component for related collections
- * 
- * JavaScript Dependencies:
- * - Built-in Shopify filtering and AJAX functionality
- * - Custom carousel slider for related collections gallery
- * - Layout switcher functionality for mobile grid toggle
- * 
- * LAYOUT OPTIONS:
- * - Collection header with optional featured image background
- * - Configurable products per row (2-5 columns)
- * - Related collections display (buttons or gallery style)
- * - Filter sidebar with collapsible sections
- * - Product grid with aspect ratio customization
- * - Mobile layout switching (1 or 2 columns)
- * 
- * RESPONSIVE DESIGN:
- * - Desktop: Multi-column grid with sidebar filters (up to 5 products per row)
- * - Tablet: Adjusted grid layout with responsive filter controls
- * - Mobile: Stacked layout with drawer-style filters and layout switcher
- * - Touch-friendly filter buttons and sort controls
- * - Responsive image sizing with aspect ratio preservation
- * 
- * ACCESSIBILITY FEATURES:
- * - ARIA labels for interactive elements
- * - Keyboard navigation support for filters and sorting
- * - Screen reader friendly filter counts and status
- * - Focus management for modal and drawer interactions
- * - Semantic HTML structure for better navigation
- * 
- * CUSTOMIZATION OPTIONS:
- * - Collection title and description display toggle
- * - Featured image height settings (compact to large)
- * - Overlay styles for collection header (tint, box, shadow)
- * - Filter display options (counts, two-column layout)
- * - Sort options configuration (featured, best selling, alphabetical, price, date)
- * - Related collections selection and display style
- * - Product vendor and total count display
- * - Sticky filter column option
- * 
- * FILTERING FEATURES:
- * - Faceted search with multiple filter types
- * - Filter collapse options for long lists
- * - Button-style filters for specific attributes (Size, etc.)
- * - Auto-apply hide unavailable products option
- * - Filter count display with active filter indicators
- * - Mobile-optimized filter drawer
- * 
- * COLLECTION FEATURES:
- * - Collection image as header background
- * - Rich text description with HTML support
- * - Related collections with metafield integration
- * - Gallery-style related collections with carousel
- * - Configurable image aspect ratios and positioning
- * 
- * PRODUCT DISPLAY:
- * - Responsive product grid with customizable columns
- * - Product block integration with detailed metadata
- * - Vendor information display option
- * - Product count and pagination controls
- * - Mobile layout switching between 1 and 2 columns
- * 
- * PERFORMANCE CONSIDERATIONS:
- * - Lazy loading for product images
- * - AJAX pagination to avoid full page reloads
- * - Optimized CSS with minimal specificity
- * - Efficient Liquid loops with proper liquid tags
- * - Image optimization through Shopify's CDN
- * 
- * BROWSER COMPATIBILITY:
- * - Modern browsers with CSS Grid and Flexbox support
- * - Progressive enhancement for older browsers
- * - Touch device optimization for mobile interactions
- * - Cross-browser tested filter and sort functionality
- * 
- * USAGE SCENARIOS:
- * - Main collection pages for product browsing
- * - Category pages with filtering requirements
- * - Search result pages with faceted navigation
- * - Product catalog displays with sorting needs
- * - Mobile commerce with touch-optimized controls
- * 
- * SCHEMA CONFIGURATION:
- * - Comprehensive settings for layout, filtering, and display options
- * - Related collections configuration with gallery options
- * - Filter and sort customization settings
- * - Image and overlay style configuration
- * - Mobile-specific layout and behavior settings
- */
-{%- endcomment -%}
-
 <div data-section-id="{{ section.id }}" {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
   {% paginate collection.products by section.settings.coll_num_per_page_int %}
     {%- liquid
@@ -538,7 +397,7 @@
 <style>
   .link-dropdown {
     position: relative;
-    z-index: 100; 
+    z-index: 100; /* 增加z-index值，确保高于产品块 */
   }
   
   .link-dropdown__button {
@@ -561,7 +420,7 @@
     position: absolute;
     right: 0;
     top: 100%;
-    z-index: 100; 
+    z-index: 100; /* 确保下拉选项显示在最上层 */
     background-color: white;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     border-radius: 4px;

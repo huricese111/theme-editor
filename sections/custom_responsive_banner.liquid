@@ -1,0 +1,829 @@
+{% schema %}
+{
+  "name": "Custom 4-blocks Banner",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Left Module"
+    },
+    {
+      "type": "image_picker",
+      "id": "left_image",
+      "label": "Left Module Background Image"
+    },
+    {
+      "type": "select",
+      "id": "left_bg_size",
+      "label": "Left Module Background Size",
+      "options": [
+        { "value": "cover", "label": "Cover" },
+        { "value": "contain", "label": "Contain" },
+        { "value": "auto", "label": "Auto" },
+        { "value": "80%", "label": "80%" },
+        { "value": "60%", "label": "60%" },
+        { "value": "40%", "label": "40%" }
+      ],
+      "default": "cover"
+    },
+    {
+      "type": "select",
+      "id": "left_bg_position",
+      "label": "Left Module Background Position",
+      "options": [
+        { "value": "center", "label": "Center" },
+        { "value": "top left", "label": "Top Left" },
+        { "value": "top center", "label": "Top Center" },
+        { "value": "top right", "label": "Top Right" },
+        { "value": "bottom left", "label": "Bottom Left" },
+        { "value": "bottom center", "label": "Bottom Center" },
+        { "value": "bottom right", "label": "Bottom Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "text",
+      "id": "left_tag",
+      "label": "Left Module Tag",
+      "default": "Free 100 Nm Upgrade"
+    },
+    {
+      "type": "text",
+      "id": "left_tag_de",
+      "label": "Left Module Tag DE"
+    },
+    {
+      "type": "text",
+      "id": "left_tag_fr",
+      "label": "Left Module Tag FR"
+    },
+     {
+      "type": "text",
+      "id": "left_tag_fi",
+      "label": "Left Module Tag FI"
+    },
+    {
+      "type": "text",
+      "id": "left_title",
+      "label": "Left Module Title",
+      "default": "Left Column Module"
+    },
+    {
+      "type": "text",
+      "id": "left_title_de",
+      "label": "Left Module Title DE"
+    },
+    {
+      "type": "text",
+      "id": "left_title_fr",
+      "label": "Left Module Title FR"
+    },
+     {
+      "type": "text",
+      "id": "left_title_fi",
+      "label": "Left Module Title FI"
+    },
+    {
+      "type": "text",
+      "id": "left_button",
+      "label": "Left Module Button Text",
+      "default": "Left Column Button"
+    },
+    {
+      "type": "text",
+      "id": "left_button_de",
+      "label": "Left Module Button Text DE"
+    },
+    {
+      "type": "text",
+      "id": "left_button_fr",
+      "label": "Left Module Button Text FR"
+    },
+    {
+      "type": "text",
+      "id": "left_button_fi",
+      "label": "Left Module Button Text FI"
+    },
+    {
+      "type": "url",
+      "id": "left_button_url",
+      "label": "Left Module Button URL"
+    },
+    {
+      "type": "color",
+      "id": "left_button_color",
+      "label": "Left Button Background Color",
+      "default": "#e34a38"
+    },
+    {
+      "type": "color",
+      "id": "left_button_text_color",
+      "label": "Left Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "left_background_color",
+      "label": "Left Module Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Right Module 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "right_image_1",
+      "label": "Right Module 1 Background Image"
+    },
+    {
+      "type": "select",
+      "id": "right1_bg_size",
+      "label": "Right Module 1 Background Size",
+      "options": [
+        { "value": "cover", "label": "Cover" },
+        { "value": "contain", "label": "Contain" },
+        { "value": "auto", "label": "Auto" },
+        { "value": "80%", "label": "80%" },
+        { "value": "60%", "label": "60%" },
+        { "value": "40%", "label": "40%" }
+      ],
+      "default": "cover"
+    },
+    {
+      "type": "select",
+      "id": "right1_bg_position",
+      "label": "Right Module 1 Background Position",
+      "options": [
+        { "value": "center", "label": "Center" },
+        { "value": "top left", "label": "Top Left" },
+        { "value": "top center", "label": "Top Center" },
+        { "value": "top right", "label": "Top Right" },
+        { "value": "bottom left", "label": "Bottom Left" },
+        { "value": "bottom center", "label": "Bottom Center" },
+        { "value": "bottom right", "label": "Bottom Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "text",
+      "id": "right1_tag",
+      "label": "Right Module 1 Tag",
+      "default": "Free 100 Nm Upgrade"
+    },
+    {
+      "type": "text",
+      "id": "right1_tag_de",
+      "label": "Right Module 1 Tag DE"
+    },
+    {
+      "type": "text",
+      "id": "right1_tag_fr",
+      "label": "Right Module 1 Tag FR"
+    },
+     {
+      "type": "text",
+      "id": "right1_tag_fi",
+      "label": "Right Module 1 Tag FI"
+    },
+    {
+      "type": "text",
+      "id": "right1_title",
+      "label": "Right Module 1 Small Title",
+      "default": "Right Column 2"
+    },
+    {
+      "type": "text",
+      "id": "right1_title_de",
+      "label": "Right Module 1 Small Title DE"
+    },
+    {
+      "type": "text",
+      "id": "right1_title_fr",
+      "label": "Right Module 1 Small Title FR"
+    },
+    {
+      "type": "text",
+      "id": "right1_title_fi",
+      "label": "Right Module 1 Small Title FI"
+    },
+    {
+      "type": "text",
+      "id": "right1_button",
+      "label": "Right Module 1 Button Text",
+      "default": "Button 1 and 2"
+    },
+    {
+      "type": "text",
+      "id": "right1_button_de",
+      "label": "Right Module 1 Button Text DE"
+    },
+    {
+      "type": "text",
+      "id": "right1_button_fr",
+      "label": "Right Module 1 Button Text FR"
+    },
+     {
+      "type": "text",
+      "id": "right1_button_fi",
+      "label": "Right Module 1 Button Text FI"
+    },
+    {
+      "type": "url",
+      "id": "right1_button_url",
+      "label": "Right Module 1 Button URL"
+    },
+    {
+      "type": "color",
+      "id": "right1_button_color",
+      "label": "Right 1 Button Background Color",
+      "default": "#e34a38"
+    },
+    {
+      "type": "color",
+      "id": "right1_button_text_color",
+      "label": "Right 1 Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "right1_background_color",
+      "label": "Right Module 1 Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Right Module 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "right_image_2",
+      "label": "Right Module 2 Background Image"
+    },
+    {
+      "type": "select",
+      "id": "right2_bg_size",
+      "label": "Right Module 2 Background Size",
+      "options": [
+        { "value": "cover", "label": "Cover" },
+        { "value": "contain", "label": "Contain" },
+        { "value": "auto", "label": "Auto" },
+        { "value": "80%", "label": "80%" },
+        { "value": "60%", "label": "60%" },
+        { "value": "40%", "label": "40%" }
+      ],
+      "default": "cover"
+    },
+    {
+      "type": "select",
+      "id": "right2_bg_position",
+      "label": "Right Module 2 Background Position",
+      "options": [
+        { "value": "center", "label": "Center" },
+        { "value": "top left", "label": "Top Left" },
+        { "value": "top center", "label": "Top Center" },
+        { "value": "top right", "label": "Top Right" },
+        { "value": "bottom left", "label": "Bottom Left" },
+        { "value": "bottom center", "label": "Bottom Center" },
+        { "value": "bottom right", "label": "Bottom Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "text",
+      "id": "right2_title",
+      "label": "Right Module 2 Small Title",
+      "default": "Right Column Module 3"
+    },
+    {
+      "type": "text",
+      "id": "right2_title_de",
+      "label": "Right Module 2 Small Title DE"
+    },
+    {
+      "type": "text",
+      "id": "right2_title_fr",
+      "label": "Right Module 2 Small Title FR"
+    },
+    {
+      "type": "text",
+      "id": "right2_title_fi",
+      "label": "Right Module 2 Small Title FI"
+    },
+    {
+      "type": "text",
+      "id": "right2_button",
+      "label": "Right Module 2 Button Text",
+      "default": "Button 3"
+    },
+    {
+      "type": "text",
+      "id": "right2_button_de",
+      "label": "Right Module 2 Button Text DE"
+    },
+    {
+      "type": "text",
+      "id": "right2_button_fr",
+      "label": "Right Module 2 Button Text FR"
+    },
+     {
+      "type": "text",
+      "id": "right2_button_fi",
+      "label": "Right Module 2 Button Text FI"
+    },
+    {
+      "type": "url",
+      "id": "right2_button_url",
+      "label": "Right Module 2 Button URL"
+    },
+    {
+      "type": "color",
+      "id": "right2_button_color",
+      "label": "Right 2 Button Background Color",
+      "default": "#e34a38"
+    },
+    {
+      "type": "color",
+      "id": "right2_button_text_color",
+      "label": "Right 2 Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "right2_background_color",
+      "label": "Right Module 2 Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Right Module 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "right_image_3",
+      "label": "Right Module 3 Background Image"
+    },
+    {
+      "type": "select",
+      "id": "right3_bg_size",
+      "label": "Right Module 3 Background Size",
+      "options": [
+        { "value": "cover", "label": "Cover" },
+        { "value": "contain", "label": "Contain" },
+        { "value": "auto", "label": "Auto" },
+        { "value": "80%", "label": "80%" },
+        { "value": "60%", "label": "60%" },
+        { "value": "40%", "label": "40%" }
+      ],
+      "default": "cover"
+    },
+    {
+      "type": "select",
+      "id": "right3_bg_position",
+      "label": "Right Module 3 Background Position",
+      "options": [
+        { "value": "center", "label": "Center" },
+        { "value": "top left", "label": "Top Left" },
+        { "value": "top center", "label": "Top Center" },
+        { "value": "top right", "label": "Top Right" },
+        { "value": "bottom left", "label": "Bottom Left" },
+        { "value": "bottom center", "label": "Bottom Center" },
+        { "value": "bottom right", "label": "Bottom Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "text",
+      "id": "right3_title",
+      "label": "Right Module 3 Small Title",
+      "default": "Right Column Module 4"
+    },
+    {
+      "type": "text",
+      "id": "right3_title_de",
+      "label": "Right Module 3 Small Title DE"
+    },
+    {
+      "type": "text",
+      "id": "right3_title_fr",
+      "label": "Right Module 3 Small Title FR"
+    },
+     {
+      "type": "text",
+      "id": "right3_title_fi",
+      "label": "Right Module 3 Small Title FI"
+    },
+    {
+      "type": "text",
+      "id": "right3_button",
+      "label": "Right Module 3 Button Text",
+      "default": "Button 4"
+    },
+    {
+      "type": "text",
+      "id": "right3_button_de",
+      "label": "Right Module 3 Button Text DE"
+    },
+    {
+      "type": "text",
+      "id": "right3_button_fr",
+      "label": "Right Module 3 Button Text FR"
+    },
+      {
+      "type": "text",
+      "id": "right3_button_fi",
+      "label": "Right Module 3 Button Text FI"
+    },
+    {
+      "type": "url",
+      "id": "right3_button_url",
+      "label": "Right Module 3 Button URL"
+    },
+    {
+      "type": "color",
+      "id": "right3_button_color",
+      "label": "Right 3 Button Background Color",
+      "default": "#e34a38"
+    },
+    {
+      "type": "color",
+      "id": "right3_button_text_color",
+      "label": "Right 3 Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "right3_background_color",
+      "label": "Right Module 3 Background Color",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom 4-blocks Banner",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+
+<div class="custom-banner-container">
+  <div class="custom-banner-left">
+    <div class="custom-banner-module"
+      style="flex: 1; background-image: url({{ section.settings.left_image | img_url: '2048x2048' }}); background-size: {{ section.settings.left_bg_size }}; background-position: {{ section.settings.left_bg_position }}; background-color: {{ section.settings.left_background_color }};">
+      <div class="custom-module-content">
+        {% if section.settings.left_tag != blank %}
+        <div class="custom-module-tag" data-localize="{{ section.settings.left_tag }}">
+          {% if request.locale.iso_code == 'de' %}
+            {{ section.settings.left_tag_de }}
+          {% elsif request.locale.iso_code == 'fr' %}
+            {{ section.settings.left_tag_fr }}
+         {% elsif request.locale.iso_code == 'fi' %}
+            {{ section.settings.left_tag_fi }}   
+          {% else %}
+            {{ section.settings.left_tag }}
+          {% endif %}
+        </div>
+        {% endif %}
+        <h2 class="custom-module-title" data-localize="{{ section.settings.left_title }}">
+          {% if request.locale.iso_code == 'de' %}
+            {{ section.settings.left_title_de }}
+          {% elsif request.locale.iso_code == 'fr' %}
+            {{ section.settings.left_title_fr }}
+           {% elsif request.locale.iso_code == 'fi' %}
+            {{ section.settings.left_title_fi }}
+          {% else %}
+            {{ section.settings.left_title }}
+          {% endif %}
+        </h2>
+      </div>
+      <a href="{{ section.settings.left_button_url }}" class="custom-module-button" style="background-color: {{ section.settings.left_button_color }}; color: {{ section.settings.left_button_text_color }};" data-localize="{{ section.settings.left_button }}">
+        {% if request.locale.iso_code == 'de' %}
+          {{ section.settings.left_button_de }}
+        {% elsif request.locale.iso_code == 'fr' %}
+          {{ section.settings.left_button_fr }}
+         {% elsif request.locale.iso_code == 'fi' %}
+          {{ section.settings.left_button_fi }}
+        {% else %}
+          {{ section.settings.left_button }}
+        {% endif %}
+        &#8594;
+    </a>
+    </div>
+  </div>
+  <div class="custom-banner-right">
+    <div class="custom-banner-right-row">
+      <div class="custom-banner-module"
+        style="flex: 2; background-image: url({{ section.settings.right_image_1 | img_url: '2048x2048' }}); background-size: {{ section.settings.right1_bg_size }}; background-position: {{ section.settings.right1_bg_position }}; background-color: {{ section.settings.right1_background_color }};">
+        <div class="custom-module-content" style="max-width: 400px;">
+          {% if section.settings.right1_tag != blank %}
+          <div class="custom-module-tag" data-localize="{{ section.settings.right1_tag }}">
+            {% if request.locale.iso_code == 'de' %}
+              {{ section.settings.right1_tag_de }}
+            {% elsif request.locale.iso_code == 'fr' %}
+              {{ section.settings.right1_tag_fr }}
+              {% elsif request.locale.iso_code == 'fi' %}
+              {{ section.settings.right1_tag_fi }}
+            {% else %}
+              {{ section.settings.right1_tag }}
+            {% endif %}
+          </div>
+          {% endif %}
+          <div class="custom-module-title-small" data-localize="{{ section.settings.right1_title }}">
+            {% if request.locale.iso_code == 'de' %}
+              {{ section.settings.right1_title_de }}
+            {% elsif request.locale.iso_code == 'fr' %}
+              {{ section.settings.right1_title_fr }}
+             {% elsif request.locale.iso_code == 'fi' %}
+              {{ section.settings.right1_title_fi }}
+            {% else %}
+              {{ section.settings.right1_title }}
+            {% endif %}
+          </div>
+        </div>
+        <a href="{{ section.settings.right1_button_url }}" class="custom-module-button" style="background-color: {{ section.settings.right1_button_color }}; color: {{ section.settings.right1_button_text_color }};" data-localize="{{ section.settings.right1_button }}">
+          {% if request.locale.iso_code == 'de' %}
+            {{ section.settings.right1_button_de }}
+          {% elsif request.locale.iso_code == 'fr' %}
+            {{ section.settings.right1_button_fr }}
+          {% elsif request.locale.iso_code == 'fi' %}
+            {{ section.settings.right1_button_fi }}
+          {% else %}
+            {{ section.settings.right1_button }}
+          {% endif %}
+          &#8594;
+      </a>
+      </div>
+    </div>
+    <div class="custom-banner-right-row">
+      <div class="custom-banner-module"
+        style="background-image: url({{ section.settings.right_image_2 | img_url: '2048x2048' }}); background-size: {{ section.settings.right2_bg_size }}; background-position: {{ section.settings.right2_bg_position }}; background-color: {{ section.settings.right2_background_color }};">
+        <div class="custom-module-content">
+          {% if section.settings.right2_tag != blank %}
+          <div class="custom-module-tag" data-localize="{{ section.settings.right2_tag }}">
+            {% if request.locale.iso_code == 'de' %}
+              {{ section.settings.right2_tag_de }}
+            {% elsif request.locale.iso_code == 'fr' %}
+              {{ section.settings.right2_tag_fr }}
+             {% elsif request.locale.iso_code == 'fi' %}
+              {{ section.settings.right2_tag_fi }}
+            {% else %}
+              {{ section.settings.right2_tag }}
+            {% endif %}
+          </div>
+          {% endif %}
+          <div class="custom-module-title-moresmall" data-localize="{{ section.settings.right2_title }}">
+            {% if request.locale.iso_code == 'de' %}
+              {{ section.settings.right2_title_de }}
+            {% elsif request.locale.iso_code == 'fr' %}
+              {{ section.settings.right2_title_fr }}
+              {% elsif request.locale.iso_code == 'fi' %}
+              {{ section.settings.right2_title_fi }}
+            {% else %}
+              {{ section.settings.right2_title }}
+            {% endif %}
+          </div>
+        </div>
+        <a href="{{ section.settings.right2_button_url }}" class="custom-module-button" style="background-color: {{ section.settings.right2_button_color }}; color: {{ section.settings.right2_button_text_color }};">
+          {% if request.locale.iso_code == 'de' %}
+            {{ section.settings.right2_button_de }}
+          {% elsif request.locale.iso_code == 'fr' %}
+            {{ section.settings.right2_button_fr }}
+          {% elsif request.locale.iso_code == 'fi' %}
+            {{ section.settings.right2_button_fi }}
+          {% else %}
+            {{ section.settings.right2_button }}
+          {% endif %}
+          &#8594;
+      </a>
+      </div>
+      <div class="custom-banner-module"
+        style="background-image: url({{ section.settings.right_image_3 | img_url: '2048x2048' }}); background-size: {{ section.settings.right3_bg_size }}; background-position: {{ section.settings.right3_bg_position }}; background-color: {{ section.settings.right3_background_color }};">
+        <div class="custom-module-content">
+          {% if section.settings.right3_tag != blank %}
+          <div class="custom-module-tag" data-localize="{{ section.settings.right3_tag }}">
+            {% if request.locale.iso_code == 'de' %}
+              {{ section.settings.right3_tag_de }}
+            {% elsif request.locale.iso_code == 'fr' %}
+              {{ section.settings.right3_tag_fr }}
+             {% elsif request.locale.iso_code == 'fi' %}
+              {{ section.settings.right3_tag_fi }}
+            {% else %}
+              {{ section.settings.right3_tag }}
+            {% endif %}
+          </div>
+          {% endif %}
+          <div class="custom-module-title-moresmall" data-localize="{{ section.settings.right3_title }}">
+            {% if request.locale.iso_code == 'de' %}
+              {{ section.settings.right3_title_de }}
+            {% elsif request.locale.iso_code == 'fr' %}
+              {{ section.settings.right3_title_fr }}
+             {% elsif request.locale.iso_code == 'fi' %}
+              {{ section.settings.right3_title_fi }}
+            {% else %}
+              {{ section.settings.right3_title }}
+            {% endif %}
+          </div>
+        </div>
+        <a href="{{ section.settings.right3_button_url }}" class="custom-module-button" style="background-color: {{ section.settings.right3_button_color }}; color: {{ section.settings.right3_button_text_color }};" data-localize="{{ section.settings.right3_button }}">
+          {% if request.locale.iso_code == 'de' %}
+            {{ section.settings.right3_button_de }}
+          {% elsif request.locale.iso_code == 'fr' %}
+            {{ section.settings.right3_button_fr }}
+          {% elsif request.locale.iso_code == 'fi' %}
+            {{ section.settings.right3_button_fi }}
+          {% else %}
+            {{ section.settings.right3_button }}
+          {% endif %}
+          &#8594;
+      </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .custom-banner-container {
+    display: flex;
+    width: 100%;
+    height: 700px;
+    flex-wrap: wrap;
+  }
+
+  .custom-banner-left,
+  .custom-banner-right {
+    flex: 1;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+  }
+
+  .custom-banner-right {
+    padding: 20px;
+  }
+
+  .custom-banner-left {
+    padding: 20px 0 40px 20px;
+  }
+
+  .custom-banner-right-row {
+    flex: 1;
+    display: flex;
+    margin-bottom: 20px;
+    gap: 20px;
+  }
+
+  .custom-banner-module {
+    flex: 1;
+    padding: 20px 30px 60px 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    background-repeat: no-repeat;
+    border-radius: 12px;
+    background-size: cover;
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+
+  .custom-banner-module:last-child {
+    margin-right: 0;
+  }
+
+  .custom-module-content {
+    padding: 10px;
+    min-width: 140px;
+  }
+
+  .custom-module-title {
+    font-weight: 700;
+    color: #fff;
+    font-size: 70px;
+    line-height: 80px;
+    margin: 0 0 20px;
+  }
+
+  .custom-module-title-small {
+    font-weight: 700;
+    color: #fff;
+    line-height: 46px;
+    margin: 0;
+    font-size: 36px;
+  }
+
+  .custom-module-title-moresmall {
+    font-weight: 700;
+    color: rgb(255, 255, 255);
+    line-height: 34px;
+    margin: 0px;
+    font-size: 26px;
+  }
+
+  .custom-module-tag {
+    margin: 0 0 10px;
+    font-size: 22px;
+    line-height: 40px;
+    height: 40px;
+    font-family: Arial;
+    font-weight: 600;
+    color: #000;
+    text-align: center;
+    display: inline-block;
+    padding: 0 10px;
+    background-color: rgb(248, 231, 28);
+    border-radius: 8px;
+    white-space: nowrap;
+  }
+
+  .custom-module-button {
+    border-radius: 50px;
+    text-decoration: none; 
+    font-weight: 400;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 10px;
+    align-self: flex-start;
+    padding: 10px 20px;
+    display: inline-block; 
+  }
+
+  .custom-module-button:hover {
+    opacity: 0.8;
+  }
+
+  @media (max-width: 768px) {
+    .custom-banner-container {
+      height: 100%;
+    }
+
+    .custom-banner-left {
+      flex: 0 0 100%;
+      padding: 0;
+      height: 90vh;
+    }
+
+    .custom-banner-right {
+      flex: 0 0 100%;
+      padding: 0;
+      height: 160vh;
+    }
+
+    .custom-banner-right-row {
+      flex-direction: column;
+      margin-bottom: 0;
+      padding: 0;
+    }
+
+    .custom-banner-module {
+      margin-right: 0;
+      margin-bottom: 0px;
+      border-radius: 0;
+      height: 80vh;
+    }
+
+    .custom-banner-right-row:last-child {
+      flex-direction: column;
+      height: 160vh;
+    }
+
+    .custom-module-title {
+      font-size: 40px;
+      line-height: 40px;
+      margin: 0;
+    }
+
+    .custom-module-tag {
+      font-size: 16px;
+    }
+    .custom-banner-left,
+  .custom-banner-right {
+    height: 400px !important;
+  }
+  .custom-banner-module:nth-of-type(2) {
+    height: 400px;
+   padding: 40px;
+    background-position: top right !important;
+  }
+  .custom-module-button {
+    font-size: 12px;
+  }
+  .custom-module-title-small {
+    margin: 0;
+    line-height: 36px;
+    font-size: 30px;
+  }
+  .custom-banner-right-row {
+    gap: 0;
+  }
+  .custom-banner-left {
+    height: 100vh;
+  }
+  .custom-banner-container {
+    min-height: 100%;
+  }
+  .custom-banner-right-row:last-child {
+    display: none;
+  }
+  }
+</style>

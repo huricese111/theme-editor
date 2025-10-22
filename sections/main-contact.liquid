@@ -46,19 +46,8 @@
             {%- endif -%}
           {%- endif -%}
 
-          {%- for block in section.blocks -%}
-            {%- if block.type == 'hidden_input' -%}
-              <input type="hidden" name="contact[{{ block.settings.title | handle }}]" value="{{ block.settings.value }}"/>
-            {%- endif -%}
-          {%- endfor -%}
-
           <div class="flexible-layout flexible-layout--form">
             {% for block in section.blocks %}
-              {%- liquid
-                if block.type == 'hidden_input'
-                  continue
-                endif
-              -%}
               <div class="column column--{% if block.settings.half_width %}half{% else %}full{% endif %}" {{ block.shopify_attributes }}>
                 {% case block.type %}
                   {% when 'name_input' %}
@@ -191,6 +180,15 @@
     </div>
   </div>
 </div>
+
+<style>
+  .title, .majortitle {
+    margin: 60px 0 1.25rem;
+}
+  .flexible-layout, .fixed-layout {
+    flex-wrap: wrap;
+}
+</style>
 
 
 {% schema %}
@@ -420,31 +418,6 @@
       ]
     },
     {
-      "type": "hidden_input",
-      "name": "Hidden data",
-      "settings": [
-        {
-          "type": "paragraph",
-          "content": "Hidden data is not shown to customers, but will appear to merchants. It can be used with dynamic sources, like a product title, to identify the page on which this form was submitted."
-        },
-        {
-          "type": "paragraph",
-          "content": "Hidden data requires a label, and that label may only be used once in the form."
-        },
-        {
-          "type": "text",
-          "id": "title",
-          "label": "Label",
-          "default": "Hidden data"
-        },
-        {
-          "type": "text",
-          "id": "value",
-          "label": "Value"
-        }
-      ]
-    },
-    {
       "type": "text",
       "name": "Text",
       "settings": [
@@ -459,4 +432,3 @@
   ]
 }
 {% endschema %}
-
