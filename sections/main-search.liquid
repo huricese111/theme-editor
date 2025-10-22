@@ -192,11 +192,7 @@
       </div>
 
       <div class="utility-bar__centre">
-        <div class="utility-bar__item">{{ 'general.search.results_with_count' | t: count: paginate.items }}</div>
-        <!-- Debug info: Pagination settings -->
-        <div class="utility-bar__item" style="font-size: 12px; color: #666; margin-left: 10px;">
-          Debug: Per page setting = {{ section.settings.coll_num_per_page_int }}, Current page size = {{ paginate.page_size }}, Total items = {{ paginate.items }}
-        </div>
+        <div class="utility-bar__item">{{ 'general.search.results_with_count' | t: count: paginate.items }}</div>        
       </div>
 
       <div class="utility-bar__right">

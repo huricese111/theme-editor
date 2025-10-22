@@ -132,6 +132,9 @@ const MainSearch = class extends HTMLElement {
                   // 设置整个产品块为垂直布局
                   block.style.display = 'flex';
                   block.style.flexDirection = 'column';
+                  block.style.border = '1px solid #dcdcdc';
+                  block.style.borderRadius = '8px';
+                  block.style.backgroundColor = '#fff';
                   
                   // 设置产品图片4:3比例（宽4，长3）
                   const productImage = block.querySelector('.product-block__image img, .product-block__image picture img');
@@ -208,6 +211,9 @@ const MainSearch = class extends HTMLElement {
                   }
                   
                   resultsProducts.firstElementChild.appendChild(block);
+                  
+                  // 重新初始化产品块的swatch功能
+                  this.reinitializeProductBlockFeatures(block);
                 }
               });
 
@@ -217,6 +223,10 @@ const MainSearch = class extends HTMLElement {
                 item.href = block.querySelector('a').href;
                 item.innerHTML = '<div class="main-search-result__text"></div>';
                 item.firstElementChild.innerText = block.querySelector('.page-block__title').innerText;
+                item.style.border = 'none';
+                item.style.borderRadius = '8px';
+                item.style.backgroundColor = '#fff';
+                item.style.display = 'block';
                 resultsPages.appendChild(item);
               });
 
@@ -277,6 +287,55 @@ const MainSearch = class extends HTMLElement {
     searchInput.addEventListener('change', handleInputChange.bind(this));
   }
 
+  reinitializeProductBlockFeatures(block) {
+    // 在搜索悬浮窗中禁用Swatches和hover图片切换功能
+    // 隐藏Swatches元素
+    const swatchContainers = block.querySelectorAll('.product-block-options');
+    swatchContainers.forEach(container => {
+      container.style.display = 'none';
+    });
+    
+    // 完全禁用hover图片切换功能
+    const imageContainer = block.querySelector('.image-cont');
+    if (imageContainer) {
+      // 移除可能触发hover的类
+      imageContainer.classList.remove('image-cont--with-secondary-image');
+      
+      // 移除所有hover相关的事件监听器
+      const newImageContainer = imageContainer.cloneNode(true);
+      imageContainer.parentNode.replaceChild(newImageContainer, imageContainer);
+    }
+    
+    const images = Array.from(block.querySelectorAll('.product-block__image'));
+    if (images.length > 1) {
+      // 移除所有图片的hover相关类和样式
+      images.forEach((img, index) => {
+        img.classList.remove('product-block__image--show-on-hover');
+        img.style.opacity = '';
+        img.style.visibility = '';
+        
+        if (index === 0) {
+          img.classList.add('product-block__image--active');
+          img.style.display = 'block';
+        } else {
+          img.classList.remove('product-block__image--active');
+          img.style.display = 'none';
+        }
+      });
+      
+      // 隐藏图片导航按钮和点
+      const nextBtn = block.querySelector('.image-page-button--next');
+      const prevBtn = block.querySelector('.image-page-button--previous');
+      const imageDots = block.querySelectorAll('.product-block__image-dot');
+      
+      if (nextBtn) nextBtn.style.display = 'none';
+      if (prevBtn) prevBtn.style.display = 'none';
+      imageDots.forEach(dot => dot.style.display = 'none');
+    }
+  }
+
+
+
   injectSearchSpecificStyles() {
     // 检查是否已经注入过样式，避免重复注入
     if (document.getElementById('search-specific-styles')) {
@@ -297,7 +356,7 @@ const MainSearch = class extends HTMLElement {
         padding-left: 18px;
       }
       
-      /* 修复产品图片在hover时的居中显示问题 */
+      /* 完全禁用搜索结果中的hover图片切换效果 */
       main-search .product-block__image .theme-img {
         object-position: center center !important;
       }
@@ -305,6 +364,99 @@ const MainSearch = class extends HTMLElement {
       main-search .image-cont--with-secondary-image .product-block__image--secondary .theme-img {
         object-position: center center !important;
       }
+
+      /* 禁用hover时的图片切换 */
+      main-search .product-block__image--show-on-hover {
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+      }
+
+      main-search .image-cont:hover .product-block__image--show-on-hover {
+        opacity: 0 !important;
+        visibility: hidden !important;
+      }
+
+      main-search .image-cont:hover .product-block__image--active {
+        opacity: 1 !important;
+        visibility: visible !important;
+      }
+
+      /* 产品块的灰色边框 */
+      main-search .main-search-result {
+        border: 1px solid #dcdcdc !important;
+        border-radius: 8px;
+        background-color: #fff;
+      }
+
+      /* 页面块不显示边框 */
+      main-search .main-search-result--page {
+        border: none !important;
+        border-radius: 8px;
+        background-color: #fff;
+      }
+
+      main-search .product-grid .main-search-result {
+        overflow: hidden;
+      }
+
+      /* 确保swatch功能在搜索结果中正常工作 */
+      main-search .product-block-options {
+        margin: 10px 0;
+      }
+
+      main-search .product-block-options__item {
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      main-search .product-block-options__item:hover {
+        transform: scale(1.1);
+      }
+
+      main-search .swatch-view {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin: 8px 0;
+      }
+
+      main-search .swatch-single {
+        margin: 0;
+      }
+
+      /* 确保图片导航按钮在搜索结果中可见 */
+      main-search .image-page-button {
+        opacity: 0.7;
+        transition: opacity 0.2s ease;
+      }
+
+      main-search .product-block:hover .image-page-button {
+        opacity: 1;
+      }
+
+      /* 确保图片导航点在搜索结果中正确显示 */
+      main-search .product-block__image-dots {
+        display: flex;
+        justify-content: center;
+        margin-top: 8px;
+      }
+
+      main-search .product-block__image-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #ccc;
+        margin: 0 3px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+      }
+
+      main-search .product-block__image-dot--active {
+        background-color: #333;
+      }
+
+
     `;
 
     // 将样式添加到head中
