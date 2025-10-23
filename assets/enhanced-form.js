@@ -1299,22 +1299,14 @@ class FiveLevelDropdown {
       span.className = 'breadcrumb-text';
       this.breadcrumb.appendChild(span);
     } else {
-      // Create clickable breadcrumb items
+      // Create non-clickable breadcrumb items
       this.selectedPath.forEach((pathItem, index) => {
-        // Create clickable link for each breadcrumb item
-        const link = document.createElement('a');
-        link.href = '#';
-        link.textContent = pathItem;
-        link.className = 'breadcrumb-link';
-        link.dataset.level = index + 1;
+        // Create a non-clickable span for each breadcrumb item
+        const span = document.createElement('span');
+        span.textContent = pathItem;
+        span.className = 'breadcrumb-text';
         
-        // Add click event to return to that level
-        link.addEventListener('click', (e) => {
-          e.preventDefault();
-          this.returnToLevel(index + 1);
-        });
-        
-        this.breadcrumb.appendChild(link);
+        this.breadcrumb.appendChild(span);
         
         // Add separator if not the last item
         if (index < this.selectedPath.length - 1) {
