@@ -4281,8 +4281,8 @@
       "store_type": [
         "dealer"
       ],
-      "latitude": 51.30521,
-      "longitude": 9.56605
+      "latitude": 51.31304,
+      "longitude": 9.46378
     },
     {
       "id": "location_240",
@@ -5096,6 +5096,24 @@
     },
     {
       "id": "location_285",
+      "store_name": "Amoore Bikestore",
+      "address": "Färberstraße 3",
+      "city": "Oberndorf bei Salzburg",
+      "province_state": "",
+      "country": "AT",
+      "postal_code": "5110",
+      "phone": "+43 6272 20676",
+      "email": "verkauf@amoore-bikestore.at",
+      "website": "https://www.amoore-bikestore.at",
+      "hours_of_operation": "Montag, Dienstag, Donnerstag & Freitag: 9:00 - 12:00 & 13:00 - 18:00 UhrMittwoch: geschlossenSamstag: 9:00 - 12:00 Uhr",
+      "store_type": [
+        "dealer"
+      ],
+      "latitude": 47.94065,
+      "longitude": 12.9416
+    },
+    {
+      "id": "location_286",
       "store_name": "BauerBikes E-Bike Store Graz",
       "address": "Puntigamer Straße 124",
       "city": "Graz",
@@ -5113,7 +5131,7 @@
       "longitude": 15.444312
     },
     {
-      "id": "location_286",
+      "id": "location_287",
       "store_name": "BauerBikes E-Bike Store St. Margarethen/Raab",
       "address": "St. Margarethen 10b",
       "city": "St. Margarethen/Raab",
@@ -5131,7 +5149,7 @@
       "longitude": 15.74612
     },
     {
-      "id": "location_287",
+      "id": "location_288",
       "store_name": "Bentho eBikes - Brunn/Geb",
       "address": "Wolfholzgasse 11",
       "city": "Brunn am Gebirge",
@@ -5149,7 +5167,7 @@
       "longitude": 16.293947
     },
     {
-      "id": "location_288",
+      "id": "location_289",
       "store_name": "Bentho eBikes - Wien",
       "address": "Lassallestraße 5",
       "city": "Wien",
@@ -5167,7 +5185,7 @@
       "longitude": 16.395579
     },
     {
-      "id": "location_289",
+      "id": "location_290",
       "store_name": "Bergspezl Haid",
       "address": "EKZ Haid, Ikea Platz 4",
       "city": "Haid",
@@ -5185,7 +5203,7 @@
       "longitude": 14.247377
     },
     {
-      "id": "location_290",
+      "id": "location_291",
       "store_name": "Bergspezl Klagenfurt",
       "address": "Völkermarkter Straße 163",
       "city": "Klagenfurt",
@@ -5203,7 +5221,7 @@
       "longitude": 14.343287
     },
     {
-      "id": "location_291",
+      "id": "location_292",
       "store_name": "Bergspezl Puch",
       "address": "Halleiner Landesstraße 50",
       "city": "Puch bei Hallein",
@@ -5221,7 +5239,7 @@
       "longitude": 13.092474
     },
     {
-      "id": "location_292",
+      "id": "location_293",
       "store_name": "Bergspezl Salzburg",
       "address": "Eberhard-Fugger-Straße 2",
       "city": "Salzburg",
@@ -5239,7 +5257,7 @@
       "longitude": 13.06762
     },
     {
-      "id": "location_293",
+      "id": "location_294",
       "store_name": "Bergspezl Villach",
       "address": "Maria-Gailer-Straße 57",
       "city": "Villach",
@@ -5257,7 +5275,7 @@
       "longitude": 13.873002
     },
     {
-      "id": "location_294",
+      "id": "location_295",
       "store_name": "Bergspezl Vösendorf Süd",
       "address": "\"Westfield Shopping  City Süd - Galerie 11\"",
       "city": "Vösendorf Süd",
@@ -5275,7 +5293,7 @@
       "longitude": 16.334783
     },
     {
-      "id": "location_295",
+      "id": "location_296",
       "store_name": "Bergspezl Wien",
       "address": "Stiftgasse 5-9",
       "city": "Wien",
@@ -5293,7 +5311,7 @@
       "longitude": 16.354912
     },
     {
-      "id": "location_296",
+      "id": "location_297",
       "store_name": "Bergspezl Wörgl",
       "address": "Salzburger Straße 30",
       "city": "Wörgl",
@@ -5311,7 +5329,25 @@
       "longitude": 12.068502
     },
     {
-      "id": "location_297",
+      "id": "location_298",
+      "store_name": "Bikebow",
+      "address": "Innsbrucker Straße 60",
+      "city": "Hall in Tirol",
+      "province_state": "",
+      "country": "AT",
+      "postal_code": "6060",
+      "phone": "+43 5223 42031",
+      "email": "info@bikebow.at",
+      "website": "https://bikebow.at/",
+      "hours_of_operation": "Montag - Freitag: 9:00 - 13:00 & 14:00 - 18:00 UhrSamstag: 9:00 - 12:00 Uhr",
+      "store_type": [
+        "dealer"
+      ],
+      "latitude": 47.27745,
+      "longitude": 11.48806
+    },
+    {
+      "id": "location_299",
       "store_name": "bimato sports",
       "address": "Steyrerstraße 51",
       "city": "Haag",
@@ -5329,7 +5365,43 @@
       "longitude": 14.540323
     },
     {
-      "id": "location_298",
+      "id": "location_300",
+      "store_name": "CRW SPORTS",
+      "address": "Schlossplatz 10/18",
+      "city": "Vorchdorf",
+      "province_state": "",
+      "country": "AT",
+      "postal_code": "4655",
+      "phone": "+43 664 2567501",
+      "email": "office@crw-sports.net",
+      "website": "https://www.crw-sports.net/",
+      "hours_of_operation": "Montag, Dienstag, Donnerstag & Freitag: 15:00 - 18:00 UhrMittwoch: geschlossenSamstag: 9:00 - 12:00 Uhr",
+      "store_type": [
+        "dealer"
+      ],
+      "latitude": 48.00285,
+      "longitude": 13.92264
+    },
+    {
+      "id": "location_301",
+      "store_name": "Bike Center Forstenpointer",
+      "address": "Obertrumer Landesstraße 9",
+      "city": "Seekirchen am Wallersee",
+      "province_state": "",
+      "country": "AT",
+      "postal_code": "5201",
+      "phone": "+43 6212 2292 92",
+      "email": "info@forstenpointer.at",
+      "website": "https://www.forstenpointer.at",
+      "hours_of_operation": "Montag - Freitag: 9:00 - 12:00 & 13:00 - 18:00 UhrSamstag: geschlossen",
+      "store_type": [
+        "dealer"
+      ],
+      "latitude": 47.90425,
+      "longitude": 13.12059
+    },
+    {
+      "id": "location_302",
       "store_name": "Drahteisel",
       "address": "Hauptstraße 23",
       "city": "Rosental",
@@ -5347,7 +5419,25 @@
       "longitude": 15.125746
     },
     {
-      "id": "location_299",
+      "id": "location_303",
+      "store_name": "e-bike 4you",
+      "address": "Passauerstraße 34",
+      "city": "Schärding",
+      "province_state": "",
+      "country": "AT",
+      "postal_code": "4780",
+      "phone": "+43 7712 29582",
+      "email": "info@e-bike4you.eu",
+      "website": "https://e-bike4you.net",
+      "hours_of_operation": "Montag, Dienstag, Donnerstag & Freitag: 10:00 -18:00 UhrMittwoch: geschlossenSamstag: 9:00 -13:00 Uhr",
+      "store_type": [
+        "dealer"
+      ],
+      "latitude": 48.46505,
+      "longitude": 13.43685
+    },
+    {
+      "id": "location_304",
       "store_name": "E-Bike ServicePoint Riegersburg",
       "address": "Riegersburg 53b",
       "city": "Riegersburg",
@@ -5365,7 +5455,7 @@
       "longitude": 15.941665
     },
     {
-      "id": "location_300",
+      "id": "location_305",
       "store_name": "Fahrradladen Fernitz",
       "address": "Peter Rosepperstraße 1",
       "city": "Fernitz",
@@ -5383,7 +5473,7 @@
       "longitude": 15.497955
     },
     {
-      "id": "location_301",
+      "id": "location_306",
       "store_name": "Friesi's Bikery GmbH",
       "address": "Grazer Straße 34",
       "city": "Gleisdorf",
@@ -5401,7 +5491,7 @@
       "longitude": 15.697853
     },
     {
-      "id": "location_302",
+      "id": "location_307",
       "store_name": "Frigo Elektrodrive GmbH",
       "address": "Walgaustraße 139",
       "city": "Ludesch",
@@ -5419,7 +5509,25 @@
       "longitude": 9.77816
     },
     {
-      "id": "location_303",
+      "id": "location_308",
+      "store_name": "Fritzmobile GmbH",
+      "address": "Hauptstraße 61",
+      "city": "Wenig im Innkreis",
+      "province_state": "",
+      "country": "AT",
+      "postal_code": "4952",
+      "phone": "+43 7723 21115",
+      "email": "office@fritzmobile.at",
+      "website": "https://fritzmobile.at",
+      "hours_of_operation": "Montag - Freitag: 8:00 - 12:00 & 13:00 - 18:00 UhrSamstag: geschlossen",
+      "store_type": [
+        "dealer"
+      ],
+      "latitude": 48.23395,
+      "longitude": 13.17608
+    },
+    {
+      "id": "location_309",
       "store_name": "Fuchs GmbH",
       "address": "Bahnhofstraße 16",
       "city": "Mank",
@@ -5437,7 +5545,7 @@
       "longitude": 15.34372
     },
     {
-      "id": "location_304",
+      "id": "location_310",
       "store_name": "Inn-Bike GmbH",
       "address": "Kinkstraße 21 ",
       "city": "Kufstein",
@@ -5455,7 +5563,7 @@
       "longitude": 12.16947
     },
     {
-      "id": "location_305",
+      "id": "location_311",
       "store_name": "Intersport Harms - House of Bike",
       "address": "Marktstraße 521",
       "city": "Neukirchen",
@@ -5473,7 +5581,25 @@
       "longitude": 12.28736
     },
     {
-      "id": "location_306",
+      "id": "location_312",
+      "store_name": "MühlenHof-RadVit",
+      "address": "Europa Straße 22",
+      "city": "Vitis",
+      "province_state": "",
+      "country": "AT",
+      "postal_code": "3902",
+      "phone": "+43 664 922 47 16",
+      "email": "radvit@mh-rv.at",
+      "website": "https://www.mh-rv.at",
+      "hours_of_operation": "Öffnungszeiten Sommer: Montag, Dienstag, Donnerstag & Freitag: 8:00 - 16:30 UhrMittwoch: 8:00 - 12:00 UhrSamstag: 9:00 - 12:00 UhrÖffnungszeiten Winter: Montag, Dienstag & Donnerstag: 8:00 - 16:30 UhrMittwoch & Freitag: 8:00 - 12:00 UhrSamstag: geschlossen",
+      "store_type": [
+        "dealer"
+      ],
+      "latitude": 48.75608,
+      "longitude": 15.19898
+    },
+    {
+      "id": "location_313",
       "store_name": "PT Motors",
       "address": "Zellach 68",
       "city": "Sankt Gertraud",
@@ -5491,7 +5617,7 @@
       "longitude": 14.852019
     },
     {
-      "id": "location_307",
+      "id": "location_314",
       "store_name": "R & R Sportart GmbH",
       "address": "Obere Marktstraße 58",
       "city": "Altenmarkt",
@@ -5509,7 +5635,7 @@
       "longitude": 13.414594
     },
     {
-      "id": "location_308",
+      "id": "location_315",
       "store_name": "Radhaus Oberwart",
       "address": "Steinermangerer Straße 19",
       "city": "Oberwart",
@@ -5527,7 +5653,7 @@
       "longitude": 16.216058
     },
     {
-      "id": "location_309",
+      "id": "location_316",
       "store_name": "Sport Menzinger",
       "address": "Fürstenfelderstrasse 4",
       "city": "Fehring",
@@ -5545,7 +5671,7 @@
       "longitude": 16.008407
     },
     {
-      "id": "location_310",
+      "id": "location_317",
       "store_name": "Sport-Modehaus Mandl",
       "address": "Hauptplatz 59",
       "city": "Gröbming",
@@ -5563,7 +5689,7 @@
       "longitude": 13.90145
     },
     {
-      "id": "location_311",
+      "id": "location_318",
       "store_name": "Sports & More - Manfred Stadler GmbH",
       "address": "Steingrub 23",
       "city": "Texing",
@@ -5581,7 +5707,7 @@
       "longitude": 15.32162
     },
     {
-      "id": "location_312",
+      "id": "location_319",
       "store_name": "Velo Novo",
       "address": "Dorfstraße 12",
       "city": "Fußach",
@@ -5599,7 +5725,7 @@
       "longitude": 9.66369
     },
     {
-      "id": "location_313",
+      "id": "location_320",
       "store_name": "Zweirad Pirklbauer",
       "address": "Bäckerfeldstraße 19",
       "city": "Traun",
@@ -5617,7 +5743,7 @@
       "longitude": 14.242981
     },
     {
-      "id": "location_314",
+      "id": "location_321",
       "store_name": "Aerelli Bike di Aerelli Mauro",
       "address": "Via Alessandro Volta 18 bis",
       "city": "Montegrotto Terme (PD)",
@@ -5635,7 +5761,7 @@
       "longitude": 11.77646
     },
     {
-      "id": "location_315",
+      "id": "location_322",
       "store_name": "Andi's Bikestodl",
       "address": "Bahnhof Sponding 22",
       "city": "Schlunderns",
@@ -5653,7 +5779,7 @@
       "longitude": 10.61019
     },
     {
-      "id": "location_316",
+      "id": "location_323",
       "store_name": "A Ruota Libera Castronno",
       "address": "Via Lombardia, 91",
       "city": "Castronno",
@@ -5671,7 +5797,7 @@
       "longitude": 8.8119
     },
     {
-      "id": "location_317",
+      "id": "location_324",
       "store_name": "A Ruota Libera Varese",
       "address": "Via Cesare Battisti, 17​",
       "city": "Varese",
@@ -5689,7 +5815,7 @@
       "longitude": 8.823626
     },
     {
-      "id": "location_318",
+      "id": "location_325",
       "store_name": "CICLI BERTINETTI",
       "address": "Via Trieste 47",
       "city": "Biella",
@@ -5707,7 +5833,7 @@
       "longitude": 8.063099
     },
     {
-      "id": "location_319",
+      "id": "location_326",
       "store_name": "CM Emporio",
       "address": "Piazza Mercato 14",
       "city": "Comano Terme",
@@ -5725,7 +5851,7 @@
       "longitude": 10.868931
     },
     {
-      "id": "location_320",
+      "id": "location_327",
       "store_name": "EBIKE LAB",
       "address": "Viale Lecco 79",
       "city": "Como",
@@ -5743,7 +5869,7 @@
       "longitude": 9.087737
     },
     {
-      "id": "location_321",
+      "id": "location_328",
       "store_name": "Ebikeone",
       "address": "Località Quarto Inferiore 275",
       "city": "Asti",
@@ -5761,7 +5887,7 @@
       "longitude": 8.292417
     },
     {
-      "id": "location_322",
+      "id": "location_329",
       "store_name": "Flexsports",
       "address": "Via Principale 13",
       "city": "Nova Ponente",
@@ -5779,7 +5905,7 @@
       "longitude": 11.429513
     },
     {
-      "id": "location_323",
+      "id": "location_330",
       "store_name": "HB Zero",
       "address": "Via Cesare Battisti 61",
       "city": "Costa Volpino BG",
@@ -5797,7 +5923,7 @@
       "longitude": 10.108221
     },
     {
-      "id": "location_324",
+      "id": "location_331",
       "store_name": "Marocco Sport",
       "address": "Piazza Garibaldi 3/4",
       "city": "Barzio",
@@ -5815,7 +5941,7 @@
       "longitude": 9.468636
     },
     {
-      "id": "location_325",
+      "id": "location_332",
       "store_name": "Motopep",
       "address": "Via Cesare Battisti 82",
       "city": "Pogliano Milanese",
@@ -5833,7 +5959,7 @@
       "longitude": 9.004576
     },
     {
-      "id": "location_326",
+      "id": "location_333",
       "store_name": "PimpGarage E-Bike Store",
       "address": "Gerbergasse 67b",
       "city": "Bozen",
@@ -5851,7 +5977,7 @@
       "longitude": 11.358448
     },
     {
-      "id": "location_327",
+      "id": "location_334",
       "store_name": "Poisonbike",
       "address": "Via Cuminie 36",
       "city": "Villardora",
@@ -5869,7 +5995,7 @@
       "longitude": 7.391465
     },
     {
-      "id": "location_328",
+      "id": "location_335",
       "store_name": "On the Rocks ",
       "address": "Via Rezia 275/A",
       "city": "Ortisei - Val Gardena (BZ)",
@@ -5887,7 +6013,7 @@
       "longitude": 11.6776
     },
     {
-      "id": "location_329",
+      "id": "location_336",
       "store_name": "Schölzhorn Sport GmbH",
       "address": "Fuggerstraße 3",
       "city": "Sterzing",
@@ -5905,7 +6031,7 @@
       "longitude": 11.404588
     },
     {
-      "id": "location_330",
+      "id": "location_337",
       "store_name": "SKITOP BADIA",
       "address": "Str. San Linert 3",
       "city": "Badia",
@@ -5923,7 +6049,7 @@
       "longitude": 11.895356
     },
     {
-      "id": "location_331",
+      "id": "location_338",
       "store_name": "Sport Edoardo",
       "address": "Via Pecei 12",
       "city": "Corvara",
@@ -5941,7 +6067,7 @@
       "longitude": 11.853234
     },
     {
-      "id": "location_332",
+      "id": "location_339",
       "store_name": "Takari Cicli",
       "address": "VIA NICOLÒ REZZARA 14/16",
       "city": "RANICA (BG)",
@@ -5959,7 +6085,7 @@
       "longitude": 9.721738
     },
     {
-      "id": "location_333",
+      "id": "location_340",
       "store_name": "Tuttosport",
       "address": "Via Belgrano 37",
       "city": "Imperia",
@@ -5977,7 +6103,7 @@
       "longitude": 8.040088
     },
     {
-      "id": "location_334",
+      "id": "location_341",
       "store_name": "Zebugi",
       "address": "Via Carini 2",
       "city": "Brescia",
@@ -5995,7 +6121,7 @@
       "longitude": 10.227238
     },
     {
-      "id": "location_335",
+      "id": "location_342",
       "store_name": "Les 2 Roues Electriques",
       "address": "13 avenue Jean Jaurès",
       "city": "Dijon",
@@ -6013,7 +6139,7 @@
       "longitude": 5.02885
     },
     {
-      "id": "location_336",
+      "id": "location_343",
       "store_name": "ARMOR CYCLES",
       "address": "ZA DE LANJOUAN",
       "city": "LAMBALLE",
@@ -6031,7 +6157,7 @@
       "longitude": -2.497017
     },
     {
-      "id": "location_337",
+      "id": "location_344",
       "store_name": "ARMOR CYCLES",
       "address": "ZA LANJOUAN 2",
       "city": "LAMBALLE",
@@ -6049,7 +6175,7 @@
       "longitude": -2.509213
     },
     {
-      "id": "location_338",
+      "id": "location_345",
       "store_name": "ATV CYCLES",
       "address": "ROUTE DES TROIS VILLAGES",
       "city": "PLATEAU DES PETITES ROCHES",
@@ -6067,7 +6193,7 @@
       "longitude": 5.887148
     },
     {
-      "id": "location_339",
+      "id": "location_346",
       "store_name": "Brive Bike Store",
       "address": "43 rue Antoine Dubayle",
       "city": "Brive la Gaillarde",
@@ -6085,7 +6211,7 @@
       "longitude": 1.489746
     },
     {
-      "id": "location_340",
+      "id": "location_347",
       "store_name": "BoutiCycle Toulouse-Rouffiac",
       "address": "Cente Commercial du Louradou - 40 route d’Albi RN88",
       "city": "Rouffiac-Tolosan",
@@ -6103,7 +6229,7 @@
       "longitude": 1.51491
     },
     {
-      "id": "location_341",
+      "id": "location_348",
       "store_name": "cap.velo.creuse",
       "address": "2 Place du 19 Mars 1962",
       "city": "Champsanglard",
@@ -6121,7 +6247,7 @@
       "longitude": 1.881742
     },
     {
-      "id": "location_342",
+      "id": "location_349",
       "store_name": "Citibike Anglet",
       "address": "21 r Loustalot",
       "city": "Anglet",
@@ -6139,7 +6265,7 @@
       "longitude": -1.519968
     },
     {
-      "id": "location_343",
+      "id": "location_350",
       "store_name": "Citibike Biganos",
       "address": "ZAC de la cassadotte en face de la cour des materiaux de Leroy Merlin",
       "city": "Biganos",
@@ -6157,7 +6283,7 @@
       "longitude": -0.948821
     },
     {
-      "id": "location_344",
+      "id": "location_351",
       "store_name": "Citibike Bordeaux",
       "address": "avenue descartes 32",
       "city": "St médard en jalles",
@@ -6175,7 +6301,7 @@
       "longitude": -0.69447
     },
     {
-      "id": "location_345",
+      "id": "location_352",
       "store_name": "CITIBIKE CAEN",
       "address": "Rue de Bernières 1",
       "city": "CAEN",
@@ -6193,7 +6319,7 @@
       "longitude": -0.357029
     },
     {
-      "id": "location_346",
+      "id": "location_353",
       "store_name": "CITIBIKE CHERBOURG",
       "address": "Rue Albert Mahieu 11",
       "city": "CHERBOURG EN COTENTIN",
@@ -6211,7 +6337,7 @@
       "longitude": -1.62514
     },
     {
-      "id": "location_347",
+      "id": "location_354",
       "store_name": "Citibike Dunkerque",
       "address": "60, Route de Furnes",
       "city": "Coudekerque Branche",
@@ -6229,7 +6355,7 @@
       "longitude": 2.39782
     },
     {
-      "id": "location_348",
+      "id": "location_355",
       "store_name": "Citibike La Rochelle",
       "address": "12, Rue saint Nicolas",
       "city": "La Rochelle",
@@ -6247,7 +6373,7 @@
       "longitude": -1.149948
     },
     {
-      "id": "location_349",
+      "id": "location_356",
       "store_name": "CITIBIKE LE HAVRE",
       "address": "RUE JULES SIEGFRIED 9",
       "city": "LE HAVRE",
@@ -6265,7 +6391,7 @@
       "longitude": 0.110023
     },
     {
-      "id": "location_350",
+      "id": "location_357",
       "store_name": "Culture Vélo",
       "address": "4 Rue de l'Électricité",
       "city": "Vendenheim",
@@ -6283,7 +6409,7 @@
       "longitude": 7.72805
     },
     {
-      "id": "location_351",
+      "id": "location_358",
       "store_name": "CYCLES CARBONE ZERO",
       "address": "Chemin de L'Eperviere",
       "city": "Valence",
@@ -6301,7 +6427,7 @@
       "longitude": 4.87566
     },
     {
-      "id": "location_352",
+      "id": "location_359",
       "store_name": "CYCLES CARBONE ZERO La Gare",
       "address": "24 rue Denis Papin",
       "city": "Valence",
@@ -6319,7 +6445,7 @@
       "longitude": 4.89331
     },
     {
-      "id": "location_353",
+      "id": "location_360",
       "store_name": "Cycles Cesbron",
       "address": "2 rue Lino Ventura",
       "city": "Les Ponts-de-Cé",
@@ -6337,7 +6463,7 @@
       "longitude": -0.501415
     },
     {
-      "id": "location_354",
+      "id": "location_361",
       "store_name": "CYCLES CESBRON ANGERS",
       "address": "12 RUE AUGUSTE GAUTIER",
       "city": "ANGERS",
@@ -6355,7 +6481,7 @@
       "longitude": -0.5617
     },
     {
-      "id": "location_355",
+      "id": "location_362",
       "store_name": "CYCLES CESBRON LAVAL",
       "address": "BOULEVARD DE LA BOUTELLERIE",
       "city": "SAINT BERTHEVIN",
@@ -6373,7 +6499,7 @@
       "longitude": -0.804664
     },
     {
-      "id": "location_356",
+      "id": "location_363",
       "store_name": "CYCLES CESBRON SAUMUR",
       "address": "RUE DE L'AVENIR",
       "city": "DISTRE",
@@ -6391,7 +6517,7 @@
       "longitude": -0.116793
     },
     {
-      "id": "location_357",
+      "id": "location_364",
       "store_name": "Cycles Clemer",
       "address": "18 rue Bernard Palissy",
       "city": "Beauvais",
@@ -6409,7 +6535,7 @@
       "longitude": 2.11494
     },
     {
-      "id": "location_358",
+      "id": "location_365",
       "store_name": "Cycles Expert City",
       "address": "1 Rue Chicogné",
       "city": "RENNES",
@@ -6427,7 +6553,7 @@
       "longitude": -1.68298
     },
     {
-      "id": "location_359",
+      "id": "location_366",
       "store_name": "CYCLES EXPERTS BAIN DE BR",
       "address": "1 Rue Lanserva",
       "city": "Plechatel",
@@ -6445,7 +6571,7 @@
       "longitude": -1.680919
     },
     {
-      "id": "location_360",
+      "id": "location_367",
       "store_name": "Cycles Guyonnet",
       "address": "105 Avenue du Marechal de Lattre",
       "city": "Niort",
@@ -6463,7 +6589,7 @@
       "longitude": -0.4674
     },
     {
-      "id": "location_361",
+      "id": "location_368",
       "store_name": "Cycles Passion",
       "address": "18 PLACE LOUIS LUMIERE",
       "city": "Boulogne Sur Mer",
@@ -6481,7 +6607,7 @@
       "longitude": 1.60878
     },
     {
-      "id": "location_362",
+      "id": "location_369",
       "store_name": "Cycling Universe",
       "address": "25 rue du Général Leclerc",
       "city": "Chalon Sur Saone",
@@ -6499,7 +6625,7 @@
       "longitude": 4.85337
     },
     {
-      "id": "location_363",
+      "id": "location_370",
       "store_name": "Ebike Riviera Tour",
       "address": "8 boulevard Lech WALESA",
       "city": "Nice",
@@ -6517,7 +6643,7 @@
       "longitude": 7.287171
     },
     {
-      "id": "location_364",
+      "id": "location_371",
       "store_name": "Energy Cycles",
       "address": "9 Avenue Hubert Pierson",
       "city": "Mareuil le Port",
@@ -6535,7 +6661,7 @@
       "longitude": 3.74563
     },
     {
-      "id": "location_365",
+      "id": "location_372",
       "store_name": "Espace Vélos VELOLAND",
       "address": "100 rue de L'ile Napoléon",
       "city": "Rixheim",
@@ -6553,7 +6679,7 @@
       "longitude": 7.3987
     },
     {
-      "id": "location_366",
+      "id": "location_373",
       "store_name": "Evolution 2",
       "address": "5 rue de la glisse",
       "city": "Montchavin",
@@ -6571,7 +6697,7 @@
       "longitude": 6.734704
     },
     {
-      "id": "location_367",
+      "id": "location_374",
       "store_name": "FanVelo",
       "address": "426 rue Jenny Vetillard Lieu dit Le Chassagnon",
       "city": "Mazeyrat d'Allier",
@@ -6589,7 +6715,7 @@
       "longitude": 3.53222
     },
     {
-      "id": "location_368",
+      "id": "location_375",
       "store_name": "FG BIKE STORE",
       "address": "QUAI DE BREST 11",
       "city": "REDON",
@@ -6607,7 +6733,7 @@
       "longitude": -2.086358
     },
     {
-      "id": "location_369",
+      "id": "location_376",
       "store_name": "GEM BIKES BBMC",
       "address": "22 avenue du Mont Aigoual",
       "city": "Ganges",
@@ -6625,7 +6751,7 @@
       "longitude": 3.710256
     },
     {
-      "id": "location_370",
+      "id": "location_377",
       "store_name": "MONDOVELO PONTIVY",
       "address": "23 RUE ALBERT DE MUN",
       "city": "PONTIVY",
@@ -6643,7 +6769,7 @@
       "longitude": -2.96343
     },
     {
-      "id": "location_371",
+      "id": "location_378",
       "store_name": "MODOVELO SAINT MALO",
       "address": "44 RUE DU GENERAL PATTON",
       "city": "ST MALO",
@@ -6661,7 +6787,7 @@
       "longitude": -1.99553
     },
     {
-      "id": "location_372",
+      "id": "location_379",
       "store_name": "La Roue Liber",
       "address": "32 rue Vignon",
       "city": "Paris",
@@ -6679,7 +6805,7 @@
       "longitude": 2.32667
     },
     {
-      "id": "location_373",
+      "id": "location_380",
       "store_name": "Les Cycles Clemer",
       "address": "124 A, rue du Général de Gaulle",
       "city": "La Neuville en Hez",
@@ -6697,7 +6823,7 @@
       "longitude": 2.322003
     },
     {
-      "id": "location_374",
+      "id": "location_381",
       "store_name": "LES VELOS DE LEON",
       "address": "RUE DUQUESNE 5",
       "city": "DIEPPE",
@@ -6715,7 +6841,7 @@
       "longitude": 1.078884
     },
     {
-      "id": "location_375",
+      "id": "location_382",
       "store_name": "Location Vélo Dunkerque",
       "address": "1 bis Digue de Mer",
       "city": "Dunkerque",
@@ -6733,7 +6859,7 @@
       "longitude": 2.386325
     },
     {
-      "id": "location_376",
+      "id": "location_383",
       "store_name": "LT2MH BICI",
       "address": "2  Rue de la Poste",
       "city": "SAONE",
@@ -6751,7 +6877,7 @@
       "longitude": 6.116989
     },
     {
-      "id": "location_377",
+      "id": "location_384",
       "store_name": "Modovélo Sarl Espace Bike 38",
       "address": "12 route de Lyon",
       "city": "Chanas",
@@ -6769,7 +6895,7 @@
       "longitude": 4.808476
     },
     {
-      "id": "location_378",
+      "id": "location_385",
       "store_name": "MONBOIPEN SPORT34",
       "address": "2 rue des Joncasses",
       "city": "Le Cres",
@@ -6787,7 +6913,7 @@
       "longitude": 3.939191
     },
     {
-      "id": "location_379",
+      "id": "location_386",
       "store_name": "Mondovélo Chécy",
       "address": "20 rue gustave eiffel",
       "city": "Chécy",
@@ -6805,7 +6931,7 @@
       "longitude": 2.03233
     },
     {
-      "id": "location_380",
+      "id": "location_387",
       "store_name": "Mondovelo Langueux",
       "address": "1 RUE DES GRIGNONS",
       "city": "LANGUEUX",
@@ -6823,7 +6949,7 @@
       "longitude": -2.731863
     },
     {
-      "id": "location_381",
+      "id": "location_388",
       "store_name": "Mondovelo Le Mans Nord",
       "address": "Parc Manceau - ZAC de l 'Ardoise",
       "city": "LE MANS",
@@ -6841,7 +6967,7 @@
       "longitude": 0.181164
     },
     {
-      "id": "location_382",
+      "id": "location_389",
       "store_name": "Mondovelo Le Mans Sud",
       "address": "ZAC du Cormier // 10 rue Wilbur",
       "city": "MULSANNE",
@@ -6859,7 +6985,7 @@
       "longitude": 0.231357
     },
     {
-      "id": "location_383",
+      "id": "location_390",
       "store_name": "ORCIERES CYCLING",
       "address": "3755 ROUTE D ORCIERES",
       "city": "ORCIERES",
@@ -6877,7 +7003,7 @@
       "longitude": 6.324415
     },
     {
-      "id": "location_384",
+      "id": "location_391",
       "store_name": "Paddock shop",
       "address": "10",
       "city": "Vesoul",
@@ -6895,7 +7021,7 @@
       "longitude": 6.15428
     },
     {
-      "id": "location_385",
+      "id": "location_392",
       "store_name": "REINE ET BICLOU",
       "address": "49 RUE DE MONS",
       "city": "VALENCIENNES",
@@ -6913,7 +7039,7 @@
       "longitude": 3.528905
     },
     {
-      "id": "location_386",
+      "id": "location_393",
       "store_name": "Roule Energie",
       "address": "12 Rue de l'Europe //  ZA la Tigno",
       "city": "Aubigny",
@@ -6931,7 +7057,7 @@
       "longitude": -1.44541
     },
     {
-      "id": "location_387",
+      "id": "location_394",
       "store_name": "Sport Passion GSB",
       "address": "273 chemin de Croupillac",
       "city": "Ales",
@@ -6949,7 +7075,7 @@
       "longitude": 4.104612
     },
     {
-      "id": "location_388",
+      "id": "location_395",
       "store_name": "TEX RACING",
       "address": "7 Rue de la Marine BP 69",
       "city": "PROPRIANO",
@@ -6967,7 +7093,7 @@
       "longitude": 8.898206
     },
     {
-      "id": "location_389",
+      "id": "location_396",
       "store_name": "Culture Velo Tours Nord",
       "address": "15 Rue Arthur Rimband",
       "city": "Tours",
@@ -6985,7 +7111,7 @@
       "longitude": 0.70801
     },
     {
-      "id": "location_390",
+      "id": "location_397",
       "store_name": "Val de Loire Velo",
       "address": "7 Rue Paul Langevin",
       "city": "Chambray les Tours",
@@ -7003,7 +7129,7 @@
       "longitude": 0.704564
     },
     {
-      "id": "location_391",
+      "id": "location_398",
       "store_name": "VELO EMOTION",
       "address": "CHEMIN ROMAIN",
       "city": "ST ALBAN",
@@ -7021,7 +7147,7 @@
       "longitude": -2.548169
     },
     {
-      "id": "location_392",
+      "id": "location_399",
       "store_name": "Vélo Montagne Noire",
       "address": "1 impasse des capucines",
       "city": "Aiguefonde",
@@ -7039,7 +7165,7 @@
       "longitude": 2.346087
     },
     {
-      "id": "location_393",
+      "id": "location_400",
       "store_name": "Velo2Max",
       "address": "589 ZAC des Bousquets",
       "city": "CUERS",
@@ -7057,7 +7183,7 @@
       "longitude": 6.0722
     },
     {
-      "id": "location_394",
+      "id": "location_401",
       "store_name": "Culture Velo Blois ",
       "address": "Rue Bernard Palissy",
       "city": "Vineuil",
@@ -7075,7 +7201,7 @@
       "longitude": 1.375111
     },
     {
-      "id": "location_395",
+      "id": "location_402",
       "store_name": "VELOLAND Cannes",
       "address": "Zi Les Tourrades",
       "city": "Mandelieu",
@@ -7093,7 +7219,7 @@
       "longitude": 6.95442
     },
     {
-      "id": "location_396",
+      "id": "location_403",
       "store_name": "VELOLAND FUNCYCLES",
       "address": "13 AVENUE DE BEL AIR // ZC DE LA CLAIRCIERE",
       "city": "SAINT PIERRE D'OLERON",
@@ -7111,7 +7237,7 @@
       "longitude": -1.304816
     },
     {
-      "id": "location_397",
+      "id": "location_404",
       "store_name": "VeloMax",
       "address": "235 Rue de l'Artisanat",
       "city": "Six Fours Les Plages",
@@ -7129,7 +7255,7 @@
       "longitude": 5.847377
     },
     {
-      "id": "location_398",
+      "id": "location_405",
       "store_name": "Vélos et Compagnie ",
       "address": "40 Rue de Cuire",
       "city": "Lyon",
@@ -7147,7 +7273,7 @@
       "longitude": 4.83017
     },
     {
-      "id": "location_399",
+      "id": "location_406",
       "store_name": "VELOVOLT",
       "address": "AVENUE DU COMMANDANT LYSIACK 8",
       "city": "AYTRE",
@@ -7165,7 +7291,7 @@
       "longitude": -1.129171
     },
     {
-      "id": "location_400",
+      "id": "location_407",
       "store_name": "EAST MX",
       "address": "Ivontie 9",
       "city": "Joensuu",
@@ -7183,7 +7309,7 @@
       "longitude": 29.823806
     },
     {
-      "id": "location_401",
+      "id": "location_408",
       "store_name": "Moto-Seinäjoki Oy",
       "address": "Lieskatie 2",
       "city": "Hyllykallio",
@@ -7201,7 +7327,7 @@
       "longitude": 22.882222
     },
     {
-      "id": "location_402",
+      "id": "location_409",
       "store_name": "Kari Vehniäinen Racing Oy",
       "address": "Vasarakatu 5",
       "city": "Jyväskylä",
@@ -7219,7 +7345,7 @@
       "longitude": 25.770738
     },
     {
-      "id": "location_403",
+      "id": "location_410",
       "store_name": "Kone & Vene Center",
       "address": "Kaivotie 23",
       "city": "Kuopio",
@@ -7237,7 +7363,7 @@
       "longitude": 27.63313
     },
     {
-      "id": "location_404",
+      "id": "location_411",
       "store_name": "Kytönen Motorsport",
       "address": "Teollisuuskatu 4",
       "city": "Jämsä",
@@ -7255,7 +7381,7 @@
       "longitude": 25.178365
     },
     {
-      "id": "location_405",
+      "id": "location_412",
       "store_name": "Pyöräkeidas",
       "address": "Helsingintie 32",
       "city": "Salo",
@@ -7273,7 +7399,7 @@
       "longitude": 23.14286
     },
     {
-      "id": "location_406",
+      "id": "location_413",
       "store_name": "Vmsport",
       "address": "Kanavapuistikko 8",
       "city": "Pietarsaari",
@@ -7291,7 +7417,7 @@
       "longitude": 22.707911
     },
     {
-      "id": "location_407",
+      "id": "location_414",
       "store_name": "Zweirad Center Horst Weynand",
       "address": "Zur Domaine 25",
       "city": "Bütgenbach",
@@ -7309,7 +7435,7 @@
       "longitude": 6.220246
     },
     {
-      "id": "location_408",
+      "id": "location_415",
       "store_name": "BIKE CENTER MARIBOR",
       "address": "Na Poljanah 18 (Ikona center)",
       "city": "Maribor",
