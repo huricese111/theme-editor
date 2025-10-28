@@ -513,7 +513,7 @@
       "country": "DE",
       "postal_code": "35510",
       "phone": "+49 6033 9735620",
-      "email": "m.gaul@bnb.bike",
+      "email": "verkauf.butzbach@bnb.bike",
       "website": "https://www.bnb.bike",
       "hours_of_operation": "Montag, Dienstag, Donnerstag & Freitag: 10:00 - 18:30 UhrDienstag: geschlossenSamstag: 9:00 - 14:00 Uhr",
       "store_type": [
@@ -5384,15 +5384,15 @@
     },
     {
       "id": "location_301",
-      "store_name": "Bike Center Forstenpointer",
+      "store_name": "Bike Center Forsterpointner",
       "address": "Obertrumer Landesstraße 9",
       "city": "Seekirchen am Wallersee",
       "province_state": "",
       "country": "AT",
       "postal_code": "5201",
       "phone": "+43 6212 2292 92",
-      "email": "info@forstenpointer.at",
-      "website": "https://www.forstenpointer.at",
+      "email": "info@forsterpointner.at",
+      "website": "https://www.forsterpointner.at",
       "hours_of_operation": "Montag - Freitag: 9:00 - 12:00 & 13:00 - 18:00 UhrSamstag: geschlossen",
       "store_type": [
         "dealer"
