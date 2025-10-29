@@ -21,6 +21,7 @@ if (!customElements.get('variant-picker')) {
       this.selectedOptions = this.getSelectedOptions();
       this.variant = this.getSelectedVariant();
 
+      this.updateOptionVisibility();
       this.updateAvailability();
       this.updateAddToCartButton();
       this.addEventListener('change', this.handleVariantChange.bind(this));
@@ -42,6 +43,7 @@ if (!customElements.get('variant-picker')) {
       this.updateUrl(evt);
       this.updateVariantInput();
       this.updateAddToCartButton();
+      this.updateOptionVisibility();
       this.updateAvailability();
       this.updatePrice();
       this.updateBackorderText();
@@ -112,6 +114,23 @@ if (!customElements.get('variant-picker')) {
     }
 
     /**
+     * Hides or shows an option based on whether it exists in any variant combination.
+     * @param {Element} optionEl - Option element.
+     * @param {boolean} shouldShow - Whether the option should be visible.
+     */
+    static updateOptionVisibility(optionEl, shouldShow) {
+      if (optionEl.classList.contains('custom-select__option')) {
+        optionEl.style.display = shouldShow ? '' : 'none';
+      } else {
+        const label = optionEl.nextElementSibling;
+        if (label) {
+          label.style.display = shouldShow ? '' : 'none';
+        }
+        optionEl.style.display = shouldShow ? '' : 'none';
+      }
+    }
+
+    /**
      * Updates the availability status in option selectors.
      */
     updateAvailability() {
@@ -122,6 +141,9 @@ if (!customElements.get('variant-picker')) {
       if (!this.variant) {
         currVariant = { options: this.selectedOptions };
       }
+
+      // First, handle option visibility based on variant existence
+      this.updateOptionVisibility();
 
       if (availabilityMode === 'selection') {
         // Flag all options as unavailable
@@ -181,6 +203,40 @@ if (!customElements.get('variant-picker')) {
           });
         });
       }
+    }
+
+    /**
+     * Updates option visibility based on which combinations actually exist in variants.
+     */
+    updateOptionVisibility() {
+      this.optionSelectors.forEach((selector, selectorIndex) => {
+        const options = selector.querySelectorAll('.js-option:not([data-value=""])');
+        
+        options.forEach((option) => {
+          const optionValue = selector.dataset.selectorType === 'dropdown' ? option.dataset.value : option.value;
+          let shouldShow = false;
+
+          // Check if this option value exists in any variant combination
+          // considering the currently selected options in previous selectors
+          this.data.variants.forEach((variant) => {
+            if (variant.options[selectorIndex] === optionValue) {
+              // Check if this variant is compatible with currently selected options
+              let isCompatible = true;
+              for (let i = 0; i < selectorIndex; i += 1) {
+                if (this.selectedOptions[i] !== null && variant.options[i] !== this.selectedOptions[i]) {
+                  isCompatible = false;
+                  break;
+                }
+              }
+              if (isCompatible) {
+                shouldShow = true;
+              }
+            }
+          });
+
+          VariantPicker.updateOptionVisibility(option, shouldShow);
+        });
+      });
     }
 
     /**

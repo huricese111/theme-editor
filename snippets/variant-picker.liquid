@@ -16,6 +16,15 @@
 {%- unless product.has_only_default_variant -%}
   {%- if product.variants.size > 1 or block.settings.show_single -%}
     <script src="{{ 'variant-picker.js' | asset_url }}" defer></script>
+    <style>
+      .opt-label[style*="display: none"],
+      .js-option[style*="display: none"] {
+        display: none !important;
+      }
+      .custom-select__option[style*="display: none"] {
+        display: none !important;
+      }
+    </style>
 
     <variant-picker
         class="no-js-hidden"
