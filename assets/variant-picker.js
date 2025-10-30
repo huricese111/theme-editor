@@ -211,6 +211,16 @@ if (!customElements.get('variant-picker')) {
     updateOptionVisibility() {
       this.optionSelectors.forEach((selector, selectorIndex) => {
         const options = selector.querySelectorAll('.js-option:not([data-value=""])');
+        let firstVisibleOption = null;
+        let hasSelectedVisibleOption = false;
+        let currentSelectedOption = null;
+        
+        // First, identify the currently selected option
+        if (selector.dataset.selectorType === 'dropdown') {
+          currentSelectedOption = selector.querySelector('.custom-select__option[aria-selected="true"]');
+        } else {
+          currentSelectedOption = selector.querySelector('input:checked');
+        }
         
         options.forEach((option) => {
           const optionValue = selector.dataset.selectorType === 'dropdown' ? option.dataset.value : option.value;
@@ -235,8 +245,65 @@ if (!customElements.get('variant-picker')) {
           });
 
           VariantPicker.updateOptionVisibility(option, shouldShow);
+          
+          // Track the first visible option
+          if (shouldShow && !firstVisibleOption) {
+            firstVisibleOption = option;
+          }
+          
+          // Check if the currently selected option is still visible
+          if (shouldShow && currentSelectedOption === option) {
+            hasSelectedVisibleOption = true;
+          }
         });
+        
+        // Auto-select the first visible option if:
+        // 1. There's a first visible option available
+        // 2. The currently selected option is not visible (or no option is selected)
+        // 3. There are previous selections (not the first selector)
+        // 4. All previous selectors have selections
+        const allPreviousSelected = selectorIndex === 0 || this.selectedOptions.slice(0, selectorIndex).every(option => option !== null);
+        
+        if (firstVisibleOption && !hasSelectedVisibleOption && selectorIndex > 0 && allPreviousSelected) {
+          // Use setTimeout to avoid triggering during the current change event
+          setTimeout(() => {
+            this.autoSelectOption(selector, firstVisibleOption);
+          }, 0);
+        }
       });
+    }
+
+    /**
+     * Auto-select an option in a selector
+     * @param {HTMLElement} selector - The selector element
+     * @param {HTMLElement} option - The option to select
+     */
+    autoSelectOption(selector, option) {
+      if (selector.dataset.selectorType === 'dropdown') {
+        // Handle dropdown/custom-select
+        const currentSelected = selector.querySelector('.custom-select__option[aria-selected="true"]');
+        if (currentSelected) {
+          currentSelected.setAttribute('aria-selected', 'false');
+        }
+        option.setAttribute('aria-selected', 'true');
+        
+        // Update the display text
+        const displayElement = selector.querySelector('.custom-select__selected-text');
+        if (displayElement) {
+          displayElement.textContent = option.textContent;
+        }
+        
+        // Trigger change event
+        const changeEvent = new Event('change', { bubbles: true });
+        selector.dispatchEvent(changeEvent);
+      } else {
+        // Handle radio buttons or checkboxes
+        option.checked = true;
+        
+        // Trigger change event
+        const changeEvent = new Event('change', { bubbles: true });
+        option.dispatchEvent(changeEvent);
+      }
     }
 
     /**
