@@ -365,14 +365,127 @@
                   endfor
                 endif
 
-                for product in collection.products
+                assign product_index = 0
+              -%}
+              
+              {%- for product in collection.products -%}
+                {%- liquid
                   assign prioritised_loading = false
-                  if forloop.index0 < section.settings.grid
+                  if product_index < section.settings.grid
                     assign prioritised_loading = true
                   endif
-                  render 'product-block', product: product, custom_aspect_ratio: chosen_aspect_ratio, animate: true, prioritised_loading: prioritised_loading
-                endfor
-              -%}
+                -%}
+                
+                {%- liquid
+                  # Initialize variables
+                  assign should_split_product = false
+                  
+                  # Check if variant splitting is enabled and configured
+                  if section.settings.enable_variant_splitting and section.settings.variant_keywords != blank
+                    # Parse variant keywords
+                    assign variant_keywords_array = section.settings.variant_keywords | split: ','
+                    assign variant_keywords_clean = ''
+                    for keyword in variant_keywords_array
+                      assign clean_keyword = keyword | strip
+                      if clean_keyword != ''
+                        if variant_keywords_clean == ''
+                          assign variant_keywords_clean = clean_keyword
+                        else
+                          assign variant_keywords_clean = variant_keywords_clean | append: '|' | append: clean_keyword
+                        endif
+                      endif
+                    endfor
+                    
+                    # Only proceed if we have valid keywords
+                    if variant_keywords_clean != ''
+                      # Check if product has matching variants and group by keyword
+                      assign matching_keywords = ''
+                      assign has_matching_variants = false
+                      assign multiple_keyword_match = false
+                      
+                      # First, find which keywords have matching variants
+                      for keyword in variant_keywords_array
+                        assign clean_keyword = keyword | strip
+                        assign keyword_has_variants = false
+                        
+                        for variant in product.variants
+                          assign variant_options = variant.option1 | append: ' ' | append: variant.option2 | append: ' ' | append: variant.option3
+                          if variant_options contains clean_keyword
+                            assign keyword_has_variants = true
+                            break
+                          endif
+                        endfor
+                        
+                        if keyword_has_variants
+                          assign has_matching_variants = true
+                          if matching_keywords == ''
+                            assign matching_keywords = clean_keyword
+                          else
+                            assign matching_keywords = matching_keywords | append: '|' | append: clean_keyword
+                          endif
+                        endif
+                      endfor
+                      
+                      # Determine if we should split this product
+                      if has_matching_variants
+                        assign should_split_product = true
+                      endif
+                    endif
+                  endif
+                -%}
+                
+                {%- if should_split_product -%}
+                  {%- liquid
+                    # Split into keyword-based cards (one card per keyword, not per variant)
+                    assign keyword_list = matching_keywords | split: '|'
+                  -%}
+                  {%- for keyword in keyword_list -%}
+                    {%- liquid
+                      # Find the first variant that matches this keyword
+                      assign selected_variant = null
+                      for variant in product.variants
+                        assign variant_options = variant.option1 | append: ' ' | append: variant.option2 | append: ' ' | append: variant.option3
+                        if variant_options contains keyword
+                          assign selected_variant = variant
+                          break
+                        endif
+                      endfor
+                    -%}
+                    
+                    {%- if selected_variant -%}
+                      {%- liquid
+                        # Create variant-specific product data
+                        assign variant_product = product
+                        assign variant_title = product.title | append: ' - ' | append: keyword
+                        assign variant_url = product.url | append: '?variant=' | append: selected_variant.id
+                        assign variant_price = selected_variant.price
+                        assign variant_compare_price = selected_variant.compare_at_price
+                        assign variant_image = selected_variant.featured_image | default: product.featured_image
+                        assign product_index = product_index | plus: 1
+                      -%}
+                      
+                      {%- render 'product-block', 
+                        product: variant_product, 
+                        custom_aspect_ratio: chosen_aspect_ratio, 
+                        animate: true, 
+                        prioritised_loading: prioritised_loading,
+                        variant_title: variant_title,
+                        variant_url: variant_url,
+                        variant_price: variant_price,
+                        variant_compare_price: variant_compare_price,
+                        variant_image: variant_image,
+                        selected_variant: selected_variant,
+                        is_variant_split: true -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                {%- else -%}
+                  {%- liquid
+                    # Show original product
+                    assign product_index = product_index | plus: 1
+                  -%}
+                  {%- render 'product-block', product: product, custom_aspect_ratio: chosen_aspect_ratio, animate: true, prioritised_loading: prioritised_loading -%}
+                {%- endif -%}
+              {%- endfor -%}
             </div>
           {% endif %}
         </div>
@@ -891,6 +1004,24 @@
       "id": "show_total",
       "label": "Show product total",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "Variant Splitting"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_variant_splitting",
+      "label": "Enable variant splitting",
+      "info": "Split products by variants based on configured keywords",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "variant_keywords",
+      "label": "Variant keywords",
+      "info": "Comma-separated keywords to split variants by (e.g., Step Through, Low Step, High Step)",
+      "default": "Step Through, Low Step, High Step"
     },
     {
       "type": "header",
