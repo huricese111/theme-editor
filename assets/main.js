@@ -2187,14 +2187,9 @@ const ProductBlock = class extends HTMLElement {
 
   init() {
     this.images = Array.from(this.querySelectorAll('.product-block__image'));
-    this.isVariantSplit = this.hasAttribute('data-variant-split');
-    this.selectedVariant = this.dataset.selectedVariant;
-    
-    // Always monitor swatch selection for hover functionality
-    this.monitorSwatchSelection();
-    
     if (this.images.length > 1) {
       this.initImagePagination();
+      this.monitorSwatchSelection();
       this.initCustomLazyLoading();
     }
   }
@@ -2297,39 +2292,14 @@ const ProductBlock = class extends HTMLElement {
     evt.preventDefault();
     let index = -1;
 
-    // Check if we have variant-specific media data
-    const mediaId = evt.currentTarget.dataset.media;
-    if (!mediaId) return;
-
-    // Find the image with matching media ID
     for (let i = 0; i < this.images.length; i += 1) {
-      if (this.images[i].dataset.mediaId === mediaId) {
+      if (this.images[i].dataset.mediaId === evt.currentTarget.dataset.media) {
         index = i;
         break;
       }
     }
 
-    // If we're in variant split mode and didn't find the image, 
-    // it might be because we need to show variant-specific images
-    if (index < 0 && this.isVariantSplit) {
-      // Try to find the first image that matches the variant group
-      const variantOption = evt.currentTarget.dataset.optionItem;
-      if (variantOption) {
-        // Look for images that belong to this variant group
-        for (let i = 0; i < this.images.length; i += 1) {
-          const imageVariant = this.images[i].dataset.variantOption;
-          if (imageVariant === variantOption) {
-            index = i;
-            break;
-          }
-        }
-      }
-    }
-
-    // Fallback to first image if still not found
-    if (index < 0) {
-      index = 0;
-    }
+    if (index < 0) return;
 
     this.setActiveImage(index);
 
