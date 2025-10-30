@@ -5,12 +5,14 @@
   - media_ratio {Number} - Media aspect ratio.
   - block {Object} - Block object.
   - dynamic_availability_mode {String} - Dynamic availability mode, 'selection' or 'down', default is 'selection'.
+  - show_variant_metafield {Boolean} - Whether to show variant metafield after variant picker, default is true.
 
   Dependencies:
   - Custom select component
 
   Usage:
   {% render 'variant-picker', product: product, product_form_id: product_form_id, block: block %}
+  {% render 'variant-picker', product: product, product_form_id: product_form_id, block: block, show_variant_metafield: false %}
 {% endcomment %}
 
 {%- unless product.has_only_default_variant -%}
@@ -232,6 +234,163 @@
       </script>
     </variant-picker>
 
+    {%- liquid
+      if block.settings.show_variant_metafield != blank
+        assign show_metafield = block.settings.show_variant_metafield
+      else
+        assign show_metafield = show_variant_metafield | default: true
+      endif
+      
+      if show_metafield and block
+        comment
+          创建一个占位符，JavaScript 将会同步数据到这里
+        endcomment
+        capture component_id
+          echo 'variant-metafield-sync-'
+          echo block.id | slice: -6, 6
+        endcapture
+        
+        echo '<div id="' | append: component_id | append: '" class="variant-metafields-block variant-metafield-sync">'
+        echo '<div class="variant-metafield-value">Loading...</div>'
+        echo '</div>'
+      endif
+    -%}
+
+    {%- if block -%}
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          // 等待一小段时间确保所有元素都已渲染
+          setTimeout(function() {
+            const existingMetafields = document.querySelectorAll('.variant-metafields-block');
+            const variantPickerElement = document.querySelector('variant-picker[data-url*="{{ product.url }}"]');
+            const syncElement = document.getElementById('variant-metafield-sync-{{ block.id | slice: -6, 6 }}');
+            
+            {%- if show_metafield -%}
+              // 数据同步逻辑
+              if (syncElement) {
+                // 查找第一个独立的 variant-metafield block 作为数据源
+                let sourceMetafield = null;
+                for (let i = 0; i < existingMetafields.length; i++) {
+                  const element = existingMetafields[i];
+                  if (!element.classList.contains('variant-metafield-sync') && 
+                      !variantPickerElement.contains(element) &&
+                      variantPickerElement.nextElementSibling !== element) {
+                    sourceMetafield = element;
+                    break; // 找到第一个就停止
+                  }
+                }
+                
+                if (sourceMetafield) {
+                  console.log('Found source metafield:', sourceMetafield);
+                  
+                  // 复制数据脚本
+                  const sourceDataScript = sourceMetafield.querySelector('script[type="application/json"]');
+                  if (sourceDataScript) {
+                    const clonedScript = sourceDataScript.cloneNode(true);
+                    clonedScript.id = 'variant-metafield-sync-{{ block.id | slice: -6, 6 }}-data';
+                    syncElement.appendChild(clonedScript);
+                    
+                    console.log('Cloned data script:', clonedScript);
+                    
+                    // 解析数据
+                    let metafieldsData;
+                    try {
+                      metafieldsData = JSON.parse(clonedScript.textContent);
+                      console.log('Parsed metafields data:', metafieldsData);
+                    } catch (e) {
+                      console.error('Error parsing metafields data:', e);
+                      return;
+                    }
+                    
+                    // 获取当前变体ID
+                    const form = variantPickerElement ? variantPickerElement.closest('form') : null;
+                    const variantInput = form ? form.querySelector('input[name="id"]') : null;
+                    const currentVariantId = variantInput ? parseInt(variantInput.value) : null;
+                    
+                    console.log('Current variant ID:', currentVariantId);
+                    
+                    // 初始化显示内容
+                    const syncValue = syncElement.querySelector('.variant-metafield-value');
+                    if (syncValue && currentVariantId && metafieldsData[currentVariantId]) {
+                      syncValue.innerHTML = metafieldsData[currentVariantId] || '';
+                      console.log('Initialized sync value:', metafieldsData[currentVariantId]);
+                    } else if (syncValue) {
+                      // 如果没有当前变体数据，复制源的当前显示内容
+                      const sourceValue = sourceMetafield.querySelector('.variant-metafield-value');
+                      if (sourceValue) {
+                        syncValue.innerHTML = sourceValue.innerHTML;
+                        console.log('Copied source value:', sourceValue.innerHTML);
+                      }
+                    }
+                    
+                    // 设置变体切换监听器
+                    function updateSyncMetafield(variantId) {
+                      if (!variantId || !syncValue) return;
+                      const value = metafieldsData[variantId];
+                      syncValue.innerHTML = value || '';
+                      console.log('Updated sync metafield for variant', variantId, ':', value);
+                    }
+                    
+                    // 监听变体变化事件
+                    document.addEventListener('on:variant:change', function(event) {
+                      if (event.detail && event.detail.variant) {
+                        updateSyncMetafield(event.detail.variant.id);
+                      }
+                    });
+                    
+                    // 监听 variant picker 变化
+                    if (variantPickerElement) {
+                      variantPickerElement.addEventListener('change', function(event) {
+                        const form = variantPickerElement.closest('form');
+                        const variantInput = form ? form.querySelector('input[name="id"]') : null;
+                        const variantId = variantInput ? parseInt(variantInput.value) : null;
+                        if (variantId) {
+                          updateSyncMetafield(variantId);
+                        }
+                      });
+                    }
+                  }
+                } else {
+                  console.log('No source metafield found');
+                  // 如果没有找到源，显示提示信息
+                  const syncValue = syncElement.querySelector('.variant-metafield-value');
+                  if (syncValue) {
+                    syncValue.innerHTML = 'No variant metafield found to sync';
+                  }
+                }
+              }
+              
+              // 隐藏独立的 variant-metafield 实例
+              existingMetafields.forEach(function(element) {
+                // 检查元素是否在当前的 variant-picker 内部
+                let isInsideCurrentPicker = false;
+                if (variantPickerElement) {
+                  isInsideCurrentPicker = variantPickerElement.contains(element) || 
+                                        variantPickerElement.nextElementSibling === element ||
+                                        (variantPickerElement.parentNode && variantPickerElement.parentNode.contains(element) && 
+                                         element.previousElementSibling === variantPickerElement);
+                }
+                
+                // 只隐藏不在当前 variant-picker 相关区域内的独立 variant-metafield 实例
+                if (!isInsideCurrentPicker && !element.classList.contains('variant-metafield-sync')) {
+                  element.style.display = 'none';
+                  element.setAttribute('data-hidden-by-variant-picker', 'true');
+                }
+              });
+            {%- else -%}
+              // 开关关闭：恢复显示所有被当前 variant-picker 隐藏的 variant-metafield 实例
+              existingMetafields.forEach(function(element) {
+                if (element.getAttribute('data-hidden-by-variant-picker') === 'true') {
+                  element.style.display = '';
+                  element.removeAttribute('data-hidden-by-variant-picker');
+                }
+              });
+            {%- endif -%}
+          }, 100); // 100ms 延迟确保 DOM 完全渲染
+        });
+      </script>
+    {%- endif -%}
+
     <noscript>
       <div class="product-info__select"{% if product.has_only_default_variant %} hidden{% endif %}>
         <label class="label" for="variants-{{ product.id }}-{{ section.id }}">
@@ -254,3 +413,23 @@
     </noscript>
   {%- endif -%}
 {%- endunless -%}
+
+{%- if show_metafield and block -%}
+  <style>
+    .variant-metafield-sync {
+      display: block;
+      transition: opacity 0.3s ease;
+      padding: 0 0 10px 0;
+    }
+
+    .variant-metafield-sync .variant-metafield-value {
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .variant-metafield-sync .variant-metafield-value img {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+{%- endif -%}
