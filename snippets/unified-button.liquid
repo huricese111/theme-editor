@@ -23,11 +23,26 @@
 {%- assign button_margin_right = margin_right | default: 0 -%}
 {%- assign button_margin_bottom = margin_bottom | default: 0 -%}
 {%- assign button_margin_left = margin_left | default: 0 -%}
+{%- assign button_font_size = font_size | default: 14 -%}
+{%- assign button_mobile_font_size = mobile_font_size | default: 12 -%}
+{%- assign button_border_radius = border_radius | default: 50 -%}
+{%- assign button_height = button_height | default: 48 -%}
 
 <a
   href="{{ button_url }}"
   class="unified-button {{ button_class }}"
-  style="background-color: {{ button_bg_color }}; color: {{ button_text_color }}; margin: {{ button_margin_top }}px {{ button_margin_right }}px {{ button_margin_bottom }}px {{ button_margin_left }}px;"
+  style="
+    background-color: {{ button_bg_color }}; 
+    color: {{ button_text_color }}; 
+    margin: {{ button_margin_top }}px {{ button_margin_right }}px {{ button_margin_bottom }}px {{ button_margin_left }}px; 
+    font-size: {{ button_font_size }}px; 
+    border-radius: {{ button_border_radius }}px; 
+    min-height: {{ button_height }}px; 
+    height: {{ button_height }}px;
+    --button-mobile-font-size: {{ button_mobile_font_size }}px;
+    --button-border-radius: {{ button_border_radius }}px;
+    --button-height: {{ button_height }}px;
+  "
 >
   <span class="button-text">{{ button_text }}</span>
   {%- if show_arrow -%}

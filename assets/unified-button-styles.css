@@ -142,7 +142,15 @@
   .unified-button {
     --unified-button-font-size: 12px;
     --unified-button-padding: 8px 16px;
-    --unified-button-min-height: 36px;
+    --unified-button-min-height: 48px;
+  }
+  
+  /* Use custom properties for dynamic mobile styles */
+  .unified-button[style*="--button-mobile-font-size"] {
+    font-size: var(--button-mobile-font-size) !important;
+    border-radius: var(--button-border-radius) !important;
+    min-height: var(--button-height) !important;
+    height: var(--button-height) !important;
   }
   
   /* Mobile module button styles */

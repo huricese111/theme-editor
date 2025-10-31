@@ -270,15 +270,14 @@
               if (syncElement) {
                 // 查找第一个独立的 variant-metafield block 作为数据源
                 let sourceMetafield = null;
-                for (let i = 0; i < existingMetafields.length; i++) {
-                  const element = existingMetafields[i];
+                existingMetafields.forEach(function(element) {
                   if (!element.classList.contains('variant-metafield-sync') && 
                       !variantPickerElement.contains(element) &&
                       variantPickerElement.nextElementSibling !== element) {
                     sourceMetafield = element;
-                    break; // 找到第一个就停止
+                    return;
                   }
-                }
+                });
                 
                 if (sourceMetafield) {
                   console.log('Found source metafield:', sourceMetafield);
@@ -355,7 +354,7 @@
                   // 如果没有找到源，显示提示信息
                   const syncValue = syncElement.querySelector('.variant-metafield-value');
                   if (syncValue) {
-                    syncValue.innerHTML = 'No variant metafield found to sync';
+                    syncValue.innerHTML = '';
                   }
                 }
               }

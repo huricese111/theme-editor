@@ -1,0 +1,796 @@
+﻿ID,Store Name,Address,Postal Code,City,Country,Phone,Email,Website,Hours of Operation,Latitude,Longitude,Store Type
+location_001,1000 Räder Hamburg,Krausestraße 116a,22049,Hamburg,DE,+49 40 6525 217,info@1000raeder.de,https://www.1000raeder.de/,"Montag - Freitag: 10:00 - 19:00 Uhr
+Samstag: 10:00 - 16:00 Uhr",53.577294,10.058,dealer
+location_002,2Rad Hofer,Dieselstraße 8,86368,Gersthofen,DE,+49 821 491284,info@2-rad-hofer.de,https://www.2-rad-hofer.de,Montag: geschlossenDienstag - Freitag: 9:30 - 12:00 & 13:00 - 17:00 UhrSamstag: 9:30 - 12:00 Uhr,48.42679,10.86623,dealer
+location_003,2Rad Jessen,Schäfflerstraße 12,93309,Kelheim,DE,+49 9441 504 850,info@my2rad.de,https://www.my2rad.de,"Montag - Freitag: 9:00 - 18:30 Uhr
+Samstag: 9:00 - 14:00 Uhr",48.920647,11.883671,dealer
+location_004,2Rad Leuer,Hauptstraße 50,53340,Meckenheim,DE,+492225 2272,info@2rad-leuer.de,https://www.2rad-leuer.de/,"Montag: geschlossen
+Dienstag - Freitag: 10:00 - 13:00 & 14:00 - 18:30 Uhr
+Samstag: 10:00 - 14:00 Uhr",50.623142,7.021424,dealer
+location_005,2-rad Mueller,Am Mettweg 34,79111,Freiburg,DE,+49 761 4768256,info@mueller-bikes.de,http://www.mueller-bikes.de,"Montag, Dienstag, Donnerstag & Freitag: 9:00 - 12:30 & 14:30 - 18:00 Uhr
+Mittwoch: 9:00 - 12:30 Uhr
+Samstag: 9:00 - 13:00 Uhr",47.979915,7.806979,dealer
+location_006,2RADFABRIK Fürth GmbH & Co. KG,Gründlacherstraße 303,90765,Fürth,DE,+49 911 30088033,fuerth@2radfabrik.de,http://www.2radfabrik.de,"Montag - Samstag: 10 - 19 Uhr
+
+Achtung: November bis Februar abweichende Öffnungszeiten:
+Montag geschlossen
+Dienstag - Freitag: 10 - 19 Uhr
+Samstag: 10 - 16 Uhr",49.60308,10.99005,dealer
+location_007,Amends Fahrradladen,Am Setzen 109,97469,Gochsheim,DE,+49 9721 4771498,info@amends-fahrradladen.de,http://www.amends-fahrradladen.de,"Montag: 12:30 - 18:00 Uhr
+Dienstag: geschlossen 
+Mittwoch - Freitag: 12:30 - 18:00 Uhr
+Samstag: 9:00 - 13:00 Uhr",50.022926,10.274327,dealer
+location_008,Arndt Fahrradhandel,An der Bärenhecke 33,91790,Nennslingen,DE,+49 91477599005,arndt-fahrradladen@gmx.de,,,49.043055,11.126919,dealer
+location_009,Badbikes,Dornbergweg 28,38855,Werningerode,DE,+49 3943 694 253,badbikes.online@gmail.com,https://www.rockmachine-germany.de/,"Mo - Fr: 08:30 - 18:30 Uhr
+Sa: 09:00 - 13:00 Uhr",51.847513,10.785027,dealer
+location_010,Bader Rad-Kraftwerk,Dieselstraße 6,70771,Leinfelden-Echterdingen,DE,+49 711 220 918 16,stephan.bader@rad-kraftwerk.de,https://rad-kraftwerk.de/,"Dienstag - Freitag: 10:00 - 18:30 Uhr
+Samstag: 10:00 - 13:30 Uhr",48.695559,9.165798,dealer
+location_011,Bavarian Finest E-Bikes,Fischerei 43,86911,Dießen,DE,+49 8807 4391051,info@bavarian-finest-e.bike,http://www.bavarian-finest-e.bike,,47.948851,11.107992,dealer
+location_012,Beim Felix,Nürnberger Straße 14,90587,Veitsbronn,DE,+49 911 6336 9701,info@beimfelix.de,,"Montag bis Freitag: 9:00 - 12:00 Uhr & 13:00 - 16:30 Uhr
+Samstag: nach Absprache",49.510053,10.885209,service
+location_013,Bertis Bike Center,Werner-Eckart-Ring 2,49961,Cloppenburg,DE,+49 4471 93 25 39,info@bertis-bikes.de,http://www.bertis-bikes.de,"Montag - Freitag: 9:00 - 18:30 Uhr
+Samstag: 9:00 - 16:00 Uhr",52.840594,8.069145,dealer
+location_014,Bike Center Herzer,Ulmer Str. 41,73037,Göppingen,DE,+49 7161979796,info@herzer.de,http://www.herzer.de/,Montag: geschlossenDienstag - Freitag: 9:00 - 12:30 & 14:00 - 19:00 Uhr,48.69858,9.6674,dealer
+location_015,Bike & Tools,Am Moosrain 5,85652,Pliening,DE,+49 89 23076378,info@bike-and-tools.com,https://bike-and-tools.com/,"März - Oktober
+Dienstag - Freitag: 09:00 Uhr - 12:00 Uhr und 13:00 Uhr - 19:00 Uhr
+Samstag: 09:00 Uhr - 16:00 Uhr
+
+November - Februar
+Dienstag - Freitag: 10:00 Uhr - 12:00 Uhr und 13:00 Uhr - 18:00 Uhr
+Samstag: 09:00 Uhr - 16:00 Uhr",48.189297,11.780013,dealer
+location_016,Bike Activ,Taunusstraße 44,63538,Großkrotzenburg,DE,+49 6186 201310,info@bike-activ.de,https://bike-activ.de/,"Montag, Dienstag, Donnerstag & Freitag: 10:00 - 13:00  &14:00 - 18:00 Uhr
+Mittwoch: geschlossen
+Samstag: 9:00 - 13:00 Uhr",50.083582,8.974159,dealer
+location_017,Bike + Ski Center Rosbach,Raiffeisenstraße 6,61191,Rosbach v. d. H. ,DE,+49 6003 3003,rosbach@bike-ski-center.de,https://www.bike-ski-center.de,Montag: geschlossenDienstag - Freitag: 10:00 - 19:00 UhrSamstag: 10:00 - 16:00 Uhr,50.29591,8.68737,dealer
+location_018,BIKE AND STYLE,Schorndorfer-Str. 21,70736,Fellbach,DE,+49 711 3604141515,info@bike-and-style.de,https://www.bike-and-style.de/,Montag: geschlossenDienstag: 10:00 - 13:00 & 14:00 - 18:00 UhrSamstag: 10:00 - 14:00 Uhr,48.81549,9.27766,dealer
+location_019,Bike Location,Erlhofer Straße 76,95032,Hof,DE,+49 9281 5965919,hof@bikelocation.de,http://www.bikelocation.de,"Montag: geschlossen
+Dienstag - Freitag: 9:00 - 18:00 Uhr
+Samstag: 9:00 - 13:00 Uhr",50.289782,11.923245,dealer
+location_020,Bike Löffler,Nürnberger Straße 106,97076,Würzburg,DE,+49 931 200 10 77,service@bike-loeffler.de,https://auto-loeffler.de/bike-loeffler,"Montag: geschlossen
+Dienstag - Freitag: 8:00 - 17:00 Uhr
+Samstag: 8:00 - 13:00 Uhr",49.797966,9.990142,dealer
+location_021,Bike Monkey,Bgm.-Neumeyr-Straße 7,85391,Allershausen,DE,+49 8166 9889258,info@bike-monkey.de,https://bike-monkey.de/,"Montag - Donnerstag: 17:00 - 20:00 Uhr
+Freitag: 9:30 - 17:00 Uhr
+Samstag: 10:00 -16:00 Uhr",48.42787,11.58306,dealer
+location_022,Bike Now,Amberger Straße 95,92318,Neumarkt,DE,+49 9181 47550,team@bikenow.de,https://bikenow.de/,"Montag - Freitag: 8:00 - 18:00 Uhr
+Samstag: 8:00 - 13:00 Uhr",49.296698,11.480118,dealer
+location_023,Bike Point Jena,Löbstedter Straße 53,07749,Jena,DE,+49 3641 618561,mail@bike-point-jena.de,https://bike-point-jena.de/,"Montag - Freitag: 10:00 - 18:00 Uhr
+Samstag: 10:00 - 13:00 Uhr",50.94201,11.60094,dealer
+location_024,BIKE POINT JENA-OST,Breite Straße 2,07749,Jena,DE,+49 3641 827110,mail@bike-point-jena.de,https://bike-point-jena.de/,"Montag - Freitag: 10:00 - 18:00 Uhr
+Samstag: 10:00 - 13:00 Uhr",50.93217,11.605501,dealer
+location_025,Bikehouse Bühler,Hauptstraße 98,74821,Mosbach,DE,+49 6261 899 376,mail@bikehouse-buehler.de,https://www.bikehouse-buehler.de,"Montag bis Freitag: 9:00 - 13:00 Uhr & 14:00 - 18:00 Uhr
+Samstag: 9:30 - 14:00 Uhr",49.354539,9.147852,dealer
+location_026,Bikes for friends GmbH,Dorfstraße. 20,94244,Geiersthal,DE,+49 (0)1707475196,bikesforfriends@posteo.de,,,49.046493,12.979978,dealer
+location_027,Bikes'n Boards Wetzlar,Hermannsteiner Straße 130,35586,Wetzlar,DE,+49 6441 3832138,verkauf.wetzlar@bnb.bike,https://www.bnb.bike,"Montag, Mittwoch, Donnerstag & Freitag: 10:00 - 18:00 UhrDienstag: geschlossenSamstag: 9:00 - 14:00 Uhr",50.57775,8.49021,dealer
+location_028,Bikes'n Boards Butzbach,Griedeler Straße 62,35510,Butzbach,DE,+49 6033 9735620,verkauf.butzbach@bnb.bike,https://www.bnb.bike,"Montag, Dienstag, Donnerstag & Freitag: 10:00 - 18:30 UhrDienstag: geschlossenSamstag: 9:00 - 14:00 Uhr",50.43464,8.68587,dealer
+location_029,Bikes Only,Jakob-Krebs-Straße 124g,4787,Willich-Anraht,DE,+49 2156 915370,info@bikesonlywillich.de,https://www.bikesonlywillich.de/,"Montag - Freitag: 9:30 - 18:00 Uhr
+Samstag: 9:30 - 14:00 Uhr",51.284239,6.451372,dealer
+location_030,Bike-Sky GmbH,Im Fruchtfeld 16,77791,Berghaupten,DE,+49 7803 966990,info@bike-sky.com,https://www.bike-sky.com,Montag: geschlossenDienstag - Freitag: 9:00 - 18:00 UhrSamstag: 9:00 - 13:00 Uhr,48.4078,7.99798,dealer
+location_031,Bike-Sky GmbH,Am Markt 11,77855,Achern,DE,+49 7803 966990,info@bike-sky.com,https://www.bike-sky.com,Montag: geschlossenDienstag - Freitag: 9:00 - 18:00 UhrSamstag: 9:00 - 13:00 Uhr,48.62819,8.07221,dealer
+location_032,Bikezeit,Pommernstraße 4,93073,Neutraubling,DE,+49 9401913870,info@bikezeit.de,http://www.bikezeit.de,"Montag - Freitag: 10:00 - 18:00 Uhr
+Samstag: 10:00 - 16:00 Uhr",48.983192,12.191577,dealer
+location_033,Business auf Rädern GmbH,Dorfstraße 26,15366,Hoppegarten,DE,+49 3342 2501 482,info@business-auf-raedern.de,http://www.business-auf-raedern.de,Montag - Freitag: 9:00 - 16:00 Uhr,52.548931,13.63563,service
+location_034,Carle Zweiradfachgeschäft GmbH,Berliner Str. 16,74613,Öhringen,DE,+49 7941 91760,info@zweirad-carle.de,https://www.zweirad-carle.de/,"Montag - Freitag: 9:00 - 12:30 Uhr & 13:30 - 18:30 UhrSamstag: 9:00 - 14:00 Uhr""",49.20024,9.493219,dealer
+location_035,Das Radhaus,Neumünsterstraße 6,23812,Wahlstedt,DE,+49 4554 704727,info@dasradhaus.net,https://www.dasradhaus.net,Montag: geschlossenDienstag - Freitag: 9:00 - 18:00 UhrSamstag: 9:00 - 13:00 Uhr,53.95365,10.21075,dealer
+location_036,Die Bike Company,Bundesstraße 38a,21382,Brietlingen,DE,+49 4133 2022 368,info@die-bike-company.de,http://www.die-bike-company.de,"Montag, Dienstag, Donnerstag & Freitag: 10:00 - 18:00 Uhr
+Mittwoch: geschlossen
+Samstag: 10:00 - 15:00 Uhr",53.328201,10.443659,dealer
+location_037,Die Fahrradprofis,Wangener Straße 17,88212,Ravensburg,DE,+49 751 362994 0,shop@fahrradprofis.de,https://www.fahrradprofis.de/,"Montag - Freitag: 10:00 - 18:00 Uhr
+Samstag: 9:00 - 16:00 Uhr",47.777171,9.619251,dealer
+location_038,Die Fahrrad-Scheune e.K.,Untere Str. 1,32825,Blomberg,DE,+49 5235 8996,info@fahrrad-scheune.de,https://www.fahrrad-scheune.de,Montag: geschlossenDienstag - Freitag: 10:00 - 13:00 & 14:00 - 18:00 UhrSamstag: 10:00 - 13:00 Uhr,51.92132,9.0391,dealer
+location_039,Die Fahrrad-Scheune e.K.,Lange Str. 9,31675,Bückeburg,DE,+49 5722 3487,bueckeburg@fahrrad-scheune.de,https://www.fahrrad-scheune.de,Montag: geschlossenDienstag - Freitag: 10:00 - 18:00 UhrSamstag: 10:00 - 13:00 Uhr,52.26051,9.05088,dealer
+location_040,Die Speiche Radhaus,Tumringerstrasse 224,79539,Lörrach,DE,+49 7621 44681,diespeiche@arcor.de,http://www.speiche.net,"Montag - Freitag: 9:30 - 18:30 Uhr
+Samstag: 9:00 - 16:00 Uhr",47.61621,7.660755,dealer
+location_041,Drahtesel,Hoyersweraer Straße 20,02997,Wittichenau,DE,+49 3572592655,drahtesel@outlook.com,,Mittwoch - Freitag: 9:00 - 18:00 Uhr,51.383622,14.243191,dealer
+location_042,Drahtesel Der Fahrradladen,Saathainer Straße 296,04910,Elsterwerda,DE,+49 6355 164471,mrz-weber@t-online.de,,"Montag - Freitag: 9:00 - 18:00 Uhr
+Samstag: 9:00 - 12:00 Uhr",51.468572,13.495744,dealer
+location_043,E-Bike Bavaria,Frauenberg 21,94481,Grafenau,DE,+49 8552 7769267,info@e-bike-bavaria.de,https://www.e-bike-bavaria.de,"Montag, Dienstag, Donnerstag und Freitag: 10:00 - 18:00 Uhr
+Mittwoch und Samstag: 9:00 - 13:00 Uhr",48.856422,13.384417,dealer
+location_044,Ebike Center Bredstedt,Gressstr. 4,25821,Bredstedt,DE,+49 4671 4049231,info@bredstedt-bike.de,https://www.bredstedt-bike.de,Montag - Freitag: 9:00 - 17:30 UhrSamstag: 9:00 - 13:00 Uhr,54.62303,"8,97200",dealer
+location_045,E-Bike Center Gründau,Gelnhäuser Str. 15B,63584,Gründau,DE,+49 6051 9677433,info@ebikegruendau.de,http://xn--ebikegrndau-zhb.de/,"Montag - Mittwoch: 10:00 - 18:00 Uhr
+Donnerstag & Freitag: 12:00 - 18:00 Uhr.",50.209712,9.139968,dealer
+location_046,E-Bike Center Lohr am Main,Sackenbacker Straße 34,97816,Lohr am Main,DE,+49 9352 6026936,info@ebikelohr.de,http://www.ebikelohr.de,"Montag, Mittwoch, Donnerstag & Freitag: 12:00 - 18:00 Uhr
+Dienstag: geschlossen
+Samstag: 9:00 - 13:00 Uhr",49.989221,9.572231,dealer
+location_047,E-Bike Center Wächtersbach,Frankfurter Straße 57,63607,Wächtersbach-Aufenau,DE,+49 60653 6203507,,http://action-line-cycles.de/action-line/#_standorte,"Montag: geschlossen
+Dienstag - Freitag: 10:00 - 18:00 Uhr
+Samstag: 9:00 - 13:00 Uhr",50.253196,9.323282,dealer
+location_048,e-Bike Corner,Wernberger Straße 48,92536,Pfreimd,DE,+49 96065979430,info@ebike-corner.de,https://ebike-corner.de/,"Montag: geschlossen
+Dienstag - Freitag: 9:00 - 12:00 & 13:00 - 18:00 Uhr
+Samstag: 9:00 - 14:00 Uhr",49.502327,12.182867,dealer
+location_049,eBike Dresden,Sagader Weg 1,Dresden,01109,DE,+49 0351 88814380,info@ebike-dresden.com,http://www.ebike-dresden.com,"Montag - Freitag:   10:00 - 18:00 Uhr
+Samstag: 10:00 - 16:00 Uhr",51.123252,13.784361,dealer
+location_050,eBike Maass/vit:Bikes,Altdorfer Straße 2,91207,Lauf an der Pegnitz,DE,+49 9123 9999960,info@ebike-maass.de,http://www.ebike-maass.de,"Montag: geschlossen
+Dienstag - Freitag: 10:00 - 18:00 Uhr
+Samstag: nach Vereinbarung",49.509241,11.281166,dealer
+location_051,E-Bike Shop Ennepetal,Berninghauser Str. 2,58256,Ennepetal,DE,+49 176 62425684,info@ebike-shop.eu,http://info@ebike-shop.eu,"Montag: geschlossen
+Dienstag - Freitag: 13:00 - 18:00 Uhr
+Samstag: 10:00 - 14:00 Uhr",51.297856,7.351478,dealer
+location_052,E-Bike Shop Gevelsberg,Körnerstraße 79,58285,Gevelsberg,DE,+49 176 31390444,info@ebike-shop.eu,http://www.ebike-shop.eu,"Montag: geschlossen
+Dienstag - Freitag: 13:00 - 18:00 Uhr
+Samstag: 10:00 - 14:00 Uhr",51.321478,7.335997,dealer
+location_053,Ebike-Store Kaiserslautern,Im Haderwald 11,67661,Kaiserslautern,DE,+49 631 3508261,kontakt@ebike-store-kl.de,https://ebike-store-kl.de,Montag - Donnerstag: 9:00 - 18:00 UhrFreitag: 9:00 - 17:00 UhrSamstag: 10:00 - 14:00 Uhr,49.43204,7.67996,dealer
+location_054,eBike Welt Hanau,Johann-Carl-Koch-Straße 7,63452,Hanau,DE,+49 6181 911 99 0,office@ebikewelthanau.de,https://ebikewelthanau.de/,"Montag: geschlossen
+Dienstag - Freitag: 10:00 - 19:00 Uhr
+Samstag: 10:00 -15:00 Uhr",50.145773,8.941646,dealer
+location_055,ebike-saar GmbH,Mainzer Straße 269,66121,Saarbrücken,DE,0681 96868911,info@ebike-saar.com,https://www.ebike-saar.com/,"Montag - Freitag: 14:00 - 18:00 Uhr
+Samstag: 10:00 - 14:00 Uhr",49.225295,7.027941,dealer
+location_056,EBike-Warehouse.de,Hoffeldstr. 104,40235,Düsseldorf,DE,+49 211-4167251,info@ebike-warehouse.de,https://ebike-warehouse.de/,"Montag - Freitag: 9:30 - 17:30 Uhr
+Samstag: 11:00 - 15:00 Uhr",51.226708,6.817234,dealer
+location_057,EGGEbikes,Zum Breikedahl 12,33165,Lichtenau,DE,+49 160 96364875,info@eggebikes.de,https://www.eggebikes.de,Montag - Freitag: 9:30 - 18:00 UhrSamstag:geschlossen,51.62208,8.90079,dealer
+location_058,e-motion e-Bike Premium-Shop Blankenese,Blankeneser Bahnhofstraße 60,22587,Hamburg,DE,+49 40 571990352,blankenese@emotion-bikes.de,https://ebikes-nord.de/blankenese/,"Montag, Dienstag, Donnerstag & Freitag: 10:00 - 18:30 Uhr
+Samstag: 10:00 - 15:30 Uhr",53.563065,9.811861,dealer
+location_059,Emotion E-Bike Welt Bad Kreuznach,Hüffelsheimerstraße 1,55593,Rüdesheim,DE,+49 671 92012525,bad-kreuznach@emotion-technologi,http://emotion-technologies.de/bad-Kreuznach,"Montag: geschlossen
+Dienstag - Freitag: 10:00 - 18:30 Uhr
+Samstag: 10:00 - 15:00 Uhr",49.845873,7.807581,dealer
+location_060,e-motion e-Bike Welt Freiburg-Süd,Tulpenbaumallee 8,79189,Bad Krozingen,DE,+49 7633 988 50 80,freiburg@emotion-ebikes.de,http://www.emotion-technologies.de/freiburg,"Montag: geschlossen
+Dienstag - Freitag: 10:00 - 18:00 Uhr
+Samstag: 10:00 - 15:00 Uhr",47.918963,7.712302,dealer
+location_061,e-motion e-Bike Welt Stade - Altes Land,Hansestraße 32,21682,Stade,DE,+49 4141 4263130,stade@emotion-ebikes.de,https://emotion-technologies.de/stade/,"Montag: geschlossen
+Dienstag - Freitag: 10:00 - 18:30 Uhr
+Samstag: 10:00 - 14:00 Uhr",53.60949,9.47611,dealer
+location_062,emotion eBike Welt Tuttlingen,Langes Gewand 5,78604,Rietheim-Weilheim,DE,+49 7461 140 85 44,tut@emotion-technologies.de,http://emotion-tut.de,"Montag: geschlossen
+Dienstag - Freitag: 9:30 - 12:30 & 13:30 - 18:30 Uhr
+Samstag: 9:30 - 15:00 Uhr",48.029871,8.775169,dealer
+location_063,e-motion eBike Welt Wedel,Langenkamp 28,22880,Wedel,DE,+49 4103 80 620 81,wedel@emotion-ebikes.de,https://ebikes-nord.de/home/standorte/wedel/,"Montag - Freitag: 10:00 - 18:30 Uhr
+Samstag: 10:00 - 15:30 Uhr",53.573232,9.728139,dealer
+location_064,enduroX Hollmann& Richter GbR,Hetzweger Weg 4,27356,Rotenburg,DE,+49 4261-6826,INFO@ENDUROX.DE,https://www.endurox.de/,"Montag - Freitag: 09:00 - 18:00 Uhr
+Samstag: 10:00 - 13:00 Uhr",53.123767,9.421115,dealer
+location_065,ePedalics Bad Nenndorf,Piepmühle 1-11,31542,Bad Nenndorf,DE,,bn1@epedalics.de,https://epedalics.de,,52.3357,9.40346,dealer
+location_066,ePedalics Bremen,Kirchhuchtinger Landstraße 36,28259,Bremen,DE,+49 421 5799293,hb1@epedalics.de,https://epedalics.de,,53.050283,8.740196,dealer
+location_067,ePedalics Chemnitz,Annaberger Straße 315,09125,Chemnitz,DE,+49 371 3550888,ch2@epedalics.de,https://epedalics.de,,50.796632,12.921887,dealer
+location_068,ePedalics Ratingen,Homberger Str. 19,40882,Ratingen,DE,+49 2102 843279,ra1@epedalics.de,https://epedalics.de,,51.296135,6.866396,dealer
+location_069,ePedalics Weimar,Nordstraße 1a,99427,Weimar,DE,+49 3643 779900,we1@epedalics.de,https://epedalics.de,,50.999305,11.332225,dealer
+location_070,Fahrrad Fischer GmbH,Kapelleschweg 20,72818,Trochtelfingen,DE,+49 7124 92800,kasse@fischertrochtelfingen.de,https://www.fischertrochtelfingen.de,Montag - Freitag: 9:00 - 12:00 & 14:00 - 18:30 UhrSamstag: 9:00 - 13:00 Uhr,48.30583,9.23569,dealer
+location_071,Fahrrad Gäde,Gewerbestraße 26,26506,Norden,DE,+49 4931 168081,fahrradgaede@gmail.com,https://fahrradservice-norden.de/,Montag - Samstag: 9:00 - 18:00 Uhr,53.6044,7.17838,dealer
+location_072,Fahrradhaus Jähn,Parkstraße 1,34516,Vöhl,DE,+49 5635 7849938,info@fahrradhaus-jaehn.de,https://www.fahrradhaus-jaehn.de/,Montag: 8:00 - 13:00 & 14:00 - 16:00 Uhr (Werkstatt geöffnet / Verkauf geschlossen)Dienstag & Mittwoch: 10:00 - 13:00 & 14:00 - 18:00 UhrDonnerstag und Freitag: 10:00 - 13:00 & 14:00 - 19:00 UhrSamstag: 9:00 - 13:00 Uhr,51.266,8.89238,dealer
+location_073,Fahrrad Heidemann,Saarstraße 6a,54290,Trier,DE,+49 651 9945227,info@fahrrad-heidemann.de,https://www.fahrrad-heidemann.de/,"Montag: geschlossen
+Dienstag - Freitag: 9:00 - 18:00 Uhr
+Samstag: 9:00 - 14:00 Uhr",49.749125,6.636651,dealer
+location_074,Fahrrad Hoffmann,Horster Landstraße 117,21220,Seevetal,DE,+49 4105 84005,info@fahrradhoffmann.de,https://fahrradhoffmann.de/,"Montag - Freitag: 9:00 - 13:00 Uhr & 14:00 - 18:00 Uhr
+Samstag: 9:00 - 14:00 Uhr",53.377581,10.035267,dealer
+location_075,Fahrrad Rapp,Hauptstraße 161,77694,Kehl,DE,+49 785171231,info@fahrrad-rapp.de,https://www.fahrrad-rapp.de/,"Montag, Dienstag, Donnerstag & Freitag: 9:00 - 13:00 & 14:00 - 18:00 Uhr
+Samstag: 9:00 - 13:00 Uhr",48.569055,7.8215,dealer
+location_076,Fahrrad Riemey - Fa. Hans Schüssler e.K,Hauptstraße 2,97799,Zeitlofs,DE,+49 160/99263515,info@fahrrad-riemey.de,https://www.fahrrad-riemey.de/,"Montag: geschlossen
+Dienstag - Freitag: 10:00 - 18:00 Uhr
+Samstag: 9:00 - 13:00 Uhr",50.271538,9.71125,dealer
+location_077,Fahrrad XXL Franz,Löhstraße 5-15,56068,Koblenz,DE,+49 261 915050,filialleitung.ko@fahrrad-xxl.de,www.fahrrad-xxl.de,Montag - Freitag: 9:30 - 18:30 UhrSamstag: 10:00 - 18:00 Uhr,50.35992,7.59404,dealer
+location_078,Fahrrad XXL Franz,Industriestr. 18-20,56218,Mühlheim-Kärlich,DE,+49 261133686-0,anfrage.mk@fahrrad-xxl.de,www.fahrrad-xxl.de,Montag - Freitag: 9:30 - 19:00 UhrSamstag: 10:00 - 18:30 Uhr,50.39601,7.52941,dealer
+location_079,Fahrrad Wappler,Königsstraße 52,08412,Werdau,DE,+49 3761 82540,fahrrad.wappler@t-online.de,https://www.fahrrad-wappler.de,"Montag - Mittwoch: 9:30 - 12:00 Uhr & 13:30 - 18:00 Uhr
+Donnerstag: geschlossen
+Freitag: 9:30 - 12:00 Uhr & 13:30 - 18:00 Uhr
+Samstag: 9:30 - 12:00 Uhr",50.74101,12.375678,dealer
+location_080,Fahrrad Wollesen,Dorfstraße 19,25927,Aventoft,DE,+49 4664 249,info@fahrrad-wollesen.de,https://www.fahrrad-wollesen.de,Montag - Freitag: 9:00 - 12:00 & 13:00 - 18:00 UhrSamstag: 9:00 - 18:00 Uhr,54.90611,8.82411,dealer
+location_081,Fahrrad Wollesen,Zum Stellwerk 6,25899,Niebüll,DE,+49 4661 3535,info@fahrrad-wollesen.de,https://www.fahrrad-wollesen.de,Montag - Freitag: 9:00 - 12:00 & 13:00 - 18:00 UhrSamstag: 9:00 - 13:00 Uhr,54.79048,8.83235,dealer
+location_082,Fahrrad Wollesen,Siemensstraße 41,25813,Husum,DE,+49 4841 9989770,info@fahrrad-wollesen.de,https://www.fahrrad-wollesen.de,Montag - Freitag: 9:00 - 12:00 & 13:00 - 18:00 UhrSamstag: 9:00 - 14:00 Uhr,54.49301,9.07796,dealer
+location_083,Fahrradhaus Winter GmbH,Oststraße 47,71638,Ludwigsburg,DE,+49 7141 688 1337,info@fahrradhaus-winter.de,http://www.fahrradhaus-winter.de,"Montag: geschlossen
+Dienstag - Freitag: 9:30 - 12:30 & 14:30 - 18:30 Uhr
+Samstag: 9:30 - 14:00 Uhr",48.892044,9.206721,dealer
+location_084,Fahrradladen Bonn,Justus-von-Liebig-Str. 31,53121,Bonn,DE,+49 228 84254877,info@fahrradladen-bonn.de,https://www.fahrradladen-bonn.de/,,50.739419,7.052456,dealer
+location_085,Fahrradprofi,Neumühler Straße 16,92224,Amberg,DE,+49 9621 7890 010,fahrradprofi@hotmail.de,https://www.fahrradprofishop.de/,"Montag - Freitag: 8:00 - 18:00 Uhr
+Samstag: 9:00 - 13:00 Uhr",49.469414,11.850316,dealer
+location_086,Fahrrad-Team Baumann,Im Leimenfeld 7,77975,Ringsheim,DE,+49 176/32426587,fahrrad@teambaumann.com,https://www.teambaumann.com/fahrrad,"Montag, Dienstag, Donnerstag & Freitag: 15:30 Uhr- 18:30 Uhr
+Mittwoch: geschlossen
+Samstag: 10:00 - 13:00 Uhr",48.247469,7.770771,dealer
+location_087,Fahrrad XXL Walcher,Herrenlandweg 2,73779,Deizisau,DE,+49 7153 83000,info.walcher@fahrrad-xxl.de,https://www.fahrrad-xxl.de/filiale/esslingen-deizisau/,Montag - Freitag: 9:30 - 19:00 UhrSamstag 9:00 - 18:00 Uhr,48.71525,9.37029,dealer
+location_088,Fahrwerk Bocholt,An der Königsmühle 16,46395,Bocholt,DE,28713543540,bocholt@fahrwerk.me,http://www.fahrwerk.me,"Montag - Freitag: 9:30 - 13:00 Uhr & 14:00 - 18:30 Uhr
+Samstag: 9:30 - 14:00 Uhr",51.826685,6.58762,dealer
+location_089,Fahrwerk Stadtlohn,Gutenbergstr. 13,48703,Stadtlohn,DE,+49 25636261,stadtlohn@fahrwerk.me,http://www.fahrwerk.me,"Montag - Freitag: 9:30 - 13:00 Uhr & 14:00 - 18:30 Uhr
+Samstag: 9:30 - 14:00 Uhr",51.989743,6.898087,dealer
+location_090,Fahrwerk Timmer Lingen,Meppener Str. 104,49808,Lingen,DE,+49 (0)591 32 17 44-23,lingen@fahrwerk.me,https://fahrwerk.me/,"Montag - Freitag: 9:30 - 13:00 Uhr & 14:00 - 18:30 Uhr
+Samstag: 9:30 - 14:00 Uhr",52.53245,7.30563,dealer
+location_091,Fahrwerk Timmer Meppen,Burgstraße 3,49716,Meppen,DE,+49 5931 12261,meppen@fahrwerk.me,https://fahrwerk.me/,"Montag - Freitag: 9:30 - 13:00 Uhr & 14:00 - 18:30 Uhr
+Samstag: 9:30 - 14:00 Uhr",52.691988,7.292902,dealer
+location_092,Florea E-Mobility,Guldenstraße 31a,86343,Königsbrunn,DE,+49 82319241054,mail@florea-emobility.de,http://www.florea-emobility.de,"Montag - Freitag: 9:00 - 18:00 Uhr
+Samstag: 10:00 - 16:00 Uhr",48.258454,10.88217,dealer
+location_093,Freetime GmbH,Rudolf Diesel Straße 21,64331,Weiterstadt,DE,+49 6151 871507,info@freetime-fahrraeder.de,https://www.freetimefahrraeder.de/,"Montag bis Freitag: 10:00 - 19:00 Uhr
+Samstag: 10:00 - 16:00 Uhr",49.900529,8.607648,dealer
+location_094,HANN-BIKES,Roseneck 1,32609,Hüllhorst,DE,+49 57412506301,service@e-bike-schrauber.de,,,52.264344,8.602996,dealer
+location_095,Haslinger Hof - Fahrradverleih Arwin Krämer,Ed 1,94148,Kirchham,DE,+49 8531 2954941,info@haslinger-hof.de,,,48.350458,13.289038,rental
+location_096,Heinrich K. Möller GmbH & Co. KG,Im Tor 14,34308,Bad Emstal,DE,*49 5625 850,mail@hk-moeller.de,https://www.hk-moeller.de,Montag - Freitag: 10:00 - 18:00 UhrSamstag: 9:00 - 12:00 Uhr,51.27437,9.2364,dealer
+location_097,Hennecke Zweirad Meisterbetrieb,Zwinger 15,86732,Öttingen,DE,+49 91082 4468,robert.hennecke@t-online.de,,"Montag - Freitag: 9:00 - 12:15 Uhr & 14:00 - 18:00 Uhr
+Samstag: 9:00 - 12:00 Uhr",48.953359,10.607102,service
+location_098,HM Racing,Hauptstra0e 120,26524,Hage,DE,+49 4931 9301115,info@powerformx.de,http://powerformx.de/,"Montag, Dienstag, Mittwoch & Freitag: 9:00 - 12:00 & 14:00 - 17:00 Uhr
+Donnerstag: 9:00 - 12:00 & 14:00 - 19:00 Uhr
+Samstag: 9:00 - 12:00 Uhr",53.603031,7.276639,dealer
+location_099,House of Bikes,Eiserfelder Straße 236,57080,Siegen,DE,+49 271 3868250, info@house-of-bikes.de,https://www.house-of-bikes-siegen.de/,"Montag - Freitag: 10:00 - 18:00 Uhr
+Samstag: 9:00 - 14:00 Uhr",50.850906,7.995825,dealer
+location_100,Hupfer GmbH,Bundesstr. 14,,Lauchringen,DE,+49 (0)7741/3289,afathi@hupfer-fahrradladen.de,,,47.632157,8.299615,dealer
+location_101,Jeti X Bikes,Alte Neustädtleiner Straße 1,91550,Dinkelsbühl,DE,+49 9851 3119,info@jeti-x.de,http://www.jeti-x.de,"Montag - Freitag: 9:00 - 12:00 & 13:30 - 18:00 Uhr
+Samstag: 9:00 - 13:00 Uhr",49.076522,10.316648,dealer
+location_102,Jonito Bikes,Taschenmacherstr. 12,23556,Lübeck,DE,+49 451 79 08 47 15 0,info@jonito.com,http://www.jonito.com,"Montag: geschlossen
+Dienstag - Freitag: 12:00 - 18:00 Uhr
+Samstag: geschlossen",53.867656,10.605456,dealer
+location_103,Karls Bike Shop,Kaigartenallee 12,68753,Waghäusel,DE,+49 (0)72549583180,info@karls-bike-shop.de,,,49.255026,8.540545,dealer
+location_104,Krafft.Werk,Tegernseer Landstraße 10,82054,Sauerlach,DE,+49 8104 8899971,kontakt@krafft-werk.de,https://www.krafft-werk.de,Montag: geschlossenDienstag - Freitag: 10:00 - 12:30 & 14:00 - 18:00 UhrSamstag: 9:30 - 13:00 Uhr,47.97063,11.65336,dealer
+location_105,Kraft Rad GmbH,Roitzheimer Straße 113,53879,Euskirchen,DE,+49 2251 2758,euskirchen@zweirad-kraft.de,https://www.zweirad-kraft.de/,"Montag - Freitag: 10:00 - 19:00 Uhr
+Samstag: 10:00 -17:00 Uhr",50.652993,6.799947,dealer
+location_106,Kraft Rad GmbH,Ernst-Heinrich-Geist-Straße 7,50226,Frechen,DE,+49 2234 911930,frechen@zweirad-kraft.de,https://www.zweirad-kraft.de/,"Montag - Freitag: 10:00 - 19:00 Uhr
+Samstag: 10:00 -17:00 Uhr",50.908724,6.820961,dealer
+location_107,Leichter fahren Elektrorad-Zentrum,Dietzhölzstraße 6,35713,Eschenburg,DE,+49 2774  917 917 0,info@leichter-fahren.de,https://leichter-fahren.de/,"Von März bis Oktober:
+Montag - Freitag: 9:30 - 18:00 Uhr
+Samstag: 9:30 - 13:00 Uhr
+
+Von November bis Februar:
+Montag: geschlossen
+Dienstag - Freitag: 14:00 - 18:00 Uhr
+Samstag: 10:00 - 13:00 Uhr",50.789759,8.326859,dealer
+location_108,Lili´s Radl-Laden,Martin-Luther-Straße 25,91217,Hersbruck,DE,+49 9151 9050580,info@lilis-radlladen.de,http://www.lilis-radlladen.de,"Montag - Freitag: 10:00 - 18:00 Uhr
+Samstag: 10:00 - 13:00 Uhr
+In den Wintermonaten: Mittwochs nur bis 13:00 Uhr",49.508139,11.431643,dealer
+location_109,Little John Bikes Bautzen,Neusalzaer Straße 58,02625,Bautzen,DE,+49 3591 530507,bz1@littlejohnbikes.com,https://littlejohnbikes.de,,51.166791,14.425563,dealer
+location_110,Little John Bikes Berlin-Friedrichshain,Frankfurter Allee 71-77,10247,Berlin,DE,+49 30 42804516,be6@littlejohnbikes.com,https://littlejohnbikes.de,,52.515092,13.468626,dealer
+location_111,Little John Bikes Berlin-Gesundbrunnen,Grüntalerstraße 2,13357,Berlin,DE,+49 30 49308080,be9@littlejohnbikes.com,https://littlejohnbikes.de,,52.550824,13.385267,dealer
+location_112,Little John Bikes Berlin-Kreuzberg,Hasenheide 61,10967,Berlin,DE,+49 30 61203765,be3@littlejohnbikes.com,https://littlejohnbikes.de,,52.488683,13.408413,dealer
+location_113,Little John Bikes Berlin-Mariendorf,Mariendorfer Damm 433,12107,Berlin,DE,+49 30 70072707,be5@littlejohnbikes.co,https://littlejohnbikes.de,,52.41635,13.400501,dealer
+location_114,Little John Bikes Berlin-Prenzlauer Berg,Prenzlauer Allee 177a,10409,Berlin,DE,+49 30 46796810,be8@littlejohnbikes.com,https://littlejohnbikes.de,,52.545117,13.427144,dealer
+location_115,Little John Bikes Berlin-Schöneberg,Potsdamer Straße 162,10783,Berlin,DE,+49 30 23627310,be7@littlejohnbikes.com,https://littlejohnbikes.de,,52.495806,13.36063,dealer
+location_116,Little John Bikes Berlin-Steglitz,Rheinstraße 41,12161,Berlin,DE,+49 30 85408950,be10@littlejohnbikes.com,https://littlejohnbikes.de,,52.46513,13.329467,dealer
+location_117,Little John Bikes Bitterfeld,Bismarckstraße 45,06749,Bitterfeld,DE,+49 3493 9223227,bf1@littlejohnbikes.com,https://littlejohnbikes.de,,51.620447,12.319821,dealer
+location_118,Little John Bikes Brandenburg Havel,Upstallstraße 15,14772,Brandenburg an der Havel,DE,+49 3381 7391965,br1@littlejohnbikes.com,https://littlejohnbikes.de,,52.432187,12.537076,dealer
+location_119,Little John Bikes Cottbus,Berliner Straße 24,03046,Cottbus,DE,+49 355 715062,cb1@littlejohnbikes.com,https://littlejohnbikes.de,,51.760741,14.322695,dealer
+location_120,Little John Bikes Dessau-Roßlau,Kavalierstraße 82,06844,Dessau,DE,+49 340 2168989,de1@littlejohnbikes.com,https://littlejohnbikes.de,,51.8311,12.24181,dealer
+location_121,Little John Bikes Dresden -Johannstadt,Pfotenhauer Straße 7,01307,Dresden,DE,+49 351 47004212,dd5@littlejohnbikes.com,https://littlejohnbikes.de,,51.056476,13.765155,dealer
+location_122,Little John Bikes Dresden-Löbtau,Tharandter Straße 48,01159,Dresden,DE,+49 351 4867825,dd3@littlejohnbikes.com,https://littlejohnbikes.de,,51.036074,13.703991,dealer
+location_123,Little John Bikes Dresden-Mickten,Lommatzscher Straße 53,01139,Dresden,DE,+49 351 8438568,dd2@littlejohnbikes.com,https://littlejohnbikes.de,,51.082079,13.7036,dealer
+location_124,Little John Bikes Dresden-Seidnitz,Rennplatzstraße 26,01237,Dresden,DE,+49 351 2056342,dd4@littlejohnbikes.com,https://littlejohnbikes.de,,51.025034,13.797352,dealer
+location_125,Little John Bikes Duisburg-Buchholz,Sittardsberger Allee 21,47249,Duisburg,DE,+49 203 701293,du4@littlejohnbikes.com,https://littlejohnbikes.de,,51.377419,6.761402,dealer
+location_126,Little John Bikes Duisburg-Neudorf,Sternbuschweg 95,47057,Duisburg,DE,+49 203 2898488,du3@littlejohnbikes.com,https://littlejohnbikes.de,,51.427927,6.793139,dealer
+location_127,Little John Bikes Eberswalde,Schneidemühlenweg 1,16225,Eberswalde,DE,+49 3334 3868226,ew1@littlejohnbikes.com,https://littlejohnbikes.de,,52.836511,13.805097,dealer
+location_128,Little John Bikes Eisenach,Bahnhofstraße 8 - 32,99817,Eisenach,DE,,ea1@littlejohnbikes.com,https://littlejohnbikes.de,,50.976375,10.327605,dealer
+location_129,Little John Bikes Erfurt,Leipziger Straße 56b,99085,Erfurt,DE,+49 361 55069771,ef1@littlejohnbikes.com,https://littlejohnbikes.de,,50.986063,11.049997,dealer
+location_130,Little John Bikes Erkelenz,August-Horch-Straße 5,41812,Erkelenz,DE,+49 2431 6620,ez1@littlejohnbikes.com,https://littlejohnbikes.de,,51.076229,6.306741,dealer
+location_131,Little John Bikes Erkrath,Schimmelbuschstraße 19,40699,Erkrath,DE,+49 2104 43919,et1@littlejohnbikes.com,https://littlejohnbikes.de,,51.216298,6.946711,dealer
+location_132,Little John Bikes Falkensee,Spandauer Straße 112,14612,Falkensee,DE,+49 3322 4260117,fs1@littlejohnbikes.com,https://littlejohnbikes.de,,52.561838,13.128903,dealer
+location_133,Little John Bikes Frankfurt (Oder),Berliner Straße 40,15230,Frankfurt (Oder),DE,+49 335 40163430,ff1@littlejohnbikes.com,https://littlejohnbikes.de,,52.351439,14.548412,dealer
+location_134,Little John Bikes Freiberg,Häuersteig 2,09599,Freiberg,DE,+49 3731 2449086,fg1@littlejohnbikes.com,https://littlejohnbikes.de,,50.895292,13.328423,dealer
+location_135,Little John Bikes Görlitz,Am Hopfenfeld 6,02828,Görlitz,DE,+49 3581 313166,gr3@littlejohnbikes.com,https://littlejohnbikes.de,,51.16983,14.968234,dealer
+location_136,Little John Bikes Gotha,Bertha von Suttner Platz 2-8,99867,Gotha,DE,+49 3621 7367601,gt1@littlejohnbikes.com,https://littlejohnbikes.de,,50.950656,10.698622,dealer
+location_137,Little John Bikes Greifswald,Gützkower Straße 81/82,17489,Greifswald,DE,+49 3834 8890777,gf1@littlejohnbikes.com,https://littlejohnbikes.de,,54.091351,13.380086,dealer
+location_138,Little John Bikes Güstrow,Speicherstraße 1,18273,Güstrow,DE,+49 3843 681193,gw1@littlejohnbikes.com,https://littlejohnbikes.de,,53.799515,12.171209,dealer
+location_139,Little John Bikes Halle Mitte,Mansfelder Straße 15,06108,Halle,DE,,ha1@littlejohnbikes.com,https://littlejohnbikes.de,,51.481174,11.957822,dealer
+location_140,Little John Bikes Hilden,Am Kronengarten 21,40721,Hilden,DE,+49 2103 286660,hi1@littlejohnbikes.com,https://littlejohnbikes.de,,51.168498,6.939083,dealer
+location_141,Little John Bikes Hof,Wunsiedler Straße 16,95032,Hof,DE,+49 9281 1441909,ho1@littlejohnbikes.com,https://littlejohnbikes.de,,50.303136,11.922912,dealer
+location_142,Little John Bikes Hoyerswerda,Senftenberger Straße 1,02977,Hoyerswerda,DE,+49 3571 600719,hy1@littlejohnbikes.com,https://littlejohnbikes.de,,51.438832,14.243108,dealer
+location_143,Little John Bikes Leipzig-Rückmarsdorf,Großer Marktweg 2,04178,Leipzig,DE,+49 341 4417641,le1@littlejohnbikes.com,https://littlejohnbikes.de,,51.34561,12.263257,dealer
+location_144,Little John Bikes Leipzig-Zentrum,Martin-Luther-Ring 3-5,04109,Leipzig,DE,+49 341 4625919,le5@littlejohnbikes.com,https://littlejohnbikes.de,,51.335008,12.371596,dealer
+location_145,Little John Bikes Magdeburg-Altstadt,Alter Markt 13/14,39104,Magdeburg,DE,+49 391 5556203,md2@littlejohnbikes.com,https://littlejohnbikes.de,,52.131709,11.637289,dealer
+location_146,Little John Bikes Magdeburg-Hermsdorf,Am Elbepark 1,39326,Hermsdorf,DE,+49 39206 689540,md3@littlejohnbikes.com,https://littlejohnbikes.de,,52.178295,11.481949,dealer
+location_147,Little John Bikes Magdeburg-Neustadt,Lübecker Straße 92,39124,Magdeburg,DE,+49 391 2581627,md1@littlejohnbikes.com,https://littlejohnbikes.de,,52.161623,11.63611,dealer
+location_148,Little John Bikes Mühlhausen,Wendewehrstraße 130,99974,Mühlhausen,DE,+49 3601 4086680,mh1@littlejohnbikes.com,https://littlejohnbikes.de,,51.216046,10.464866,dealer
+location_149,Little John Bikes Neubrandenburg,Juri-Gagarin-Ring 1,17036,Neubrandenburg,DE,+49 395 45503043,nb1@littlejohnbikes.com,https://littlejohnbikes.de,,53.553977,13.293872,dealer
+location_150,Little John Bikes Neukirch/Lausitz,Oststraße 29,01904,Neukirch,DE,+49 35951 34333,nk2@littlejohnbikes.com,https://littlejohnbikes.de,,51.097348,14.335444,dealer
+location_151,Little John Bikes Niederkrüchten,Gewerbering 24,41372,Niederkrüchten,DE,+49 2163 8896271,ni1@littlejohnbikes.com,https://littlejohnbikes.de,,51.210572,6.18038,dealer
+location_152,Little John Bikes Nordhausen,Alte Leipziger Straße 57,99734,Nordhausen,DE,,nh1@littlejohnbikes.com,https://littlejohnbikes.de,,51.489427,10.832426,dealer
+location_153,Little John Bikes Oranienburg,Lehnitzstraße 87-89,16515,Oranienburg,DE,+49 3301 5771854,or1@littlejohnbikes.com,https://littlejohnbikes.de,,52.744506,13.25476,dealer
+location_154,Little John Bikes Plauen,Pausaer Straße 281a,08525,Plauen,DE,+49 3741 1494676,pl1@littlejohnbikes.com,https://littlejohnbikes.de,,50.524787,12.110318,dealer
+location_155,Little John Bikes Rostock-Schmarl,Handwerkstraße 1,18069,Rostock,DE,+49 381 12830975,ro2@littlejohnbikes.com,https://littlejohnbikes.de,,54.123954,12.074562,dealer
+location_156,Little John Bikes Schwerin,Am Margaretenhof 26,19057,Schwerin,DE,+49 385 4866165,sn1@littlejohnbikes.com,https://littlejohnbikes.de,,53.659943,11.361394,dealer
+location_157,Little John Bikes Spremberg,Friedrichstraße 39,03130,Spremberg,DE,+49 3563 348486,sp1@littlejohnbikes.com,https://littlejohnbikes.de,,51.568968,14.376058,dealer
+location_158,Little John Bikes Stendal,Gneisenaustraße 2,39576,Stendal,DE,+49 3931 4186809,sd1@littlejohnbikes.com,https://littlejohnbikes.de,,52.610314,11.842149,dealer
+location_159,Little John Bikes Stralsund,Grünhufer Bogen 15,18437,Stralsund,DE,+49 3831 3079622,st1@littlejohnbikes.com,https://littlejohnbikes.de,,54.305668,13.041992,dealer
+location_160,Little John Bikes Weißenfels,Max-Planck-Straße 1,06667,Weißenfels,DE,+49 3443 3387880,wf1@littlejohnbikes.com,https://littlejohnbikes.de,,51.18835,11.98125,dealer
+location_161,Little John Bikes Wismar,Am Kleinen Stadtfeld 5,23970,Wismar,DE,+49 3841 7589202,wi1@littlejohnbikes.com,https://littlejohnbikes.de,,53.873802,11.447807,dealer
+location_162,Little John Bikes Wittenberg,Elbstraße 3A,06886,Wittenberg,DE,+49 3491 8774333,wb1@littlejohnbikes.com,https://littlejohnbikes.de,,51.864416,12.642837,dealer
+location_163,Markenfahrräder Tallafuß,Bahnhofstraße 5,84130,Dingolfing,DE,+49 8731 3974324,info@markenfahrraeder-tallafuss.de,http://www.markenfahrraeder-tallafuss.de,"Montag: geschlossen
+Dienstag - Freitag: 9:00 - 12:00 & 14:00 - 18:00 Uhr
+Samstag: 9:00 - 12:00 Uhr",48.635091,12.493623,dealer
+location_164,Matti's Bike Shop,Bahnhofstraße 62,59199,Bönen,DE,+4923839535500,info@mattis-bike-shop.de,https://mattis-bike-shop.de,"""Montag: geschlossen
+Dienstag & Donnerstag: 10:00 - 18:00 Uhr
+Mittwoch & Freitag: 08:00 - 16:00 Uhr
+Samstag: 09:00 - 13:00 Uhr""",51.596635,7.750465,dealer
+location_165,MD Bikes,Am Marktplatz 9,91320,Ebermannstadt,DE,+49 9194 5956, info@md-bikes.de,https://www.md-bikes.de/,"Montag: geschlossen
+Dienstag: nur nach Vereinbarung!
+Mittwoch: 10:00 Uhr - 17:00 Uhr
+Donnerstag & Freitag: 10:00 Uhr - 18:00 Uhr
+Samstag: 10:00 Uhr - 13:00 Uhr",49.780373,11.187268,dealer
+location_166,MEGA Bike Altona,Stresemannstr.360,22761,Hamburg,DE,+49 40 89062783,altona@megabike24.de,https://www.megabike24.de/,,53.563054,9.922704,dealer
+location_167,MEGA Bike Bad Segeberg,Ziegelstr.107,23795,Bad Segeberg,DE,+49 4551 9014966,badsegeberg@megabike24.de,https://www.megabike24.de/,,53.947583,10.302835,dealer
+location_168,MEGA Bike Bramfeld,Bramfelder Ch.148,22177,Hamburg,DE,+49 40 64222388,bramfeld@megabike24.de,https://www.megabike24.de/,,53.604733,10.071005,dealer
+location_169,MEGA Bike Flensburg,Westerallee161,24941,Flensburg,DE,+49 461 24438,flensburg@megabike24.de,https://www.megabike24.de/,,54.767506,9.405155,dealer
+location_170,MEGA Bike Kaltenkirchen,Kisdorfer Weg 32,24568,Kaltenkirchen,DE,+49 4191 956 77 73,kaltenkirchen@megabike24.de,https://www.megabike24.de/,,53.828417,9.979009,dealer
+location_171,MEGA Bike Kiel-Hassee,Rendsburger Landstr.161,24113,Kiel-Hassee,DE,+49 431 71988577,hassee@megabike24.de,https://www.megabike24.de/,,54.30095,10.096705,dealer
+location_172,MEGA Bike Lübeck,St.-Jürgen-Ring62,23564,Lübeck,DE,+49 451 4792175,luebeck@megabike24.de,https://www.megabike24.de/,,53.859661,10.716797,dealer
+location_173,MEGA Bike Neumünster,Rendsburger Str.12,24534,Neumünster,DE,+49 4321 499385,neumuenster@megabike24.de,https://www.megabike24.de/,,54.078754,9.979697,dealer
+location_174,MEGA Bike Pinneberg,Mühlenstr.2,25421,Pinneberg,DE,+49 4101 8563816,pinneberg@megabike24.de,https://www.megabike24.de/,,53.660292,9.78869,dealer
+location_175,MEGA Bike Rendsburg,Friedrichstädter Str.75-77,24768,Rendsburg,DE,+49 4331 789660,rendsburg@megabike24.de,https://www.megabike24.de/,,54.32336,9.626254,dealer
+location_176,MEGA Bike Schleswig,Stadtweg72-76,24837,Schleswig,DE,+49 4621 989790,schleswig@megabike24.de,https://www.megabike24.de/,,54.522303,9.566151,dealer
+location_177,MEGA Bike Schwentinental,Liebigstr.11,24223,Schwentinental,DE,+49 4307 839140,schwentinental@megabike24.de,https://www.megabike24.de/,,54.285467,10.21879,dealer
+location_178,MEGA Bike Wik,Schleusenstraße 18,24106,Kiel-Wik,DE,+49 431 6668963,wik@megabike24.de,https://www.megabike24.de/,,54.362276,10.132085,dealer
+location_179,Miriquidi Bike Store GmbH,Lohngasse  3,09429,Wolkenstein,DE,+49 37369 274601,miriquidi.wolkenstein@gmail.com,https://miriquidi-bikestore.de,"Montag, Mittwoch & Freitag: 09:00–12:00 & 13:00–16:00 Uhr
+Dienstag & Donnerstag: 09:00–12:00 & 13:00–18:00 Uhr
+Samstag	nach Vereinbarung",50.655848,13.067428,dealer
+location_180,Motorrad Ruser,Kamperrege 80,25489,Haseldorf,DE,+49 4129 443,info@motorrad-ruser.de,http://www.motorrad-ruser.de,"Montag - Freitag: 9:00 - 18:00 Uhr
+Samstag: 10:00 - 13:00 Uhr",53.648134,9.611516,dealer
+location_181,Motorrad Welink,Am Schleifweg 2,97516,Oberschwarzach,DE,+49 9382 3191071,info@motorrad-welink.de,https://www.motorrad-welink.de/,"Montag: 09:00 - 12:30 und 14:00 - 18:00 Uhr
+Dienstag: 09:00 - 12:30 und 14:00 - 18:00 Uhr
+Mittwoch: 09:00 - 12:30 Uhr
+Donnerstag: 09:00 - 12:30 und 14:00 - 18:00 Uhr
+Freitag: 09:00 - 12:30 und 14:00 - 18:00 Uhr
+Samstag: 09:00 - 12:00 Uhr",49.857795,10.408671,dealer
+location_182,MTB - Market Lübeck,Bei der Gasanstalt 2 - 4,23560,Lübeck,DE,+49 451 51358,info@mtbmarket-luebeck.de,https://www.mtbmarket.de,Montag - Freitag: 10:00 - 19:00 UhrSamstag: 10:00 - 16:00 Uhr,53.84955,10.67784,dealer
+location_183,MTB Store,Langwahn 100,52249,Eschweiler,DE,+49 240322497,info@mtb-store.de,https://www.mtb-store.de/,"Montag, Mittwoch & Freitag: 13:00 - 18:00 Uhr
+Samstag: 10:00 - 13:00 Uhr",50.816293,6.259344,dealer
+location_184,Nicklas Kleingerätewelt,Bürgermeister-Kleinlein-Straße 2,95349,Thurnau,DE,+49 92289974151,info@kleingeraetewelt.de,https://www.kleingeraetewelt.de/,"Montag - Freitag: 9:00 - 18:00 Uhr
+Samstag: 8:00 - 13:00 Uhr",50.023304,11.390817,dealer
+location_185,Olek's Radsport,Hafenstraße 3,65479,Raunheim,DE,+49 (0)6142 833 869 1, info@biketeam-raunheim.de,https://www.oleks-radsport.de/,"Montag: geschlossen
+Dienstag - Freitag: 10:00 - 13:00 Uhr & 14:30 - 19:00 Uhr
+Samstag: 10:00 - 16:00 Uhr",50.010633,8.439906,dealer
+location_186,OLEK'S RADSPORT GMBH,"Mathildenstrasse	54",64683,Einhausen,DE,+49 (0)625/153039,info@oleks-radsport.de,https://www.oleks-radsport.de/,"Montag, Dienstag, Donnerstag & Freitag: 9:00 - 12:30 Uhr & 14:30 Uhr - 18:00 Uhr
+Mittwoch: 9:00 - 12:30 Uhr
+Samstag: 9:00 - 13:00 Uhr",49.672312,8.544783,dealer
+location_187,Otto Achilles 2-Radgeschäft,Bahnhofstr. 30,29308,Winsen,DE,4951432265,ottoachilles@dg-email.de,,"Montag, Mittwoch & Freitag: 10:00 - 12:30 Uhr & 14:30 - 18:00 Uhr
+Dienstag & Donnerstag: 14:30 - 18:00 Uhr
+Samstag: 10:00 . 13:00 Uhr""",52.673687,9.905519,dealer
+location_188,Pfalz-Bikes e. K.,Flörsheimer Ring 5a,67705,Trippstadt,DE,+49 6306 701948,info@pfalz-bikes.de,https://pfalz-bikes.de/,"Montag: 08:00–12:00 / 13:00–17:00
+Dienstag: 08:00–12:00 / 13:00–17:00
+Mittwoch: 08:00–12:00 / 13:00–17:00
+Donnerstag: 08:00–12:00 / 13:00–17:00
+Freitag: 08:00–12:00 / 13:00–17:00
+Samstag: Geschlossen
+Sonntag: Geschlossen",49.364696,7.76465,dealer
+location_189,Pott GmbH,"Heideweg, 12",49196,Bad Laer,DE,+49 (0)05424 - 22 170,info@pott-gmbh.de,,,52.101664,8.069241,dealer
+location_190,Profile Korte der Fahrradspezialist,Bahnhofstraße 123,44623,Herne,DE,+49 232353494,hallo@fahrrad-korte.de,http://fahrrad-korte.de,"Montag: geschlossen
+Dienstag - Freitag: 10:00 - 18:30 Uhr
+Samstag: 10:00 - 14:30 Uhr",51.546095,7.217016,dealer
+location_191,Pulssport Blieskastel,Von-der-Leyen-Straße 7,66440,Blieskastel,DE,+49 6842 946533,info@puls-sport.de,https://www.puls-sport.com/,"Montag, Dienstag, Donnerstag & Freitag: 13:00 - 18:00 Uhr
+Samstag: 9:00 - 12:00 Uhr",49.237417,7.259218,dealer
+location_192,Rabl GmbH & Co. KG,Gewerbestr. 22,85229,Markt Indersdorf,DE,+49 8136 89 32 03,mail@rabl-gmbh.de,https://rabl-gmbh.de/,"Montag: 13:00 - 18:00 Uhr
+Dienstag - Freitag: 9:00 - 18:00 Uhr
+Samstag: 9:00 - 13:00 Uhr",48.346693,11.379265,dealer
+location_193,Rad+Tat,Herbert-Wehner-Straße 3+5,59174,Kamen,DE,+49 2307 12932,info@radkamen.de,https://radkamen.de,Montag - Freitag: 9:30 - 13:00 Uhr & 14:00 - 19:00 UhrSamstag: 9:30 - 16:00 Uhr,51.59071,7.65005,dealer
+location_194,Raddesign,Friedrich-Verleger-Straße 5,33602,Bielefeld,DE,+49 521 61146,info@raddesign.de ,https://raddesign.de,Montag - Freitag: 10:00 - 18:30 UhrSamstag: 10:00 - 14:00 Uhr,52.02376,8.53622,dealer
+location_195,Radelmeister Giengen,Herbrechtinger Straße 3,89537,Giengen an der Brenz,DE,+49 7322 919134,info@radelmeister.de,https://www.radelmeister.de,Montag: geschlossenDienstag - Freitag: 14:00 - 18:00 UhrSamstag: 10:00 - 13:00 Uhr,48.62212,10.23689,dealer
+location_196,Rad & Sportservice Wall,Hauptstraße 19,93173,Wenzenbach,DE,+49 9407 5529127,info@rad-sportservice.de,https://www.rad-sportservice.de/,"Montag:	geschlossen
+Dienstag - Freitag: 9:00 – 18:00 Uhr
+Samstag: 9:00 – 13:00 Uhr",49.07676,12.197998,dealer
+location_197,Rad Max,Marktplatz 7,75417,Mühlacker,DE,+49 172 77 40 890,info@rad-max.de,https://www.rad-max.de/,"Montag: 14:00  - 18:00 Uhr
+Dienstag, Donnerstag & Freitag: 10:00 - 13:00 Uhr & 14:00 - 18:00 Uhr
+Mittwoch: 14:00 - 18:00 Uhr
+Samstag: 10:00 - 13:00 Uhr",48.940693,8.842049,dealer
+location_198,Rad Service Jung,Wilhelmstr. 4,55566,Bad Sobernheim,DE,+49 6751 8568500,info@radjung.de,http://www.radjung.de,"Montag, Dienstag, Donnerstag & Freitag: 9:00 - 12:00 & 14:00 - 18:00 Uhr
+Mittwoch: geschlossen
+Samstag: 9:00 - 13:00 Uhr",49.785734,7.649713,dealer
+location_199,Radhaus am Elm,Marktstr. 3,38154 ,Königslutter,DE,+49 5353 9904097,kontakt@radhausamelm.de,https://www.radhausamelm.de/,"Montag, Dienstag, Donnerstag & Freitag: 10:00 - 18:00 UhrMittwoch & Samstag: 10:00 - 14:00 Uhr",52.25084,10.81812,dealer
+location_200,Radhaus Bennigsen,Hauptstr. 1,31832,Springe,DE,+49 5045 4580826,gabriel.hartig@radhaus-bennigsen.de,https://www.radhaus-bennigsen.de,"Montag, Mittwoch, Donnerstag & Freitag: 9:00 - 13:00 & 15:00 - 18:00 UhrDienstag & Samstag: 9:00 - 13:00 Uhr",52.2396,9.66511,dealer
+location_201,Radhaus Ingolstadt,Bei der Arena 7,85053,Ingolstadt,DE,+49 841 8857720,info@radhaus.de,http://www.radhaus.de,"Montag: geschlossen
+Dienstag - Freitag: 10:00 - 19:00 Uhr
+Samstag: 10:00 - 18:00 Uhr",48.757092,11.436972,dealer
+location_202,Radhaus Radebeul,Neißner Straße 66,01445,Radebeul,DE,+49 351 8336365,info@radhaus-radebeul.com,http://www.radhaus-radebeul.com,Montag - Freitag: 10:00 - 19:00 Uhr,51.111544,13.643318,dealer
+location_203,Rad-Konzept Mario Johannsohn,Ernst-Thälmann-Straße 125,01968,Senftenberg,DE,+49 35738100811,radkonzept-senftenberg@web.de,,"Montag - Freitag: 9:00 - 18:00 Uhr
+Samstag: 9:00 - 12:00 Uhr",51.522387,13.981763,dealer
+location_204,Radlladen am Schweinemarkt,Hauptstraße 8,91257,Pegnitz,DE,+49 9241 4986630,radlladen.am.schweinemarkt@gmail,https://radlladen-am-schweinemarkt.de/,"Montag, Donnerstag & Freitag: 10:00 - 18:00 Uhr
+Dienstag: nach Vereinbarung
+Mittwoch: geschlossen
+Samstag: 10:00 - 12:00 Uhr",49.756596,11.543414,dealer
+location_205,Radl-ladl,Frabertshamerstr.9a,83123,Amerang,DE,+49 8075 1698, service@radl-ladl.de,https://www.radl-ladl.de/,"Montag, Dienstag, Donnerstag & Freitag: 9:00 - 12.00 Uhr & 13:00 - 18:00 Uhr
+Mittwoch & Samstag: 9:00 - 12:00 Uhr",47.99131,12.31001,dealer
+location_206,Radlmadl,Lenbachstraße 39,86529,Schrobenhausen,DE,+49 176 31541822,info@radlmadl.de,https://radlmadl.de/,"Dienstag - Freitag: 9:00 - 13:00 & 14:00 - 18:00 Uhr
+Samstag: 9:00 - 13:00 Uhr",48.559631,11.265,dealer
+location_207,Rad Rech,Göllheimer Straße 50,67304,Kerzenheim,DE,+49 6351 8658,info@rad-rech.de,https://rad-rech.de,"Montag, Diesntag, Donnerstag & Freitag: 14:00 - 18:00 UhrMitwoch & Samstag: 9:00 - 12:00 Uhr",49.57731,8.05566,dealer
+location_208,Radshop Brunner,Mürwiker Straße 144,24943,Flensburg,DE,+49 461 312462,info@eike-brunner.de,http://eike-brunner.de/,"Montag - Freitag: 9:00 - 18:00 Uhr
+Samstag: 9:00 - 13:00 Uhr",54.805826,9.458736,dealer
+location_209,Radsport Baier,Kirchplatz 5,96129,Mistendorf,DE,+49 95 05 80 47 90,info@radsport-baier.de,https://www.radsport-baier.de/,"Montag: geschlossen
+Dienstag - Freitag: 10:00 - 18:00 Uhr
+Donnerstag: 10 :00- 19:00 Uhr
+Samstag: 9:00 - 13:00 Uhr",49.871422,11.045324,dealer
+location_210,Radsport Borens,Aegidienberger Straße 1,53604,Bad Honnef,DE,+49 2224820750,verkauf@radsport-borens.de,https://www.radsport-borens.de/,"Montag, Dienstag, Donnerstag & Freitag: 9:30 - 13:00 & 14:30 - 18:30 Uhr
+Mittwoch: 9:30 - 13:00 Uhr
+Samstag: 9:30 - 14:00 Uhr",50.652518,7.301716,dealer
+location_211,Radsport Claassen,Judenstraße 24,47906,Kempen,DE,+49 2152 3398,info@radsport-claassen.de,https://radsport-claassen.de/,"Montag - Freitag: 9:00 - 13:00 & 14:00 - 18:30 Uhr
+Samstag: 10:00 - 14:00 Uhr",51.364809,6.419228,dealer
+location_212,Radsport Ersing,Rottumstraße 1,88487,Mietingen,DE,+49 7392 9390213,info@radsport-ersing.de,http://www.radsport-ersing.de,"Montag: geschlossen
+Dienstag - Freitag: 10:00 - 12:00 & 13:30 - 18:00 Uhr
+Samstag: 9:00 - 12:00 Uhr",48.183382,9.903467,dealer
+location_213,Radsport Hungerhuber,Schwarzauer Str. 66,83308,Trostberg,DE,+49 8621 90242 0,info@hungerhuber.de,https://www.hungerhuber.de/,"Montag, Dienstag Donnerstag & Freitag: 9:00 – 12:00 Uhr & 13:00 – 18:00 Uhr
+Mittwoch: 13:00 – 18:00 Uhr 
+Samstag: 9:00 – 12:00 Uhr",48.01786,12.536671,dealer
+location_214,Radsport Riedmann,Marktheidenfelder Str. 19,97842,Karbach,DE,+49 9391 5121,robert@radsport-riedmann.de,https://www.radsport-riedmann.de/,"Montag: 15.00 – 18.30 Uhr
+Dienstag: 15.00 – 18.30 Uhr
+Mittwoch: geschlossen
+Donnerstag: 9.00 - 13.00* und 15.00 – 18.30 Uhr
+Freitag: 9.00 - 13.00* und 15.00 – 18.30 Uhr
+Samstag: 9.00 – 13.00 Uhr
+
+*März bis Oktober Vormittags geöffnet",49.865016,9.637984,dealer
+location_215,Radwelt Main-Tauber,Wilhelm-Frank-Straße 82,97980,Bad Mergentheim,DE,+49 7931 520 21,info@radwelt-mt.de,https://www.radwelt-main-tauber.de/,"Montag: geschlossen
+Dienstag - Freitag: 9:00 -13:00 & 14:00 - 18:00 Uhr
+Samstag: 9:00 - 13:00 Uhr",49.497884,9.759237,dealer
+location_216,RADWerk Görlitz,Heilige-Grab-Straße 26,02826,Görlitz,DE,+49 3581 4298990,epost@radwerk-goerlitz.de,https://www.radwerk.online/,"Montag - Freitag: 9:00 - 18:00 Uhr
+Samstag: 9:00 - 12:00 Uhr",51.159704,14.977407,dealer
+location_217,Radwerk Hachen,Am Sportplatz 3,59846,Sundern,DE,+49 2935 1038,radwerkhachen@gmx.de,https://radwerk-hüsten.de,"Montag - Freitag: 8:30 - 18:00 Uhr
+Samstag: 8:30 - 13:00 Uhr",51.372241,7.977513,dealer
+location_218,Radwerk Hüsten,Kleinbahnstraße 11,59759,Arnsberg,DE,+49 2932 9319993,radwerkhuesten@gmx.de,https://radwerk-hüsten.de,"Montag - Freitag: 8:30 - 18:00 Uhr
+Samstag: 8:30 - 13:00 Uhr",51.432926,7.984571,dealer
+location_219,Radwerk Würzburg,Ringstraße 1,97261,Güntersleben,DE,+49 151 128 66 2 45,sw@radwerk-wuerzburg.de,https://www.radwerk-wuerzburg.de/,"1. Oktober bis 28. Februar
+Freitags 14.00 Uhr-16.30 Uhr
+
+oder gerne ganzjährig nach vorheriger
+telefonischer Terminvereinbarung unter 0175 11 64 667
+(erreichbar Mo-Fr 16 Uhr bis 18 Uhr)",49.865518,9.904951,dealer
+location_220,REVEN EUROPE GmbH,Am Umspannwerk 6,88255,Baindt/Schachen,DE,+49 7502 9421898,info@revenbikes.com,https://revenbikes.de/,"Montag: 13:00 – 19:00 Uhr
+Dienstag - Freitag: 13:00 – 18:00 Uhr
+Samstag: 9:00 – 13:00 Uhr
+Mittwoch geschlossen",47.836296,9.633614,dealer
+location_221,Reyhle GmbH & Co. KG,Lichtensteinstraße 2,89160,Dornstadt,DE,+49 7348 9673232,info@radsport-reyhle.de,http://radsport-Reyhle.de,"Winter-Öffnungszeiten ab 14.10.2024:
+Montag - Freitag: 10:00 - 18:00 Uhr
+Samstag: 9:00 - 14:00 Uhr""",48.484456,9.894646,dealer
+location_222,Rios Rad,Klosterstraße 25,46459,Rees-Haldern,DE,+49 2850 212,info@rios-rad.de,https://rios-rad.de/,"Montag: geschlossen
+Dienstag - Freitag: 9:30 - 18:30 Uhr
+Samstag: 9:30 - 14:00 Uhr",51.774275,6.46221,dealer
+location_223,Rund ums Rad,Bremer Straße 302,27751,Delmenhorst,DE,+49 4221 721033,verkauf@wirlebenfahrrad.de,https://www.wirlebenfahrrad.de,Montag - Freitag: 9:00 - 18:00Samstag: geschlossen,53.05641,8.67869,dealer
+location_224,Rupps Fahrradkiste,Mailheimer Straße 1,91438,Bad Windsheim,DE,+49 9841 4011170,info@rupps-fahrradkiste.de,https://www.rupps-fahrradkiste.de,"Montag, Dienstag, Donnerstag & Freitag: 10:00 - 18:00 UhrMittwoch:geschlossenSamstag: 9:00 - 18:00 Uhr",49.50785,10.4404,dealer
+location_225,SCHMITZ Fahrrad.Freiheit.Leben.,Barbarastraße 55/4,46282,Dorsten,DE,+49 2363605060,office@schmitz.bike,http://www.schmitz.bike,"Montag - Freitag: 9:30 - 19:00 Uhr
+Samstag: 9:30 - 16:00 Uhr",51.65256,6.978701,dealer
+location_226,SCHMITZ Fahrrad.Freiheit.Leben.,Erlenstraße 14a,46149,Oberhausen,DE,+49 20888016620,office@schmitz.bike,http://www.schmitz.bike,"Montag: geschlossen
+Dienstag - Freitag: 9:30 - 19:00 Uhr
+Samstag: 9:30 - 16:00 Uhr",51.51574,6.82168,dealer
+location_227,Schnellrad by Zweirad Schnell UG,Koblenzer Str. 38a,57627,Hachenburg,DE,+49 (0)2662/9319770,info@schnellrad.de,,"Montag, Dienstag, Donnerstag & Freitag: 13.00 - 18:30 Uhr
+Samstag: 9:00 - 13:00 Uhr",50.660125,7.811194,dealer
+location_228,Sormitz-Tandem Lutz Wohlfarth,Lehestener Straße 10,07343,Wurbach,DE,+49 1522 368 378 0,vertrieb@sormitz-tandem.de,http://www.sormitz-tandem.de,"Ab April 2025
+Montag: geschlossen
+Dienstag: 9:00 - 14:00 & 16:00 - 19:00 Uhr
+Mittwoch: 9:00 - 14:00 & 16:00 - 18:00 Uhr
+Donnerstag: 9:00 - 14:00 Uhr
+Freitag: 16:00 - 18:00 Uhr
+Samstag: 9:30 - 11:30 Uhr",50.46299,11.536247,service
+location_229,Sport Café,Kesselweg 9,74736,Hardheim-Gerichtstetten,DE,+49 151 27101041,,,"Freitag: nur nach Absprache  
+Termine bitte telefonisch oder per Whats App vereinbaren, täglich von 17-19 Uhr 
+Samstag: 10 bis 14 Uhr",49.531876,9.510999,dealer
+location_230,Sport Cycling Meindl,Konrad-Mayer-Str. 31,92237,Sulzbach-Rosenberg,DE,+49 9661 3048833,info@sportcycling.de,https://www.sportcycling.de,"Montag: geschlossen
+Dienstag - Freitag: 14:00 - 18:00 Uhr
+Samstag: 09:00 - 13:00 Uhr",49.498969,11.751081,dealer
+location_231,Sport Stefan,Gemeindestraße 3,5532,Filzmoos,DE,+43 645320080,shop@sportstefan.at,http://sportstefan.at,"Montag - Freitag: 8:30 - 12:00 & 14:00 - 18:00 Uhr
+Samstag: 8:30 - 12:00 & 14:00 - 17:00 Uhr",47.43286,13.522853,dealer
+location_232,Sportshop Bittner,Weißestr. 26,04299,Leipzig,DE,+49 (0)341 59097850, steffen@sportshop-bittner.de,https://sportshop-bittner.de/,"Montag, Dienstag, Mittwoch & Freitag: 10:00 - 18:00 UhrDonnerstag 10:00 - 19:00 UhrSamstag 9:00 - 13:00 Uhr",51.75424,12.581357,dealer
+location_233,STADTRAD GmbH,Gewerbering 1a,66450,Homburg/Bexbach,DE,+49 6826- 5248004,info@stadtrad-homburg.de ,https://www.stadtrad-homburg.de/,"Montag: geschlossen
+Dienstag - Freitag: 9:30 - 18:30 Uhr
+Samstag: 9:30 - 16:00 Uhr",49.344438,7.279716,dealer
+location_234,Stephans Radwelt,Ziegelei 22,96487,Dörfles-Esbach,DE,+49 9561 8537126,info@stephans-radwelt.de,https://www.stephans-radwelt.de,Montag - Freitag: 9:30 - 18:30 UhrSamstag: 9:30 - 15:30 Uhr,50.28645,11.00607,dealer
+location_235,Switchbike Bornemann OHG,"Katharinengasse	14",35390,Gießen,DE,+49 (0)641-34393,info@switchbike.de,https://www.switchbike.de/,"Montag, Dienstag, Mittwoch & Freitag: 10:00 - 18:00 Uhr
+Donnerstag: geschlossen
+Samstag: 10:00 - 16:00 Uhr",50.584165,8.671666,dealer
+location_236,Tip-Top-Bikes,Martin-Ofner-Straße 5,84508,Burgkirchen an der Alz,DE,+49 8679 3069497,kontakt@tip-top-bikes.de,https://www.tip-top-bikes.de/,"Dienstag - Freitag: 09:00 Uhr - 12:00 Uhr und 14:00 Uhr - 17:00 Uhr
+Samstag: 09:00 Uhr - 12:00 Uhr",48.167,12.730485,dealer
+location_237,Toa's Bikes GmbH,Bahnhofstraße 19,64401,Groß-Bieberau,DE,+49 6162 81640,service@toas-bikes.de,https://toas-bikes.de/,Montag - Freitag: 9:00 - 18:00 UhrSamstag: 09:00 - 13:00 Uhr,49.802014,8.826692,dealer
+location_238,Toms Ihr-Ebikeprofi,Wilhelmshöher Allee 132,34119,Kassel,DE,+49 561 25082,toms-kassel@web.de,https://toms-kassel.de,Montag - Freitag: 10:00 - 18:00 UhrSamstag: 10:00 - 13:00 Uhr,51.31304,9.46378,dealer
+location_239,Total Normal Bikes GmbH,Kaiserstraße 331,66386,Sankt Ingbert,DE,+49 (0) 6894 - 87530,info@total-normal.com,https://total-normal.com/,"Montag, Mittwoch & Donnerstag: 13:30 – 18:00 Uhr
+Dienstag & Freitag: 10:00 – 12:00 & 13:30 – 18:00 Uhr
+Samstag: 9:30 – 13:00 Uhr",49.286502,7.135046,dealer
+location_240,Velobox Walsrode,Bergstr. 8,29664,Walsrode,DE,+49 5161 4811870,info@velobox-walsrode.de,https://www.velobox-walsrode.de,Montag - Freitag: 9:00 - 18:00 UhrSamstag: 09:00 - 13:00 Uhr,52.86425,9.58737,dealer
+location_241,Velobox Bad Fallingbostel,Walsroder Str. 3,29683 ,Bad Fallingbostel,DE,+49 5162 4189992,info@velobox-walsrode.de,https://www.velobox-walsrode.de,Montag - Freitag: 10:00 - 13:00 & 15:00 - 18:00 UhrSamstag: geschlossen,52.86575,9.69331,dealer
+location_242,Velo City Soest,Elfser Weg 27a,59494,Soest,DE,+49 2921 31318,info@velo-city-soest.de,https://www.velo-city-soest.de/,"Montag, Dienstag, Donnerstag & Freitag: 10:00 - 18:00 Uhr
+Mittwoch: 10:00 - 13:00 Uhr
+Samstag: 10:00 - 14:00 Uhr",51.56361,8.125177,dealer
+location_243,Velo Sport Werner Otto GmbH,Pastor Niemöller Platz 8,13156,Berlin,DE,+49 30 20093711,info@premium-bikeshop.de,https://www.premium-bikeshop.de/,"Montag - Freitag: 10:00 - 19:00 Uhr
+Samstag: geschlossen",52.579787,13.396914,dealer
+location_244,Velocity Braunschweig GmbH,Kurt-Schumacher-Straße 8,38102,Braunschweing,DE,+49 531 1231180,verkauf@velocity-bs.de,https://velocity-bs.de/,"Montag : geschlossen
+Dienstag - Freitag: 11:00 - 19:00 Uhr
+Samstag: 10:00 - 14:00 Uhr",52.254454,10.53573,dealer
+location_245,Vineyard-bikes,Weinberggasse 25,88481,Balzheim,DE,+49 7347 920698,vineyard-bikes@t-online.de,http://vineyard-bikes.de,,48.17735,10.07121,dealer
+location_246,vit:bikes Hamburg,Beerenweg 3,22761,Hamburg,DE,+49 40 334666819,hamburg@vitbikes.de,www.vitbikes.de/hamburg,Montag: geschlossenDienstag - Freitag: 10:00 - 18:00 UhrSamstag: 10:00 - 16:00 Uhr,53.56669,9.91985,dealer
+location_247,vit:bikes Hann.Münden,Veckerhäger Str. 30,34346,Hann.Münden,DE,+49 5541 98250,info@schelp.de,https://schelp.de/,"Montag - Freitag:	8:30 - 18:00 Uhr
+Samsatag: 8:30 - 13:00 Uhr",51.420138,9.644543,dealer
+location_248,vit:bikes Rottweil,Im Galgen 15,78658,Zimmern ob Rottweil,DE,+49 741 175 75 131,rottweil@vitbikes.de,https://fahrrad.vitbikes.de/rottweil-78658/,"Montag: geschlossen
+Dienstag - Freitag: 10:00 -18:00 Uhr
+Samstag: 10:00 - 16:00 Uhr",48.165,8.60438,dealer
+location_249,Vit:Bikes Wesel,Rudolf-Diesel-Str. 15a,46485,Wesel,DE,+49 28120694031,wesel@vitbikes.de,http://vitbikes.de,"Montag: geschlossen
+Dienstag - Freitag: 10:00 - 18:00 Uhr
+Samstag: 10.=0 - 14:00 Uhr",51.662225,6.663893,dealer
+location_250,Waterkant eBikes GmbH,Maurerstraße 3,21244,Buchholz i.d.N.,DE,+49 41819284870,nordheide@emotion-ebikes.de,https://emotion-technologies.de/nordheide/,"Montag: geschlossen
+Dienstag - Freitag: 10:00 - 18:30 Uhr
+Samstag: 10:00 - 14:00 Uhr",53.346374,9.859527,dealer
+location_251,Wiedia Bike,Sodenerstraße 2a,63743,Aschaffenburg,DE,+49 151 419 404 15,jochen.herold@wiediabike.com,https://www.wiediabike.com/,Montag - Donnerstag: 15:00 - 18:00 Uhr,49.949702,9.167189,dealer
+location_252,Wunderlich GmbH,Dieselstraße 2,95168,Marktleuthen,DE,,info@wunderlich-umwelt.de,http://www.wunderlich-umwelt.de/,"Montag - Freitag: 8:00 - 18:00 Uhr
+Samstag: 8:00 - 12:00 Uhr",50.136698,12.013486,dealer
+location_253,zweiRAD Botenheim,Wiesenbachstraße 2,74336,Brackenheim,DE,+49 7135 12274,info@zweirad-botenheim.de,https://www.zweirad-botenheim.de,"Montag: geschlossen
+Dienstag - Freitag: 9:00 - 12:30 Uhr und 14:00 - 18:00 Uhr
+Donnerstag: 9:00 - 12:30 Uhr und 14:00 - 20:00 Uhr
+Samstag: 9:00 - 13:00 Uhr",49.06639,9.06812,dealer
+location_254,Zweirad Dütsch,Münsterstraße 10 – 12,48282,Emsdetten,DE,+49 2572 960 797 4,emsdetten@zweirad-duetsch.de,https://ebike-emsdetten.de/,"Montag - Freitag: 9:00 – 12:30 & 14:00 – 18:00 Uhr
+Samstag: 9:00 – 13:00 Uhr",52.174483,7.535238,dealer
+location_255,Zweirad Hansen,Steingasse 4,53945,Blankenheim,DE,+49 163 844 333 6,info@zweirad-hansen.de,https://www.zweirad-hansen.de/,"Dienstag - Freitag: 14:00 - 18:00 Uhr
+Samstag: 9:00 - 12:00 Uhr",50.388006,6.74045,dealer
+location_256,Zweirad Hees,Hammersraße 19,57223,Kreuztal,DE,+49 2732-79843 0,info@zweirad-hees.com,https://www.zweirad-hees.com/,"Montag - Freitag: 10:00 - 18:00 Uhr
+Samstag: 10:00 - 13:00 Uhr",50.98031,7.979547,dealer
+location_257,Zweirad Högerl,Bogenroither Straße 4,94344,Wiesenfelden,DE,+49 9966 1201,info@zweirad-hoegerl.de,https://www.zweirad-hoegerl.de/,"Montag - Freitag: 08:00 - 12:00 Uhr & 13:00 - 18:00 Uhr
+Samstag: 08:30 - 12:00 Uhr",49.042433,12.534985,dealer
+location_258,Zweirad Käppner,Friedrichstraße 34,39418,Neundorf,DE,+49 3925 378951,,,Montag - Freitag: 9:00 - 18:00 Uhr,51.819118,11.57459,dealer
+location_259,Zweirad Kirch,Plöck 81,69117,Heidelberg,DE,+49 6221 24046,zweiradkirch@t-online.de,http://www.zweirad-kirch.de,"Montag - Freitag: 9:00 - 18:00 Uhr
+Samstag: 10:00 - 13:00 Uhr
+
+Im Winter montags geschlossen.",49.409472,8.701879,dealer
+location_260,Zweirad Kopsch,Roßmarktsche Straße 8,04552,Borna,DE,+49 3433203659,zweirad.kopsch@web.de,,"Montag - Freitag: 9:00 - 12:30 & 14:00 - 18:00 Uhr
+Samstag: 9:00 - 11:30 Uhr",51.1245,12.49835,dealer
+location_261,Zweirad Müller,Frankfurter Strasse 67,61118,Bad Vilbel,DE,+49 6101 85826,info@fahrrad-mueller.info,https://www.fahrrad-mueller.info,"Montag, Dienstag, Donnerstag & Freitag: 8:30 (10:00*) - 12:30 Uhr & 14:30 - 18:00 Uhr
+Mittwoch: 8:30 (10:00*) - 12:30 Uhr
+Samstag: 8:30 (10:00*) - 13:00 Uhr
+* In der Zeit vom 14.10.2024 bis 28.02.2025 erst ab 10:00 Uhr",50.180394,8.740399,dealer
+location_262,Zweirad Nübling,Rudolf Diesel Straße 9,79211,Denzlingen,DE,+49 7666 5078,info@zweirad-nuebling.de,https://www.zweirad-nuebling.de/,"Montag, Dienstag, Donnerstag & Freitag: 8:00 - 12:30 & 14:00 - 18:00 Uhr
+Mittwoch: 8:00 - 12:30 Uhr
+Samstag: 9:00 - 13:00 Uhr",48.075166,7.883081,dealer
+location_263,Zweirad Schnieder,Goldstraße 1,48565,Steinfurt,DE,+49 25519969062,verkauf@schnieder-steinfurt.de,http://www.fahrrad-steinfurt.de,"Montag: geschlossen
+Dienstag: 14:00 - 18:00 Uhr
+Mittwoch - Freitag: 9:00 - 13:00 & 14:00 - 18:00 Uhr
+Samstag: 9:00 - 13:00 Uhr",52.14862,7.328239,dealer
+location_264,Zweirad Sebold,Duisburger Straße 147,45479,Mühlheim an der Ruhr,DE,+49 208 425232,info@zweirad-sebold.de,https://www.zweirad-sebold.de/,"Montag: geschlossen
+Dienstag - Freitag: 9:00 - 13:00 & 14:00 - 18:30 Uhr
+Samstag: 9:00 - 13:00 Uhr",51.426785,6.859285,dealer
+location_265,Zweirad Service Dorfrad,Grünstrasse 1,06184,Kabelsketal-Naundorf,DE,+49 179 2938403,enrico-hartmann@web.de,https://www.dorfrad.de,"Montag - Freitag: 12.00 - 19:00 Uhr 
+und nach Vereinbarung",51.450865,12.079671,dealer
+location_266,Zweirad Stegmaier,Lange Straße 39,74564,Crailsheim,DE,+49 7951 7962,info@zweirad-stegmaier.de,http://www.zweirad-stegmaier.de/,Montag - Freitag: 10:00 - 18:00 UhrSamstag 10:00 - 13:00 Uhr,49.13498,10.07162,dealer
+location_267,Zweirad Stellwag GmbH,Neckarstraße 24,64711,Erbach,DE,+49 6062 3163,Stellwag2-Rad@t-online.de,https://www.zweirad-stellwag.de/,"Montag bis Freitag: 9:00 - 12:30 Uhr und 14:00 - 18:00 Uhr
+Mittwoch 9:00 - 12:30 Uhr 
+Samstag: 9:00 - 13:00 Uhr",49.653935,8.995798,dealer
+location_268,Zweirad Stephan,Untere Hauptstraße 1a,09380,Thalheim,DE,+49 3721 84484,stephan-thalheim@t-online.de,https://zweirad-stephan.de/de/,"Montag - Freitag: 9:00 - 18:00 Uhr
+Samstag: 9:00 - 12:00 Uhr (ausgenommen September bis Februar)",50.703204,12.853124,dealer
+location_269,Zweirad Stückemann,Oldenburger Str. 76,26180,Rastede,DE,+49 4402 92500,info@stueckemann.de,http://www.stueckemann.de,"Montag - Freitag: 09:30 - 18:00 Uhr
+Samstag: 09:30 - 16:00 Uhr",53.228423,8.212305,dealer
+location_270,Zweirad Würdinger,Kapuziner Straße 107,94474,Vilshofen,DE,+49 8541 910710,info@wuerdinger.de,https://www.wuerdinger.de/,"Montag - Freitag: 09:00 - 18:00 Uhr
+Samstag: 9:00 - 13:00 Uhr",48.641274,13.172142,dealer
+location_271,Zweirad Würdinger,Äußere Spitalhofstraße 2,94036,Passau,DE,+49 851 6346,passau@wuerdinger.de,https://www.wuerdinger.de/,"Montag - Freitag: 9:00 - 18:00 Uhr
+Samstag: 9:00 - 13:00 Uhr",48.57202,13.444943,dealer
+location_272,Zweirad Würdinger,Scheiblerstr. 10,94447,Plattling,DE,+49 9931 8945901,plattling@wuerdinger.de,https://www.wuerdinger.de/,"Montag - Freitag: 9:00 - 18:00 Uhr
+Samstag: 9:00 - 13:00 Uhr",48.788257,12.891239,dealer
+location_273,Zweirad-Center Durach,Achenerweg 11,88316,Isny,DE,+49 7562 245 6,info@fahrrad-durach.de,https://www.zweirad-center-durach.de/,"Montag - Freitag: 09:00 - 12:30 Uhr & 14:00 - 18:00 Uhr
+Mittwoch: Nachmittag: geschlossen
+Samstag: 09:00 - 13:00 Uhr",47.698169,10.043733,dealer
+location_274,Zweirad-Center Van de Stay GmbH,An St. Sebastian 40,41334,Nettetal,DE,+49 2153 405405,lobberich@van-de-Stay.de,http://www.van-de-stay.de/,"Montag, Dienstag, Donnerstag & Freitag: 9:00 - 13:00 & 14:00 - 18:00 Uhr
+Mittwoch & Samstag: 9:00 - 13:00 Uhr",51.30881,6.27285,dealer
+location_275,Zweirad-Center Van de Stay GmbH,Ostwall 10,47638,Straelen,DE,+49 2834 91888,lobberich@van-de-Stay.de,http://www.van-de-stay.de/,"Montag, Dienstag, Donnerstag & Freitag: 9:00 - 13:00 & 14:00 - 18:00 Uhr
+Mittwoch & Samstag: 9:00 - 13:00 Uhr",51.445974,6.267811,dealer
+location_276,Zweiradhaus Kämpflein,Mittelstraße 35+37,57567,Daaden,DE,+49 2743 930204,kaempflein@t-online.de,https://www.kaempflein-zweirad.de/,"Montag - Freitag: 10:00 - 13:00 Uhr & 14:00 - 18:00 Uhr
+Samstag: 10:00 - 13:00 Uhr",50.737839,7.971056,dealer
+location_277,Zweiradhaus Terbrack,Bahnhofstraße 18,48691,Vreden,DE,+49 256497999,info@vredenna.de,http://www.fahrradhaus-terbrack.de/,"Montag - Freitag: 9:00 - 12:30 & 14:00 - 18:00 Uhr
+Samstag: 9:00 - 12:30 Uhr",52.031835,6.821651,dealer
+location_278,Zweiradhaus Westerfeld,Borriesstr. 111,32557,Bünde,DE,+49 5223 42731,info@westerfeld.bike,https://www.westerfeld.bike,Montag - Freitag: 10:00 - 18:00 UhrSamstag: 10:00 - 14:00 Uhr,52.20692,8.58359,dealer
+location_279,Zweirad-Schmiede,Zum Königsberg 5,41812,Erkelenz,DE,+49 2435 3314,zweirad-schmiede@online.de,https://www.zweirad-schmiede.de/,"Montag, Dienstag, Donnerstag & Freitag: 9:00 - 18:30 Uhr
+Mittwoch: 9:00 - 12:30 Uhr
+Samstag: 9:00 - 14:00 Uhr",51.029889,6.325645,dealer
+location_280,Zweiradsport Geyer,Gartenstraße 30,88410,Bad Wurzach,DE,+49 7564 85893  0,info@zweiradsport-geyer.de,https://www.zweiradsport-geyer.de/,"Montag - Mittwoch, Freitag
+09:00 - 12:30 Uhr
+14:00 - 18:00 Uhr
+
+Donnerstag
+09:00 - 12:30
+14:00 - 19:00
+
+Samstag
+08:30 - 13:00 Uhr",47.907409,9.894703,dealer
+location_281,Zwoo GmbH/Fahrradladen Essen,Huyssenallee 95,45128,Essen,DE,+49 (0)201/36036960,info@fahrradladen-essen.de,https://fahrradladen-essen.de,Montag - Freitag: 10:00 - 18:00 UhrSamstag: 10:00 - 16:00 Uhr,51.444461,7.008503,dealer
+location_282,Zweirad Wichmann,Friedrich-Ebert-Str. 29,38440,Wolfsburg,DE,+49 5361 16399,mail@zweirad-wichmann.de,https://www.zweirad-wichmann.de,Montag - Freitag: 9:00 - 12:30 & 14:30 - 18:00 UhrSamstag: 9:00 - 14:00 Uhr,52.42008,10.79095,dealer
+location_283,Zweirad Zitzmann,Mühlgasse 10a,91096,Möhrendorf,DE,+49 9133 767488,info@zweirad-zitzmann.de,https://www.zweirad-zitzmann.de,Montag: geschlossenDienstag - Freitag: 9:00 - 12:00 & 14:14 - 18:00 UhrSamstag: 9:00 - 13:00 Uhr,49.65044,11.00858,dealer
+location_284,Amoore Bikestore,Färberstraße 3,5110,Oberndorf bei Salzburg,AT,+43 6272 20676,verkauf@amoore-bikestore.at,https://www.amoore-bikestore.at,"Montag, Dienstag, Donnerstag & Freitag: 9:00 - 12:00 & 13:00 - 18:00 UhrMittwoch: geschlossenSamstag: 9:00 - 12:00 Uhr",47.94065,12.9416,dealer
+location_285,BauerBikes E-Bike Store Graz,Puntigamer Straße 124,8055,Graz,AT,+43 316 292 671,info.graz@bauerbikes.com,http://www.bauerbikes.com,"Montag - Freitag: 10:00 - 13:00 Uhr & 14:00 - 17:00 Uhr
+Samstag: 10:00 - 13:00 Uhr",47.0344,15.444312,dealer
+location_286,BauerBikes E-Bike Store St. Margarethen/Raab,St. Margarethen 10b,8323,St. Margarethen/Raab,AT,+43 311 594 171,info.gleisdorf@bauerbikes.com,http://www.bauerbikes.com,"Montag, Donnerstag & Freitag: 14:00 - 17:00 Uhr
+Samstag: 10:00 - 13:00 Uhr",47.046469,15.74612,dealer
+location_287,Bentho eBikes - Brunn/Geb,Wolfholzgasse 11,2345,Brunn am Gebirge,AT,+43 2236 378 763,servus@bentho.at,https://www.bentho.at/,"Montag: geschlossen
+Dienstag - Freitag: 10:00 - 18:00 Uhr
+Samstag: 9:30 - 15:00 Uhr",48.120122,16.293947,dealer
+location_288,Bentho eBikes - Wien,Lassallestraße 5,1020,Wien,AT,0043 01 589 70 64,servus@bentho.at,https://www.bentho.at/,"Montag: geschlossen
+Dienstag - Freitag: 10.00 - 18:00 Uhr
+Samstag: 9:30 - 15:00 Uhr",48.22123,16.395579,dealer
+location_289,Bergspezl Haid,"EKZ Haid, Ikea Platz 4",4053,Haid,AT,+43 7229 246 90,verkauf.haid@bergspezl.at,https://bergspezl.at/,"Montag - Freitag: 9:00 - 19:00 Uhr
+Samstag: 9:00 - 18:00 Uhr",48.195478,14.247377,dealer
+location_290,Bergspezl Klagenfurt,Völkermarkter Straße 163,9020,Klagenfurt,AT,+43 463 519 000,verkauf.klagenfurt@bergspezl.at,https://bergspezl.at/,"Montag - Freitag: 9:00 - 18:00 Uhr
+Samstag: 9:00 - 17:00 Uhr",46.627602,14.343287,dealer
+location_291,Bergspezl Puch,Halleiner Landesstraße 50,5412,Puch bei Hallein,AT,+43 6245 730 00,buero@bergspezl.at,https://bergspezl.at/,"Montag - Freitag: 8:00 - 18:00 Uhr
+Samstag: 9:00 - 13:00 Uhr",47.71224,13.092474,dealer
+location_292,Bergspezl Salzburg,Eberhard-Fugger-Straße 2,5020,Salzburg,AT,+43 662 642 555,verkauf@bergspezl-rad.at,https://bergspezl.at/,"Montag - Freitag: 8:00 - 18:00 Uhr
+Samstag: 9:00 - 13:00 Uhr",47.802318,13.06762,dealer
+location_293,Bergspezl Villach,Maria-Gailer-Straße 57,9500,Villach,AT,+43 4242 40 439,verkauf.villach@bergspezl.at,https://bergspezl.at/,"Montag - Freitag: 9:00 - 18:00 Uhr
+Samstag: 9:00 - 17:00 Uhr",46.604692,13.873002,dealer
+location_294,Bergspezl Vösendorf Süd,"""Westfield Shopping  City Süd - Galerie 11""",2334,Vösendorf Süd,AT,+43 1 39 50 944,verkauf.scs@bergspezl.at,https://bergspezl.at/,"Montag - Mittwoch: 9:00 - 19:00 Uhr
+Donnerstag & Freitag: 9:00 - 20:00 Uhr
+Samstag: 9:00 - 18:00 Uhr",48.12228,16.334783,dealer
+location_295,Bergspezl Wien,Stiftgasse 5-9,1070,Wien,AT,+43 1 395 07 70,verkauf.Wien7@bergspezl.at,https://bergspezl.at/,"Montag - Freitag: 10:00 - 19:00 Uhr
+Samstag: 10:00 - 18:00 Uhr",48.200896,16.354912,dealer
+location_296,Bergspezl Wörgl,Salzburger Straße 30,6300,Wörgl,AT,+43 5332 219 26,verkauf.woergl@bergspezl.at,https://bergspezl.at/,"Montag - Freitag : 09:00 - 18:00 Uhr
+Samstag: 09:00 - 17:00 Uhr",47.488008,12.068502,dealer
+location_297,Bikebow,Innsbrucker Straße 60,6060,Hall in Tirol,AT,+43 5223 42031,info@bikebow.at,https://bikebow.at/,Montag - Freitag: 9:00 - 13:00 & 14:00 - 18:00 UhrSamstag: 9:00 - 12:00 Uhr,47.27745,11.48806,dealer
+location_298,bimato sports,Steyrerstraße 51,3350,Haag,AT,+43 7434 43734,info@bimato.at,http://www.bimato.at,"Montag, Dienstag & Freitag: 9:00 - 12:30 & 14:30 - 18:00 Uhr
+Donnerstag: 9:00 - 12:30 & 14:30 - 20:00 Uhr
+Mittwoch & Samstag: geschlossen",48.097777,14.540323,dealer
+location_299,CRW SPORTS,Schlossplatz 10/18,4655,Vorchdorf,AT,+43 664 2567501,office@crw-sports.net,https://www.crw-sports.net/,"Montag, Dienstag, Donnerstag & Freitag: 15:00 - 18:00 UhrMittwoch: geschlossenSamstag: 9:00 - 12:00 Uhr",48.00285,13.92264,dealer
+location_300,Bike Center Forsterpointner,Obertrumer Landesstraße 9,5201,Seekirchen am Wallersee,AT,+43 6212 2292 92,info@forsterpointner.at,https://www.forsterpointner.at,Montag - Freitag: 9:00 - 12:00 & 13:00 - 18:00 UhrSamstag: geschlossen,47.90425,13.12059,dealer
+location_301,Drahteisel,Hauptstraße 23,8582,Rosental,AT,+43 3142 26881,rad@drahteisel.at,https://drahteisel.at/,"Montag - Freitag: 9:00 - 18:00 Uhr
+Samstag: 9:00 - 12:00 Uhr",47.05204,15.125746,dealer
+location_302,e-bike 4you,Passauerstraße 34,4780,Schärding,AT,+43 7712 29582,info@e-bike4you.eu,https://e-bike4you.net,"Montag, Dienstag, Donnerstag & Freitag: 10:00 -18:00 UhrMittwoch: geschlossenSamstag: 9:00 -13:00 Uhr",48.46505,13.43685,dealer
+location_303,E-Bike ServicePoint Riegersburg,Riegersburg 53b,8333,Riegersburg,AT,+43 681 84619785,,https://bauerbikes.com/standorte/standort-riegersburg/,"Freitag: 10:00 - 13:00 Uhr 
+Samstag: 10:00 - 13:00 Uhr",46.996641,15.941665,dealer
+location_304,Fahrradladen Fernitz,Peter Rosepperstraße 1,8072,Fernitz,AT,+43 604 8810 5510,office@fahrrad-laden.at,https://www.fahrrad-laden.at/,"Montag - Freitag: 9:00 - 18:00 Uhr
+Samstag: 9:00 - 13:00 Uhr",46.97259,15.497955,dealer
+location_305,Friesi's Bikery GmbH,Grazer Straße 34,8200,Gleisdorf,AT,+43 311 222 666,office@friesis-bikery.at,http://friesis-bikery.at,"Montag - Freitag: 9:00 - 18:30 Uhr
+Samstag: 8:00 - 13:00 Uhr",47.106031,15.697853,dealer
+location_306,Frigo Elektrodrive GmbH,Walgaustraße 139,6713,Ludesch,AT,+43 5550 21900,office@frigoelektrodrive.com,https://www.frigoelektrodrive.com/,Montag: geschlossenDienstag - Freitag: 9:00 - 12:00 & 14:00 - 18:00 UhrSamstag: 9:00 - 12:00 Uhr,47.18709,9.77816,dealer
+location_307,Fritzmobile GmbH,Hauptstraße 61,4952,Wenig im Innkreis,AT,+43 7723 21115,office@fritzmobile.at,https://fritzmobile.at,Montag - Freitag: 8:00 - 12:00 & 13:00 - 18:00 UhrSamstag: geschlossen,48.23395,13.17608,dealer
+location_308,Fuchs GmbH,Bahnhofstraße 16,3240,Mank,AT,+43 2755 2310,office@rad-fuchs.at,https://www.rad-fuchs.at,"Montag, Diesntag, Donnerstag & Freitag: 8:00 - 12:00 & 14:00 - 16:00 UhrMitwoch: 8:00 - 12:00 UhrSamstag: 9:00 - 12:00 Uhr",48.11237,15.34372,dealer
+location_309,Inn-Bike GmbH,Kinkstraße 21 ,6330,Kufstein,AT,+43 5372 63547,info@inn-bike.at,https://www.e-bikes4you.com/at/inn-bike/,Montag - Freitag: 9:00 - 18:00 Uhr,47.57987,12.16947,dealer
+location_310,Intersport Harms - House of Bike,Marktstraße 521,5741,Neukirchen,AT,+43 656 521664,bikeshop@harms.at,https://www.intersport-harms.at/de/shops/Bikeshop-Neukirchen_sl_794,"Öffnungszeiten Sommer 13.03.2024 - 09.11.2024
+
+Montag - Freitag: 08:30 - 12:00 Uhr und 14:30 - 18:00 Uhr
+Samstag: 08:30 - 12:00 Uhr",47.253752,12.28736,dealer
+location_311,MühlenHof-RadVit,Europa Straße 22,3902,Vitis,AT,+43 664 922 47 16,radvit@mh-rv.at,https://www.mh-rv.at,"Öffnungszeiten Sommer: Montag, Dienstag, Donnerstag & Freitag: 8:00 - 16:30 UhrMittwoch: 8:00 - 12:00 UhrSamstag: 9:00 - 12:00 UhrÖffnungszeiten Winter: Montag, Dienstag & Donnerstag: 8:00 - 16:30 UhrMittwoch & Freitag: 8:00 - 12:00 UhrSamstag: geschlossen",48.75608,15.19898,dealer
+location_312,PT Motors,Zellach 68,9413,Sankt Gertraud,AT,+43 4352 35776,office@ptmotors.at,http://www.pt-motors.at,Montag - Freitag: 8:00 - 12:00 - 13:00 - 17:00 Uhr,46.854139,14.852019,dealer
+location_313,R & R Sportart GmbH,Obere Marktstraße 58,5541,Altenmarkt,AT,+43 6452 20750,office@sport-art.at,https://www.sport-art.at/,"Montag - Freitag: 8:00 - 12:00 & 13:00 - 18:00 Uhr
+Samstag: 8:00 - 13:00 Uhr",47.382234,13.414594,dealer
+location_314,Radhaus Oberwart,Steinermangerer Straße 19,7400,Oberwart,AT,+43 3352 93083,info@radhaus.biz,https://www.radhaus-shop.biz/,"Montag, Dienstag, Mittwoch & Freitag: 9:00 - 12:30 & 15:00 - 18:00 Uhr
+Donnerstag: geschlossen
+Samstag: 9:00 - 12:30 Uhr",47.285834,16.216058,dealer
+location_315,Sport Menzinger,Fürstenfelderstrasse 4,8350,Fehring,AT,+43 3155 28715,office@sport-menzinger.at,http://www.sport-menzinger.at,"Montag - Freitag: 8:00 - 12:00 & 14:30 - 18:00 Uhr
+Samstag: 8:00 - 12:00 Uhr",46.94003,16.008407,dealer
+location_316,Sport-Modehaus Mandl,Hauptplatz 59,8962,Gröbming,AT,+43 3685 22312,office@sportmandl.at,https://www.sportmandl.at,Montag - Freitag: 8:00 - 12:00 & 14:00 - 18:00 UhrSamstag: 8:00 - 12:00 Uhr,47.44498,13.90145,dealer
+location_317,Sports & More - Manfred Stadler GmbH,Steingrub 23,3242,Texing,AT,+43 2755 47306,office@sportsandmore.at,https://www.sportsandmore.at,"Montag, Dienstag, Mittwoch und Freitag: 8:00 - 12:00 & 14:00 - 18:00 UhrDonnerstag & Samstag: 8:00 - 12:00 Uhr",48.06086,15.32162,dealer
+location_318,Velo Novo,Dorfstraße 12,6972,Fußach,AT,+43 699 15046373,hallo@velo-novo.at,https://www.velo-novo.at,Montag & Mittwoch: 8:00 - 12:00 & 14:00 - 18:00 UhrDienstag & Samstag: geschlossenDonnerstag: 13:00 - 19:00 Uhr,47.47832,9.66369,dealer
+location_319,Zweirad Pirklbauer,Bäckerfeldstraße 19,4050,Traun,AT,+43 650 444 7191,info@zweirad-pirklbauer.at,https://www.zweirad-pirklbauer.at/,"Montag - Freitag: 9:00 - 12:00 & 13:00 - 18:00 Uhr
+Samstag: 9:00 - 12:00 Uhr",48.219893,14.242981,dealer
+location_320,Aerelli Bike di Aerelli Mauro,Via Alessandro Volta 18 bis,35036,Montegrotto Terme (PD),IT,+39 049 8669036,info@aerellibike.com,https://www.aerellibike.com,Montag: 9:00 - 12:30 & 15:00 - 19:30Dienstag - Samstag: 8:30 - 12:30 & 15:00 - 19:30 ,45.34368,11.77646,dealer
+location_321,Andi's Bikestodl,Bahnhof Sponding 22,39020,Schlunderns,IT,+39 349 0768467,andis@bikestadl.com,https://www.bikestodl.com,Montag - Samstag: 9:00 - 12:00 & 13:00 - 19:00 ,46.63487,10.61019,dealer
+location_322,A Ruota Libera Castronno,"Via Lombardia, 91",21040,Castronno,IT,+39 0332 893170,aruotalibera1@gmail.com,https://www.aruotaliberavarese.com/,Monday - Saturday: 9:00 - 12:30 & 15:00 - 19:00,45.763611,8.8119,dealer
+location_323,A Ruota Libera Varese,"Via Cesare Battisti, 17​",21100,Varese,IT,+39 0332 280094,â€‹aruotalibera1@gmail.com,https://www.aruotaliberavarese.com/,Monday - Saturday: 9:00 - 12:30 & 15:00 - 19:00,45.821007,8.823626,dealer
+location_324,CICLI BERTINETTI,Via Trieste 47,13900,Biella,IT,+39 15406587,ciclibertinetti@libero.it,,"Tuesday - Friday: 9:00 - 12:00 & 16:00 - 19:00
+Saturday: 9:00 - 12:00",45.557349,8.063099,dealer
+location_325,CM Emporio,Piazza Mercato 14,38077,Comano Terme,IT,+39 335 453188,info@cm-emporio.it,https://cm-emporio.it/,"Monday - Saturday: 6:30 - 12:30 & 15:00 - 19:30
+Sunday: 7:00 - 12:00",46.036266,10.868931,dealer
+location_326,EBIKE LAB,Viale Lecco 79,22100,Como,IT,+39 3102270072,info@ebikelab.it,http://www.ebikelab.it,Monday - Friday: 9:30 - 12:30 & 14:30 - 19:00,45.80898,9.087737,dealer
+location_327,Ebikeone,Località Quarto Inferiore 275,14100,Asti,IT,+39 335 7573794,corrado@ebikeone.it,http://www.ebikeone.it,"Monday: closed
+Tuesday - Saturday: 09:00 - 12:00 & 15:30 - 19:00",44.907254,8.292417,dealer
+location_328,Flexsports,Via Principale 13,39050,Nova Ponente,IT,+39 335 565 0226,info@flexsports.it,http://www.flexsports.it,Monday - Saturday: 8:00 - 12:00 & 14:00 - 18:00,46.413412,11.429513,dealer
+location_329,HB Zero,Via Cesare Battisti 61,24062,Costa Volpino BG,IT,+39 3356557739,hbzerobike@gmail.com,https://www.hbzerosrl.it/,"Monday - Friday: 8:30 - 12:30 & 14:00 - 19:30
+Saturday: 8:30 - 18:30",45.823665,10.108221,dealer
+location_330,Marocco Sport,Piazza Garibaldi 3/4,23816,Barzio,IT,+33 341 996191,info@maroccosport.it,http://maroccosport.it,"Tuesday, Thursday, Friday & Saturday: 9:00 - 12:30 & 15:00 - 17:30",45.946472,9.468636,dealer
+location_331,Motopep,Via Cesare Battisti 82,20005,Pogliano Milanese,IT,+39 02 934 1902,motorpep@gmail.com,https://www.motorpepstore.it,Tuesday - Saturday: 9:00 –12:30 & 15:00 – 19:00,45.535034,9.004576,dealer
+location_332,PimpGarage E-Bike Store,Gerbergasse 67b,39100,Bozen,IT,+39 0471 501851,info@pimpgarage.it,http://www.pimpgarage.it,Montag - Freitag: 9:00 - 12:00 & 14:00 - 18:00 Uhr,46.499588,11.358448,dealer
+location_333,Poisonbike,Via Cuminie 36,10040,Villardora,IT,+39 11 8531312,poisondany81@gmail.com,http://poisonbike.it,"Monday, Tuesday, Wednesday & Friday: 9:00 - 12:30 & 15:30 - 19:00Thursday: closedSaturday: 9:00 - 12:30",45.101845,7.391465,dealer
+location_334,On the Rocks ,Via Rezia 275/A,39046,Ortisei - Val Gardena (BZ),IT,+39 0471 1430500,info@onrocks.it,https://www.ontherocks.it,Montag - Sonntag: 8:30 - 12:00 Uhr & 14:00 - 18:30 Uhr,46.57208,11.6776,"dealer, rental"
+location_335,Schölzhorn Sport GmbH,Fuggerstraße 3,39049,Sterzing,IT,+39 472 671 376,info@skiprofi.it,https://www.rentandgo-shop.it,Montag - Freitag: 10:00 - 17:00 Uhr,46.886633,11.404588,dealer
+location_336,SKITOP BADIA,Str. San Linert 3,39036,Badia,IT,+39 471 839685,info@skitop.it,https://biketop.skitop.it/de/,Montag - Sonntag: 8:30 - 12:00 Uhr & 15:00 - 19:00 Uhr,46.609543,11.895356,dealer
+location_337,Sport Edoardo,Via Pecei 12,39033,Corvara,IT,,info@sportedoardo.it,https://www.sportedoardo.it/,Monday - Saturday: 08:30 - 12:00 & 15:00 - 19:00,46.553564,11.853234,dealer
+location_338,Takari Cicli,VIA NICOLÒ REZZARA 14/16,24020,RANICA (BG),IT,+39035514313,info@takari.it,https://www.takari.it/,"Monday: 15:00 - 19:00
+Tuesday -  Friday: 9:00 - 12:30 & 15:00 - 19:00
+Saturday: 9:00 - 12:30",45.720652,9.721738,dealer
+location_339,Tuttosport,Via Belgrano 37,18100,Imperia,IT,+39 0183 710343,tuttosport.birolo@alice.it,,,43.888278,8.040088,dealer
+location_340,Zebugi,Via Carini 2,25121,Brescia,IT,+39 3045129,info@zebugi.it,https://zebugi.it/,Monday - Saturday: 9:00 - 12:15 & 15:00 - 19:15,45.531544,10.227238,dealer
+location_341,Les 2 Roues Electriques,13 avenue Jean Jaurès,21000,Dijon,FR,+33 380461236,contact@les-2-roues-electriques.fr,https://www.les-2-roues-electriques.fr/,Monday - Friday: 10:00 - 12:00 & 14:00 - 19:00Saturday: 9:30 - 12:00 & 14:00 - 18:30,47.31462,5.02885,dealer
+location_342,ARMOR CYCLES,ZA DE LANJOUAN,22400,LAMBALLE,FR,296310423 / 84498525,serviceclient@armorcycles.fr,,,48.481199,-2.497017,dealer
+location_343,ARMOR CYCLES,ZA LANJOUAN 2,22400,LAMBALLE,FR,+33 296310423,serviceclient@armorcycles.fr,,"Monday: closed
+Tuesday - Friday: 9h30 - 12h30 & 14h00 - 19h00
+Saturday: 9h30 - 12h30 & 14h00 - 18h00",48.475887,-2.509213,dealer
+location_344,ATV CYCLES,ROUTE DES TROIS VILLAGES,38660,PLATEAU DES PETITES ROCHES,FR,+33 4 58 00 59 32,contact@atv-cycles.fr,,,45.312064,5.887148,dealer
+location_345,Brive Bike Store,43 rue Antoine Dubayle,19100,Brive la Gaillarde,FR,+33 5 55 87 58 86,19brive@culturevelo.com,http://www.culturevelo.com,"Monday: 14h30 - 18h30
+Tuesday - Saturday: 09h30 - 12h30 & 14h30 - 18h30",45.14751,1.489746,dealer
+location_346,BoutiCycle Toulouse-Rouffiac,Cente Commercial du Louradou - 40 route d’Albi RN88,31180,Rouffiac-Tolosan,FR,+33 967804501,31rouffiac@bouticycle.com,https://bouticycle.com/-Toulouse-Rouffiac-,Monday: closedTuesday - Friday: 10:00 - 13:00 & 14:00 - 19:00Saturday: 10:00 - 18:00 ,43.67144,1.51491,dealer
+location_347,cap.velo.creuse,2 Place du 19 Mars 1962,23220,Champsanglard,FR,+33 641350368,cap.velo.creuse@gmail.com,,,46.274291,1.881742,dealer
+location_348,Citibike Anglet,21 r Loustalot,64600,Anglet,FR,05 59 20 81 11,,http://www.citibike.fr,,43.494898,-1.519968,dealer
+location_349,Citibike Biganos,ZAC de la cassadotte en face de la cour des materiaux de Leroy Merlin,33180,Biganos,FR,985235882 / 85935026,biganos@citibike.fr,,,44.641626,-0.948821,dealer
+location_350,Citibike Bordeaux,avenue descartes 32,33160,St médard en jalles,FR,985020687 / 49915034,bordeaux@citibike.fr,,,44.886246,-0.69447,dealer
+location_351,CITIBIKE CAEN,Rue de Bernières 1,14000,CAEN,FR,+33 952312014,caen@citibike.fr,http://www.citibike.fr,,49.183451,-0.357029,dealer
+location_352,CITIBIKE CHERBOURG,Rue Albert Mahieu 11,50100,CHERBOURG EN COTENTIN,FR,+33 950737004,cherbourg@citibike.fr,,,49.639714,-1.62514,dealer
+location_353,Citibike Dunkerque,"60, Route de Furnes",59210,Coudekerque Branche,FR,+33 3 28 61 39 75,cote-dopale@citibike.fr,https://www.citibike.fr/fr/,"Dienstag - Freitag: 10:00 - 13:00 & 14:30 - 19:00 Uhr
+Samstag: 10:00 - 19:00 Uhr",51.03652,2.39782,dealer
+location_354,Citibike La Rochelle,"12, Rue saint Nicolas",17000,La Rochelle,FR,+33 9 54 57 65 68,larochelle@citibike.fr,http://www.citibike.fr,"Monday: 14h00-19h00
+Tuesday: 10h00-19h00
+Wednesday: 10h00-19h00
+Thursday: 10h00-19h00
+Friday: 10h00-19h00
+Saturday: 10h00-19h00",46.160098,-1.149948,dealer
+location_355,CITIBIKE LE HAVRE,RUE JULES SIEGFRIED 9,76600,LE HAVRE,FR,+33 954709102,lehavre@citibike.fr,,,49.49233,0.110023,dealer
+location_356,Culture Vélo,4 Rue de l'Électricité,67550,Vendenheim,FR,+33 3 67 10 98 33,67vendenheim@culturevelo.com,https://www.culturevelo.com/-Vendenheim-,Monday: closedTuesday - Saturday: 9:30 - 12:00 & 13:30 - 18:30,48.65834,7.72805,dealer
+location_357,CYCLES CARBONE ZERO,Chemin de L'Eperviere,26000,Valence,FR,+33 684 53 14 10,leport@carbone-zero.fr,https://www.carbone-zero.fr,Tuesday - Saturday: 9:00 - 12:00 & 13:30 - 18:30,44.91934,4.87566,dealer
+location_358,CYCLES CARBONE ZERO La Gare,24 rue Denis Papin,26000,Valence,FR,+33 4 75 56 99 06,contact@carbone-zero.fr,https://www.carbone-zero.fr,Tuesday - Saturday: 9:00 - 12:00 & 13:30 - 18:30,44.92867,4.89331,dealer
+location_359,Cycles Cesbron,2 rue Lino Ventura,49130,Les Ponts-de-Cé,FR,+33 241448744,info@cyclescesbron.fr,https://www.cyclescesbron.fr/,"Monday: closed
+Tuesday - Saturday: 9h00 - 12h00 & 14h00 - 19h00",47.433795,-0.501415,dealer
+location_360,CYCLES CESBRON ANGERS,12 RUE AUGUSTE GAUTIER,49100,ANGERS,FR,+33 24954980,info@cyclescesbron.fr,http://CYCLESCESBRON.FR,"Monday: closed
+Tuesday - Wednesday: 10:00h - 19:00h
+Friday: 14:00h - 19:00h
+Saturday: 10:00 - 18:00h",47.464362,-0.5617,dealer
+location_361,CYCLES CESBRON LAVAL,BOULEVARD DE LA BOUTELLERIE,53940,SAINT BERTHEVIN,FR,+33 243909426,info@cyclescesbron.fr,http://CYCLESCESBRON.FR,Monday - Saturday: 9:30h - 19:00h,48.066022,-0.804664,dealer
+location_362,CYCLES CESBRON SAUMUR,RUE DE L'AVENIR,49400,DISTRE,FR,+33 241676932,info@cyclescesbron.fr,http://CYCLESCESBRON.FR,"Monday: closed
+Tuesday - Friday: 9:00h - 12:00h & 14:00h - 19:00h
+Saturday: 9:00h - 12:00h & 14:00 - 18:00h",47.229623,-0.116793,dealer
+location_363,Cycles Clemer,18 rue Bernard Palissy,60000,Beauvais,FR,+33 3 44 45 54 73,cyclesclemer@outlook.com,http://www.cyclesclemer.fr,"Monday: 14h30-19h00
+Tuesday: 9h30-13h00// 14h00-19h00
+Wednesday: 9h30-13h00// 14h00-19h00
+Thursday: 9h30-13h00// 14h00-19h00
+Friday: 9h30-13h00// 14h00-19h00
+Saturday: 9h30-13h00// 14h00-19h00",49.41499,2.11494,dealer
+location_364,Cycles Expert City,1 Rue Chicogné,35000,RENNES,FR,+33 2 99 69 59 82, contact@cyclexperts-ecity.com,https://www.cyclexperts-ecity.com/,"Monday: 10h00-13h00 // 14h00-19h00
+Tuesday: 10h00-13h00 // 14h00-19h00
+Wednesday: 10h00-13h00 // 14h00-19h00
+Thursday: 10h00-13h00 // 14h00-19h00
+Friday: 10h00-13h00 // 14h00-19h00
+Saturday: 10h00-18h00",48.108075,-1.68298,dealer
+location_365,CYCLES EXPERTS BAIN DE BR,1 Rue Lanserva,35470,Plechatel,FR,+33 299444650,sarlh3b@gmail.com,http://cyclexperts.com,"Monday - Friday: 9:30 -12:30 & 14:00 - 19:00
+Saturday: 9:30 - 18:00",47.861853,-1.680919,dealer
+location_366,Cycles Guyonnet,105 Avenue du Marechal de Lattre,79000,Niort,FR,+33 5 49 73 98 86,Cycles-guyonnet@orange.fr,,"Monday:  14:00 - 18:00
+Tuesday, Thursday, Friday & Saturday: 8:00 12:00 & 14:00 - 18:00",46.323099,-0.4674,dealer
+location_367,Cycles Passion,18 PLACE LOUIS LUMIERE,62200,Boulogne Sur Mer,FR,+33 3 21 31 34 41,cyclespassion.bike@gmail.com ,http:// www.cyclespassion.bike,"Monday: closed
+Tuesday:  9h00-12h00 // 14h00-19h00
+Wednesday:  9h00-12h00 // 14h00-19h00
+Thursday:  9h00-12h00 // 14h00-19h00
+Friday:  9h00-12h00 // 14h00-19h00
+Saturday:",50.72146,1.60878,dealer
+location_368,Cycling Universe,25 rue du Général Leclerc,71100,Chalon Sur Saone,FR,+33 9 86 20 74 94,cycling.univers@outlook.fr,https://www.cycling-univers.fr,Monday: 14:00 - 18:30Tuesda - Saturday: 9:00 - 12:00 & 14:00 - 18:30,46.78301,4.85337,dealer
+location_369,Ebike Riviera Tour,8 boulevard Lech WALESA,06300,Nice,FR,+33 6 65 27 52 79,,,"Monday: closed
+Tuesday - Friday: 9 am - 12 pm & 2 - 7 pm
+Saturday: 9:30 am - 12 pm & 1:30 - 6 pm",43.699462,7.287171,dealer
+location_370,Energy Cycles,9 Avenue Hubert Pierson,51700,Mareuil le Port,FR,+33 652047875,energycycles51@gmail.com,https://energycycles51.wixsite.com/bikeshop,Monday: closedTuesday - Saturday: 9:30 - 12:00 & 14:00 - 19:00,49.08218,3.74563,dealer
+location_371,Espace Vélos VELOLAND,100 rue de L'ile Napoléon,68170,Rixheim,FR,+33 389619708,espace.velos@orange.fr,https://www.veloland-rixheim.com,Monday: closedTuesday - Friday: 9:00 - 12:00 & 14:40 - 19:00Saturday: 9:00 - 12:00 & 13:30 - 18:00,47.76083,7.3987,dealer
+location_372,Evolution 2,5 rue de la glisse,73210,Montchavin,FR,+33 686349415,montchavin@evolution2.com,http://evolution2.com/la-plagne-montchav,,45.559437,6.734704,dealer
+location_373,FanVelo,426 rue Jenny Vetillard Lieu dit Le Chassagnon,43300,Mazeyrat d'Allier,FR,+33 6 33 33 37 66,contact@fanvelo.fr,http://fanvelo.fr/,"Tuesday - Thursday: 5 - 9 pm
+Friday: 2 - 7 pm
+Saturday: 9 am - 2 pm",45.123053,3.53222,dealer
+location_374,FG BIKE STORE,QUAI DE BREST 11,35600,REDON,FR,299722238 / 86743001,fg.bikestore@gmail.com,http://fgbikestore.fr,,47.648896,-2.086358,dealer
+location_375,GEM BIKES BBMC,22 avenue du Mont Aigoual,34190,Ganges,FR,+33 4 99 64 91 73,34ganges@gem-bikes.com,https://shop.gem-bikes.com/,"Monday: 14:30 - 19:00
+Tuesday - Saturday: 9:30 - 12:30 & 14:30 -19:00",43.932283,3.710256,dealer
+location_376,MONDOVELO PONTIVY,23 RUE ALBERT DE MUN,56300,PONTIVY,FR,+33 297089191,pontivy@velogiant.fr,,"Monday: closed
+Tuesday - Friday: 9h30 - 12h30 & 14h00 - 19h00
+Saturday: 9h30 - 12h30 & 14h00 - 18h00",48.057086,-2.96343,dealer
+location_377,MODOVELO SAINT MALO,44 RUE DU GENERAL PATTON,35400,ST MALO,FR,+33 299820184,saintmalo@velogiant.fr,,"Monday: 14h00 - 19h00
+Tuesday - Friday: 9h30 - 12h30 & 14h00 - 19h00
+Saturday: 9h30 - 12h30 & 14h00 - 18h00",48.62185,-1.99553,dealer
+location_378,La Roue Liber,32 rue Vignon,75009,Paris,FR,+33 144700865,laroueliber@gmail.com,http://www.laroueliber.fr,"Monday: closed
+Tuesday - Friday: 10h - 19h
+Saturday: 11h - 18h",48.872077,2.32667,dealer
+location_379,Les Cycles Clemer,"124 A, rue du Général de Gaulle",60510,La Neuville en Hez,FR,+33 3 44 68 03 72,cyclesclemer@outlook.com,http://www.cyclesclemer.fr,"Monday: closed
+Tuesday - Saturday: 9:30 - 12:00 & 14:00 - 18:30",49.404782,2.322003,dealer
+location_380,LES VELOS DE LEON,RUE DUQUESNE 5,76200,DIEPPE,FR,235828490,lesvelosdeleon@gmail.com,https://lesvelosdeleon.fr/,,49.927561,1.078884,dealer
+location_381,Location Vélo Dunkerque,1 bis Digue de Mer,59140,Dunkerque,FR,+33(0) I24659346353,lvdknord@gmail.com,https://www.location-velo-dunkerque.fr,,51.04912,2.386325,dealer
+location_382,LT2MH BICI,2  Rue de la Poste,25660,SAONE,FR,+33 6 31 76 64 20,Lt2mh.bici@sfr.fr,http://Lt2mhbici.fr,"Monday - Friday: 9:00 - 12:00 & 14:00 - 17:00h
+Saturday: 9:00 - 12:00h",47.223559,6.116989,dealer
+location_383,Modovélo Sarl Espace Bike 38,12 route de Lyon,38150,Chanas,FR,+33 771 591636,mondovelochanas@gmail.com,,"Monday: closed
+Tuesday - Saturday: 9:30 - 12:00 & 14:00 - 18:00",45.322459,4.808476,dealer
+location_384,MONBOIPEN SPORT34,2 rue des Joncasses,34920,Le Cres,FR,+33 4 67 72 64 46,34montpellier-lecres@culturevelo.c,https://www.culturevelo.com/-Mon,"Monday: closed
+Tuesday - Saturday: 9:30 -12:00 & 14:00 - 19:00",43.642487,3.939191,dealer
+location_385,Mondovélo Chécy,20 rue gustave eiffel,45430,Chécy,FR,+33 219130474,mondovelochecy@gmail.com,https://checy.mondovelo.fr/,Monday: closedTuesday - Friday: 10:00 - 12:30 & 14:00 - 19:00Saturday: 9:30 - 12:30 & 14:00 - 18:30,47.90565,2.03233,dealer
+location_386,Mondovelo Langueux,1 RUE DES GRIGNONS,22360,LANGUEUX,FR,+33 296700691,saintbrieuc@velogiant.fr,,Monday - Saturday: 10h00 - 12h30 & 14h00 - 19h00,48.496161,-2.731863,dealer
+location_387,Mondovelo Le Mans Nord,Parc Manceau - ZAC de l 'Ardoise,72000,LE MANS,FR,+33 2 43 51 16 00,mondovelolemans@gmail.com,https://le-mans.mondovelo.fr/,"Monday: 14h00-19h00
+Tuesday - Saturday: 09h30-12h30 & 14h00-19h00",48.028056,0.181164,dealer
+location_388,Mondovelo Le Mans Sud,ZAC du Cormier // 10 rue Wilbur,72230,MULSANNE,FR,+33 2 43 78 50 90,mondovelolemansud@orange.fr,https://mulsanne.mondovelo.fr/,"Monday: 14h00-19h00
+Tuesday - Saturday: 09h30-12h30 & 14h00-19h00",47.942331,0.231357,dealer
+location_389,ORCIERES CYCLING,3755 ROUTE D ORCIERES,05170,ORCIERES,FR,+3 6 83 97 99 58,romainmiellot.atelieroct@gmail.com,,Monday - Saturday: 8h - 18h,44.684318,6.324415,dealer
+location_390,Paddock shop,10,70000,Vesoul,FR,+33 0685107074,contact@paddockshop.fr,,,47.619788,6.15428,dealer
+location_391,REINE ET BICLOU,49 RUE DE MONS,59300,VALENCIENNES,FR,+33 671999799,contact@reineetbiclou.fr,http://www.reineetbiclou.fr,"Monday: closed
+Tuesday, Thursday & Friday: 8:00 - 18:00h
+Wednesday: 8:00 - 19:00h
+Saturday: 9:00 - 19:00h",50.360246,3.528905,dealer
+location_392,Roule Energie,12 Rue de l'Europe //  ZA la Tigno,85430,Aubigny,FR,,infos.rouleenergie@orange.fr,https://www.rouleenergie.fr/,Monday - Saturday: 9:00 - 12:00 & 14:00 - 18:30 ,46.61616,-1.44541,dealer
+location_393,Sport Passion GSB,273 chemin de Croupillac,30100,Ales,FR,+33 4 66 55 17 23,30ales@culturevelo.com,https://www.culturevelo.com/-Ales-,Monday - Saturday: 9:30 - 12:30 & 14:30 - 19:00,44.132211,4.104612,dealer
+location_394,TEX RACING,7 Rue de la Marine BP 69,20110,PROPRIANO,FR,+33 6 03 53 55 62,tex.racing@orange.fr,http://www.texracing.shop,"Monday: closed
+Tuesday - Saturday: 9:30 - 12:00 & 14:30 - 18:30",41.675525,8.898206,dealer
+location_395,Culture Velo Tours Nord,15 Rue Arthur Rimband,37100,Tours,FR,+33 247633724,37tours-nord@culturevelo.com,https://www.valdeloirevelo.fr/,"Monday: 2 - 7 pm
+Tuesday - Saturday: 10 - 12 am & 2 - 7 pm",47.429554,0.70801,dealer
+location_396,Val de Loire Velo,7 Rue Paul Langevin,37170,Chambray les Tours,FR,+33 247748080,toursnord@valdeloirevelo.fr,https://www.valdeloirevelo.fr/,"Monday: 2 - 7 pm
+Tuesday - Saturday: 10 - 12 am & 2 - 7 pm",47.327629,0.704564,dealer
+location_397,VELO EMOTION,CHEMIN ROMAIN,22400,ST ALBAN,FR,+33 257675609,contact@velo-emotion.fr,,"Monday: closed
+Tuesday - Friday: 9h30 - 12h30 & 14h00 - 19h00
+Saturday: 9h30 - 12h30 & 14h00 - 18h00",48.556226,-2.548169,dealer
+location_398,Vélo Montagne Noire,1 impasse des capucines,81200,Aiguefonde,FR,+33617433824,,https://www.velo-montagnenoire.com,Du Lundi au samedi de 8h30 à 19h00,43.501038,2.346087,dealer
+location_399,Velo2Max,589 ZAC des Bousquets,83390,CUERS,FR,+33 4 94 35 28 80,velo-max@orange.fr,https://www.facebook.com/veloma,"Monday & Thursday: 14h à 18h30
+Tuesday, Wednesday, Friday & Saturday: 9h00 à 12h & 14h à 18h30",43.237875,6.0722,dealer
+location_400,Culture Velo Blois ,Rue Bernard Palissy,41350,Vineuil,FR,+33 254500103,31blois@culturevelo.com,https://valdeloirevelo.fr/,"Monday: 2 pm - 7 pm
+Tuesday - Saturday: 10 - 12 am & 2 - 7 pm",47.581201,1.375111,dealer
+location_401,VELOLAND Cannes,Zi Les Tourrades,06210,Mandelieu,FR,+33 493472026,veloland-cannes@veloland.com,http://veloland.com,Tuesday - Saturday: 10:00 - 13:00 & 15:00 - 19:00,43.5545,6.95442,dealer
+location_402,VELOLAND FUNCYCLES,13 AVENUE DE BEL AIR // ZC DE LA CLAIRCIERE,17310,SAINT PIERRE D'OLERON,FR,+33 546369197 / 23911875,funcyclesio@gmail.com,https://www.veloland-funcycles.fr/,,45.935534,-1.304816,dealer
+location_403,VeloMax,235 Rue de l'Artisanat,83140,Six Fours Les Plages,FR,+33 4 94 92 26 35,velo-max@orange.fr,https://www.facebook.com/veloma,"Monday: 14:00 - 18:30
+Tuesday - Saturday: 9:30 - 12:00 & 14:00 - 18:30",43.11354,5.847377,dealer
+location_404,Vélos et Compagnie ,40 Rue de Cuire,69004,Lyon,FR,+33 9 81 34 48 95,contact@velosetcie.com,https://velosetcie.com/,Monday: 9:00 - 12:30Tuesday & Wednesday: 10:00 - 12:00 & 14:30 - 18:30Thursday: 14:30 - 19:00Friday: 9:00 - 12:30 & 14:00 - 17:30Saturday: 10:00 - 12:30 & 14:00 - 18:00,45.77785,4.83017,dealer
+location_405,VELOVOLT,AVENUE DU COMMANDANT LYSIACK 8,17440,AYTRE,FR,+33546561378,larochelle@velovolt.fr,,,46.137837,-1.129171,dealer
+location_406,EAST MX,Ivontie 9,80260,Joensuu,FI,+35 10 419 4525,info@eastmx.fi,http://www.eastmx.fi,"Monday - Friday: 9:00 - 17:00
+Saturday: 10:00 - 14:00",62.58973,29.823806,dealer
+location_407,Moto-Seinäjoki Oy,Lieskatie 2,60510,Hyllykallio,FI,+358 20 7939855,myynti@moto-seinajoki.fi,http://www.eride.fi,"Monday - Friday: 9:00 - 17:00
+Saturday: 10:00 - 14:00",62.809091,22.882222,dealer
+location_408,Kari Vehniäinen Racing Oy,Vasarakatu 5,40320,Jyväskylä,FI,+35 4007044736,myynti@kvr.fi,http://www.kvr.fi,"Monday - Friday: 9:00 - 17:00
+Saturday: 10:00 - 13:00 at summer (01.05. - 30.09.)",62.254158,25.770738,dealer
+location_409,Kone & Vene Center,Kaivotie 23,70700,Kuopio,FI,+358 20 7433 080 ,info@konevenecenter.fi,https://www.konevenecenter.fi,Monday - Friday: 9:00 - 17:00Saturday: 10:00 - 14:00,62.87888,27.63313,dealer
+location_410,Kytönen Motorsport,Teollisuuskatu 4,42100,Jämsä,FI,+358 50 0541 023,myynti@kytonen-motorsport.com,http://www.kytonen-motorsport.com,Monday - Friday: 8:00 - 17:00,61.859567,25.178365,dealer
+location_411,Pyöräkeidas,Helsingintie 32,24100,Salo,FI,+358445512710,myynti@pyorakeidas.fi,https://www.pyorakeidas.fi,Monday - Friday: 10:00 - 17:00Saturday: 10:00 - 14:00,60.38743,23.14286,dealer
+location_412,Vmsport,Kanavapuistikko 8,68600,Pietarsaari,FI,+358 6 723 0511,info@vmsport.fi,http://www.vmsport.fi,Monday - Friday: 10:00 - 18:00Saturday 10:00 - 14:00,63.675113,22.707911,dealer
+location_413,Zweirad Center Horst Weynand,Zur Domaine 25,4750,Bütgenbach,BE,+32 80 64 22 01,weynand.horst@skynet.be,https://h-weynand.be/,"Monday: closed
+Tuesday - Friday: 9:00 - 12:00 & 13:00 - 18:00
+Saturday: 9:00 - 12:00 & 13:00 - 16:00 (during winter until 15:00)",50.412309,6.220246,dealer
+location_414,BIKE CENTER MARIBOR,Na Poljanah 18 (Ikona center),2000,Maribor,SI,+386 2 420 18 36,info@bike-center.si,http://www.bike-center.si,"Monday - Friday: 10:00 - 18:00
+Saturday: 9:00 - 13:00",46.55253,15.628144,dealer
+location_415,TCM Cykel,Flygstaden Byggnad 63,826 70,Söderhamn,SE,+4610 160 33 33,support@tcmcykel.se,https://www.tcmcykel.se/,Monday - Friday: 08:00 - 16:00,61.27347,17.09888,dealer
+location_416,TCM Cykel,Industrivägen 6,135 70,Tyresö,SE,+4610 160 33 33,support@tcmcykel.se,https://www.tcmcykel.se/,Sommer: Monday - Saturday: 10:00 - 16:00 & Winter: Monday - Friday: 11:00 - 18:00Saturday: 10:00 - 14:00,59.24633,18.21625,dealer

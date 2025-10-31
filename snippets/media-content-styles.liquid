@@ -468,62 +468,21 @@
   }
   {% when 'button' %}
   #shopify-section-{{ section.id }} .block-{{ block.id }}
-  .btn-1 {
-    color: {{ block.settings.button_text_color1 | default: "#ffffff" }};
-    background: {{ block.settings.button_bg_color1 | default: "#000000" }};
-    border: 2px solid {{ block.settings.button_border_color1 | default: "#000000" }};
-    font-size: {{ block.settings.desktop_font_size }}px;
-    white-space: nowrap;
-    border-radius: 50px;
-    padding: 0 24px;
-    height: 48px;
-    font-weight: 600;
-    letter-spacing: 0.025em;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  .content-button-1.unified-button {
+    font-size: {{ block.settings.desktop_font_size | default: 14 }}px !important;
+    border-radius: {{ block.settings.button_border_radius | default: 50 }}px !important;
+    min-height: {{ block.settings.button_height | default: 60 }}px !important;
+    height: {{ block.settings.button_height | default: 60 }}px !important;
+    border: 2px solid {{ block.settings.button_border_color1 | default: "transparent" }} !important;
   }
 
   #shopify-section-{{ section.id }} .block-{{ block.id }}
-  .btn-1:hover {
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15), 0 4px 10px rgba(0, 0, 0, 0.1);
-  }
-
-  #shopify-section-{{ section.id }} .block-{{ block.id }}
-  .btn-1:hover .button-shine {
-    left: 100%;
-  }
-
-  #shopify-section-{{ section.id }} .block-{{ block.id }}
-  .btn-1:hover .button-text {
-    transform: translateX(-2px);
-  }
-
-  #shopify-section-{{ section.id }} .block-{{ block.id }}
-  .btn-1:hover .button-arrow {
-    transform: translateX(4px) scale(1.1);
-  }
-
-  #shopify-section-{{ section.id }} .block-{{ block.id }}
-  .btn-2 {
-    color: {{ block.settings.button_text_color2 | default: "#ffffff" }};
-    background: {{ block.settings.button_bg_color2 | default: "#000000" }};
-    border: 2px solid {{ block.settings.button_border_color2 | default: "#000000" }};
-    font-size: {{ block.settings.desktop_font_size }}px;
-    white-space: nowrap;
-    border-radius: 50px;
-    padding: 0 24px;
-    height: 48px;
-    font-weight: 600;
-    letter-spacing: 0.025em;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
-  }
-
-  #shopify-section-{{ section.id }} .block-{{ block.id }}
-  .btn-2:hover {
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15), 0 4px 10px rgba(0, 0, 0, 0.1);
+  .content-button-2.unified-button {
+    font-size: {{ block.settings.desktop_font_size | default: 14 }}px !important;
+    border-radius: {{ block.settings.button_border_radius | default: 50 }}px !important;
+    min-height: {{ block.settings.button_height | default: 60 }}px !important;
+    height: {{ block.settings.button_height | default: 60 }}px !important;
+    border: 2px solid {{ block.settings.button_border_color2 | default: "transparent" }} !important;
   }
   {% endcase %}
   {% endfor %}
@@ -662,9 +621,13 @@
     }
     {% when 'button' %}
     #shopify-section-{{ section.id }} .block-{{ block.id }}
-    .btn {
-      font-size: {{ block.settings.mobile_font_size }}px;
-      white-space: normal;
+    .content-button-1.unified-button,
+    #shopify-section-{{ section.id }} .block-{{ block.id }}
+    .content-button-2.unified-button {
+      font-size: {{ block.settings.mobile_font_size | default: 12 }}px !important;
+      border-radius: {{ block.settings.button_border_radius | default: 50 }}px !important;
+      min-height: {{ block.settings.button_height | default: 48 }}px !important;
+      height: {{ block.settings.button_height | default: 48 }}px !important;
     }
     {% endcase %}
     {% endfor %}
