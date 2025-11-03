@@ -1,6 +1,24 @@
 {% assign current_locale = request.locale.iso_code | default: 'en' %}
 {% assign locale_prefix = current_locale | slice: 0, 2 %}
-<div class="button-container lightly-spaced-row" style="justify-content: {{ block.settings.button_alignment | default: 'center' }}; display: flex; gap: 10px;">
+
+{% comment %} Get button layout settings {% endcomment %}
+{% assign desktop_layout = block.settings.button_layout_desktop | default: 'horizontal' %}
+{% assign mobile_layout = block.settings.button_layout_mobile | default: 'vertical' %}
+
+{% comment %} Set flex direction based on layout {% endcomment %}
+{% assign desktop_flex_direction = 'row' %}
+{% assign mobile_flex_direction = 'column' %}
+
+{% if desktop_layout == 'vertical' %}
+  {% assign desktop_flex_direction = 'column' %}
+{% endif %}
+
+{% if mobile_layout == 'horizontal' %}
+  {% assign mobile_flex_direction = 'row' %}
+{% endif %}
+
+<div class="button-container lightly-spaced-row button-layout-desktop-{{ desktop_layout }} button-layout-mobile-{{ mobile_layout }}" 
+     style="justify-content: {{ block.settings.button_alignment | default: 'center' }}; display: flex; flex-direction: {{ desktop_flex_direction }};">
   {% for i in (1..2) %}
     {% assign button_label_key = 'button_label' %}
     {% assign button_link_key = 'button_link' %}

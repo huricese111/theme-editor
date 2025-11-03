@@ -798,4 +798,29 @@
       display: none !important;
     }
   }
+
+  /* Button Layout Controls */
+  /* Desktop Button Layout */
+  #shopify-section-{{ section.id }} .button-container.button-layout-desktop-horizontal {
+    flex-direction: row;
+    gap: 10px;
+  }
+  
+  #shopify-section-{{ section.id }} .button-container.button-layout-desktop-vertical {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  /* Mobile Button Layout */
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} .button-container.button-layout-mobile-horizontal {
+      flex-direction: row !important;
+      gap: 8px !important;
+    }
+    
+    #shopify-section-{{ section.id }} .button-container.button-layout-mobile-vertical {
+      flex-direction: column !important;
+      gap: 5px !important;
+    }
+  }
 {% endstyle %}

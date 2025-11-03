@@ -27,15 +27,20 @@ if (!customElements.get('faq-header')) {
         this.searchInput.addEventListener('paste', this.performSearch.bind(this));
       }
 
-      this.debouncedBuildIndex = debounce(this.buildIndex.bind(this), 50);
+      this.debouncedBuildIndex = debounce(this.buildIndex.bind(this), 100);
       document.addEventListener('theme:faq-header-update', this.debouncedBuildIndex);
       this.debouncedBuildIndex();
 
       if (this.querySelector('.faq-index')) {
         this.addEventListener('click', FaqHeader.handleIndexClick.bind(this));
         this.closest('.section-faq-header').classList.add(this.classNames.sectionWithIndexStatus);
-        this.resizeIndex.call(this);
-        this.debouncedResizeIndex = debounce(this.resizeIndex.bind(this), 250);
+        
+        // Initialize index with proper timing
+        requestAnimationFrame(() => {
+          this.resizeIndex.call(this);
+        });
+        
+        this.debouncedResizeIndex = debounce(this.resizeIndex.bind(this), 100);
         window.addEventListener('resize', this.debouncedResizeIndex);
       }
     }
@@ -58,6 +63,7 @@ if (!customElements.get('faq-header')) {
       this.linkedCollapsibleTabs = [];
       this.linkedQuestionContainers = [];
       this.linkedContent = [];
+      this.linkedHeadings = []; // Add array to track section headings
 
       let currentElement = faqHeaderSection;
       while (currentElement.nextElementSibling && currentElement.nextElementSibling.classList.contains('section-collapsible-tabs')) {
@@ -65,8 +71,14 @@ if (!customElements.get('faq-header')) {
 
         // build list of searchable content
         this.linkedCollapsibleTabs.push(currentElement);
-        currentElement.querySelectorAll('.collapsible-tabs__tab').forEach((el) => this.linkedQuestionContainers.push(el));
-        currentElement.querySelectorAll('.collapsible-tabs__content').forEach((el) => this.linkedContent.push(el));
+        currentElement.querySelectorAll('.collapsible-tabs__question').forEach((el) => this.linkedQuestionContainers.push(el));
+        currentElement.querySelectorAll('.collapsible-tabs__content-block, .collapsible-tabs__button-wrapper').forEach((el) => this.linkedContent.push(el));
+        
+        // Collect section headings to hide during search
+        const currentElementHeading = currentElement.querySelector('.collapsible-tabs__heading');
+        if (currentElementHeading) {
+          this.linkedHeadings.push(currentElementHeading);
+        }
 
         // build index UI
         if (indexContainer) {
@@ -85,8 +97,11 @@ if (!customElements.get('faq-header')) {
         }
       }
 
+      // Delay resizeIndex to prevent layout jumping
       if (indexContainer) {
-        this.resizeIndex.call(this);
+        requestAnimationFrame(() => {
+          this.resizeIndex.call(this);
+        });
       }
     }
 
@@ -94,15 +109,27 @@ if (!customElements.get('faq-header')) {
       const stickyContainer = this.querySelector('.faq-index__sticky-container');
       const faqHeaderSection = this.closest('.section-faq-header');
 
+      if (!stickyContainer || !faqHeaderSection) {
+        return;
+      }
+
       let currentElement = faqHeaderSection;
       while (currentElement.nextElementSibling && currentElement.nextElementSibling.classList.contains('section-collapsible-tabs')) {
         currentElement = currentElement.nextElementSibling;
       }
 
-      const stickyContainerRect = stickyContainer.getBoundingClientRect();
-      const currentElementRect = currentElement.getBoundingClientRect();
+      // Use setTimeout to ensure DOM is fully rendered before calculating dimensions
+      setTimeout(() => {
+        const stickyContainerRect = stickyContainer.getBoundingClientRect();
+        const currentElementRect = currentElement.getBoundingClientRect();
 
-      stickyContainer.style.height = `${currentElementRect.bottom - stickyContainerRect.top}px`;
+        if (stickyContainerRect.top && currentElementRect.bottom) {
+          const calculatedHeight = currentElementRect.bottom - stickyContainerRect.top;
+          if (calculatedHeight > 0) {
+            stickyContainer.style.height = `${calculatedHeight}px`;
+          }
+        }
+      }, 0);
     }
 
     performSearch() {
@@ -118,11 +145,92 @@ if (!customElements.get('faq-header')) {
           }
         });
 
+        // Add/remove searching class for styling and apply inline styles
+        this.linkedCollapsibleTabs.forEach((section) => {
+          const blocksContainer = section.querySelector('.collapsible-tabs__blocks');
+          const blocks = section.querySelectorAll('.collapsible-tabs__block');
+          const details = section.querySelectorAll('.collapsible-tabs__details');
+          
+          if (terms.length) {
+            section.classList.add('faq-searching');
+            
+            // Apply tight spacing styles when searching
+            if (blocksContainer) {
+              blocksContainer.style.gap = '0.125rem';
+            }
+            
+            blocks.forEach(block => {
+              block.style.marginBottom = '0.125rem';
+              block.style.marginTop = '0';
+            });
+            
+            details.forEach(detail => {
+              detail.style.marginBottom = '0.125rem';
+              detail.style.marginTop = '0';
+            });
+
+            // Reduce spacing between sections during search
+            section.style.marginBottom = '0.5rem';
+            section.style.marginTop = '0.5rem';
+            
+            // Also reduce spacing on the collapsible-tabs container within the section
+            const collapsibleTabsContainer = section.querySelector('.collapsible-tabs');
+            if (collapsibleTabsContainer) {
+              collapsibleTabsContainer.style.marginTop = '0';
+              collapsibleTabsContainer.style.marginBottom = '0';
+            }
+          } else {
+            section.classList.remove('faq-searching');
+            
+            // Reset to original spacing when not searching
+            if (blocksContainer) {
+              blocksContainer.style.gap = '';
+            }
+            
+            blocks.forEach(block => {
+              block.style.marginBottom = '';
+              block.style.marginTop = '';
+            });
+            
+            details.forEach(detail => {
+              detail.style.marginBottom = '';
+              detail.style.marginTop = '';
+            });
+
+            // Reset section spacing
+            section.style.marginBottom = '';
+            section.style.marginTop = '';
+            
+            // Reset collapsible-tabs container spacing
+            const collapsibleTabsContainer = section.querySelector('.collapsible-tabs');
+            if (collapsibleTabsContainer) {
+              collapsibleTabsContainer.style.marginTop = '';
+              collapsibleTabsContainer.style.marginBottom = '';
+            }
+          }
+        });
+
         // search
         this.linkedQuestionContainers.forEach((el) => {
           if (terms.length) {
             let termFound = false;
-            const matchContent = el.textContent.toLowerCase();
+            // Search in both question title and answer content
+            const questionTitle = el.querySelector('.collapsible-tabs__question-title, .collapsible-tabs__summary');
+            const answerContent = el.querySelector('.collapsible-tabs__answer, .collapsible-tabs__text');
+            
+            let matchContent = '';
+            if (questionTitle) {
+              matchContent += questionTitle.textContent.toLowerCase() + ' ';
+            }
+            if (answerContent) {
+              matchContent += answerContent.textContent.toLowerCase();
+            }
+            
+            // Fallback to element's full text content if specific elements not found
+            if (!matchContent.trim()) {
+              matchContent = el.textContent.toLowerCase();
+            }
+            
             terms.forEach((term) => {
               if (matchContent.indexOf(term) >= 0) {
                 termFound = true;
@@ -140,6 +248,15 @@ if (!customElements.get('faq-header')) {
 
         // hide non-question content if doing a search
         this.linkedContent.forEach((el) => {
+          if (terms.length) {
+            el.classList.add(this.classNames.questionContainerInactive);
+          } else {
+            el.classList.remove(this.classNames.questionContainerInactive);
+          }
+        });
+
+        // hide section headings during search
+        this.linkedHeadings.forEach((el) => {
           if (terms.length) {
             el.classList.add(this.classNames.questionContainerInactive);
           } else {

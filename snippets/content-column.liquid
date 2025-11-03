@@ -15,7 +15,17 @@
       <div class="background-image-desktop" style="background-image: url('{{ section.settings.content_bg_image | img_url: '2000x' }}'); background-position: {{ section.settings.content_bg_position | default: 'center center' }}; background-size: {{ section.settings.content_bg_size | default: 'cover' }}; background-repeat: no-repeat; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;"></div>
     {% endif %}
     {% if section.settings.content_mobile_bg != blank %}
-      <div class="background-image-mobile" style="background-image: url('{{ section.settings.content_mobile_bg | img_url: '1200x' }}'); background-position: {{ section.settings.content_mobile_bg_position | default: 'center center' }}; background-size: {{ section.settings.content_mobile_bg_size | default: 'cover' }}; background-repeat: no-repeat; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; display: none;"></div>
+      {% assign mobile_bg_image = section.settings.content_mobile_bg %}
+      {% assign mobile_bg_position = section.settings.content_mobile_bg_position | default: 'center center' %}
+      {% assign mobile_bg_size = section.settings.content_mobile_bg_size | default: 'cover' %}
+    {% elsif section.settings.content_bg_image != blank %}
+      {% assign mobile_bg_image = section.settings.content_bg_image %}
+      {% assign mobile_bg_position = section.settings.content_bg_position | default: 'center center' %}
+      {% assign mobile_bg_size = section.settings.content_bg_size | default: 'cover' %}
+    {% endif %}
+    
+    {% if mobile_bg_image != blank %}
+      <div class="background-image-mobile" style="background-image: url('{{ mobile_bg_image | img_url: '1200x' }}'); background-position: {{ mobile_bg_position }}; background-size: {{ mobile_bg_size }}; background-repeat: no-repeat; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; display: none;"></div>
     {% endif %}
   </div>
 
