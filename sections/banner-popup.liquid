@@ -90,6 +90,39 @@
       text-decoration: underline;
     }
 
+    #banner-{{ section.id }} .discount-code-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 10px;
+    }
+
+    #banner-{{ section.id }} .discount-code-wrapper > * {
+      vertical-align: middle;
+    }
+
+    #banner-{{ section.id }} .discount-code {
+      border: none;
+      border-radius: 5px;
+    }
+
+    #banner-{{ section.id }} .copy-button {
+    padding: 2px 5px;
+        color: white;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    #banner-{{ section.id }} .copy-button:hover {
+      background-color: #0056b3;
+    }
+
+    #banner-{{ section.id }} .discount-code-heading {
+      font-weight: bold;
+    }
+
     /* Responsive Design */
     @media (max-width: 768px) {
       #banner-{{ section.id }} {
@@ -199,23 +232,114 @@
                    style="font-size: {{ block.settings.font_size }}px !important; 
                           font-weight: {{ block.settings.font_weight }} !important; 
                           color: {{ block.settings.text_color }} !important; 
-                          margin-top: {{ block.settings.margin_top | default: 0 }}px !important; 
-                          margin-bottom: {{ block.settings.margin_bottom | default: 0 }}px !important;"
+                          margin-top: {{ block.settings.margin_top | default: 0 }}px; 
+                          margin-bottom: {{ block.settings.margin_bottom | default: 0 }}px;"
                    {{ block.shopify_attributes }}>
                 {%- liquid
-                  assign description_content = block.settings.description
+                  assign current_description = block.settings.description
                   if request.locale.iso_code == 'de' and block.settings.description_de != blank
-                    assign description_content = block.settings.description_de
+                    assign current_description = block.settings.description_de
                   elsif request.locale.iso_code == 'fr' and block.settings.description_fr != blank
-                    assign description_content = block.settings.description_fr
+                    assign current_description = block.settings.description_fr
                   elsif request.locale.iso_code == 'fi' and block.settings.description_fi != blank
-                    assign description_content = block.settings.description_fi
+                    assign current_description = block.settings.description_fi
                   endif
                 -%}
-                {{ description_content }}
+                {{ current_description }}
               </div>
             {%- endif -%}
 
+          {%- when 'discount_code' -%}
+            <div class="discount-code-wrapper" style="margin-top: {{ block.settings.margin_top }}px; margin-bottom: {{ block.settings.margin_bottom }}px;" {{ block.shopify_attributes }}>
+              {%- liquid
+                assign current_heading = block.settings.heading
+                if request.locale.iso_code == 'de' and block.settings.heading_de != blank
+                  assign current_heading = block.settings.heading_de
+                elsif request.locale.iso_code == 'fr' and block.settings.heading_fr != blank
+                  assign current_heading = block.settings.heading_fr
+                elsif request.locale.iso_code == 'fi' and block.settings.heading_fi != blank
+                  assign current_heading = block.settings.heading_fi
+                endif
+              -%}
+              <span class="discount-code-heading" style="font-weight: {{ block.settings.font_weight }}; color: {{ block.settings.code_color }};">{{ current_heading }}</span>
+              <span class="discount-code" style="font-size: {{ block.settings.font_size }}px; color: {{ block.settings.code_color }}; font-weight: {{ block.settings.font_weight }};">
+                {{ block.settings.discount_code }}
+              </span>
+              {%- liquid
+                assign current_copy_button_text = block.settings.copy_button_text
+                if request.locale.iso_code == 'de' and block.settings.copy_button_text_de != blank
+                  assign current_copy_button_text = block.settings.copy_button_text_de
+                elsif request.locale.iso_code == 'fr' and block.settings.copy_button_text_fr != blank
+                  assign current_copy_button_text = block.settings.copy_button_text_fr
+                elsif request.locale.iso_code == 'fi' and block.settings.copy_button_text_fi != blank
+                  assign current_copy_button_text = block.settings.copy_button_text_fi
+                endif
+
+                assign current_copy_success_text = block.settings.copy_success_text
+                if request.locale.iso_code == 'de' and block.settings.copy_success_text_de != blank
+                  assign current_copy_success_text = block.settings.copy_success_text_de
+                elsif request.locale.iso_code == 'fr' and block.settings.copy_success_text_fr != blank
+                  assign current_copy_success_text = block.settings.copy_success_text_fr
+                elsif request.locale.iso_code == 'fi' and block.settings.copy_success_text_fi != blank
+                  assign current_copy_success_text = block.settings.copy_success_text_fi
+                endif
+              -%}
+              <button class="copy-button" style="background-color: {{ block.settings.copy_button_color }}; color: {{ block.settings.copy_button_font_color }};" data-copy-text="{{ block.settings.discount_code }}" data-success-text="{{ current_copy_success_text }}">
+                {%- liquid
+                  assign current_copy_button_text = block.settings.copy_button_text
+                  if request.locale.iso_code == 'de' and block.settings.copy_button_text_de != blank
+                    assign current_copy_button_text = block.settings.copy_button_text_de
+                  elsif request.locale.iso_code == 'fr' and block.settings.copy_button_text_fr != blank
+                    assign current_copy_button_text = block.settings.copy_button_text_fr
+                  elsif request.locale.iso_code == 'fi' and block.settings.copy_button_text_fi != blank
+                    assign current_copy_button_text = block.settings.copy_button_text_fi
+                  endif
+                %}
+                {{- current_copy_button_text -}}
+              </button>
+            </div>
+
+          {%- when 'button' -%}
+            {%- if block.settings.button_text != blank -%}
+              {%- liquid
+                  assign button_text = section.settings.button_text
+                  if request.locale.iso_code == 'de' and section.settings.button_text_de != blank
+                    assign button_text = section.settings.button_text_de
+                  elsif request.locale.iso_code == 'fr' and section.settings.button_text_fr != blank
+                    assign button_text = section.settings.button_text_fr
+                  elsif request.locale.iso_code == 'fi' and section.settings.button_text_fi != blank
+                    assign button_text = section.settings.button_text_fi
+                  endif
+                -%}
+                {{ button_text | escape }}
+              </a>
+            {%- else -%}
+              <button type="button" class="banner-popup__button" disabled style="opacity: 0.5; cursor: not-allowed;">
+                {%- liquid
+                  assign button_text_final = section.settings.button_text
+                  if request.locale.iso_code == 'de' and section.settings.button_text_de != blank
+                    assign button_text_final = section.settings.button_text_de
+                  elsif request.locale.iso_code == 'fr' and section.settings.button_text_fr != blank
+                    assign button_text_final = section.settings.button_text_fr
+                  elsif request.locale.iso_code == 'fi' and section.settings.button_text_fi != blank
+                    assign button_text_final = section.settings.button_text_fi
+                  endif
+
+                  if button_text_final == blank
+                    if request.locale.iso_code == 'de'
+                      assign button_text_final = 'Link konfigurieren'
+                    elsif request.locale.iso_code == 'fr'
+                      assign button_text_final = 'Configurer le lien'
+                    elsif request.locale.iso_code == 'fi'
+                      assign button_text_final = 'Määritä linkki'
+                    else
+                      assign button_text_final = 'Configure Link'
+                    endif
+                  endif
+                -%}
+                {{ button_text_final | escape }}
+              </button>
+            {%- endif -%}
         {%- endcase -%}
       {%- endfor -%}
     </div>
@@ -470,9 +594,33 @@
   {%- endunless -%}
 {%- endif -%}
 
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const copyButtons = document.querySelectorAll('.copy-button');
+  copyButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const textToCopy = button.getAttribute('data-copy-text');
+      const successText = button.getAttribute('data-success-text');
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        const originalText = button.textContent;
+        button.textContent = successText;
+        setTimeout(() => {
+          button.textContent = originalText;
+        }, 2000);
+      }).catch(err => {
+        console.error('Failed to copy text: ', err);
+      });
+    });
+  });
+});
+</script>
+
 {% schema %}
 {
-  "name": "Banner with Custom Link",
+  "name": "t:sections.banner-popup.name",
   "tag": "section",
   "class": "cc-banner-popup",
   "settings": [
@@ -760,6 +908,154 @@
           "id": "text_color",
           "label": "Text color",
           "default": "#333333"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "label": "Margin top",
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "label": "Margin bottom",
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "type": "discount_code",
+      "name": "Discount Code",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Your code:"
+        },
+        {
+          "type": "text",
+          "id": "heading_de",
+          "label": "Heading (German)",
+          "default": "Ihr Code:"
+        },
+        {
+          "type": "text",
+          "id": "heading_fr",
+          "label": "Heading (French)",
+          "default": "Code promo :"
+        },
+        {
+          "type": "text",
+          "id": "heading_fi",
+          "label": "Heading (Finnish)",
+          "default": "Sinun koodisi:"
+        },
+        {
+          "type": "text",
+          "id": "discount_code",
+          "label": "Discount Code",
+          "default": "NPN95H3DV61M"
+        },
+        {
+          "type": "text",
+          "id": "copy_button_text",
+          "label": "Copy Button Text",
+          "default": "Copy"
+        },
+        {
+          "type": "text",
+          "id": "copy_button_text_de",
+          "label": "Copy Button Text (German)",
+          "default": "Kopieren"
+        },
+        {
+          "type": "text",
+          "id": "copy_button_text_fr",
+          "label": "Copy Button Text (French)",
+          "default": "Copier"
+        },
+        {
+          "type": "text",
+          "id": "copy_button_text_fi",
+          "label": "Copy Button Text (Finnish)",
+          "default": "Kopioi"
+          },
+          {
+            "type": "color",
+            "id": "copy_button_color",
+            "label": "Copy Button Color",
+            "default": "#007bff"
+          },
+          {
+            "type": "color",
+            "id": "copy_button_font_color",
+            "label": "Copy Button Font Color",
+            "default": "#FFFFFF"
+          },
+        {
+          "type": "text",
+          "id": "copy_success_text",
+          "label": "Copy Success Text",
+          "default": "Copied!"
+        },
+        {
+          "type": "color",
+          "id": "code_color",
+          "label": "Code Text Color",
+          "default": "#FFFFFF"
+        },
+
+        {
+          "type": "range",
+          "id": "font_size",
+          "label": "Font Size",
+          "min": 10,
+          "max": 50,
+          "step": 1,
+          "unit": "px",
+          "default": 16
+        },
+        {
+          "type": "select",
+          "id": "font_weight",
+          "label": "Font weight",
+          "options": [
+            {
+              "value": "300",
+              "label": "Light"
+            },
+            {
+              "value": "400",
+              "label": "Normal"
+            },
+            {
+              "value": "500",
+              "label": "Medium"
+            },
+            {
+              "value": "600",
+              "label": "Semi Bold"
+            },
+            {
+              "value": "700",
+              "label": "Bold"
+            },
+            {
+              "value": "800",
+              "label": "Extra Bold"
+            }
+          ],
+          "default": "700"
         },
         {
           "type": "range",

@@ -651,5 +651,28 @@
       "signup_form_success": "We will send you an email right before we open!",
       "password_link": "Enter using password"
     }
+  },
+  "banner_with_custom_link": {
+    "title": "Banner with custom link"
+  },
+  "blocks": {
+    "banner_title": {
+      "name": "Banner title"
+    },
+    "banner_description": {
+      "name": "Banner description"
+    },
+    "timeline_item": {
+      "name": "Timeline item"
+    },
+    "banner_countdown": {
+      "name": "Banner countdown"
+    },
+    "button": {
+      "name": "Button"
+    },
+    "discount_code": {
+      "name": "Discount code"
+    }
   }
 }
