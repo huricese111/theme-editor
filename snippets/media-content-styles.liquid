@@ -578,8 +578,9 @@
       !important;
       {% if section.settings.content_mobile_bg != blank %}
       background-image: url('{{ section.settings.content_mobile_bg | img_url: '1000x' }}') !important;
-      background-size: cover;
-      background-position: center;
+      background-size: {{ section.settings.content_mobile_bg_size | default: 'cover' }} !important;
+      background-position: {{ section.settings.content_mobile_bg_position | default: 'center center' }} !important;
+      background-repeat: no-repeat !important;
       {% endif %}
     }
 
@@ -660,6 +661,12 @@
   background-color: {{ section.settings.content_bg_color }};
   padding: 30px;
   position: relative;
+  {% if section.settings.content_bg_image != blank %}
+  background-image: url('{{ section.settings.content_bg_image | img_url: '1500x' }}');
+  background-size: {{ section.settings.content_bg_size | default: 'cover' }};
+  background-position: {{ section.settings.content_bg_position | default: 'center center' }};
+  background-repeat: no-repeat;
+  {% endif %}
   }
 
   #shopify-section-{{ section.id }} .flexible-layout .column,
@@ -705,6 +712,12 @@
   background-color: {{ section.settings.content_bg_color }};
   padding: 30px;
   position: relative;
+  {% if section.settings.content_bg_image != blank %}
+  background-image: url('{{ section.settings.content_bg_image | img_url: '1500x' }}');
+  background-size: {{ section.settings.content_bg_size | default: 'cover' }};
+  background-position: {{ section.settings.content_bg_position | default: 'center center' }};
+  background-repeat: no-repeat;
+  {% endif %}
   }
 
   #shopify-section-{{ section.id }} .flexible-layout .column,
@@ -764,5 +777,25 @@
   #shopify-section-{{ section.id }} .media-column .btn-2 {
   font-size: {{ section.settings.media_mobile_button_size }}px;
   }
+
+  /* Content Column Background Image Responsive Control */
+  #shopify-section-{{ section.id }} .column--content .background-image-desktop {
+    display: none;
+  }
+  
+  #shopify-section-{{ section.id }} .column--content .background-image-mobile {
+    display: block !important;
+  }
+  }
+
+  /* Desktop Background Image Control */
+  @media (min-width: 768px) {
+    #shopify-section-{{ section.id }} .column--content .background-image-desktop {
+      display: block;
+    }
+    
+    #shopify-section-{{ section.id }} .column--content .background-image-mobile {
+      display: none !important;
+    }
   }
 {% endstyle %}

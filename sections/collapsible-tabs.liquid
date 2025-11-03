@@ -1,126 +1,465 @@
+{%- comment -%}
+  Collapsible Tabs Section - Optimized Version
+  Supports multiple languages, multiple answers, multiple images, and custom Liquid content
+{%- endcomment -%}
+
+{%- liquid
+  # Create multilingual content macro to reduce code duplication
+  assign current_locale = request.locale.iso_code
+  
+  # Helper function to get localized content with fallback to English
+  capture get_localized_content
+    echo 'function get_localized_content(base_key, locale) {'
+    echo '  const localized_key = base_key + "_" + locale;'
+    echo '  return settings[localized_key] && settings[localized_key].trim() !== "" ? settings[localized_key] : settings[base_key];'
+    echo '}'
+  endcapture
+-%}
+
 <link rel="stylesheet" href="{{ 'collapsible-tabs.css' | asset_url }}" {%- render 'lazy-stylesheet-attrs' %}>
-<div class="container" {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
-  <div class="collapsible-tabs">
-    {% if section.settings.title != blank %}
-      <h3 class="collapsible-tabs__heading collapsible-tabs__content" id="faq-{{ section.settings.title | handle }}">
-      {% if request.locale.iso_code == 'de' %}
-  {{ section.settings.title_de | escape }}
-{% elsif request.locale.iso_code == 'fr' %}
-  {{ section.settings.title_fr | escape }}
-{% elsif request.locale.iso_code == 'fi' %}
-  {{ section.settings.title_fi | escape }}
-{% else %}
-  {{ section.settings.title | escape }}
-{% endif %}  
-      </h3>
-    {% endif %}
 
-    {%- for block in section.blocks -%}
-      <div class="collapsible-tabs__block" {{ block.shopify_attributes }}>
-        {% if block.type == 'content' %}
-          <div class="collapsible-tabs__text collapsible-tabs__content rte">
-           {% if request.locale.iso_code == 'de' %}
-  {{ block.settings.content_de }}
-{% elsif request.locale.iso_code == 'fr' %}
-  {{ block.settings.content_fr }}
-{% elsif request.locale.iso_code == 'fi' %}
-  {{ block.settings.content_fi }}
-{% else %}
-  {{ block.settings.content }}
-{% endif %}
+<section class="collapsible-tabs-section" 
+         aria-labelledby="collapsible-tabs-heading"
+         {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
+  <div class="container">
+    <div class="collapsible-tabs">
+      
+      {%- comment -%} Section Heading {%- endcomment -%}
+      {%- if section.settings.title != blank -%}
+        {%- liquid
+          assign section_title = section.settings.title
+          case current_locale
+            when 'de'
+              if section.settings.title_de != blank
+                assign section_title = section.settings.title_de
+              endif
+            when 'fr'
+              if section.settings.title_fr != blank
+                assign section_title = section.settings.title_fr
+              endif
+            when 'fi'
+              if section.settings.title_fi != blank
+                assign section_title = section.settings.title_fi
+              endif
+          endcase
+        -%}
+        <h2 class="collapsible-tabs__heading" 
+            id="collapsible-tabs-heading-{{ section.id }}">
+          {{ section_title | escape }}
+        </h2>
+      {%- endif -%}
 
-
-           {% if request.locale.iso_code == 'de' %}
-  {{ block.settings.liquid_content_de }}
-{% elsif request.locale.iso_code == 'fr' %}
-  {{ block.settings.liquid_content_fr }}
-{% elsif request.locale.iso_code == 'fi' %}
-  {{ block.settings.liquid_content_fi }}
-{% else %}
-  {{ block.settings.liquid_content }}
-{% endif %}
-
-              {% if block.settings.image != blank %}
-                <img src="{{ block.settings.image | img_url: 'original' }}" alt="{{ block.settings.title | escape }}" style="width: 100%;"/>
-              {% endif %}
-          </div>
-
-        {% elsif block.type == 'button' %}
-          <div class="collapsible-tabs__button collapsible-tabs__content">
-            <a class="btn btn--primary btn--link" href="{{ block.settings.link }}"><span class="btn__text">{{ block.settings.title | escape }}</span></a>
-          </div>
-
-        {% elsif block.type == 'question' %}
-          <div class="collapsible-tabs__tab">
-            <details-disclosure>
-              <details class="disclosure">
-                <summary class="disclosure__title">
-                 {% if request.locale.iso_code == 'de' %}
-            {{ block.settings.title_de }}
-            {% elsif request.locale.iso_code == 'fr' %}
-            {{ block.settings.title_fr }}
-            {% elsif request.locale.iso_code == 'fi' %}
-            {{ block.settings.title_fi }}
-            {% else %}
-            {{ block.settings.title }}
-            {% endif %}
-                </summary>
-                <div class="disclosure__panel has-motion">
-                  <div class="disclosure__content rte">
-            {% if request.locale.iso_code == 'de' %}
-            {{ block.settings.answer_de }}
-            {% elsif request.locale.iso_code == 'fr' %}
-            {{ block.settings.answer_fr }}
-              {% elsif request.locale.iso_code == 'fi' %}
-            {{ block.settings.answer_fi }}
-            {% else %}
-            {{ block.settings.answer }}
-            {% endif %}
-
-              {{ block.settings.liquid_content }}
-              {% if block.settings.image != blank %}
-                <img src="{{ block.settings.image | img_url: 'original' }}" alt="{{ block.settings.title | escape }}" />
-              {% endif %}
-   
-           {% if block.settings.answer_2 != blank %}
-            <div style="margin-top: 40px;">
-            {% if request.locale.iso_code == 'de' %}
-            {{ block.settings.answer_2_de }}
-            {% elsif request.locale.iso_code == 'fr' %}
-            {{ block.settings.answer_2_fr }}
-              {% elsif request.locale.iso_code == 'fi' %}
-            {{ block.settings.answer_2_fi }}
-            {% else %}
-            {{ block.settings.answer_2 }}
-            {% endif %}              
-            </div>
-            {% endif %}
-
-              {% if block.settings.image_2 != blank %}
-                <img src="{{ block.settings.image_2 | img_url: 'original' }}" alt="{{ block.settings.title | escape }}"/>
-              {% endif %}
+      {%- comment -%} Section Blocks {%- endcomment -%}
+      {%- if section.blocks.size > 0 -%}
+        <div class="collapsible-tabs__blocks" role="region" aria-labelledby="collapsible-tabs-heading-{{ section.id }}">
+          {%- for block in section.blocks -%}
+            <div class="collapsible-tabs__block collapsible-tabs__block--{{ block.type }}" 
+                 {{ block.shopify_attributes }}
+                 data-block-id="{{ block.id }}">
+              
+              {%- case block.type -%}
+                
+                {%- comment -%} Content Block {%- endcomment -%}
+                {%- when 'content' -%}
+                  <div class="collapsible-tabs__content-block">
+                    {%- liquid
+                      assign content_text = block.settings.content
+                      assign liquid_content = block.settings.liquid_content
+                      
+                      case current_locale
+                        when 'de'
+                          if block.settings.content_de != blank
+                            assign content_text = block.settings.content_de
+                          endif
+                          if block.settings.liquid_content_de != blank
+                            assign liquid_content = block.settings.liquid_content_de
+                          endif
+                        when 'fr'
+                          if block.settings.content_fr != blank
+                            assign content_text = block.settings.content_fr
+                          endif
+                          if block.settings.liquid_content_fr != blank
+                            assign liquid_content = block.settings.liquid_content_fr
+                          endif
+                        when 'fi'
+                          if block.settings.content_fi != blank
+                            assign content_text = block.settings.content_fi
+                          endif
+                          if block.settings.liquid_content_fi != blank
+                            assign liquid_content = block.settings.liquid_content_fi
+                          endif
+                      endcase
+                    -%}
+                    
+                    {%- if content_text != blank -%}
+                      <div class="collapsible-tabs__text rte">
+                        {{ content_text }}
+                      </div>
+                    {%- endif -%}
+                    
+                    {%- if liquid_content != blank -%}
+                      <div class="collapsible-tabs__liquid-content">
+                        {{ liquid_content }}
+                      </div>
+                    {%- endif -%}
+                    
+                    {%- if block.settings.image != blank -%}
+                      <div class="collapsible-tabs__image-wrapper">
+                        <img src="{{ block.settings.image | img_url: 'master' }}" 
+                             alt="{{ content_text | strip_html | truncate: 100 | escape }}"
+                             width="{{ block.settings.image.width | default: 800 }}"
+                             height="{{ block.settings.image.height | default: 600 }}"
+                             loading="lazy"
+                             class="collapsible-tabs__image">
+                      </div>
+                    {%- endif -%}
                   </div>
-                </div>
-              </details>
-            </details-disclosure>
-          </div>        
-        {% endif %}
 
-        
+                {%- comment -%} Button Block {%- endcomment -%}
+                {%- when 'button' -%}
+                  {%- if block.settings.link != blank and block.settings.title != blank -%}
+                    <div class="collapsible-tabs__button-wrapper">
+                      <a href="{{ block.settings.link }}" 
+                         class="btn btn--primary btn--link collapsible-tabs__button"
+                         {% if block.settings.link contains 'http' %}target="_blank" rel="noopener noreferrer"{% endif %}>
+                        <span class="btn__text">{{ block.settings.title | escape }}</span>
+                      </a>
+                    </div>
+                  {%- endif -%}
 
-      </div>
-    {%- endfor -%}
+                {%- comment -%} Question Block (FAQ) {%- endcomment -%}
+                {%- when 'question' -%}
+                  {%- liquid
+                    assign question_title = block.settings.title
+                    assign answer_content = block.settings.answer
+                    assign answer_2_content = block.settings.answer_2
+                    
+                    case current_locale
+                      when 'de'
+                        if block.settings.title_de != blank
+                          assign question_title = block.settings.title_de
+                        endif
+                        if block.settings.answer_de != blank
+                          assign answer_content = block.settings.answer_de
+                        endif
+                        if block.settings.answer_2_de != blank
+                          assign answer_2_content = block.settings.answer_2_de
+                        endif
+                      when 'fr'
+                        if block.settings.title_fr != blank
+                          assign question_title = block.settings.title_fr
+                        endif
+                        if block.settings.answer_fr != blank
+                          assign answer_content = block.settings.answer_fr
+                        endif
+                        if block.settings.answer_2_fr != blank
+                          assign answer_2_content = block.settings.answer_2_fr
+                        endif
+                      when 'fi'
+                        if block.settings.title_fi != blank
+                          assign question_title = block.settings.title_fi
+                        endif
+                        if block.settings.answer_fi != blank
+                          assign answer_content = block.settings.answer_fi
+                        endif
+                        if block.settings.answer_2_fi != blank
+                          assign answer_2_content = block.settings.answer_2_fi
+                        endif
+                    endcase
+                    
+                    assign question_id = 'question-' | append: block.id
+                  -%}
+                  
+                  {%- if question_title != blank -%}
+                    <div class="collapsible-tabs__question">
+                      <details class="collapsible-tabs__details" 
+                               id="{{ question_id }}"
+                               aria-labelledby="{{ question_id }}-summary">
+                        <summary class="collapsible-tabs__summary" 
+                                 id="{{ question_id }}-summary"
+                                 aria-expanded="false"
+                                 aria-controls="{{ question_id }}-content">
+                          <h3 class="collapsible-tabs__question-title">
+                            {{ question_title | escape }}
+                          </h3>
+                          <span class="collapsible-tabs__icon" aria-hidden="true">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                              <path class="collapsible-tabs__icon-horizontal" d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                              <path class="collapsible-tabs__icon-vertical" d="M12 5V19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                          </span>
+                        </summary>
+                        
+                        <div class="collapsible-tabs__answer" 
+                             id="{{ question_id }}-content"
+                             role="region"
+                             aria-labelledby="{{ question_id }}-summary">
+                          
+                          {%- if answer_content != blank -%}
+                            <div class="collapsible-tabs__answer-content rte">
+                              {{ answer_content }}
+                            </div>
+                          {%- endif -%}
+                          
+                          {%- if block.settings.liquid_content != blank -%}
+                            <div class="collapsible-tabs__liquid-content">
+                              {{ block.settings.liquid_content }}
+                            </div>
+                          {%- endif -%}
+                          
+                          {%- if block.settings.image != blank -%}
+                            <div class="collapsible-tabs__image-wrapper">
+                              <img src="{{ block.settings.image | img_url: 'master' }}" 
+                                   alt="{{ question_title | strip_html | escape }}"
+                                   width="{{ block.settings.image.width | default: 800 }}"
+                                   height="{{ block.settings.image.height | default: 600 }}"
+                                   loading="lazy"
+                                   class="collapsible-tabs__image">
+                            </div>
+                          {%- endif -%}
+                          
+                          {%- if answer_2_content != blank -%}
+                            <div class="collapsible-tabs__answer-content collapsible-tabs__answer-content--secondary rte">
+                              {{ answer_2_content }}
+                            </div>
+                          {%- endif -%}
+                          
+                          {%- if block.settings.image_2 != blank -%}
+                            <div class="collapsible-tabs__image-wrapper">
+                              <img src="{{ block.settings.image_2 | img_url: 'master' }}" 
+                                   alt="{{ question_title | strip_html | escape }}"
+                                   width="{{ block.settings.image_2.width | default: 800 }}"
+                                   height="{{ block.settings.image_2.height | default: 600 }}"
+                                   loading="lazy"
+                                   class="collapsible-tabs__image">
+                            </div>
+                          {%- endif -%}
+                          
+                        </div>
+                      </details>
+                    </div>
+                  {%- endif -%}
+                  
+              {%- endcase -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+      
+    </div>
   </div>
-</div>
+</section>
 
+{%- comment -%} Enhanced Styles {%- endcomment -%}
 <style>
-  .collapsible-tabs__tab .disclosure__title {
-  padding-top: 20px;
-  padding-bottom: 20px;
-  border: 0;
-  font-size: 1em;
-  font-weight: 700;
-}
+  .collapsible-tabs-section {
+    --collapsible-border-color: rgba(var(--color-border), 0.08);
+    --collapsible-hover-bg: rgba(var(--color-foreground), 0.02);
+    --collapsible-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .collapsible-tabs__heading {
+    margin-bottom: 2rem;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: 700;
+    line-height: 1.2;
+    text-align: center;
+  }
+
+  .collapsible-tabs__blocks {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .collapsible-tabs__block {
+    border-radius: 8px;
+    overflow: hidden;
+    transition: var(--collapsible-transition);
+  }
+
+  .collapsible-tabs__content-block,
+  .collapsible-tabs__button-wrapper {
+    padding: 1.5rem;
+    background: var(--collapsible-hover-bg);
+    border-radius: 8px;
+  }
+
+  .collapsible-tabs__text {
+    margin-bottom: 1rem;
+  }
+
+  .collapsible-tabs__text:last-child {
+    margin-bottom: 0;
+  }
+
+  .collapsible-tabs__liquid-content {
+    margin: 1rem 0;
+  }
+
+  .collapsible-tabs__image-wrapper {
+    margin: 1.5rem 0;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .collapsible-tabs__image {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: var(--collapsible-transition);
+  }
+
+  .collapsible-tabs__image:hover {
+    transform: scale(1.02);
+  }
+
+  .collapsible-tabs__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    transition: var(--collapsible-transition);
+  }
+
+  .collapsible-tabs__details {
+    border: 1px solid var(--collapsible-border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: var(--collapsible-transition);
+  }
+
+  .collapsible-tabs__details:hover {
+    border-color: rgba(var(--color-border), 0.15);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .collapsible-tabs__details[open] {
+    border-color: rgba(var(--color-foreground), 0.1);
+  }
+
+  .collapsible-tabs__summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem;
+    cursor: pointer;
+    background: transparent;
+    transition: var(--collapsible-transition);
+    list-style: none;
+    outline: none;
+  }
+
+  .collapsible-tabs__summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .collapsible-tabs__summary:hover {
+    background: var(--collapsible-hover-bg);
+  }
+
+  .collapsible-tabs__summary:focus-visible {
+    outline: 2px solid rgba(var(--color-foreground), 0.5);
+    outline-offset: -2px;
+  }
+
+  .collapsible-tabs__question-title {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.4;
+    flex: 1;
+    text-align: left;
+  }
+
+  .collapsible-tabs__icon {
+    flex-shrink: 0;
+    margin-left: 1rem;
+    transition: var(--collapsible-transition);
+    color: rgba(var(--color-foreground), 0.6);
+  }
+
+  .collapsible-tabs__details[open] .collapsible-tabs__icon {
+    transform: rotate(45deg);
+    color: rgba(var(--color-foreground), 0.8);
+  }
+
+  .collapsible-tabs__answer {
+    padding: 0 1.5rem 1.5rem;
+    border-top: 1px solid var(--collapsible-border-color);
+    background: rgba(var(--color-background), 0.5);
+  }
+
+  .collapsible-tabs__answer-content {
+    margin: 1rem 0;
+  }
+
+  .collapsible-tabs__answer-content:first-child {
+    margin-top: 0;
+  }
+
+  .collapsible-tabs__answer-content:last-child {
+    margin-bottom: 0;
+  }
+
+  .collapsible-tabs__answer-content--secondary {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--collapsible-border-color);
+  }
+
+  /* Responsive Design */
+  @media screen and (max-width: 749px) {
+    .collapsible-tabs__summary {
+      padding: 1rem;
+    }
+
+    .collapsible-tabs__answer {
+      padding: 0 1rem 1rem;
+    }
+
+    .collapsible-tabs__question-title {
+      font-size: 1rem;
+    }
+
+    .collapsible-tabs__content-block,
+    .collapsible-tabs__button-wrapper {
+      padding: 1rem;
+    }
+  }
+
+  /* Animation for smooth opening/closing */
+  @media (prefers-reduced-motion: no-preference) {
+    .collapsible-tabs__details {
+      transition: all 0.3s ease-out;
+    }
+    
+    .collapsible-tabs__answer {
+      animation: slideDown 0.3s ease-out;
+    }
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .collapsible-tabs__details {
+      border-width: 2px;
+    }
+    
+    .collapsible-tabs__summary:focus-visible {
+      outline-width: 3px;
+    }
+  }
 </style>
 
 {% schema %}
@@ -128,30 +467,32 @@
   "name": "Collapsible tabs",
   "class": "section-collapsible-tabs",
   "disabled_on": {
-    "groups": [
-      "aside"
-    ]
+    "groups": ["aside"]
   },
   "settings": [
     {
       "type": "text",
       "id": "title",
-      "label": "Heading"
+      "label": "Heading",
+      "info": "Main heading for the section"
     },
     {
       "type": "text",
       "id": "title_de",
-      "label": "Heading German"
+      "label": "Heading (German)",
+      "info": "German translation of the heading"
     },
     {
       "type": "text",
       "id": "title_fr",
-      "label": "Heading France"
+      "label": "Heading (French)",
+      "info": "French translation of the heading"
     },
     {
       "type": "text",
       "id": "title_fi",
-      "label": "Heading Finland"
+      "label": "Heading (Finnish)",
+      "info": "Finnish translation of the heading"
     }
   ],
   "blocks": [
@@ -162,77 +503,83 @@
         {
           "type": "text",
           "id": "title",
-          "label": "Question"
+          "label": "Question",
+          "info": "The question or FAQ title"
         },
         {
           "type": "text",
           "id": "title_de",
-          "label": "Question German"
+          "label": "Question (German)"
         },
         {
           "type": "text",
           "id": "title_fr",
-          "label": "Question France"
+          "label": "Question (French)"
         },
         {
           "type": "text",
           "id": "title_fi",
-          "label": "Question Finland"
+          "label": "Question (Finnish)"
         },
         {
           "type": "richtext",
           "id": "answer",
-          "label": "Answer"
+          "label": "Answer",
+          "info": "The main answer content"
         },
         {
           "type": "richtext",
           "id": "answer_de",
-          "label": "Answer German"
+          "label": "Answer (German)"
         },
         {
           "type": "richtext",
           "id": "answer_fr",
-          "label": "Answer France"
+          "label": "Answer (French)"
         },
         {
           "type": "richtext",
           "id": "answer_fi",
-          "label": "Answer Finland"
+          "label": "Answer (Finnish)"
         },
         {
           "type": "liquid",
           "id": "liquid_content",
-          "label": "Custom Liquid Code"
+          "label": "Custom Liquid Code",
+          "info": "Add custom Liquid code for advanced functionality"
         },
         {
           "type": "image_picker",
           "id": "image",
-          "label": "Panel Image"
+          "label": "First Image",
+          "info": "Optional image to display with the answer"
         },
         {
           "type": "richtext",
           "id": "answer_2",
-          "label": "Answer"
+          "label": "Second Answer",
+          "info": "Optional additional answer content"
         },
         {
           "type": "richtext",
           "id": "answer_2_de",
-          "label": "Answer German"
+          "label": "Second Answer (German)"
         },
         {
           "type": "richtext",
           "id": "answer_2_fr",
-          "label": "Answer France"
+          "label": "Second Answer (French)"
         },
-         {
+        {
           "type": "richtext",
           "id": "answer_2_fi",
-          "label": "Answer Finland"
+          "label": "Second Answer (Finnish)"
         },
         {
           "type": "image_picker",
           "id": "image_2",
-          "label": "Panel Image"
+          "label": "Second Image",
+          "info": "Optional second image to display"
         }
       ]
     },
@@ -243,32 +590,50 @@
         {
           "type": "richtext",
           "id": "content",
-          "label": "Content"
+          "label": "Content",
+          "info": "Rich text content for the paragraph"
         },
         {
           "type": "richtext",
           "id": "content_de",
-          "label": "Content German"
+          "label": "Content (German)"
         },
         {
           "type": "richtext",
           "id": "content_fr",
-          "label": "Content France"
+          "label": "Content (French)"
         },
         {
           "type": "richtext",
           "id": "content_fi",
-          "label": "Content Finland"
+          "label": "Content (Finnish)"
         },
         {
           "type": "liquid",
           "id": "liquid_content",
-          "label": "Custom Liquid Code"
+          "label": "Custom Liquid Code",
+          "info": "Add custom Liquid code for advanced functionality"
+        },
+        {
+          "type": "liquid",
+          "id": "liquid_content_de",
+          "label": "Custom Liquid Code (German)"
+        },
+        {
+          "type": "liquid",
+          "id": "liquid_content_fr",
+          "label": "Custom Liquid Code (French)"
+        },
+        {
+          "type": "liquid",
+          "id": "liquid_content_fi",
+          "label": "Custom Liquid Code (Finnish)"
         },
         {
           "type": "image_picker",
           "id": "image",
-          "label": "Panel Image"
+          "label": "Image",
+          "info": "Optional image to display with the content"
         }
       ]
     },
@@ -279,13 +644,15 @@
         {
           "type": "text",
           "id": "title",
-          "label": "Label",
-          "default": "Button label"
+          "label": "Button Label",
+          "default": "Button label",
+          "info": "Text displayed on the button"
         },
         {
           "type": "url",
           "id": "link",
-          "label": "Link"
+          "label": "Button Link",
+          "info": "URL the button should link to"
         }
       ]
     }
@@ -293,13 +660,23 @@
   "presets": [
     {
       "name": "Collapsible tabs",
-      "settings": {},
+      "settings": {
+        "title": "Frequently Asked Questions"
+      },
       "blocks": [
         {
-          "type": "question"
+          "type": "question",
+          "settings": {
+            "title": "Sample Question 1",
+            "answer": "<p>This is a sample answer to demonstrate the FAQ functionality.</p>"
+          }
         },
         {
-          "type": "question"
+          "type": "question",
+          "settings": {
+            "title": "Sample Question 2", 
+            "answer": "<p>This is another sample answer with more detailed information.</p>"
+          }
         }
       ]
     }

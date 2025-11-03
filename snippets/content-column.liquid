@@ -12,11 +12,10 @@
   {% endif %}
   <div class="background-container">
     {% if section.settings.content_bg_image != blank %}
-      {{
-        section.settings.content_bg_image
-        | image_url: width: 2000
-        | image_tag: class: 'background-image', loading: 'lazy'
-      }}
+      <div class="background-image-desktop" style="background-image: url('{{ section.settings.content_bg_image | img_url: '2000x' }}'); background-position: {{ section.settings.content_bg_position | default: 'center center' }}; background-size: {{ section.settings.content_bg_size | default: 'cover' }}; background-repeat: no-repeat; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;"></div>
+    {% endif %}
+    {% if section.settings.content_mobile_bg != blank %}
+      <div class="background-image-mobile" style="background-image: url('{{ section.settings.content_mobile_bg | img_url: '1200x' }}'); background-position: {{ section.settings.content_mobile_bg_position | default: 'center center' }}; background-size: {{ section.settings.content_mobile_bg_size | default: 'cover' }}; background-repeat: no-repeat; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; display: none;"></div>
     {% endif %}
   </div>
 
