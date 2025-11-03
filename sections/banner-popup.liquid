@@ -284,6 +284,16 @@
                   assign current_copy_success_text = block.settings.copy_success_text_fi
                 endif
               -%}
+              {%- liquid
+                assign current_copy_success_text = block.settings.copy_success_text
+                if request.locale.iso_code == 'de' and block.settings.copy_success_text_de != blank
+                  assign current_copy_success_text = block.settings.copy_success_text_de
+                elsif request.locale.iso_code == 'fr' and block.settings.copy_success_text_fr != blank
+                  assign current_copy_success_text = block.settings.copy_success_text_fr
+                elsif request.locale.iso_code == 'fi' and block.settings.copy_success_text_fi != blank
+                  assign current_copy_success_text = block.settings.copy_success_text_fi
+                endif
+              -%}
               <button class="copy-button" style="background-color: {{ block.settings.copy_button_color }}; color: {{ block.settings.copy_button_font_color }};" data-copy-text="{{ block.settings.discount_code }}" data-success-text="{{ current_copy_success_text }}">
                 {%- liquid
                   assign current_copy_button_text = block.settings.copy_button_text
@@ -937,6 +947,10 @@ document.addEventListener('DOMContentLoaded', function() {
       "limit": 1,
       "settings": [
         {
+          "type": "header",
+          "content": "Content"
+        },
+        {
           "type": "text",
           "id": "heading",
           "label": "Heading",
@@ -967,6 +981,10 @@ document.addEventListener('DOMContentLoaded', function() {
           "default": "NPN95H3DV61M"
         },
         {
+          "type": "header",
+          "content": "Button"
+        },
+        {
           "type": "text",
           "id": "copy_button_text",
           "label": "Copy Button Text",
@@ -989,19 +1007,27 @@ document.addEventListener('DOMContentLoaded', function() {
           "id": "copy_button_text_fi",
           "label": "Copy Button Text (Finnish)",
           "default": "Kopioi"
-          },
-          {
-            "type": "color",
-            "id": "copy_button_color",
-            "label": "Copy Button Color",
-            "default": "#007bff"
-          },
-          {
-            "type": "color",
-            "id": "copy_button_font_color",
-            "label": "Copy Button Font Color",
-            "default": "#FFFFFF"
-          },
+        },
+        {
+          "type": "header",
+          "content": "Button Colors"
+        },
+        {
+          "type": "color",
+          "id": "copy_button_color",
+          "label": "Copy Button Color",
+          "default": "#007bff"
+        },
+        {
+          "type": "color",
+          "id": "copy_button_font_color",
+          "label": "Copy Button Font Color",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "header",
+          "content": "Success Message"
+        },
         {
           "type": "text",
           "id": "copy_success_text",
@@ -1009,12 +1035,33 @@ document.addEventListener('DOMContentLoaded', function() {
           "default": "Copied!"
         },
         {
+          "type": "text",
+          "id": "copy_success_text_de",
+          "label": "Copy Success Text (German)",
+          "default": "Kopiert!"
+        },
+        {
+          "type": "text",
+          "id": "copy_success_text_fr",
+          "label": "Copy Success Text (French)",
+          "default": "Copié !"
+        },
+        {
+          "type": "text",
+          "id": "copy_success_text_fi",
+          "label": "Copy Success Text (Finnish)",
+          "default": "Kopioitu!"
+        },
+        {
+          "type": "header",
+          "content": "Styling"
+        },
+        {
           "type": "color",
           "id": "code_color",
           "label": "Code Text Color",
           "default": "#FFFFFF"
         },
-
         {
           "type": "range",
           "id": "font_size",
