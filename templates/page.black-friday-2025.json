@@ -30,9 +30,9 @@
         "heading_GBJr4D": {
           "type": "heading",
           "settings": {
-            "title": "Black Friday",
-            "title_de": "Black Friday",
-            "title_fr": "Accès Anticipé au",
+            "title": "Black Friday Early Access",
+            "title_de": "Black Friday Early Access –",
+            "title_fr": "Accès Anticipé au Black Friday -",
             "title_fi": "",
             "heading_color": "#ffffff",
             "font_family": "sans-serif",
@@ -53,9 +53,9 @@
         "heading_Ck63jL": {
           "type": "heading",
           "settings": {
-            "title": "Early Access",
-            "title_de": "Early Access – mit Preisgarantie!",
-            "title_fr": "Black Friday",
+            "title": "Price Garanntees",
+            "title_de": "mit Preisgarantie",
+            "title_fr": "Garantie de prix",
             "title_fi": "",
             "heading_color": "#ffffff",
             "font_family": "sans-serif",
@@ -76,9 +76,9 @@
         "heading_kkcR3P": {
           "type": "heading",
           "settings": {
-            "title": "Your Best Price of The Year, Price Garanntees!",
+            "title": "Your Best Price of The Year!",
             "title_de": "Ihr bester Preis des Jahres.",
-            "title_fr": "Profitez du meilleur prix de l’année, garanti !",
+            "title_fr": "Profitez du meilleur prix de l’année !",
             "title_fi": "",
             "heading_color": "#ffffff",
             "font_family": "sans-serif",
@@ -122,21 +122,21 @@
         "button_c7HFdU": {
           "type": "button",
           "settings": {
-            "button_label": "Buy now",
-            "button_label_de": "​Jetzt kaufen​",
-            "button_label_fr": "​Acheter maintenant​",
+            "button_label": "Trekking 7",
+            "button_label_de": "",
+            "button_label_fr": "",
             "button_label_fi": "",
-            "button_link": "#custom-adaptive-grid-template--24114347737356__adaptive_content_grid_dTa7LW",
-            "button2_label": "Button 2",
+            "button_link": "#custom-adaptive-grid-template--24114347737356__adaptive_content_grid_FEc999",
+            "button2_label": "All Mountain 7 Carbon",
             "button2_label_de": "",
             "button2_label_fr": "",
             "button2_label_fi": "",
-            "button2_link": "",
-            "button_text_color1": "#171717",
+            "button2_link": "#custom-adaptive-grid-template--24114347737356__adaptive_content_grid_RR7JkL",
+            "button_text_color1": "#333333",
             "button_bg_color1": "#ffc43d",
             "button_border_color1": "rgba(0,0,0,0)",
-            "button_text_color2": "#ffffff",
-            "button_bg_color2": "#000000",
+            "button_text_color2": "#333333",
+            "button_bg_color2": "#ffc43d",
             "button_border_color2": "#000000",
             "button_alignment": "flex-start",
             "desktop_font_size": 18,
@@ -245,7 +245,7 @@
           "settings": {
             "title": "Subscribe to claim your €200 VIP voucher",
             "title_de": "Sichern Sie sich Ihren 200€-VIP-Gutschein",
-            "title_fr": "Recevez un bon VIP supplémentaire de 200 €",
+            "title_fr": "Abonnez-vous à notre newsletter et recevez un bon VIP supplémentaire de 200 €",
             "title_fi": "",
             "font_size": 30,
             "mobile_font_size": 26,
@@ -270,6 +270,9 @@
             "copy_button_color": "#ffc43d",
             "copy_button_font_color": "#333333",
             "copy_success_text": "Copied!",
+            "copy_success_text_de": "Kopiert!",
+            "copy_success_text_fr": "Copié !",
+            "copy_success_text_fi": "Kopioitu!",
             "code_color": "#ffffff",
             "font_size": 16,
             "font_weight": "700",
@@ -362,105 +365,106 @@
         "show_to_guests_only": true
       }
     },
-    "adaptive_content_grid_dTa7LW": {
+    "adaptive_content_grid_FEc999": {
       "type": "adaptive-content-grid",
       "blocks": {
-        "collection_block_7KF3JH": {
-          "type": "collection_block",
+        "product_block_4iByXX": {
+          "type": "product_block",
           "settings": {
-            "selected_collection": "bike-promotion",
-            "enable_buy_button": true,
-            "products_limit": 4
+            "selected_product": "trekking-7-se-long-range",
+            "enable_buy_button": true
           }
         },
-        "custom_block_rRMGDU": {
-          "type": "custom_block",
+        "product_block_V4GUQe": {
+          "type": "product_block",
           "settings": {
-            "image": "shopify://shop_images/HEPHA_Akku_804Wh_MY24_e4fc84e4-34f5-41a6-8146-dc7f2a3b987f.png",
-            "image_background_color": "#eeeeee",
-            "image_size": "contain",
-            "big_number": "",
-            "title": "Hepha BT-800BH Battery 804Wh for P101C Motor",
-            "title_de": "Hepha BT-800BH Battery 804Wh for P101C Motor",
-            "title_fr": "Hepha BT-800BH Battery 804Wh for P101C Motor",
-            "title_fi": "",
-            "description": "<p>Compatible with E-Bikes featuring the P101C motor, it can be charged both on the bike and separately, extending your travel autonomy.</p>",
-            "description_de": "<p>Kompatibel mit E-Bikes, die über den P101C-Motor verfügen, kann er sowohl am Fahrrad als auch separat aufgeladen werden, wodurch Ihre Reiseautonomie verlängert wird</p>",
-            "description_fr": "<p>Compatible avec les vélos équipés du moteur P101C, elle peut être chargée à la fois sur le vélo et séparément, prolongeant ainsi votre autonomie de voyage.</p>",
-            "description_fi": "",
-            "button1_text": "Learn more",
-            "button1_text_de": "Mehr entdecken",
-            "button1_text_fr": "En savoir plus",
-            "button1_text_fi": "",
-            "button1_url": "shopify://products/804wh-battery-trekking-7",
-            "button2_text": "",
-            "button2_text_de": "",
-            "button2_text_fr": "",
-            "button2_text_fi": "",
-            "button2_url": "",
-            "background_color": "#ffffff",
-            "text_alignment": "center"
+            "selected_product": "trekking-7-se-ultra",
+            "enable_buy_button": true
           }
         },
-        "custom_block_iW7J3C": {
-          "type": "custom_block",
+        "product_block_kJGT9P": {
+          "type": "product_block",
           "settings": {
-            "image": "shopify://shop_images/MotorUpgrade_b4c3c097-c2f1-4206-afd8-21ca209dd49e_1.png",
-            "image_background_color": "#eeeeee",
-            "image_size": "cover",
-            "big_number": "",
-            "title": "Motor Upgrade of 20Nm",
-            "title_de": "Drehmoment-Upgrade 20Nm",
-            "title_fr": "Mise à niveau du moteur de 20Nm",
-            "title_fi": "",
-            "description": "<p>Motor upgrade of 20 Nm for the Hepha E-Bike Long Range (80 Nm), making riding easier.</p>",
-            "description_de": "<p>Motorupgrade von 20 Nm für das Hepha E-Bike Long Range (80 Nm), was das Fahren erleichtert.</p>",
-            "description_fr": "<p>Mise à niveau du moteur de 20 Nm pour le vélo électrique Hepha Long Range (80 Nm), facilitant la conduite.</p>",
-            "description_fi": "",
-            "button1_text": "Learn more",
-            "button1_text_de": "Mehr entdecken",
-            "button1_text_fr": "En savoir plus",
-            "button1_text_fi": "",
-            "button1_url": "shopify://products/motor-upgrade-20nm",
-            "button2_text": "",
-            "button2_text_de": "",
-            "button2_text_fr": "",
-            "button2_text_fi": "",
-            "button2_url": "",
-            "background_color": "#ffffff",
-            "text_alignment": "center"
+            "selected_product": "my24-trekking-7-long-range",
+            "enable_buy_button": true
           }
         },
-        "custom_block_CLh6EX": {
-          "type": "custom_block",
+        "product_block_VhxyCb": {
+          "type": "product_block",
           "settings": {
-            "image": "shopify://shop_images/Hepha_Trekking7_LongRange_High_Black_Side_ef0bf02e-24f0-4296-b7ee-a18335c4f79c.png",
-            "image_background_color": "#eeeeee",
-            "image_size": "auto",
-            "big_number": "",
-            "title": "Used E-Bikes",
-            "title_de": "Gebraucht-E-Bikes",
-            "title_fr": "Vélos électriques d'occasion",
-            "title_fi": "",
-            "description": "<p>Each refurbished bike is thoroughly inspected and comes with the same warranty as new, starting from €1,699.</p>",
-            "description_de": "<p>Jedes gebrauchte E-Bike wird gründlich<br/>geprüft und kommt mit derselben Garantie wie ein Neues, <br/>ab 1.699 €.</p>",
-            "description_fr": "<p>Profitez de la même garantie que pour un nouveau vélo.</p>",
-            "description_fi": "",
-            "button1_text": "Learn more",
-            "button1_text_de": "Mehr entdecken",
-            "button1_text_fr": "En savoir plus",
-            "button1_text_fi": "",
-            "button1_url": "shopify://collections/used-bikes",
-            "button2_text": "",
-            "button2_text_de": "",
-            "button2_text_fr": "",
-            "button2_text_fi": "",
-            "button2_url": "",
-            "background_color": "#ffffff",
-            "text_alignment": "center"
+            "selected_product": "trekking-7-performance",
+            "enable_buy_button": true
           }
         },
-        "custom_block_6jrtCk": {
+        "product_block_79qn6M": {
+          "type": "product_block",
+          "settings": {
+            "selected_product": "trekking-7-ultra",
+            "enable_buy_button": true
+          }
+        },
+        "product_block_cceEtY": {
+          "type": "product_block",
+          "settings": {
+            "selected_product": "trekking-7-ultra-plus",
+            "enable_buy_button": true
+          }
+        }
+      },
+      "block_order": [
+        "product_block_4iByXX",
+        "product_block_V4GUQe",
+        "product_block_kJGT9P",
+        "product_block_VhxyCb",
+        "product_block_79qn6M",
+        "product_block_cceEtY"
+      ],
+      "name": "Adaptive Content Grid",
+      "settings": {
+        "section_title": "Trekking 7",
+        "section_title_de": "",
+        "section_title_fr": "",
+        "section_title_fi": "",
+        "section_subtitle": "",
+        "section_subtitle_de": "",
+        "section_subtitle_fr": "",
+        "section_subtitle_fi": "",
+        "desktop_section_title_size": 20,
+        "mobile_section_title_size": 16,
+        "desktop_section_subtitle_size": 20,
+        "mobile_section_subtitle_size": 16,
+        "section_title_color": "#333333",
+        "section_subtitle_color": "#666666",
+        "section_heading_alignment": "center",
+        "block_padding": 0,
+        "image_aspect_ratio": "16-9",
+        "content_layout": "image-top",
+        "desktop_columns": "2",
+        "mobile_columns": "1",
+        "border_width": 1,
+        "border_color": "#cccccc",
+        "desktop_title_size": 20,
+        "mobile_title_size": 18,
+        "desktop_desc_size": 16,
+        "mobile_desc_size": 14,
+        "desktop_big_title_size": 60,
+        "mobile_big_title_size": 35,
+        "section_width": 1200,
+        "show_buy_button": true,
+        "enable_section_container": true
+      }
+    },
+    "adaptive_content_grid_RR7JkL": {
+      "type": "adaptive-content-grid",
+      "blocks": {
+        "product_block_HUMhE7": {
+          "type": "product_block",
+          "settings": {
+            "selected_product": "mountain-7-carbon-performance",
+            "enable_buy_button": true
+          }
+        },
+        "custom_block_nbbcnc": {
           "type": "custom_block",
           "settings": {
             "image": "shopify://shop_images/Click-1.svg",
@@ -491,15 +495,12 @@
         }
       },
       "block_order": [
-        "collection_block_7KF3JH",
-        "custom_block_rRMGDU",
-        "custom_block_iW7J3C",
-        "custom_block_CLh6EX",
-        "custom_block_6jrtCk"
+        "product_block_HUMhE7",
+        "custom_block_nbbcnc"
       ],
       "name": "Adaptive Content Grid",
       "settings": {
-        "section_title": "",
+        "section_title": "All Mountain 7 Carbon",
         "section_title_de": "",
         "section_title_fr": "",
         "section_title_fi": "",
@@ -667,10 +668,6 @@
             "answer_de": "<p>A: Ihr 200 € Rabatt (Gutscheincode: NPN95H3DV61M) ist während unserer Black Friday Aktionszeit vom 6. November bis 2. Dezember 2025 gültig.</p>",
             "answer_fr": "<p>R : Votre remise de 200 € (Code promo : NPN95H3DV61M) est valable pendant notre période de promotion Black Friday, du 6 novembre au 2 décembre 2025. </p>",
             "answer_fi": "",
-            "liquid_content": "",
-            "liquid_content_de": "",
-            "liquid_content_fr": "",
-            "liquid_content_fi": "",
             "answer_2": "",
             "answer_2_de": "",
             "answer_2_fr": "",
@@ -689,9 +686,6 @@
             "answer_fr": "<p>R : Il vous suffit de saisir et de valider votre code promo lors du passage en caisse. Les 200 € supplémentaires seront déduits du total de votre commande pour les modèles de vélos électriques sélectionnés.</p>",
             "answer_fi": "",
             "liquid_content": "",
-            "liquid_content_de": "",
-            "liquid_content_fr": "",
-            "liquid_content_fi": "",
             "answer_2": "",
             "answer_2_de": "",
             "answer_2_fr": "",
@@ -705,56 +699,11 @@
             "title_de": "F: Kann ich den Early Black Friday Rabatt von 200 € auf jedes Produkt anwenden?",
             "title_fr": "Q: Puis-je utiliser la remise anticipée Black Friday de 200 € sur n’importe quel produit ?",
             "title_fi": "",
-            "answer": "<p>A: The €200 discount is exclusively for the selected HEPHA E-Bike models (<a href=\"/pages/trekking-7-new\" target=\"_blank\" title=\"Trekking 7 Collection Page\">Trekking 7 SE</a> , <a href=\"/pages/trekking-7-new\" target=\"_blank\" title=\"Trekking 7 Collection Page\">Trekking 7</a> , <a href=\"/products/trekking-7-ultra-plus\" target=\"_blank\" title=\"Trekking 7 Ultra+\">Trekking Ultra+</a> , and <a href=\"/products/mountain-7-carbon-performance\" target=\"_blank\" title=\"All Mountain 7 Carbon Performance\">All Mountain Carbon 7 Performance</a>).</p>",
-            "answer_de": "<p>A: Der Rabatt gilt ausschließlich für die ausgewählten HEPHA E-Bike-Modelle (<a href=\"/pages/trekking-7-new\" target=\"_blank\" title=\"Trekking 7 Collection Page\">Trekking 7 SE</a> , <a href=\"/pages/trekking-7-new\" target=\"_blank\" title=\"Trekking 7 Collection Page\">Trekking 7</a> , <a href=\"/products/trekking-7-ultra-plus\" target=\"_blank\" title=\"Trekking 7 Ultra+\">Trekking Ultra+</a> und <a href=\"/products/mountain-7-carbon-performance\" target=\"_blank\" title=\"All Mountain 7 Carbon Performance\">All Mountain Carbon 7 Performance</a>).</p>",
-            "answer_fr": "<p>R : La remise s’applique exclusivement aux modèles sélectionnés de vélos électriques HEPHA (<a href=\"/pages/trekking-7-new\" target=\"_blank\" title=\"Trekking 7 Collection Page\">Trekking 7 SE</a> , <a href=\"/pages/trekking-7-new\" target=\"_blank\" title=\"Trekking 7 Collection Page\">Trekking 7</a> , <a href=\"/products/trekking-7-ultra-plus\" target=\"_blank\" title=\"Trekking 7 Ultra+\">Trekking Ultra+</a> et <a href=\"/products/mountain-7-carbon-performance\" target=\"_blank\" title=\"All Mountain 7 Carbon Performance\">All Mountain Carbon 7 Performance</a>).</p>",
+            "answer": "<p>A: The €200 discount is exclusively for the selected HEPHA E-Bike models (<a href=\"/pages/trekking-7-new\" target=\"_blank\" title=\"Trekking 7 Collection Page\">Trekking 7 SE</a> , <a href=\"/pages/trekking-7-new\" target=\"_blank\" title=\"Trekking 7 Collection Page\">Trekking 7</a> , <a href=\"/products/trekking-7-ultra-plus\" target=\"_blank\" title=\"Trekking 7 Ultra+\">Trekking Ultra+</a> , and <a href=\"/products/mountain-7-carbon-performance\" target=\"_blank\" title=\"All Mountain 7 Carbon Performance\">All Mountain Carbon 7 Performance</a>). Not applicable to used bikes.</p><p>Please see the list below for eligible models and their pricing.</p>",
+            "answer_de": "<p>A: Der Rabatt gilt ausschließlich für die ausgewählten HEPHA E-Bike-Modelle (<a href=\"/pages/trekking-7-new\" target=\"_blank\" title=\"Trekking 7 Collection Page\">Trekking 7 SE</a> , <a href=\"/pages/trekking-7-new\" target=\"_blank\" title=\"Trekking 7 Collection Page\">Trekking 7</a> , <a href=\"/products/trekking-7-ultra-plus\" target=\"_blank\" title=\"Trekking 7 Ultra+\">Trekking Ultra+</a> und <a href=\"/products/mountain-7-carbon-performance\" target=\"_blank\" title=\"All Mountain 7 Carbon Performance\">All Mountain Carbon 7 Performance</a>). Nicht gültig für gebrauchte Fahrräder.</p><p>Bitte beachten Sie die folgende Liste für die berechtigten Modelle und deren Preise.</p>",
+            "answer_fr": "<p>R : La remise s’applique exclusivement aux modèles sélectionnés de vélos électriques HEPHA (<a href=\"/pages/trekking-7-new\" target=\"_blank\" title=\"Trekking 7 Collection Page\">Trekking 7 SE</a> , <a href=\"/pages/trekking-7-new\" target=\"_blank\" title=\"Trekking 7 Collection Page\">Trekking 7</a> , <a href=\"/products/trekking-7-ultra-plus\" target=\"_blank\" title=\"Trekking 7 Ultra+\">Trekking Ultra+</a> et <a href=\"/products/mountain-7-carbon-performance\" target=\"_blank\" title=\"All Mountain 7 Carbon Performance\">All Mountain Carbon 7 Performance</a>). Non applicable aux vélos d’occasion.</p><p>Veuillez consulter la liste ci-dessous pour les modèles éligibles et leurs tarifs.</p>",
             "answer_fi": "",
-            "liquid_content": "",
-            "liquid_content_de": "",
-            "liquid_content_fr": "",
-            "liquid_content_fi": "",
-            "answer_2": "",
-            "answer_2_de": "",
-            "answer_2_fr": "",
-            "answer_2_fi": ""
-          }
-        },
-        "question_CqpMaE": {
-          "type": "question",
-          "settings": {
-            "title": "Q: What discounts are available for the Trekking 7 SE Long Range?",
-            "title_de": "F: Welche Rabatte sind für das Trekking 7 SE Long Range verfügbar?",
-            "title_fr": "Q: Quels rabais sont disponibles pour le Trekking 7 SE Long Range ?",
-            "title_fi": "",
-            "answer": "<p>A: For the Trekking 7 SE Long Range (RRP: €2,799), you get the following offers:</p><p>-€1,000: Price discount, the final price is €1,799.</p><p>-€400: Free 100Nm motorpower upgrade</p>",
-            "answer_de": "<p>A: Für das Trekking 7 SE Long Range (UVP: 2.799 €) erhalten Sie folgende Angebote:</p><p>1.000 €: Preisnachlass, der Endpreis beträgt 1.799 €.</p><p>400 €: Kostenloses 100Nm-Motorleistungs-Upgrade.</p>",
-            "answer_fr": "<p>A: Pour le Trekking 7 SE Long Range (PDSF : 2 799 €), vous bénéficiez des offres suivantes :</p><p>1 000 € : Réduction de prix, le prix final est de 1 799 €.</p><p>400 € : Mise à jour gratuite de la puissance du moteur à 100 Nm.</p>",
-            "answer_fi": "",
-            "liquid_content": "",
-            "liquid_content_de": "",
-            "liquid_content_fr": "",
-            "liquid_content_fi": "",
-            "answer_2": "",
-            "answer_2_de": "",
-            "answer_2_fr": "",
-            "answer_2_fi": ""
-          }
-        },
-        "question_awRpRT": {
-          "type": "question",
-          "settings": {
-            "title": "Q: What discounts are available for the Trekking 7 SE Ultra?",
-            "title_de": "F: Welche Rabatte gibt es für das Trekking 7 SE Ultra?",
-            "title_fr": "Q : Quelles réductions sont disponibles pour le Trekking 7 SE Ultra ?",
-            "title_fi": "",
-            "answer": "<p>A: For the Trekking 7 SE Ultra  (RRP: €3,299), you get the following offers:</p><p>-€900: Price discount, the final price is €2,399.</p>",
-            "answer_de": "<p>A: Für das Trekking 7 SE Ultra (UVP: 3.299 €) erhalten Sie folgende Angebote:</p><p>- 900 €: Preisnachlass, der Endpreis beträgt 2.399 €.</p>",
-            "answer_fr": "<p>R: Pour le Trekking 7 SE Ultra (PVP : 3 299 €), vous bénéficiez des offres suivantes :</p><p>- 900 € : Remise, le prix final est de 2 399 €.</p>",
-            "answer_fi": "",
-            "liquid_content": "",
-            "liquid_content_de": "",
-            "liquid_content_fr": "",
-            "liquid_content_fi": "",
+            "liquid_content": "<style>\n.pricing-table {\n  width: 100%;\n  border-collapse: collapse;\n  margin: 20px 0;\n  font-family: Arial, sans-serif;\n  border: 1px solid #ddd;\n}\n\n.pricing-table th,\n.pricing-table td {\n  padding: 12px 15px;\n  text-align: left;\n  border-bottom: 1px solid #ddd;\n}\n\n.pricing-table th {\n  background-color: #f8f9fa;\n  font-weight: bold;\n  color: #333;\n}\n\n.pricing-table tr:nth-child(even) {\n  background-color: #f8f9fa;\n}\n\n.pricing-table tr:hover {\n  background-color: #e9ecef;\n}\n\n.pricing-table .model-name {\n  font-weight: 600;\n  color: #2c3e50;\n}\n\n.pricing-table .original-price {\n  color: #6c757d;\n  text-decoration: line-through;\n}\n\n.pricing-table .final-price {\n  color: #dc3545;\n  font-weight: bold;\n}\n\n@media (max-width: 768px) {\n  .pricing-table {\n    font-size: 14px;\n  }\n  \n  .pricing-table th,\n  .pricing-table td {\n    padding: 8px 10px;\n  }\n}\n</style>\n\n<table class=\"pricing-table\">\n  <thead>\n    <tr>\n      {% if request.locale.iso_code == 'de' %}\n        <th>Modell</th>\n        <th>Originalpreis</th>\n        <th>Ihr Endpreis mit 200 €-Gutschein</th>\n      {% elsif request.locale.iso_code == 'fr' %}\n        <th>Modèle</th>\n        <th>Prix d'origine</th>\n        <th>Votre prix final avec le code de 200 €</th>\n      {% else %}\n        <th>Model</th>\n        <th>Original Price</th>\n        <th>Your Final Price with €200 Code</th>\n      {% endif %}\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td class=\"model-name\">Trekking 7 SE Long Range</td>\n      <td class=\"original-price\">€2,799.00</td>\n      <td class=\"final-price\">€1,599.00</td>\n    </tr>\n    <tr>\n      <td class=\"model-name\">Trekking 7 SE Ultra</td>\n      <td class=\"original-price\">€3,299.00</td>\n      <td class=\"final-price\">€1,599.00</td>\n    </tr>\n    <tr>\n      <td class=\"model-name\">Trekking 7 Long Range</td>\n      <td class=\"original-price\">€2,799.00</td>\n      <td class=\"final-price\">€2,399.00</td>\n    </tr>\n    <tr>\n      <td class=\"model-name\">Trekking 7 Performance</td>\n      <td class=\"original-price\">€2,999.00</td>\n      <td class=\"final-price\">€2,599.00</td>\n    </tr>\n    <tr>\n      <td class=\"model-name\">Trekking 7 Ultra</td>\n      <td class=\"original-price\">€3,299.00</td>\n      <td class=\"final-price\">€2,799.00</td>\n    </tr>\n    <tr>\n      <td class=\"model-name\">Trekking 7 Ultra+</td>\n      <td class=\"original-price\">€4,799.00</td>\n      <td class=\"final-price\">€3,799.00</td>\n    </tr>\n    <tr>\n      <td class=\"model-name\">All Mountain 7 Carbon Performance</td>\n      <td class=\"original-price\">€4,799.00</td>\n      <td class=\"final-price\">€3,999.00</td>\n    </tr>\n  </tbody>\n</table>",
             "answer_2": "",
             "answer_2_de": "",
             "answer_2_fr": "",
@@ -773,9 +722,6 @@
             "answer_fr": "<p>R : La période de promotion est du 6 novembre 2025 au 2 décembre 2025.</p>",
             "answer_fi": "",
             "liquid_content": "",
-            "liquid_content_de": "",
-            "liquid_content_fr": "",
-            "liquid_content_fi": "",
             "answer_2": "",
             "answer_2_de": "",
             "answer_2_fr": "",
@@ -794,9 +740,6 @@
             "answer_fr": "<p>R : Oui ! Nous proposons des options de paiement en plusieurs fois grâce à nos partenaires suivants :</p><p>Alma : 2 à 4 mois sans frais<br/>Klarna : 3 mois sans frais<br/><br/>Il vous suffit d’ajouter le vélo électrique de votre choix au panier et de sélectionner votre mode de paiement préféré lors du passage à la caisse.</p>",
             "answer_fi": "",
             "liquid_content": "",
-            "liquid_content_de": "",
-            "liquid_content_fr": "",
-            "liquid_content_fi": "",
             "answer_2": "",
             "answer_2_de": "",
             "answer_2_fr": "",
@@ -815,9 +758,6 @@
             "answer_fr": "<p>R : Cette promotion est valable à la fois sur hepha.com et chez les revendeurs. Les commandes sur <a href=\"https://hepha.com/fr-fr\" title=\"https://hepha.com/fr-fr\">hepha.com</a> sont expédiées par HEPHA GmbH. Si vous souhaitez acheter auprès d'un revendeur, veuillez contacter directement le revendeur pour obtenir des informations sur les produits et les commandes. Ils se feront un plaisir de vous aider. </p>",
             "answer_fi": "",
             "liquid_content": "",
-            "liquid_content_de": "",
-            "liquid_content_fr": "",
-            "liquid_content_fi": "",
             "answer_2": "",
             "answer_2_de": "",
             "answer_2_fr": "",
@@ -835,10 +775,7 @@
             "answer_de": "<p>A: </p>",
             "answer_fr": "<p>R : </p>",
             "answer_fi": "",
-            "liquid_content": "{% if request.locale.iso_code == 'de' %}\n<table border=\"1\" width=\"100%\">\n    <tr>\n        <th></th>\n        <th>Trekking 7 SE</th>\n        <th>Trekking 7</th>\n    </tr>\n       <tr>\n        <td>zul. Gesamtgewicht</td>\n        <td>130 KG</td>\n        <td>145 KG</td>\n    </tr>\n    <tr>\n        <td>motor</td>\n        <td>HEPHA P101C</td>\n        <td>HEPHA P101C</td>\n    </tr>\n    <tr>\n        <td>Akku</td>\n        <td>HEPHA BT-700BH/BT-800BH, 708Wh/804Wh</td>\n        <td>HEPHA BT-700BH/BT-800BH, 708Wh/804Wh</td>\n    </tr>\n    <tr>\n        <td>display</td>\n        <td>Long Range: HEPHA SC-201 (1.96” Color), non-removable<br>Performance & Ultra: HEPHA SC-351 (3.50“ Color), unabnehmbar</td>\n        <td>Long Range: HEPHA SC-201 (1.96” Color), non-removable<br>Performance & Ultra: HEPHA SC-351 (3.50“ Color), unabnehmbar</td>\n    </tr>\n    <tr>\n        <td>Gepäckträger System</td>\n        <td>Long Range: CARRYMORE QR.<br>Ultra/Performance: MIK HD QR.</td>\n        <td>Long Range: CARRYMORE QR.<br>Ultra/Performance: MIK HD QR.</td>\n    </tr>\n    <tr>\n        <td>Frontlicht</td>\n        <td>30 Lux</td>\n        <td>50 Lux</td>\n    </tr>\n   </table>\n\n{% elsif request.locale.iso_code == 'fr' %}\n<table border=\"1\" width=\"100%\">\n    <tr>\n        <th></th>\n        <th>Trekking 7 SE</th>\n        <th>Trekking 7</th>\n    </tr>\n       <tr>\n        <td>Poids total autorisé</td>\n        <td>130 KG</td>\n        <td>145 KG</td>\n    </tr>\n    <tr>\n        <td>Moteur</td>\n        <td>HEPHA P101C</td>\n        <td>HEPHA P101C</td>\n    </tr>\n    <tr>\n        <td>Batterie</td>\n        <td>HEPHA BT-700BH/BT-800BH, 708Wh/804Wh</td>\n        <td>HEPHA BT-700BH/BT-800BH, 708Wh/804Wh</td>\n    </tr>\n    <tr>\n        <td>Écran</td>\n        <td>Long Range : HEPHA SC-201 (1,96'' Couleur), non amovible<br>Performance & Ultra : HEPHA SC-351 (3,50'' Couleur), non amovible</td>\n        <td>Long Range : HEPHA SC-201 (1,96'' Couleur), non amovible<br>Performance & Ultra : HEPHA SC-351 (3,50'' Couleur), non amovible</td>\n    </tr>\n    <tr>\n        <td>Système de porte-bagages</td>\n        <td>Long Range : CARRYMORE QR.<br>Ultra/Performance : MIK HD QR.</td>\n        <td>Long Range : CARRYMORE QR.<br>Ultra/Performance : MIK HD QR.</td>\n    </tr>\n    <tr>\n        <td>Éclairage avant</td>\n        <td>30 Lux</td>\n        <td>50 Lux</td>\n    </tr>\n    </table>\n{% else %}\n<table border=\"1\" width=\"100%\">\n    <tr>\n        <th></th>\n        <th>Trekking 7 SE</th>\n        <th>Trekking 7</th>\n    </tr>\n       <tr>\n        <td>max. permissible weight</td>\n        <td>130 KG</td>\n        <td>145 KG</td>\n    </tr>\n    <tr>\n        <td>motor</td>\n        <td>HEPHA P101C</td>\n        <td>HEPHA P101C</td>\n    </tr>\n    <tr>\n        <td>battery</td>\n       <td>HEPHA BT-700BH/BT-800BH, 708Wh/804Wh</td>\n        <td>HEPHA BT-700BH/BT-800BH, 708Wh/804Wh</td>\n    </tr>\n    <tr>\n        <td>display</td>\n        <td>Long Range: HEPHA SC-201 (1.96” Color), non-removable<br>Performance & Ultra: HEPHA SC-351 (3.50“ Color), non-removable</td>\n        <td>Long Range: HEPHA SC-201 (1.96” Color), non-removable<br>Performance & Ultra: HEPHA SC-351 (3.50“ Color), non-removable</td>\n    </tr>\n    <tr>\n        <td>carrier system</td>\n        <td>Long Range: CARRYMORE QR.<br>Ultra/Performance: MIK HD QR.</td>\n        <td>Long Range: CARRYMORE QR.<br>Ultra/Performance: MIK HD QR.</td>\n    </tr>\n    <tr>\n        <td>front light</td>\n        <td>30 Lux</td>\n        <td>50 Lux</td>\n    </tr>\n    </table>\n{% endif %}",
-            "liquid_content_de": "",
-            "liquid_content_fr": "",
-            "liquid_content_fi": "",
+            "liquid_content": "<style>\n.comparison-table {\n  width: 100%;\n  border-collapse: collapse;\n  margin: 20px 0;\n  font-family: Arial, sans-serif;\n  border: 1px solid #ddd;\n}\n\n.comparison-table th,\n.comparison-table td {\n  padding: 12px 15px;\n  text-align: left;\n  border-bottom: 1px solid #ddd;\n}\n\n.comparison-table th {\n  background-color: #f8f9fa;\n  font-weight: bold;\n  color: #333;\n}\n\n.comparison-table tr:nth-child(even) {\n  background-color: #f8f9fa;\n}\n\n.comparison-table tr:hover {\n  background-color: #e9ecef;\n}\n\n@media (max-width: 768px) {\n  .comparison-table {\n    font-size: 14px;\n  }\n  \n  .comparison-table th,\n  .comparison-table td {\n    padding: 8px 10px;\n  }\n}\n</style>\n\n{% if request.locale.iso_code == 'de' %}\n<table class=\"comparison-table\">\n    <tr>\n        <th></th>\n        <th>Trekking 7 SE</th>\n        <th>Trekking 7</th>\n    </tr>\n       <tr>\n        <td>zul. Gesamtgewicht</td>\n        <td>130 KG</td>\n        <td>145 KG</td>\n    </tr>\n    <tr>\n        <td>motor</td>\n        <td>HEPHA P101C</td>\n        <td>HEPHA P101C</td>\n    </tr>\n    <tr>\n        <td>Akku</td>\n        <td>HEPHA BT-700BH/BT-800BH, 708Wh/804Wh</td>\n        <td>HEPHA BT-700BH/BT-800BH, 708Wh/804Wh</td>\n    </tr>\n    <tr>\n        <td>display</td>\n        <td>Long Range: HEPHA SC-201 (1.96” Color), non-removable<br>Performance & Ultra: HEPHA SC-351 (3.50“ Color), unabnehmbar</td>\n        <td>Long Range: HEPHA SC-201 (1.96” Color), non-removable<br>Performance & Ultra: HEPHA SC-351 (3.50“ Color), unabnehmbar</td>\n    </tr>\n    <tr>\n        <td>Gepäckträger System</td>\n        <td>Long Range: CARRYMORE QR.<br>Ultra/Performance: MIK HD QR.</td>\n        <td>Long Range: CARRYMORE QR.<br>Ultra/Performance: MIK HD QR.</td>\n    </tr>\n    <tr>\n        <td>Frontlicht</td>\n        <td>30 Lux</td>\n        <td>50 Lux</td>\n    </tr>\n   </table>\n\n{% elsif request.locale.iso_code == 'fr' %}\n<table class=\"comparison-table\">\n    <tr>\n        <th></th>\n        <th>Trekking 7 SE</th>\n        <th>Trekking 7</th>\n    </tr>\n       <tr>\n        <td>Poids total autorisé</td>\n        <td>130 KG</td>\n        <td>145 KG</td>\n    </tr>\n    <tr>\n        <td>Moteur</td>\n        <td>HEPHA P101C</td>\n        <td>HEPHA P101C</td>\n    </tr>\n    <tr>\n        <td>Batterie</td>\n        <td>HEPHA BT-700BH/BT-800BH, 708Wh/804Wh</td>\n        <td>HEPHA BT-700BH/BT-800BH, 708Wh/804Wh</td>\n    </tr>\n    <tr>\n        <td>Écran</td>\n        <td>Long Range : HEPHA SC-201 (1,96'' Couleur), non amovible<br>Performance & Ultra : HEPHA SC-351 (3,50'' Couleur), non amovible</td>\n        <td>Long Range : HEPHA SC-201 (1,96'' Couleur), non amovible<br>Performance & Ultra : HEPHA SC-351 (3,50'' Couleur), non amovible</td>\n    </tr>\n    <tr>\n        <td>Système de porte-bagages</td>\n        <td>Long Range : CARRYMORE QR.<br>Ultra/Performance : MIK HD QR.</td>\n        <td>Long Range : CARRYMORE QR.<br>Ultra/Performance : MIK HD QR.</td>\n    </tr>\n    <tr>\n        <td>Éclairage avant</td>\n        <td>30 Lux</td>\n        <td>50 Lux</td>\n    </tr>\n    </table>\n{% else %}\n<table class=\"comparison-table\">\n    <tr>\n        <th></th>\n        <th>Trekking 7 SE</th>\n        <th>Trekking 7</th>\n    </tr>\n       <tr>\n        <td>max. permissible weight</td>\n        <td>130 KG</td>\n        <td>145 KG</td>\n    </tr>\n    <tr>\n        <td>motor</td>\n        <td>HEPHA P101C</td>\n        <td>HEPHA P101C</td>\n    </tr>\n    <tr>\n        <td>battery</td>\n       <td>HEPHA BT-700BH/BT-800BH, 708Wh/804Wh</td>\n        <td>HEPHA BT-700BH/BT-800BH, 708Wh/804Wh</td>\n    </tr>\n    <tr>\n        <td>display</td>\n        <td>Long Range: HEPHA SC-201 (1.96” Color), non-removable<br>Performance & Ultra: HEPHA SC-351 (3.50“ Color), non-removable</td>\n        <td>Long Range: HEPHA SC-201 (1.96” Color), non-removable<br>Performance & Ultra: HEPHA SC-351 (3.50“ Color), non-removable</td>\n    </tr>\n    <tr>\n        <td>carrier system</td>\n        <td>Long Range: CARRYMORE QR.<br>Ultra/Performance: MIK HD QR.</td>\n        <td>Long Range: CARRYMORE QR.<br>Ultra/Performance: MIK HD QR.</td>\n    </tr>\n    <tr>\n        <td>front light</td>\n        <td>30 Lux</td>\n        <td>50 Lux</td>\n    </tr>\n    </table>\n{% endif %}",
             "answer_2": "",
             "answer_2_de": "",
             "answer_2_fr": "",
@@ -857,9 +794,6 @@
             "answer_fr": "<p>R : Avantages du moteur 100 Nm :<br/><br/>- Plus de puissance : Avec un couple plus élevé, le moteur de 100 Nm fournit une sortie plus puissante, offrant une accélération plus rapide et une meilleure capacité de montée.<br/>- Une expérience de conduite plus douce : Le moteur de 100 Nm offre une expérience de conduite plus souple, en particulier dans les situations nécessitant plus de puissance lors des démarrages, des montées et des randonnées.<br/>- Adapté à la pratique du VTT : Il est plus adapté au VTT ou à la gestion de terrains complexes grâce à sa capacité à relever efficacement les défis.<br/>- Sécurité accrue : Quel que soit l'endroit où vous conduisez le vélo électrique, le moteur veille à vous fournir une assistance suffisante pour atteindre une vitesse de base stable, garantissant une trajectoire plus sûre et réduisant le risque de basculement.<br/>- Efficacité énergétique : Comparé au moteur de 100 Nm, le moteur de 80 Nm peut consommer moins d'énergie de la batterie dans des conditions de conduite similaires, ce qui augmente l'autonomie.</p>",
             "answer_fi": "",
             "liquid_content": "",
-            "liquid_content_de": "",
-            "liquid_content_fr": "",
-            "liquid_content_fi": "",
             "answer_2": "",
             "answer_2_de": "",
             "answer_2_fr": "",
@@ -878,9 +812,6 @@
             "answer_fr": "<p>R : Dans l'application HEPHA, sur la page \"My E-Bike\", vous pouvez trouver le couple du moteur de votre E-Bike.</p>",
             "answer_fi": "",
             "liquid_content": "",
-            "liquid_content_de": "",
-            "liquid_content_fr": "",
-            "liquid_content_fi": "",
             "answer_2": "",
             "answer_2_de": "",
             "answer_2_fr": "",
@@ -892,8 +823,6 @@
         "question_7F3zBy",
         "question_qm43Tc",
         "question_tBHYfy",
-        "question_CqpMaE",
-        "question_awRpRT",
         "question_9nk4ah",
         "question_qVQbXG",
         "question_XBJtyf",
@@ -917,7 +846,8 @@
   "order": [
     "media_content_section_bnN7eR",
     "banner_popup_W8tgA4",
-    "adaptive_content_grid_dTa7LW",
+    "adaptive_content_grid_FEc999",
+    "adaptive_content_grid_RR7JkL",
     "custom_blog_slide_CUEyUn",
     "17415882502d62e51b",
     "collapsible_tabs_qETzUn"
