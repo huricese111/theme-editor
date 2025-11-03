@@ -204,7 +204,17 @@
       {%- for block in section.blocks -%}
         {%- case block.type -%}
           {%- when 'banner_title' -%}
-            {%- if block.settings.title != blank -%}
+            {%- liquid
+              assign current_title = block.settings.title
+              if request.locale.iso_code == 'de' and block.settings.title_de != blank
+                assign current_title = block.settings.title_de
+              elsif request.locale.iso_code == 'fr' and block.settings.title_fr != blank
+                assign current_title = block.settings.title_fr
+              elsif request.locale.iso_code == 'fi' and block.settings.title_fi != blank
+                assign current_title = block.settings.title_fi
+              endif
+            -%}
+            {%- if current_title != blank -%}
               <h2 class="banner-popup__title" 
                   style="font-size: {{ block.settings.font_size }}px; 
                          font-weight: {{ block.settings.font_weight }}; 
@@ -212,22 +222,22 @@
                          margin-top: {{ block.settings.margin_top | default: 0 }}px; 
                          margin-bottom: {{ block.settings.margin_bottom | default: 0 }}px;"
                   {{ block.shopify_attributes }}>
-                {%- liquid
-                  assign current_title = block.settings.title
-                  if request.locale.iso_code == 'de' and block.settings.title_de != blank
-                    assign current_title = block.settings.title_de
-                  elsif request.locale.iso_code == 'fr' and block.settings.title_fr != blank
-                    assign current_title = block.settings.title_fr
-                  elsif request.locale.iso_code == 'fi' and block.settings.title_fi != blank
-                    assign current_title = block.settings.title_fi
-                  endif
-                -%}
                 {{ current_title | escape }}
               </h2>
             {%- endif -%}
 
           {%- when 'banner_description' -%}
-            {%- if block.settings.description != blank -%}
+            {%- liquid
+              assign current_description = block.settings.description
+              if request.locale.iso_code == 'de' and block.settings.description_de != blank
+                assign current_description = block.settings.description_de
+              elsif request.locale.iso_code == 'fr' and block.settings.description_fr != blank
+                assign current_description = block.settings.description_fr
+              elsif request.locale.iso_code == 'fi' and block.settings.description_fi != blank
+                assign current_description = block.settings.description_fi
+              endif
+            -%}
+            {%- if current_description != blank -%}
               <div class="banner-popup__description" 
                    style="font-size: {{ block.settings.font_size }}px !important; 
                           font-weight: {{ block.settings.font_weight }} !important; 
@@ -235,16 +245,6 @@
                           margin-top: {{ block.settings.margin_top | default: 0 }}px; 
                           margin-bottom: {{ block.settings.margin_bottom | default: 0 }}px;"
                    {{ block.shopify_attributes }}>
-                {%- liquid
-                  assign current_description = block.settings.description
-                  if request.locale.iso_code == 'de' and block.settings.description_de != blank
-                    assign current_description = block.settings.description_de
-                  elsif request.locale.iso_code == 'fr' and block.settings.description_fr != blank
-                    assign current_description = block.settings.description_fr
-                  elsif request.locale.iso_code == 'fi' and block.settings.description_fi != blank
-                    assign current_description = block.settings.description_fi
-                  endif
-                -%}
                 {{ current_description }}
               </div>
             {%- endif -%}
@@ -260,12 +260,7 @@
                 elsif request.locale.iso_code == 'fi' and block.settings.heading_fi != blank
                   assign current_heading = block.settings.heading_fi
                 endif
-              -%}
-              <span class="discount-code-heading" style="font-weight: {{ block.settings.font_weight }}; color: {{ block.settings.code_color }};">{{ current_heading }}</span>
-              <span class="discount-code" style="font-size: {{ block.settings.font_size }}px; color: {{ block.settings.code_color }}; font-weight: {{ block.settings.font_weight }};">
-                {{ block.settings.discount_code }}
-              </span>
-              {%- liquid
+
                 assign current_copy_button_text = block.settings.copy_button_text
                 if request.locale.iso_code == 'de' and block.settings.copy_button_text_de != blank
                   assign current_copy_button_text = block.settings.copy_button_text_de
@@ -284,58 +279,48 @@
                   assign current_copy_success_text = block.settings.copy_success_text_fi
                 endif
               -%}
-              {%- liquid
-                assign current_copy_success_text = block.settings.copy_success_text
-                if request.locale.iso_code == 'de' and block.settings.copy_success_text_de != blank
-                  assign current_copy_success_text = block.settings.copy_success_text_de
-                elsif request.locale.iso_code == 'fr' and block.settings.copy_success_text_fr != blank
-                  assign current_copy_success_text = block.settings.copy_success_text_fr
-                elsif request.locale.iso_code == 'fi' and block.settings.copy_success_text_fi != blank
-                  assign current_copy_success_text = block.settings.copy_success_text_fi
-                endif
-              -%}
+              <span class="discount-code-heading" style="font-weight: {{ block.settings.font_weight }}; color: {{ block.settings.code_color }};">{{ current_heading }}</span>
+              <span class="discount-code" style="font-size: {{ block.settings.font_size }}px; color: {{ block.settings.code_color }}; font-weight: {{ block.settings.font_weight }};">
+                {{ block.settings.discount_code }}
+              </span>
               <button class="copy-button" style="background-color: {{ block.settings.copy_button_color }}; color: {{ block.settings.copy_button_font_color }};" data-copy-text="{{ block.settings.discount_code }}" data-success-text="{{ current_copy_success_text }}">
-                {%- liquid
-                  assign current_copy_button_text = block.settings.copy_button_text
-                  if request.locale.iso_code == 'de' and block.settings.copy_button_text_de != blank
-                    assign current_copy_button_text = block.settings.copy_button_text_de
-                  elsif request.locale.iso_code == 'fr' and block.settings.copy_button_text_fr != blank
-                    assign current_copy_button_text = block.settings.copy_button_text_fr
-                  elsif request.locale.iso_code == 'fi' and block.settings.copy_button_text_fi != blank
-                    assign current_copy_button_text = block.settings.copy_button_text_fi
-                  endif
-                %}
-                {{- current_copy_button_text -}}
+                {{ current_copy_button_text }}
               </button>
             </div>
 
           {%- when 'button' -%}
-            {%- if block.settings.button_text != blank -%}
-              {%- liquid
-                  assign button_text = section.settings.button_text
-                  if request.locale.iso_code == 'de' and section.settings.button_text_de != blank
-                    assign button_text = section.settings.button_text_de
-                  elsif request.locale.iso_code == 'fr' and section.settings.button_text_fr != blank
-                    assign button_text = section.settings.button_text_fr
-                  elsif request.locale.iso_code == 'fi' and section.settings.button_text_fi != blank
-                    assign button_text = section.settings.button_text_fi
-                  endif
-                -%}
-                {{ button_text | escape }}
+            {%- liquid
+              assign current_button_link = block.settings.button_link
+              if request.locale.iso_code == 'de' and block.settings.button_link_de != blank
+                assign current_button_link = block.settings.button_link_de
+              elsif request.locale.iso_code == 'fr' and block.settings.button_link_fr != blank
+                assign current_button_link = block.settings.button_link_fr
+              elsif request.locale.iso_code == 'fi' and block.settings.button_link_fi != blank
+                assign current_button_link = block.settings.button_link_fi
+              endif
+
+              assign current_button_text = block.settings.button_text
+              if request.locale.iso_code == 'de' and block.settings.button_text_de != blank
+                assign current_button_text = block.settings.button_text_de
+              elsif request.locale.iso_code == 'fr' and block.settings.button_text_fr != blank
+                assign current_button_text = block.settings.button_text_fr
+              elsif request.locale.iso_code == 'fi' and block.settings.button_text_fi != blank
+                assign current_button_text = block.settings.button_text_fi
+              endif
+            -%}
+            
+            {%- if current_button_link != blank and current_button_text != blank -%}
+              <a href="{{ current_button_link }}" 
+                 class="banner-popup__button"
+                 {% if block.settings.button_target_blank %}target="_blank" rel="noopener noreferrer"{% endif %}>
+                {{ current_button_text | escape }}
               </a>
             {%- else -%}
               <button type="button" class="banner-popup__button" disabled style="opacity: 0.5; cursor: not-allowed;">
                 {%- liquid
-                  assign button_text_final = section.settings.button_text
-                  if request.locale.iso_code == 'de' and section.settings.button_text_de != blank
-                    assign button_text_final = section.settings.button_text_de
-                  elsif request.locale.iso_code == 'fr' and section.settings.button_text_fr != blank
-                    assign button_text_final = section.settings.button_text_fr
-                  elsif request.locale.iso_code == 'fi' and section.settings.button_text_fi != blank
-                    assign button_text_final = section.settings.button_text_fi
-                  endif
-
-                  if button_text_final == blank
+                  if current_button_text != blank
+                    assign button_text_final = current_button_text
+                  else
                     if request.locale.iso_code == 'de'
                       assign button_text_final = 'Link konfigurieren'
                     elsif request.locale.iso_code == 'fr'
@@ -415,67 +400,54 @@
       {%- endfor -%}
 
       {%- if section.settings.show_button -%}
-        {%- for block in section.blocks -%}
-          <div class="banner-popup__action">
-            {%- case block.type -%}
-              {%- when 'banner_button' -%}
-                {%- liquid
-                  assign current_button_link = section.settings.button_link_en
-                  if request.locale.iso_code == 'de' and section.settings.button_link_de != blank
-                    assign current_button_link = section.settings.button_link_de
-                  elsif request.locale.iso_code == 'fr' and section.settings.button_link_fr != blank
-                    assign current_button_link = section.settings.button_link_fr
-                  elsif request.locale.iso_code == 'fi' and section.settings.button_link_fi != blank
-                    assign current_button_link = section.settings.button_link_fi
-                  endif
-                -%}
-                
-                {%- if current_button_link != blank -%}
-                  <a href="{{ current_button_link }}" 
-                     class="banner-popup__button"
-                     {% if section.settings.button_target_blank %}target="_blank" rel="noopener noreferrer"{% endif %}>
-                    {%- liquid
-                      assign button_text = section.settings.button_text
-                      if request.locale.iso_code == 'de' and section.settings.button_text_de != blank
-                        assign button_text = section.settings.button_text_de
-                      elsif request.locale.iso_code == 'fr' and section.settings.button_text_fr != blank
-                        assign button_text = section.settings.button_text_fr
-                      elsif request.locale.iso_code == 'fi' and section.settings.button_text_fi != blank
-                        assign button_text = section.settings.button_text_fi
-                      endif
-                    -%}
-                    {{ button_text | escape }}
-                  </a>
-                {%- else -%}
-                  <button type="button" class="banner-popup__button" disabled style="opacity: 0.5; cursor: not-allowed;">
-                    {%- liquid
-                      assign button_text_final = section.settings.button_text
-                      if request.locale.iso_code == 'de' and section.settings.button_text_de != blank
-                        assign button_text_final = section.settings.button_text_de
-                      elsif request.locale.iso_code == 'fr' and section.settings.button_text_fr != blank
-                        assign button_text_final = section.settings.button_text_fr
-                      elsif request.locale.iso_code == 'fi' and section.settings.button_text_fi != blank
-                        assign button_text_final = section.settings.button_text_fi
-                      endif
+        <div class="banner-popup__action">
+          {%- liquid
+            assign current_button_link = section.settings.button_link_en
+            if request.locale.iso_code == 'de' and section.settings.button_link_de != blank
+              assign current_button_link = section.settings.button_link_de
+            elsif request.locale.iso_code == 'fr' and section.settings.button_link_fr != blank
+              assign current_button_link = section.settings.button_link_fr
+            elsif request.locale.iso_code == 'fi' and section.settings.button_link_fi != blank
+              assign current_button_link = section.settings.button_link_fi
+            endif
 
-                      if button_text_final == blank
-                        if request.locale.iso_code == 'de'
-                          assign button_text_final = 'Link konfigurieren'
-                        elsif request.locale.iso_code == 'fr'
-                          assign button_text_final = 'Configurer le lien'
-                        elsif request.locale.iso_code == 'fi'
-                          assign button_text_final = 'Määritä linkki'
-                        else
-                          assign button_text_final = 'Configure Link'
-                        endif
-                      endif
-                    -%}
-                    {{ button_text_final | escape }}
-                  </button>
-                {%- endif -%}
-            {%- endcase -%}
-          </div>
-        {%- endfor -%}
+            assign current_button_text = section.settings.button_text
+            if request.locale.iso_code == 'de' and section.settings.button_text_de != blank
+              assign current_button_text = section.settings.button_text_de
+            elsif request.locale.iso_code == 'fr' and section.settings.button_text_fr != blank
+              assign current_button_text = section.settings.button_text_fr
+            elsif request.locale.iso_code == 'fi' and section.settings.button_text_fi != blank
+              assign current_button_text = section.settings.button_text_fi
+            endif
+          -%}
+          
+          {%- if current_button_link != blank and current_button_text != blank -%}
+            <a href="{{ current_button_link }}" 
+               class="banner-popup__button"
+               {% if section.settings.button_target_blank %}target="_blank" rel="noopener noreferrer"{% endif %}>
+              {{ current_button_text | escape }}
+            </a>
+          {%- else -%}
+            <button type="button" class="banner-popup__button" disabled style="opacity: 0.5; cursor: not-allowed;">
+              {%- liquid
+                if current_button_text != blank
+                  assign button_text_final = current_button_text
+                else
+                  if request.locale.iso_code == 'de'
+                    assign button_text_final = 'Link konfigurieren'
+                  elsif request.locale.iso_code == 'fr'
+                    assign button_text_final = 'Configurer le lien'
+                  elsif request.locale.iso_code == 'fi'
+                    assign button_text_final = 'Määritä linkki'
+                  else
+                    assign button_text_final = 'Configure Link'
+                  endif
+                endif
+              -%}
+              {{ button_text_final | escape }}
+            </button>
+          {%- endif -%}
+        </div>
       {%- endif -%}
   </div>
 </section>
@@ -1334,6 +1306,62 @@ document.addEventListener('DOMContentLoaded', function() {
           "id": "show_timer_labels",
           "label": "Show labels",
           "default": true
+        }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "Button",
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text",
+          "default": "Click here"
+        },
+        {
+          "type": "text",
+          "id": "button_text_de",
+          "label": "Button text (German)",
+          "default": "Hier klicken"
+        },
+        {
+          "type": "text",
+          "id": "button_text_fr",
+          "label": "Button text (French)",
+          "default": "Cliquez ici"
+        },
+        {
+          "type": "text",
+          "id": "button_text_fi",
+          "label": "Button text (Finnish)",
+          "default": "Klikkaa tästä"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link (Default/English)"
+        },
+        {
+          "type": "url",
+          "id": "button_link_de",
+          "label": "Button link (German)"
+        },
+        {
+          "type": "url",
+          "id": "button_link_fr",
+          "label": "Button link (French)"
+        },
+        {
+          "type": "url",
+          "id": "button_link_fi",
+          "label": "Button link (Finnish)"
+        },
+        {
+          "type": "checkbox",
+          "id": "button_target_blank",
+          "label": "Open link in new tab",
+          "default": false
         }
       ]
     },

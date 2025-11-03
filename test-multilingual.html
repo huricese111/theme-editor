@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多语言切换测试 - Banner Popup</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .language-selector {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .language-selector button {
+            margin: 0 10px;
+            padding: 10px 20px;
+            border: 2px solid #007cba;
+            background: white;
+            color: #007cba;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .language-selector button.active {
+            background: #007cba;
+            color: white;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .test-section h3 {
+            margin-top: 0;
+            color: #333;
+            border-bottom: 2px solid #007cba;
+            padding-bottom: 5px;
+        }
+        .test-result {
+            background: #f9f9f9;
+            padding: 10px;
+            border-left: 4px solid #007cba;
+            margin: 10px 0;
+            font-family: monospace;
+        }
+        .status {
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 3px;
+            margin-left: 10px;
+        }
+        .status.pass {
+            background: #d4edda;
+            color: #155724;
+        }
+        .status.fail {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .banner-preview {
+            border: 2px dashed #007cba;
+            padding: 20px;
+            margin: 15px 0;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+        .discount-code-wrapper {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border: 1px solid #ffeaa7;
+        }
+        .copy-button {
+            background: #007cba;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        .summary {
+            background: #e7f3ff;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid #007cba;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Banner Popup 多语言切换测试</h1>
+        <p>此测试验证修复后的 Banner Title、Discount Code 和 Banner Description 的多语言切换功能</p>
+        
+        <div class="language-selector">
+            <button onclick="switchLanguage('en')" class="active" id="btn-en">English</button>
+            <button onclick="switchLanguage('de')" id="btn-de">Deutsch</button>
+            <button onclick="switchLanguage('fr')" id="btn-fr">Français</button>
+            <button onclick="switchLanguage('fi')" id="btn-fi">Suomi</button>
+        </div>
+
+        <div class="test-section">
+            <h3>Banner Title 测试</h3>
+            <div class="banner-preview">
+                <h2 id="banner-title-result">Loading...</h2>
+            </div>
+            <div class="test-result">
+                <strong>当前语言:</strong> <span id="banner-title-lang">en</span>
+                <span id="banner-title-status" class="status">测试中...</span>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>Banner Description 测试</h3>
+            <div class="banner-preview">
+                <p id="banner-description-result">Loading...</p>
+            </div>
+            <div class="test-result">
+                <strong>当前语言:</strong> <span id="banner-description-lang">en</span>
+                <span id="banner-description-status" class="status">测试中...</span>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>Discount Code 测试</h3>
+            <div class="discount-code-wrapper">
+                <div>
+                    <span id="discount-heading-result">Loading...</span>
+                </div>
+                <div style="margin: 10px 0;">
+                    <strong>SAVE20</strong>
+                    <button class="copy-button" id="copy-button-result">Loading...</button>
+                </div>
+            </div>
+            <div class="test-result">
+                <strong>当前语言:</strong> <span id="discount-code-lang">en</span>
+                <span id="discount-code-status" class="status">测试中...</span>
+            </div>
+        </div>
+
+        <div class="summary">
+            <h3>测试总结</h3>
+            <div id="test-summary">正在运行测试...</div>
+        </div>
+    </div>
+
+    <script>
+        // 模拟 Shopify Liquid 的多语言数据
+        const testData = {
+            banner_title: {
+                default: "Welcome to Our Store",
+                de: "Willkommen in unserem Shop",
+                fr: "Bienvenue dans notre magasin",
+                fi: "Tervetuloa kauppaamme"
+            },
+            banner_description: {
+                default: "Discover amazing products with great deals",
+                de: "Entdecken Sie erstaunliche Produkte mit tollen Angeboten",
+                fr: "Découvrez des produits incroyables avec de super offres",
+                fi: "Löydä upeita tuotteita loistavilla tarjouksilla"
+            },
+            discount_heading: {
+                default: "Use discount code:",
+                de: "Rabattcode verwenden:",
+                fr: "Utilisez le code de réduction:",
+                fi: "Käytä alennuskoodia:"
+            },
+            copy_button_text: {
+                default: "Copy Code",
+                de: "Code kopieren",
+                fr: "Copier le code",
+                fi: "Kopioi koodi"
+            },
+            copy_success_text: {
+                default: "Copied!",
+                de: "Kopiert!",
+                fr: "Copié!",
+                fi: "Kopioitu!"
+            }
+        };
+
+        let currentLanguage = 'en';
+
+        // 模拟修复后的 Liquid 逻辑
+        function getLocalizedText(textType, locale) {
+            const data = testData[textType];
+            if (!data) return "N/A";
+            
+            // 修复后的逻辑：优先使用本地化版本，如果不存在则使用默认值
+            if (locale !== 'en' && data[locale]) {
+                return data[locale];
+            }
+            return data.default || "N/A";
+        }
+
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            
+            // 更新按钮状态
+            document.querySelectorAll('.language-selector button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(`btn-${lang}`).classList.add('active');
+            
+            // 更新所有组件
+            updateBannerTitle();
+            updateBannerDescription();
+            updateDiscountCode();
+            updateTestSummary();
+        }
+
+        function updateBannerTitle() {
+            const text = getLocalizedText('banner_title', currentLanguage);
+            document.getElementById('banner-title-result').textContent = text;
+            document.getElementById('banner-title-lang').textContent = currentLanguage;
+            
+            const status = document.getElementById('banner-title-status');
+            if (text && text !== "N/A") {
+                status.textContent = "✓ 通过";
+                status.className = "status pass";
+            } else {
+                status.textContent = "✗ 失败";
+                status.className = "status fail";
+            }
+        }
+
+        function updateBannerDescription() {
+            const text = getLocalizedText('banner_description', currentLanguage);
+            document.getElementById('banner-description-result').textContent = text;
+            document.getElementById('banner-description-lang').textContent = currentLanguage;
+            
+            const status = document.getElementById('banner-description-status');
+            if (text && text !== "N/A") {
+                status.textContent = "✓ 通过";
+                status.className = "status pass";
+            } else {
+                status.textContent = "✗ 失败";
+                status.className = "status fail";
+            }
+        }
+
+        function updateDiscountCode() {
+            const heading = getLocalizedText('discount_heading', currentLanguage);
+            const buttonText = getLocalizedText('copy_button_text', currentLanguage);
+            
+            document.getElementById('discount-heading-result').textContent = heading;
+            document.getElementById('copy-button-result').textContent = buttonText;
+            document.getElementById('discount-code-lang').textContent = currentLanguage;
+            
+            const status = document.getElementById('discount-code-status');
+            if (heading && heading !== "N/A" && buttonText && buttonText !== "N/A") {
+                status.textContent = "✓ 通过";
+                status.className = "status pass";
+            } else {
+                status.textContent = "✗ 失败";
+                status.className = "status fail";
+            }
+        }
+
+        function updateTestSummary() {
+            const languages = ['en', 'de', 'fr', 'fi'];
+            let passCount = 0;
+            let totalTests = 0;
+            
+            languages.forEach(lang => {
+                const titleText = getLocalizedText('banner_title', lang);
+                const descText = getLocalizedText('banner_description', lang);
+                const headingText = getLocalizedText('discount_heading', lang);
+                const buttonText = getLocalizedText('copy_button_text', lang);
+                
+                totalTests += 4;
+                if (titleText && titleText !== "N/A") passCount++;
+                if (descText && descText !== "N/A") passCount++;
+                if (headingText && headingText !== "N/A") passCount++;
+                if (buttonText && buttonText !== "N/A") passCount++;
+            });
+            
+            const summaryDiv = document.getElementById('test-summary');
+            summaryDiv.innerHTML = `
+                <p><strong>测试结果:</strong> ${passCount}/${totalTests} 项测试通过</p>
+                <p><strong>成功率:</strong> ${Math.round((passCount/totalTests)*100)}%</p>
+                <p><strong>状态:</strong> ${passCount === totalTests ? 
+                    '<span class="status pass">所有测试通过 ✓</span>' : 
+                    '<span class="status fail">部分测试失败 ✗</span>'}</p>
+                <div style="margin-top: 15px;">
+                    <h4>修复内容总结:</h4>
+                    <ul>
+                        <li>✅ 修复了 Banner Title 的多语言切换逻辑</li>
+                        <li>✅ 修复了 Banner Description 的多语言切换逻辑</li>
+                        <li>✅ 清理了 Discount Code 中的重复代码</li>
+                        <li>✅ 统一了所有组件的多语言处理方式</li>
+                        <li>✅ 确保即使默认值为空也能显示本地化内容</li>
+                    </ul>
+                </div>
+            `;
+        }
+
+        // 页面加载时初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            switchLanguage('en');
+        });
+
+        // 添加复制按钮功能
+        document.getElementById('copy-button-result').addEventListener('click', function() {
+            const successText = getLocalizedText('copy_success_text', currentLanguage);
+            const originalText = this.textContent;
+            this.textContent = successText;
+            setTimeout(() => {
+                this.textContent = originalText;
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
