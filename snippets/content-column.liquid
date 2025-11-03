@@ -61,6 +61,9 @@
             
           {% when 'custom_image' %}
             {% render 'block-custom-image', block: block %}
+          
+          {% when '@app' %}
+            {% render block %}
         {% endcase %}
       </div>
     {% endfor %}

@@ -18,11 +18,24 @@
 
     #banner-{{ section.id }} .banner-popup__container {
       display: grid;
-      grid-template-columns: 1fr auto 1fr;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 1.5rem;
+      padding: 1.5rem;
       align-items: center;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .banner-popup__timeline {
+      flex-shrink: 0;
+      justify-content: space-between;
       gap: 2rem;
-      min-height: var(--banner-height);
-      padding: 2rem;
+      padding: 1.5rem 2rem;
+      position: relative;
+      z-index: 2;
     }
 
     #banner-{{ section.id }} .banner-popup__action {
@@ -50,15 +63,6 @@
       transform: translateY(-2px);
     }
 
-    {%- if section.settings.banner_bg_image != blank -%}
-      #banner-{{ section.id }} {
-        background-image: url('{{ section.settings.banner_bg_image | img_url: '1920x' }}');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-      }
-    {%- endif -%}
-
     /* Banner Description Styles */
     #banner-{{ section.id }} .banner-popup__description {
       margin-bottom: 0.5rem;
@@ -82,6 +86,10 @@
       margin-bottom: 0.5rem !important;
     }
 
+    #banner-{{ section.id }} .banner-popup__description a {
+      text-decoration: underline;
+    }
+
     /* Responsive Design */
     @media (max-width: 768px) {
       #banner-{{ section.id }} {
@@ -96,6 +104,10 @@
         padding: 1.5rem 1rem;
         justify-items: center;
         align-items: center;
+      }
+      
+      #banner-{{ section.id }} .banner-popup__actions {
+        order: 3;
       }
       
       #banner-{{ section.id }} .banner-popup__content {
@@ -119,6 +131,21 @@
         padding: 0.8rem 1.5rem;
         font-size: calc(var(--button-font-size) * 0.9);
       }
+
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'banner_title' -%}
+          #banner-{{ section.id }} .banner-popup__title {
+            font-size: {{ block.settings.mobile_font_size }}px !important;
+            text-align: center;
+          }
+        {%- endif -%}
+        {%- if block.type == 'banner_description' -%}
+          #banner-{{ section.id }} .banner-popup__description {
+            font-size: {{ block.settings.mobile_font_size }}px !important;
+            text-align: center;
+          }
+        {%- endif -%}
+      {%- endfor -%}
     }
 
     @media (max-width: 480px) {
@@ -138,8 +165,8 @@
     <div class="banner-popup__bg-overlay" style="background-color: {{ section.settings.banner_bg_color }}; opacity: {{ section.settings.banner_bg_opacity | divided_by: 100.0 }};"></div>
   {%- endif -%}
 
-  <div class="banner-popup__container">
-    <!-- Left Content Area -->
+  <div class="banner-popup__container{% unless has_timeline %} no-timeline{% endunless %}">
+    <!-- Left-side Content -->
     <div class="banner-popup__content">
       {%- for block in section.blocks -%}
         {%- case block.type -%}
@@ -152,15 +179,17 @@
                          margin-top: {{ block.settings.margin_top | default: 0 }}px; 
                          margin-bottom: {{ block.settings.margin_bottom | default: 0 }}px;"
                   {{ block.shopify_attributes }}>
-                {% if request.locale.iso_code == 'de' %}
-                  {{ block.settings.title_de | escape }}
-                {% elsif request.locale.iso_code == 'fr' %}
-                  {{ block.settings.title_fr | escape }}
-                {% elsif request.locale.iso_code == 'fi' %}
-                  {{ block.settings.title_fi | escape }}
-                {% else %}
-                  {{ block.settings.title | escape }}
-                {% endif %}
+                {%- liquid
+                  assign current_title = block.settings.title
+                  if request.locale.iso_code == 'de' and block.settings.title_de != blank
+                    assign current_title = block.settings.title_de
+                  elsif request.locale.iso_code == 'fr' and block.settings.title_fr != blank
+                    assign current_title = block.settings.title_fr
+                  elsif request.locale.iso_code == 'fi' and block.settings.title_fi != blank
+                    assign current_title = block.settings.title_fi
+                  endif
+                -%}
+                {{ current_title | escape }}
               </h2>
             {%- endif -%}
 
@@ -173,38 +202,54 @@
                           margin-top: {{ block.settings.margin_top | default: 0 }}px !important; 
                           margin-bottom: {{ block.settings.margin_bottom | default: 0 }}px !important;"
                    {{ block.shopify_attributes }}>
-                {% assign description_content = block.settings.description %}
-                {% if request.locale.iso_code == 'de' %}
-                  {% assign description_content = block.settings.description_de %}
-                {% elsif request.locale.iso_code == 'fr' %}
-                  {% assign description_content = block.settings.description_fr %}
-                {% elsif request.locale.iso_code == 'fi' %}
-                  {% assign description_content = block.settings.description_fi %}
-                {% endif %}
+                {%- liquid
+                  assign description_content = block.settings.description
+                  if request.locale.iso_code == 'de' and block.settings.description_de != blank
+                    assign description_content = block.settings.description_de
+                  elsif request.locale.iso_code == 'fr' and block.settings.description_fr != blank
+                    assign description_content = block.settings.description_fr
+                  elsif request.locale.iso_code == 'fi' and block.settings.description_fi != blank
+                    assign description_content = block.settings.description_fi
+                  endif
+                -%}
                 {{ description_content }}
               </div>
             {%- endif -%}
+
         {%- endcase -%}
       {%- endfor -%}
     </div>
 
-    <!-- Middle Timeline/Countdown Area -->
-    <div class="banner-popup__timeline">
-      {%- for block in section.blocks -%}
-        {%- case block.type -%}
-          {%- when 'timeline_item' -%}
-            <div class="timeline-item" {{ block.shopify_attributes }}>
+    {%- liquid
+      assign has_timeline = false
+      for block in section.blocks
+        if block.type == 'timeline_item'
+          assign has_timeline = true
+          break
+        endif
+      endfor
+    -%}
+
+    {%- if has_timeline -%}
+      <!-- Middle Timeline/Countdown Area -->
+      <div class="banner-popup__timeline">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'timeline_item' -%}
+              <div class="timeline-item" {{ block.shopify_attributes }}>
               <div class="timeline-bullet">•</div>
               <span class="timeline-text">
-                {% if request.locale.iso_code == 'de' %}
-                  {{ block.settings.timeline_text_de | escape }}
-                {% elsif request.locale.iso_code == 'fr' %}
-                  {{ block.settings.timeline_text_fr | escape }}
-                {% elsif request.locale.iso_code == 'fi' %}
-                  {{ block.settings.timeline_text_fi | escape }}
-                {% else %}
-                  {{ block.settings.timeline_text | escape }}
-                {% endif %}
+                {%- liquid
+                  assign timeline_text = block.settings.timeline_text
+                  if request.locale.iso_code == 'de' and block.settings.timeline_text_de != blank
+                    assign timeline_text = block.settings.timeline_text_de
+                  elsif request.locale.iso_code == 'fr' and block.settings.timeline_text_fr != blank
+                    assign timeline_text = block.settings.timeline_text_fr
+                  elsif request.locale.iso_code == 'fi' and block.settings.timeline_text_fi != blank
+                    assign timeline_text = block.settings.timeline_text_fi
+                  endif
+                -%}
+                {{ timeline_text | escape }}
               </span>
             </div>
 
@@ -223,48 +268,81 @@
         {%- endcase -%}
       {%- endfor -%}
     </div>
-
-    <!-- Right Button Area -->
-    <div class="banner-popup__action">
-      {%- liquid
-        assign current_button_link = section.settings.button_link_en
-        if request.locale.iso_code == 'de' and section.settings.button_link_de != blank
-          assign current_button_link = section.settings.button_link_de
-        elsif request.locale.iso_code == 'fr' and section.settings.button_link_fr != blank
-          assign current_button_link = section.settings.button_link_fr
-        elsif request.locale.iso_code == 'fi' and section.settings.button_link_fi != blank
-          assign current_button_link = section.settings.button_link_fi
-        endif
-      -%}
-      
-      {%- if current_button_link != blank -%}
-        <a href="{{ current_button_link }}" 
-           class="banner-popup__button"
-           {% if section.settings.button_target_blank %}target="_blank" rel="noopener noreferrer"{% endif %}>
-          {% if request.locale.iso_code == 'de' %}
-            {{ section.settings.button_text_de | escape }}
-          {% elsif request.locale.iso_code == 'fr' %}
-            {{ section.settings.button_text_fr | escape }}
-          {% elsif request.locale.iso_code == 'fi' %}
-            {{ section.settings.button_text_fi | escape }}
-          {% else %}
-            {{ section.settings.button_text | escape }}
-          {% endif %}
-        </a>
-      {%- else -%}
-        <button type="button" class="banner-popup__button" disabled style="opacity: 0.5; cursor: not-allowed;">
-          {% if request.locale.iso_code == 'de' %}
-            {{ section.settings.button_text_de | default: 'Link konfigurieren' | escape }}
-          {% elsif request.locale.iso_code == 'fr' %}
-            {{ section.settings.button_text_fr | default: 'Configurer le lien' | escape }}
-          {% elsif request.locale.iso_code == 'fi' %}
-            {{ section.settings.button_text_fi | default: 'Määritä linkki' | escape }}
-          {% else %}
-            {{ section.settings.button_text | default: 'Configure Link' | escape }}
-          {% endif %}
-        </button>
-      {%- endif -%}
     </div>
+      </div>
+    {%- endif -%}
+
+    <!-- Right-side Action Buttons -->
+    <div class="banner-popup__actions">
+      {%- for block in section.blocks -%}
+        {%- if block.type == '@app' -%}
+          {% render block %}
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- if section.settings.show_button -%}
+        {%- for block in section.blocks -%}
+          <div class="banner-popup__action">
+            {%- case block.type -%}
+              {%- when 'banner_button' -%}
+                {%- liquid
+                  assign current_button_link = section.settings.button_link_en
+                  if request.locale.iso_code == 'de' and section.settings.button_link_de != blank
+                    assign current_button_link = section.settings.button_link_de
+                  elsif request.locale.iso_code == 'fr' and section.settings.button_link_fr != blank
+                    assign current_button_link = section.settings.button_link_fr
+                  elsif request.locale.iso_code == 'fi' and section.settings.button_link_fi != blank
+                    assign current_button_link = section.settings.button_link_fi
+                  endif
+                -%}
+                
+                {%- if current_button_link != blank -%}
+                  <a href="{{ current_button_link }}" 
+                     class="banner-popup__button"
+                     {% if section.settings.button_target_blank %}target="_blank" rel="noopener noreferrer"{% endif %}>
+                    {%- liquid
+                      assign button_text = section.settings.button_text
+                      if request.locale.iso_code == 'de' and section.settings.button_text_de != blank
+                        assign button_text = section.settings.button_text_de
+                      elsif request.locale.iso_code == 'fr' and section.settings.button_text_fr != blank
+                        assign button_text = section.settings.button_text_fr
+                      elsif request.locale.iso_code == 'fi' and section.settings.button_text_fi != blank
+                        assign button_text = section.settings.button_text_fi
+                      endif
+                    -%}
+                    {{ button_text | escape }}
+                  </a>
+                {%- else -%}
+                  <button type="button" class="banner-popup__button" disabled style="opacity: 0.5; cursor: not-allowed;">
+                    {%- liquid
+                      assign button_text_final = section.settings.button_text
+                      if request.locale.iso_code == 'de' and section.settings.button_text_de != blank
+                        assign button_text_final = section.settings.button_text_de
+                      elsif request.locale.iso_code == 'fr' and section.settings.button_text_fr != blank
+                        assign button_text_final = section.settings.button_text_fr
+                      elsif request.locale.iso_code == 'fi' and section.settings.button_text_fi != blank
+                        assign button_text_final = section.settings.button_text_fi
+                      endif
+
+                      if button_text_final == blank
+                        if request.locale.iso_code == 'de'
+                          assign button_text_final = 'Link konfigurieren'
+                        elsif request.locale.iso_code == 'fr'
+                          assign button_text_final = 'Configurer le lien'
+                        elsif request.locale.iso_code == 'fi'
+                          assign button_text_final = 'Määritä linkki'
+                        else
+                          assign button_text_final = 'Configure Link'
+                        endif
+                      endif
+                    -%}
+                    {{ button_text_final | escape }}
+                  </button>
+                {%- endif -%}
+            {%- endcase -%}
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
   </div>
 </section>
 
@@ -275,6 +353,21 @@
   max-width: {{ section.settings.banner_max_width }}px;
   margin: {{ section.settings.banner_margin_top }}px auto {{ section.settings.banner_margin_bottom }}px auto;
   border-radius: 12px;
+  {%- if section.settings.banner_bg_image != blank -%}
+    background-image: url('{{ section.settings.banner_bg_image | image_url }}');
+    background-size: cover;
+    background-position: center;
+  {%- endif -%}
+}
+
+@media (max-width: 768px) {
+  .banner-popup-section {
+    {%- if section.settings.mobile_background_image != blank -%}
+      background-image: url('{{ section.settings.mobile_background_image | image_url }}');
+    {%- endif -%}
+    margin-top: {{ section.settings.mobile_banner_margin_top }}px;
+    margin-bottom: {{ section.settings.mobile_banner_margin_bottom }}px;
+  }
 }
 
 .banner-popup__bg-overlay {
@@ -286,11 +379,70 @@
   pointer-events: none;
 }
 
+
+
+#banner-{{ section.id }} .banner-popup__container {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  align-items: center;
+  height: 100%;
+}
+
+#banner-{{ section.id }} .banner-popup__container.no-timeline {
+  grid-template-columns: 1fr auto;
+}
+
 .banner-popup__timeline {
+  flex-shrink: 0;
+}
+
+.banner-popup__actions {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   align-items: center;
+}
+
+@media (max-width: 768px) {
+  #banner-{{ section.id }} .banner-popup__container {
+    position: relative;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+    padding: 1.5rem 1rem;
+    align-items: center;
+  }
+
+  #banner-{{ section.id }} .banner-popup__actions {
+    margin-top: auto;
+  }
+  
+  #banner-{{ section.id }} .banner-popup__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+  }
+  
+  #banner-{{ section.id }} .banner-popup__timeline {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  #banner-{{ section.id }} .banner-popup__action {
+    justify-content: center;
+    margin-right: 0;
+  }
+  
+  #banner-{{ section.id }} .banner-popup__button {
+    padding: 0.8rem 1.5rem;
+    font-size: calc(var(--button-font-size) * 0.9);
+  }
 }
 
 .timeline-item {
@@ -370,6 +522,26 @@
       "default": 60
     },
     {
+      "type": "range",
+      "id": "mobile_banner_margin_top",
+      "label": "Mobile Banner margin top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "mobile_banner_margin_bottom",
+      "label": "Mobile Banner margin bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 30
+    },
+    {
       "type": "color",
       "id": "banner_bg_color",
       "label": "Banner background color",
@@ -387,6 +559,13 @@
       "label": "Banner background image"
     },
     {
+      "type": "image_picker",
+      "id": "mobile_background_image",
+      "label": "Mobile Background Image",
+      "info": "Optional. If not set, the desktop background image will be used."
+    },
+
+    {
       "type": "range",
       "id": "banner_bg_opacity",
       "label": "Background overlay opacity",
@@ -400,6 +579,12 @@
     {
       "type": "header",
       "content": "Button Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show button",
+      "default": true
     },
     {
       "type": "text",
@@ -529,6 +714,16 @@
           "default": 24
         },
         {
+          "type": "range",
+          "id": "mobile_font_size",
+          "label": "Mobile font size",
+          "min": 14,
+          "max": 48,
+          "step": 2,
+          "unit": "px",
+          "default": 24
+        },
+        {
           "type": "select",
           "id": "font_weight",
           "label": "Font weight",
@@ -620,6 +815,16 @@
           "type": "range",
           "id": "font_size",
           "label": "Font size",
+          "min": 12,
+          "max": 24,
+          "step": 1,
+          "unit": "px",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "mobile_font_size",
+          "label": "Mobile font size",
           "min": 12,
           "max": 24,
           "step": 1,
@@ -788,6 +993,9 @@
           "default": true
         }
       ]
+    },
+    {
+      "type": "@app"
     }
   ],
   "presets": [
