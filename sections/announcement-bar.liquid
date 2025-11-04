@@ -153,7 +153,7 @@
                {{- block.settings.bg_gradient | default: block.settings.bg_color }}
              {%- else %}
                {{- section.settings.announcement_bar_gradient | default: section.settings.announcement_bar_col }}
-             {%- endif -%}"></div>
+             {%- endfor -%}"></div>
     {%- endfor -%}
 
     <div class="container container--no-max relative">
