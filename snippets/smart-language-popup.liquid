@@ -103,6 +103,39 @@
               <button class="language-option__lang" data-locale="en-FI" data-country="FI">English</button>
             </div>
           </div>
+          
+          <!-- Luxembourg -->
+          <div class="language-option" data-country="LU">
+            <span class="language-option__flag">
+              <svg class="flag-icon" viewBox="0 0 640 480">
+                <rect width="640" height="160" fill="#ea2839"/>
+                <rect y="160" width="640" height="160" fill="#fff"/>
+                <rect y="320" width="640" height="160" fill="#00a1de"/>
+              </svg>
+            </span>
+            <span class="language-option__country">Luxembourg</span>
+            <div class="language-option__languages">
+              <button class="language-option__lang" data-locale="en-LU" data-country="LU">English</button>
+              <button class="language-option__lang" data-locale="de-LU" data-country="LU">Deutsch</button>
+              <button class="language-option__lang" data-locale="fr-LU" data-country="LU">Français</button>
+            </div>
+          </div>
+
+          <!-- Belgium -->
+          <div class="language-option" data-country="BE">
+            <span class="language-option__flag">
+              <svg class="flag-icon" viewBox="0 0 640 480">
+                <rect width="213.3" height="480" fill="#000"/>
+                <rect x="213.3" width="213.3" height="480" fill="#fae042"/>
+                <rect x="426.6" width="213.4" height="480" fill="#ed2939"/>
+              </svg>
+            </span>
+            <span class="language-option__country">Belgium</span>
+            <div class="language-option__languages">
+              <button class="language-option__lang" data-locale="en-BE" data-country="BE">English</button>
+              <button class="language-option__lang" data-locale="fr-BE" data-country="BE">Français</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -450,6 +483,8 @@ class SmartLanguagePopup {
       'FR': '/fr-fr',  // 法国默认法语 
       'AT': '/de-at',  // 奥地利默认德语
       'FI': '/fi-fi',  // 芬兰默认芬兰语
+      'LU': '/en-lu',  // 卢森堡默认英语
+      'BE': '/en-be',  // 比利时默认英语
       // 新增国家/地区URL映射
       'CN': '/zh-cn',  // 中国默认简体中文
       'HK': '/zh-hk',  // 香港默认繁体中文
@@ -795,7 +830,9 @@ class SmartLanguagePopup {
       'DE': [{ code: 'de-DE', name: 'Deutsch', flag: 'DE' }, { code: 'en-DE', name: 'English', flag: 'DE' }],
       'FR': [{ code: 'fr-FR', name: 'Français', flag: 'FR' }, { code: 'en-FR', name: 'English', flag: 'FR' }],
       'AT': [{ code: 'de-AT', name: 'Deutsch', flag: 'AT' }, { code: 'en-AT', name: 'English', flag: 'AT' }],
-      'FI': [{ code: 'fi-FI', name: 'Suomi', flag: 'FI' }, { code: 'en-FI', name: 'English', flag: 'FI' }]
+      'FI': [{ code: 'fi-FI', name: 'Suomi', flag: 'FI' }, { code: 'en-FI', name: 'English', flag: 'FI' }],
+      'LU': [{ code: 'en-LU', name: 'English', flag: 'LU' }, { code: 'de-LU', name: 'Deutsch', flag: 'LU' }, { code: 'fr-LU', name: 'Français', flag: 'LU' }],
+      'BE': [{ code: 'en-BE', name: 'English', flag: 'BE' }, { code: 'fr-BE', name: 'Français', flag: 'BE' }]
     };
     
     const flagSvg = flagSvgMap[countryCode] || flagSvgMap['INT'];
@@ -886,7 +923,12 @@ class SmartLanguagePopup {
       'de-AT': '/de-at', 
       'en-AT': '/en-at',
       'fi-FI': '/fi-fi',
-      'en-FI': '/en-fi'
+      'en-FI': '/en-fi',
+      'en-LU': '/en-lu',
+      'de-LU': '/de-lu',
+      'fr-LU': '/fr-lu',
+      'en-BE': '/en-be',
+      'fr-BE': '/fr-be'
     };
     
     const newUrlPrefix = localeUrlMap[locale];
@@ -900,6 +942,7 @@ class SmartLanguagePopup {
       // 定义所有可能的语言前缀（按长度降序排列，确保先匹配较长的前缀）
       const allPrefixes = [
         '/fr-fr', '/en-fr', '/de-at', '/en-at', '/fi-fi', '/en-fi',
+        '/en-lu', '/de-lu', '/fr-lu', '/en-be', '/fr-be',
         '/de', '/fr', '/fi'
       ];
       

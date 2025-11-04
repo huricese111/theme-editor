@@ -43,6 +43,14 @@ def convert_csv_to_json(csv_file_path):
         print("Error: Could not read CSV file with any of the attempted encodings.")
         return
     
+    def safe_float(s):
+        if not s:
+            return 0.0
+        try:
+            return float(s.replace(',', '.'))
+        except (ValueError, TypeError):
+            return 0.0
+    
     # Process the CSV data
     for i, row in enumerate(csv_data):
         try:
@@ -60,8 +68,8 @@ def convert_csv_to_json(csv_file_path):
                 "website": row.get('Website', ''),
                 "hours_of_operation": row.get('Hours of Operation', ''),
                 "store_type": [row.get('Store Type', 'dealer')],  # Convert to array format
-                "latitude": float(row.get('Latitude', 0)) if row.get('Latitude') else 0.0,
-                "longitude": float(row.get('Longitude', 0)) if row.get('Longitude') else 0.0
+                "latitude": safe_float(row.get('Latitude')),
+                "longitude": safe_float(row.get('Longitude'))
             }
             dealers.append(dealer)
         except Exception as e:

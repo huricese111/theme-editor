@@ -128,6 +128,12 @@
                 <rect y="160" width="640" height="160" fill="#fff"/>
                 <rect y="320" width="640" height="160" fill="#c8102e"/>
               </svg>
+            {% elsif request.locale.root_url contains '/de-lu' %}
+              <svg class="flag-icon" viewBox="0 0 640 480" width="20" height="15">
+                <rect width="640" height="160" fill="#D52B1E"/>
+                <rect y="160" width="640" height="160" fill="#fff"/>
+                <rect y="320" width="640" height="160" fill="#00A3E0"/>
+              </svg>
             {% else %}
               <svg class="flag-icon" viewBox="0 0 640 480" width="20" height="15">
                 <rect width="640" height="160" fill="#000"/>
@@ -136,11 +142,25 @@
               </svg>
             {% endif %}
           {% when 'fr' %}
-            <svg class="flag-icon" viewBox="0 0 640 480" width="20" height="15">
-              <rect width="213.3" height="480" fill="#002654"/>
-              <rect x="213.3" width="213.3" height="480" fill="#fff"/>
-              <rect x="426.6" width="213.4" height="480" fill="#ce1126"/>
-            </svg>
+            {% if request.locale.root_url contains '/fr-be' %}
+              <svg class="flag-icon" viewBox="0 0 640 480" width="20" height="15">
+                <rect width="640" height="160" fill="#000"/>
+                <rect y="160" width="640" height="160" fill="#FDDA24"/>
+                <rect y="320" width="640" height="160" fill="#EF3340"/>
+              </svg>
+            {% elsif request.locale.root_url contains '/fr-lu' %}
+              <svg class="flag-icon" viewBox="0 0 640 480" width="20" height="15">
+                <rect width="640" height="160" fill="#D52B1E"/>
+                <rect y="160" width="640" height="160" fill="#fff"/>
+                <rect y="320" width="640" height="160" fill="#00A3E0"/>
+              </svg>
+            {% else %}
+              <svg class="flag-icon" viewBox="0 0 640 480" width="20" height="15">
+                <rect width="213.3" height="480" fill="#002654"/>
+                <rect x="213.3" width="213.3" height="480" fill="#fff"/>
+                <rect x="426.6" width="213.4" height="480" fill="#ce1126"/>
+              </svg>
+            {% endif %}
           {% when 'fi' %}
             <svg class="flag-icon" viewBox="0 0 640 480" width="20" height="15">
               <rect width="640" height="480" fill="#fff"/>
@@ -173,6 +193,18 @@
                 <rect width="640" height="480" fill="#fff"/>
                 <rect y="175" width="640" height="130" fill="#003580"/>
                 <rect x="175" width="130" height="480" fill="#003580"/>
+              </svg>
+            {% elsif request.locale.root_url contains '/en-lu' %}
+              <svg class="flag-icon" viewBox="0 0 640 480" width="20" height="15">
+                <rect width="640" height="160" fill="#D52B1E"/>
+                <rect y="160" width="640" height="160" fill="#fff"/>
+                <rect y="320" width="640" height="160" fill="#00A3E0"/>
+              </svg>
+            {% elsif request.locale.root_url contains '/en-be' %}
+              <svg class="flag-icon" viewBox="0 0 640 480" width="20" height="15">
+                <rect width="640" height="160" fill="#000"/>
+                <rect y="160" width="640" height="160" fill="#FDDA24"/>
+                <rect y="320" width="640" height="160" fill="#EF3340"/>
               </svg>
             {% else %}
               <svg class="flag-icon" viewBox="0 0 640 480" width="20" height="15">

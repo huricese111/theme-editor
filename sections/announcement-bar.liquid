@@ -80,55 +80,37 @@
         flex-wrap: wrap;
         gap: 8px;
       }
+
+      .copy-button {
+        background-color: var(--copy-button-bg-color, #f0f0f0);
+        color: var(--copy-button-text-color, #000);
+        border-radius: 4px;
+        padding: 4px 8px;
+        cursor: pointer;
+        font-size: 12px;
+        margin-left: 8px;
+      }
+
+      .copy-button.copied {
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+        color: #155724;
+      }
+
+      .announcement-button--unique {
+        background-color: var(--button-bg-color, #000);
+        color: #fff;
+        padding: 4px 12px;
+        border-radius: 4px;
+        text-decoration: none;
+        font-size: 12px;
+      }
       
       .announcement-text-link {
         text-decoration: none;
         color: inherit;
         display: inline-flex;
         align-items: center;
-      }
-      
-      .custom-announcement-button {
-        background-color: var(--button-bg-color, #000);
-        color: white;
-        margin-left: 20px;
-        text-decoration: none;
-        padding: 6px 10px;
-        font-size: 12px;
-        border-radius: 4px;
-        display: inline-flex;
-        align-items: center;
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-      }
-      
-      .custom-announcement-button:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        background-color: var(--button-bg-color-hover, #333);
-      }
-      
-      .custom-announcement-button:hover .arrow-icon {
-        transform: translateX(2px);
-      }
-      
-      .custom-announcement-button:active {
-        transform: translateY(0);
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      }
-      
-      @media (max-width: 767px) {
-        .custom-announcement-button {
-          display: none;
-        }
-      }
-      
-      .custom-announcement-button .arrow-icon {
-        display: inline-block;
-        margin-left: 5px;
-        vertical-align: middle;
-        transition: transform 0.3s ease;
       }
       
       .announcement-text-link {
@@ -236,6 +218,8 @@
                        --text-color: {{ section.settings.announcement_text_col.rgb }};
                        --link-color: {{ section.settings.announcement_text_col.rgb }};
                        --button-bg-color: {{ block.settings.unique_button_color }};
+                       --copy-button-bg-color: {{ block.settings.copy_button_bg_color }};
+                       --copy-button-text-color: {{ block.settings.copy_button_text_color }};
                      {%- endif %}"
                    {{ block.shopify_attributes }}>
                 
@@ -258,14 +242,33 @@
                     {{ announcement_text }}
                   </a>
 
-                  <a href="{{ block.settings.unique_button_link }}" 
-                     class="custom-announcement-button"
-                     data-localize="{{ block.settings.unique_button_text }}">
-                    {{ button_text }}
-                    <svg class="arrow-icon" width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M8.59 16.59L13.17 12L8.59 7.41L10 6l6 6-6 6-1.41-1.41z"/>
-                    </svg>
-                  </a>
+                  {%- if block.settings.unique_button_text != blank -%}
+                    <a href="{{ block.settings.unique_button_link }}" class="announcement-button--unique">
+                      {{- button_text -}}
+                    </a>
+                  {%- endif -%}
+
+                  {%- if block.settings.discount_code != blank -%}
+                    {%- assign copy_text = 'Copy' -%}
+                    {%- assign copied_text = 'Copied' -%}
+                    {%- if request.locale.iso_code == 'de' -%}
+                      {%- assign copy_text = 'Kopieren' -%}
+                      {%- assign copied_text = 'Kopiert' -%}
+                    {%- elsif request.locale.iso_code == 'fr' -%}
+                      {%- assign copy_text = 'Copier' -%}
+                      {%- assign copied_text = 'Copié' -%}
+                    {%- elsif request.locale.iso_code == 'fi' -%}
+                      {%- assign copy_text = 'Kopioi' -%}
+                      {%- assign copied_text = 'Kopioitu' -%}
+                    {%- endif -%}
+                    <span class="discount-code">{{ block.settings.discount_code }}</span>
+                    <button class="copy-button" data-copy-text="{{ block.settings.discount_code }}">
+                      <span class="copy-text">{{ copy_text }}</span>
+                      <span class="copied-text" style="display:none;">{{ copied_text }}</span>
+                    </button>
+                  {%- endif -%}
+
+
                 </div>
               </div>
             {%- endfor -%}
@@ -305,6 +308,41 @@
       </div>
     </div>
   </announcement-bar>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const copyButtons = document.querySelectorAll('.copy-button');
+    copyButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const textToCopy = this.getAttribute('data-copy-text');
+        
+        const textArea = document.createElement('textarea');
+        textArea.value = textToCopy;
+        document.body.appendChild(textArea);
+        textArea.select();
+        
+        try {
+          document.execCommand('copy');
+          const copyText = this.querySelector('.copy-text');
+          const copiedText = this.querySelector('.copied-text');
+          copyText.style.display = 'none';
+          copiedText.style.display = 'inline';
+          this.classList.add('copied');
+          setTimeout(() => {
+            copyText.style.display = 'inline';
+            copiedText.style.display = 'none';
+            this.classList.remove('copied');
+          }, 2000);
+        } catch (err) {
+          console.error('Failed to copy text: ', err);
+        }
+        
+        document.body.removeChild(textArea);
+      });
+    });
+  });
+</script>
+
 {%- endif -%}
 
 {% schema %}
@@ -401,6 +439,23 @@
           "type": "inline_richtext",
           "id": "text_fr",
           "label": "Text (French)"
+        },
+        {
+          "type": "text",
+          "id": "discount_code",
+          "label": "Discount Code"
+        },
+        {
+          "type": "color",
+          "id": "copy_button_bg_color",
+          "label": "Copy Button Background Color",
+          "default": "#f0f0f0"
+        },
+        {
+          "type": "color",
+          "id": "copy_button_text_color",
+          "label": "Copy Button Text Color",
+          "default": "#000000"
         },
         {
           "type": "url",
