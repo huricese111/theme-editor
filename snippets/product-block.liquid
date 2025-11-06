@@ -241,21 +241,56 @@
                     -%}
                   </div>
                   
-                  <!-- 次要图片使用懒加载 -->
-                  {%- for image in product_images offset: 1 limit: 4 -%}
-                    <div
-                      class="product-block__image product-block__image--secondary"
-                      data-media-id="{{ image.id }}"
-                      data-image-index="{{ forloop.index }}"
-                    >
-                      {%- render 'image' with image.preview_image,
-                        loading: 'lazy', /* 次要图片懒加载 */
-                        size_cols_mobile: 2,
-                        size_cols_desktop: size_cols_desktop,
-                        custom_aspect_ratio: custom_aspect_ratio,
-                        custom_crop: custom_crop
-                      -%}
-                    </div>
+                  <!-- 渲染所有变体特色图片 -->
+                  {%- assign rendered_media_ids = product.media.first.id | append: ',' -%}
+                  {%- assign image_index = 1 -%}
+                  {%- for variant in product.variants -%}
+                    {%- if variant.featured_media -%}
+                      {%- assign media_id_str = variant.featured_media.id | append: ',' -%}
+                      {%- unless rendered_media_ids contains media_id_str -%}
+                        <div
+                          class="product-block__image product-block__image--secondary"
+                          data-media-id="{{ variant.featured_media.id }}"
+                          data-image-index="{{ image_index }}"
+                        >
+                          {%- render 'image' with variant.featured_media.preview_image,
+                            loading: 'lazy',
+                            size_cols_mobile: 2,
+                            size_cols_desktop: size_cols_desktop,
+                            custom_aspect_ratio: custom_aspect_ratio,
+                            custom_crop: custom_crop
+                          -%}
+                        </div>
+                        {%- assign rendered_media_ids = rendered_media_ids | append: media_id_str -%}
+                        {%- assign image_index = image_index | plus: 1 -%}
+                      {%- endunless -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                  
+                  <!-- 然后渲染剩余的产品图片（最多4张） -->
+                  {%- assign remaining_count = 0 -%}
+                  {%- for image in product_images offset: 1 -%}
+                    {%- if remaining_count < 4 -%}
+                      {%- assign image_id_str = image.id | append: ',' -%}
+                      {%- unless rendered_media_ids contains image_id_str -%}
+                        <div
+                          class="product-block__image product-block__image--secondary"
+                          data-media-id="{{ image.id }}"
+                          data-image-index="{{ image_index }}"
+                        >
+                          {%- render 'image' with image.preview_image,
+                            loading: 'lazy',
+                            size_cols_mobile: 2,
+                            size_cols_desktop: size_cols_desktop,
+                            custom_aspect_ratio: custom_aspect_ratio,
+                            custom_crop: custom_crop
+                          -%}
+                        </div>
+                        {%- assign rendered_media_ids = rendered_media_ids | append: image_id_str -%}
+                        {%- assign remaining_count = remaining_count | plus: 1 -%}
+                        {%- assign image_index = image_index | plus: 1 -%}
+                      {%- endunless -%}
+                    {%- endif -%}
                   {%- endfor -%}
                 {%- else -%}
                   <div
@@ -394,8 +429,26 @@
         const prevButton = productBlock.querySelector('.image-page-button--previous');
         const nextButton = productBlock.querySelector('.image-page-button--next');
         const imageDots = productBlock.querySelectorAll('.product-block__image-dot');
-        const swatchItems = productBlock.querySelectorAll('.product-block-options__item');
         const imagesContainer = productBlock.querySelector('.product-block__images-container');
+        
+        // Find swatches - look within the product block and its detail section
+        let swatchItems = productBlock.querySelectorAll('.product-block-options__item');
+        
+        // If not found, try searching within the product-block__detail section
+        if (swatchItems.length === 0) {
+          const detailSection = productBlock.querySelector('.product-block__detail');
+          if (detailSection) {
+            swatchItems = detailSection.querySelectorAll('.product-block-options__item');
+          }
+        }
+        
+        // If still not found, try the parent container
+        if (swatchItems.length === 0) {
+          const parentContainer = productBlock.closest('.product-item, .grid-item, .collection-grid__item');
+          if (parentContainer) {
+            swatchItems = parentContainer.querySelectorAll('.product-block-options__item');
+          }
+        }
         
         if (images.length <= 1) return;
         
@@ -465,26 +518,43 @@
         }
         
         if (swatchItems.length > 0) {
+          console.log('Found swatches:', swatchItems.length);
           swatchItems.forEach(swatch => {
             const mediaId = swatch.getAttribute('data-media');
+            console.log('Swatch media ID:', mediaId);
             if (mediaId) {
-              swatch.addEventListener('mouseenter', function() {
+              // Use mouseenter for hover effect
+              swatch.addEventListener('mouseenter', function(e) {
+                e.stopPropagation();
                 hoverEnabled = false;
                 
+                console.log('Hovering swatch with media ID:', mediaId);
+                console.log('Available images:', Array.from(images).map(img => ({
+                  mediaId: img.getAttribute('data-media-id'),
+                  index: img.getAttribute('data-image-index')
+                })));
+                
+                // Find the target image by media ID
                 const targetImage = Array.from(images).find(img => 
                   img.getAttribute('data-media-id') === mediaId
                 );
                 
+                console.log('Found target image:', targetImage);
+                
                 if (targetImage) {
                   const targetIndex = parseInt(targetImage.getAttribute('data-image-index') || '0');
+                  console.log('Switching to index:', targetIndex);
                   if (currentIndex !== targetIndex && !isTransitioning) {
                     currentIndex = targetIndex;
                     updateImageState();
                   }
+                } else {
+                  console.warn('No matching image found for media ID:', mediaId);
                 }
               });
               
-              swatch.addEventListener('mouseleave', function() {
+              swatch.addEventListener('mouseleave', function(e) {
+                e.stopPropagation();
                 setTimeout(() => {
                   hoverEnabled = true;
                 }, 100);
