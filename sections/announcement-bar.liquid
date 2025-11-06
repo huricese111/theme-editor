@@ -143,6 +143,17 @@
       .announcement-bg--inactive {
         opacity: 0;
       }
+      
+      /* Mobile styles - hide announcement buttons but keep copy button visible */
+      @media (max-width: 767px) {
+        .announcement-button--unique {
+          display: none;
+        }
+        
+        .announcement-bar__announcement-controller {
+          display: none;
+        }
+      }
     {% endstyle %}
 
     {%- for block in section.blocks offset: 1 -%}

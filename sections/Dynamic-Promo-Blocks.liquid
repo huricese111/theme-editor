@@ -286,6 +286,12 @@
     },
     {
       "type": "text",
+      "id": "left_title_line_height_mobile",
+      "label": "Left title line height (Mobile)",
+      "default": "1.1"
+    },
+    {
+      "type": "text",
       "id": "left_title_margin_top",
       "label": "Left title margin top",
       "default": "20px"
@@ -1204,7 +1210,7 @@
 
     .banner-mobile-left .module__title {
       font-size: {{ section.settings.left_title_size_mobile }}px;
-      line-height: 40px;
+      line-height: {{ section.settings.left_title_line_height_mobile | default: '1.1' }};
       white-space: auto;
       margin: 0;
     }
