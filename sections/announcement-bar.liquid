@@ -153,7 +153,7 @@
                {{- block.settings.bg_gradient | default: block.settings.bg_color }}
              {%- else %}
                {{- section.settings.announcement_bar_gradient | default: section.settings.announcement_bar_col }}
-             {%- endfor -%}"></div>
+             {%- endif -%}"></div>
     {%- endfor -%}
 
     <div class="container container--no-max relative">
@@ -262,9 +262,8 @@
                       {%- assign copied_text = 'Kopioitu' -%}
                     {%- endif -%}
                     <span class="discount-code">{{ block.settings.discount_code }}</span>
-                    <button class="copy-button" data-copy-text="{{ block.settings.discount_code }}">
-                      <span class="copy-text">{{ copy_text }}</span>
-                      <span class="copied-text" style="display:none;">{{ copied_text }}</span>
+                    <button class="copy-button" data-copy-text="{{ block.settings.discount_code }}" data-copied-text="{{ copied_text }}" data-copy-text-initial="{{ copy_text }}">
+                      <span class="copy-text-container">{{ copy_text }}</span>
                     </button>
                   {%- endif -%}
 
@@ -323,14 +322,15 @@
         
         try {
           document.execCommand('copy');
-          const copyText = this.querySelector('.copy-text');
-          const copiedText = this.querySelector('.copied-text');
-          copyText.style.display = 'none';
-          copiedText.style.display = 'inline';
+          const copyTextContainer = this.querySelector('.copy-text-container');
+          const originalText = this.getAttribute('data-copy-text-initial');
+          const copiedText = this.getAttribute('data-copied-text');
+          
+          copyTextContainer.textContent = copiedText;
           this.classList.add('copied');
+          
           setTimeout(() => {
-            copyText.style.display = 'inline';
-            copiedText.style.display = 'none';
+            copyTextContainer.textContent = originalText;
             this.classList.remove('copied');
           }, 2000);
         } catch (err) {

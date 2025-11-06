@@ -143,6 +143,23 @@
       "label": "Mobile Background Image"
     },
     {
+      "type": "image_picker",
+      "id": "left_content_image",
+    "label": "Left content image"
+  },
+  {
+    "type": "text",
+    "id": "left_content_image_width",
+    "label": "Left content image width",
+    "default": "auto"
+  },
+  {
+    "type": "text",
+    "id": "left_content_image_height",
+    "label": "Left content image height",
+    "default": "auto"
+  },
+    {
       "type": "select",
       "id": "left_bg_size",
       "label": "Background Size",
@@ -263,6 +280,18 @@
     },
     {
       "type": "text",
+      "id": "left_title_line_height",
+      "label": "Left title line height",
+      "default": "1.2"
+    },
+    {
+      "type": "text",
+      "id": "left_title_margin_top",
+      "label": "Left title margin top",
+      "default": "20px"
+    },
+    {
+      "type": "text",
       "id": "left_button",
       "label": "Button Text",
       "default": "Left Column Button"
@@ -286,6 +315,30 @@
       "type": "url",
       "id": "left_button_url",
       "label": "Button URL"
+    },
+    {
+      "type": "select",
+      "id": "left_button_position",
+      "label": "Button Position",
+      "options": [
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "bottom_left",
+          "label": "Bottom Left"
+        },
+        {
+          "value": "bottom_center",
+          "label": "Bottom Center"
+        },
+        {
+          "value": "bottom_right",
+          "label": "Bottom Right"
+        }
+      ],
+      "default": "default"
     },
     {
       "type": "color",
@@ -896,6 +949,27 @@
     --text-button-spacing-mobile: 16px;
   }
 
+  .module__button-wrapper {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    z-index: 3;
+  }
+
+  .module__button-wrapper.bottom_left {
+    justify-content: flex-start;
+  }
+
+  .module__button-wrapper.bottom_center {
+    justify-content: center;
+  }
+
+  .module__button-wrapper.bottom_right {
+    justify-content: flex-end;
+  }
+
   .promo-section-container {
     padding: 20px;
     box-sizing: border-box;
@@ -973,6 +1047,7 @@
   }
 
   .module-position-top .module__inner {
+    padding-top: 60px;
     justify-content: flex-start;
   }
 
@@ -997,19 +1072,26 @@
   .banner-left .module__title {
     font-weight: 700;
     font-size: {{ section.settings.left_title_size }}px;
-    line-height: {{ section.settings.left_title_size | times: 1.14 }}px;
+    line-height: 1.1;
   }
 
   .module__title--medium {
     font-weight: 700;
     font-size: {{ section.settings.right1_title_size }}px;
-    line-height: {{ section.settings.right1_title_size | times: 1.28 }}px;
+    line-height: 1.2;
   }
 
   .module__title--small {
     font-weight: 700;
     font-size: {{ section.settings.right2_title_size }}px;
-    line-height: {{ section.settings.right2_title_size | times: 1.3 }}px;
+    line-height: 1.2;
+  }
+
+  /* Add spacing between tag and title */
+  .module__content .module__tag + .module__title,
+  .module__content .module__tag + h2,
+  .module__content .module__tag + div.module__title {
+    margin-top: 20px !important;
   }
 
   .module__tag {
@@ -1074,9 +1156,55 @@
       padding-bottom: 20px; /* 统一content与底部距离 */
     }
 
+    .module-position-top .module__inner {
+      padding-top: 40px;
+    }
+
+    .module__button-wrapper {
+      position: absolute;
+      left: 20px;
+      right: 20px;
+      bottom: 20px;
+      z-index: 3;
+    }
+
+    /* 确保移动端banner高度适应视口，让按钮在一屏内显示 */
+    /* 减去announcement bar(~50px) + header(~80px) + 浏览器地址栏余量(~60px)的高度 */
+    .banner-mobile-left {
+      height: var(--banner-height-mobile);
+      margin-bottom: 0; /* 移除底部间距，避免遮挡下方内容 */
+    }
+
+    .banner-mobile-left .module {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      background-size: cover !important;
+      background-position: center !important;
+    }
+
+    /* 当按钮在底部时，确保内容区域不会过高 */
+    .banner-mobile-left .module .module__inner {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      max-height: calc(100% - 80px); /* 为底部按钮预留空间 */
+    }
+
+    /* 底部按钮wrapper在移动端的特殊处理 - 向上移动更多 */
+    .banner-mobile-left .module__button-wrapper {
+      position: absolute;
+      bottom: 200px; 
+      left: 20px;
+      right: 20px;
+      z-index: 3;
+    }
+
     .banner-mobile-left .module__title {
       font-size: {{ section.settings.left_title_size_mobile }}px;
-      line-height: {{ section.settings.left_title_size_mobile | times: 1.14 }}px;
+      line-height: 40px;
       white-space: auto;
       margin: 0;
     }
@@ -1281,16 +1409,31 @@
             title: left_title,
             title_color: section.settings.left_title_color,
             title_size: 'large',
-            title_element: 'h2'
+            title_element: 'h2',
+            title_line_height: section.settings.left_title_line_height,
+            title_margin_top: section.settings.left_title_margin_top
           %}
-          {% render 'unified-button',
-            text: left_button,
-            url: section.settings.left_button_url,
-            bg_color: section.settings.left_button_color,
-            text_color: section.settings.left_button_text_color,
-            class: 'module__button'
-          %}
+          {%- if section.settings.left_button_position == 'default' -%}
+            {% render 'unified-button',
+              text: left_button,
+              url: section.settings.left_button_url,
+              bg_color: section.settings.left_button_color,
+              text_color: section.settings.left_button_text_color,
+              class: 'module__button'
+            %}
+          {%- endif -%}
         </div>
+        {%- if section.settings.left_button_position != 'default' -%}
+          <div class="module__button-wrapper {{ section.settings.left_button_position }}">
+            {%- render 'unified-button',
+              text: left_button,
+              url: section.settings.left_button_url,
+              bg_color: section.settings.left_button_color,
+              text_color: section.settings.left_button_text_color,
+              class: 'module__button'
+            -%}
+          </div>
+        {%- endif -%}
       </div>
     </div>
 
@@ -1379,11 +1522,11 @@
   </div>
 
   <div class="banner-mobile">
-    <div class="banner-mobile-left">
+      <div class="banner-mobile-left">
       <div
         class="module module-position-module module-position-{{ section.settings.left_content_position_mobile | replace: 'flex-', '' | replace: 'start', 'top' | replace: 'end', 'bottom' }}"
         style="
-          background-image: url({{ section.settings.left_image | img_url: '2048x2048' }});
+          background-image: url({% if section.settings.left_mobile_image != blank %}{{ section.settings.left_mobile_image | img_url: '1024x1024' }}{% else %}{{ section.settings.left_image | img_url: '2048x2048' }}{% endif %});
           background-size: {{ section.settings.left_bg_size }};
           background-position: {{ section.settings.left_bg_position }};
           background-color: {{ section.settings.left_background_color }};
@@ -1395,45 +1538,59 @@
             title: left_title,
             title_color: section.settings.left_title_color,
             title_size: 'large',
-            title_element: 'h2'
+            title_element: 'h2',
+            title_line_height: section.settings.left_title_line_height_mobile
           %}
-          {% render 'unified-button',
-            text: left_button,
-            url: section.settings.left_button_url,
-            bg_color: section.settings.left_button_color,
-            text_color: section.settings.left_button_text_color,
-            class: 'module__button'
-          %}
+          {%- if section.settings.left_button_position == 'default' -%}
+            {% render 'unified-button',
+              text: left_button,
+              url: section.settings.left_button_url,
+              bg_color: section.settings.left_button_color,
+              text_color: section.settings.left_button_text_color,
+              class: 'module__button'
+            %}
+          {%- endif -%}
         </div>
+        {%- if section.settings.left_button_position != 'default' -%}
+          <div class="module__button-wrapper {{ section.settings.left_button_position }}">
+            {%- render 'unified-button',
+              text: left_button,
+              url: section.settings.left_button_url,
+              bg_color: section.settings.left_button_color,
+              text_color: section.settings.left_button_text_color,
+              class: 'module__button'
+            -%}
+          </div>
+        {%- endif -%}
       </div>
     </div>
 
     <div class="banner-mobile-right-row">
       <div
         class="module module-right-1 module-position-module module-position-{{ section.settings.right1_content_position_mobile | replace: 'flex-', '' | replace: 'start', 'top' | replace: 'end', 'bottom' }}"
-        style="
-          background-image: url({{ section.settings.right_image_1 | img_url: '2048x2048' }});
-          background-size: {{ section.settings.right1_bg_size }};
-          background-position: {{ section.settings.right1_bg_position }};
-          background-color: {{ section.settings.right1_background_color }};
-        "
-      >
-        <div class="module__inner">
-          {% render 'module-content',
-            tag: right1_tag,
-            title: right1_title,
-            title_color: section.settings.right1_title_color,
-            title_size: 'medium'
-          %}
-          {% render 'unified-button',
-            text: right1_button,
-            url: section.settings.right1_button_url,
-            bg_color: section.settings.right1_button_color,
-            text_color: section.settings.right1_button_text_color,
-            class: 'module__button'
-          %}
+          style="
+            background-image: url({{ section.settings.right_image_1 | img_url: '2048x2048' }});
+            background-size: {{ section.settings.right1_bg_size }};
+            background-position: {{ section.settings.right1_bg_position }};
+            background-color: {{ section.settings.right1_background_color }};
+          "
+        >
+          <div class="module__inner">
+            {% render 'module-content',
+              tag: right1_tag,
+              title: right1_title,
+              title_color: section.settings.right1_title_color,
+              title_size: 'medium'
+            %}
+            {% render 'unified-button',
+              text: right1_button,
+              url: section.settings.right1_button_url,
+              bg_color: section.settings.right1_button_color,
+              text_color: section.settings.right1_button_text_color,
+              class: 'module__button'
+            %}
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>

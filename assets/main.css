@@ -3006,6 +3006,9 @@ main-navigation {
            flex-wrap: nowrap;
         justify-content: center;
   }
+  .navigation .navigation__columns--with-promos .navigation__column {
+    text-align: center;
+  }
   .navigation
     .navigation__columns:not(.navigation__columns--5-cols):not(
       .navigation__columns--over-5-cols

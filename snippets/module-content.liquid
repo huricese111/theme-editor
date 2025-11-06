@@ -9,6 +9,12 @@
 {% endif %}
 
 <div class="{% if wrapper_class %}{{ wrapper_class }}{% else %}module__content{% endif %}">
+  {% if image != blank %}
+    <div class="module__image">
+      <img src="{{ image | img_url: 'master' }}" alt="{{ image.alt | escape }}" width="{{ image_width }}" height="{{ image_height }}">
+    </div>
+  {% endif %}
+
   {% if tag != blank %}
     {% if use_salestagrow %}
       <div class="salestagrow">
@@ -26,6 +32,8 @@
         {% if title_font_size %}font-size: {{ title_font_size }}px;{% endif %}
         {% if title_font_weight %}font-weight: {{ title_font_weight }};{% endif %}
         {% if title_color %}color: {{ title_color }};{% endif %}
+        {% if title_line_height %}line-height: {{ title_line_height }};{% endif %}
+        {% if title_margin_top %}margin-top: {{ title_margin_top }};{% endif %}
       "
       {% if title_mobile_font_size %}data-mobile-font-size="{{ title_mobile_font_size }}"{% endif %}
     >
