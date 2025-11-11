@@ -53,7 +53,7 @@
       assign label_count = label_count | plus: 1
     endif
   -%}
-  {%- if sale_label_text -%}
+  {%- if sale_label_text and sale_label_text != '&nbsp;' -%}
     <span class="product-label product-label--sale">
       <span>{{ sale_label_text }}</span>
     </span>

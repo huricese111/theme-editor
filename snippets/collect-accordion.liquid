@@ -2,11 +2,11 @@
   assign home_url = shop.url
   assign shop_name = shop.name
   assign shop_domain = shop.domain
-  assign click_collect_path = '/pages/click-collect-at-your-local-dealer'
 -%}
 
 {%- case request.locale.iso_code -%}
   {% when 'de' %}
+    {%- assign click_collect_path = '/de/pages/click-collect-at-your-local-dealer' -%}
     <p>
       Wenn Sie ein Fahrrad bei
       <a href="{{ home_url }}" target="_blank" title="{{ shop_name }}">{{ shop_domain }}</a> bestellen, versenden wir es kostenlos
@@ -17,10 +17,11 @@
         href="{{ home_url }}{{ click_collect_path }}"
         target="_blank"
         title="Click & Collect bei Ihrem lokalen Händler"
-        >Erfahren Sie mehr</a
+        >Mehr erfahren</a
       >
     </p>
   {% when 'fr' %}
+    {%- assign click_collect_path = '/fr/pages/click-collect-at-your-local-dealer' -%}
     <p>
       Vous commandez un vélo sur
       <a href="{{ home_url }}" target="_blank" title="{{ shop_name }}">{{ shop_domain }}</a>, nous l'expédierons gratuitement à
@@ -35,6 +36,7 @@
       >
     </p>
   {% else %}
+    {%- assign click_collect_path = '/pages/click-collect-at-your-local-dealer' -%}
     <p>
       When you order a bike from <a href="{{ home_url }}" target="_blank" title="{{ shop_name }}">{{ shop_domain }}</a>, we'll ship it
       for free to a dealer of your choice through our Click &amp; Collect service. Once your bike arrives, the dealer

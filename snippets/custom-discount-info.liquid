@@ -34,16 +34,16 @@
         {% endif %}
       {% endif %}
       
-      {% if show_discount_2 %}
+      {% if show_discount_2 and discounts.discount_2 and discounts.discount_2 != '&nbsp;' %}
         <div class="discount-label">{{ discounts.discount_2 }}</div>
       {% endif %}
     {% endif %}
 
-    {% if discounts.discount_3 %}
+    {% if discounts.discount_3 and discounts.discount_3 != '&nbsp;' %}
       <div class="discount-label">{{ discounts.discount_3 }}</div>
     {% endif %}
 
-    {% if discounts.discount %}
+    {% if discounts.discount and discounts.discount != '&nbsp;' %}
       <div class="discount-label">{{ discounts.discount }}</div>
     {% endif %}
   </div>
