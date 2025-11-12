@@ -48,12 +48,48 @@
     }
 
     const displayElement = document.getElementById('{{ component_id }}-value');
+    const currentLocale = '{{ request.locale.iso_code }}';
+
+    // Size to height mapping
+    const sizeHeightMap = {
+      '46cm': '160-175cm',
+      '49cm': '170-185cm',
+      '52cm': '180-195cm',
+      '56cm': '190-200cm'
+    };
+
+    // Language-specific prefix for "For Rider"
+    const riderTextMap = {
+      'en': 'For Rider',
+      'de': 'Für Fahrer',
+      'fr': 'Pour cycliste',
+      'fi': 'Pyöräilijälle'
+    };
+
+    function getHeightRecommendation(text) {
+      if (!text) return '';
+      
+      const textStr = typeof text === 'string' ? text : text.toString();
+      
+      // Check if text contains any of the size values
+      for (const [size, heightRange] of Object.entries(sizeHeightMap)) {
+        if (textStr.includes(size)) {
+          const riderText = riderTextMap[currentLocale] || riderTextMap['en'];
+          return `<div class="size-height-recommendation">${riderText}: ${heightRange}</div>`;
+        }
+      }
+      
+      return '';
+    }
 
     function updateMetafieldForVariant(variantId) {
       if (!variantId) return;
 
       const value = metafieldsData[variantId];
-      displayElement.innerHTML = value ? value : `{{ block.settings.fallback | escape }}`;
+      const baseContent = value ? value : `{{ block.settings.fallback | escape }}`;
+      const heightRec = getHeightRecommendation(baseContent);
+      
+      displayElement.innerHTML = baseContent + heightRec;
     }
 
     document.addEventListener('on:variant:change', function (event) {
@@ -127,5 +163,15 @@
   .variant-metafield-value img {
     max-width: 100%;
     height: auto;
+  }
+
+  .size-height-recommendation {
+    margin-top: 8px;
+    padding: 8px 12px;
+    background-color: #f5f5f5;
+    border-left: 3px solid #333;
+    font-size: 14px;
+    color: #333;
+    line-height: 1.4;
   }
 </style>
