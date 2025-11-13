@@ -60,7 +60,8 @@
             "enable_size_chart": false,
             "size_chart_label": "",
             "size_chart_variant": "",
-            "size_chart_page": ""
+            "size_chart_page": "",
+            "show_variant_metafield": true
           }
         },
         "variant_metafield_TmpaKQ": {
@@ -80,7 +81,11 @@
             "text_fr": "Quelle taille de cadre me convient ?",
             "text_fi": "Millainen rungon koko sopii minulle?",
             "style": "link",
-            "page": "trekking2024-sizechart",
+            "page": "mountain7-sizechart",
+            "enable_product_display": false,
+            "selected_products": [],
+            "products_per_row": 3,
+            "show_product_prices": true,
             "show_in_quickbuy": false
           }
         },
@@ -422,6 +427,7 @@
             "title_fr": "Plusieurs fois récompensé.",
             "title_fi": "Palkittua muotoilua & suorituskykyä.",
             "heading_color": "#ffffff",
+            "font_family": "sans-serif",
             "desktop_font_size": 50,
             "mobile_font_size": 40,
             "use_h1": false,
@@ -444,6 +450,7 @@
             "text_fr": "<p>Notre objectif est de rendre le design, la qualité et la performance accessibles à tous. Nous sommes donc d’autant plus heureux que cette ambition ait été récompensée par de nombreuses récompenses !</p>",
             "text_fi": "<p>Tavoitteenamme on tehdä huippumuotoilusta, laadusta ja suorituskyvystä kaikille saavutettavaa. Tästä syystä olemme erityisen ylpeitä siitä, että tämä tavoite on huomioitu polkupyöräalalla lukuisilla arvostetuilla palkinnoilla!</p>",
             "text_color": "#ffffff",
+            "font_family": "monospace",
             "desktop_font_size": 18,
             "mobile_font_size": 16,
             "enlarge_text": false,
@@ -514,6 +521,8 @@
         "media_text_bg_enabled": false,
         "media_text_font_family": "monospace",
         "media_text_alignment": "center",
+        "media_content_alignment": "center",
+        "media_content_vertical_alignment": "center",
         "media_button1_label": "Button 1",
         "media_button1_label_de": "",
         "media_button1_label_fr": "",
@@ -522,7 +531,6 @@
         "media_button1_text_color": "#ffffff",
         "media_button1_bg_color": "#000000",
         "media_button1_border_color": "#000000",
-        "media_button1_style": "primary",
         "media_button2_label": "Button 2",
         "media_button2_label_de": "",
         "media_button2_label_fr": "",
@@ -531,7 +539,6 @@
         "media_button2_text_color": "#ffffff",
         "media_button2_bg_color": "#000000",
         "media_button2_border_color": "#000000",
-        "media_button2_style": "secondary",
         "media_button_alignment": "center",
         "media_desktop_button_size": 18,
         "media_mobile_button_size": 16,
@@ -539,8 +546,16 @@
         "content_text_bg_opacity": 100,
         "content_bg_color": "#94ab7a",
         "content_bg_video": "",
+        "content_bg_position": "center center",
+        "content_bg_size": "cover",
+        "content_mobile_bg_position": "center center",
+        "content_mobile_bg_size": "cover",
         "content_alignment": "left",
-        "content_vertical_alignment": "center"
+        "content_vertical_alignment": "center",
+        "content_padding_top": "60",
+        "content_padding_right": "60",
+        "content_padding_bottom": "60",
+        "content_padding_left": "60"
       }
     },
     "custom_image_with_text_rY7PYa": {
@@ -914,7 +929,9 @@
             "button_label": "Explore all E-Bikes!",
             "button_label_de": "Entdecke alle E-Bikes!",
             "button_label_fr": "Découvrez tous modèles !",
-            "button_label_fi": "Tutki koko mallistoa!"
+            "button_label_fi": "Tutki koko mallistoa!",
+            "button_bg_color": "#000000",
+            "button_text_color": "#ffffff"
           }
         }
       },

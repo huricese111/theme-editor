@@ -1,1 +1,1092 @@
-{"sections":{"main":{"type":"main-product","blocks":{"title":{"type":"title","settings":{}},"loox_reviews_loox_rating_4LcXpt":{"type":"shopify:\/\/apps\/loox-reviews\/blocks\/loox-rating\/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e","settings":{"contentSize":16,"pattern":"","hideText":false,"alignment":"","layout":"","textColor":"","starColor":"","showAllReviews":false,"looxOpenFloatingWidget":false,"emptyRatingWidget":false}},"price":{"type":"price","settings":{"show_tax_and_shipping":false,"enable_product_reviews_by_price":true}},"description_JNVXj3":{"type":"description","settings":{"show_in_tab":false,"open_tab":false,"icon":"","show_in_quickbuy":false}},"specification_simple_cit7xy":{"type":"specification_simple","settings":{}},"variant_picker_BNiCD8":{"type":"variant-picker","settings":{"show_single":false,"selector_style":"listed","dynamic_availability":"show","enable_size_chart":false,"size_chart_label":"","size_chart_variant":"","size_chart_page":""}},"variant_metafield_DNFVc3":{"type":"variant_metafield","settings":{"namespace":"custom","key":"size","fallback":"<p>Information not available for this variant<\/p>","custom_selector":""}},"pop_up_AAc34B":{"type":"pop-up","settings":{"text":"Which frame size fit me?","text_de":"Welche Rahmengröße passt zu mir?","text_fr":"Quelle taille de cadre me convient ?","text_fi":"Millainen rungon koko sopii minulle?","style":"link","page":"trekking2024-sizechart","show_in_quickbuy":false}},"buy_buttons_ieLink":{"type":"buy-buttons","settings":{"show_quantity_selector":false,"show_pickup_availability":false,"show_backorder_text":false,"enable_payment_button":true,"show_gift_card_recipient":false,"show_accessories":true,"accessories_heading":"Compatible accessories","accessories_heading_de":"Kompatibles Zubehör","accessories_heading_fr":"Accessoires compatibles","accessories_heading_fi":"Yhteensopivat lisävarusteet","accessory_products":["hepha-708wh-battery-for-trekking-7"],"show_accessory_description":true}},"sharing_Hmw8qb":{"type":"sharing","settings":{"show_twitter":true,"show_facebook":true,"show_pinterest":true,"show_linkedin":true,"show_whatsapp":true,"show_snapchat":true,"show_threads":true,"show_tumblr":true,"show_twitch":true}},"finance_leasing_accordion_gcfTV8":{"type":"finance-leasing-accordion","settings":{"show_in_quickbuy":true,"open":false,"title":"","title_de":"","title_fr":"","title_fi":"","content":"","content_de":"","content_fr":"","content_fi":"","icon":"","jobrad_url":"","bikeleasing_url":"","deutsche_url":"","businessbike_url":""}}},"block_order":["title","loox_reviews_loox_rating_4LcXpt","price","description_JNVXj3","specification_simple_cit7xy","variant_picker_BNiCD8","variant_metafield_DNFVc3","pop_up_AAc34B","buy_buttons_ieLink","sharing_Hmw8qb","finance_leasing_accordion_gcfTV8"],"custom_css":[],"settings":{"show_breadcrumbs":false,"select_first_variant":true,"show_location_underneath":false,"inventory_transfers_enable":false,"enable_sticky_columns":true,"enable_sticky_atc":true,"sticky_atc_position":"end","sticky_atc_mobile":true,"sticky_atc_behavior":"add_to_cart","sticky_atc_button_style":"secondary","gallery_size":"large","gallery_layout":"carousel-under","enable_zoom":true,"show_alt_text":false,"alt_text_icon":"","enable_video_autoplay":false,"enable_video_looping":false,"enable_media_grouping":true,"media_grouping_option":"Choose from the following colors,Wählen Sie aus den folgenden Rahmenfarben, Choisissez parmi les couleurs suivantes","new_label_text":"","new_label_text_de":"","new_label_text_fr":"","new_label_text_fi":""}},"custom_firework_video_qbyhVV":{"type":"custom_firework_video","settings":{"mode":"row","playlist_id":"oPNnaq","player_placement":"bottom-left","player_margin_top":16,"player_margin_right":16,"player_margin_bottom":140,"player_margin_left":16,"player_width":125,"player_height":223}},"custom_image_with_text_JrTgrp":{"type":"Custom-Image-with-Text","blocks":{"custom_item_c3Jqyf":{"type":"custom_item","settings":{"image":"shopify:\/\/shop_images\/RUD0632_1_f1682320-f842-4078-b7b4-a6a1c276721f.jpg","image_link":"","title":"Slide Title","title_de":"Folientitel","title_fr":"Titre de la diapositive","title_fi":"Dian otsikko","title_link":"","text":"<p>Add your custom text here<\/p>","text_de":"<p>Fügen Sie hier Ihren benutzerdefinierten Text hinzu<\/p>","text_fr":"<p>Ajoutez votre texte personnalisé ici<\/p>","text_fi":"<p>Lisää mukautettu teksti tähän<\/p>","button_link":"","button_text_override":"","button_text_override_de":"","button_text_override_fr":"","button_text_override_fi":""}},"custom_item_q9UrFV":{"type":"custom_item","settings":{"image":"shopify:\/\/shop_images\/RUD0632_2_e39c9461-5d8b-4c33-8e54-68142cc564c3.jpg","image_link":"","title":"Slide Title","title_de":"Folientitel","title_fr":"Titre de la diapositive","title_fi":"Dian otsikko","title_link":"","text":"<p>Add your custom text here<\/p>","text_de":"<p>Fügen Sie hier Ihren benutzerdefinierten Text hinzu<\/p>","text_fr":"<p>Ajoutez votre texte personnalisé ici<\/p>","text_fi":"<p>Lisää mukautettu teksti tähän<\/p>","button_link":"","button_text_override":"","button_text_override_de":"","button_text_override_fr":"","button_text_override_fi":""}},"custom_item_DMMnMX":{"type":"custom_item","settings":{"image":"shopify:\/\/shop_images\/RUD0632_3_da2cfbf2-14c1-4d94-8cdf-7f5da27a7239.jpg","image_link":"","title":"Slide Title","title_de":"Folientitel","title_fr":"Titre de la diapositive","title_fi":"Dian otsikko","title_link":"","text":"<p>Add your custom text here<\/p>","text_de":"<p>Fügen Sie hier Ihren benutzerdefinierten Text hinzu<\/p>","text_fr":"<p>Ajoutez votre texte personnalisé ici<\/p>","text_fi":"<p>Lisää mukautettu teksti tähän<\/p>","button_link":"","button_text_override":"","button_text_override_de":"","button_text_override_fr":"","button_text_override_fi":""}},"custom_item_MMt6ML":{"type":"custom_item","settings":{"image":"shopify:\/\/shop_images\/RUD0632_4_1f10d9f6-fa84-4d18-9f53-beb4ffb10d18.jpg","image_link":"","title":"Slide Title","title_de":"Folientitel","title_fr":"Titre de la diapositive","title_fi":"Dian otsikko","title_link":"","text":"<p>Add your custom text here<\/p>","text_de":"<p>Fügen Sie hier Ihren benutzerdefinierten Text hinzu<\/p>","text_fr":"<p>Ajoutez votre texte personnalisé ici<\/p>","text_fi":"<p>Lisää mukautettu teksti tähän<\/p>","button_link":"","button_text_override":"","button_text_override_de":"","button_text_override_fr":"","button_text_override_fi":""}},"custom_item_QKytJw":{"type":"custom_item","settings":{"image":"shopify:\/\/shop_images\/RUD0632_6.png","image_link":"","title":"Slide Title","title_de":"Folientitel","title_fr":"Titre de la diapositive","title_fi":"Dian otsikko","title_link":"","text":"<p>Add your custom text here<\/p>","text_de":"<p>Fügen Sie hier Ihren benutzerdefinierten Text hinzu<\/p>","text_fr":"<p>Ajoutez votre texte personnalisé ici<\/p>","text_fi":"<p>Lisää mukautettu teksti tähän<\/p>","button_link":"","button_text_override":"","button_text_override_de":"","button_text_override_fr":"","button_text_override_fi":""}},"custom_item_yUVAEK":{"type":"custom_item","settings":{"image":"shopify:\/\/shop_images\/Frame_372_6ff28f17-b8fa-40d8-bfc2-4b887791a673.jpg","image_link":"","title":"Slide Title","title_de":"Folientitel","title_fr":"Titre de la diapositive","title_fi":"Dian otsikko","title_link":"","text":"<p>Add your custom text here<\/p>","text_de":"<p>Fügen Sie hier Ihren benutzerdefinierten Text hinzu<\/p>","text_fr":"<p>Ajoutez votre texte personnalisé ici<\/p>","text_fi":"<p>Lisää mukautettu teksti tähän<\/p>","button_link":"","button_text_override":"","button_text_override_de":"","button_text_override_fr":"","button_text_override_fi":""}}},"block_order":["custom_item_c3Jqyf","custom_item_q9UrFV","custom_item_DMMnMX","custom_item_MMt6ML","custom_item_QKytJw","custom_item_yUVAEK"],"name":"Custom Image with Text","settings":{"title":"Highlights","title_de":"Highlights","title_fr":"Highlights","title_fi":"Highlights","hide_title":true,"image_aspect_ratio":"4\/3","show_title_global":false,"show_text_global":false,"show_button_global":false,"button_text":"Learn More","button_text_de":"Mehr erfahren","button_text_fr":"En savoir plus","button_text_fi":"Lue lisää","button_background_color":"#ffffff","button_text_color":"#222222","button_border_color":"#222222","button_hover_background_color":"#222222","button_hover_text_color":"#ffffff","button_hover_border_color":"#222222"}},"enhance_text_area_yDaYbB":{"type":"enhance-text-area","blocks":{"list_item_ndLqVt":{"type":"list_item","settings":{"item_text":"29\" carbon frame with 4-link Virtual Pivot rear triangle","item_text_de":"29\" Carbonrahmen mit 4-Link Virtual Pivot Hinterbau","item_text_fr":"Cadre en carbone de 29 pouces avec triangle arrière à quatre liaisons Virtual Pivot.","item_text_fi":"29\" hiilikuiturunko, jossa on 4-linkkuinen Virtual Pivot -takarunko"}},"list_item_Pbec7D":{"type":"list_item","settings":{"item_text":"HEPHA P101C motor (90 Nm)","item_text_de":"HEPHA P101C Motor (90 Nm)","item_text_fr":"HEPHA P101C motor (90 Nm)","item_text_fi":"HEPHA P101C-moottori (90 Nm)"}},"list_item_kPr7ey":{"type":"list_item","settings":{"item_text":"Battery with 708 Wh capacity","item_text_de":"Akku mit 708 Wh Kapazität","item_text_fr":"Batterie d'une capacité de 708 Wh","item_text_fi":"Akku 708 Wh:n kapasiteetilla"}},"list_item_PmjQ4P":{"type":"list_item","settings":{"item_text":"6A fast charger","item_text_de":"6A Schnellladegerät","item_text_fr":"Chargeur rapide 6A","item_text_fi":"6A nopea pikalaturi"}},"list_item_3pDib8":{"type":"list_item","settings":{"item_text":"11-speed Shimano Cues gears","item_text_de":"11-Gang Shimano Cues Schaltung","item_text_fr":"Transmission Shimano Cues à 11 vitesses","item_text_fi":"11-nopeuksinen Shimano Cues-vaihteisto"}},"list_item_QFbnTc":{"type":"list_item","settings":{"item_text":"Rock Shox suspension with 150 mm travel","item_text_de":"Rock Shox-Federung mit 150 mm Federweg","item_text_fr":"Suspension Rock Shox avec un débattement de 150 mm","item_text_fi":"Rock Shox-jousitus, 150 mm joustomatkalla"}},"list_item_PzaNin":{"type":"list_item","settings":{"item_text":"Assembled in Germany","item_text_de":"Montiert in Deutschland","item_text_fr":"Assemblé en Allemagne","item_text_fi":"Kokoonpano Saksassa"}}},"block_order":["list_item_ndLqVt","list_item_Pbec7D","list_item_kPr7ey","list_item_PmjQ4P","list_item_3pDib8","list_item_QFbnTc","list_item_PzaNin"],"name":"Enhanced Text Area","settings":{"section_title":"Performance, design & driving pleasure!","section_title_de":"Leistung, Design und Fahrvergnügen!","section_title_fr":"Performance, design & plaisir de conduite !","section_title_fi":"Suorituskykyä, muotoilua ja ajonautintoa!","text_description":"<p>The \"Performance\" version offers a clever mix of performance, equipment and design. With a maximum engine torque of 90 Nm, the Performance is more powerful than average and is positioned in the middle of the price range between the entry-level Long Range model and the top-of-the-range \"Ultra\" version.<\/p>","text_description_de":"<p>Die Version „Performance“ bietet einen cleveren Mix aus Leistung, Ausstattung und Design. Mit einem maximalen Motordrehmoment von 90 Nm ist die Performance überdurchschnittlich leistungsstark und positioniert sich preislich im Mittelfeld zwischen dem Einstiegsmodell Long Range und der Top-Version „Ultra“.<\/p>","text_description_fr":"<p>La version « Performance » propose un savant mélange de performances, d’équipements et de design. Avec un couple moteur maximal de 90 Nm, la Performance est plus puissante que la moyenne et se positionne au milieu de la fourchette de prix entre le modèle d’entrée de gamme Long Range et la version haut de gamme « Ultra ».<\/p>","text_description_fi":"<p>\"Performance\"-malli edustaa oivaltavaa yhdistelmää suorituskykyä, varustelua ja muotoilua. 90 Nm maksimivääntönsä ansiosta se tarjoaa keskimääräistä enemmän tehoa ja sijoittuu hintaluokaltaan lähtötason Long Range– ja huippumallin  \"Ultra\"-versioiden välille.<\/p>","title_font_size":50,"text_font_size":18,"show_item_list":true,"layout":"title_above","item_font_size":16,"custom_icon":"checkmark","title_color":"#000000","text_color":"#333333","icon_color":"#000000","mobile_title_font_size":40,"mobile_text_font_size":16,"mobile_item_font_size":14}},"media_content_section_Xqer7H":{"type":"media-content-section","blocks":{"heading_VeFipY":{"type":"heading","settings":{"title":"Fun Machine.","title_de":"Mehrfach ausgezeichnet.","title_fr":"Plusieurs fois récompensé.","title_fi":"Täyttä hauskuutta!","heading_color":"#ffffff","font_family":"sans-serif","desktop_font_size":50,"mobile_font_size":30,"use_h1":true,"position_mode":"relative","position":"middle-center","offset_x":0,"offset_y":0,"margin_top":0,"margin_right":0,"margin_bottom":0,"margin_left":0,"text_align":"left"}},"text_gH6atq":{"type":"text","settings":{"text":"<p>The Mountain 7 Carbon is ideal for a variety of terrain, from challenging climbs and fast descents to fun on narrow trails. Its powerful yet efficient drive enables long-lasting riding fun. A real fun machine!<\/p>","text_de":"<p>Unser Anspruch ist es, Design, Qualität und Leistung für alle zugänglich zu machen. Umso mehr freuen wir uns, dass dieser Anspruch mit zahlreichen Auszeichnungen gewürdigt wurde!<\/p>","text_fr":"<p>Notre objectif est de rendre le design, la qualité et la performance accessibles à tous. Nous sommes donc d’autant plus heureux que cette ambition ait été récompensée par de nombreuses récompenses !<\/p>","text_fi":"<p>Mountain 7 Carbon sopii täydellisesti monipuoliseen maastoajoon – haastavista ylämäkinousuista nopeisiin laskuihin ja kapeiden metsäpolkujen pujotteluun. Sen tehokas, mutta energiatehokas moottori, mahdollistaa pitkäkestoisen ajonautinnon. Todellinen hauskanpitopyörä!<\/p>","text_color":"#ffffff","font_family":"monospace","desktop_font_size":18,"mobile_font_size":16,"enlarge_text":false,"position_mode":"relative","position":"middle-center","offset_x":0,"offset_y":0,"margin_top":20,"margin_right":0,"margin_bottom":0,"margin_left":0,"text_align":"left"}}},"block_order":["heading_VeFipY","text_gH6atq"],"name":"Media & Content Section","settings":{"margin_top":"0","margin_bottom":"0","min_section_height":700,"min_column_height":700,"min_section_height_mobile":400,"min_column_height_mobile":400,"show_media_column":true,"media_bg_color":"#ffffff","media_bg_image":"shopify:\/\/shop_images\/RUD1076-wotr_Kopie_3d73929e-e3ed-4253-9038-438cfe007220.jpg","media_bg_video":"","media_position":"center center","media_size":"cover","media_position_setting":"right","mobile_media_position":"below","media_heading":"","media_heading_de":"","media_heading_fr":"","media_heading_fi":"","media_heading_color":"#ffffff","media_desktop_heading_size":36,"media_mobile_heading_size":24,"media_use_h1":false,"media_text":"","media_text_de":"","media_text_fr":"","media_text_fi":"","media_text_color":"#ffffff","media_desktop_text_size":18,"media_mobile_text_size":16,"media_enlarge_text":false,"media_text_bg_enabled":false,"media_text_font_family":"monospace","media_text_alignment":"center","media_content_alignment":"center","media_content_vertical_alignment":"center","media_button1_label":"Button 1","media_button1_label_de":"","media_button1_label_fr":"","media_button1_label_fi":"","media_button1_link":"","media_button1_text_color":"#ffffff","media_button1_bg_color":"#000000","media_button1_border_color":"#000000","media_button2_label":"Button 2","media_button2_label_de":"","media_button2_label_fr":"","media_button2_label_fi":"","media_button2_link":"","media_button2_text_color":"#ffffff","media_button2_bg_color":"#000000","media_button2_border_color":"#000000","media_button_alignment":"center","media_desktop_button_size":18,"media_mobile_button_size":16,"content_text_bg_color":"","content_text_bg_opacity":100,"content_bg_color":"#94ab7a","content_bg_video":"","content_alignment":"left","content_vertical_alignment":"center","content_padding_top":"60","content_padding_right":"60","content_padding_bottom":"60","content_padding_left":"60"}},"custom_image_with_text_8zjVWU":{"type":"Custom-Image-with-Text","blocks":{"custom_item_6Qfn7m":{"type":"custom_item","settings":{"image":"shopify:\/\/shop_images\/Frame_401.jpg","image_link":"","title":"90 Nm motor","title_de":"90 Nm Motor","title_fr":"Moteur de 90 Nm","title_fi":"90 Nm moottori","title_link":"","text":"<p>With its 90 Nm, the powerful HEPHA P101 motor of the Performance offers plenty of power for extra riding fun or as a partner for all everyday requirements.<\/p>","text_de":"<p>Der besonders kraftvolle 90 Nm HEPHA P101C Motor ist einer der leistungsstärksten und effizientesten auf dem Markt!<\/p>","text_fr":"<p>Le moteur HEPHA P101C particulièrement puissant de 80 Nm est l'un des plus puissants et des plus performants du marché !<\/p>","text_fi":"<p>90 Nm:n väännöllään HEPHA P101 -moottori tarjoaa Performance-mallissa reilusti voimaa – niin ajon iloksi kuin arjen luotettavaksi kumppaniksi.<\/p>","button_link":"","button_text_override":"","button_text_override_de":"","button_text_override_fr":"","button_text_override_fi":""}},"custom_item_BFHdQL":{"type":"custom_item","settings":{"image":"shopify:\/\/shop_images\/Frame_402_3e5dcda7-da37-400f-bb16-524e027e5c72.jpg","image_link":"","title":"708 Wh battery","title_de":"708 Wh Akku","title_fr":"Batterie de 708 Wh","title_fi":"708Wh akku","title_link":"","text":"<p>The battery of the Long Range is perfectly integrated into the frame. Together with the very efficient motor, its 708 Wh enables above-average ranges. It can be removed or charged on the bike.<\/p>","text_de":"<p>Der Akku des Long Range ist perfekt in den Rahmen integriert. Zusammen mit dem sehr effizienten Motor ermöglicht er mit 708 Wh überdurchschnittliche Reichweiten. Er kann herausgenommen oder am Fahrrad aufgeladen werden.<\/p>","text_fr":"<p>La batterie du Long Range est parfaitement intégrée au cadre. Associée au moteur très efficace, ses 708 Wh permettent des autonomies supérieures à la moyenne. Elle peut être retirée ou rechargée sur le vélo.<\/p>","text_fi":"<p>Long Range-mallin akku on tyylikkäästi runkoon integroitu. Yhdistettynä tehokkaaseen moottoriin, sen 708Wh:n kapasiteetti tarjoaa keskimääräistä pidemmän toimintamatkan. Akku on ladattavissa suoraan pyörässä sijaitsevasta pistokkeesta, tai vaihtoehtoisesti irrotettavissa kotona lataamista varten.<\/p>","button_link":"","button_text_override":"","button_text_override_de":"","button_text_override_fr":"","button_text_override_fi":""}},"custom_item_inEBRz":{"type":"custom_item","settings":{"image":"shopify:\/\/shop_images\/Frame_403.jpg","image_link":"","title":"Carbon frame","title_de":"Carbonrahmen","title_fr":"Cadre en carbone","title_fi":"Hiilikuiturunko","title_link":"","text":"<p>Light, stiff and robust: these characteristics of the Ultra's carbon frame make it the perfect partner for the high-performance drive unit.<\/p>","text_de":"<p>Leicht, steif und robust: Diese Eigenschaften des Carbonrahmens des Ultra machen ihn zum perfekten Partner für die leistungsstarke Antriebseinheit.<\/p>","text_fr":"<p>Léger, rigide et robuste : ces caractéristiques du cadre en carbone de l'Ultra en font le partenaire idéal pour le groupe motopropulseur hautes performances.<\/p>","text_fi":"<p>Kevyt, jäykkä ja kestävä – nämä hiilikuituisen rungon ominaisuudet tekevät pyörästä täydellisen ja suorituskykyisen kumppanin maastoseikkailuihin.<\/p>","button_link":"","button_text_override":"","button_text_override_de":"","button_text_override_fr":"","button_text_override_fi":""}},"custom_item_UwCAAx":{"type":"custom_item","settings":{"image":"shopify:\/\/shop_images\/Frame_404.jpg","image_link":"","title":"4-Link virtual pivot suspension system","title_de":"4-Link virtual pivot-federungssystem","title_fr":"Système de suspension à pivot virtuel à 4 bras","title_fi":"4-Linkkuinen Virtual Pivot -jousitusjärjestelmä","title_link":"","text":"<p>This special system offers an excellent balance between traction and sensitivity as well as independence from braking influences. This guarantees maximum control even on the roughest trails.<\/p>","text_de":"<p>Dieses spezielle System bietet eine hervorragende Balance zwischen Traktion und Sensibilität sowie Unabhängigkeit von Bremseinflüssen. Dies garantiert maximale Kontrolle auch auf den härtesten Trails.<\/p>","text_fr":"<p>Ce système spécial offre un excellent rapport entre traction et sensibilité ainsi qu'une indépendance vis-à-vis des influences de freinage. Cela garantit un contrôle maximal même sur les sentiers les plus accidentés.<\/p>","text_fi":"<p>Tämä innovatiivinen jousitusjärjestelmä tarjoaa erinomaisen tasapainon pidon ja herkkyyden välillä, ja toimii jarrutustilanteissa loogisesti. Tämä takaa maksimaalisen pyörän hallinnan haastavimmillakin metsäreiteillä.<\/p>","button_link":"","button_text_override":"","button_text_override_de":"","button_text_override_fr":"","button_text_override_fi":""}},"custom_item_jLHBy3":{"type":"custom_item","settings":{"image":"shopify:\/\/shop_images\/RockShox-Recon-Silver.png","image_link":"","title":"Rock Shox Recon Silver with 150 mm","title_de":"Rock Shox Recon Silver mit 150 mm","title_fr":"Rock Shox Recon Silver avec 150 mm","title_fi":"Rock Shox Recon Silver 150 mm","title_link":"","text":"<p>With a lightweight magnesium crown, precise Motion Control damper and adjustable settings for air pressure and damping, this suspension fork offers plenty of customization and control on any trail.<\/p>","text_de":"<p>Mit einer leichten Magnesiumkrone, einem präzisen Motion Control-Dämpfer und anpassbaren Einstellungen für Luftdruck und Dämpfung bietet diese Federgabel zahlreiche Anpassungsmöglichkeiten und Kontrolle auf jedem Trail.<\/p>","text_fr":"<p>Avec une couronne légère en magnésium, un amortisseur Motion Control précis et des réglages réglables pour la pression d'air et l'amortissement, cette fourche à suspension offre beaucoup de personnalisation et de contrôle sur n'importe quel sentier.<\/p>","text_fi":"<p>Kevyt magnesiumkruunu, herkkätoiminen Motion Control-vaimennin sekä vaimennuksen tarkat säätömahdollisuudet tekevät tästä ilmajousitetusta haarukasta erinomaisen ja helposti hallittavan kumppanin kaikille poluille, haastavuudesta riippumatta.<\/p>","button_link":"","button_text_override":"","button_text_override_de":"","button_text_override_fr":"","button_text_override_fi":""}},"custom_item_3VBBXd":{"type":"custom_item","settings":{"image":"shopify:\/\/shop_images\/Frame_377_77b0c983-39ff-4d1c-9972-46079a9e94e1.jpg","image_link":"","title":"6 A fast charger","title_de":"6 A Schnellladegerät","title_fr":"Chargeur rapide 6 A","title_fi":"6A nopeasti lataava pikalaturi","title_link":"","text":"<p>Quickly mobile again - no problem with our standard HEPHA quick charger. With its 6 A, it charges almost 1.5 times faster than conventional chargers. It can be used both on the road and as a detachable wallbox at home!<\/p>","text_de":"<p>Schnell wieder mobil - mit unserem serienmäßigen HEPHA Schnellladegerät kein Problem. Es lädt fast 1,5 mal schneller als herkömmliche Ladegeräte. Es ist sowohl mobil auf der Tour als auch als abnehmbare Wallbox zuhause einsetzbar!<\/p>","text_fr":"<p>De nouveau rapidement mobile – aucun problème avec notre chargeur rapide HEPHA standard. Avec ses 6 A, il charge presque 1,5 fois plus vite que les chargeurs classiques. Il peut être utilisé aussi bien en déplacement que comme boîtier mural amovible à la maison !<\/p>","text_fi":"<p>Nopeasti takaisin matkaan – HEPHA-sähköpyörien vakiona mukana toimitettavalla pikalaturilla se onnistuu helposti. Laturin 6A latausvirta tekee siitä lähes 1,5 kertaa nopeampaa kuin tavanomaisilla latureilla. Laturia voidaan käyttää joko tien päällä tai kotona, ja myös seinään asennettavana wallboxina!<\/p>","button_link":"","button_text_override":"","button_text_override_de":"","button_text_override_fr":"","button_text_override_fi":""}},"custom_item_qepdyz":{"type":"custom_item","settings":{"image":"shopify:\/\/shop_images\/Frame_376_132dc3eb-7169-45f9-b1b8-484ff6cfbce6.jpg","image_link":"","title":"Crystal clear 1.96\" Display","title_de":"kristallklarer 1.96\" Display","title_fr":"Écran 1.96\" d'une clarté exceptionnelle","title_fi":"Kristallinkirkas 1.96\" näyttö","title_link":"","text":"<p>The compact 1.96\" display sits well protected to the left of the stem. Thanks to the high-quality IPS technology, it is very easy to read even in bright light.<\/p>","text_de":"<p>Das kompakte 1.96\"-Display sitzt gut geschützt links am Vorbau. Dank hochwertiger IPS-Technologie ist es auch bei hellem Licht sehr gut lesbar.<\/p>","text_fr":"<p>L'écran compact de 1.96\" est bien protégé à gauche de la tige. Grâce à la technologie IPS de haute qualité, il est très facile à lire même en pleine lumière.<\/p>","text_fi":"<p>Kompakti 1,96” näyttö sijaitsee ohjainkannattimen vasemmalla puolella, hyvin suojattuna. IPS-tekniikan ansiosta se on helposti luettavissa myös kirkkaassa valossa ja mistä katselukulmasta tahansa.<\/p>","button_link":"","button_text_override":"","button_text_override_de":"","button_text_override_fr":"","button_text_override_fi":""}},"custom_item_bdeD8Q":{"type":"custom_item","settings":{"image":"shopify:\/\/shop_images\/Frame_378_780417fd-5fd7-4d1c-a773-964cf507b6aa.jpg","image_link":"","title":"11-speed gearshift","title_de":"11-Gang Schaltung","title_fr":"Boîte de vitesses à 11 vitesses","title_fi":"11-nopeuksinen vaihteisto","title_link":"","text":"<p>The Shimano Cues U6020 drivetrain has been specially developed for e-bikes and is therefore perfect for smooth shifting in combination with the Ultra's high-performance motor.<\/p>","text_de":"<p>Die Shimano Cues U6020 Schaltung des Long Range wurde speziell für E-Bikes entwickelt und eignet sich daher perfekt für sanfte Schaltvorgänge auch unter mehr Last.<\/p>","text_fr":"<p>Le système de changement de vitesse Shimano Cues U6020 du Long Range a été spécialement développé pour les vélos électriques et est donc parfait pour un changement de vitesse en douceur même sous une charge plus élevée.<\/p>","text_fi":"<p>Ultra-mallin 11-nopeuksinen Shimano CUES U6020-vaihteisto on suunniteltu erityisesti sähköpyörien vaatimuksiin. Vaihteisto tarjoaa sulavaa vaihteensiirtoa myös suuremman kuormituksen alla.<\/p>","button_link":"","button_text_override":"","button_text_override_de":"","button_text_override_fr":"","button_text_override_fi":""}},"custom_item_AntPaC":{"type":"custom_item","settings":{"image":"shopify:\/\/shop_images\/Frame_400_647777b9-ebf3-482d-8909-eed9ece26ff5.jpg","image_link":"","title":"Shimano BR-M6120 disc brakes","title_de":"Shimano BR-M6120 Scheibenbremsen","title_fr":"Freins à disque Shimano BR-M6120","title_fi":"Shimano BR-M6120 levyjarrut","title_link":"","text":"<p>The hydraulic Shimano BR-MT6120 with its 4-piston design ensures reliable deceleration and a long service life. It is also characterized by a first-class response and quick piston return.<\/p>","text_de":"<p>Der hydraulische Shimano BR-MT6120 sorgt mit seinem 4-Kolben-Design für zuverlässige Verzögerung und lange Lebensdauer. Zudem zeichnet er sich durch ein erstklassiges Ansprechverhalten und eine schnelle Kolbenrückführung aus.<\/p>","text_fr":"<p>Le frein hydraulique Shimano BR-MT6120 avec sa conception à 4 pistons assure un freinage fiable et une longue durée de vie. Il se caractérise également par une réponse de première classe et un retour rapide du piston.<\/p>","text_fi":"<p>Hydrauliset, nelimäntäiset Shimano BR-MT6120-jarrut takaavat huippunopean pysähtymisen tiukemmissakin tilanteissa sekä pitkän jarrujen käyttöiän. Shimanon jarrut erottuvat markkinassa ensiluokkaisella jarrutusvasteellaan ja nopealla jarrumäntien palautusnopeudellaan.<\/p>","button_link":"","button_text_override":"","button_text_override_de":"","button_text_override_fr":"","button_text_override_fi":""}},"custom_item_ghXCcm":{"type":"custom_item","settings":{"image":"shopify:\/\/shop_images\/app_432ee281-bc29-43b1-9f76-b357a74d18a6.png","image_link":"","title":"Smart APP","title_de":"Smarte App","title_fr":"Application intelligente","title_fi":"Älykäs mobiilisovellus","title_link":"","text":"<p>With the HEPHA APP, you can unlock the full potential of your e-bike: record rides, configure your e-bike, update your system or get help with questions.<\/p>","text_de":"<p>Mit der HEPHA APP setzen Sie das volle Potenzial Ihres E-Bikes frei: Zeichnen Sie Fahrten auf, konfigurieren Sie Ihr E-Bike, updaten Sie Ihr System oder erhalten Sie Hilfe bei Fragen..<\/p>","text_fr":"<p>Avec l'application HEPHA, vous pouvez exploiter tout le potentiel de votre vélo électrique : enregistrer des trajets, configurer votre vélo électrique, mettre à jour votre système ou obtenir de l'aide en cas de questions.<\/p>","text_fi":"<p>HEPHA-sovelluksella valjastat pyöräsi koko potentiaalin käyttöösi: tallenna ajosi, konfiguroi moottorin avustustasot ja löydä apua tukipalvelusta.<\/p>","button_link":"","button_text_override":"","button_text_override_de":"","button_text_override_fr":"","button_text_override_fi":""}}},"block_order":["custom_item_6Qfn7m","custom_item_BFHdQL","custom_item_inEBRz","custom_item_UwCAAx","custom_item_jLHBy3","custom_item_3VBBXd","custom_item_qepdyz","custom_item_bdeD8Q","custom_item_AntPaC","custom_item_ghXCcm"],"name":"Custom Image with Text","settings":{"title":"Highlights","title_de":"Highlights","title_fr":"Highlights","title_fi":"Highlights","hide_title":false,"image_aspect_ratio":"1\/1","show_title_global":true,"show_text_global":true,"show_button_global":true,"button_text":"Learn More","button_text_de":"Mehr erfahren","button_text_fr":"En savoir plus","button_text_fi":"Lue lisää","button_background_color":"#ffffff","button_text_color":"#222222","button_border_color":"#222222","button_hover_background_color":"#222222","button_hover_text_color":"#ffffff","button_hover_border_color":"#222222"}},"custom_specification_QfHYhe":{"type":"custom_specification","name":"Custom Specification","settings":{}},"frame_geometry_sheet_zV49G9":{"type":"frame_geometry_sheet","blocks":{"carbon_WLFbxi":{"type":"carbon","settings":{"frame_height_high":"440 mm","frame_height_high_L":"480 mm","seat_tube_angle_high":"74°","seat_tube_angle_high_L":"74°","fork_offset_high":"66 mm","fork_offset_high_L":"66 mm","seat_angle_high":"68.5°","seat_angle_high_L":"68.5°","head_tube_length_high":"110 mm","head_tube_length_high_L":"124 mm","head_tube_angle_high":"66°","head_tube_angle_high_L":"66°","top_tube_horizontal_high":"632 mm","top_tube_horizontal_high_L":"655 mm","chain_stay_length_high":"458 mm","chain_stay_length_high_L":"458 mm","bottom_bracket_drop_high":"20 mm","bottom_bracket_drop_high_L":"20 mm","wheelbase_high":"1225","wheelbase_high_L":"1249","stack_high":"618 mm","stack_high_L":"627 mm","reach_high":"455 mm","reach_high_L":"475 mm","standover_height_high":"","standover_height_high_L":"","seat_height_min_high":"","seat_height_min_high_L":"","seat_height_max_high":"","seat_height_max_high_L":""}}},"block_order":["carbon_WLFbxi"],"name":"Frame geometry sheet","settings":{"title":"Frame & Geometry","title_de":"Rahmen & Geometrie","title_fr":"Cadre & Géométrie","title_fi":"Runko & Geometria","geometry_type":"mountain"}},"173442611857857522":{"type":"apps","blocks":{"loox_reviews_loox_dynamic_section_p3bDHL":{"type":"shopify:\/\/apps\/loox-reviews\/blocks\/loox-dynamic-section\/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e","settings":{"only_photos":false,"aggregated":false,"limit":20,"hide_thumbnails":false,"maxwidth":1080,"is_sample":true}}},"block_order":["loox_reviews_loox_dynamic_section_p3bDHL"],"settings":{"full_width":false,"show_space":true,"title":"","title_de":"","title_fr":""}},"custom_product_tab_new_MCTDmc":{"type":"custom-product-tab-new","blocks":{"tab_M8tehG":{"type":"tab","settings":{"title":"Sale","title_de":"Sale","title_fr":"Sale","title_fi":"Sale","product_source":"collection","collection":"trekking-7-my23","products":[]}},"tab_6LNycU":{"type":"tab","settings":{"title":"City","title_de":"City","title_fr":"City","title_fi":"City","product_source":"collection","collection":"city-e-bike","products":[]}},"tab_A8JET8":{"type":"tab","settings":{"title":"Trekking","title_de":"Trekking","title_fr":"Trekking","title_fi":"Trekking","product_source":"collection","collection":"new-bike-2024","products":[]}},"tab_D33UmW":{"type":"tab","settings":{"title":"Mountain","title_de":"Mountain","title_fr":"Mountain","title_fi":"Mountain","product_source":"collection","collection":"mountain-7-2024","products":[]}},"tab_cejRpM":{"type":"tab","settings":{"title":"Mountain Carbon","title_de":"Mountain Carbon","title_fr":"Mountain Carbon","title_fi":"Mountain Carbon","product_source":"collection","collection":"mountain-7-carbon","products":[]}},"advertisement_RNktqf":{"type":"advertisement","settings":{"ad_link":"shopify:\/\/collections\/hepha-ebikes","image":"shopify:\/\/shop_images\/HEPHA-Trekking7_01_grey_7ff138ad-9f41-4981-b752-1bd80fee72c0.jpg","background_color":"#ffffff","background_position":"center center","background_size":"cover","background_align_items":"center","background_padding_top":20,"background_padding_left":20,"background_padding_right":20,"background_padding_bottom":20,"title_1":"<p>Not sure which E-Bike is right for you? Discover and compare our full range of E-Bikes to find the perfect model for your adventures.<\/p>","title_1_de":"<p>Nicht sicher, welches E-Bike das richtige für Sie ist? Entdecken und vergleichen Sie unser gesamtes Sortiment an E-Bikes, um das perfekte Modell für Ihre Abenteuer zu finden.<\/p>","title_1_fr":"<p>Vous n’êtes pas sûr de quel vélo électrique est fait pour vous ? Découvrez et comparez notre gamme complète de vélos électriques pour trouver le modèle parfait pour vos aventures.<\/p>","title_1_fi":"<p>Etkö ole varma, mikä sähköpyörämalli sopii sinulle? Tutustu ja vertaa koko valikoimaamme löytääksesi täydellisen pyörän omaan käyttötarkoitukseesi.<\/p>","heading_color_1":"#ffffff","heading_size_1":18,"button_label":"Explore all E-Bikes!","button_label_de":"Entdecke alle E-Bikes!","button_label_fr":"Découvrez tous modèles !","button_label_fi":"Tutki koko mallistoa!","button_bg_color":"#000000","button_text_color":"#ffffff"}}},"block_order":["tab_M8tehG","tab_6LNycU","tab_A8JET8","tab_D33UmW","tab_cejRpM","advertisement_RNktqf"],"name":"Custom Product Tabs New","settings":{"title":"Explore more HEPHA E-Bikes","title_de":"Entdecken Sie mehr HEPHA E-Bikes","title_fr":"Découvrez d'autres vélos électriques HEPHA","title_fi":"Tutustu lisää HEPHA E-Bike-malleihin"}},"custom_stickybar_98arWY":{"type":"custom-stickybar","blocks":{"nav_link_fPGtca":{"type":"nav_link","settings":{"anchor_id":"highlights","text_en":"Highlights","text_de":"Highlights","text_fr":"Points forts","text_fi":"Kohokohdat"}},"nav_link_9tfCip":{"type":"nav_link","settings":{"anchor_id":"specification","text_en":"Specification","text_de":"Spezifikation","text_fr":"Spécification","text_fi":"Tekniset tiedot"}},"nav_link_NwtDqn":{"type":"nav_link","settings":{"anchor_id":"frame_geometry","text_en":"Frame Geometry","text_de":"Rahmengröße","text_fr":"Géométrie du cadre","text_fi":"Rungon geometria"}},"nav_link_aTrMjp":{"type":"nav_link","settings":{"anchor_id":"appblock","text_en":"Review","text_de":"Bewertungen","text_fr":"Avis","text_fi":"Arvostelut"}}},"block_order":["nav_link_fPGtca","nav_link_9tfCip","nav_link_NwtDqn","nav_link_aTrMjp"],"name":"Custom Stickybar","settings":{}}},"order":["main","custom_firework_video_qbyhVV","custom_image_with_text_JrTgrp","enhance_text_area_yDaYbB","media_content_section_Xqer7H","custom_image_with_text_8zjVWU","custom_specification_QfHYhe","frame_geometry_sheet_zV49G9","173442611857857522","custom_product_tab_new_MCTDmc","custom_stickybar_98arWY"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "loox_reviews_loox_rating_4LcXpt": {
+          "type": "shopify://apps/loox-reviews/blocks/loox-rating/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
+          "settings": {
+            "contentSize": 16,
+            "pattern": "",
+            "hideText": false,
+            "alignment": "",
+            "layout": "",
+            "textColor": "",
+            "starColor": "",
+            "showAllReviews": false,
+            "looxOpenFloatingWidget": false,
+            "emptyRatingWidget": false
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {
+            "show_tax_and_shipping": false,
+            "enable_product_reviews_by_price": true
+          }
+        },
+        "description_JNVXj3": {
+          "type": "description",
+          "settings": {
+            "show_in_tab": false,
+            "open_tab": false,
+            "icon": "",
+            "show_in_quickbuy": false
+          }
+        },
+        "specification_simple_cit7xy": {
+          "type": "specification_simple",
+          "settings": {}
+        },
+        "variant_picker_BNiCD8": {
+          "type": "variant-picker",
+          "settings": {
+            "show_single": false,
+            "selector_style": "listed",
+            "dynamic_availability": "show",
+            "enable_size_chart": false,
+            "size_chart_label": "",
+            "size_chart_variant": "",
+            "size_chart_page": "",
+            "show_variant_metafield": true
+          }
+        },
+        "variant_metafield_DNFVc3": {
+          "type": "variant_metafield",
+          "settings": {
+            "namespace": "custom",
+            "key": "size",
+            "fallback": "<p>Information not available for this variant</p>",
+            "custom_selector": ""
+          }
+        },
+        "pop_up_AAc34B": {
+          "type": "pop-up",
+          "settings": {
+            "text": "Which frame size fit me?",
+            "text_de": "Welche Rahmengröße passt zu mir?",
+            "text_fr": "Quelle taille de cadre me convient ?",
+            "text_fi": "Millainen rungon koko sopii minulle?",
+            "style": "link",
+            "page": "mountain7-sizechart",
+            "enable_product_display": false,
+            "selected_products": [],
+            "products_per_row": 3,
+            "show_product_prices": true,
+            "show_in_quickbuy": false
+          }
+        },
+        "buy_buttons_ieLink": {
+          "type": "buy-buttons",
+          "settings": {
+            "show_quantity_selector": false,
+            "show_pickup_availability": false,
+            "show_backorder_text": false,
+            "enable_payment_button": true,
+            "show_gift_card_recipient": false,
+            "show_accessories": false,
+            "accessories_heading": "Compatible accessories",
+            "accessories_heading_de": "Kompatibles Zubehör",
+            "accessories_heading_fr": "Accessoires compatibles",
+            "accessories_heading_fi": "Yhteensopivat lisävarusteet",
+            "accessory_products": [
+              "hepha-708wh-battery-for-trekking-7"
+            ],
+            "show_accessory_description": true
+          }
+        },
+        "sharing_Hmw8qb": {
+          "type": "sharing",
+          "settings": {
+            "show_twitter": true,
+            "show_facebook": true,
+            "show_pinterest": true,
+            "show_linkedin": true,
+            "show_whatsapp": true,
+            "show_snapchat": true,
+            "show_threads": true,
+            "show_tumblr": true,
+            "show_twitch": true
+          }
+        },
+        "finance_leasing_accordion_gcfTV8": {
+          "type": "finance-leasing-accordion",
+          "settings": {
+            "show_in_quickbuy": true,
+            "open": false,
+            "title": "",
+            "title_de": "",
+            "title_fr": "",
+            "title_fi": "",
+            "content": "",
+            "content_de": "",
+            "content_fr": "",
+            "content_fi": "",
+            "icon": "",
+            "jobrad_url": "",
+            "bikeleasing_url": "",
+            "deutsche_url": "",
+            "businessbike_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "title",
+        "loox_reviews_loox_rating_4LcXpt",
+        "price",
+        "description_JNVXj3",
+        "specification_simple_cit7xy",
+        "variant_picker_BNiCD8",
+        "variant_metafield_DNFVc3",
+        "pop_up_AAc34B",
+        "buy_buttons_ieLink",
+        "sharing_Hmw8qb",
+        "finance_leasing_accordion_gcfTV8"
+      ],
+      "custom_css": [],
+      "settings": {
+        "show_breadcrumbs": false,
+        "select_first_variant": true,
+        "show_location_underneath": false,
+        "inventory_transfers_enable": false,
+        "enable_sticky_columns": true,
+        "enable_sticky_atc": true,
+        "sticky_atc_position": "end",
+        "sticky_atc_mobile": true,
+        "sticky_atc_behavior": "add_to_cart",
+        "sticky_atc_button_style": "secondary",
+        "gallery_size": "large",
+        "gallery_layout": "carousel-under",
+        "enable_zoom": true,
+        "show_alt_text": false,
+        "alt_text_icon": "",
+        "enable_video_autoplay": false,
+        "enable_video_looping": false,
+        "enable_media_grouping": true,
+        "media_grouping_option": "Choose from the following colors,Wählen Sie aus den folgenden Rahmenfarben, Choisissez parmi les couleurs suivantes",
+        "new_label_text": "",
+        "new_label_text_de": "",
+        "new_label_text_fr": "",
+        "new_label_text_fi": ""
+      }
+    },
+    "custom_firework_video_qbyhVV": {
+      "type": "custom_firework_video",
+      "settings": {
+        "mode": "row",
+        "playlist_id": "oPNnaq",
+        "player_placement": "bottom-left",
+        "player_margin_top": 16,
+        "player_margin_right": 16,
+        "player_margin_bottom": 140,
+        "player_margin_left": 16,
+        "player_width": 125,
+        "player_height": 223
+      }
+    },
+    "custom_image_with_text_JrTgrp": {
+      "type": "Custom-Image-with-Text",
+      "blocks": {
+        "custom_item_c3Jqyf": {
+          "type": "custom_item",
+          "settings": {
+            "image": "shopify://shop_images/RUD0632_1_f1682320-f842-4078-b7b4-a6a1c276721f.jpg",
+            "image_link": "",
+            "title": "Slide Title",
+            "title_de": "Folientitel",
+            "title_fr": "Titre de la diapositive",
+            "title_fi": "Dian otsikko",
+            "title_link": "",
+            "text": "<p>Add your custom text here</p>",
+            "text_de": "<p>Fügen Sie hier Ihren benutzerdefinierten Text hinzu</p>",
+            "text_fr": "<p>Ajoutez votre texte personnalisé ici</p>",
+            "text_fi": "<p>Lisää mukautettu teksti tähän</p>",
+            "button_link": "",
+            "button_text_override": "",
+            "button_text_override_de": "",
+            "button_text_override_fr": "",
+            "button_text_override_fi": ""
+          }
+        },
+        "custom_item_q9UrFV": {
+          "type": "custom_item",
+          "settings": {
+            "image": "shopify://shop_images/RUD0632_2_e39c9461-5d8b-4c33-8e54-68142cc564c3.jpg",
+            "image_link": "",
+            "title": "Slide Title",
+            "title_de": "Folientitel",
+            "title_fr": "Titre de la diapositive",
+            "title_fi": "Dian otsikko",
+            "title_link": "",
+            "text": "<p>Add your custom text here</p>",
+            "text_de": "<p>Fügen Sie hier Ihren benutzerdefinierten Text hinzu</p>",
+            "text_fr": "<p>Ajoutez votre texte personnalisé ici</p>",
+            "text_fi": "<p>Lisää mukautettu teksti tähän</p>",
+            "button_link": "",
+            "button_text_override": "",
+            "button_text_override_de": "",
+            "button_text_override_fr": "",
+            "button_text_override_fi": ""
+          }
+        },
+        "custom_item_DMMnMX": {
+          "type": "custom_item",
+          "settings": {
+            "image": "shopify://shop_images/RUD0632_3_da2cfbf2-14c1-4d94-8cdf-7f5da27a7239.jpg",
+            "image_link": "",
+            "title": "Slide Title",
+            "title_de": "Folientitel",
+            "title_fr": "Titre de la diapositive",
+            "title_fi": "Dian otsikko",
+            "title_link": "",
+            "text": "<p>Add your custom text here</p>",
+            "text_de": "<p>Fügen Sie hier Ihren benutzerdefinierten Text hinzu</p>",
+            "text_fr": "<p>Ajoutez votre texte personnalisé ici</p>",
+            "text_fi": "<p>Lisää mukautettu teksti tähän</p>",
+            "button_link": "",
+            "button_text_override": "",
+            "button_text_override_de": "",
+            "button_text_override_fr": "",
+            "button_text_override_fi": ""
+          }
+        },
+        "custom_item_MMt6ML": {
+          "type": "custom_item",
+          "settings": {
+            "image": "shopify://shop_images/RUD0632_4_1f10d9f6-fa84-4d18-9f53-beb4ffb10d18.jpg",
+            "image_link": "",
+            "title": "Slide Title",
+            "title_de": "Folientitel",
+            "title_fr": "Titre de la diapositive",
+            "title_fi": "Dian otsikko",
+            "title_link": "",
+            "text": "<p>Add your custom text here</p>",
+            "text_de": "<p>Fügen Sie hier Ihren benutzerdefinierten Text hinzu</p>",
+            "text_fr": "<p>Ajoutez votre texte personnalisé ici</p>",
+            "text_fi": "<p>Lisää mukautettu teksti tähän</p>",
+            "button_link": "",
+            "button_text_override": "",
+            "button_text_override_de": "",
+            "button_text_override_fr": "",
+            "button_text_override_fi": ""
+          }
+        },
+        "custom_item_QKytJw": {
+          "type": "custom_item",
+          "settings": {
+            "image": "shopify://shop_images/RUD0632_6.png",
+            "image_link": "",
+            "title": "Slide Title",
+            "title_de": "Folientitel",
+            "title_fr": "Titre de la diapositive",
+            "title_fi": "Dian otsikko",
+            "title_link": "",
+            "text": "<p>Add your custom text here</p>",
+            "text_de": "<p>Fügen Sie hier Ihren benutzerdefinierten Text hinzu</p>",
+            "text_fr": "<p>Ajoutez votre texte personnalisé ici</p>",
+            "text_fi": "<p>Lisää mukautettu teksti tähän</p>",
+            "button_link": "",
+            "button_text_override": "",
+            "button_text_override_de": "",
+            "button_text_override_fr": "",
+            "button_text_override_fi": ""
+          }
+        },
+        "custom_item_yUVAEK": {
+          "type": "custom_item",
+          "settings": {
+            "image": "shopify://shop_images/Frame_372_6ff28f17-b8fa-40d8-bfc2-4b887791a673.jpg",
+            "image_link": "",
+            "title": "Slide Title",
+            "title_de": "Folientitel",
+            "title_fr": "Titre de la diapositive",
+            "title_fi": "Dian otsikko",
+            "title_link": "",
+            "text": "<p>Add your custom text here</p>",
+            "text_de": "<p>Fügen Sie hier Ihren benutzerdefinierten Text hinzu</p>",
+            "text_fr": "<p>Ajoutez votre texte personnalisé ici</p>",
+            "text_fi": "<p>Lisää mukautettu teksti tähän</p>",
+            "button_link": "",
+            "button_text_override": "",
+            "button_text_override_de": "",
+            "button_text_override_fr": "",
+            "button_text_override_fi": ""
+          }
+        }
+      },
+      "block_order": [
+        "custom_item_c3Jqyf",
+        "custom_item_q9UrFV",
+        "custom_item_DMMnMX",
+        "custom_item_MMt6ML",
+        "custom_item_QKytJw",
+        "custom_item_yUVAEK"
+      ],
+      "name": "Custom Image with Text",
+      "settings": {
+        "title": "Highlights",
+        "title_de": "Highlights",
+        "title_fr": "Highlights",
+        "title_fi": "Highlights",
+        "hide_title": true,
+        "image_aspect_ratio": "4/3",
+        "show_title_global": false,
+        "show_text_global": false,
+        "show_button_global": false,
+        "button_text": "Learn More",
+        "button_text_de": "Mehr erfahren",
+        "button_text_fr": "En savoir plus",
+        "button_text_fi": "Lue lisää",
+        "button_background_color": "#ffffff",
+        "button_text_color": "#222222",
+        "button_border_color": "#222222",
+        "button_hover_background_color": "#222222",
+        "button_hover_text_color": "#ffffff",
+        "button_hover_border_color": "#222222"
+      }
+    },
+    "enhance_text_area_yDaYbB": {
+      "type": "enhance-text-area",
+      "blocks": {
+        "list_item_ndLqVt": {
+          "type": "list_item",
+          "settings": {
+            "item_text": "29\" carbon frame with 4-link Virtual Pivot rear triangle",
+            "item_text_de": "29\" Carbonrahmen mit 4-Link Virtual Pivot Hinterbau",
+            "item_text_fr": "Cadre en carbone de 29 pouces avec triangle arrière à quatre liaisons Virtual Pivot.",
+            "item_text_fi": "29\" hiilikuiturunko, jossa on 4-linkkuinen Virtual Pivot -takarunko"
+          }
+        },
+        "list_item_Pbec7D": {
+          "type": "list_item",
+          "settings": {
+            "item_text": "HEPHA P101C motor (90 Nm)",
+            "item_text_de": "HEPHA P101C Motor (90 Nm)",
+            "item_text_fr": "HEPHA P101C motor (90 Nm)",
+            "item_text_fi": "HEPHA P101C-moottori (90 Nm)"
+          }
+        },
+        "list_item_kPr7ey": {
+          "type": "list_item",
+          "settings": {
+            "item_text": "Battery with 708 Wh capacity",
+            "item_text_de": "Akku mit 708 Wh Kapazität",
+            "item_text_fr": "Batterie d'une capacité de 708 Wh",
+            "item_text_fi": "Akku 708 Wh:n kapasiteetilla"
+          }
+        },
+        "list_item_PmjQ4P": {
+          "type": "list_item",
+          "settings": {
+            "item_text": "6A fast charger",
+            "item_text_de": "6A Schnellladegerät",
+            "item_text_fr": "Chargeur rapide 6A",
+            "item_text_fi": "6A nopea pikalaturi"
+          }
+        },
+        "list_item_3pDib8": {
+          "type": "list_item",
+          "settings": {
+            "item_text": "11-speed Shimano Cues gears",
+            "item_text_de": "11-Gang Shimano Cues Schaltung",
+            "item_text_fr": "Transmission Shimano Cues à 11 vitesses",
+            "item_text_fi": "11-nopeuksinen Shimano Cues-vaihteisto"
+          }
+        },
+        "list_item_QFbnTc": {
+          "type": "list_item",
+          "settings": {
+            "item_text": "Rock Shox suspension with 150 mm travel",
+            "item_text_de": "Rock Shox-Federung mit 150 mm Federweg",
+            "item_text_fr": "Suspension Rock Shox avec un débattement de 150 mm",
+            "item_text_fi": "Rock Shox-jousitus, 150 mm joustomatkalla"
+          }
+        },
+        "list_item_PzaNin": {
+          "type": "list_item",
+          "settings": {
+            "item_text": "Assembled in Germany",
+            "item_text_de": "Montiert in Deutschland",
+            "item_text_fr": "Assemblé en Allemagne",
+            "item_text_fi": "Kokoonpano Saksassa"
+          }
+        }
+      },
+      "block_order": [
+        "list_item_ndLqVt",
+        "list_item_Pbec7D",
+        "list_item_kPr7ey",
+        "list_item_PmjQ4P",
+        "list_item_3pDib8",
+        "list_item_QFbnTc",
+        "list_item_PzaNin"
+      ],
+      "name": "Enhanced Text Area",
+      "settings": {
+        "section_title": "Performance, design & driving pleasure!",
+        "section_title_de": "Leistung, Design und Fahrvergnügen!",
+        "section_title_fr": "Performance, design & plaisir de conduite !",
+        "section_title_fi": "Suorituskykyä, muotoilua ja ajonautintoa!",
+        "text_description": "<p>The \"Performance\" version offers a clever mix of performance, equipment and design. With a maximum engine torque of 90 Nm, the Performance is more powerful than average and is positioned in the middle of the price range between the entry-level Long Range model and the top-of-the-range \"Ultra\" version.</p>",
+        "text_description_de": "<p>Die Version „Performance“ bietet einen cleveren Mix aus Leistung, Ausstattung und Design. Mit einem maximalen Motordrehmoment von 90 Nm ist die Performance überdurchschnittlich leistungsstark und positioniert sich preislich im Mittelfeld zwischen dem Einstiegsmodell Long Range und der Top-Version „Ultra“.</p>",
+        "text_description_fr": "<p>La version « Performance » propose un savant mélange de performances, d’équipements et de design. Avec un couple moteur maximal de 90 Nm, la Performance est plus puissante que la moyenne et se positionne au milieu de la fourchette de prix entre le modèle d’entrée de gamme Long Range et la version haut de gamme « Ultra ».</p>",
+        "text_description_fi": "<p>\"Performance\"-malli edustaa oivaltavaa yhdistelmää suorituskykyä, varustelua ja muotoilua. 90 Nm maksimivääntönsä ansiosta se tarjoaa keskimääräistä enemmän tehoa ja sijoittuu hintaluokaltaan lähtötason Long Range– ja huippumallin  \"Ultra\"-versioiden välille.</p>",
+        "title_font_size": 50,
+        "text_font_size": 18,
+        "show_item_list": true,
+        "layout": "title_above",
+        "item_font_size": 16,
+        "custom_icon": "checkmark",
+        "title_color": "#000000",
+        "text_color": "#333333",
+        "icon_color": "#000000",
+        "mobile_title_font_size": 40,
+        "mobile_text_font_size": 16,
+        "mobile_item_font_size": 14
+      }
+    },
+    "media_content_section_Xqer7H": {
+      "type": "media-content-section",
+      "blocks": {
+        "heading_VeFipY": {
+          "type": "heading",
+          "settings": {
+            "title": "Fun Machine.",
+            "title_de": "Mehrfach ausgezeichnet.",
+            "title_fr": "Plusieurs fois récompensé.",
+            "title_fi": "Täyttä hauskuutta!",
+            "heading_color": "#ffffff",
+            "font_family": "sans-serif",
+            "desktop_font_size": 50,
+            "mobile_font_size": 30,
+            "use_h1": true,
+            "position_mode": "relative",
+            "position": "middle-center",
+            "offset_x": 0,
+            "offset_y": 0,
+            "margin_top": 0,
+            "margin_right": 0,
+            "margin_bottom": 0,
+            "margin_left": 0,
+            "text_align": "left"
+          }
+        },
+        "text_gH6atq": {
+          "type": "text",
+          "settings": {
+            "text": "<p>The Mountain 7 Carbon is ideal for a variety of terrain, from challenging climbs and fast descents to fun on narrow trails. Its powerful yet efficient drive enables long-lasting riding fun. A real fun machine!</p>",
+            "text_de": "<p>Unser Anspruch ist es, Design, Qualität und Leistung für alle zugänglich zu machen. Umso mehr freuen wir uns, dass dieser Anspruch mit zahlreichen Auszeichnungen gewürdigt wurde!</p>",
+            "text_fr": "<p>Notre objectif est de rendre le design, la qualité et la performance accessibles à tous. Nous sommes donc d’autant plus heureux que cette ambition ait été récompensée par de nombreuses récompenses !</p>",
+            "text_fi": "<p>Mountain 7 Carbon sopii täydellisesti monipuoliseen maastoajoon – haastavista ylämäkinousuista nopeisiin laskuihin ja kapeiden metsäpolkujen pujotteluun. Sen tehokas, mutta energiatehokas moottori, mahdollistaa pitkäkestoisen ajonautinnon. Todellinen hauskanpitopyörä!</p>",
+            "text_color": "#ffffff",
+            "font_family": "monospace",
+            "desktop_font_size": 18,
+            "mobile_font_size": 16,
+            "enlarge_text": false,
+            "position_mode": "relative",
+            "position": "middle-center",
+            "offset_x": 0,
+            "offset_y": 0,
+            "margin_top": 20,
+            "margin_right": 0,
+            "margin_bottom": 0,
+            "margin_left": 0,
+            "text_align": "left"
+          }
+        }
+      },
+      "block_order": [
+        "heading_VeFipY",
+        "text_gH6atq"
+      ],
+      "name": "Media & Content Section",
+      "settings": {
+        "margin_top": "0",
+        "margin_bottom": "0",
+        "min_section_height": 700,
+        "min_column_height": 700,
+        "min_section_height_mobile": 400,
+        "min_column_height_mobile": 400,
+        "show_media_column": true,
+        "media_bg_color": "#ffffff",
+        "media_bg_image": "shopify://shop_images/RUD1076-wotr_Kopie_3d73929e-e3ed-4253-9038-438cfe007220.jpg",
+        "media_bg_video": "",
+        "media_position": "center center",
+        "media_size": "cover",
+        "media_position_setting": "right",
+        "mobile_media_position": "below",
+        "media_heading": "",
+        "media_heading_de": "",
+        "media_heading_fr": "",
+        "media_heading_fi": "",
+        "media_heading_color": "#ffffff",
+        "media_desktop_heading_size": 36,
+        "media_mobile_heading_size": 24,
+        "media_use_h1": false,
+        "media_text": "",
+        "media_text_de": "",
+        "media_text_fr": "",
+        "media_text_fi": "",
+        "media_text_color": "#ffffff",
+        "media_desktop_text_size": 18,
+        "media_mobile_text_size": 16,
+        "media_enlarge_text": false,
+        "media_text_bg_enabled": false,
+        "media_text_font_family": "monospace",
+        "media_text_alignment": "center",
+        "media_content_alignment": "center",
+        "media_content_vertical_alignment": "center",
+        "media_button1_label": "Button 1",
+        "media_button1_label_de": "",
+        "media_button1_label_fr": "",
+        "media_button1_label_fi": "",
+        "media_button1_link": "",
+        "media_button1_text_color": "#ffffff",
+        "media_button1_bg_color": "#000000",
+        "media_button1_border_color": "#000000",
+        "media_button2_label": "Button 2",
+        "media_button2_label_de": "",
+        "media_button2_label_fr": "",
+        "media_button2_label_fi": "",
+        "media_button2_link": "",
+        "media_button2_text_color": "#ffffff",
+        "media_button2_bg_color": "#000000",
+        "media_button2_border_color": "#000000",
+        "media_button_alignment": "center",
+        "media_desktop_button_size": 18,
+        "media_mobile_button_size": 16,
+        "content_text_bg_color": "",
+        "content_text_bg_opacity": 100,
+        "content_bg_color": "#94ab7a",
+        "content_bg_video": "",
+        "content_bg_position": "center center",
+        "content_bg_size": "cover",
+        "content_mobile_bg_position": "center center",
+        "content_mobile_bg_size": "cover",
+        "content_alignment": "left",
+        "content_vertical_alignment": "center",
+        "content_padding_top": "60",
+        "content_padding_right": "60",
+        "content_padding_bottom": "60",
+        "content_padding_left": "60"
+      }
+    },
+    "custom_image_with_text_8zjVWU": {
+      "type": "Custom-Image-with-Text",
+      "blocks": {
+        "custom_item_6Qfn7m": {
+          "type": "custom_item",
+          "settings": {
+            "image": "shopify://shop_images/Frame_401.jpg",
+            "image_link": "",
+            "title": "90 Nm motor",
+            "title_de": "90 Nm Motor",
+            "title_fr": "Moteur de 90 Nm",
+            "title_fi": "90 Nm moottori",
+            "title_link": "",
+            "text": "<p>With its 90 Nm, the powerful HEPHA P101 motor of the Performance offers plenty of power for extra riding fun or as a partner for all everyday requirements.</p>",
+            "text_de": "<p>Der besonders kraftvolle 90 Nm HEPHA P101C Motor ist einer der leistungsstärksten und effizientesten auf dem Markt!</p>",
+            "text_fr": "<p>Le moteur HEPHA P101C particulièrement puissant de 80 Nm est l'un des plus puissants et des plus performants du marché !</p>",
+            "text_fi": "<p>90 Nm:n väännöllään HEPHA P101 -moottori tarjoaa Performance-mallissa reilusti voimaa – niin ajon iloksi kuin arjen luotettavaksi kumppaniksi.</p>",
+            "button_link": "",
+            "button_text_override": "",
+            "button_text_override_de": "",
+            "button_text_override_fr": "",
+            "button_text_override_fi": ""
+          }
+        },
+        "custom_item_BFHdQL": {
+          "type": "custom_item",
+          "settings": {
+            "image": "shopify://shop_images/Frame_402_3e5dcda7-da37-400f-bb16-524e027e5c72.jpg",
+            "image_link": "",
+            "title": "708 Wh battery",
+            "title_de": "708 Wh Akku",
+            "title_fr": "Batterie de 708 Wh",
+            "title_fi": "708Wh akku",
+            "title_link": "",
+            "text": "<p>The battery of the Long Range is perfectly integrated into the frame. Together with the very efficient motor, its 708 Wh enables above-average ranges. It can be removed or charged on the bike.</p>",
+            "text_de": "<p>Der Akku des Long Range ist perfekt in den Rahmen integriert. Zusammen mit dem sehr effizienten Motor ermöglicht er mit 708 Wh überdurchschnittliche Reichweiten. Er kann herausgenommen oder am Fahrrad aufgeladen werden.</p>",
+            "text_fr": "<p>La batterie du Long Range est parfaitement intégrée au cadre. Associée au moteur très efficace, ses 708 Wh permettent des autonomies supérieures à la moyenne. Elle peut être retirée ou rechargée sur le vélo.</p>",
+            "text_fi": "<p>Long Range-mallin akku on tyylikkäästi runkoon integroitu. Yhdistettynä tehokkaaseen moottoriin, sen 708Wh:n kapasiteetti tarjoaa keskimääräistä pidemmän toimintamatkan. Akku on ladattavissa suoraan pyörässä sijaitsevasta pistokkeesta, tai vaihtoehtoisesti irrotettavissa kotona lataamista varten.</p>",
+            "button_link": "",
+            "button_text_override": "",
+            "button_text_override_de": "",
+            "button_text_override_fr": "",
+            "button_text_override_fi": ""
+          }
+        },
+        "custom_item_inEBRz": {
+          "type": "custom_item",
+          "settings": {
+            "image": "shopify://shop_images/Frame_403.jpg",
+            "image_link": "",
+            "title": "Carbon frame",
+            "title_de": "Carbonrahmen",
+            "title_fr": "Cadre en carbone",
+            "title_fi": "Hiilikuiturunko",
+            "title_link": "",
+            "text": "<p>Light, stiff and robust: these characteristics of the Ultra's carbon frame make it the perfect partner for the high-performance drive unit.</p>",
+            "text_de": "<p>Leicht, steif und robust: Diese Eigenschaften des Carbonrahmens des Ultra machen ihn zum perfekten Partner für die leistungsstarke Antriebseinheit.</p>",
+            "text_fr": "<p>Léger, rigide et robuste : ces caractéristiques du cadre en carbone de l'Ultra en font le partenaire idéal pour le groupe motopropulseur hautes performances.</p>",
+            "text_fi": "<p>Kevyt, jäykkä ja kestävä – nämä hiilikuituisen rungon ominaisuudet tekevät pyörästä täydellisen ja suorituskykyisen kumppanin maastoseikkailuihin.</p>",
+            "button_link": "",
+            "button_text_override": "",
+            "button_text_override_de": "",
+            "button_text_override_fr": "",
+            "button_text_override_fi": ""
+          }
+        },
+        "custom_item_UwCAAx": {
+          "type": "custom_item",
+          "settings": {
+            "image": "shopify://shop_images/Frame_404.jpg",
+            "image_link": "",
+            "title": "4-Link virtual pivot suspension system",
+            "title_de": "4-Link virtual pivot-federungssystem",
+            "title_fr": "Système de suspension à pivot virtuel à 4 bras",
+            "title_fi": "4-Linkkuinen Virtual Pivot -jousitusjärjestelmä",
+            "title_link": "",
+            "text": "<p>This special system offers an excellent balance between traction and sensitivity as well as independence from braking influences. This guarantees maximum control even on the roughest trails.</p>",
+            "text_de": "<p>Dieses spezielle System bietet eine hervorragende Balance zwischen Traktion und Sensibilität sowie Unabhängigkeit von Bremseinflüssen. Dies garantiert maximale Kontrolle auch auf den härtesten Trails.</p>",
+            "text_fr": "<p>Ce système spécial offre un excellent rapport entre traction et sensibilité ainsi qu'une indépendance vis-à-vis des influences de freinage. Cela garantit un contrôle maximal même sur les sentiers les plus accidentés.</p>",
+            "text_fi": "<p>Tämä innovatiivinen jousitusjärjestelmä tarjoaa erinomaisen tasapainon pidon ja herkkyyden välillä, ja toimii jarrutustilanteissa loogisesti. Tämä takaa maksimaalisen pyörän hallinnan haastavimmillakin metsäreiteillä.</p>",
+            "button_link": "",
+            "button_text_override": "",
+            "button_text_override_de": "",
+            "button_text_override_fr": "",
+            "button_text_override_fi": ""
+          }
+        },
+        "custom_item_jLHBy3": {
+          "type": "custom_item",
+          "settings": {
+            "image": "shopify://shop_images/RockShox-Recon-Silver.png",
+            "image_link": "",
+            "title": "Rock Shox Recon Silver with 150 mm",
+            "title_de": "Rock Shox Recon Silver mit 150 mm",
+            "title_fr": "Rock Shox Recon Silver avec 150 mm",
+            "title_fi": "Rock Shox Recon Silver 150 mm",
+            "title_link": "",
+            "text": "<p>With a lightweight magnesium crown, precise Motion Control damper and adjustable settings for air pressure and damping, this suspension fork offers plenty of customization and control on any trail.</p>",
+            "text_de": "<p>Mit einer leichten Magnesiumkrone, einem präzisen Motion Control-Dämpfer und anpassbaren Einstellungen für Luftdruck und Dämpfung bietet diese Federgabel zahlreiche Anpassungsmöglichkeiten und Kontrolle auf jedem Trail.</p>",
+            "text_fr": "<p>Avec une couronne légère en magnésium, un amortisseur Motion Control précis et des réglages réglables pour la pression d'air et l'amortissement, cette fourche à suspension offre beaucoup de personnalisation et de contrôle sur n'importe quel sentier.</p>",
+            "text_fi": "<p>Kevyt magnesiumkruunu, herkkätoiminen Motion Control-vaimennin sekä vaimennuksen tarkat säätömahdollisuudet tekevät tästä ilmajousitetusta haarukasta erinomaisen ja helposti hallittavan kumppanin kaikille poluille, haastavuudesta riippumatta.</p>",
+            "button_link": "",
+            "button_text_override": "",
+            "button_text_override_de": "",
+            "button_text_override_fr": "",
+            "button_text_override_fi": ""
+          }
+        },
+        "custom_item_3VBBXd": {
+          "type": "custom_item",
+          "settings": {
+            "image": "shopify://shop_images/Frame_377_77b0c983-39ff-4d1c-9972-46079a9e94e1.jpg",
+            "image_link": "",
+            "title": "6 A fast charger",
+            "title_de": "6 A Schnellladegerät",
+            "title_fr": "Chargeur rapide 6 A",
+            "title_fi": "6A nopeasti lataava pikalaturi",
+            "title_link": "",
+            "text": "<p>Quickly mobile again - no problem with our standard HEPHA quick charger. With its 6 A, it charges almost 1.5 times faster than conventional chargers. It can be used both on the road and as a detachable wallbox at home!</p>",
+            "text_de": "<p>Schnell wieder mobil - mit unserem serienmäßigen HEPHA Schnellladegerät kein Problem. Es lädt fast 1,5 mal schneller als herkömmliche Ladegeräte. Es ist sowohl mobil auf der Tour als auch als abnehmbare Wallbox zuhause einsetzbar!</p>",
+            "text_fr": "<p>De nouveau rapidement mobile – aucun problème avec notre chargeur rapide HEPHA standard. Avec ses 6 A, il charge presque 1,5 fois plus vite que les chargeurs classiques. Il peut être utilisé aussi bien en déplacement que comme boîtier mural amovible à la maison !</p>",
+            "text_fi": "<p>Nopeasti takaisin matkaan – HEPHA-sähköpyörien vakiona mukana toimitettavalla pikalaturilla se onnistuu helposti. Laturin 6A latausvirta tekee siitä lähes 1,5 kertaa nopeampaa kuin tavanomaisilla latureilla. Laturia voidaan käyttää joko tien päällä tai kotona, ja myös seinään asennettavana wallboxina!</p>",
+            "button_link": "",
+            "button_text_override": "",
+            "button_text_override_de": "",
+            "button_text_override_fr": "",
+            "button_text_override_fi": ""
+          }
+        },
+        "custom_item_qepdyz": {
+          "type": "custom_item",
+          "settings": {
+            "image": "shopify://shop_images/Frame_376_132dc3eb-7169-45f9-b1b8-484ff6cfbce6.jpg",
+            "image_link": "",
+            "title": "Crystal clear 1.96\" Display",
+            "title_de": "kristallklarer 1.96\" Display",
+            "title_fr": "Écran 1.96\" d'une clarté exceptionnelle",
+            "title_fi": "Kristallinkirkas 1.96\" näyttö",
+            "title_link": "",
+            "text": "<p>The compact 1.96\" display sits well protected to the left of the stem. Thanks to the high-quality IPS technology, it is very easy to read even in bright light.</p>",
+            "text_de": "<p>Das kompakte 1.96\"-Display sitzt gut geschützt links am Vorbau. Dank hochwertiger IPS-Technologie ist es auch bei hellem Licht sehr gut lesbar.</p>",
+            "text_fr": "<p>L'écran compact de 1.96\" est bien protégé à gauche de la tige. Grâce à la technologie IPS de haute qualité, il est très facile à lire même en pleine lumière.</p>",
+            "text_fi": "<p>Kompakti 1,96” näyttö sijaitsee ohjainkannattimen vasemmalla puolella, hyvin suojattuna. IPS-tekniikan ansiosta se on helposti luettavissa myös kirkkaassa valossa ja mistä katselukulmasta tahansa.</p>",
+            "button_link": "",
+            "button_text_override": "",
+            "button_text_override_de": "",
+            "button_text_override_fr": "",
+            "button_text_override_fi": ""
+          }
+        },
+        "custom_item_bdeD8Q": {
+          "type": "custom_item",
+          "settings": {
+            "image": "shopify://shop_images/Frame_378_780417fd-5fd7-4d1c-a773-964cf507b6aa.jpg",
+            "image_link": "",
+            "title": "11-speed gearshift",
+            "title_de": "11-Gang Schaltung",
+            "title_fr": "Boîte de vitesses à 11 vitesses",
+            "title_fi": "11-nopeuksinen vaihteisto",
+            "title_link": "",
+            "text": "<p>The Shimano Cues U6020 drivetrain has been specially developed for e-bikes and is therefore perfect for smooth shifting in combination with the Ultra's high-performance motor.</p>",
+            "text_de": "<p>Die Shimano Cues U6020 Schaltung des Long Range wurde speziell für E-Bikes entwickelt und eignet sich daher perfekt für sanfte Schaltvorgänge auch unter mehr Last.</p>",
+            "text_fr": "<p>Le système de changement de vitesse Shimano Cues U6020 du Long Range a été spécialement développé pour les vélos électriques et est donc parfait pour un changement de vitesse en douceur même sous une charge plus élevée.</p>",
+            "text_fi": "<p>Ultra-mallin 11-nopeuksinen Shimano CUES U6020-vaihteisto on suunniteltu erityisesti sähköpyörien vaatimuksiin. Vaihteisto tarjoaa sulavaa vaihteensiirtoa myös suuremman kuormituksen alla.</p>",
+            "button_link": "",
+            "button_text_override": "",
+            "button_text_override_de": "",
+            "button_text_override_fr": "",
+            "button_text_override_fi": ""
+          }
+        },
+        "custom_item_AntPaC": {
+          "type": "custom_item",
+          "settings": {
+            "image": "shopify://shop_images/Frame_400_647777b9-ebf3-482d-8909-eed9ece26ff5.jpg",
+            "image_link": "",
+            "title": "Shimano BR-M6120 disc brakes",
+            "title_de": "Shimano BR-M6120 Scheibenbremsen",
+            "title_fr": "Freins à disque Shimano BR-M6120",
+            "title_fi": "Shimano BR-M6120 levyjarrut",
+            "title_link": "",
+            "text": "<p>The hydraulic Shimano BR-MT6120 with its 4-piston design ensures reliable deceleration and a long service life. It is also characterized by a first-class response and quick piston return.</p>",
+            "text_de": "<p>Der hydraulische Shimano BR-MT6120 sorgt mit seinem 4-Kolben-Design für zuverlässige Verzögerung und lange Lebensdauer. Zudem zeichnet er sich durch ein erstklassiges Ansprechverhalten und eine schnelle Kolbenrückführung aus.</p>",
+            "text_fr": "<p>Le frein hydraulique Shimano BR-MT6120 avec sa conception à 4 pistons assure un freinage fiable et une longue durée de vie. Il se caractérise également par une réponse de première classe et un retour rapide du piston.</p>",
+            "text_fi": "<p>Hydrauliset, nelimäntäiset Shimano BR-MT6120-jarrut takaavat huippunopean pysähtymisen tiukemmissakin tilanteissa sekä pitkän jarrujen käyttöiän. Shimanon jarrut erottuvat markkinassa ensiluokkaisella jarrutusvasteellaan ja nopealla jarrumäntien palautusnopeudellaan.</p>",
+            "button_link": "",
+            "button_text_override": "",
+            "button_text_override_de": "",
+            "button_text_override_fr": "",
+            "button_text_override_fi": ""
+          }
+        },
+        "custom_item_ghXCcm": {
+          "type": "custom_item",
+          "settings": {
+            "image": "shopify://shop_images/app_432ee281-bc29-43b1-9f76-b357a74d18a6.png",
+            "image_link": "",
+            "title": "Smart APP",
+            "title_de": "Smarte App",
+            "title_fr": "Application intelligente",
+            "title_fi": "Älykäs mobiilisovellus",
+            "title_link": "",
+            "text": "<p>With the HEPHA APP, you can unlock the full potential of your e-bike: record rides, configure your e-bike, update your system or get help with questions.</p>",
+            "text_de": "<p>Mit der HEPHA APP setzen Sie das volle Potenzial Ihres E-Bikes frei: Zeichnen Sie Fahrten auf, konfigurieren Sie Ihr E-Bike, updaten Sie Ihr System oder erhalten Sie Hilfe bei Fragen..</p>",
+            "text_fr": "<p>Avec l'application HEPHA, vous pouvez exploiter tout le potentiel de votre vélo électrique : enregistrer des trajets, configurer votre vélo électrique, mettre à jour votre système ou obtenir de l'aide en cas de questions.</p>",
+            "text_fi": "<p>HEPHA-sovelluksella valjastat pyöräsi koko potentiaalin käyttöösi: tallenna ajosi, konfiguroi moottorin avustustasot ja löydä apua tukipalvelusta.</p>",
+            "button_link": "",
+            "button_text_override": "",
+            "button_text_override_de": "",
+            "button_text_override_fr": "",
+            "button_text_override_fi": ""
+          }
+        }
+      },
+      "block_order": [
+        "custom_item_6Qfn7m",
+        "custom_item_BFHdQL",
+        "custom_item_inEBRz",
+        "custom_item_UwCAAx",
+        "custom_item_jLHBy3",
+        "custom_item_3VBBXd",
+        "custom_item_qepdyz",
+        "custom_item_bdeD8Q",
+        "custom_item_AntPaC",
+        "custom_item_ghXCcm"
+      ],
+      "name": "Custom Image with Text",
+      "settings": {
+        "title": "Highlights",
+        "title_de": "Highlights",
+        "title_fr": "Highlights",
+        "title_fi": "Highlights",
+        "hide_title": false,
+        "image_aspect_ratio": "1/1",
+        "show_title_global": true,
+        "show_text_global": true,
+        "show_button_global": true,
+        "button_text": "Learn More",
+        "button_text_de": "Mehr erfahren",
+        "button_text_fr": "En savoir plus",
+        "button_text_fi": "Lue lisää",
+        "button_background_color": "#ffffff",
+        "button_text_color": "#222222",
+        "button_border_color": "#222222",
+        "button_hover_background_color": "#222222",
+        "button_hover_text_color": "#ffffff",
+        "button_hover_border_color": "#222222"
+      }
+    },
+    "custom_specification_QfHYhe": {
+      "type": "custom_specification",
+      "name": "Custom Specification",
+      "settings": {}
+    },
+    "frame_geometry_sheet_zV49G9": {
+      "type": "frame_geometry_sheet",
+      "blocks": {
+        "carbon_WLFbxi": {
+          "type": "carbon",
+          "settings": {
+            "frame_height_high": "440 mm",
+            "frame_height_high_L": "480 mm",
+            "seat_tube_angle_high": "74°",
+            "seat_tube_angle_high_L": "74°",
+            "fork_offset_high": "66 mm",
+            "fork_offset_high_L": "66 mm",
+            "seat_angle_high": "68.5°",
+            "seat_angle_high_L": "68.5°",
+            "head_tube_length_high": "110 mm",
+            "head_tube_length_high_L": "124 mm",
+            "head_tube_angle_high": "66°",
+            "head_tube_angle_high_L": "66°",
+            "top_tube_horizontal_high": "632 mm",
+            "top_tube_horizontal_high_L": "655 mm",
+            "chain_stay_length_high": "458 mm",
+            "chain_stay_length_high_L": "458 mm",
+            "bottom_bracket_drop_high": "20 mm",
+            "bottom_bracket_drop_high_L": "20 mm",
+            "wheelbase_high": "1225",
+            "wheelbase_high_L": "1249",
+            "stack_high": "618 mm",
+            "stack_high_L": "627 mm",
+            "reach_high": "455 mm",
+            "reach_high_L": "475 mm",
+            "standover_height_high": "",
+            "standover_height_high_L": "",
+            "seat_height_min_high": "",
+            "seat_height_min_high_L": "",
+            "seat_height_max_high": "",
+            "seat_height_max_high_L": ""
+          }
+        }
+      },
+      "block_order": [
+        "carbon_WLFbxi"
+      ],
+      "name": "Frame geometry sheet",
+      "settings": {
+        "title": "Frame & Geometry",
+        "title_de": "Rahmen & Geometrie",
+        "title_fr": "Cadre & Géométrie",
+        "title_fi": "Runko & Geometria",
+        "geometry_type": "mountain"
+      }
+    },
+    "173442611857857522": {
+      "type": "apps",
+      "blocks": {
+        "loox_reviews_loox_dynamic_section_p3bDHL": {
+          "type": "shopify://apps/loox-reviews/blocks/loox-dynamic-section/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
+          "settings": {
+            "only_photos": false,
+            "aggregated": false,
+            "limit": 20,
+            "hide_thumbnails": false,
+            "maxwidth": 1080,
+            "is_sample": true
+          }
+        }
+      },
+      "block_order": [
+        "loox_reviews_loox_dynamic_section_p3bDHL"
+      ],
+      "settings": {
+        "full_width": false,
+        "show_space": true,
+        "title": "",
+        "title_de": "",
+        "title_fr": ""
+      }
+    },
+    "custom_product_tab_new_MCTDmc": {
+      "type": "custom-product-tab-new",
+      "blocks": {
+        "tab_M8tehG": {
+          "type": "tab",
+          "settings": {
+            "title": "Sale",
+            "title_de": "Sale",
+            "title_fr": "Sale",
+            "title_fi": "Sale",
+            "product_source": "collection",
+            "collection": "trekking-7-my23",
+            "products": []
+          }
+        },
+        "tab_6LNycU": {
+          "type": "tab",
+          "settings": {
+            "title": "City",
+            "title_de": "City",
+            "title_fr": "City",
+            "title_fi": "City",
+            "product_source": "collection",
+            "collection": "city-e-bike",
+            "products": []
+          }
+        },
+        "tab_A8JET8": {
+          "type": "tab",
+          "settings": {
+            "title": "Trekking",
+            "title_de": "Trekking",
+            "title_fr": "Trekking",
+            "title_fi": "Trekking",
+            "product_source": "collection",
+            "collection": "new-bike-2024",
+            "products": []
+          }
+        },
+        "tab_D33UmW": {
+          "type": "tab",
+          "settings": {
+            "title": "Mountain",
+            "title_de": "Mountain",
+            "title_fr": "Mountain",
+            "title_fi": "Mountain",
+            "product_source": "collection",
+            "collection": "mountain-7-2024",
+            "products": []
+          }
+        },
+        "tab_cejRpM": {
+          "type": "tab",
+          "settings": {
+            "title": "Mountain Carbon",
+            "title_de": "Mountain Carbon",
+            "title_fr": "Mountain Carbon",
+            "title_fi": "Mountain Carbon",
+            "product_source": "collection",
+            "collection": "mountain-7-carbon",
+            "products": []
+          }
+        },
+        "advertisement_RNktqf": {
+          "type": "advertisement",
+          "settings": {
+            "ad_link": "shopify://collections/hepha-ebikes",
+            "image": "shopify://shop_images/HEPHA-Trekking7_01_grey_7ff138ad-9f41-4981-b752-1bd80fee72c0.jpg",
+            "background_color": "#ffffff",
+            "background_position": "center center",
+            "background_size": "cover",
+            "background_align_items": "center",
+            "background_padding_top": 20,
+            "background_padding_left": 20,
+            "background_padding_right": 20,
+            "background_padding_bottom": 20,
+            "title_1": "<p>Not sure which E-Bike is right for you? Discover and compare our full range of E-Bikes to find the perfect model for your adventures.</p>",
+            "title_1_de": "<p>Nicht sicher, welches E-Bike das richtige für Sie ist? Entdecken und vergleichen Sie unser gesamtes Sortiment an E-Bikes, um das perfekte Modell für Ihre Abenteuer zu finden.</p>",
+            "title_1_fr": "<p>Vous n’êtes pas sûr de quel vélo électrique est fait pour vous ? Découvrez et comparez notre gamme complète de vélos électriques pour trouver le modèle parfait pour vos aventures.</p>",
+            "title_1_fi": "<p>Etkö ole varma, mikä sähköpyörämalli sopii sinulle? Tutustu ja vertaa koko valikoimaamme löytääksesi täydellisen pyörän omaan käyttötarkoitukseesi.</p>",
+            "heading_color_1": "#ffffff",
+            "heading_size_1": 18,
+            "button_label": "Explore all E-Bikes!",
+            "button_label_de": "Entdecke alle E-Bikes!",
+            "button_label_fr": "Découvrez tous modèles !",
+            "button_label_fi": "Tutki koko mallistoa!",
+            "button_bg_color": "#000000",
+            "button_text_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "tab_M8tehG",
+        "tab_6LNycU",
+        "tab_A8JET8",
+        "tab_D33UmW",
+        "tab_cejRpM",
+        "advertisement_RNktqf"
+      ],
+      "name": "Custom Product Tabs New",
+      "settings": {
+        "title": "Explore more HEPHA E-Bikes",
+        "title_de": "Entdecken Sie mehr HEPHA E-Bikes",
+        "title_fr": "Découvrez d'autres vélos électriques HEPHA",
+        "title_fi": "Tutustu lisää HEPHA E-Bike-malleihin"
+      }
+    },
+    "custom_stickybar_98arWY": {
+      "type": "custom-stickybar",
+      "blocks": {
+        "nav_link_fPGtca": {
+          "type": "nav_link",
+          "settings": {
+            "anchor_id": "highlights",
+            "text_en": "Highlights",
+            "text_de": "Highlights",
+            "text_fr": "Points forts",
+            "text_fi": "Kohokohdat"
+          }
+        },
+        "nav_link_9tfCip": {
+          "type": "nav_link",
+          "settings": {
+            "anchor_id": "specification",
+            "text_en": "Specification",
+            "text_de": "Spezifikation",
+            "text_fr": "Spécification",
+            "text_fi": "Tekniset tiedot"
+          }
+        },
+        "nav_link_NwtDqn": {
+          "type": "nav_link",
+          "settings": {
+            "anchor_id": "frame_geometry",
+            "text_en": "Frame Geometry",
+            "text_de": "Rahmengröße",
+            "text_fr": "Géométrie du cadre",
+            "text_fi": "Rungon geometria"
+          }
+        },
+        "nav_link_aTrMjp": {
+          "type": "nav_link",
+          "settings": {
+            "anchor_id": "appblock",
+            "text_en": "Review",
+            "text_de": "Bewertungen",
+            "text_fr": "Avis",
+            "text_fi": "Arvostelut"
+          }
+        }
+      },
+      "block_order": [
+        "nav_link_fPGtca",
+        "nav_link_9tfCip",
+        "nav_link_NwtDqn",
+        "nav_link_aTrMjp"
+      ],
+      "name": "Custom Stickybar",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "custom_firework_video_qbyhVV",
+    "custom_image_with_text_JrTgrp",
+    "enhance_text_area_yDaYbB",
+    "media_content_section_Xqer7H",
+    "custom_image_with_text_8zjVWU",
+    "custom_specification_QfHYhe",
+    "frame_geometry_sheet_zV49G9",
+    "173442611857857522",
+    "custom_product_tab_new_MCTDmc",
+    "custom_stickybar_98arWY"
+  ]
+}
