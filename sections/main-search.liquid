@@ -159,6 +159,14 @@
 </div>
 
 {% if search.performed %}
+  {% assign _q = search.terms | downcase | strip | replace: '-', ' ' | replace: '_', ' ' %}
+  {% assign _synonyms = 'gebraucht|e bike gebraucht|ebike used|gebrauchtes e bike|e-bike gebraucht|used e bike|used ebike' | split: '|' %}
+  {% for _s in _synonyms %}
+    {% if _q contains _s %}
+      <script>location.href = "{{ collections['used-bikes'].url }}";</script>
+      {% break %}
+    {% endif %}
+  {% endfor %}
   {%- liquid
     assign show_filters = section.settings.enable_filtering
     if search.filters == empty

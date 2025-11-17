@@ -253,7 +253,13 @@
               {% endif %}
           {% endcase %}
 
-          <td>{{ block.settings[field_name] | default: '-' }}</td>
+          {% assign cell_value = block.settings[field_name] %}
+          {% if type == 'step_through' and size == 'XL' %}
+            {% if measurement == 'standover_height' or measurement == 'seat_height_min' or measurement == 'seat_height_max' %}
+              {% assign cell_value = '' %}
+            {% endif %}
+          {% endif %}
+          <td>{{ cell_value | default: '-' }}</td>
         {% endfor %}
       </tr>
     {% endfor %}
