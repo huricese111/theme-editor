@@ -159,6 +159,12 @@
           "default": false
         },
         {
+          "type": "checkbox",
+          "id": "show_size_xl",
+          "label": "Show Size XL Column",
+          "default": false
+        },
+        {
           "type": "text",
           "id": "frame_height_low_S",
           "label": "Frame Height S"
@@ -177,6 +183,12 @@
         },
         {
           "type": "text",
+          "id": "frame_height_low_XL",
+          "label": "Frame Height XL",
+          "default": "520 mm"
+        },
+        {
+          "type": "text",
           "id": "seat_tube_angle_low_S",
           "label": "Seat Tube Angle S"
         },
@@ -190,6 +202,12 @@
           "type": "text",
           "id": "seat_tube_angle_low_L",
           "label": "Seat Tube Angle L",
+          "default": "74°"
+        },
+        {
+          "type": "text",
+          "id": "seat_tube_angle_low_XL",
+          "label": "Seat Tube Angle XL",
           "default": "74°"
         },
         {
@@ -211,6 +229,12 @@
         },
         {
           "type": "text",
+          "id": "fork_offset_low_XL",
+          "label": "Fork Offset XL",
+          "default": "43 mm"
+        },
+        {
+          "type": "text",
           "id": "seat_angle_low_S",
           "label": "Seat Angle S"
         },
@@ -224,6 +248,12 @@
           "type": "text",
           "id": "seat_angle_low_L",
           "label": "Seat Angle L",
+          "default": "74°"
+        },
+        {
+          "type": "text",
+          "id": "seat_angle_low_XL",
+          "label": "Seat Angle XL",
           "default": "74°"
         },
         {
@@ -245,6 +275,12 @@
         },
         {
           "type": "text",
+          "id": "head_tube_length_low_XL",
+          "label": "Head Tube Length XL",
+          "default": "180 mm"
+        },
+        {
+          "type": "text",
           "id": "head_tube_angle_low_S",
           "label": "Head Tube Angle S"
         },
@@ -258,6 +294,12 @@
           "type": "text",
           "id": "head_tube_angle_low_L",
           "label": "Head Tube Angle L",
+          "default": "68.5°"
+        },
+        {
+          "type": "text",
+          "id": "head_tube_angle_low_XL",
+          "label": "Head Tube Angle XL",
           "default": "68.5°"
         },
         {
@@ -279,6 +321,12 @@
         },
         {
           "type": "text",
+          "id": "top_tube_horizontal_low_XL",
+          "label": "Top Tube Horizontal XL",
+          "default": "666 mm"
+        },
+        {
+          "type": "text",
           "id": "chain_stay_length_low_S",
           "label": "Chain Stay Length S"
         },
@@ -292,6 +340,12 @@
           "type": "text",
           "id": "chain_stay_length_low_L",
           "label": "Chain Stay Length L",
+          "default": "484 mm"
+        },
+        {
+          "type": "text",
+          "id": "chain_stay_length_low_XL",
+          "label": "Chain Stay Length XL",
           "default": "484 mm"
         },
         {
@@ -313,6 +367,12 @@
         },
         {
           "type": "text",
+          "id": "bottom_bracket_drop_low_XL",
+          "label": "Bottom Bracket Drop XL",
+          "default": "60 mm"
+        },
+        {
+          "type": "text",
           "id": "wheelbase_low_S",
           "label": "Wheelbase S"
         },
@@ -327,6 +387,12 @@
           "id": "wheelbase_low_L",
           "label": "Wheelbase L",
           "default": "1201 mm"
+        },
+        {
+          "type": "text",
+          "id": "wheelbase_low_XL",
+          "label": "Wheelbase XL",
+          "default": "1240 mm"
         },
         {
           "type": "text",
@@ -347,6 +413,12 @@
         },
         {
           "type": "text",
+          "id": "stack_low_XL",
+          "label": "Stack XL",
+          "default": "657 mm"
+        },
+        {
+          "type": "text",
           "id": "reach_low_S",
           "label": "Reach S"
         },
@@ -364,6 +436,12 @@
         },
         {
           "type": "text",
+          "id": "reach_low_XL",
+          "label": "Reach XL",
+          "default": "478 mm"
+        },
+        {
+          "type": "text",
           "id": "standover_height_low_S",
           "label": "Standover Height S"
         },
@@ -377,6 +455,12 @@
           "type": "text",
           "id": "standover_height_low_L",
           "label": "Standover Height L",
+          "default": "720 mm"
+        },
+        {
+          "type": "text",
+          "id": "standover_height_low_XL",
+          "label": "Standover Height XL",
           "default": "720 mm"
         },
         {
@@ -398,6 +482,12 @@
         },
         {
           "type": "text",
+          "id": "seat_height_min_low_XL",
+          "label": "Seat Height Min XL",
+          "default": "850 mm"
+        },
+        {
+          "type": "text",
           "id": "seat_height_max_low_S",
           "label": "Seat Height Max S"
         },
@@ -411,6 +501,13 @@
           "type": "text",
           "id": "seat_height_max_low_L",
           "label": "Seat Height Max L",
+          "default": "1000 mm"
+        }
+        ,
+        {
+          "type": "text",
+          "id": "seat_height_max_low_XL",
+          "label": "Seat Height Max XL",
           "default": "1000 mm"
         }
       ]
@@ -1396,7 +1493,8 @@
                     {% render 'frame-size-table',
                       block: block,
                       type: 'step_through',
-                      show_size_s: block.settings.show_size_s
+                      show_size_s: block.settings.show_size_s,
+                      show_size_xl: block.settings.show_size_xl
                     %}
                   </div>
                 </div>
@@ -1797,6 +1895,8 @@
     padding: 12px 16px;
     text-align: left;
     border-bottom: 1px solid #e0e0e0;
+    white-space: normal;
+    word-break: break-word;
   }
 
   table.pf-inner-table th {
@@ -1819,12 +1919,18 @@
   table.pf-inner-table td:first-child {
     font-weight: 500;
     color: #666;
-    width: 40px;
+    width: 10%;
+    white-space: nowrap;
+    word-break: normal;
   }
   
   table.pf-inner-table td:nth-child(2) {
     font-weight: 500;
+    width: 34%;
   }
+
+  table.pf-inner-table th:first-child { width: 10%; white-space: nowrap; word-break: normal; }
+  table.pf-inner-table th:nth-child(2) { width: 34%; }
 
   .infotext {
     font-weight: 400;
@@ -1843,12 +1949,14 @@
   }
 
   .table-container {
-    overflow-x: auto;
+    overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
   }
 
   .pf-inner-table {
-    min-width: 600px;
+    min-width: 100%;
+    width: 100%;
+    table-layout: fixed;
   }
 
   @media (min-width: 769px) {
