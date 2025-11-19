@@ -704,6 +704,7 @@
         "custom_item_HCAark": {
           "type": "custom_item",
           "settings": {
+            "image": "shopify://shop_images/app_432ee281-bc29-43b1-9f76-b357a74d18a6.png",
             "image_link": "",
             "title": "Intelligence in Your Pocket: Hepha App",
             "title_de": "Intelligenz in der Tasche: Hepha App",
