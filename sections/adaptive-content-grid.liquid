@@ -644,6 +644,21 @@
           "label": "Button 1 URL"
         },
         {
+          "type": "url",
+          "id": "button1_url_de",
+          "label": "Button 1 URL (German)"
+        },
+        {
+          "type": "url",
+          "id": "button1_url_fr",
+          "label": "Button 1 URL (French)"
+        },
+        {
+          "type": "url",
+          "id": "button1_url_fi",
+          "label": "Button 1 URL (Finnish)"
+        },
+        {
           "type": "text",
           "id": "button2_text",
           "label": "Button 2 Text (English)"
@@ -667,6 +682,21 @@
           "type": "url",
           "id": "button2_url",
           "label": "Button 2 URL"
+        },
+        {
+          "type": "url",
+          "id": "button2_url_de",
+          "label": "Button 2 URL (German)"
+        },
+        {
+          "type": "url",
+          "id": "button2_url_fr",
+          "label": "Button 2 URL (French)"
+        },
+        {
+          "type": "url",
+          "id": "button2_url_fi",
+          "label": "Button 2 URL (Finnish)"
         },
         {
           "type": "header",
@@ -1432,8 +1462,9 @@
               <div class="custom-content-image" style="background-color: {{ settings.image_background_color }}">
                 {% if settings.image != blank %}
                   <div class="custom-image-wrapper">
-                    {% if settings.button1_url != blank %}
-                      <a href="{{ settings.button1_url }}">
+                    {% capture button1_href %}{% render 'localized-value', field: 'button1_url', locale_code: locale_code, settings: settings %}{% endcapture %}
+                    {% if button1_href != blank %}
+                      <a href="{{ button1_href }}">
                     {% endif %}
 
                     {% capture image_class %}custom-image image-size-{{ settings.image_size }}{% endcapture %}
@@ -1443,7 +1474,7 @@
                       | image_tag: class: image_class, loading: 'lazy', alt: settings.title
                     }}
 
-                    {% if settings.button1_url != blank %}
+                    {% if button1_href != blank %}
                       </a>
                     {% endif %}
                   </div>
@@ -1470,14 +1501,15 @@
                 {% endif %}
 
                 <div class="custom-button-container">
-                  {% if settings.button1_text != blank and settings.button1_url != blank %}
-                    <a href="{{ settings.button1_url }}" class="custom-grid-button">
+                  {% capture button2_href %}{% render 'localized-value', field: 'button2_url', locale_code: locale_code, settings: settings %}{% endcapture %}
+                  {% if settings.button1_text != blank and button1_href != blank %}
+                    <a href="{{ button1_href }}" class="custom-grid-button" target="_blank" rel="noopener noreferrer">
                       {% render 'localized-value', field: 'button1_text', locale_code: locale_code, settings: settings %}
                     </a>
                   {% endif %}
 
-                  {% if settings.button2_text != blank and settings.button2_url != blank %}
-                    <a href="{{ settings.button2_url }}" class="custom-grid-button">
+                  {% if settings.button2_text != blank and button2_href != blank %}
+                    <a href="{{ button2_href }}" class="custom-grid-button" target="_blank" rel="noopener noreferrer">
                       {% render 'localized-value', field: 'button2_text', locale_code: locale_code, settings: settings %}
                     </a>
                   {% endif %}
