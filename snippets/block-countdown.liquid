@@ -5,13 +5,27 @@
   data-end-date="{{ block.settings.end_date }}"
   data-end-time="{{ block.settings.end_time }}"
   data-hide-on-end="{{ block.settings.hide_on_end }}"
-  style="display: flex; justify-content: center; padding: 15px 0;"
+  style="display: flex; justify-content: {{ block.settings.alignment | default: 'center' }}; padding: 15px 0;"
 >
   {% assign days_text = 'day' %}
   {% assign hours_text = 'Hrs' %}
   {% assign minutes_text = 'Min' %}
   {% assign seconds_text = 'Sec' %}
   {% assign end_text_translated = block.settings.end_text %}
+  {% assign prefix_text_translated = block.settings.prefix_text %}
+  {% assign align_class = 'center' %}
+  {% if block.settings.alignment == 'flex-start' %}
+    {% assign align_class = 'left' %}
+  {% elsif block.settings.alignment == 'flex-end' %}
+    {% assign align_class = 'right' %}
+  {% endif %}
+  {% assign prefix_mobile_size = block.settings.prefix_text_size_mobile %}
+  {% if prefix_mobile_size == blank %}
+    {% assign prefix_mobile_size = block.settings.prefix_text_size %}
+  {% endif %}
+  {% if prefix_mobile_size == blank %}
+    {% assign prefix_mobile_size = 16 %}
+  {% endif %}
 
   {% case locale_prefix %}
     {% when 'de' %}
@@ -20,6 +34,7 @@
       {% assign minutes_text = 'Min' %}
       {% assign seconds_text = 'Sek' %}
       {% assign end_text_translated = block.settings.end_text_de | default: block.settings.end_text %}
+      {% assign prefix_text_translated = block.settings.prefix_text_de | default: block.settings.prefix_text %}
 
     {% when 'fr' %}
       {% assign days_text = 'Jou' %}
@@ -27,6 +42,7 @@
       {% assign minutes_text = 'Min' %}
       {% assign seconds_text = 'Sec' %}
       {% assign end_text_translated = block.settings.end_text_fr | default: block.settings.end_text %}
+      {% assign prefix_text_translated = block.settings.prefix_text_fr | default: block.settings.prefix_text %}
 
     {% when 'fi' %}
       {% assign days_text = 'Pvä' %}
@@ -34,28 +50,34 @@
       {% assign minutes_text = 'Min' %}
       {% assign seconds_text = 'Ssek' %}
       {% assign end_text_translated = block.settings.end_text_fi | default: block.settings.end_text %}
+      {% assign prefix_text_translated = block.settings.prefix_text_fi | default: block.settings.prefix_text %}
   {% endcase %}
 
   <div class="countdown-container">
-    <div class="countdown-timer">
-      <div class="countdown-unit">
-        <span class="countdown-number" id="days-{{ block.id }}">00</span>
-        <span class="countdown-label">{{ days_text }}</span>
-      </div>
-      <div class="countdown-separator">:</div>
-      <div class="countdown-unit">
-        <span class="countdown-number" id="hours-{{ block.id }}">00</span>
-        <span class="countdown-label">{{ hours_text }}</span>
-      </div>
-      <div class="countdown-separator">:</div>
-      <div class="countdown-unit">
-        <span class="countdown-number" id="minutes-{{ block.id }}">00</span>
-        <span class="countdown-label">{{ minutes_text }}</span>
-      </div>
-      <div class="countdown-separator">:</div>
-      <div class="countdown-unit">
-        <span class="countdown-number" id="seconds-{{ block.id }}">00</span>
-        <span class="countdown-label">{{ seconds_text }}</span>
+    <div class="countdown-timer {% if block.settings.show_prefix_text and prefix_text_translated != blank %}countdown-timer--has-prefix{% endif %} countdown-align-{{ align_class }}">
+      {% if block.settings.show_prefix_text and prefix_text_translated != blank %}
+        <div class="countdown-prefix">{{ prefix_text_translated }}</div>
+      {% endif %}
+      <div class="countdown-row">
+        <div class="countdown-unit">
+          <span class="countdown-number" id="days-{{ block.id }}">00</span>
+          <span class="countdown-label">{{ days_text }}</span>
+        </div>
+        <div class="countdown-separator">:</div>
+        <div class="countdown-unit">
+          <span class="countdown-number" id="hours-{{ block.id }}">00</span>
+          <span class="countdown-label">{{ hours_text }}</span>
+        </div>
+        <div class="countdown-separator">:</div>
+        <div class="countdown-unit">
+          <span class="countdown-number" id="minutes-{{ block.id }}">00</span>
+          <span class="countdown-label">{{ minutes_text }}</span>
+        </div>
+        <div class="countdown-separator">:</div>
+        <div class="countdown-unit">
+          <span class="countdown-number" id="seconds-{{ block.id }}">00</span>
+          <span class="countdown-label">{{ seconds_text }}</span>
+        </div>
       </div>
     </div>
     <div class="countdown-end-text" id="end-text-{{ block.id }}" style="display: none;">
@@ -71,6 +93,21 @@
     gap: 8px;
   }
 
+  .block-id-{{ block.id }} .countdown-row {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .block-id-{{ block.id }} .countdown-prefix {
+    font-size: {{ block.settings.prefix_text_size | default: 16 }}px;
+    color: {{ block.settings.countdown_number_color }};
+    font-weight: 700;
+    margin-right: 4px;
+    white-space: nowrap;
+  }
+
+
   .block-id-{{ block.id }} .countdown-unit {
     display: flex;
     flex-direction: column;
@@ -84,13 +121,14 @@
     font-weight: 700;
     min-width: 2ch;
     text-align: center;
+    line-height: 1;
   }
 
   .block-id-{{ block.id }} .countdown-label {
     font-size: 14px;
     color: {{ block.settings.countdown_label_color }};
     font-weight: normal !important;
-    text-transform: uppercase;
+    text-transform: none;
     margin-top: 4px;
     letter-spacing: 0.5px;
   }
@@ -100,6 +138,34 @@
     color: {{ block.settings.countdown_number_color }};
     margin: 0 -4px;
     transform: translateY(-5px);
+  }
+  @media (max-width: 767px) {
+    .block-id-{{ block.id }} .countdown-timer.countdown-timer--has-prefix {
+      flex-direction: column;
+      gap: 6px;
+    }
+    .block-id-{{ block.id }} .countdown-timer.countdown-timer--has-prefix.countdown-align-left {
+      align-items: flex-start;
+    }
+    .block-id-{{ block.id }} .countdown-timer.countdown-timer--has-prefix.countdown-align-center {
+      align-items: center;
+    }
+    .block-id-{{ block.id }} .countdown-timer.countdown-timer--has-prefix.countdown-align-right {
+      align-items: flex-end;
+    }
+    .block-id-{{ block.id }} .countdown-prefix {
+      font-size: {{ prefix_mobile_size }}px !important;
+      white-space: normal;
+    }
+    .block-id-{{ block.id }} .countdown-timer.countdown-align-left .countdown-row {
+      justify-content: flex-start;
+    }
+    .block-id-{{ block.id }} .countdown-timer.countdown-align-center .countdown-row {
+      justify-content: center;
+    }
+    .block-id-{{ block.id }} .countdown-timer.countdown-align-right .countdown-row {
+      justify-content: flex-end;
+    }
   }
 {% endstyle %}
 

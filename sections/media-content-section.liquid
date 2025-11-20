@@ -1841,6 +1841,71 @@
           "default": "#666666"
         },
         {
+          "type": "select",
+          "id": "alignment",
+          "label": "Alignment",
+          "default": "center",
+          "options": [
+            { "label": "Left", "value": "flex-start" },
+            { "label": "Center", "value": "center" },
+            { "label": "Right", "value": "flex-end" }
+          ]
+        },
+        {
+          "type": "header",
+          "content": "Prefix text"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_prefix_text",
+          "label": "Show prefix text",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "prefix_text",
+          "label": "Prefix (English)",
+          "default": "Offer ends in"
+        },
+        {
+          "type": "text",
+          "id": "prefix_text_de",
+          "label": "Prefix (German)",
+          "default": "Angebot endet in"
+        },
+        {
+          "type": "text",
+          "id": "prefix_text_fr",
+          "label": "Prefix (French)",
+          "default": "Offre se termine dans"
+        },
+        {
+          "type": "text",
+          "id": "prefix_text_fi",
+          "label": "Prefix (Finnish)",
+          "default": "Tarjous päättyy"
+        },
+        {
+          "type": "range",
+          "id": "prefix_text_size",
+          "min": 12,
+          "max": 60,
+          "step": 1,
+          "unit": "px",
+          "label": "Prefix Size",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "prefix_text_size_mobile",
+          "min": 10,
+          "max": 50,
+          "step": 1,
+          "unit": "px",
+          "label": "Prefix Size (mobile)",
+          "default": 14
+        },
+        {
           "type": "header",
           "content": "End Message Translations"
         },
