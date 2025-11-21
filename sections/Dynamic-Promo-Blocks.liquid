@@ -297,6 +297,62 @@
       "default": "20px"
     },
     {
+      "type": "select",
+      "id": "left_content_offset_mode",
+      "label": "Content Position Mode",
+      "options": [
+        { "value": "default", "label": "Default" },
+        { "value": "custom", "label": "Custom (use offsets)" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "range",
+      "id": "left_content_offset_top",
+      "label": "Content Top offset",
+      "min": 0,
+      "max": 600,
+      "step": 10,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "left_content_offset_bottom",
+      "label": "Content Bottom offset",
+      "min": 0,
+      "max": 600,
+      "step": 10,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "left_content_offset_left",
+      "label": "Content Left offset",
+      "min": 0,
+      "max": 600,
+      "step": 10,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "left_content_offset_right",
+      "label": "Content Right offset",
+      "min": 0,
+      "max": 600,
+      "step": 10,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "left_content_center_horizontal",
+      "label": "Center content horizontally",
+      "default": true
+    },
+    {
       "type": "text",
       "id": "left_button",
       "label": "Button Text",
@@ -332,6 +388,10 @@
           "label": "Default"
         },
         {
+          "value": "custom",
+          "label": "Custom (use offsets)"
+        },
+        {
           "value": "bottom_left",
           "label": "Bottom Left"
         },
@@ -345,6 +405,52 @@
         }
       ],
       "default": "default"
+    },
+    {
+      "type": "range",
+      "id": "left_button_offset_top",
+      "label": "Top offset",
+      "min": 0,
+      "max": 600,
+      "step": 10,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "left_button_offset_bottom",
+      "label": "Bottom offset",
+      "min": 0,
+      "max": 600,
+      "step": 10,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "left_button_offset_left",
+      "label": "Left offset",
+      "min": 0,
+      "max": 600,
+      "step": 10,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "left_button_offset_right",
+      "label": "Right offset",
+      "min": 0,
+      "max": 600,
+      "step": 10,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "left_button_center_horizontal",
+      "label": "Center horizontally",
+      "default": true
     },
     {
       "type": "color",
@@ -1410,15 +1516,17 @@
         "
       >
         <div class="module__inner">
-          {% render 'module-content',
-            tag: left_tag,
-            title: left_title,
-            title_color: section.settings.left_title_color,
-            title_size: 'large',
-            title_element: 'h2',
-            title_line_height: section.settings.left_title_line_height,
-            title_margin_top: section.settings.left_title_margin_top
-          %}
+          {%- if section.settings.left_content_offset_mode != 'custom' -%}
+            {% render 'module-content',
+              tag: left_tag,
+              title: left_title,
+              title_color: section.settings.left_title_color,
+              title_size: 'large',
+              title_element: 'h2',
+              title_line_height: section.settings.left_title_line_height,
+              title_margin_top: section.settings.left_title_margin_top
+            %}
+          {%- endif -%}
           {%- if section.settings.left_button_position == 'default' -%}
             {% render 'unified-button',
               text: left_button,
@@ -1429,16 +1537,41 @@
             %}
           {%- endif -%}
         </div>
-        {%- if section.settings.left_button_position != 'default' -%}
-          <div class="module__button-wrapper {{ section.settings.left_button_position }}">
-            {%- render 'unified-button',
-              text: left_button,
-              url: section.settings.left_button_url,
-              bg_color: section.settings.left_button_color,
-              text_color: section.settings.left_button_text_color,
-              class: 'module__button'
-            -%}
+        {%- if section.settings.left_content_offset_mode == 'custom' -%}
+          <div class="module__content-wrapper" style="position: absolute; z-index: 3; display: flex; top: {% if section.settings.left_content_offset_top > 0 %}{{ section.settings.left_content_offset_top }}px{% else %}auto{% endif %}; bottom: {% if section.settings.left_content_offset_bottom > 0 %}{{ section.settings.left_content_offset_bottom }}px{% else %}auto{% endif %}; left: {% if section.settings.left_content_center_horizontal %}0{% elsif section.settings.left_content_offset_left > 0 %}{{ section.settings.left_content_offset_left }}px{% else %}auto{% endif %}; right: {% if section.settings.left_content_center_horizontal %}0{% elsif section.settings.left_content_offset_right > 0 %}{{ section.settings.left_content_offset_right }}px{% else %}auto{% endif %}; width: {% if section.settings.left_content_center_horizontal %}100%{% else %}auto{% endif %}; justify-content: {% if section.settings.left_content_center_horizontal %}center{% else %}flex-start{% endif %};">
+            {% render 'module-content',
+              tag: left_tag,
+              title: left_title,
+              title_color: section.settings.left_title_color,
+              title_size: 'large',
+              title_element: 'h2',
+              title_line_height: section.settings.left_title_line_height,
+              title_margin_top: section.settings.left_title_margin_top
+            %}
           </div>
+        {%- endif -%}
+        {%- if section.settings.left_button_position != 'default' -%}
+          {%- if section.settings.left_button_position == 'custom' -%}
+            <div class="module__button-wrapper custom" style="top: {% if section.settings.left_button_offset_top > 0 %}{{ section.settings.left_button_offset_top }}px{% else %}auto{% endif %}; bottom: {% if section.settings.left_button_offset_bottom > 0 %}{{ section.settings.left_button_offset_bottom }}px{% else %}auto{% endif %}; left: {% if section.settings.left_button_center_horizontal %}0{% elsif section.settings.left_button_offset_left > 0 %}{{ section.settings.left_button_offset_left }}px{% else %}auto{% endif %}; right: {% if section.settings.left_button_center_horizontal %}0{% elsif section.settings.left_button_offset_right > 0 %}{{ section.settings.left_button_offset_right }}px{% else %}auto{% endif %}; justify-content: {% if section.settings.left_button_center_horizontal %}center{% else %}flex-start{% endif %}; width: {% if section.settings.left_button_center_horizontal %}100%{% else %}auto{% endif %};">
+              {%- render 'unified-button',
+                text: left_button,
+                url: section.settings.left_button_url,
+                bg_color: section.settings.left_button_color,
+                text_color: section.settings.left_button_text_color,
+                class: 'module__button'
+              -%}
+            </div>
+          {%- else -%}
+            <div class="module__button-wrapper {{ section.settings.left_button_position }}">
+              {%- render 'unified-button',
+                text: left_button,
+                url: section.settings.left_button_url,
+                bg_color: section.settings.left_button_color,
+                text_color: section.settings.left_button_text_color,
+                class: 'module__button'
+              -%}
+            </div>
+          {%- endif -%}
         {%- endif -%}
       </div>
     </div>
@@ -1539,14 +1672,16 @@
         "
       >
         <div class="module__inner">
-          {% render 'module-content',
-            tag: left_tag,
-            title: left_title,
-            title_color: section.settings.left_title_color,
-            title_size: 'large',
-            title_element: 'h2',
-            title_line_height: section.settings.left_title_line_height_mobile
-          %}
+          {%- if section.settings.left_content_offset_mode != 'custom' -%}
+            {% render 'module-content',
+              tag: left_tag,
+              title: left_title,
+              title_color: section.settings.left_title_color,
+              title_size: 'large',
+              title_element: 'h2',
+              title_line_height: section.settings.left_title_line_height_mobile
+            %}
+          {%- endif -%}
           {%- if section.settings.left_button_position == 'default' -%}
             {% render 'unified-button',
               text: left_button,
@@ -1557,16 +1692,40 @@
             %}
           {%- endif -%}
         </div>
-        {%- if section.settings.left_button_position != 'default' -%}
-          <div class="module__button-wrapper {{ section.settings.left_button_position }}">
-            {%- render 'unified-button',
-              text: left_button,
-              url: section.settings.left_button_url,
-              bg_color: section.settings.left_button_color,
-              text_color: section.settings.left_button_text_color,
-              class: 'module__button'
-            -%}
+        {%- if section.settings.left_content_offset_mode == 'custom' -%}
+          <div class="module__content-wrapper" style="position: absolute; z-index: 3; display: flex; top: {% if section.settings.left_content_offset_top > 0 %}{{ section.settings.left_content_offset_top }}px{% else %}auto{% endif %}; bottom: {% if section.settings.left_content_offset_bottom > 0 %}{{ section.settings.left_content_offset_bottom }}px{% else %}auto{% endif %}; left: {% if section.settings.left_content_center_horizontal %}0{% elsif section.settings.left_content_offset_left > 0 %}{{ section.settings.left_content_offset_left }}px{% else %}auto{% endif %}; right: {% if section.settings.left_content_center_horizontal %}0{% elsif section.settings.left_content_offset_right > 0 %}{{ section.settings.left_content_offset_right }}px{% else %}auto{% endif %}; width: {% if section.settings.left_content_center_horizontal %}100%{% else %}auto{% endif %}; justify-content: {% if section.settings.left_content_center_horizontal %}center{% else %}flex-start{% endif %};">
+            {% render 'module-content',
+              tag: left_tag,
+              title: left_title,
+              title_color: section.settings.left_title_color,
+              title_size: 'large',
+              title_element: 'h2',
+              title_line_height: section.settings.left_title_line_height_mobile
+            %}
           </div>
+        {%- endif -%}
+        {%- if section.settings.left_button_position != 'default' -%}
+          {%- if section.settings.left_button_position == 'custom' -%}
+            <div class="module__button-wrapper custom" style="top: {% if section.settings.left_button_offset_top > 0 %}{{ section.settings.left_button_offset_top }}px{% else %}auto{% endif %}; bottom: {% if section.settings.left_button_offset_bottom > 0 %}{{ section.settings.left_button_offset_bottom }}px{% else %}auto{% endif %}; left: {% if section.settings.left_button_center_horizontal %}0{% elsif section.settings.left_button_offset_left > 0 %}{{ section.settings.left_button_offset_left }}px{% else %}auto{% endif %}; right: {% if section.settings.left_button_center_horizontal %}0{% elsif section.settings.left_button_offset_right > 0 %}{{ section.settings.left_button_offset_right }}px{% else %}auto{% endif %}; justify-content: {% if section.settings.left_button_center_horizontal %}center{% else %}flex-start{% endif %}; width: {% if section.settings.left_button_center_horizontal %}100%{% else %}auto{% endif %};">
+              {%- render 'unified-button',
+                text: left_button,
+                url: section.settings.left_button_url,
+                bg_color: section.settings.left_button_color,
+                text_color: section.settings.left_button_text_color,
+                class: 'module__button'
+              -%}
+            </div>
+          {%- else -%}
+            <div class="module__button-wrapper {{ section.settings.left_button_position }}">
+              {%- render 'unified-button',
+                text: left_button,
+                url: section.settings.left_button_url,
+                bg_color: section.settings.left_button_color,
+                text_color: section.settings.left_button_text_color,
+                class: 'module__button'
+              -%}
+            </div>
+          {%- endif -%}
         {%- endif -%}
       </div>
     </div>
