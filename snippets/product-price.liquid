@@ -16,7 +16,7 @@
         {% endif %}
       </div>
       {% render 'unit-price', variant: current_variant %}
-      {% if current_variant %}
+      {% if current_variant and localization.country.iso_code == 'DE' %}
         <jobrad-price-widget
           data-actual-price="{{ current_variant.price | divided_by: 100.0 }}"
           data-uvp-price="{{ current_variant.compare_at_price | default: current_variant.price | divided_by: 100.0 }}"
