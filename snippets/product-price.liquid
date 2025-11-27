@@ -16,6 +16,16 @@
         {% endif %}
       </div>
       {% render 'unit-price', variant: current_variant %}
+      {% if current_variant %}
+        <jobrad-price-widget
+          data-actual-price="{{ current_variant.price | divided_by: 100.0 }}"
+          data-uvp-price="{{ current_variant.compare_at_price | default: current_variant.price | divided_by: 100.0 }}"
+          data-name="{{ product.title | escape }}"
+          data-brand="{{ product.vendor | default: shop.name | escape }}"
+          data-product-id="{% if current_variant.sku != blank %}{{ current_variant.sku }}{% else %}{{ current_variant.id }}{% endif %}"
+          data-category="{{ product.product_type | default: product.type | default: 'Bicycle' }}">
+        </jobrad-price-widget>
+      {% endif %}
     </div>
   </div>
   <div class="price-descriptors">

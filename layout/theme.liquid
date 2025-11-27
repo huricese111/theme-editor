@@ -239,5 +239,8 @@
     <!-- Smart Language Selection Popup -->
     {% render 'smart-language-popup' %}
     {% render 'gw-custom' %}
+    {% if request.page_type == 'product' %}
+      <script type="module" src="https://jobrad-price-widget.svc.jobrad.org/staticfiles/latest/jobrad-price-widget.js"></script>
+    {% endif %}
   </body>
 </html>
