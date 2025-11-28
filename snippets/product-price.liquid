@@ -16,7 +16,34 @@
         {% endif %}
       </div>
       {% render 'unit-price', variant: current_variant %}
-      {% if current_variant and localization.country.iso_code == 'DE' %}
+      {%- assign type_lower = product.product_type | default: product.type | downcase -%}
+      {%- assign title_lower = product.title | downcase -%}
+      {%- assign has_ebike_keyword = false -%}
+      {%- assign ebike_keywords = 'trekking,city,urban,mountain,mountain carbon,allmountain,all mountain' | split: ',' -%}
+      {%- for kw in ebike_keywords -%}
+        {%- if title_lower contains kw or type_lower contains kw -%}
+          {%- assign has_ebike_keyword = true -%}
+          {%- break -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- assign is_accessory_keyword = false -%}
+      {%- if type_lower contains 'accessor' or type_lower contains 'accessories' or type_lower contains 'zubehör' or type_lower contains 'parts' or title_lower contains 'accessor' or title_lower contains 'accessories' or title_lower contains 'zubehör' or title_lower contains 'parts' -%}
+        {%- assign is_accessory_keyword = true -%}
+      {%- endif -%}
+      {%- assign is_ebike_product = false -%}
+      {%- if has_ebike_keyword and is_accessory_keyword == false -%}
+        {%- assign is_ebike_product = true -%}
+      {%- endif -%}
+      {%- assign tags_lower = product.tags | join: ',' | downcase -%}
+      {%- assign is_accessory_tag = false -%}
+      {%- if tags_lower contains 'accessor' or tags_lower contains 'zubehör' or tags_lower contains 'parts' or tags_lower contains 'component' -%}
+        {%- assign is_accessory_tag = true -%}
+      {%- endif -%}
+      {%- assign is_accessory = false -%}
+      {%- if is_accessory_keyword or is_accessory_tag -%}
+        {%- assign is_accessory = true -%}
+      {%- endif -%}
+      {% if current_variant and localization.country.iso_code == 'DE' and is_ebike_product and is_accessory == false %}
         <jobrad-price-widget
           data-actual-price="{{ current_variant.price | divided_by: 100.0 }}"
           data-uvp-price="{{ current_variant.compare_at_price | default: current_variant.price | divided_by: 100.0 }}"
@@ -30,6 +57,7 @@
   </div>
   <div class="price-descriptors">
     {%- form 'product', product, id: product_form_installments_id -%}
+      
       <input
         type="hidden"
         name="id"
