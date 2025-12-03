@@ -558,6 +558,16 @@
       min-width: max-content;
     }
 
+    /* Mobile vertical button layout: reduce spacing */
+    #shopify-section-{{ section.id }} .button-container.button-layout-mobile-vertical {
+      flex-direction: column !important;
+      gap: 8px;
+      overflow-x: visible;
+    }
+    #shopify-section-{{ section.id }} .button-container.button-layout-mobile-vertical .unified-button {
+      margin: 0 !important;
+    }
+
     #shopify-section-{{ section.id }} .media-overlap__background {
       min-height: 300px;
       {% if section.settings.media_mobile_bg != blank %}
