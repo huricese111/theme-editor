@@ -658,9 +658,85 @@
                                   {% if has_euro == false and d3 and d3 contains '&euro;' %}{% assign has_euro = true %}{% endif %}
                                   {% if has_euro %}
                                     {% assign pid = product.id | append: ',' %}
+                                    {% assign title_lower = product.title | downcase %}
+                                    {% if title_lower contains 'trekking 7 se' %}
+                                      {% unless sale_ids contains pid %}
+                                        {% render 'product-block', product: product, animate: true, force_hover_image: true %}
+                                        {% assign sale_ids = sale_ids | append: pid %}
+                                      {% endunless %}
+                                    {% endif %}
+                                  {% endif %}
+                                {% endfor %}
+                              {% endif %}
+                            {% else %}
+                              {% for product in other.settings.products %}
+                                {% assign d1 = product.metafields.custom.discount %}
+                                {% assign d2 = product.metafields.custom.discount_2 %}
+                                {% assign d3 = product.metafields.custom.discount_3 %}
+                                {% assign has_euro = false %}
+                                {% assign hide_d2 = false %}
+                                {% if d2 %}
+                                  {% assign d2_lower = d2 | downcase %}
+                                  {% if country_iso == 'FR' or country_iso == 'AT' %}
+                                    {% if d2_lower contains 'free insurance' or d2_lower contains 'gratis versicherung' or d2_lower contains 'assurance gratuite' %}
+                                      {% assign hide_d2 = true %}
+                                    {% endif %}
+                                  {% endif %}
+                                {% endif %}
+                                {% if d1 and d1 contains '€' %}{% assign has_euro = true %}{% endif %}
+                                {% if has_euro == false and d1 and d1 contains '&euro;' %}{% assign has_euro = true %}{% endif %}
+                                {% if has_euro == false and d2 and hide_d2 == false and d2 contains '€' %}{% assign has_euro = true %}{% endif %}
+                                {% if has_euro == false and d2 and hide_d2 == false and d2 contains '&euro;' %}{% assign has_euro = true %}{% endif %}
+                                {% if has_euro == false and d3 and d3 contains '€' %}{% assign has_euro = true %}{% endif %}
+                                {% if has_euro == false and d3 and d3 contains '&euro;' %}{% assign has_euro = true %}{% endif %}
+                                {% if has_euro %}
+                                  {% assign pid = product.id | append: ',' %}
+                                  {% assign title_lower = product.title | downcase %}
+                                  {% if title_lower contains 'trekking 7 se' %}
                                     {% unless sale_ids contains pid %}
                                       {% render 'product-block', product: product, animate: true, force_hover_image: true %}
                                       {% assign sale_ids = sale_ids | append: pid %}
+                                    {% endunless %}
+                                  {% endif %}
+                                {% endif %}
+                              {% endfor %}
+                            {% endif %}
+                          {% endif %}
+                        {% endfor %}
+
+                        {% for other in section.blocks %}
+                          {% if other.type == 'tab' and other.id != block.id %}
+                            {% if other.settings.product_source == 'collection' %}
+                              {% assign coll = collections[other.settings.collection] %}
+                              {% if coll and coll.products.size > 0 %}
+                                {% for product in coll.products %}
+                                  {% assign d1 = product.metafields.custom.discount %}
+                                  {% assign d2 = product.metafields.custom.discount_2 %}
+                                  {% assign d3 = product.metafields.custom.discount_3 %}
+                                  {% assign has_euro = false %}
+                                  {% assign hide_d2 = false %}
+                                  {% if d2 %}
+                                    {% assign d2_lower = d2 | downcase %}
+                                    {% if country_iso == 'FR' or country_iso == 'AT' %}
+                                      {% if d2_lower contains 'free insurance' or d2_lower contains 'gratis versicherung' or d2_lower contains 'assurance gratuite' %}
+                                        {% assign hide_d2 = true %}
+                                      {% endif %}
+                                    {% endif %}
+                                  {% endif %}
+                                  {% if d1 and d1 contains '€' %}{% assign has_euro = true %}{% endif %}
+                                  {% if has_euro == false and d1 and d1 contains '&euro;' %}{% assign has_euro = true %}{% endif %}
+                                  {% if has_euro == false and d2 and hide_d2 == false and d2 contains '€' %}{% assign has_euro = true %}{% endif %}
+                                  {% if has_euro == false and d2 and hide_d2 == false and d2 contains '&euro;' %}{% assign has_euro = true %}{% endif %}
+                                  {% if has_euro == false and d3 and d3 contains '€' %}{% assign has_euro = true %}{% endif %}
+                                  {% if has_euro == false and d3 and d3 contains '&euro;' %}{% assign has_euro = true %}{% endif %}
+                                  {% if has_euro %}
+                                    {% assign pid = product.id | append: ',' %}
+                                    {% assign title_lower = product.title | downcase %}
+                                    {% unless title_lower contains 'trekking 7 se' %}
+                                      {% unless sale_ids contains pid %}
+                                        {% render 'product-block', product: product, animate: true, force_hover_image: true %}
+                                        {% assign sale_ids = sale_ids | append: pid %}
+                                      {% endunless %}
                                     {% endunless %}
                                   {% endif %}
                                 {% endfor %}
@@ -688,9 +764,12 @@
                                 {% if has_euro == false and d3 and d3 contains '&euro;' %}{% assign has_euro = true %}{% endif %}
                                 {% if has_euro %}
                                   {% assign pid = product.id | append: ',' %}
-                                  {% unless sale_ids contains pid %}
-                                    {% render 'product-block', product: product, animate: true, force_hover_image: true %}
-                                    {% assign sale_ids = sale_ids | append: pid %}
+                                  {% assign title_lower = product.title | downcase %}
+                                  {% unless title_lower contains 'trekking 7 se' %}
+                                    {% unless sale_ids contains pid %}
+                                      {% render 'product-block', product: product, animate: true, force_hover_image: true %}
+                                      {% assign sale_ids = sale_ids | append: pid %}
+                                    {% endunless %}
                                   {% endunless %}
                                 {% endif %}
                               {% endfor %}
