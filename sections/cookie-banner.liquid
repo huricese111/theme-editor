@@ -1,0 +1,244 @@
+{% liquid
+  assign lang = request.locale.iso_code
+  assign privacy_url = section.settings.privacy_policy_url | default: '/policies/privacy-policy'
+  assign cookie_url = section.settings.cookie_policy_url | default: '/pages/cookie-policy'
+  assign first_char_p = privacy_url | slice: 0, 1
+  assign proto_rel_p = privacy_url | slice: 0, 2
+  if privacy_url contains '://' or proto_rel_p == '//'
+  elsif first_char_p != '/'
+    assign privacy_url = '/' | append: privacy_url
+  endif
+  assign first_char_c = cookie_url | slice: 0, 1
+  assign proto_rel_c = cookie_url | slice: 0, 2
+  if cookie_url contains '://' or proto_rel_c == '//'
+  elsif first_char_c != '/'
+    assign cookie_url = '/' | append: cookie_url
+  endif
+  case lang
+    when 'de'
+      assign banner_title = 'Wir respektieren deine Privatsphäre'
+      assign banner_desc = 'Wir verwenden Cookies für Funktionalität, Leistung und zielgerichtete Angebote. Du kannst alle zulassen, alle ablehnen oder deine Präferenzen wählen.'
+      assign accept_label = 'Alle zulassen'
+      assign deny_label = 'Alle ablehnen'
+      assign pref_label = 'Einstellungen'
+      assign manage_label = 'Cookie verwalten'
+      assign privacy_label = 'Datenschutzerklärung'
+      assign cookie_label = 'Cookie-Richtlinie'
+      assign save_label = 'Speichern'
+      assign func_label = 'Funktionalität'
+      assign perf_label = 'Leistung'
+      assign targ_label = 'Targeting'
+      assign modal_desc = 'Wähle, welche Arten von Cookies zulässig sind. Du kannst dies jederzeit ändern.'
+    when 'fr'
+      assign banner_title = 'Nous respectons votre vie privée'
+      assign banner_desc = 'Nous utilisons des cookies pour la fonctionnalité, la performance et le ciblage. Vous pouvez tout accepter, tout refuser ou choisir vos préférences.'
+      assign accept_label = 'Tout accepter'
+      assign deny_label = 'Tout refuser'
+      assign pref_label = 'Préférences'
+      assign manage_label = 'Gérer les cookies'
+      assign privacy_label = 'Politique de confidentialité'
+      assign cookie_label = 'Politique de cookies'
+      assign save_label = 'Enregistrer'
+      assign func_label = 'Fonctionnalité'
+      assign perf_label = 'Performance'
+      assign targ_label = 'Ciblage'
+      assign modal_desc = 'Choisissez les types de cookies autorisés. Vous pouvez modifier à tout moment.'
+    when 'fi'
+      assign banner_title = 'Kunnioitamme yksityisyyttäsi'
+      assign banner_desc = 'Käytämme evästeitä toiminnallisuuteen, suorituskykyyn ja kohdentamiseen. Voit hyväksyä kaikki, hylätä kaikki tai valita mieltymykset.'
+      assign accept_label = 'Hyväksy kaikki'
+      assign deny_label = 'Hylkää kaikki'
+      assign pref_label = 'Asetukset'
+      assign manage_label = 'Hallitse evästeitä'
+      assign privacy_label = 'Tietosuojaseloste'
+      assign cookie_label = 'Evästekäytännöt'
+      assign save_label = 'Tallenna'
+      assign func_label = 'Toiminnallisuus'
+      assign perf_label = 'Suorituskyky'
+      assign targ_label = 'Kohdentaminen'
+      assign modal_desc = 'Valitse, mitkä evästetyypit sallitaan. Voit muuttaa milloin tahansa.'
+    else
+      assign banner_title = 'We respect your privacy'
+      assign banner_desc = 'We use cookies for functionality, performance, and targeting. You can accept all, deny all, or choose preferences.'
+      assign accept_label = 'Accept all'
+      assign deny_label = 'Deny all'
+      assign pref_label = 'Preferences'
+      assign manage_label = 'Manage cookies'
+      assign privacy_label = 'Privacy policy'
+      assign cookie_label = 'Cookie policy'
+      assign save_label = 'Save'
+      assign func_label = 'Functionality'
+      assign perf_label = 'Performance'
+      assign targ_label = 'Targeting'
+      assign modal_desc = 'Choose which types of cookies are allowed. You can change this anytime.'
+  endcase
+%}
+
+<div id="cookie-banner" class="cookie-banner" data-api-base="{{ section.settings.consent_api_base | strip }}">
+  <div class="cookie-banner__content">
+    <div class="cookie-banner__text">
+      <h3 class="cookie-banner__title">{{ banner_title }}</h3>
+      <p class="cookie-banner__desc">{{ banner_desc }} <a class="cookie-banner__link" href="{{ privacy_url }}" target="_blank" rel="noopener">{{ privacy_label }}</a> · <a class="cookie-banner__link" href="{{ cookie_url }}" target="_blank" rel="noopener">{{ cookie_label }}</a></p>
+    </div>
+    <div class="cookie-banner__actions">
+      <button type="button" class="btn cookie-btn cookie-btn--deny" id="cookie-deny">{{ deny_label }}</button>
+      <button type="button" class="btn cookie-btn cookie-btn--accept" id="cookie-accept">{{ accept_label }}</button>
+      <button type="button" class="btn cookie-btn cookie-btn--prefs" id="cookie-prefs">{{ pref_label }}</button>
+    </div>
+  </div>
+</div>
+
+<modal-dialog class="modal fixed top-0 left-0 w-full h-full flex items-center justify-center" id="cookie-prefs-modal" role="dialog" aria-label="{{ pref_label }}" aria-modal="true" tabindex="-1">
+  <div class="modal__window relative bg-theme-bg text-theme-text text-start overflow-hidden has-motion">
+    <button type="button" class="modal__close-btn absolute js-close-modal">{% render 'icon-close' %}<span class="visually-hidden">Close</span></button>
+    <div class="modal__content flex-auto h-full">
+      <h3 class="cookie-prefs__title">{{ pref_label }}</h3>
+      <p class="cookie-prefs__desc">{{ modal_desc }} <a class="cookie-banner__link" href="{{ privacy_url }}" target="_blank" rel="noopener">{{ privacy_label }}</a></p>
+      <div class="cookie-prefs__groups">
+        <label class="cookie-prefs__item"><input type="checkbox" id="pref-func" checked /> {{ func_label }}</label>
+        <label class="cookie-prefs__item"><input type="checkbox" id="pref-perf" checked /> {{ perf_label }}</label>
+        <label class="cookie-prefs__item"><input type="checkbox" id="pref-targ" checked /> {{ targ_label }}</label>
+      </div>
+      <div class="cookie-prefs__actions">
+        <button type="button" class="btn cookie-btn cookie-btn--save" id="cookie-save">{{ save_label }}</button>
+      </div>
+    </div>
+  </div>
+</modal-dialog>
+
+<button type="button" id="cookie-manage" class="cookie-manage" aria-label="{{ manage_label }}" title="{{ manage_label }}">
+  <img src="{{ 'pandectes-reopen-logo.png' | asset_url }}" alt="" />
+</button>
+
+<script type="text/plain" id="consent-api-routes">
+const express = require('express');
+const app = express();
+app.use(express.json());
+const consents = [];
+app.post('/api/consent', (req, res) => {
+  const ip = (req.headers['x-forwarded-for'] || '').split(',')[0] || req.socket.remoteAddress || '';
+  const ua = req.headers['user-agent'] || '';
+  const now = Date.now();
+  const b = req.body || {};
+  const record = {
+    id: b.id || null,
+    email: b.email || null,
+    privacy: !!b.privacy,
+    terms: !!b.terms,
+    marketing: !!b.marketing,
+    preferences: typeof b.preferences === 'number' ? b.preferences : null,
+    status: b.status || null,
+    timestamp: typeof b.timestamp === 'number' ? b.timestamp : Math.floor(now/1000),
+    consent_time: b.consent_time || new Date(now).toISOString(),
+    ip,
+    userAgent: ua
+  };
+  consents.push(record);
+  res.status(201).json({ ok: true });
+});
+app.get('/api/consent', (req, res) => {
+  const limit = parseInt(req.query.limit || '100', 10);
+  res.json({ consents: consents.slice(-limit) });
+});
+if (require.main === module) {
+  const port = process.env.PORT || 3000;
+  app.listen(port, () => {});
+}
+module.exports = app;
+</script>
+
+<style>
+  #shopify-section-{{ section.id }} .cookie-banner { position: fixed; left: 0; right: 0; bottom: 0; z-index: 9000; background: #0f172a; color: #fff; box-shadow: 0 -6px 20px rgba(0,0,0,0.2); }
+  #shopify-section-{{ section.id }} .cookie-banner__content { max-width: 1200px; margin: 0 auto; padding: 12px 16px; display: flex; gap: 12px; align-items: center; justify-content: space-between; }
+  #shopify-section-{{ section.id }} .cookie-banner__title { margin: 0 0 4px; font-size: 16px; }
+  #shopify-section-{{ section.id }} .cookie-banner__desc { margin: 0; font-size: 14px; color: #cbd5e1; }
+  #shopify-section-{{ section.id }} .cookie-banner__link { color: #93c5fd; text-decoration: underline; text-underline-offset: 2px; }
+  #shopify-section-{{ section.id }} .cookie-banner__actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  #shopify-section-{{ section.id }} .cookie-btn { min-width: 120px; padding: 10px 14px; font-weight: 600; border-radius: 10px; }
+  #shopify-section-{{ section.id }} .cookie-btn--accept { background: #10b981; color: #06220f; border: 2px solid #0ea5a5; }
+  #shopify-section-{{ section.id }} .cookie-btn--deny { background: #ef4444; color: #3b0a0a; border: 2px solid #dc2626; }
+  #shopify-section-{{ section.id }} .cookie-btn--prefs { background: #334155; color: #e2e8f0; border: 2px solid #475569; }
+  #shopify-section-{{ section.id }} .cookie-prefs__title { margin: 0 0 10px; }
+  #shopify-section-{{ section.id }} .cookie-prefs__desc { margin: 0 0 12px; color: rgb(var(--text-2)); }
+  #shopify-section-{{ section.id }} .cookie-prefs__groups { display: grid; gap: 10px; }
+  #shopify-section-{{ section.id }} .cookie-prefs__item { display: flex; gap: 8px; align-items: center; }
+  #shopify-section-{{ section.id }} .cookie-prefs__actions { margin-top: 14px; display: flex; justify-content: flex-end; }
+  #shopify-section-{{ section.id }} .cookie-btn--save { background: #3b82f6; color: #081a3c; border: 2px solid #2563eb; }
+  #shopify-section-{{ section.id }} .cookie-manage { position: fixed; left: 16px; bottom: 16px; width: 44px; height: 44px; border-radius: 50%; overflow: hidden; border: 2px solid #e2e8f0; background: #fff; display: none; align-items: center; justify-content: center; z-index: 9001; }
+  #shopify-section-{{ section.id }} .cookie-manage img { width: 28px; height: 28px; }
+  @media (max-width: 767.98px) { #shopify-section-{{ section.id }} .cookie-banner__content { flex-direction: column; align-items: stretch; } #shopify-section-{{ section.id }} .cookie-banner__actions { justify-content: space-between; } }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function(){
+    var banner = document.getElementById('cookie-banner');
+    var btnAccept = document.getElementById('cookie-accept');
+    var btnDeny = document.getElementById('cookie-deny');
+    var btnPrefs = document.getElementById('cookie-prefs');
+    var modal = document.getElementById('cookie-prefs-modal');
+    var btnSave = document.getElementById('cookie-save');
+    var manage = document.getElementById('cookie-manage');
+    function getCookie(name){
+      var cookieString = '; ' + document.cookie;
+      var parts = cookieString.split('; ' + name + '=');
+      if (parts.length === 2) return parts.pop().split(';').shift();
+      return null;
+    }
+    function setCookie(name, value, days){
+      var expires = '';
+      if (days){ var d = new Date(); d.setTime(d.getTime() + (days*24*60*60*1000)); expires = '; expires=' + d.toUTCString(); }
+      document.cookie = encodeURIComponent(name) + '=' + encodeURIComponent(value) + expires + '; path=/; SameSite=Lax';
+    }
+    function encodePayload(obj){ try { return btoa(JSON.stringify(obj)); } catch(e){ return ''; } }
+    function decodePayload(str){
+      try {
+        var dec = atob(str);
+        try { return JSON.parse(dec); } catch(e){
+          var out = {}; dec.split(/\n|; /).forEach(function(line){ var kv = line.split(':'); if(kv.length>=2){ var k = kv[0].trim(); var v = kv.slice(1).join(':').trim().replace(/^"|"$/g,''); out[k]=v; } }); return out;
+        }
+      } catch(e){ return null; }
+    }
+    function getEndpoint(){ var base = banner ? banner.getAttribute('data-api-base') : ''; if(!base || base==='http://localhost:3000' || base==='https://example.com') return null; return base.endsWith('/api/consent')? base : (base.replace(/\/$/, '') + '/api/consent'); }
+    function logConsent(payload){ var ep = getEndpoint(); if(!ep) return; try { var ok = navigator.sendBeacon(ep, JSON.stringify(payload)); if(!ok){ fetch(ep, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), keepalive: true, mode: 'cors' }).catch(function(){}); } } catch(e){} }
+    function nowTs(){ return Math.floor(Date.now()/1000); }
+    function makeId(){ try { return crypto.randomUUID(); } catch(e){ return 'id-' + Math.random().toString(36).slice(2); } }
+    function writeConsent(status, prefs){ var id = makeId(); var ts = nowTs(); var payload = { id: id, preferences: prefs, status: status, timestamp: ts, userAgent: navigator.userAgent, type: 'cookie_consent' }; setCookie('_pandectes_gdpr', encodePayload(payload), 395); logConsent(payload); }
+    function showManage(){ if(manage) manage.style.display = 'flex'; }
+    function hideBanner(){ if(banner) banner.style.display = 'none'; }
+    var existing = getCookie('_pandectes_gdpr');
+    if (existing) { hideBanner(); showManage(); }
+    if (btnAccept) btnAccept.addEventListener('click', function(){ writeConsent('allow', 0); hideBanner(); showManage(); });
+    if (btnDeny) btnDeny.addEventListener('click', function(){ writeConsent('deny', 7); hideBanner(); showManage(); });
+    function openModal(){ if (modal && typeof modal.open === 'function') { modal.open(btnPrefs); } else if (modal) { modal.setAttribute('open', ''); } }
+    function closeModal(){ if (modal) { modal.removeAttribute('open'); } }
+    if (btnPrefs) btnPrefs.addEventListener('click', openModal);
+    if (manage) manage.addEventListener('click', openModal);
+    if (btnSave) btnSave.addEventListener('click', function(){
+      var f = document.getElementById('pref-func');
+      var p = document.getElementById('pref-perf');
+      var t = document.getElementById('pref-targ');
+      var prefs = 0;
+      if (!f || !f.checked) prefs = prefs | 1;
+      if (!p || !p.checked) prefs = prefs | 2;
+      if (!t || !t.checked) prefs = prefs | 4;
+      var status = (prefs === 0) ? 'allow' : ((prefs === 7) ? 'deny' : 'custom');
+      writeConsent(status, prefs);
+      closeModal();
+      hideBanner();
+      showManage();
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Cookie Banner",
+  "settings": [
+    { "type": "url", "id": "privacy_policy_url", "label": "Privacy policy link" },
+    { "type": "url", "id": "cookie_policy_url", "label": "Cookie policy link" },
+    { "type": "text", "id": "consent_api_base", "label": "Consent API base URL", "default": "https://example.com" }
+  ],
+  "presets": [{ "name": "Cookie Banner" }],
+  "disabled_on": { "groups": ["header", "footer"] }
+}
+{% endschema %}

@@ -53,7 +53,7 @@
             <div class="text-over-input">
               <span class="input-icon-left">{% render 'icon', icon: 'lock', size: 'small' %}</span>
               <input type="password" value="" name="customer[password]" id="password" class="large password" size="30" />
-              <button type="button" class="password-toggle" data-target="password" aria-pressed="false" aria-label="Show password">{% render 'icon', icon: 'eye', size: 'small' %}</button>
+              <button type="button" class="password-toggle" data-target="password" aria-pressed="true" aria-label="Show password">{% render 'icon', icon: 'eye', size: 'small' %}</button>
             </div>
           </div>
 
@@ -180,7 +180,7 @@
       toggle.addEventListener('click', function(){
         var visible = passwd.type === 'text';
         passwd.type = visible ? 'password' : 'text';
-        toggle.setAttribute('aria-pressed', visible ? 'false' : 'true');
+        toggle.setAttribute('aria-pressed', passwd.type === 'password' ? 'true' : 'false');
       });
     }
     var base = '{{ section.settings.consent_api_base | strip }}';

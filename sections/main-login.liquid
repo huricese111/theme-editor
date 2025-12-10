@@ -54,7 +54,7 @@
           <div class="text-over-input">
             <span class="input-icon-left">{% render 'icon', icon: 'lock', size: 'small' %}</span>
             <input type="password" value="" name="customer[password]" id="customer_password" class="large password" size="16" />
-            <button type="button" class="password-toggle" data-target="customer_password" aria-pressed="false" aria-label="Show password">{% render 'icon', icon: 'eye', size: 'small' %}</button>
+            <button type="button" class="password-toggle" data-target="customer_password" aria-pressed="true" aria-label="Show password">{% render 'icon', icon: 'eye', size: 'small' %}</button>
             <div id="forgot_password" class="text-over-input__text">
               <a class="underline" href="#" onclick="showRecoverPasswordForm();return false;">{{ 'customer.login.forgot_password' | t }}</a>
             </div>
@@ -182,7 +182,7 @@
     btn.addEventListener('click', function(){
       var visible = input.type === 'text';
       input.type = visible ? 'password' : 'text';
-      btn.setAttribute('aria-pressed', visible ? 'false' : 'true');
+      btn.setAttribute('aria-pressed', input.type === 'password' ? 'true' : 'false');
     });
   });
 </script>
