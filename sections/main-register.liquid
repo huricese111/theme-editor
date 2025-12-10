@@ -188,11 +188,19 @@
     var endpoint = valid ? (base.endsWith('/api/consent') ? base : (base.replace(/\/$/, '') + '/api/consent')) : null;
     var form = document.querySelector('#create-customer form');
     if (!form) return;
+    function nowTs(){ return Math.floor(Date.now()/1000); }
+    function makeId(){ try { return crypto.randomUUID(); } catch(e){ return 'id-' + Math.random().toString(36).slice(2); } }
+    function formatLocalTime(){ var d = new Date(); function pad(n){ return (n<10?'0':'')+n; } var off = -d.getTimezoneOffset(); var sign = off>=0?'+':'-'; var oh = Math.floor(Math.abs(off)/60); var om = Math.abs(off)%60; var offset = sign + pad(oh) + ':' + pad(om); return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+' '+pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds())+' '+offset; }
+    function getCountryInfo(){ var loc = null; try { loc = Intl.DateTimeFormat().resolvedOptions().locale; } catch(e){} if (!loc) { loc = (navigator.languages && navigator.languages[0]) || navigator.language || null; } var code = null; if (loc) { var parts = String(loc).split(/-|_/); if (parts.length>=2) { var last = parts[parts.length-1]; if (/^[A-Z]{2}$/.test(last)) code = last; } } var name = null; try { if (code && typeof Intl.DisplayNames === 'function') { var dn = new Intl.DisplayNames(['en'], { type: 'region' }); name = dn.of(code); } } catch(e){} return { locale: loc || null, country_code: code || null, country: name || null }; }
     form.addEventListener('submit', function(){
       var emailEl = document.getElementById('email');
       var legalEl = document.getElementById('legal_consent');
       var marketingEl = document.getElementById('accepts_marketing');
-      var payload = { email: emailEl ? emailEl.value : '', privacy: !!(legalEl && legalEl.checked), terms: !!(legalEl && legalEl.checked), marketing: !!(marketingEl && marketingEl.checked) };
+      var id = makeId();
+      var ts = nowTs();
+      var tz = (typeof Intl !== 'undefined' && Intl.DateTimeFormat && Intl.DateTimeFormat().resolvedOptions ? Intl.DateTimeFormat().resolvedOptions().timeZone : null);
+      var region = getCountryInfo();
+      var payload = { id: id, email: emailEl ? emailEl.value : '', privacy: !!(legalEl && legalEl.checked), terms: !!(legalEl && legalEl.checked), marketing: !!(marketingEl && marketingEl.checked), timestamp: ts, consent_time: formatLocalTime(), timezone: tz, country: region.country, country_code: region.country_code, locale: region.locale, userAgent: navigator.userAgent, type: 'registration_consent' };
       try { console.log('consent payload', payload); } catch(e) {}
       if (!marketingEl || !marketingEl.checked) {
         try {
