@@ -83,9 +83,9 @@
                 assign terms_policy_label = "Conditions d'utilisation"
                 assign marketing_consent_label = "J’accepte de recevoir régulièrement la newsletter de HEPHA GmbH. Elle contient des informations sur les produits et services de HEPHA GmbH. (facultatif)"
               when 'fi'
-                assign privacy_policy_label = 'Tietosuojaseloste'
+                assign privacy_policy_label = 'Tietosuojakäytäntö'
                 assign terms_policy_label = 'Käyttöehdot'
-                assign marketing_consent_label = 'Hyväksyn vastaanottavani HEPHA GmbH:n uutiskirjeen säännöllisin väliajoin. Se esittelee HEPHA GmbH:n tuotteita ja palveluja.'
+                assign marketing_consent_label = 'Suostun vastaanottamaan HEPHA GmbH:n uutiskirjeen, joka sisältää tietoa uusista tuotteista ja palveluista. (valinnainen)'
               else
                 assign privacy_policy_label = 'Privacy Policy'
                 assign terms_policy_label = 'Terms of Service'
@@ -184,7 +184,7 @@
       });
     }
     var base = '{{ section.settings.consent_api_base | strip }}';
-    var valid = !!base && base !== 'http://localhost:3000' && base !== 'https://example.com';
+    var valid = !!base && base !== 'https://example.com';
     var endpoint = valid ? (base.endsWith('/api/consent') ? base : (base.replace(/\/$/, '') + '/api/consent')) : null;
     var form = document.querySelector('#create-customer form');
     if (!form) return;
