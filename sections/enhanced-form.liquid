@@ -1501,6 +1501,7 @@
   document.addEventListener('DOMContentLoaded', function() {
     var form = document.getElementById('enhanced-contact-form');
     if (!form) return;
+    try { var restored = sessionStorage.getItem('enhanced_form_last_consent'); if (restored) { console.log('consent payload (restored)', JSON.parse(restored)); } } catch(e) {}
     function nowTs(){ return Math.floor(Date.now()/1000); }
     function makeId(){ try { return crypto.randomUUID(); } catch(e){ return 'id-' + Math.random().toString(36).slice(2); } }
     function formatLocalTime(){ var d = new Date(); function pad(n){ return (n<10?'0':'')+n; } var off = -d.getTimezoneOffset(); var sign = off>=0?'+':'-'; var oh = Math.floor(Math.abs(off)/60); var om = Math.abs(off)%60; var offset = sign + pad(oh) + ':' + pad(om); return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+' '+pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds())+' '+offset; }
@@ -1515,6 +1516,7 @@
       var region = getCountryInfo();
       var payload = { id: id, email: emailEl ? emailEl.value : '', formTitle: {{ form_title_text | json }}, privacy: !!(legalEl && legalEl.checked), terms: !!(legalEl && legalEl.checked), marketing: !!(marketingEl && marketingEl.checked), timestamp: ts, consent_time: formatLocalTime(), timezone: tz, country: region.country, country_code: region.country_code, locale: region.locale, userAgent: navigator.userAgent, type: 'enhanced_form_consent' };
       try { console.log('consent payload', payload); } catch(e) {}
+      try { sessionStorage.setItem('enhanced_form_last_consent', JSON.stringify(payload)); } catch(e) {}
     });
   });
 </script>
