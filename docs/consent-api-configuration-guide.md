@@ -2,7 +2,7 @@
 
 ## 中文
 - 目标
-  - 记录 Cookie 同意与注册同意日志，包含 `ID、preferences(0–7)、status(allow|deny|custom)、timestamp、consent_time、IP、userAgent` 等，用于合规留痕。
+  - 记录 Cookie 同意、注册同意与增强表单同意日志，包含 `ID、preferences(0–7)、status(allow|deny|custom)、timestamp、consent_time、IP、userAgent` 等，用于合规留痕。
   - 前端通过“主题设置中的 `Consent API base URL`”自动拼接 `.../api/consent` 并上报。
 
 - 前端集成位置
@@ -24,9 +24,10 @@
       - 写入尝试/允许/阻止：`sections/cookie-banner.liquid:287-290`
       - 周期扫描新增/移除：`sections/cookie-banner.liquid:305-307`
   - `sections/main-register.liquid`
-  - `sections/footer.liquid`
     - 端点拼接：`sections/main-register.liquid:186-188`
     - 表单提交上报（含隐私/条款/营销）：`sections/main-register.liquid:191-213`
+  - `sections/enhanced-form.liquid`
+    - 表单提交日志打印（含隐私/条款/营销、formTitle）：`sections/enhanced-form.liquid:1501-1519`
 
 - 主题设置（必须配置）
   - 在主题编辑器中，将 Cookie Banner 区块的 `Consent API base URL` 设置为你的后端根地址。
@@ -38,15 +39,17 @@
     - 请求体（JSON）：
       - `id` 字符串（UUID）
       - `email` 字符串或 `null`
-      - `privacy` 布尔（注册页）
-      - `terms` 布尔（注册页）
-      - `marketing` 布尔（注册页）
+      - `privacy` 布尔（注册页/增强表单）
+      - `terms` 布尔（注册页/增强表单）
+      - `marketing` 布尔（注册页/增强表单）
       - `preferences` 数字（0–7，3 位位图：功能=1、性能=2、定向=4；未勾选表示拒绝，对应置 1）
       - `status` 字符串：`allow | deny | custom`
       - `timestamp` 秒级时间戳
       - `consent_time` ISO 字符串
       - `userAgent` 字符串
-      - `type` 固定：`cookie_consent`
+      - `type`：`cookie_consent | registration_consent | enhanced_form_consent`
+      - 额外字段：
+        - `formTitle` 字符串（增强表单）；见 `sections/enhanced-form.liquid:1516`
   - 响应体（JSON）：
       - 成功：`{ ok: true, ip: "<客户端IP>" }`（参考 `sections/cookie-banner.liquid:180-181`）
       - 失败：`{ ok: false }`（500）
@@ -72,6 +75,7 @@
   - 在浏览器控制台查看日志：
     - 本地打印：`consent { endpoint, payload }`（`sections/cookie-banner.liquid:236-241`）
     - 回退 `fetch` 时打印：`consent saved { ok: true, ip: "..." }`
+    - 增强表单打印：`consent payload`（含 `formTitle`；`sections/enhanced-form.liquid:1501-1519`）
   - 数据库验证：检查插入新行，含 `ip` 与 `userAgent`。
 
 - 合规与安全建议
@@ -89,7 +93,7 @@
 
 ## English
 - Goal
-  - Persist cookie and registration consents with `id, preferences(0–7), status(allow|deny|custom), timestamp, consent_time, ip, userAgent` for compliance.
+  - Persist cookie, registration, and enhanced form consents with `id, preferences(0–7), status(allow|deny|custom), timestamp, consent_time, ip, userAgent` for compliance.
   - Frontend reads Theme setting `Consent API base URL` and posts to `.../api/consent`.
 
 - Frontend integration points
@@ -110,6 +114,11 @@
     - Logging:
       - Attempt/allowed/blocked: `sections/cookie-banner.liquid:287-290`
       - Periodic detection/removal scan: `sections/cookie-banner.liquid:305-307`
+  - `sections/main-register.liquid`
+    - Endpoint building: `sections/main-register.liquid:186-188`
+    - Submit payload (privacy/terms/marketing): `sections/main-register.liquid:191-213`
+  - `sections/enhanced-form.liquid`
+    - Submit logging (privacy/terms/marketing, formTitle): `sections/enhanced-form.liquid:1501-1519`
 
 - Theme setting (required)
   - Set `Consent API base URL` in the Cookie Banner section to your backend base URL.
@@ -121,7 +130,9 @@
     - Request (JSON):
       - `id` (UUID), `email` (string or null), `privacy` (bool), `terms` (bool), `marketing` (bool)
       - `preferences` (number 0–7; bits: 1=functionality, 2=performance, 4=targeting; 1 means denied)
-      - `status` (`allow | deny | custom`), `timestamp` (unix seconds), `consent_time` (ISO), `userAgent` (string), `type` (`cookie_consent`)
+      - `status` (`allow | deny | custom`), `timestamp` (unix seconds), `consent_time` (ISO), `userAgent` (string), `type` (`cookie_consent | registration_consent | enhanced_form_consent`)
+      - Extra fields:
+        - `formTitle` (string, Enhanced Form); see `sections/enhanced-form.liquid:1516`
     - Response (JSON):
       - Success: `{ ok: true, ip: "<client_ip>" }` (see `sections/cookie-banner.liquid:180-181`)
       - Failure: `{ ok: false }` (500)
@@ -147,6 +158,7 @@
   - Browser console:
     - Local print: `consent { endpoint, payload }` (`sections/cookie-banner.liquid:236-241`)
     - Fetch fallback: `consent saved { ok: true, ip: "..." }`
+    - Enhanced Form print: `consent payload` (with `formTitle`; `sections/enhanced-form.liquid:1501-1519`)
   - DB: verify inserted rows with `ip` and `userAgent`.
 
 - Compliance & security
