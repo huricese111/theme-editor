@@ -6,16 +6,25 @@
   - 前端通过“主题设置中的 `Consent API base URL`”自动拼接 `.../api/consent` 并上报。
 
 - 前端集成位置
-  - `d:/Hepha Theme Editor/sections/cookie-banner.liquid`
-    - 端点拼接与上报：`sections/cookie-banner.liquid:236-241`
-    - 写入 Cookie 与生成 payload：`sections/cookie-banner.liquid:238-241`
+  - `sections/cookie-banner.liquid`
+    - 端点拼接与上报：`sections/cookie-banner.liquid:291-292`
+    - 写入 Cookie 与生成 payload：`sections/cookie-banner.liquid:262-266`、`sections/cookie-banner.liquid:301`
     - 事件上报与关闭：
-      - 接受并关闭：`sections/cookie-banner.liquid:244`
-      - 拒绝并关闭：`sections/cookie-banner.liquid:245`
-      - 偏好保存并关闭：`sections/cookie-banner.liquid:252-264`
-    - 初始化弹窗（有任何同意记录则不再弹窗）：`sections/cookie-banner.liquid:243`
-    - 政策链接（段落中的内联链接）：`sections/cookie-banner.liquid:93-96`
-  - `d:/Hepha Theme Editor/sections/main-register.liquid`
+      - 接受并关闭：`sections/cookie-banner.liquid:308`
+      - 拒绝并关闭：`sections/cookie-banner.liquid:309`
+      - 偏好保存并关闭：`sections/cookie-banner.liquid:316`
+    - 初始化弹窗（有任何同意记录则不再弹窗）：`sections/cookie-banner.liquid:304`
+    - 政策链接（段落中的内联链接）：`sections/cookie-banner.liquid:98-100`
+    - Cookie 拦截与清理（拒绝或自定义关闭时）：
+      - 启用拦截：`sections/cookie-banner.liquid:287`
+      - 清理非必需 Cookie：`sections/cookie-banner.liquid:289`
+      - 关闭拦截（接受全部）：`sections/cookie-banner.liquid:292`
+      - 根据状态应用拦截：`sections/cookie-banner.liquid:290`
+    - 日志监控（控制台输出）：
+      - 写入尝试/允许/阻止：`sections/cookie-banner.liquid:287-290`
+      - 周期扫描新增/移除：`sections/cookie-banner.liquid:305-307`
+  - `sections/main-register.liquid`
+  - `sections/footer.liquid`
     - 端点拼接：`sections/main-register.liquid:186-188`
     - 表单提交上报（含隐私/条款/营销）：`sections/main-register.liquid:191-213`
 
@@ -38,15 +47,15 @@
       - `consent_time` ISO 字符串
       - `userAgent` 字符串
       - `type` 固定：`cookie_consent`
-    - 响应体（JSON）：
-      - 成功：`{ ok: true, ip: "<客户端IP>" }`（参考 `sections/cookie-banner.liquid:171`）
+  - 响应体（JSON）：
+      - 成功：`{ ok: true, ip: "<客户端IP>" }`（参考 `sections/cookie-banner.liquid:180-181`）
       - 失败：`{ ok: false }`（500）
   - `GET /api/consent?limit=N`
     - 返回最近 N 条记录：`{ consents: [ ... ] }`（参考 `sections/cookie-banner.liquid:173-176`）
 
 - 数据库表结构（SQLite 示例）
   - 字段：`id,email,privacy,terms,marketing,preferences,status,timestamp,consent_time,ip,userAgent,received_at`
-  - 插入语句位置：`sections/cookie-banner.liquid:167-174`
+  - 插入语句位置：`sections/cookie-banner.liquid:178-181`
 
 - 服务端实现要点
   - IP 捕获（代理兼容）：`sections/cookie-banner.liquid:146-154`
@@ -84,18 +93,23 @@
   - Frontend reads Theme setting `Consent API base URL` and posts to `.../api/consent`.
 
 - Frontend integration points
-  - `d:/Hepha Theme Editor/sections/cookie-banner.liquid`
-    - Endpoint building and logging: `sections/cookie-banner.liquid:236-241`
-    - Cookie write and payload creation: `sections/cookie-banner.liquid:238-241`
+  - `sections/cookie-banner.liquid`
+    - Endpoint building and logging: `sections/cookie-banner.liquid:291-292`
+    - Cookie write and payload creation: `sections/cookie-banner.liquid:262-266`, `sections/cookie-banner.liquid:301`
     - Event logging and closing:
-      - Accept & close: `sections/cookie-banner.liquid:244`
-      - Deny & close: `sections/cookie-banner.liquid:245`
-      - Save preferences & close: `sections/cookie-banner.liquid:252-264`
-    - Initial modal logic (do not open if any consent exists): `sections/cookie-banner.liquid:243`
-    - Policy links (inline in paragraph): `sections/cookie-banner.liquid:93-96`
-  - `d:/Hepha Theme Editor/sections/main-register.liquid`
-    - Endpoint building: `sections/main-register.liquid:186-188`
-    - Form submit logging: `sections/main-register.liquid:191-213`
+      - Accept & close: `sections/cookie-banner.liquid:308`
+      - Deny & close: `sections/cookie-banner.liquid:309`
+      - Save preferences & close: `sections/cookie-banner.liquid:316`
+    - Initial modal logic (do not open if any consent exists): `sections/cookie-banner.liquid:304`
+    - Policy links (inline in paragraph): `sections/cookie-banner.liquid:98-100`
+    - Cookie interception & cleanup:
+      - Enable interception: `sections/cookie-banner.liquid:287`
+      - Cleanup non-essential cookies: `sections/cookie-banner.liquid:289`
+      - Disable interception on "Accept all": `sections/cookie-banner.liquid:292`
+      - Apply by status: `sections/cookie-banner.liquid:290`
+    - Logging:
+      - Attempt/allowed/blocked: `sections/cookie-banner.liquid:287-290`
+      - Periodic detection/removal scan: `sections/cookie-banner.liquid:305-307`
 
 - Theme setting (required)
   - Set `Consent API base URL` in the Cookie Banner section to your backend base URL.
@@ -109,14 +123,14 @@
       - `preferences` (number 0–7; bits: 1=functionality, 2=performance, 4=targeting; 1 means denied)
       - `status` (`allow | deny | custom`), `timestamp` (unix seconds), `consent_time` (ISO), `userAgent` (string), `type` (`cookie_consent`)
     - Response (JSON):
-      - Success: `{ ok: true, ip: "<client_ip>" }` (see `sections/cookie-banner.liquid:171`)
+      - Success: `{ ok: true, ip: "<client_ip>" }` (see `sections/cookie-banner.liquid:180-181`)
       - Failure: `{ ok: false }` (500)
   - `GET /api/consent?limit=N`
     - Returns latest N records: `{ consents: [ ... ] }` (see `sections/cookie-banner.liquid:173-176`)
 
 - Database schema (SQLite example)
   - Columns: `id,email,privacy,terms,marketing,preferences,status,timestamp,consent_time,ip,userAgent,received_at`
-  - Insert reference: `sections/cookie-banner.liquid:167-174`
+  - Insert reference: `sections/cookie-banner.liquid:178-181`
 
 - Backend notes
   - IP extraction (proxy-aware): `sections/cookie-banner.liquid:146-154`

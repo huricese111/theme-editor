@@ -25,6 +25,7 @@
       assign privacy_label = 'Datenschutzerklärung'
       assign cookie_label = 'Cookie-Richtlinie'
       assign save_label = 'Speichern'
+      assign back_label = 'Zurück'
       assign func_label = 'Funktionalität'
       assign perf_label = 'Leistung'
       assign targ_label = 'Targeting'
@@ -42,6 +43,7 @@
       assign privacy_label = 'Politique de confidentialité'
       assign cookie_label = 'Politique de cookies'
       assign save_label = 'Enregistrer'
+      assign back_label = 'Retour'
       assign func_label = 'Fonctionnalité'
       assign perf_label = 'Performance'
       assign targ_label = 'Ciblage'
@@ -59,6 +61,7 @@
       assign privacy_label = 'Tietosuojaseloste'
       assign cookie_label = 'Evästekäytännöt'
       assign save_label = 'Tallenna'
+      assign back_label = 'Takaisin'
       assign func_label = 'Toiminnallisuus'
       assign perf_label = 'Suorituskyky'
       assign targ_label = 'Kohdentaminen'
@@ -76,6 +79,7 @@
       assign privacy_label = 'Privacy policy'
       assign cookie_label = 'Cookie policy'
       assign save_label = 'Save'
+      assign back_label = 'Back'
       assign func_label = 'Functionality'
       assign perf_label = 'Performance'
       assign targ_label = 'Targeting'
@@ -86,9 +90,9 @@
   endcase
 %}
 
-<modal-dialog class="modal fixed top-0 left-0 w-full h-full flex items-center justify-center" id="cookie-consent-modal" role="dialog" aria-label="{{ banner_title }}" aria-modal="true" tabindex="-1" data-api-base="{{ section.settings.consent_api_base | strip }}" data-customer-email="{{ customer.email | default: '' }}">
+<modal-dialog class="modal cookie-banner fixed top-0 left-0 w-full h-full flex items-center justify-center" id="cookie-consent-modal" role="dialog" aria-label="{{ banner_title }}" aria-modal="true" tabindex="-1" data-api-base="{{ section.settings.consent_api_base | strip }}" data-customer-email="{{ customer.email | default: '' }}">
   <div class="modal__window relative bg-theme-bg text-theme-text text-start overflow-hidden has-motion">
-    <div class="modal__content flex-auto h-full">
+    <div class="modal__content">
       <div class="consent-header">
         <img class="consent-logo" src="https://cdn.shopify.com/s/files/1/0560/0080/6985/files/HEPHA_Logo_PNG.png?v=1722608803" alt="HEPHA" />
         <button type="button" class="modal__close-btn absolute js-close-modal">{% render 'icon-close' %}<span class="visually-hidden">Close</span></button>
@@ -104,18 +108,18 @@
         <li><strong>{{ targ_label }}:</strong> {{ targ_desc }}</li>
       </ul>
       <div class="cookie-consent__actions">
-        <button type="button" class="btn cookie-btn cookie-btn--deny" id="cookie-deny">{{ deny_label }}</button>
-        <button type="button" class="btn cookie-btn cookie-btn--accept" id="cookie-accept">{{ accept_label }}</button>
-        <button type="button" class="btn btn--tertiary cookie-btn cookie-btn--prefs" id="cookie-prefs">{{ pref_label }}</button>
+        <button type="button" class="cookie-btn cookie-btn--deny" id="cookie-deny">{{ deny_label }}</button>
+        <button type="button" class="cookie-btn cookie-btn--accept" id="cookie-accept">{{ accept_label }}</button>
+        <button type="button" class="cookie-btn cookie-btn--prefs" id="cookie-prefs">{{ pref_label }}</button>
       </div>
       
     </div>
   </div>
 </modal-dialog>
 
-<modal-dialog class="modal fixed top-0 left-0 w-full h-full flex items-center justify-center" id="cookie-prefs-modal" role="dialog" aria-label="{{ pref_label }}" aria-modal="true" tabindex="-1">
+<modal-dialog class="modal cookie-banner fixed top-0 left-0 w-full h-full flex items-center justify-center" id="cookie-prefs-modal" role="dialog" aria-label="{{ pref_label }}" aria-modal="true" tabindex="-1">
   <div class="modal__window relative bg-theme-bg text-theme-text text-start overflow-hidden has-motion">
-    <div class="modal__content flex-auto h-full">
+    <div class="modal__content">
       <div class="consent-header">
         <img class="consent-logo" src="https://cdn.shopify.com/s/files/1/0560/0080/6985/files/HEPHA_Logo_PNG.png?v=1722608803" alt="HEPHA" />
       </div>
@@ -136,8 +140,8 @@
         </div>
       </div>
       <div class="cookie-prefs__actions">
-        <button type="button" class="btn cookie-btn cookie-btn--save" id="cookie-save">{{ save_label }}</button>
-        <button type="button" class="btn cookie-btn cookie-btn--accept-all" id="cookie-accept-all">{{ accept_label }}</button>
+        <button type="button" class="cookie-btn cookie-btn--save" id="cookie-save">{{ save_label }}</button>
+        <button type="button" class="cookie-btn cookie-btn--back" id="cookie-back">{{ back_label }}</button>
       </div>
     </div>
   </div>
@@ -195,15 +199,15 @@ module.exports = app;
 </script>
 
 <style>
-  #shopify-section-{{ section.id }} .cookie-consent__title { margin: 0 0 8px; font-size: 20px; }
+  #shopify-section-{{ section.id }} .cookie-consent__title { margin: 30px 0 8px; font-size: 24px; }
   #shopify-section-{{ section.id }} .cookie-consent__desc { margin: 0 0 16px; font-size: 14px; color: #475569; }
   #shopify-section-{{ section.id }} .cookie-consent__link { color: #2563eb; text-decoration: underline; text-underline-offset: 2px; }
-  #shopify-section-{{ section.id }} .cookie-consent__actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 12px; border-top: 1px solid #e5e7eb; padding-top: 12px; position: sticky; bottom: 0; background: #ffffff; }
+  #shopify-section-{{ section.id }} .cookie-consent__actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 12px; border-top: 1px solid #e5e7eb; padding-top: 12px; position: static; background: #ffffff; }
   #shopify-section-{{ section.id }} .cookie-consent__links { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
-  #shopify-section-{{ section.id }} .cookie-consent__actions .btn { flex: 1; min-width: 160px; }
+  #shopify-section-{{ section.id }} .cookie-consent__actions .cookie-btn { flex: 0 1 auto; min-width: 160px; }
   #shopify-section-{{ section.id }} .cookie-btn--prefs::after { content: '›'; display: inline-block; margin-left: 6px; font-weight: 700; }
   
-  #shopify-section-{{ section.id }} .cookie-btn { background: #000000; color: #ffffff; border: 2px solid #000000; border-radius: 8px; transition: background-color .15s ease, border-color .15s ease, transform .15s ease, box-shadow .15s ease; }
+  #shopify-section-{{ section.id }} .cookie-btn { appearance: none; box-sizing: border-box; background: #000000; color: #ffffff; border: 2px solid #000000; border-radius: 8px; padding: 10px 12px; font: inherit; line-height: 1.2; display: inline-block; cursor: pointer; transition: background-color .15s ease, border-color .15s ease, transform .15s ease, box-shadow .15s ease; }
   #shopify-section-{{ section.id }} .cookie-btn:hover, 
   #shopify-section-{{ section.id }} .cookie-btn:focus { background: #111111; border-color: #111111; transform: translateY(-1px); box-shadow: 0 8px 16px rgba(0,0,0,.2); }
   #shopify-section-{{ section.id }} .cookie-btn:active { transform: translateY(-0.5px); box-shadow: 0 4px 8px rgba(0,0,0,.16); }
@@ -226,10 +230,18 @@ module.exports = app;
   #shopify-section-{{ section.id }} .cookie-prefs__label input:checked + .cookie-toggle::after { transform: translateX(18px); }
   #shopify-section-{{ section.id }} .cookie-prefs__item-desc { grid-column: 1 / -1; color: rgb(var(--text-2)); font-size: 13px; }
   #shopify-section-{{ section.id }} .cookie-prefs__actions { margin-top: 14px; display: flex; gap: 12px; justify-content: space-between; }
+  #shopify-section-{{ section.id }} .cookie-prefs__actions .cookie-btn { flex: 0 1 auto; min-width: 160px; }
   #shopify-section-{{ section.id }} .cookie-btn--save { background: #000000; color: #ffffff; border: 2px solid #000000; }
-  #shopify-section-{{ section.id }} .cookie-btn--accept-all { background: #000000; color: #ffffff; border: 2px solid #000000; }
+  #shopify-section-{{ section.id }} .cookie-btn--back { background: #e5e7eb; color: #000000; border: 2px solid #d1d5db; }
+  #shopify-section-{{ section.id }} .cookie-btn--back:hover,
+  #shopify-section-{{ section.id }} .cookie-btn--back:focus { background: #d1d5db; border-color: #cbd5e1; color: #000000; transform: translateY(-1px); box-shadow: 0 8px 16px rgba(0,0,0,.15); }
   @media (max-width: 767.98px) { #shopify-section-{{ section.id }} .cookie-consent__actions { justify-content: space-between; } }
   #shopify-section-{{ section.id }} modal-dialog.modal:not([open]) { display: none; }
+  #shopify-section-{{ section.id }} #cookie-consent-modal .modal__window,
+  #shopify-section-{{ section.id }} #cookie-prefs-modal .modal__window { max-width: 800px; max-height: 80vh;min-height: 40vh; height: auto !important; }
+  #shopify-section-{{ section.id }} #cookie-consent-modal .modal__content,
+  #shopify-section-{{ section.id }} #cookie-prefs-modal .modal__content { height: auto !important; padding: 24px 24px 16px !important; }
+  #shopify-section-{{ section.id }} #cookie-consent-modal .modal__content { padding: 24px 24px 16px !important; }
 </style>
 
 <script>
@@ -240,7 +252,7 @@ module.exports = app;
     var btnPrefs = document.getElementById('cookie-prefs');
     var prefsModal = document.getElementById('cookie-prefs-modal');
     var btnSave = document.getElementById('cookie-save');
-    var btnAcceptAllBottom = document.getElementById('cookie-accept-all');
+    var btnBack = document.getElementById('cookie-back');
     var reopenSelector = '[data-open-cookie-prefs]';
     function getCookie(name){
       var cookieString = '; ' + document.cookie;
@@ -256,12 +268,30 @@ module.exports = app;
     function encodePayload(obj){ try { return btoa(JSON.stringify(obj)); } catch(e){ return ''; } }
     function decodePayload(str){
       try {
-        var dec = atob(str);
+        var raw = String(str || '');
+        var base64;
+        try { base64 = decodeURIComponent(raw); } catch(e){ base64 = raw; }
+        var dec = atob(base64);
         try { return JSON.parse(dec); } catch(e){
           var out = {}; dec.split(/\n|; /).forEach(function(line){ var kv = line.split(':'); if(kv.length>=2){ var k = kv[0].trim(); var v = kv.slice(1).join(':').trim().replace(/^"|"$/g,''); out[k]=v; } }); return out;
         }
       } catch(e){ return null; }
     }
+    function cookieNameFromString(str){ var s = String(str || ''); var p = s.split(';')[0]; var i = p.indexOf('='); return (i>=0 ? p.slice(0,i) : p).trim(); }
+    var functionalAllow = [/^_pandectes_gdpr$/, /^cart($|_)/, /^secure_customer_sig$/, /^localization$/, /^shopify_pay_redirect$/, /^checkout($|_)/, /^storefront_digest$/, /^__Host-/];
+    var perfBlock = [/^_ga/, /^_gid/, /^_gat/, /^__utm/, /^_gcl_/, /^_shopify_y$/, /^_shopify_s$/, /^_y$/, /^_s$/, /^_shopify_d$/];
+    var targBlock = [/^_fbp$/, /^fr$/, /^IDE$/, /^NID$/, /^ANID$/, /^_pin/, /^_tt/, /^ajs_/, /^mp_/i, /^amplitude/i];
+    function matchAny(arr, name){ for (var i=0;i<arr.length;i++){ if(arr[i].test(name)) return true; } return false; }
+    function isFunctional(name){ return matchAny(functionalAllow, name); }
+    function category(name){ if (isFunctional(name)) return 'functional'; if (matchAny(perfBlock, name)) return 'performance'; if (matchAny(targBlock, name)) return 'targeting'; return 'unknown'; }
+    var cookieDescriptor = (function(){ try { return Object.getOwnPropertyDescriptor(Document.prototype,'cookie') || Object.getOwnPropertyDescriptor(HTMLDocument.prototype,'cookie'); } catch(e){ return null; } })();
+    var origCookieSet = cookieDescriptor && cookieDescriptor.set ? cookieDescriptor.set.bind(document) : null;
+    var origCookieGet = cookieDescriptor && cookieDescriptor.get ? cookieDescriptor.get.bind(document) : null;
+    var interceptMode = null;
+    function enableCookieInterception(detail){ interceptMode = { functionality: true, performance: !!detail && !!detail.performance, targeting: !!detail && !!detail.targeting }; if (!cookieDescriptor || !origCookieSet || !origCookieGet) return; Object.defineProperty(document, 'cookie', { configurable: true, enumerable: true, get: function(){ try { return origCookieGet(); } catch(e){ return ''; } }, set: function(v){ var name = cookieNameFromString(v); var cat = category(name); var allow = (cat === 'functional') || (cat === 'performance' && interceptMode.performance) || (cat === 'targeting' && interceptMode.targeting) || (name === '_pandectes_gdpr'); try { console.log('cookie:set_attempt', { name: name, category: cat, allowed: allow, value_preview: String(v).slice(0,120) }); } catch(e){} if (allow) { try { origCookieSet(v); try { console.log('cookie:set_allowed', { name: name, category: cat }); } catch(e){} } catch(e){} } else { try { var past = 'expires=' + new Date(0).toUTCString(); origCookieSet(name + '=; ' + past + '; path=/'); var host = location.hostname; origCookieSet(name + '=; ' + past + '; path=/; domain=.' + host); try { console.log('cookie:set_blocked', { name: name, category: cat }); } catch(e){} } catch(e){} } } }); }
+    function disableCookieInterception(){ interceptMode = null; if (!cookieDescriptor) return; try { Object.defineProperty(document, 'cookie', cookieDescriptor); } catch(e){} }
+    function clearNonFunctional(detail){ var s = ''; try { s = document.cookie || ''; } catch(e){} s.split(/;\s*/).forEach(function(pair){ var n = pair.split('=')[0].trim(); if (!n) return; var cat = category(n); var keep = (cat === 'functional') || (cat === 'performance' && detail && detail.performance) || (cat === 'targeting' && detail && detail.targeting) || (n === '_pandectes_gdpr'); if (!keep) { try { var past = 'expires=' + new Date(0).toUTCString(); if (origCookieSet) { origCookieSet(n + '=; ' + past + '; path=/'); var host = location.hostname; origCookieSet(n + '=; ' + past + '; path=/; domain=.' + host); } else { document.cookie = n + '=; ' + past + '; path=/'; } try { console.log('cookie:clear', { name: n, category: cat }); } catch(e){} } catch(e){} } }); }
+    function applyConsentBlockingByStatus(status){ if (status === 'allow') { disableCookieInterception(); try { console.log('cookie:intercept_off', { status: status }); } catch(e){} return; } var d = prefsDetail(status); var detail = { functionality: true, performance: !!d && !!d.performance, targeting: !!d && !!d.targeting }; try { console.log('cookie:intercept_on', { status: status, detail: detail }); } catch(e){} enableCookieInterception(detail); clearNonFunctional(detail); }
     function getEndpoint(){ var base = consentModal ? consentModal.getAttribute('data-api-base') : ''; if(!base || base==='https://example.com') return null; return base.endsWith('/api/consent')? base : (base.replace(/\/$/, '') + '/api/consent'); }
     function logConsent(payload){ var ep = getEndpoint(); try { console.log('consent', { endpoint: ep || null, payload: payload }); } catch(e){} if(!ep) return; try { var ok = navigator.sendBeacon(ep, JSON.stringify(payload)); if(!ok){ fetch(ep, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), keepalive: true, mode: 'cors' }).then(function(r){ try { return r.json(); } catch(e){ return null; } }).then(function(d){ if (d) { try { console.log('consent saved', d); } catch(e){} } }).catch(function(){}); } } catch(e){} }
     function nowTs(){ return Math.floor(Date.now()/1000); }
@@ -275,14 +305,17 @@ module.exports = app;
     function writeConsent(status, prefs){ var id = makeId(); var ts = nowTs(); var detail = prefsDetail(status); var tz = (typeof Intl !== 'undefined' && Intl.DateTimeFormat && Intl.DateTimeFormat().resolvedOptions ? Intl.DateTimeFormat().resolvedOptions().timeZone : null); var region = getCountryInfo(); var payload = { id: id, email: (customerEmail || null), preferences: prefs, preferences_detail: detail, status: status, timestamp: ts, consent_time: formatLocalTime(), timezone: tz, country: region.country, country_code: region.country_code, locale: region.locale, userAgent: navigator.userAgent, type: 'cookie_consent' }; setCookie('_pandectes_gdpr', encodePayload(payload), 395); logConsent(payload); }
     var existing = getCookie('_pandectes_gdpr');
     function openConsent(){ if (consentModal) { if (typeof consentModal.open === 'function') { consentModal.open(document.body); } else { consentModal.setAttribute('open',''); } } }
-    (function(){ var hasConsent = false; if (existing) { var payload = decodePayload(existing); if (payload && (payload.status === 'allow' || payload.status === 'deny' || payload.status === 'custom')) { hasConsent = true; } } if (!hasConsent) { openConsent(); } })();
-    if (btnAccept) btnAccept.addEventListener('click', function(){ writeConsent('allow', 0); if (consentModal) { if (typeof consentModal.close === 'function') { consentModal.close(); } else { consentModal.removeAttribute('open'); document.body.classList.remove('fixed'); document.body.style.top = ''; } } });
-    if (btnDeny) btnDeny.addEventListener('click', function(){ writeConsent('deny', 7); if (consentModal) { if (typeof consentModal.close === 'function') { consentModal.close(); } else { consentModal.removeAttribute('open'); document.body.classList.remove('fixed'); document.body.style.top = ''; } } });
-    function openPrefs(){ if (prefsModal && typeof prefsModal.open === 'function') { prefsModal.open(btnPrefs || document.body); } else if (prefsModal) { prefsModal.setAttribute('open', ''); } if (consentModal) { if (typeof consentModal.close === 'function') { consentModal.close(); } else { consentModal.removeAttribute('open'); document.body.classList.remove('fixed'); document.body.style.top = ''; } } }
-    function closePrefs(){ if (prefsModal) { if (typeof prefsModal.close === 'function') { prefsModal.close(); } else { prefsModal.removeAttribute('open'); } } openConsent(); }
-    if (btnPrefs) btnPrefs.addEventListener('click', openPrefs);
-    document.addEventListener('click', function(e){ var t = e.target.closest(reopenSelector); if (t) { e.preventDefault(); openPrefs(); } });
-    window.CookieConsent = { open: function(){ openConsent(); }, openPreferences: function(){ openPrefs(); } };
+    (function(){ var hasConsent = false; if (existing) { var payload = decodePayload(existing); if (payload && (payload.status === 'allow' || payload.status === 'deny' || payload.status === 'custom')) { hasConsent = true; applyConsentBlockingByStatus(payload.status); } } if (!hasConsent) { openConsent(); } })();
+    var seenCookieNamesMap = {}; function scanCookies(){ var s = ''; try { s = document.cookie || ''; } catch(e){} var curr = {}; s.split(/;\s*/).forEach(function(pair){ var n = pair.split('=')[0].trim(); if (n) curr[n] = true; }); Object.keys(curr).forEach(function(n){ if (!seenCookieNamesMap[n]) { try { console.log('cookie:detected', { name: n, category: category(n) }); } catch(e){} } }); Object.keys(seenCookieNamesMap).forEach(function(n){ if (!curr[n]) { try { console.log('cookie:removed', { name: n }); } catch(e){} } }); seenCookieNamesMap = curr; }
+    setTimeout(function(){ scanCookies(); }, 500);
+    setInterval(function(){ scanCookies(); }, 5000);
+    if (btnAccept) btnAccept.addEventListener('click', function(){ writeConsent('allow', 0); applyConsentBlockingByStatus('allow'); if (consentModal) { if (typeof consentModal.close === 'function') { consentModal.close(); } else { consentModal.removeAttribute('open'); document.body.classList.remove('fixed'); document.body.style.top = ''; } } });
+    if (btnDeny) btnDeny.addEventListener('click', function(){ writeConsent('deny', 7); applyConsentBlockingByStatus('deny'); if (consentModal) { if (typeof consentModal.close === 'function') { consentModal.close(); } else { consentModal.removeAttribute('open'); document.body.classList.remove('fixed'); document.body.style.top = ''; } } });
+    function openPrefs(opener){ var openerEl = opener || btnPrefs || document.body; if (consentModal && consentModal.hasAttribute('open')) { if (typeof consentModal.close === 'function') { consentModal.close(); } else { consentModal.removeAttribute('open'); document.body.classList.remove('fixed'); document.body.style.top = ''; } } if (prefsModal && typeof prefsModal.open === 'function') { prefsModal.open(openerEl); } else if (prefsModal) { prefsModal.setAttribute('open', ''); } }
+    function closePrefs(){ if (prefsModal) { if (typeof prefsModal.close === 'function') { prefsModal.close(); } else { prefsModal.removeAttribute('open'); } } }
+    if (btnPrefs) btnPrefs.addEventListener('click', function(){ openPrefs(btnPrefs); });
+    document.addEventListener('click', function(e){ var t = e.target.closest(reopenSelector); if (t) { e.preventDefault(); openPrefs(t); } });
+    window.CookieConsent = { open: function(){ openConsent(); }, openPreferences: function(){ openPrefs(document.activeElement || document.body); } };
     
     if (btnSave) btnSave.addEventListener('click', function(){
       var f = document.getElementById('pref-func');
@@ -294,10 +327,14 @@ module.exports = app;
       if (!t || !t.checked) prefs = prefs | 4;
       var status = (prefs === 0) ? 'allow' : ((prefs === 7) ? 'deny' : 'custom');
       writeConsent(status, prefs);
+      applyConsentBlockingByStatus(status);
       closePrefs();
-      if (consentModal) { if (typeof consentModal.close === 'function') { consentModal.close(); } else { consentModal.removeAttribute('open'); document.body.classList.remove('fixed'); document.body.style.top = ''; } }
+      if (consentModal && consentModal.hasAttribute('open')) { if (typeof consentModal.close === 'function') { consentModal.close(); } else { consentModal.removeAttribute('open'); document.body.classList.remove('fixed'); document.body.style.top = ''; } }
     });
-    if (btnAcceptAllBottom) btnAcceptAllBottom.addEventListener('click', function(){ writeConsent('allow', 0); if (prefsModal) { if (typeof prefsModal.close === 'function') { prefsModal.close(); } else { prefsModal.removeAttribute('open'); } } if (consentModal) { if (typeof consentModal.close === 'function') { consentModal.close(); } else { consentModal.removeAttribute('open'); document.body.classList.remove('fixed'); document.body.style.top = ''; } } });
+    if (btnBack) btnBack.addEventListener('click', function(){
+      closePrefs();
+      openConsent();
+    });
     if (prefsModal) { var pcs = prefsModal.querySelectorAll('.js-close-modal'); if (pcs && pcs.length) { pcs.forEach(function(b){ b.addEventListener('click', function(){ closePrefs(); }); }); } }
   });
 </script>
