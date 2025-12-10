@@ -10,11 +10,19 @@
 
       <div id="password" class="input-row">
         <label class="large" for="customer_password">{{ 'customer.activate_account.password' | t }}</label>
-        <input type="password" value="" name="customer[password]" id="customer_password" class="large password" size="16" />
+        <div class="text-over-input">
+          <span class="input-icon-left">{% render 'icon', icon: 'lock', size: 'small' %}</span>
+          <input type="password" value="" name="customer[password]" id="customer_password" class="large password" size="16" />
+          <button type="button" class="password-toggle" data-target="customer_password" aria-pressed="false" aria-label="Show password">{% render 'icon', icon: 'eye', size: 'small' %}</button>
+        </div>
       </div>
       <div id="password_confirm" class="input-row">
         <label class="large" for="customer_password_confirmation">{{ 'customer.activate_account.password_confirm' | t }}</label>
-        <input type="password" value="" name="customer[password_confirmation]" id="customer_password_confirmation" class="large password" size="16" />
+        <div class="text-over-input">
+          <span class="input-icon-left">{% render 'icon', icon: 'lock', size: 'small' %}</span>
+          <input type="password" value="" name="customer[password_confirmation]" id="customer_password_confirmation" class="large password" size="16" />
+          <button type="button" class="password-toggle" data-target="customer_password_confirmation" aria-pressed="false" aria-label="Show password">{% render 'icon', icon: 'eye', size: 'small' %}</button>
+        </div>
       </div>
       <div class="lightly-spaced-row-above">
         <p>
@@ -25,3 +33,29 @@
     {% endform %}
   </div>
 </div>
+
+<style>
+#shopify-section-{{ section.id }} .auth-card input.password { padding-right: 42px; }
+#shopify-section-{{ section.id }} .text-over-input input.large { padding-left: 42px; }
+#shopify-section-{{ section.id }} .auth-card .input-icon-left { position: absolute; top: 50%; left: 14px; transform: translateY(-50%); color: #6b7280; }
+#shopify-section-{{ section.id }} .input-icon-left .icon, #shopify-section-{{ section.id }} .input-icon-left .icon * { fill: currentColor !important; stroke: none !important; }
+#shopify-section-{{ section.id }} .auth-card .password-toggle { position: absolute; top: 50%; right: 14px; transform: translateY(-50%); width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; color: #6b7280; }
+#shopify-section-{{ section.id }} .auth-card .password-toggle[aria-pressed="true"]::after { content: ""; position: absolute; width: 20px; border-top: 2px solid currentColor; transform: rotate(-45deg); }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  function bind(id){
+    var input = document.getElementById(id);
+    var btn = input ? input.parentNode.querySelector('.password-toggle[data-target="'+id+'"]') : null;
+    if (!input || !btn) return;
+    btn.addEventListener('click', function(){
+      var visible = input.type === 'text';
+      input.type = visible ? 'password' : 'text';
+      btn.setAttribute('aria-pressed', visible ? 'false' : 'true');
+    });
+  }
+  bind('customer_password');
+  bind('customer_password_confirmation');
+});
+</script>

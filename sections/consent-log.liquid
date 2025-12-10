@@ -1,0 +1,74 @@
+<div class="container fully-spaced-row">
+  <div class="reading-width" {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
+    <div class="page-header">
+      <h2 class="title">{{ section.settings.title | default: 'Consent log' }}</h2>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="note">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </div>
+
+    <div id="consent-log" class="lightly-spaced-row-above">
+      <table class="table" style="width:100%;border-collapse:collapse">
+        <thead>
+          <tr>
+            <th style="text-align:left;padding:8px;border-bottom:1px solid #e5e7eb">Email</th>
+            <th style="text-align:left;padding:8px;border-bottom:1px solid #e5e7eb">Privacy</th>
+            <th style="text-align:left;padding:8px;border-bottom:1px solid #e5e7eb">Terms</th>
+            <th style="text-align:left;padding:8px;border-bottom:1px solid #e5e7eb">Marketing</th>
+            <th style="text-align:left;padding:8px;border-bottom:1px solid #e5e7eb">IP</th>
+            <th style="text-align:left;padding:8px;border-bottom:1px solid #e5e7eb">Time</th>
+          </tr>
+        </thead>
+        <tbody id="consent-log-body"></tbody>
+      </table>
+      <div class="lightly-spaced-row">
+        <button class="btn" type="button" id="consent-log-refresh">Refresh</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+#shopify-section-{{ section.id }} #consent-log td { padding: 8px; border-bottom: 1px solid #f1f5f9; word-break: break-word; }
+#shopify-section-{{ section.id }} #consent-log th { font-weight: 600; }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var base = '{{ section.settings.consent_api_base | strip }}';
+    if (!base || base === 'http://localhost:3000' || base === 'https://example.com') return;
+    var endpoint = base.endsWith('/api/consent') ? base : (base.replace(/\/$/, '') + '/api/consent');
+    var tbody = document.getElementById('consent-log-body');
+    var btn = document.getElementById('consent-log-refresh');
+    function load(){
+      fetch(endpoint + '?limit=100', { method: 'GET' }).then(function(r){ return r.json(); }).then(function(json){
+        if (!json || !json.consents) return;
+        tbody.innerHTML = '';
+        json.consents.forEach(function(c){
+          var tr = document.createElement('tr');
+          tr.innerHTML = '<td>' + (c.email||'') + '</td>'+
+                         '<td>' + (c.privacy ? 'Yes' : 'No') + '</td>'+
+                         '<td>' + (c.terms ? 'Yes' : 'No') + '</td>'+
+                         '<td>' + (c.marketing ? 'Yes' : 'No') + '</td>'+
+                         '<td>' + (c.ip||'') + '</td>'+
+                         '<td>' + (c.consent_time||'') + '</td>';
+          tbody.appendChild(tr);
+        });
+      }).catch(function(){});
+    }
+    if (btn) btn.addEventListener('click', load);
+    load();
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Consent log",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "Consent log" },
+    { "type": "text", "id": "subtitle", "label": "Subtitle" },
+    { "type": "text", "id": "consent_api_base", "label": "Consent API base URL", "default": "https://example.com" }
+  ],
+  "presets": [{ "name": "Consent log" }]
+}
+{% endschema %}

@@ -5,29 +5,113 @@
       <div id="create-customer">
         <div class="page-header">
           <h2 class="title">{{ 'customer.register.title' | t }}</h2>
+          {%- liquid
+            assign lang_for_header = request.locale.iso_code
+            case lang_for_header
+              when 'de'
+                assign register_note = 'Erstellen Sie Ihr Konto, um Bestellungen zu verfolgen und Prämien zu erhalten.'
+              when 'fr'
+                assign register_note = 'Créez votre compte pour suivre vos commandes et profiter des récompenses.'
+              when 'fi'
+                assign register_note = 'Luo tili, jotta voit seurata tilauksia ja hyödyntää palkintoja.'
+              else
+                assign register_note = 'Create your account to track orders and enjoy rewards.'
+            endcase
+          -%}
+          <p class="note">{{ register_note }}</p>
         </div>
-
+        <div class="auth-card">
         {% form 'create_customer' %}
           {%- render 'form-errors', form: form -%}
 
           <div class="input-row">
             <label for="first_name" class="login">{{ 'customer.register.first_name' | t }}</label>
-            <input type="text" value="" name="customer[first_name]" id="first_name" class="large" size="30" />
+            <div class="input-with-icon">
+              <span class="input-icon-left">{% render 'icon', icon: 'silhouette', size: 'small' %}</span>
+              <input type="text" value="" name="customer[first_name]" id="first_name" class="large" size="30" />
+            </div>
           </div>
 
           <div class="input-row">
             <label for="last_name" class="login">{{ 'customer.register.last_name' | t }}</label>
-            <input type="text" value="" name="customer[last_name]" id="last_name" class="large" size="30" />
+            <div class="input-with-icon">
+              <span class="input-icon-left">{% render 'icon', icon: 'silhouette', size: 'small' %}</span>
+              <input type="text" value="" name="customer[last_name]" id="last_name" class="large" size="30" />
+            </div>
           </div>
 
           <div class="input-row">
             <label for="email" class="login">{{ 'customer.register.email' | t }}</label>
-            <input type="email" value="" name="customer[email]" id="email" class="large" size="30" />
+            <div class="input-with-icon">
+              <span class="input-icon-left">{% render 'icon', icon: 'mail', size: 'small' %}</span>
+              <input type="email" value="" name="customer[email]" id="email" class="large" size="30" />
+            </div>
           </div>
 
           <div class="input-row">
             <label for="password" class="login">{{ 'customer.register.password' | t }}</label>
-            <input type="password" value="" name="customer[password]" id="password" class="large password" size="30" />
+            <div class="text-over-input">
+              <span class="input-icon-left">{% render 'icon', icon: 'lock', size: 'small' %}</span>
+              <input type="password" value="" name="customer[password]" id="password" class="large password" size="30" />
+              <button type="button" class="password-toggle" data-target="password" aria-pressed="false" aria-label="Show password">{% render 'icon', icon: 'eye', size: 'small' %}</button>
+            </div>
+          </div>
+
+          {%- liquid
+            assign privacy_url = section.settings.privacy_policy_url | default: '/policies/privacy-policy'
+            assign first_char = privacy_url | slice: 0, 1
+            assign proto_rel = privacy_url | slice: 0, 2
+            if privacy_url contains '://' or proto_rel == '//'
+            elsif first_char != '/'
+              assign privacy_url = '/' | append: privacy_url
+            endif
+            assign terms_url = section.settings.terms_policy_url | default: '/policies/terms-of-service'
+            assign terms_first_char = terms_url | slice: 0, 1
+            assign terms_proto_rel = terms_url | slice: 0, 2
+            if terms_url contains '://' or terms_proto_rel == '//'
+            elsif terms_first_char != '/'
+              assign terms_url = '/' | append: terms_url
+            endif
+            assign lang = request.locale.iso_code
+            case lang
+              when 'de'
+                assign privacy_policy_label = 'Datenschutzerklärung'
+                assign terms_policy_label = 'Nutzungsbedingungen'
+                assign marketing_consent_label = 'Ich willige ein, den Newsletter der HEPHA GmbH in regelmäßigen Abständen zu erhalten. Dieser bewirbt Produkte und Services der HEPHA GmbH. (optional)'
+              when 'fr'
+                assign privacy_policy_label = 'Politique de confidentialité'
+                assign terms_policy_label = "Conditions d'utilisation"
+                assign marketing_consent_label = "J’accepte de recevoir régulièrement la newsletter de HEPHA GmbH. Elle contient des informations sur les produits et services de HEPHA GmbH. (facultatif)"
+              when 'fi'
+                assign privacy_policy_label = 'Tietosuojaseloste'
+                assign terms_policy_label = 'Käyttöehdot'
+                assign marketing_consent_label = 'Hyväksyn vastaanottavani HEPHA GmbH:n uutiskirjeen säännöllisin väliajoin. Se esittelee HEPHA GmbH:n tuotteita ja palveluja.'
+              else
+                assign privacy_policy_label = 'Privacy Policy'
+                assign terms_policy_label = 'Terms of Service'
+                assign marketing_consent_label = "I agree to receive the newsletter of HEPHA GmbH at regular intervals. It promotes products and services of HEPHA GmbH. (optional)"
+            endcase
+          -%}
+
+          
+
+          {%- case lang -%}
+            {%- when 'de' -%}
+              {%- capture legal_consent_label -%}Ich habe die <a class="underline" href="{{ terms_url }}" target="_blank" rel="noopener">{{ terms_policy_label }}</a> und die <a class="underline" href="{{ privacy_url }}" target="_blank" rel="noopener">{{ privacy_policy_label }}</a> von HEPHA gelesen und stimme ihnen zu.{%- endcapture -%}
+            {%- when 'fr' -%}
+              {%- capture legal_consent_label -%}J'ai lu et j'accepte les <a class="underline" href="{{ terms_url }}" target="_blank" rel="noopener">{{ terms_policy_label }}</a> et la <a class="underline" href="{{ privacy_url }}" target="_blank" rel="noopener">{{ privacy_policy_label }}</a> de HEPHA.{%- endcapture -%}
+            {%- when 'fi' -%}
+              {%- capture legal_consent_label -%}Olen lukenut ja hyväksynyt HEPHA:n <a class="underline" href="{{ terms_url }}" target="_blank" rel="noopener">{{ terms_policy_label }}</a> ja <a class="underline" href="{{ privacy_url }}" target="_blank" rel="noopener">{{ privacy_policy_label }}</a>.{%- endcapture -%}
+            {%- else -%}
+              {%- capture legal_consent_label -%}I've read and agreed to HEPHA's <a class="underline" href="{{ terms_url }}" target="_blank" rel="noopener">{{ terms_policy_label }}</a> and <a class="underline" href="{{ privacy_url }}" target="_blank" rel="noopener">{{ privacy_policy_label }}</a>.{%- endcapture -%}
+          {%- endcase -%}
+
+          <div class="input-row">
+            <label for="legal_consent" class="login"><input type="checkbox" id="legal_consent" name="legal_consent" required checked="checked" /> {{ legal_consent_label }}</label>
+          </div>
+
+          <div class="input-row">
+            <label for="accepts_marketing" class="login"><input type="checkbox" id="accepts_marketing" name="customer[accepts_marketing]" value="true" /> {{ marketing_consent_label }}</label>
           </div>
 
           <div class="lightly-spaced-row-above">
@@ -38,13 +122,119 @@
             </span>
           </div>
         {% endform %}
+        </div>
       </div><!-- /#create-customer -->
     </div>
   </div>
 </div>
 
+<style>
+#shopify-section-{{ section.id }} .page-header .title { margin-bottom: 8px; }
+#shopify-section-{{ section.id }} .page-header .note { color: rgb(var(--text-2)); }
+#shopify-section-{{ section.id }} .auth-card { max-width: 520px; margin: 0 auto; padding: 24px; border: 1px solid rgba(0,0,0,0.06); border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.06); background: rgb(var(--body-bg-color)); }
+#shopify-section-{{ section.id }} .auth-card .input-row { margin-bottom: 14px; }
+#shopify-section-{{ section.id }} .auth-card .input-row label.login { font-weight: 600; }
+#shopify-section-{{ section.id }} .auth-card .input-row label[for="legal_consent"],
+#shopify-section-{{ section.id }} .auth-card .input-row label[for="accepts_marketing"] { font-weight: 400; font-size: 14px; line-height: 1.6; }
+#shopify-section-{{ section.id }} .auth-card input.large { width: 100%; border: 1px solid #e5e7eb; border-radius: 8px; padding: 10px 12px; transition: border-color .2s ease, box-shadow .2s ease; }
+#shopify-section-{{ section.id }} .auth-card input.large:focus { outline: 0; border-color: rgb(var(--link-color)); box-shadow: 0 0 0 4px rgba(var(--link-color) / 0.18); }
+#shopify-section-{{ section.id }} .auth-card .btn { width: 100%; }
+#shopify-section-{{ section.id }} .auth-card .input-with-icon { position: relative; }
+#shopify-section-{{ section.id }} .auth-card .input-with-icon input.large { padding-left: 42px; }
+#shopify-section-{{ section.id }} .auth-card .input-icon-left { position: absolute; top: 50%; left: 14px; transform: translateY(-50%); color: #6b7280; }
+#shopify-section-{{ section.id }} .input-icon-left .icon, #shopify-section-{{ section.id }} .input-icon-left .icon * { fill: currentColor !important; stroke: none !important; }
+#shopify-section-{{ section.id }} .auth-card input.password { padding-right: 42px; }
+#shopify-section-{{ section.id }} .auth-card .password-toggle { position: absolute; top: 50%; right: 14px; transform: translateY(-50%); width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; color: #6b7280; }
+#shopify-section-{{ section.id }} .auth-card .password-toggle[aria-pressed="true"]::after { content: ""; position: absolute; width: 20px; border-top: 2px solid currentColor; transform: rotate(-45deg); }
+#shopify-section-{{ section.id }} .text-over-input input.large { padding-left: 42px; }
+#shopify-section-{{ section.id }} .auth-card label.login { display: inline; white-space: normal; }
+#shopify-section-{{ section.id }} .auth-card label.login input[type="checkbox"] { margin-right: 8px; margin-top: 2px; }
+#shopify-section-{{ section.id }} .auth-card .note a.underline { text-underline-offset: 2px; text-decoration-thickness: 1px; }
+@media (max-width: 767.98px) { #shopify-section-{{ section.id }} .auth-card { padding: 18px; border-radius: 10px; } }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var legal = document.getElementById('legal_consent');
+    var btn = null;
+    if (legal && legal.closest('form')) {
+      btn = legal.closest('form').querySelector('button[type="submit"]');
+    }
+    function update() {
+      if (!btn) return;
+      var ok = (!!legal && legal.checked);
+      btn.disabled = !ok;
+      if (btn.disabled) {
+        btn.setAttribute('aria-disabled', 'true');
+      } else {
+        btn.removeAttribute('aria-disabled');
+      }
+    }
+    if (legal) legal.addEventListener('change', update);
+    update();
+  });
+  document.addEventListener('DOMContentLoaded', function() {
+    var passwd = document.getElementById('password');
+    var toggle = passwd ? passwd.parentNode.querySelector('.password-toggle[data-target="password"]') : null;
+    if (passwd && toggle) {
+      toggle.addEventListener('click', function(){
+        var visible = passwd.type === 'text';
+        passwd.type = visible ? 'password' : 'text';
+        toggle.setAttribute('aria-pressed', visible ? 'false' : 'true');
+      });
+    }
+    var base = '{{ section.settings.consent_api_base | strip }}';
+    var valid = !!base && base !== 'http://localhost:3000' && base !== 'https://example.com';
+    var endpoint = valid ? (base.endsWith('/api/consent') ? base : (base.replace(/\/$/, '') + '/api/consent')) : null;
+    var form = document.querySelector('#create-customer form');
+    if (!form) return;
+    form.addEventListener('submit', function(){
+      var emailEl = document.getElementById('email');
+      var legalEl = document.getElementById('legal_consent');
+      var marketingEl = document.getElementById('accepts_marketing');
+      var payload = { email: emailEl ? emailEl.value : '', privacy: !!(legalEl && legalEl.checked), terms: !!(legalEl && legalEl.checked), marketing: !!(marketingEl && marketingEl.checked) };
+      try { console.log('consent payload', payload); } catch(e) {}
+      if (!marketingEl || !marketingEl.checked) {
+        try {
+          var hidden = document.createElement('input');
+          hidden.setAttribute('type', 'hidden');
+          hidden.setAttribute('name', 'customer[accepts_marketing]');
+          hidden.setAttribute('value', 'false');
+          form.appendChild(hidden);
+        } catch(e) {}
+      }
+      if (!endpoint) return;
+      try {
+        var ok = navigator.sendBeacon(endpoint, JSON.stringify(payload));
+        if (!ok) {
+          fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), keepalive: true, mode: 'cors' }).catch(function(){});
+        }
+      } catch(e) {}
+    });
+  });
+</script>
+
 {% schema %}
 {
-  "name": "Customer register"
+  "name": "Customer register",
+  "settings": [
+    {
+      "type": "url",
+      "id": "privacy_policy_url",
+      "label": "Privacy policy link"
+    },
+    {
+      "type": "url",
+      "id": "terms_policy_url",
+      "label": "Terms of service link"
+    },
+    {
+      "type": "text",
+      "id": "consent_api_base",
+      "label": "Consent API base URL",
+      "info": "e.g. https://your-domain.com",
+      "default": "https://example.com"
+    }
+  ]
 }
 {% endschema %}

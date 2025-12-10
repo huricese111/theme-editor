@@ -914,6 +914,8 @@ svg.feather {
   height: var(--icon-size);
 }
 
+/* Solid fill for input-left icons */
+
 .icon--extra-small {
   --icon-size: 14px;
 }

@@ -4,6 +4,20 @@
       <div id="customer">
         <div class="page-header{% if shop.checkout.guest_login %} align-start{% endif %}">
           <h2 class="title">{{ 'customer.login.title' | t }}</h2>
+          {%- liquid
+            assign lang = request.locale.iso_code
+            case lang
+              when 'de'
+                assign login_note = 'Melden Sie sich an, um Bestellungen und Prämien zu verwalten.'
+              when 'fr'
+                assign login_note = 'Connectez-vous pour gérer vos commandes et vos récompenses.'
+              when 'fi'
+                assign login_note = 'Kirjaudu sisään hallitaksesi tilauksia ja palkintoja.'
+              else
+                assign login_note = 'Sign in to manage orders and rewards.'
+            endcase
+          -%}
+          <p class="note">{{ login_note }}</p>
         </div>
 
         {%- if section.settings.enable_shop_login_button -%}
@@ -16,13 +30,17 @@
           </div>
         {%- endif -%}
 
+        <div class="auth-card">
         {% form 'customer_login' %}
 
         {%- render 'form-errors', form: form -%}
 
         <div id="login_email" class="input-row">
           <label for="customer_email" class="login">{{ 'customer.login.email' | t }}</label>
-          <input type="email" value="" name="customer[email]" id="customer_email" class="large" size="30" />
+          <div class="input-with-icon">
+            <span class="input-icon-left">{% render 'icon', icon: 'mail', size: 'small' %}</span>
+            <input type="email" value="" name="customer[email]" id="customer_email" class="large" size="30" />
+          </div>
         </div>
 
         {% if form.password_needed %}
@@ -34,7 +52,9 @@
         <div id="login_password" class="input-row">
           <label for="customer_password" class="login">{{ 'customer.login.password' | t }}</label>
           <div class="text-over-input">
+            <span class="input-icon-left">{% render 'icon', icon: 'lock', size: 'small' %}</span>
             <input type="password" value="" name="customer[password]" id="customer_password" class="large password" size="16" />
+            <button type="button" class="password-toggle" data-target="customer_password" aria-pressed="false" aria-label="Show password">{% render 'icon', icon: 'eye', size: 'small' %}</button>
             <div id="forgot_password" class="text-over-input__text">
               <a class="underline" href="#" onclick="showRecoverPasswordForm();return false;">{{ 'customer.login.forgot_password' | t }}</a>
             </div>
@@ -44,13 +64,13 @@
         {% endif %}
 
         <div class="lightly-spaced-row-above">
-          <div class="opposing-items">
-            <button class="btn" type="submit">{{ 'customer.login.sign_in' | t }}</button>
-
-            <a href="{{ routes.account_register_url }}" class="underline">{{ 'customer.register.title' | t }}</a>
-          </div>
+          <button class="btn" type="submit">{{ 'customer.login.sign_in' | t }}</button>
+        </div>
+        <div class="lightly-spaced-row create-account-link">
+          <a href="{{ routes.account_register_url }}" class="btn btn--tertiary" role="button">{{ 'customer.register.title' | t }}</a>
         </div>
         {% endform %}
+        </div>
       </div>
 
       {% comment %}
@@ -58,6 +78,7 @@
       {% endcomment %}
 
       <div id="recover-password" style='display:none'>
+        <div class="auth-card">
         {% form 'recover_customer_password' %}
         {% if form.posted_successfully? %}
         {% assign reset_success = true %}
@@ -85,15 +106,16 @@
           <input type="email" value="" size="30" name="email" id="recover-email" class="large" />
         </div>
         <div class="lightly-spaced-row-above">
-          <div class="opposing-items">
-            <button class="btn" type="submit">{{ 'customer.recover_password.submit' | t }}</button>
-            <a class="underline" href="#" onclick="hideRecoverPasswordForm();return false;">{{ 'customer.recover_password.cancel' | t }}</a>
-          </div>
+          <button class="btn" type="submit">{{ 'customer.recover_password.submit' | t }}</button>
+        </div>
+        <div class="lightly-spaced-row">
+          <button class="btn btn--tertiary cancel-btn" type="button" onclick="hideRecoverPasswordForm();return false;">{{ 'customer.recover_password.cancel' | t }}</button>
         </div>
 
         {% endif %}
 
         {% endform %}
+        </div>
       </div>
     </div><!-- /layout-column-half-left" -->
 
@@ -115,6 +137,31 @@
   </div>
 </div>
 
+<style>
+#shopify-section-{{ section.id }} .page-header .title { margin-bottom: 8px; }
+#shopify-section-{{ section.id }} .page-header .note { color: rgb(var(--text-2)); }
+#shopify-section-{{ section.id }} .auth-card { max-width: 520px; margin: 0 auto; padding: 24px; border: 1px solid rgba(0,0,0,0.06); border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.06); background: rgb(var(--body-bg-color)); }
+#shopify-section-{{ section.id }} .auth-card .input-row { margin-bottom: 14px; }
+#shopify-section-{{ section.id }} .auth-card .input-row label.login { font-weight: 600; }
+#shopify-section-{{ section.id }} .auth-card input.large { width: 100%; border: 1px solid #e5e7eb; border-radius: 8px; padding: 10px 12px; transition: border-color .2s ease, box-shadow .2s ease; }
+#shopify-section-{{ section.id }} .auth-card input.large:focus { outline: 0; border-color: rgb(var(--link-color)); box-shadow: 0 0 0 4px rgba(var(--link-color) / 0.18); }
+#shopify-section-{{ section.id }} .auth-card .btn { width: 100%; }
+#shopify-section-{{ section.id }} .auth-card .input-with-icon { position: relative; }
+#shopify-section-{{ section.id }} .auth-card .input-with-icon input.large { padding-left: 42px; }
+#shopify-section-{{ section.id }} .auth-card .input-icon-left { position: absolute; top: 50%; left: 14px; transform: translateY(-50%); color: #6b7280; }
+#shopify-section-{{ section.id }} .input-icon-left .icon, #shopify-section-{{ section.id }} .input-icon-left .icon * { fill: currentColor !important; stroke: none !important; }
+#shopify-section-{{ section.id }} .auth-card input.password { padding-right: 42px; }
+#shopify-section-{{ section.id }} .auth-card .password-toggle { position: absolute; top: 50%; right: 14px; transform: translateY(-50%); width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; color: #6b7280; }
+#shopify-section-{{ section.id }} .auth-card .password-toggle[aria-pressed="true"]::after { content: ""; position: absolute; width: 20px; border-top: 2px solid currentColor; transform: rotate(-45deg); }
+#shopify-section-{{ section.id }} .text-over-input input.large { padding-left: 42px; }
+#shopify-section-{{ section.id }} .text-over-input__text { right: 54px; }
+#shopify-section-{{ section.id }} .auth-card .cancel-btn { margin-top: 12px; }
+#shopify-section-{{ section.id }} .auth-card label.login { display: inline; white-space: normal; }
+#shopify-section-{{ section.id }} .auth-card label.login input[type="checkbox"] { margin-right: 8px; margin-top: 2px; }
+#shopify-section-{{ section.id }} .auth-card .opposing-items { align-items: center; }
+#shopify-section-{{ section.id }} .auth-card .create-account-link { margin-top: 12px; }
+@media (max-width: 767.98px) { #shopify-section-{{ section.id }} .auth-card { padding: 18px; border-radius: 10px; } }
+</style>
 <script type="text/javascript">
   function showRecoverPasswordForm() {
     document.getElementById('recover-password').style.display = 'block';
@@ -128,6 +175,16 @@
 
   {% if reset_success %}showRecoverPasswordForm();{% endif %}
   if (window.location.hash == '#recover') { showRecoverPasswordForm() }
+  document.addEventListener('DOMContentLoaded', function(){
+    var input = document.getElementById('customer_password');
+    var btn = input ? input.parentNode.querySelector('.password-toggle[data-target="customer_password"]') : null;
+    if (!input || !btn) return;
+    btn.addEventListener('click', function(){
+      var visible = input.type === 'text';
+      input.type = visible ? 'password' : 'text';
+      btn.setAttribute('aria-pressed', visible ? 'false' : 'true');
+    });
+  });
 </script>
 
 {% schema %}
