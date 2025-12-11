@@ -1,0 +1,3 @@
+103.215.83.188.nip.io {
+    reverse_proxy localhost:3000
+}

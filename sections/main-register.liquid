@@ -184,6 +184,8 @@
       });
     }
     var base = '{{ section.settings.consent_api_base | strip }}';
+    var privacyVer = '{{ section.settings.privacy_version | default: "230220" | strip }}';
+    var termsVer = '{{ section.settings.terms_version | default: "230220" | strip }}';
     var valid = !!base && base !== 'https://example.com';
     var endpoint = valid ? (base.endsWith('/api/consent') ? base : (base.replace(/\/$/, '') + '/api/consent')) : null;
     var form = document.querySelector('#create-customer form');
@@ -200,7 +202,7 @@
       var ts = nowTs();
       var tz = (typeof Intl !== 'undefined' && Intl.DateTimeFormat && Intl.DateTimeFormat().resolvedOptions ? Intl.DateTimeFormat().resolvedOptions().timeZone : null);
       var region = getCountryInfo();
-      var payload = { id: id, email: emailEl ? emailEl.value : '', privacy: !!(legalEl && legalEl.checked), terms: !!(legalEl && legalEl.checked), marketing: !!(marketingEl && marketingEl.checked), timestamp: ts, consent_time: formatLocalTime(), timezone: tz, country: region.country, country_code: region.country_code, locale: region.locale, userAgent: navigator.userAgent, type: 'registration_consent' };
+      var payload = { id: id, email: emailEl ? emailEl.value : '', privacy: !!(legalEl && legalEl.checked), terms: !!(legalEl && legalEl.checked), marketing: !!(marketingEl && marketingEl.checked), timestamp: ts, consent_time: formatLocalTime(), timezone: tz, country: region.country, country_code: region.country_code, locale: region.locale, userAgent: navigator.userAgent, type: 'registration_consent', domain: location.hostname, page_url: location.href, privacy_version: privacyVer, terms_version: termsVer };
       try { console.log('consent payload', payload); } catch(e) {}
       if (!marketingEl || !marketingEl.checked) {
         try {
@@ -242,6 +244,19 @@
       "label": "Consent API base URL",
       "info": "e.g. https://your-domain.com",
       "default": "https://example.com"
+    }
+    ,
+    {
+      "type": "text",
+      "id": "privacy_version",
+      "label": "Privacy policy version",
+      "default": "230220"
+    },
+    {
+      "type": "text",
+      "id": "terms_version",
+      "label": "Terms of service version",
+      "default": "230220"
     }
   ]
 }

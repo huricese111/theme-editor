@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "main": {
+      "type": "consent-log",
+      "settings": {
+        "title": "Consent log",
+        "subtitle": "Latest registration consents",
+        "consent_api_base": "https://103.215.83.188.nip.io"
+      }
+    }
+  },
+  "order": ["main"]
+}

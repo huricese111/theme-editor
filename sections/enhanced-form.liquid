@@ -1501,6 +1501,9 @@
   document.addEventListener('DOMContentLoaded', function() {
     var form = document.getElementById('enhanced-contact-form');
     if (!form) return;
+    var base = '{{ section.settings.consent_api_base | strip }}';
+    var valid = !!base && base !== 'https://example.com';
+    var endpoint = valid ? (base.endsWith('/api/consent') ? base : (base.replace(/\/$/, '') + '/api/consent')) : null;
     try { var restored = sessionStorage.getItem('enhanced_form_last_consent'); if (restored) { console.log('consent payload (restored)', JSON.parse(restored)); } } catch(e) {}
     function nowTs(){ return Math.floor(Date.now()/1000); }
     function makeId(){ try { return crypto.randomUUID(); } catch(e){ return 'id-' + Math.random().toString(36).slice(2); } }
@@ -1514,9 +1517,18 @@
       var ts = nowTs();
       var tz = (typeof Intl !== 'undefined' && Intl.DateTimeFormat && Intl.DateTimeFormat().resolvedOptions ? Intl.DateTimeFormat().resolvedOptions().timeZone : null);
       var region = getCountryInfo();
-      var payload = { id: id, email: emailEl ? emailEl.value : '', formTitle: {{ form_title_text | json }}, privacy: !!(legalEl && legalEl.checked), terms: !!(legalEl && legalEl.checked), marketing: !!(marketingEl && marketingEl.checked), timestamp: ts, consent_time: formatLocalTime(), timezone: tz, country: region.country, country_code: region.country_code, locale: region.locale, userAgent: navigator.userAgent, type: 'enhanced_form_consent' };
+      var privacyVer = '{{ section.settings.privacy_version | default: "230220" | strip }}';
+      var termsVer = '{{ section.settings.terms_version | default: "230220" | strip }}';
+      var payload = { id: id, email: emailEl ? emailEl.value : '', formTitle: {{ form_title_text | json }}, privacy: !!(legalEl && legalEl.checked), terms: !!(legalEl && legalEl.checked), marketing: !!(marketingEl && marketingEl.checked), timestamp: ts, consent_time: formatLocalTime(), timezone: tz, country: region.country, country_code: region.country_code, locale: region.locale, userAgent: navigator.userAgent, type: 'enhanced_form_consent', domain: location.hostname, page_url: location.href, privacy_version: privacyVer, terms_version: termsVer };
       try { console.log('consent payload', payload); } catch(e) {}
       try { sessionStorage.setItem('enhanced_form_last_consent', JSON.stringify(payload)); } catch(e) {}
+      if (!endpoint) return;
+      try {
+        var ok = navigator.sendBeacon(endpoint, JSON.stringify(payload));
+        if (!ok) {
+          fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), keepalive: true, mode: 'cors' }).catch(function(){});
+        }
+      } catch(e) {}
     });
   });
 </script>
@@ -1533,6 +1545,24 @@
   },
   "class": "page-section-spacing",
   "settings": [
+    {
+      "type": "text",
+      "id": "consent_api_base",
+      "label": "Consent API base URL",
+      "default": "https://example.com"
+    },
+    {
+      "type": "text",
+      "id": "privacy_version",
+      "label": "Privacy policy version",
+      "default": "230220"
+    },
+    {
+      "type": "text",
+      "id": "terms_version",
+      "label": "Terms of service version",
+      "default": "230220"
+    },
     {
       "type": "header",
       "content": "Form Settings"

@@ -11,11 +11,16 @@
       <table class="table" style="width:100%;border-collapse:collapse">
         <thead>
           <tr>
+            <th style="text-align:left;padding:8px;border-bottom:1px solid #e5e7eb">No.</th>
             <th style="text-align:left;padding:8px;border-bottom:1px solid #e5e7eb">Email</th>
             <th style="text-align:left;padding:8px;border-bottom:1px solid #e5e7eb">Privacy</th>
             <th style="text-align:left;padding:8px;border-bottom:1px solid #e5e7eb">Terms</th>
             <th style="text-align:left;padding:8px;border-bottom:1px solid #e5e7eb">Marketing</th>
             <th style="text-align:left;padding:8px;border-bottom:1px solid #e5e7eb">IP</th>
+            <th style="text-align:left;padding:8px;border-bottom:1px solid #e5e7eb">Domain</th>
+            <th style="text-align:left;padding:8px;border-bottom:1px solid #e5e7eb">Privacy ver</th>
+            <th style="text-align:left;padding:8px;border-bottom:1px solid #e5e7eb">Terms ver</th>
+            <th style="text-align:left;padding:8px;border-bottom:1px solid #e5e7eb">Page URL</th>
             <th style="text-align:left;padding:8px;border-bottom:1px solid #e5e7eb">Time</th>
           </tr>
         </thead>
@@ -44,13 +49,20 @@
       fetch(endpoint + '?limit=100', { method: 'GET' }).then(function(r){ return r.json(); }).then(function(json){
         if (!json || !json.consents) return;
         tbody.innerHTML = '';
+        var idx = 0;
         json.consents.forEach(function(c){
           var tr = document.createElement('tr');
-          tr.innerHTML = '<td>' + (c.email||'') + '</td>'+
+          idx += 1;
+          tr.innerHTML = '<td>' + idx + '</td>'+
+                         '<td>' + (c.email||'') + '</td>'+
                          '<td>' + (c.privacy ? 'Yes' : 'No') + '</td>'+
                          '<td>' + (c.terms ? 'Yes' : 'No') + '</td>'+
                          '<td>' + (c.marketing ? 'Yes' : 'No') + '</td>'+
                          '<td>' + (c.ip||'') + '</td>'+
+                         '<td>' + (c.domain||'') + '</td>'+
+                         '<td>' + (c.privacy_version||'') + '</td>'+
+                         '<td>' + (c.terms_version||'') + '</td>'+
+                         '<td>' + (c.page_url ? ('<a href="' + c.page_url + '" target="_blank" rel="noopener">' + c.page_url + '</a>') : '') + '</td>'+
                          '<td>' + (c.consent_time||'') + '</td>';
           tbody.appendChild(tr);
         });
