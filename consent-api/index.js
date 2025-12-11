@@ -24,6 +24,7 @@ try {
 const app = express()
 app.set('trust proxy', true)
 app.use(morgan('combined'))
+app.use('/consent-assets', express.static(baseDir))
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*')
@@ -151,22 +152,32 @@ app.get('/consents', (req, res) => {
     const where = []
     const params = []
     if (q) { where.push('(email LIKE ? OR domain LIKE ? OR page_url LIKE ?)'); params.push('%'+q+'%','%'+q+'%','%'+q+'%') }
-    if (type) { where.push('type = ?'); params.push(type) }
+    if (type) {
+      const tk = type.toLowerCase()
+      if (tk === 'registration') {
+        where.push('LOWER(page_url) LIKE ?'); params.push('%account/register%')
+      } else if (tk === 'contact') {
+        where.push('LOWER(page_url) LIKE ?'); params.push('%contact%')
+      } else if (tk === 'leasing') {
+        where.push('(LOWER(page_url) LIKE ? OR LOWER(page_url) LIKE ? OR LOWER(page_url) LIKE ? OR LOWER(page_url) LIKE ?)')
+        params.push('%jobrad%','%bikeleasing%','%dienstrad%','%business-bike%')
+      }
+    }
     const whereSql = where.length ? ('WHERE ' + where.join(' AND ')) : ''
     const offset = (page - 1) * pageSize
     const orderSql = `ORDER BY ${sortBy} ${sortDir.toUpperCase()}`
     const baseSelect = `SELECT id,email,privacy,terms,marketing,timestamp,consent_time,timezone,country,country_code,locale,type,ip,domain,page_url,privacy_version,terms_version FROM consents ${whereSql} ${orderSql} LIMIT ? OFFSET ?`
     const rows = db.prepare(baseSelect).all(...params, pageSize, offset)
     const total = db.prepare(`SELECT COUNT(*) AS c FROM consents ${whereSql}`).get(...params).c
-    const htmlHead = `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Consents</title><style>body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;background:#f8fafc;margin:0;padding:24px}h1{margin:0 0 16px}table{width:100%;border-collapse:collapse;background:#fff;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden}th,td{padding:10px 12px;border-bottom:1px solid #eef2f7;font-size:13px}th{background:#f1f5f9;text-align:left}tbody tr:hover{background:#f9fafb}code{font-size:12px;color:#334155}a.btn{display:inline-block;margin-bottom:12px;padding:8px 12px;background:#0ea5e9;color:#fff;text-decoration:none;border-radius:6px}a.btn:visited{color:#fff}form.filters{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px}form.filters input,form.filters select{padding:6px 8px;border:1px solid #e5e7eb;border-radius:6px;font-size:13px}nav.pager{display:flex;gap:8px;align-items:center;margin-top:12px}</style>`
+    const htmlHead = `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Consents</title><style>body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;background:#f8fafc;margin:0;padding:24px}h1{margin:0}table{width:100%;border-collapse:collapse;background:#fff;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden}th,td{padding:10px 12px;border-bottom:1px solid #eef2f7;font-size:13px}th{background:#f1f5f9;text-align:left}tbody tr:hover{background:#f9fafb}code{font-size:12px;color:#334155}a.btn{display:inline-block;margin-bottom:12px;padding:8px 12px;background:#0ea5e9;color:#fff;text-decoration:none;border-radius:6px}a.btn:visited{color:#fff}form.filters{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px}form.filters input,form.filters select{padding:6px 8px;border:1px solid #e5e7eb;border-radius:6px;font-size:13px}nav.pager{display:flex;gap:8px;align-items:center;margin-top:12px}.header-bar{display:flex;align-items:center;gap:12px;margin:0 0 12px}.header-bar img.logo{height:36px}</style>`
     const baseParams = new URLSearchParams()
     if (q) baseParams.set('q', q)
     if (type) baseParams.set('type', type)
     baseParams.set('pageSize', String(pageSize))
     function sortLink(col){ const p = new URLSearchParams(baseParams); const next = (sortBy===col && sortDir==='asc')?'desc':'asc'; p.set('sortBy', col); p.set('sortDir', next); p.set('page','1'); return `?${p.toString()}` }
     function pageLink(n){ const p = new URLSearchParams(baseParams); p.set('sortBy', sortBy); p.set('sortDir', sortDir); p.set('page', String(n)); return `?${p.toString()}` }
-    const header = `<h1>Consent Records</h1><a class="btn" href="/consents.csv">Download CSV</a>`
-    const controls = `<form class="filters" method="get"><input type="text" name="q" value="${escapeHtml(q)}" placeholder="Search"><select name="type"><option value="">All types</option><option value="cookie_consent"${type==='cookie_consent'?' selected':''}>Cookie</option><option value="registration_consent"${type==='registration_consent'?' selected':''}>Registration</option><option value="enhanced_form_consent"${type==='enhanced_form_consent'?' selected':''}>Enhanced form</option></select><select name="pageSize"><option${pageSize===25?' selected':''} value="25">25</option><option${pageSize===50?' selected':''} value="50">50</option><option${pageSize===100?' selected':''} value="100">100</option></select><button type="submit">Apply</button></form>`
+    const header = `<div class="header-bar"><img src="/consent-assets/HEPHA_Logo_JPG_1200px.jpg" alt="HEPHA Logo" class="logo"><h1>Consent Records</h1></div><a class="btn" href="/consents.csv">Download CSV</a>`
+    const controls = `<form class="filters" method="get"><input type="text" name="q" value="${escapeHtml(q)}" placeholder="Search"><select name="type"><option value="">All categories</option><option value="registration"${type==='registration'?' selected':''}>Registration</option><option value="contact"${type==='contact'?' selected':''}>Contact</option><option value="leasing"${type==='leasing'?' selected':''}>Leasing (All)</option></select><select name="pageSize"><option${pageSize===25?' selected':''} value="25">25</option><option${pageSize===50?' selected':''} value="50">50</option><option${pageSize===100?' selected':''} value="100">100</option></select><button type="submit">Apply</button></form>`
     const headerRow = `<tr><th>No.</th><th><a href="${sortLink('email')}">Email</a></th><th><a href="${sortLink('privacy')}">Privacy</a></th><th><a href="${sortLink('terms')}">Terms</a></th><th><a href="${sortLink('marketing')}">Marketing</a></th><th><a href="${sortLink('timestamp')}">Time</a></th><th>Timezone</th><th>Country</th><th>IP</th><th><a href="${sortLink('domain')}">Domain</a></th><th><a href="${sortLink('page_url')}">Page URL</a></th><th>Privacy ver</th><th>Terms ver</th></tr>`
     const bodyRows = rows.map((r,i) => `<tr><td>${offset + i + 1}</td><td>${escapeHtml(r.email||'')}</td><td>${r.privacy? 'Yes':'No'}</td><td>${r.terms? 'Yes':'No'}</td><td>${r.marketing? 'Yes':'No'}</td><td>${escapeHtml(r.consent_time||String(r.timestamp))}</td><td>${escapeHtml(r.timezone||'')}</td><td>${escapeHtml(r.country||'')}</td><td>${escapeHtml(r.ip||'')}</td><td>${escapeHtml(r.domain||'')}</td><td>${r.page_url ? `<a href="${escapeHtml(r.page_url)}" target="_blank" rel="noopener">${escapeHtml(r.page_url)}</a>` : ''}</td><td>${escapeHtml(r.privacy_version||'')}</td><td>${escapeHtml(r.terms_version||'')}</td></tr>`).join('')
     const totalPages = Math.max(1, Math.ceil(total / pageSize))
