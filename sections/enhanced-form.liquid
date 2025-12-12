@@ -1436,11 +1436,12 @@
                 {%- capture legal_consent_label -%}I've read and agreed to HEPHA's <a class="underline" href="{{ terms_url }}" target="_blank" rel="noopener">{{ terms_policy_label }}</a> and <a class="underline" href="{{ privacy_url }}" target="_blank" rel="noopener">{{ privacy_policy_label }}</a>.{%- endcapture -%}
             {%- endcase -%}
             <div class="legal-consent-row">
-              <label class="legal-consent-label" for="legal_consent"><input type="checkbox" id="legal_consent" name="legal_consent" required checked="checked"> {{ legal_consent_label }}</label>
+              <label class="legal-consent-label" for="legal_consent"><input type="checkbox" id="legal_consent" name="legal_consent" required> {{ legal_consent_label }}</label>
             </div>
             <button
               class="enhanced-form-submit-btn btn btn--{{ section.settings.button_style | default: 'primary' }}"
               type="submit"
+              disabled
               {% if section.settings.custom_button_color != blank %}
                 style="background: linear-gradient(135deg, {{ section.settings.custom_button_color }} 0%, {{ section.settings.custom_button_color | color_darken: 20 }} 100%);"
               {% endif %}

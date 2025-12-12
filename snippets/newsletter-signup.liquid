@@ -21,6 +21,28 @@
         {{- 'newsletter.button_label' | t -}}
       </button>
     </div>
+    {%- liquid
+      assign privacy_url = '/policies/privacy-policy'
+      assign first_char = privacy_url | slice: 0, 1
+      assign proto_rel = privacy_url | slice: 0, 2
+      if privacy_url contains '://' or proto_rel == '//'
+      elsif first_char != '/'
+        assign privacy_url = '/' | append: privacy_url
+      endif
+    -%}
+    {%- case request.locale.iso_code -%}
+      {%- when 'de' -%}
+        {%- capture privacy_note -%}Es gilt die <a class="underline" href="{{ privacy_url }}" target="_blank" rel="noopener">Datenschutzerklärung</a> der HEPHA GmbH.{%- endcapture -%}
+      {%- when 'fr' -%}
+        {%- capture privacy_note -%}La <a class="underline" href="{{ privacy_url }}" target="_blank" rel="noopener">déclaration de confidentialité</a> de HEPHA GmbH est applicable.{%- endcapture -%}
+      {%- when 'fi' -%}
+        {%- capture privacy_note -%}Katso <a class="underline" href="{{ privacy_url }}" target="_blank" rel="noopener">Tietosuojakäytäntö</a>{%- endcapture -%}
+      {%- else -%}
+        {%- capture privacy_note -%}The <a class="underline" href="{{ privacy_url }}" target="_blank" rel="noopener">Privacy Policy</a> of HEPHA GmbH applies.{%- endcapture -%}
+    {%- endcase -%}
+    {% if id contains 'footer_' or tags contains 'footer' %}
+      <div class="signup-form__privacy-note">{{ privacy_note }}</div>
+    {% endif %}
   {% endform %}
 </div>
 
@@ -81,6 +103,8 @@
     padding: 20px;
     z-index: 1;
   }
+  .signup-form__privacy-note { margin-top: 8px; font-size: 12px; line-height: 1.6; color: rgb(var(--text-2)); }
+  .signup-form__privacy-note a.underline { text-underline-offset: 2px; text-decoration-thickness: 1px; }
   
   .newsletter-modal-header {
     display: flex;

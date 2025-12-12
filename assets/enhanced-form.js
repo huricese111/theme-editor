@@ -2242,6 +2242,12 @@ function initFormValidation() {
       // 检查所有必填的普通字段
       const requiredFields = form.querySelectorAll('input[required], select[required], textarea[required]');
       for (let field of requiredFields) {
+        if (field.type === 'checkbox') {
+          if (!field.checked) {
+            return false;
+          }
+          continue;
+        }
         if (!field.value.trim()) {
           return false;
         }
@@ -2346,10 +2352,17 @@ function initFormValidation() {
       });
       
       // 输入时清除错误状态
-      field.addEventListener('input', function() {
-        clearFieldError(this);
-        updateSubmitButtonState();
-      });
+      if (field.type === 'checkbox') {
+        field.addEventListener('change', function() {
+          clearFieldError(this);
+          updateSubmitButtonState();
+        });
+      } else {
+        field.addEventListener('input', function() {
+          clearFieldError(this);
+          updateSubmitButtonState();
+        });
+      }
     });
     
     // 为必填的多级下拉框添加验证
@@ -2416,9 +2429,17 @@ function validateForm(form) {
 
 // 验证单个字段
 function validateField(field) {
-  const value = field.value.trim();
   const fieldType = field.type;
   const fieldName = field.name;
+  if (fieldType === 'checkbox') {
+    if (!field.checked) {
+      showFieldError(field, getLocalizedText('field_required'));
+      return false;
+    }
+    clearFieldError(field);
+    return true;
+  }
+  const value = field.value.trim();
   
   // 检查是否为空
   if (!value) {
