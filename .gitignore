@@ -1,1 +1,4 @@
 locales/en.default.json
+consent-api/node_modules/
+consent-api/data/
+consent-api/*.exe

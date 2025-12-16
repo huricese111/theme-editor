@@ -276,7 +276,7 @@
                     >
                     
                     <!-- Newsletter subscription checkbox -->
-                    {% if block.settings.show_newsletter_signup %}
+                    {% if false %}
                       <div class="newsletter-signup-wrapper" style="margin-top: 10px;">
                         <label class="newsletter-checkbox-label" for="contact_newsletter_{{ block.id }}" style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
                           <input
@@ -1394,59 +1394,7 @@
                 assign submit_text = section.settings.submit_button_text_fi
               endif
             -%}
-            {%- liquid
-              assign privacy_url = settings.privacy_policy_url | default: '/policies/privacy-policy'
-              assign first_char = privacy_url | slice: 0, 1
-              assign proto_rel = privacy_url | slice: 0, 2
-              if privacy_url contains '://' or proto_rel == '//'
-              elsif first_char != '/'
-                assign privacy_url = '/' | append: privacy_url
-              endif
-              assign terms_url = settings.terms_policy_url | default: '/policies/terms-of-service'
-              assign terms_first_char = terms_url | slice: 0, 1
-              assign terms_proto_rel = terms_url | slice: 0, 2
-              if terms_url contains '://' or terms_proto_rel == '//'
-              elsif terms_first_char != '/'
-                assign terms_url = '/' | append: terms_url
-              endif
-              assign lang = request.locale.iso_code
-              case lang
-                when 'de'
-                  assign privacy_policy_label = 'Datenschutzerklärung'
-                  assign terms_policy_label = 'Nutzungsbedingungen'
-                  assign marketing_consent_label = 'Ich willige ein, den Newsletter der HEPHA GmbH in regelmäßigen Abständen zu erhalten. Dieser bewirbt Produkte und Services der HEPHA GmbH. (optional)'
-                when 'fr'
-                  assign privacy_policy_label = 'Politique de confidentialité'
-                  assign terms_policy_label = "Conditions d'utilisation"
-                  assign marketing_consent_label = "J’accepte de recevoir régulièrement la newsletter de HEPHA GmbH. Elle contient des informations sur les produits et services de HEPHA GmbH. (facultatif)"
-                when 'fi'
-                  assign privacy_policy_label = 'Tietosuojakäytäntö'
-                  assign terms_policy_label = 'Käyttöehdot'
-                  assign marketing_consent_label = 'Suostun vastaanottamaan HEPHA GmbH:n uutiskirjeen, joka sisältää tietoa uusista tuotteista ja palveluista. (valinnainen)'
-                else
-                  assign privacy_policy_label = 'Privacy Policy'
-                  assign terms_policy_label = 'Terms of Service'
-                  assign marketing_consent_label = "I agree to receive the newsletter of HEPHA GmbH at regular intervals. It promotes products and services of HEPHA GmbH. (optional)"
-              endcase
-            -%}
-            {%- case request.locale.iso_code -%}
-              {%- when 'de' -%}
-                {%- capture legal_consent_label -%}Ich habe die <a class="underline" href="{{ terms_url }}" target="_blank" rel="noopener">{{ terms_policy_label }}</a> und die <a class="underline" href="{{ privacy_url }}" target="_blank" rel="noopener">{{ privacy_policy_label }}</a> von HEPHA gelesen und stimme ihnen zu.{%- endcapture -%}
-              {%- when 'fr' -%}
-                {%- capture legal_consent_label -%}J'ai lu et j'accepte les <a class="underline" href="{{ terms_url }}" target="_blank" rel="noopener">{{ terms_policy_label }}</a> et la <a class="underline" href="{{ privacy_url }}" target="_blank" rel="noopener">{{ privacy_policy_label }}</a> de HEPHA.{%- endcapture -%}
-              {%- when 'fi' -%}
-                {%- capture legal_consent_label -%}Olen lukenut ja hyväksynyt HEPHA:n <a class="underline" href="{{ terms_url }}" target="_blank" rel="noopener">{{ terms_policy_label }}</a> ja <a class="underline" href="{{ privacy_url }}" target="_blank" rel="noopener">{{ privacy_policy_label }}</a>.{%- endcapture -%}
-              {%- else -%}
-                {%- capture legal_consent_label -%}I've read and agreed to HEPHA's <a class="underline" href="{{ terms_url }}" target="_blank" rel="noopener">{{ terms_policy_label }}</a> and <a class="underline" href="{{ privacy_url }}" target="_blank" rel="noopener">{{ privacy_policy_label }}</a>.{%- endcapture -%}
-            {%- endcase -%}
-            <div class="legal-consent-row">
-              <label class="legal-consent-label" for="legal_consent"><input type="checkbox" id="legal_consent" name="legal_consent" required> {{ legal_consent_label }}</label>
-            </div>
-            {% if section.settings.show_marketing_consent %}
-            <div class="legal-consent-row">
-              <label class="legal-consent-label" for="accepts_marketing"><input type="checkbox" id="accepts_marketing" name="contact[newsletter_signup]" value="true"> {{ marketing_consent_label }}</label>
-            </div>
-            {% endif %}
+            {%- render 'consent-module', show_marketing_consent: section.settings.show_marketing_consent -%}
             <button
               class="enhanced-form-submit-btn btn btn--{{ section.settings.button_style | default: 'primary' }}"
               type="submit"
@@ -1489,37 +1437,8 @@
       }
     };
   {% endunless %}
-  document.addEventListener('DOMContentLoaded', function() {
-    var legal = document.getElementById('legal_consent');
-    var btn = null;
-    if (legal && legal.closest('form')) {
-      btn = legal.closest('form').querySelector('button[type="submit"]');
-    }
-    function update() {
-      if (!btn) return;
-      var ok = (!!legal && legal.checked);
-      btn.disabled = !ok;
-      if (btn.disabled) {
-        btn.setAttribute('aria-disabled', 'true');
-      } else {
-        btn.removeAttribute('aria-disabled');
-      }
-    }
-    if (legal) legal.addEventListener('change', update);
-    update();
-  });
-  document.addEventListener('DOMContentLoaded', function() {
-  });
+  document.addEventListener('DOMContentLoaded', function() {});
 </script>
-{%- render 'consent-logger',
-  form_selector: '#enhanced-contact-form',
-  type: 'enhanced_form_consent',
-  email_selector: 'input[name=\"contact[email]\"]',
-  legal_selector: '#legal_consent',
-  marketing_selector: 'input[name=\"contact[newsletter_signup]\"], #accepts_marketing',
-  append_hidden_marketing_false: false
-  , form_title: form_title_text
--%}
 
 {{ 'enhanced-form.js' | asset_url | script_tag }}
 

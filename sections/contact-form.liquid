@@ -158,36 +158,8 @@
           {% endfor %}
         </div>
 
-        {%- liquid
-          assign privacy_url = section.settings.privacy_policy_url | default: '/policies/privacy-policy'
-          assign first_char = privacy_url | slice: 0, 1
-          assign proto_rel = privacy_url | slice: 0, 2
-          if privacy_url contains '://' or proto_rel == '//'
-          elsif first_char != '/'
-            assign privacy_url = '/' | append: privacy_url
-          endif
-          assign lang = request.locale.iso_code
-          case lang
-            when 'de'
-              assign privacy_policy_label = 'Datenschutzerklärung'
-              assign consent_text = 'Ich habe die Datenschutzerklärung gelesen und stimme ihr zu.'
-            when 'fr'
-              assign privacy_policy_label = 'Politique de confidentialité'
-              assign consent_text = "J'ai lu et j'accepte la politique de confidentialité."
-            when 'fi'
-              assign privacy_policy_label = 'Tietosuojaseloste'
-              assign consent_text = 'Olen lukenut ja hyväksyn tietosuojaselosteen.'
-            else
-              assign privacy_policy_label = 'Privacy Policy'
-              assign consent_text = "I've read and agree to the Privacy Policy."
-          endcase
-        -%}
-
         <div class="lightish-spaced-row">
-          <div class="rte" style="font-size:14px;color:#475569">
-            <p>{{ consent_text }} <a class="underline" href="{{ privacy_url }}" target="_blank" rel="noopener">{{ privacy_policy_label }}</a></p>
-          </div>
-          <label class="checkbox-label"><input type="checkbox" id="legal_consent_contact" required /> {{ consent_text }}</label>
+          {%- render 'consent-module', show_marketing_consent: false -%}
         </div>
 
         <div class="lightly-spaced-row">
@@ -483,23 +455,4 @@
   ]
 }
 {% endschema %}
-
-<script>
-  document.addEventListener('DOMContentLoaded', function(){
-    var legal = document.getElementById('legal_consent_contact');
-    var form = document.querySelector('.section-contact-form form');
-    var btn = form ? form.querySelector('button[type="submit"]') : null;
-    function update(){ if (btn) { var ok = (!!legal && legal.checked); btn.disabled = !ok; if (btn.disabled) { btn.setAttribute('aria-disabled','true'); } else { btn.removeAttribute('aria-disabled'); } } }
-    if (legal) legal.addEventListener('change', update);
-    update();
-    var base = '{{ section.settings.consent_api_base | strip }}';
-    var valid = !!base && base !== 'http://localhost:3000' && base !== 'https://example.com';
-    var endpoint = valid ? (base.endsWith('/api/consent') ? base : (base.replace(/\/$/, '') + '/api/consent')) : null;
-    if (form) form.addEventListener('submit', function(){
-      var emailEl = document.getElementById('contact_email');
-      var payload = { email: emailEl ? emailEl.value : '', privacy: !!(legal && legal.checked), terms: !!(legal && legal.checked), marketing: false, type: 'legal_consent', consent_time: new Date().toISOString() };
-      try { var ok = endpoint && navigator.sendBeacon(endpoint, JSON.stringify(payload)); if (!ok && endpoint) { fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), keepalive: true, mode: 'cors' }).catch(function(){}); } } catch(e){}
-    });
-  });
-</script>
 

@@ -1,0 +1,173 @@
+
+<div id="create-customer">
+        <div class="page-header">
+          <h2 class="title">Create account</h2><p class="note">Create your account to track orders and enjoy rewards.</p>
+        </div>
+        <div class="auth-card">
+        <form method="post" action="/account" id="create_customer" accept-charset="UTF-8" data-login-with-shop-sign-up="true" data-cptcha="true" data-gtm-form-interact-id="0" data-hcaptcha-bound="true"><input type="hidden" name="form_type" value="create_customer"><input type="hidden" name="utf8" value="✓">
+<div class="input-row">
+            <label for="first_name" class="login">First name</label>
+            <div class="input-with-icon">
+              <span class="input-icon-left"><svg class="icon icon--small icon--type-silhouette" stroke-width="1" aria-hidden="true" focusable="false" role="presentation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill="currentColor" stroke="none" d="M8 2a3 3 0 110 6 3 3 0 010-6zm-6 11c0-2.9 2.4-4.5 6-4.5s6 1.6 6 4.5V15H2v-2z"></path></svg></span>
+              <input type="text" value="" name="customer[first_name]" id="first_name" class="large" size="30">
+            </div>
+          </div>
+
+          <div class="input-row">
+            <label for="last_name" class="login">Last name</label>
+            <div class="input-with-icon">
+              <span class="input-icon-left"><svg class="icon icon--small icon--type-silhouette" stroke-width="1" aria-hidden="true" focusable="false" role="presentation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill="currentColor" stroke="none" d="M8 2a3 3 0 110 6 3 3 0 010-6zm-6 11c0-2.9 2.4-4.5 6-4.5s6 1.6 6 4.5V15H2v-2z"></path></svg></span>
+              <input type="text" value="" name="customer[last_name]" id="last_name" class="large" size="30">
+            </div>
+          </div>
+
+          <div class="input-row">
+            <label for="email" class="login">Email</label>
+            <div class="input-with-icon">
+              <span class="input-icon-left"><svg class="icon icon--small icon--type-mail" stroke-width="1" aria-hidden="true" focusable="false" role="presentation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill="currentColor" stroke="none" d="M0.5 4.2C0.5 3.09 1.39 2.2 2.5 2.2h11c1.11 0 2 .89 2 2v0.05L8 8.2 0.5 4.25V4.2z"></path>
+      <path fill="currentColor" stroke="none" d="M0.5 5.2v6.6c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2V5.2L8 9.4 0.5 5.2z"></path></svg></span>
+              <input type="email" value="" name="customer[email]" id="email" class="large" size="30">
+            </div>
+          </div>
+
+          <div class="input-row">
+            <label for="password" class="login">Password</label>
+            <div class="text-over-input">
+              <span class="input-icon-left"><svg class="icon icon--small icon--type-lock" stroke-width="1" aria-hidden="true" focusable="false" role="presentation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill="currentColor" stroke="none" d="M5.5 6V4.8C5.5 3.02 6.98 1.5 8.8 1.5s3.3 1.52 3.3 3.3V6h-6.6z"></path>
+      <path fill="currentColor" stroke="none" d="M3.2 6.8h11.2c.44 0 .8.36.8.8v6.6c0 .44-.36.8-.8.8H3.2a.8.8 0 01-.8-.8V7.6c0-.44.36-.8.8-.8zM8.8 10.1a1.1 1.1 0 100 2.2 1.1 1.1 0 000-2.2z"></path></svg></span>
+              <input type="password" value="" name="customer[password]" id="password" class="large password" size="30">
+              <button type="button" class="password-toggle" data-target="password" aria-pressed="true" aria-label="Show password"><svg class="icon icon--small icon--type-eye" stroke-width="1" aria-hidden="true" focusable="false" role="presentation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill="currentColor" d="M8 10a2 2 0 100-4 2 2 0 000 4zm0 1a3 3 0 100-6 3 3 0 000 6z" fill-rule="evenodd"></path>
+      <path fill="currentColor" d="M15.79 8.62L15 8l.79-.62a1 1 0 010 1.24zM1 8l-.79.62.02.02a5.56 5.56 0 00.15.18 15.16 15.16 0 002.05 1.96C3.77 11.84 5.73 13 8 13c2.26 0 4.23-1.16 5.57-2.22a15.17 15.17 0 002.2-2.14l.01-.02L15 8l.79-.62-.02-.02a6.17 6.17 0 00-.6-.67c-.37-.4-.92-.94-1.6-1.47C12.23 4.16 10.27 3 8 3 5.73 3 3.77 4.16 2.43 5.22a15.16 15.16 0 00-2.2 2.14l-.01.02L1 8zm0 0l-.79.62a1 1 0 010-1.24L1 8zm0 0s3.13-4 7-4 7 4 7 4-3.13 4-7 4-7-4-7-4z" fill-rule="evenodd"></path></svg></button>
+            </div>
+          </div><div class="consent-module">
+  <div class="input-row">
+    <label for="legal_consent" class="login"><input type="checkbox" id="legal_consent" name="legal_consent" required="" data-gtm-form-interact-field-id="0"> I've read and agreed to HEPHA's <a class="underline" href="/policies/terms-of-service" target="_blank" rel="noopener">Terms of Service</a> and <a class="underline" href="/policies/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a>.</label>
+  </div>
+  
+  <div class="input-row">
+    <label for="accepts_marketing" class="login"><input type="checkbox" id="accepts_marketing" name="customer[accepts_marketing]" value="true"> I agree to receive the newsletter of HEPHA GmbH at regular intervals. It promotes products and services of HEPHA GmbH. (optional)</label>
+  </div>
+  
+</div>
+<style>
+.consent-module .input-row label.login{display:inline-flex;align-items:center;gap:8px;font-weight:400;font-size:14px;line-height:1.6}
+.consent-module .input-row input[type="checkbox"]{margin:0;flex-shrink:0}
+.consent-module .input-row a.underline{text-underline-offset:2px;text-decoration-thickness:1px}
+</style>
+<script>
+  (function(){
+    function nowTs(){ return Math.floor(Date.now()/1000); }
+    function makeId(){ try { return crypto.randomUUID(); } catch(e){ return 'id-' + Math.random().toString(36).slice(2); } }
+    function formatLocalTime(){ var d = new Date(); function pad(n){ return (n<10?'0':'')+n; } var off = -d.getTimezoneOffset(); var sign = off>=0?'+':'-'; var oh = Math.floor(Math.abs(off)/60); var om = Math.abs(off)%60; var offset = sign + pad(oh) + ':' + pad(om); return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+' '+pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds())+' '+offset; }
+    function getCountryInfo(){ var loc = null; try { loc = Intl.DateTimeFormat().resolvedOptions().locale; } catch(e){} if (!loc) { loc = (navigator.languages && navigator.languages[0]) || navigator.language || null; } var code = null; if (loc) { var parts = String(loc).split(/-|_/); if (parts.length>=2) { var last = parts[parts.length-1]; if (/^[A-Z]{2}$/.test(last)) code = last; } } var name = null; try { if (code && typeof Intl.DisplayNames === 'function') { var dn = new Intl.DisplayNames(['en'], { type: 'region' }); name = dn.of(code); } } catch(e){} return { locale: loc || null, country_code: code || null, country: name || null }; }
+    var s = document.currentScript;
+    var form = s && s.closest ? s.closest('form') : null;
+    var legal = form ? form.querySelector('#legal_consent') : null;
+    var btn = form ? form.querySelector('button[type="submit"]') : null;
+    function update(){ if (!btn) return; var ok = (!!legal && legal.checked); btn.disabled = !ok; if (btn.disabled) { btn.setAttribute('aria-disabled','true'); } else { btn.removeAttribute('aria-disabled'); } }
+    if (legal) legal.addEventListener('change', update);
+    update();
+    var endpoint = 'https://103.215.83.188.nip.io/api/consent';
+    var privacyVer = '230220';
+    var termsVer = '230220';
+    var formTitle = "";
+    if (form) {
+      form.addEventListener('submit', function(){
+        var emailEl = form.querySelector('#email, input[name="customer[email]"], input[name="contact[email]"]');
+        var marketingLabel = form.querySelector('label[for="accepts_marketing"]');
+        var marketingEl = marketingLabel ? form.querySelector('#accepts_marketing') : null;
+        var id = makeId();
+        var ts = nowTs();
+        var tz = (typeof Intl !== 'undefined' && Intl.DateTimeFormat && Intl.DateTimeFormat().resolvedOptions ? Intl.DateTimeFormat().resolvedOptions().timeZone : null);
+        var region = getCountryInfo();
+        var type = form.querySelector('input[name="customer[email]"]') ? 'registration_consent' : 'enhanced_form_consent';
+        var payload = {
+          id: id,
+          email: emailEl ? emailEl.value : '',
+          privacy: !!(legal && legal.checked),
+          terms: !!(legal && legal.checked),
+          timestamp: ts,
+          consent_time: formatLocalTime(),
+          timezone: tz,
+          country: region.country,
+          country_code: region.country_code,
+          locale: region.locale,
+          userAgent: navigator.userAgent,
+          type: type,
+          domain: location.hostname,
+          page_url: location.href,
+          privacy_version: privacyVer,
+          terms_version: termsVer
+        };
+        if (formTitle) payload.formTitle = formTitle;
+        if (marketingLabel && marketingEl) {
+          payload.marketing = !!marketingEl.checked;
+          if (type === 'registration_consent' && !marketingEl.checked) {
+            var hidden = document.createElement('input');
+            hidden.type = 'hidden';
+            hidden.name = 'customer[accepts_marketing]';
+            hidden.value = 'false';
+            form.appendChild(hidden);
+          }
+        } else {
+          payload.marketing = null;
+        }
+        try { console.log('consent payload', payload); } catch(e) {}
+        if (!endpoint) return;
+        try {
+          var ok = navigator.sendBeacon(endpoint, JSON.stringify(payload));
+          if (!ok) {
+            fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), keepalive: true, mode: 'cors' }).catch(function(){});
+          }
+        } catch(e) {}
+      });
+    }
+    document.addEventListener('hiko', function(event){
+      var d = event && event.detail ? event.detail : {};
+      var a = String(d.action || '');
+      if (a === 'login' || a === 'activate' || a === 'multipass') {
+        var id = makeId();
+        var ts = nowTs();
+        var tz = (typeof Intl !== 'undefined' && Intl.DateTimeFormat && Intl.DateTimeFormat().resolvedOptions ? Intl.DateTimeFormat().resolvedOptions().timeZone : null);
+        var region = getCountryInfo();
+        var payload = {
+          id: id,
+          email: String(d.email || ''),
+          privacy: true,
+          terms: true,
+          marketing: null,
+          timestamp: ts,
+          consent_time: formatLocalTime(),
+          timezone: tz,
+          country: region.country,
+          country_code: region.country_code,
+          locale: region.locale,
+          userAgent: navigator.userAgent,
+          type: 'social_login_consent',
+          domain: location.hostname,
+          page_url: location.href,
+          privacy_version: privacyVer,
+          terms_version: termsVer
+        };
+        try { console.log('consent payload', payload); } catch(e) {}
+        if (!endpoint) return;
+        try {
+          var ok = navigator.sendBeacon(endpoint, JSON.stringify(payload));
+          if (!ok) {
+            fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), keepalive: true, mode: 'cors' }).catch(function(){});
+          }
+        } catch(e) {}
+      }
+    });
+  })();
+</script>
+<div class="lightly-spaced-row-above">
+            <button class="btn" type="submit">Create account</button>
+            <span class="note">
+              Already have an account?
+              <a href="/account/login" class="underline">Log in here</a>
+            </span>
+          </div>
+        <div name="hiko-container" type="register" app=""><div class="h_wizard"><div name="hiko-err"></div><div class="h_buttons"><div class="h_apple_button h_apple_center" data="apple"><i style="font-family: social_logo !important; color: black;" class="fax fax-apple"></i><span class="h_apple_text">Sign up with Apple</span></div><div class="h_google_button h_google_center" data="google"><p class="png-google" alt=""></p><span class="h_google_text">Sign up with Google</span></div><div class="h_facebook_button h_facebook_center" data="facebook"><i style="font-family: social_logo !important; color: #4267B2;" class="fax fax-facebook"></i><span class="h_facebook_text">Sign up with Facebook</span></div></div></div></div><input type="hidden" name="login_with_shop[analytics_trace_id]" value="861bfd14-4d16-4546-a5fd-23bb05a77f57"><div class="h-captcha" data-sitekey="f06e6c50-85a8-45c8-87d0-21a2b65856fe" data-size="invisible"><iframe aria-hidden="true" data-hcaptcha-widget-id="0yaxull4ssrc" data-hcaptcha-response="" src="https://newassets.hcaptcha.com/captcha/v1/2e2f9feae51e15dd4676ba8e3d761ec72f41b826/static/hcaptcha.html#frame=checkbox-invisible" style="display: none;"></iframe><textarea id="h-captcha-response-0yaxull4ssrc" name="h-captcha-response" style="display: none;"></textarea></div></form>
+        </div>
+      </div>

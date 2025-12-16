@@ -11,7 +11,7 @@ fs.mkdirSync(dataDir, { recursive: true })
 const dbPath = process.env.DB_PATH || path.join(dataDir, 'consents.db')
 const db = new Database(dbPath)
 db.exec(
-  'CREATE TABLE IF NOT EXISTS consents (id TEXT PRIMARY KEY, email TEXT, privacy INTEGER, terms INTEGER, marketing INTEGER, timestamp INTEGER, consent_time TEXT, timezone TEXT, country TEXT, country_code TEXT, locale TEXT, userAgent TEXT, type TEXT, ip TEXT, domain TEXT, page_url TEXT, privacy_version TEXT, terms_version TEXT)'
+  'CREATE TABLE IF NOT EXISTS consents (id TEXT PRIMARY KEY, email TEXT, privacy INTEGER, terms INTEGER, marketing INTEGER, timestamp INTEGER, consent_time TEXT, timezone TEXT, country TEXT, country_code TEXT, locale TEXT, userAgent TEXT, type TEXT, social TEXT, ip TEXT, domain TEXT, page_url TEXT, privacy_version TEXT, terms_version TEXT)'
 )
 try {
   const cols = db.prepare('PRAGMA table_info(consents)').all().map(r => r.name)
@@ -19,6 +19,7 @@ try {
   if (!cols.includes('page_url')) db.exec('ALTER TABLE consents ADD COLUMN page_url TEXT')
   if (!cols.includes('privacy_version')) db.exec('ALTER TABLE consents ADD COLUMN privacy_version TEXT')
   if (!cols.includes('terms_version')) db.exec('ALTER TABLE consents ADD COLUMN terms_version TEXT')
+  if (!cols.includes('social')) db.exec('ALTER TABLE consents ADD COLUMN social TEXT')
 } catch {}
 
 const app = express()
@@ -78,7 +79,10 @@ app.post('/api/consent', (req, res) => {
     email: String(b.email || ''),
     privacy: b.privacy ? 1 : 0,
     terms: b.terms ? 1 : 0,
-    marketing: b.marketing ? 1 : 0,
+    marketing: (Object.prototype.hasOwnProperty.call(b, 'marketing'))
+      ? (b.marketing === true ? 1 : (b.marketing === false ? 0 : null))
+      : null,
+    social: String((b.social || '')).toLowerCase(),
     timestamp: Number(b.timestamp || Math.floor(Date.now() / 1000)),
     consent_time: String(b.consent_time || ''),
     timezone: String(b.timezone || ''),
@@ -97,7 +101,7 @@ app.post('/api/consent', (req, res) => {
   }
   try {
     const stmt = db.prepare(
-      'INSERT OR REPLACE INTO consents (id, email, privacy, terms, marketing, timestamp, consent_time, timezone, country, country_code, locale, userAgent, type, ip, domain, page_url, privacy_version, terms_version) VALUES (@id, @email, @privacy, @terms, @marketing, @timestamp, @consent_time, @timezone, @country, @country_code, @locale, @userAgent, @type, @ip, @domain, @page_url, @privacy_version, @terms_version)'
+      'INSERT OR REPLACE INTO consents (id, email, privacy, terms, marketing, timestamp, consent_time, timezone, country, country_code, locale, userAgent, type, social, ip, domain, page_url, privacy_version, terms_version) VALUES (@id, @email, @privacy, @terms, @marketing, @timestamp, @consent_time, @timezone, @country, @country_code, @locale, @userAgent, @type, @social, @ip, @domain, @page_url, @privacy_version, @terms_version)'
     )
     stmt.run(rec)
     res.status(201).json({ ok: true })
@@ -109,7 +113,7 @@ app.post('/api/consent', (req, res) => {
 app.get('/api/consent', (req, res) => {
   try {
     const limit = Math.max(1, Math.min(1000, Number(req.query.limit || 100)))
-    const stmt = db.prepare('SELECT id,email,privacy,terms,marketing,ip,consent_time,domain,page_url,privacy_version,terms_version FROM consents ORDER BY timestamp DESC LIMIT ?')
+    const stmt = db.prepare('SELECT id,email,privacy,terms,marketing,social,ip,consent_time,domain,page_url,privacy_version,terms_version FROM consents ORDER BY timestamp DESC LIMIT ?')
     const rows = stmt.all(limit)
     res.json({ consents: rows })
   } catch {
@@ -128,9 +132,9 @@ app.get('/api/consents', (_req, res) => {
 
 app.get('/consents.csv', (_req, res) => {
   try {
-    const rows = db.prepare('SELECT id,email,privacy,terms,marketing,timestamp,consent_time,timezone,country,country_code,locale,userAgent,type,ip,domain,page_url,privacy_version,terms_version FROM consents ORDER BY timestamp DESC').all()
-    const header = 'id,email,privacy,terms,marketing,timestamp,consent_time,timezone,country,country_code,locale,userAgent,type,ip,domain,page_url,privacy_version,terms_version\n'
-    const csv = header + rows.map(r => [r.id, r.email, r.privacy, r.terms, r.marketing, r.timestamp, r.consent_time, r.timezone, r.country, r.country_code, r.locale, (r.userAgent || '').replace(/"/g, ''), r.type, r.ip, r.domain, r.page_url, r.privacy_version, r.terms_version].map(v => String(v)).map(v => v.includes(',') ? '"' + v.replace(/"/g, '""') + '"' : v).join(',')).join('\n')
+    const rows = db.prepare('SELECT id,email,privacy,terms,marketing,timestamp,consent_time,timezone,country,country_code,locale,userAgent,type,social,ip,domain,page_url,privacy_version,terms_version FROM consents ORDER BY timestamp DESC').all()
+    const header = 'id,email,privacy,terms,marketing,timestamp,consent_time,timezone,country,country_code,locale,userAgent,type,social,ip,domain,page_url,privacy_version,terms_version\n'
+    const csv = header + rows.map(r => [r.id, r.email, r.privacy, r.terms, r.marketing, r.timestamp, r.consent_time, r.timezone, r.country, r.country_code, r.locale, (r.userAgent || '').replace(/"/g, ''), r.type, r.social || '', r.ip, r.domain, r.page_url, r.privacy_version, r.terms_version].map(v => String(v)).map(v => v.includes(',') ? '"' + v.replace(/"/g, '""') + '"' : v).join(',')).join('\n')
     res.setHeader('Content-Type', 'text/csv; charset=utf-8')
     res.send(csv)
   } catch {
@@ -146,11 +150,11 @@ app.get('/consents', (req, res) => {
     const pageSize = Math.max(1, Math.min(200, Number(req.query.pageSize || 50)))
     const sortByRaw = String(req.query.sortBy || 'timestamp').trim()
     const sortDirRaw = String(req.query.sortDir || 'desc').toLowerCase()
-    const allowedSort = ['timestamp','email','privacy','terms','marketing','ip','domain','page_url']
-    const sortBy = allowedSort.includes(sortByRaw) ? sortByRaw : 'timestamp'
-    const sortDir = sortDirRaw === 'asc' ? 'asc' : 'desc'
-    const where = []
-    const params = []
+  const allowedSort = ['timestamp','email','privacy','terms','marketing','ip','domain','page_url']
+  const sortBy = allowedSort.includes(sortByRaw) ? sortByRaw : 'timestamp'
+  const sortDir = sortDirRaw === 'asc' ? 'asc' : 'desc'
+  const where = []
+  const params = []
     if (q) { where.push('(email LIKE ? OR domain LIKE ? OR page_url LIKE ?)'); params.push('%'+q+'%','%'+q+'%','%'+q+'%') }
     if (type) {
       const tk = type.toLowerCase()
@@ -166,8 +170,8 @@ app.get('/consents', (req, res) => {
     const whereSql = where.length ? ('WHERE ' + where.join(' AND ')) : ''
     const offset = (page - 1) * pageSize
     const orderSql = `ORDER BY ${sortBy} ${sortDir.toUpperCase()}`
-    const baseSelect = `SELECT id,email,privacy,terms,marketing,timestamp,consent_time,timezone,country,country_code,locale,type,ip,domain,page_url,privacy_version,terms_version FROM consents ${whereSql} ${orderSql} LIMIT ? OFFSET ?`
-    const rows = db.prepare(baseSelect).all(...params, pageSize, offset)
+  const baseSelect = `SELECT id,email,privacy,terms,marketing,timestamp,consent_time,timezone,country,country_code,locale,type,social,ip,domain,page_url,privacy_version,terms_version FROM consents ${whereSql} ${orderSql} LIMIT ? OFFSET ?`
+  const rows = db.prepare(baseSelect).all(...params, pageSize, offset)
     const total = db.prepare(`SELECT COUNT(*) AS c FROM consents ${whereSql}`).get(...params).c
     const htmlHead = `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Consents</title><style>:root{--bg:#f6f8fb;--card-bg:#ffffff;--text:#0f172a;--muted:#64748b;--border:#e5e7eb;--accent:#2563eb;--accent-2:#0ea5e9}*{box-sizing:border-box}body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;background:var(--bg);margin:0}a{color:var(--accent)}.wrap{width:100%;max-width:none;margin:0 auto;padding:24px}header.brand{display:flex;align-items:center;justify-content:space-between;margin:0 0 12px}header.brand .brand-left{display:flex;align-items:center;gap:12px}header.brand .logo{height:28px;display:block}header.brand h1{font-size:20px;margin:0;color:var(--text)}.btn{display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 12px;border-radius:8px;background:var(--accent-2);color:#fff;text-decoration:none;border:0;cursor:pointer;box-shadow:0 1px 2px rgba(2,8,23,.06)}.btn:visited{color:#fff}.filters{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.filters input,.filters select,.filters button{height:34px;padding:0 10px;border:1px solid var(--border);border-radius:8px;background:#fff;font-size:13px;color:var(--text)}.table-card{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;box-shadow:0 8px 24px rgba(2,8,23,.06);overflow:hidden}.table-wrap{width:100%;overflow:auto}.table{width:100%;border-collapse:separate;border-spacing:0}.table th,.table td{padding:10px 12px;border-bottom:1px solid #eef2f7;font-size:13px;color:var(--text)}.table thead th{position:sticky;top:0;background:#f8fafc;text-align:left}.table tbody tr:nth-child(even){background:#fbfcfe}.table tbody tr:hover{background:#f3f6fb}.table th a{color:var(--text);text-decoration:none}.table th a:hover{color:var(--accent)}.empty{color:var(--muted);text-align:center;padding:24px}.pager{display:flex;justify-content:space-between;align-items:center;margin-top:16px;color:var(--muted);font-size:13px}.pager-right{display:flex;align-items:center;gap:12px}.pager-pages{display:flex;gap:4px}.pager-pages a.page,.pager-pages span.page{display:inline-flex;align-items:center;justify-content:center;height:32px;min-width:32px;padding:0 6px;border:1px solid var(--border);border-radius:6px;color:var(--text);text-decoration:none;background:#fff;font-size:13px}.pager-pages span.page.disabled{opacity:.5;cursor:not-allowed}.pager-pages span.page.active{background:var(--accent);color:#fff;border-color:var(--accent)}.pager-goto input:focus{outline:2px solid var(--accent-2);outline-offset:-1px}</style>`
     const baseParams = new URLSearchParams()
@@ -178,8 +182,12 @@ app.get('/consents', (req, res) => {
     function pageLink(n){ const p = new URLSearchParams(baseParams); p.set('sortBy', sortBy); p.set('sortDir', sortDir); p.set('page', String(n)); return `?${p.toString()}` }
     const header = `<header class="brand"><div class="brand-left"><img src="/consent-assets/HEPHA_Logo_JPG_1200px.jpg" alt="HEPHA" class="logo"><h1>Consent Records</h1></div><div class="brand-actions"><a class="btn" href="/consents.csv">Download CSV</a></div></header>`
     const controls = `<form class="filters" method="get"><div class="filters-left"><input type="text" name="q" value="${escapeHtml(q)}" placeholder="Search"><select name="type"><option value="">All categories</option><option value="registration"${type==='registration'?' selected':''}>Registration</option><option value="contact"${type==='contact'?' selected':''}>Contact</option><option value="leasing"${type==='leasing'?' selected':''}>Leasing (All)</option></select><button type="submit" class="btn" style="background:#334155;color:#fff">Apply</button></div></form>`
-    const headerRow = `<tr><th>No.</th><th><a href="${sortLink('email')}">Email</a></th><th><a href="${sortLink('privacy')}">Privacy</a></th><th><a href="${sortLink('terms')}">Terms</a></th><th><a href="${sortLink('marketing')}">Marketing</a></th><th><a href="${sortLink('timestamp')}">Time</a></th><th>Timezone</th><th>Country</th><th>IP</th><th><a href="${sortLink('domain')}">Domain</a></th><th><a href="${sortLink('page_url')}">Page URL</a></th><th>Privacy ver</th><th>Terms ver</th></tr>`
-    const bodyRows = rows.map((r,i) => `<tr><td>${offset + i + 1}</td><td>${escapeHtml(r.email||'')}</td><td>${r.privacy? 'Yes':'No'}</td><td>${r.terms? 'Yes':'No'}</td><td>${r.marketing? 'Yes':'No'}</td><td>${escapeHtml(r.consent_time||String(r.timestamp))}</td><td>${escapeHtml(r.timezone||'')}</td><td>${escapeHtml(r.country||'')}</td><td>${escapeHtml(r.ip||'')}</td><td>${escapeHtml(r.domain||'')}</td><td>${r.page_url ? `<a href="${escapeHtml(r.page_url)}" target="_blank" rel="noopener">${escapeHtml(r.page_url)}</a>` : ''}</td><td>${escapeHtml(r.privacy_version||'')}</td><td>${escapeHtml(r.terms_version||'')}</td></tr>`).join('')
+  const headerRow = `<tr><th>No.</th><th><a href="${sortLink('email')}">Email</a></th><th><a href="${sortLink('privacy')}">Privacy</a></th><th><a href="${sortLink('terms')}">Terms</a></th><th><a href="${sortLink('marketing')}">Marketing</a></th><th>Social</th><th><a href="${sortLink('timestamp')}">Time</a></th><th>Timezone</th><th>Country</th><th>IP</th><th><a href="${sortLink('domain')}">Domain</a></th><th><a href="${sortLink('page_url')}">Page URL</a></th><th>Privacy ver</th><th>Terms ver</th></tr>`
+  const bodyRows = rows.map((r,i) => {
+    const marketingCell = (r.marketing === null || typeof r.marketing === 'undefined') ? 'Undefined' : (r.marketing ? 'Yes' : 'No')
+    const socialCell = (String(r.social||'').toLowerCase()==='apple')?'Apple':(String(r.social||'').toLowerCase()==='google')?'Google':(String(r.social||'').toLowerCase()==='facebook')?'Facebook':''
+    return `<tr><td>${offset + i + 1}</td><td>${escapeHtml(r.email||'')}</td><td>${r.privacy? 'Yes':'No'}</td><td>${r.terms? 'Yes':'No'}</td><td>${marketingCell}</td><td>${socialCell}</td><td>${escapeHtml(r.consent_time||String(r.timestamp))}</td><td>${escapeHtml(r.timezone||'')}</td><td>${escapeHtml(r.country||'')}</td><td>${escapeHtml(r.ip||'')}</td><td>${escapeHtml(r.domain||'')}</td><td>${r.page_url ? `<a href="${escapeHtml(r.page_url)}" target="_blank" rel="noopener">${escapeHtml(r.page_url)}</a>` : ''}</td><td>${escapeHtml(r.privacy_version||'')}</td><td>${escapeHtml(r.terms_version||'')}</td></tr>`
+  }).join('')
     const totalPages = Math.max(1, Math.ceil(total / pageSize))
     const maxLinks = 7
     let start = Math.max(1, page - Math.floor(maxLinks/2))

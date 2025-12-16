@@ -25,7 +25,7 @@
     - 直接使用全局 `Consent API URL`，不再拼接 `/api/consent`
     - `sendBeacon` 成功则不可读取响应体，失败回退 `fetch`
   - 注册页：必须勾选法律同意才可提交；营销开关默认关闭（`sections/main-register.liquid:204–209`）
-    - 未显示或未勾选营销时，会追加隐藏字段 `customer[accepts_marketing]=false`
+    - 仅当营销开关开启且显示复选框时，未勾选会追加隐藏字段 `customer[accepts_marketing]=false`
   - 增强表单：必须勾选法律同意才可提交；营销开关默认关闭（`sections/enhanced-form.liquid:1536–1541`）
     - 记录 `formTitle` 便于区分来源
   - 同意日志列表：通过全局端点请求最近记录（`sections/consent-log.liquid:43–49`）
@@ -39,7 +39,7 @@
   - 推荐服务端提供 `POST /api/consent`；前端可配置任意完整端点（例如自定义路径），只需与后端一致
   - 请求（JSON）：
     - `id`（UUID）、`email`（字符串或 `null`）
-    - `privacy`、`terms`、`marketing`（布尔）
+    - `privacy`、`terms`（布尔）、`marketing`（三态：`true | false | undefined`；当营销开关未开启或复选框未渲染时，该字段不发送）
     - `preferences`（数字 0–7；位图：功能=1、性能=2、定向=4；未勾选表示拒绝）
     - `status`（`allow | deny | custom`）、`timestamp`（秒）、`consent_time`（本地时间+时区）
     - `userAgent`、`type`（`registration_consent | enhanced_form_consent`）
@@ -96,7 +96,7 @@
 
 - Frontend integration & behavior
   - Posting via `snippets/consent-logger.liquid` using the full endpoint (no concatenation)
-  - Register page: legal consent required; marketing toggle default off, appends hidden `customer[accepts_marketing]=false` when unchecked
+  - Register page: legal consent required; marketing toggle default off. Only when the marketing toggle is enabled and the checkbox is rendered, unchecked will append hidden `customer[accepts_marketing]=false`
   - Enhanced Form: legal consent required; marketing toggle default off; includes `formTitle`
   - Consent log: fetches recent records from the configured endpoint
 
@@ -106,7 +106,7 @@
 
 - API contract (recommended)
   - Backend provides `POST /api/consent`; frontend accepts any full URL as long as it matches the backend
-  - Request: `id`, `email`, `privacy`, `terms`, `marketing`, `preferences`, `status`, `timestamp`, `consent_time`, `userAgent`, `type`, optional `formTitle`
+  - Request: `id`, `email`, `privacy`, `terms`, `marketing` (tri-state: `true | false | undefined`), `preferences`, `status`, `timestamp`, `consent_time`, `userAgent`, `type`, optional `formTitle`
   - Response: `{ ok: true }` or `{ ok: false }`
   - Query: `GET <Consent API URL>?limit=N` → `{ consents: [ ... ] }`
 
