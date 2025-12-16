@@ -1754,4 +1754,39 @@
       }
     ]
   }
+  ,
+  {
+    "name": "Consent & Legal",
+    "settings": [
+      {
+        "type": "url",
+        "id": "privacy_policy_url",
+        "label": "Privacy policy link"
+      },
+      {
+        "type": "url",
+        "id": "terms_policy_url",
+        "label": "Terms of service link"
+      },
+      {
+        "type": "text",
+        "id": "consent_api_url",
+        "label": "Consent API URL",
+        "info": "example：https://your-domain.com",
+        "default": "https://example.com/api/consent"
+      },
+      {
+        "type": "text",
+        "id": "privacy_version",
+        "label": "Privacy policy version",
+        "default": "230220"
+      },
+      {
+        "type": "text",
+        "id": "terms_version",
+        "label": "Terms of service version",
+        "default": "230220"
+      }
+    ]
+  }
 ]

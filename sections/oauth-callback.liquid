@@ -1,0 +1,98 @@
+<div class="container fully-spaced-row">
+  <div class="small-form" {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
+    <div class="auth-card">
+      {%- liquid
+        assign lang = request.locale.iso_code
+        case lang
+          when 'de'
+            assign title = 'Anmeldung wird verarbeitet'
+            assign note = 'Bitte warten Sie, wir verarbeiten Ihre Anmeldung.'
+          when 'fr'
+            assign title = 'Connexion en cours'
+            assign note = 'Veuillez patienter pendant le traitement de votre connexion.'
+          when 'fi'
+            assign title = 'Kirjautumista käsitellään'
+            assign note = 'Odota hetki, käsittelemme kirjautumistasi.'
+          else
+            assign title = 'Processing sign-in'
+            assign note = 'Please wait while we process your sign-in.'
+        endcase
+      -%}
+      <div class="page-header">
+        <h2 class="title">{{ title }}</h2>
+        <p class="note">{{ note }}</p>
+      </div>
+      <div id="callback-status" class="lightly-spaced-row-above"></div>
+    </div>
+  </div>
+</div>
+
+<style>
+#shopify-section-{{ section.id }} .page-header .title { margin-bottom: 8px; }
+#shopify-section-{{ section.id }} .page-header .note { color: rgb(var(--text-2)); }
+#shopify-section-{{ section.id }} .auth-card { max-width: 520px; margin: 0 auto; padding: 24px; border: 1px solid rgba(0,0,0,0.06); border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.06); background: rgb(var(--body-bg-color)); }
+#shopify-section-{{ section.id }} #callback-status { font-size: 14px; color: rgb(var(--text-2)); }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', async function(){
+    var el = document.getElementById('callback-status');
+    function set(t){ if(el) el.textContent = t; }
+    function getParams(){ var sp = new URLSearchParams(location.search); var code = sp.get('code'); var state = sp.get('state'); var error = sp.get('error'); if (!code && document.forms && document.forms.length>0){ try { var fd = new FormData(document.forms[0]); code = code || fd.get('code'); state = state || fd.get('state'); error = error || fd.get('error'); } catch(e){} } return { code: code, state: state, error: error }; }
+    var provider = '{{ section.settings.provider | default: "google" | strip }}';
+    var backend = '{{ section.settings.backend_base | strip }}';
+    var successUrl = '{{ section.settings.success_redirect | strip }}' || '/account/login';
+    var p = getParams();
+    if (p.error){ set('Error: '+p.error); return; }
+    if (!p.code){ set('Missing authorization code'); return; }
+    var verKey = 'oauth_verifier_'+provider;
+    var verifier = null; try { verifier = sessionStorage.getItem(verKey); } catch(e){}
+    var payload = { code: p.code, state: p.state, code_verifier: verifier, provider: provider, redirect_uri: null };
+    if (provider==='google'){ payload.redirect_uri = '{{ section.settings.google_redirect_uri | default: "https://hepha.com/pages/google-callback" | strip }}'; }
+    if (provider==='facebook'){ payload.redirect_uri = '{{ section.settings.facebook_redirect_uri | default: "https://hepha.com/pages/facebook-callback" | strip }}'; }
+    if (provider==='apple'){ payload.redirect_uri = '{{ section.settings.apple_redirect_uri | default: "https://hepha.com/pages/apple-callback" | strip }}'; }
+    if (!backend){ set('Backend is not configured'); return; }
+    set('Exchanging authorization code...');
+    try {
+      var res = await fetch(backend.replace(/\/$/, '') + '/oauth/'+provider+'/exchange', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), credentials: 'omit' });
+      if (!res.ok) { set('Exchange failed ('+res.status+')'); return; }
+      var data = null; try { data = await res.json(); } catch(e){ }
+      try { sessionStorage.removeItem(verKey); } catch(e){}
+      var redirect = (data && data.redirect) ? data.redirect : successUrl;
+      location.href = redirect;
+    } catch(e){ set('Network error'); }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "OAuth callback",
+  "settings": [
+    {
+      "type": "select",
+      "id": "provider",
+      "label": "Provider",
+      "options": [
+        { "value": "google", "label": "Google" },
+        { "value": "facebook", "label": "Facebook" },
+        { "value": "apple", "label": "Apple" }
+      ],
+      "default": "google"
+    },
+    {
+      "type": "url",
+      "id": "backend_base",
+      "label": "OAuth backend base URL"
+    },
+    {
+      "type": "url",
+      "id": "success_redirect",
+      "label": "Success redirect URL"
+    },
+    { "type": "paragraph", "content": "Configure provider redirect URIs and backend to complete sign-in." },
+    { "type": "url", "id": "google_redirect_uri", "label": "Google redirect URI" },
+    { "type": "url", "id": "facebook_redirect_uri", "label": "Facebook redirect URI" },
+    { "type": "url", "id": "apple_redirect_uri", "label": "Apple redirect URI" }
+  ]
+}
+{% endschema %}

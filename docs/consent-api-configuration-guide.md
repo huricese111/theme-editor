@@ -2,172 +2,136 @@
 
 ## 中文
 - 目标
-  - 记录 Cookie 同意、注册同意与增强表单同意日志，包含 `ID、preferences(0–7)、status(allow|deny|custom)、timestamp、consent_time、IP、userAgent` 等，用于合规留痕。
-  - 前端通过“主题设置中的 `Consent API base URL`”自动拼接 `.../api/consent` 并上报。
+  - 记录注册同意与增强表单同意日志，包含 `id、preferences(0–7)、status(allow|deny|custom)、timestamp、consent_time、ip、userAgent` 等，用于合规留痕。
+  - 统一使用“完整 API URL”进行上报，不再自动拼接路径。
 
-- 前端集成位置
-  - `sections/cookie-banner.liquid`
-    - 端点拼接与上报：`sections/cookie-banner.liquid:291-292`
-    - 写入 Cookie 与生成 payload：`sections/cookie-banner.liquid:262-266`、`sections/cookie-banner.liquid:301`
-    - 事件上报与关闭：
-      - 接受并关闭：`sections/cookie-banner.liquid:308`
-      - 拒绝并关闭：`sections/cookie-banner.liquid:309`
-      - 偏好保存并关闭：`sections/cookie-banner.liquid:316`
-    - 初始化弹窗（有任何同意记录则不再弹窗）：`sections/cookie-banner.liquid:304`
-    - 政策链接（段落中的内联链接）：`sections/cookie-banner.liquid:98-100`
-    - Cookie 拦截与清理（拒绝或自定义关闭时）：
-      - 启用拦截：`sections/cookie-banner.liquid:287`
-      - 清理非必需 Cookie：`sections/cookie-banner.liquid:289`
-      - 关闭拦截（接受全部）：`sections/cookie-banner.liquid:292`
-      - 根据状态应用拦截：`sections/cookie-banner.liquid:290`
-    - 日志监控（控制台输出）：
-      - 写入尝试/允许/阻止：`sections/cookie-banner.liquid:287-290`
-      - 周期扫描新增/移除：`sections/cookie-banner.liquid:305-307`
-  - `sections/main-register.liquid`
-    - 端点拼接：`sections/main-register.liquid:186-188`
-    - 表单提交上报（含隐私/条款/营销）：`sections/main-register.liquid:191-213`
-  - `sections/enhanced-form.liquid`
-    - 表单提交日志打印（含隐私/条款/营销、formTitle）：`sections/enhanced-form.liquid:1501-1519`
+- 涉及文件
+  - 片段：`snippets/consent-logger.liquid:11` 读取全局 `settings.consent_api_url` 并上报
+  - 注册页：`sections/main-register.liquid:61,68` 读取全局隐私/条款链接；`190–198` 调用片段
+  - 增强表单：`sections/enhanced-form.liquid:1398,1405` 读取全局隐私/条款链接；`1514–1522` 调用片段（含 `formTitle`）
+  - 同意日志列表：`sections/consent-log.liquid:43–49` 使用全局完整端点拉取
+  - 主题设置：`config/settings_schema.json:1761–1789` 增加并维护 `privacy_policy_url`、`terms_policy_url`、`consent_api_url`、`privacy_version`、`terms_version`
+  - 模板：`templates/page.consent-log.json:6–11` 移除本地端点字段，改为使用全局
+  - 服务端示例：`consent-api/index.js` 提供默认路由 `/api/consent`、`/api/consents`、`/consents.csv`
 
-- 主题设置（必须配置）
-  - 在主题编辑器中，将 Cookie Banner 区块的 `Consent API base URL` 设置为你的后端根地址。
-    - 示例：`http://localhost:3000` 或 `https://your-domain.com`
-    - 前端自动拼接：`https://your-domain.com/api/consent`
+- 前端配置（新设计）
+  - 在主题「Consent & Legal」中填写：
+    - `Privacy policy link`、`Terms of service link`（完整或相对 URL；前端会规范化）
+    - `Consent API URL`（填写完整端点，如 `https://your-domain.com/api/consent`）
+    - `Privacy policy version`、`Terms of service version`（可选，用于日志版本留痕）
 
-- 接口约定
-  - `POST /api/consent`
-    - 请求体（JSON）：
-      - `id` 字符串（UUID）
-      - `email` 字符串或 `null`
-      - `privacy` 布尔（注册页/增强表单）
-      - `terms` 布尔（注册页/增强表单）
-      - `marketing` 布尔（注册页/增强表单）
-      - `preferences` 数字（0–7，3 位位图：功能=1、性能=2、定向=4；未勾选表示拒绝，对应置 1）
-      - `status` 字符串：`allow | deny | custom`
-      - `timestamp` 秒级时间戳
-      - `consent_time` ISO 字符串
-      - `userAgent` 字符串
-      - `type`：`cookie_consent | registration_consent | enhanced_form_consent`
-      - 额外字段：
-        - `formTitle` 字符串（增强表单）；见 `sections/enhanced-form.liquid:1516`
-  - 响应体（JSON）：
-      - 成功：`{ ok: true, ip: "<客户端IP>" }`（参考 `sections/cookie-banner.liquid:180-181`）
-      - 失败：`{ ok: false }`（500）
-  - `GET /api/consent?limit=N`
-    - 返回最近 N 条记录：`{ consents: [ ... ] }`（参考 `sections/cookie-banner.liquid:173-176`）
+- 前端集成与行为
+  - 所有上报统一通过片段：`snippets/consent-logger.liquid:11–16`
+    - 直接使用全局 `Consent API URL`，不再拼接 `/api/consent`
+    - `sendBeacon` 成功则不可读取响应体，失败回退 `fetch`
+  - 注册页：必须勾选法律同意才可提交；营销开关默认关闭（`sections/main-register.liquid:204–209`）
+    - 未显示或未勾选营销时，会追加隐藏字段 `customer[accepts_marketing]=false`
+  - 增强表单：必须勾选法律同意才可提交；营销开关默认关闭（`sections/enhanced-form.liquid:1536–1541`）
+    - 记录 `formTitle` 便于区分来源
+  - 同意日志列表：通过全局端点请求最近记录（`sections/consent-log.liquid:43–49`）
 
-- 数据库表结构（SQLite 示例）
-  - 字段：`id,email,privacy,terms,marketing,preferences,status,timestamp,consent_time,ip,userAgent,received_at`
-  - 插入语句位置：`sections/cookie-banner.liquid:178-181`
+- 已移除的节级配置
+  - `sections/main-register.liquid` 与 `sections/enhanced-form.liquid` 不再包含：
+    - `privacy_policy_url`、`terms_policy_url`、`consent_api_base`、`privacy_version`、`terms_version`
+  - 请在主题全局配置「Consent & Legal」维护上述字段
 
-- 服务端实现要点
-  - IP 捕获（代理兼容）：`sections/cookie-banner.liquid:146-154`
-    - 读取 `x-forwarded-for`（取第一个），兼容 `cf-connecting-ip`、`x-real-ip`、`fastly-client-ip`，回退到 `remoteAddress`
-  - CORS 与预检：允许 `*`、`Content-Type`、方法 `GET, POST, OPTIONS`；`OPTIONS` 返回 204（`sections/cookie-banner.liquid:146`）
-  - sendBeacon 行为：成功时前端无法读取响应体；仅在回退到 `fetch` 时，前端会打印服务端响应（`sections/cookie-banner.liquid:236-241`）。
+- 接口约定（推荐）
+  - 推荐服务端提供 `POST /api/consent`；前端可配置任意完整端点（例如自定义路径），只需与后端一致
+  - 请求（JSON）：
+    - `id`（UUID）、`email`（字符串或 `null`）
+    - `privacy`、`terms`、`marketing`（布尔）
+    - `preferences`（数字 0–7；位图：功能=1、性能=2、定向=4；未勾选表示拒绝）
+    - `status`（`allow | deny | custom`）、`timestamp`（秒）、`consent_time`（本地时间+时区）
+    - `userAgent`、`type`（`registration_consent | enhanced_form_consent`）
+    - 其他：`formTitle`（增强表单）
+  - 响应（JSON）：
+    - 成功：`{ ok: true }`；失败：`{ ok: false }`
+  - 查询（示例）：`GET <Consent API URL>?limit=N` 返回最近 N 条 `{ consents: [ ... ] }`
 
-- 部署步骤（示例：Node/Express）
-  - 依赖：`express`、`sqlite3`
-  - 端口：`PORT` 环境变量或默认 `3000`
-  - 将后端部署到你的域名后，设置主题的 `Consent API base URL` 为该域名根地址。
+- 数据库（SQLite 示例）
+  - 列：`id,email,privacy,terms,marketing,preferences,status,timestamp,consent_time,ip,userAgent,domain,page_url,privacy_version,terms_version,received_at`
 
-- 测试方法
-  - 在浏览器控制台查看日志：
-    - 本地打印：`consent { endpoint, payload }`（`sections/cookie-banner.liquid:236-241`）
-    - 回退 `fetch` 时打印：`consent saved { ok: true, ip: "..." }`
-    - 增强表单打印：`consent payload`（含 `formTitle`；`sections/enhanced-form.liquid:1501-1519`）
-  - 数据库验证：检查插入新行，含 `ip` 与 `userAgent`。
+- 服务端要点
+  - IP 捕获（代理兼容）：优先 `x-forwarded-for`，兼容 `cf-connecting-ip`、`x-real-ip`、`fastly-client-ip`，回退 `remoteAddress`
+  - CORS 与预检：允许 `*`、`Content-Type`；方法 `GET, POST, OPTIONS`；`OPTIONS` 返回 204
+  - sendBeacon：成功不暴露响应体；仅在回退到 `fetch` 时可见
 
-- 合规与安全建议
-  - IP 属于个人数据：可伪匿名（截断或哈希）再存储。
-  - 保留期建议 180–395 天，定期清理。
-  - 加强防护：限制来源、速率限制、审计日志。
-  - 使用 HTTPS。
+- 部署（Node/Express 示例）
+  - 依赖：`express`、`better-sqlite3`、`morgan`
+  - 路由参考：`consent-api/index.js` 默认实现 `/api/consent`、`/api/consents`、`/consents.csv`
+
+- 测试
+  - 浏览器控制台查看打印：`consent payload`
+  - 后端数据库：验证新记录含 `ip`、`userAgent`、`domain`、`page_url`
+
+- 合规与安全
+  - IP 属于个人数据：建议伪匿名（截断或哈希）
+  - 建议保留期 180–395 天，定期清理
+  - 加固：限制来源、速率限制、审计日志；务必使用 HTTPS
 
 - 常见问题
-  - 控制台 `endpoint: null`：未在主题设置配置 `Consent API base URL`。
-  - 看不到响应：sendBeacon 成功不返回响应体；仅 `fetch` 回退会打印。
-  - CORS 报错：后端需返回 `Access-Control-Allow-Origin: *` 并允许 `Content-Type` 头。
+  - `endpoint: null`：前端未在全局配置 `Consent API URL`
+  - 看不到响应：sendBeacon 成功不返回响应体；仅 `fetch` 回退会打印
+  - CORS 报错：后端需返回 `Access-Control-Allow-Origin: *` 并允许 `Content-Type`
 
 ---
 
 ## English
 - Goal
-  - Persist cookie, registration, and enhanced form consents with `id, preferences(0–7), status(allow|deny|custom), timestamp, consent_time, ip, userAgent` for compliance.
-  - Frontend reads Theme setting `Consent API base URL` and posts to `.../api/consent`.
+  - Persist registration and enhanced form consents with `id, preferences(0–7), status(allow|deny|custom), timestamp, consent_time, ip, userAgent`.
+  - Use a single “full API URL” for posting; no path concatenation on the frontend.
 
-- Frontend integration points
-  - `sections/cookie-banner.liquid`
-    - Endpoint building and logging: `sections/cookie-banner.liquid:291-292`
-    - Cookie write and payload creation: `sections/cookie-banner.liquid:262-266`, `sections/cookie-banner.liquid:301`
-    - Event logging and closing:
-      - Accept & close: `sections/cookie-banner.liquid:308`
-      - Deny & close: `sections/cookie-banner.liquid:309`
-      - Save preferences & close: `sections/cookie-banner.liquid:316`
-    - Initial modal logic (do not open if any consent exists): `sections/cookie-banner.liquid:304`
-    - Policy links (inline in paragraph): `sections/cookie-banner.liquid:98-100`
-    - Cookie interception & cleanup:
-      - Enable interception: `sections/cookie-banner.liquid:287`
-      - Cleanup non-essential cookies: `sections/cookie-banner.liquid:289`
-      - Disable interception on "Accept all": `sections/cookie-banner.liquid:292`
-      - Apply by status: `sections/cookie-banner.liquid:290`
-    - Logging:
-      - Attempt/allowed/blocked: `sections/cookie-banner.liquid:287-290`
-      - Periodic detection/removal scan: `sections/cookie-banner.liquid:305-307`
-  - `sections/main-register.liquid`
-    - Endpoint building: `sections/main-register.liquid:186-188`
-    - Submit payload (privacy/terms/marketing): `sections/main-register.liquid:191-213`
-  - `sections/enhanced-form.liquid`
-    - Submit logging (privacy/terms/marketing, formTitle): `sections/enhanced-form.liquid:1501-1519`
+- Files involved
+  - Snippet: `snippets/consent-logger.liquid:11` reads global `settings.consent_api_url`
+  - Register page: `sections/main-register.liquid:61,68` reads global privacy/terms; `190–198` invokes snippet
+  - Enhanced Form: `sections/enhanced-form.liquid:1398,1405` reads global privacy/terms; `1514–1522` invokes snippet (`formTitle`)
+  - Theme settings: `config/settings_schema.json:1761–1789` maintain `privacy_policy_url`/`terms_policy_url`/`consent_api_url`/versions
+  - Backend sample: `consent-api/index.js` routes `/api/consent`, `/api/consents`, `/consents.csv`
 
-- Theme setting (required)
-  - Set `Consent API base URL` in the Cookie Banner section to your backend base URL.
-    - Example: `http://localhost:3000` or `https://your-domain.com`
-    - Frontend posts to: `https://your-domain.com/api/consent`
+- Frontend configuration (new design)
+  - In “Consent & Legal”, set:
+    - `Privacy policy link`, `Terms of service link`
+    - `Consent API URL` (a full endpoint, e.g. `https://your-domain.com/api/consent`)
+    - Optional versions: `Privacy policy version`, `Terms of service version`
 
-- API contract
-  - `POST /api/consent`
-    - Request (JSON):
-      - `id` (UUID), `email` (string or null), `privacy` (bool), `terms` (bool), `marketing` (bool)
-      - `preferences` (number 0–7; bits: 1=functionality, 2=performance, 4=targeting; 1 means denied)
-      - `status` (`allow | deny | custom`), `timestamp` (unix seconds), `consent_time` (ISO), `userAgent` (string), `type` (`cookie_consent | registration_consent | enhanced_form_consent`)
-      - Extra fields:
-        - `formTitle` (string, Enhanced Form); see `sections/enhanced-form.liquid:1516`
-    - Response (JSON):
-      - Success: `{ ok: true, ip: "<client_ip>" }` (see `sections/cookie-banner.liquid:180-181`)
-      - Failure: `{ ok: false }` (500)
-  - `GET /api/consent?limit=N`
-    - Returns latest N records: `{ consents: [ ... ] }` (see `sections/cookie-banner.liquid:173-176`)
+- Frontend integration & behavior
+  - Posting via `snippets/consent-logger.liquid` using the full endpoint (no concatenation)
+  - Register page: legal consent required; marketing toggle default off, appends hidden `customer[accepts_marketing]=false` when unchecked
+  - Enhanced Form: legal consent required; marketing toggle default off; includes `formTitle`
+  - Consent log: fetches recent records from the configured endpoint
+
+- Removed per-section settings
+  - The two sections no longer contain: `privacy_policy_url`, `terms_policy_url`, `consent_api_base`, `privacy_version`, `terms_version`
+  - Maintain them globally in theme settings
+
+- API contract (recommended)
+  - Backend provides `POST /api/consent`; frontend accepts any full URL as long as it matches the backend
+  - Request: `id`, `email`, `privacy`, `terms`, `marketing`, `preferences`, `status`, `timestamp`, `consent_time`, `userAgent`, `type`, optional `formTitle`
+  - Response: `{ ok: true }` or `{ ok: false }`
+  - Query: `GET <Consent API URL>?limit=N` → `{ consents: [ ... ] }`
 
 - Database schema (SQLite example)
-  - Columns: `id,email,privacy,terms,marketing,preferences,status,timestamp,consent_time,ip,userAgent,received_at`
-  - Insert reference: `sections/cookie-banner.liquid:178-181`
+  - Columns: `id,email,privacy,terms,marketing,preferences,status,timestamp,consent_time,ip,userAgent,domain,page_url,privacy_version,terms_version,received_at`
 
 - Backend notes
-  - IP extraction (proxy-aware): `sections/cookie-banner.liquid:146-154`
-    - Use `x-forwarded-for` (first value), support `cf-connecting-ip`, `x-real-ip`, `fastly-client-ip`, fallback `remoteAddress`
-  - CORS & preflight: allow `*`, `Content-Type`, methods `GET, POST, OPTIONS`; respond 204 for `OPTIONS` (`sections/cookie-banner.liquid:146`).
-  - sendBeacon: response body is not accessible on success; frontend prints server response only on `fetch` fallback (`sections/cookie-banner.liquid:236-241`).
+  - IP extraction: `x-forwarded-for` (first), support `cf-connecting-ip`, `x-real-ip`, `fastly-client-ip`, fallback `remoteAddress`
+  - CORS: allow `*`, `Content-Type`, methods `GET, POST, OPTIONS`; `OPTIONS` → 204
+  - sendBeacon: no response body on success; `fetch` fallback prints
 
-- Deployment (Node/Express example)
-  - Dependencies: `express`, `sqlite3`
-  - Port: `PORT` env or default `3000`
-  - Deploy to your domain, then set Theme `Consent API base URL` accordingly.
+- Deployment (Node/Express)
+  - Dependencies: `express`, `better-sqlite3`, `morgan`
+  - Example routes: `/api/consent`, `/api/consents`, `/consents.csv`
 
 - Testing
-  - Browser console:
-    - Local print: `consent { endpoint, payload }` (`sections/cookie-banner.liquid:236-241`)
-    - Fetch fallback: `consent saved { ok: true, ip: "..." }`
-    - Enhanced Form print: `consent payload` (with `formTitle`; `sections/enhanced-form.liquid:1501-1519`)
-  - DB: verify inserted rows with `ip` and `userAgent`.
+  - Inspect console prints: `consent payload`
+  - Verify DB inserts include `ip`, `userAgent`, `domain`, `page_url`
 
 - Compliance & security
-  - IP is personal data: consider pseudonymization (truncate or hash) before storage.
-  - Retention: 180–395 days, scheduled cleanup.
-  - Hardening: restrict origins, rate limit, audit logging.
-  - Enforce HTTPS.
+  - Treat IP as personal data; consider pseudonymization
+  - Retention 180–395 days with cleanup
+  - Hardened setup: origin restriction, rate limiting, audit logging; enforce HTTPS
 
 - Troubleshooting
-  - `endpoint: null`: Theme `Consent API base URL` not configured.
-  - No response printed: sendBeacon success does not expose response; only `fetch` fallback prints it.
-  - CORS errors: set `Access-Control-Allow-Origin: *` and allow `Content-Type` header.
+  - `endpoint: null`: global `Consent API URL` is not configured
+  - No response printed: sendBeacon success does not expose body; only visible in `fetch` fallback
+  - CORS errors: set `Access-Control-Allow-Origin: *` and allow `Content-Type`

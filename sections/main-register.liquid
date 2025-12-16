@@ -58,14 +58,14 @@
           </div>
 
           {%- liquid
-            assign privacy_url = section.settings.privacy_policy_url | default: '/policies/privacy-policy'
+            assign privacy_url = settings.privacy_policy_url | default: '/policies/privacy-policy'
             assign first_char = privacy_url | slice: 0, 1
             assign proto_rel = privacy_url | slice: 0, 2
             if privacy_url contains '://' or proto_rel == '//'
             elsif first_char != '/'
               assign privacy_url = '/' | append: privacy_url
             endif
-            assign terms_url = section.settings.terms_policy_url | default: '/policies/terms-of-service'
+            assign terms_url = settings.terms_policy_url | default: '/policies/terms-of-service'
             assign terms_first_char = terms_url | slice: 0, 1
             assign terms_proto_rel = terms_url | slice: 0, 2
             if terms_url contains '://' or terms_proto_rel == '//'
@@ -111,7 +111,9 @@
           </div>
 
           <div class="input-row">
+            {% if section.settings.show_marketing_consent %}
             <label for="accepts_marketing" class="login"><input type="checkbox" id="accepts_marketing" name="customer[accepts_marketing]" value="true" /> {{ marketing_consent_label }}</label>
+            {% endif %}
           </div>
 
           <div class="lightly-spaced-row-above">
@@ -183,80 +185,27 @@
         toggle.setAttribute('aria-pressed', passwd.type === 'password' ? 'true' : 'false');
       });
     }
-    var base = '{{ section.settings.consent_api_base | strip }}';
-    var privacyVer = '{{ section.settings.privacy_version | default: "230220" | strip }}';
-    var termsVer = '{{ section.settings.terms_version | default: "230220" | strip }}';
-    var valid = !!base && base !== 'https://example.com';
-    var endpoint = valid ? (base.endsWith('/api/consent') ? base : (base.replace(/\/$/, '') + '/api/consent')) : null;
-    var form = document.querySelector('#create-customer form');
-    if (!form) return;
-    function nowTs(){ return Math.floor(Date.now()/1000); }
-    function makeId(){ try { return crypto.randomUUID(); } catch(e){ return 'id-' + Math.random().toString(36).slice(2); } }
-    function formatLocalTime(){ var d = new Date(); function pad(n){ return (n<10?'0':'')+n; } var off = -d.getTimezoneOffset(); var sign = off>=0?'+':'-'; var oh = Math.floor(Math.abs(off)/60); var om = Math.abs(off)%60; var offset = sign + pad(oh) + ':' + pad(om); return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+' '+pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds())+' '+offset; }
-    function getCountryInfo(){ var loc = null; try { loc = Intl.DateTimeFormat().resolvedOptions().locale; } catch(e){} if (!loc) { loc = (navigator.languages && navigator.languages[0]) || navigator.language || null; } var code = null; if (loc) { var parts = String(loc).split(/-|_/); if (parts.length>=2) { var last = parts[parts.length-1]; if (/^[A-Z]{2}$/.test(last)) code = last; } } var name = null; try { if (code && typeof Intl.DisplayNames === 'function') { var dn = new Intl.DisplayNames(['en'], { type: 'region' }); name = dn.of(code); } } catch(e){} return { locale: loc || null, country_code: code || null, country: name || null }; }
-    form.addEventListener('submit', function(){
-      var emailEl = document.getElementById('email');
-      var legalEl = document.getElementById('legal_consent');
-      var marketingEl = document.getElementById('accepts_marketing');
-      var id = makeId();
-      var ts = nowTs();
-      var tz = (typeof Intl !== 'undefined' && Intl.DateTimeFormat && Intl.DateTimeFormat().resolvedOptions ? Intl.DateTimeFormat().resolvedOptions().timeZone : null);
-      var region = getCountryInfo();
-      var payload = { id: id, email: emailEl ? emailEl.value : '', privacy: !!(legalEl && legalEl.checked), terms: !!(legalEl && legalEl.checked), marketing: !!(marketingEl && marketingEl.checked), timestamp: ts, consent_time: formatLocalTime(), timezone: tz, country: region.country, country_code: region.country_code, locale: region.locale, userAgent: navigator.userAgent, type: 'registration_consent', domain: location.hostname, page_url: location.href, privacy_version: privacyVer, terms_version: termsVer };
-      try { console.log('consent payload', payload); } catch(e) {}
-      if (!marketingEl || !marketingEl.checked) {
-        try {
-          var hidden = document.createElement('input');
-          hidden.setAttribute('type', 'hidden');
-          hidden.setAttribute('name', 'customer[accepts_marketing]');
-          hidden.setAttribute('value', 'false');
-          form.appendChild(hidden);
-        } catch(e) {}
-      }
-      if (!endpoint) return;
-      try {
-        var ok = navigator.sendBeacon(endpoint, JSON.stringify(payload));
-        if (!ok) {
-          fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), keepalive: true, mode: 'cors' }).catch(function(){});
-        }
-      } catch(e) {}
-    });
   });
 </script>
+{%- render 'consent-logger',
+  form_selector: '#create-customer form',
+  type: 'registration_consent',
+  email_selector: '#email, input[name="customer[email]"]',
+  legal_selector: '#legal_consent',
+  marketing_selector: '#accepts_marketing',
+  append_hidden_marketing_false: true,
+  marketing_field_name: 'customer[accepts_marketing]'
+-%}
 
 {% schema %}
 {
   "name": "Customer register",
   "settings": [
     {
-      "type": "url",
-      "id": "privacy_policy_url",
-      "label": "Privacy policy link"
-    },
-    {
-      "type": "url",
-      "id": "terms_policy_url",
-      "label": "Terms of service link"
-    },
-    {
-      "type": "text",
-      "id": "consent_api_base",
-      "label": "Consent API base URL",
-      "info": "e.g. https://your-domain.com",
-      "default": "https://example.com"
-    }
-    ,
-    {
-      "type": "text",
-      "id": "privacy_version",
-      "label": "Privacy policy version",
-      "default": "230220"
-    },
-    {
-      "type": "text",
-      "id": "terms_version",
-      "label": "Terms of service version",
-      "default": "230220"
+      "type": "checkbox",
+      "id": "show_marketing_consent",
+      "label": "Show marketing consent",
+      "default": false
     }
   ]
 }

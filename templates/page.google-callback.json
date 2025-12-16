@@ -1,0 +1,1 @@
+{"sections":{"oauth":{"type":"oauth-callback","settings":{"provider":"google","backend_base":"","success_redirect":""}}},"order":["oauth"]}
