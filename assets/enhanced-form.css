@@ -157,19 +157,19 @@
 .enhanced-form-section
   .column.md3-outlined:not(.md3-active):not(:focus-within):not(.md3-multiline):not(.md3-fallback)
   .enhanced-form-label {
-  top: 50% !important;
+  top: 25px !important;
   transform: translateY(-50%) !important;
 }
 .enhanced-form-section
   .column.md3-outlined.md3-fallback:not(.md3-active):not(:focus-within):not(.md3-multiline)
   .enhanced-form-label {
-  top: 50% !important;
+  top: 25px !important;
   transform: translateY(-50%) !important;
 }
 .enhanced-form-section
   .column.md3-outlined.md3-custom-select.md3-fallback:not(.md3-active):not(:focus-within):not(.md3-multiline)
   .enhanced-form-label {
-  top: 50% !important;
+  top: 25px !important;
   transform: translateY(-50%) !important;
 }
 .enhanced-form-section .column.md3-outlined.md3-multiline:not(.md3-active):not(:focus-within) .enhanced-form-label {
