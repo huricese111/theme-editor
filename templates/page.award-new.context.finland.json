@@ -1,99 +1,18 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
-    "parent": "page.award-new.json",
-    "context": {
-        "market": "finland"
-    },
-    "sections": {
-        "media_content_section_YxFxK7": {
-            "settings": {
-                "media_button1_label": "",
-                "media_button1_label_fi": "",
-                "media_button1_link": ""
-            }
-        },
-        "adaptive_content_grid_gCrVRw": {
-            "settings": {},
-            "blocks": {
-                "custom_block_9xRc9c": {
-                    "settings": {
-                        "button1_text": ""
-                    }
-                },
-                "custom_block_CiKbzb": {
-                    "settings": {
-                        "button1_text": ""
-                    }
-                },
-                "custom_block_kpiPKx": {
-                    "settings": {
-                        "button1_text": ""
-                    }
-                },
-                "custom_block_TzDfEk": {
-                    "settings": {
-                        "button1_text": ""
-                    }
-                },
-                "custom_block_tcr6bW": {
-                    "settings": {
-                        "button1_text": ""
-                    }
-                },
-                "custom_block_3L7CGm": {
-                    "settings": {
-                        "button1_text": ""
-                    }
-                },
-                "custom_block_i4jXhP": {
-                    "settings": {
-                        "button1_text": ""
-                    }
-                },
-                "custom_block_hhXVJz": {
-                    "settings": {
-                        "button1_text": ""
-                    }
-                }
-            }
-        },
-        "adaptive_content_grid_B3XJMr": {
-            "settings": {},
-            "blocks": {
-                "custom_block_7hBB6C": {
-                    "settings": {
-                        "button1_text": ""
-                    }
-                },
-                "custom_block_T4ikaK": {
-                    "settings": {
-                        "button1_text": ""
-                    }
-                },
-                "custom_block_PGFRrF": {
-                    "settings": {
-                        "button1_text": ""
-                    }
-                },
-                "custom_block_GhFmtH": {
-                    "settings": {
-                        "button1_text": ""
-                    }
-                },
-                "custom_block_GAJdxj": {
-                    "settings": {
-                        "button1_text": ""
-                    }
-                },
-                "custom_block_bBmJgJ": {
-                    "settings": {
-                        "button1_text": ""
-                    }
-                },
-                "custom_block_YXyXiH": {
-                    "settings": {
-                        "button1_text": ""
-                    }
-                }
-            }
-        }
-    }
+  "parent": "page.award-new.json",
+  "context": {
+    "market": "finland"
+  },
+  "sections": {
+        
+  }
+}

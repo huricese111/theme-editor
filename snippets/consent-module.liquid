@@ -1,3 +1,19 @@
+<!--
+模块: 同意模块 (consent-module)
+目标:
+- 在注册/登录/增强表单中收集用户对隐私政策与服务条款的同意, 以及营销同意(可选)
+- 控制提交按钮与社交登录按钮的启用/禁用, 防止未勾选法律同意而提交
+- 将同意信息发送到 `settings.consent_api_url` (优先 `navigator.sendBeacon`, 失败回退到 `fetch`)
+依赖:
+- DOM: 外层 `form`, `#legal_consent` 复选框, 可选 `#accepts_marketing`
+- 主题设置: `privacy_policy_url`, `terms_policy_url`, `consent_api_url`, `privacy_version`, `terms_version`
+- 模板变量: `form_title_text`, `show_marketing_consent`
+事件集成:
+- 监听自定义事件 `hiko` 以记录社交登录的同意信息
+兼容与安全:
+- URL 规范化避免错误路径; 不记录除 `email` 外更多敏感信息
+- 不依赖第三方库; 在不支持 `sendBeacon` 的环境自动回退
+-->
 {%- liquid
   assign privacy_url = settings.privacy_policy_url | default: '/policies/privacy-policy'
   assign privacy_first_char = privacy_url | slice: 0, 1
@@ -33,6 +49,7 @@
       assign marketing_consent_label = "I agree to receive the newsletter of HEPHA GmbH at regular intervals. It promotes products and services of HEPHA GmbH. (optional)"
   endcase
 -%}
+<!-- 依据当前语言 `request.locale.iso_code`，构建法律同意文案，包含隐私与条款链接 -->
 {%- case lang -%}
   {%- when 'de' -%}
     {%- capture legal_consent_label -%}Ich habe die <a class="underline" href="{{ terms_url }}" target="_blank" rel="noopener">{{ terms_policy_label }}</a> und die <a class="underline" href="{{ privacy_url }}" target="_blank" rel="noopener">{{ privacy_policy_label }}</a> von HEPHA gelesen und stimme ihnen zu.{%- endcapture -%}
@@ -43,10 +60,26 @@
   {%- else -%}
     {%- capture legal_consent_label -%}I've read and agreed to HEPHA's <a class="underline" href="{{ terms_url }}" target="_blank" rel="noopener">{{ terms_policy_label }}</a> and <a class="underline" href="{{ privacy_url }}" target="_blank" rel="noopener">{{ privacy_policy_label }}</a>.{%- endcapture -%}
 {%- endcase -%}
+{%- case lang -%}
+  {%- when 'de' -%}
+    {%- assign consent_error_label = 'Bitte akzeptieren Sie die Nutzungsbedingungen und die Datenschutzerklärung, bevor Sie absenden.' -%}
+  {%- when 'fr' -%}
+    {%- assign consent_error_label = "Veuillez accepter les Conditions d'utilisation et la Politique de confidentialité avant de soumettre." -%}
+  {%- when 'fi' -%}
+    {%- assign consent_error_label = 'Hyväksy käyttöehdot ja tietosuojakäytäntö ennen lähettämistä.' -%}
+  {%- else -%}
+    {%- assign consent_error_label = 'Please accept the Terms of Service and Privacy Policy before submitting.' -%}
+{%- endcase -%}
+<!--
+标记结构:
+- `#legal_consent` 为必选的法律同意; 文案包含隐私与条款链接(新窗口打开)
+- 若 `show_marketing_consent` 为真, 展示 `#accepts_marketing` 的营销同意(可选)
+-->
 <div class="consent-module">
   <div class="input-row">
     <label for="legal_consent" class="login"><input type="checkbox" id="legal_consent" name="legal_consent" required /> {{ legal_consent_label }}</label>
   </div>
+  <p id="consent_error" class="consent-error" role="alert" aria-live="polite" aria-hidden="true">{{ consent_error_label }}</p>
   {% if show_marketing_consent %}
   <div class="input-row">
     <label for="accepts_marketing" class="login"><input type="checkbox" id="accepts_marketing" name="customer[accepts_marketing]" value="true" /> {{ marketing_consent_label }}</label>
@@ -54,23 +87,33 @@
   {% endif %}
 </div>
 <style>
+/*
+- label 与复选框的布局与排版
+- 链接下划线样式微调
+- 与外部插件桥接的营销输入隐藏
+*/
 .consent-module .input-row label.login{display:inline-flex;align-items:center;gap:8px;font-weight:400;font-size:14px;line-height:1.6}
 .consent-module .input-row input[type="checkbox"]{margin:0;flex-shrink:0}
 .consent-module .input-row a.underline{text-underline-offset:2px;text-decoration-thickness:1px}
-[name="hiko-container"] .h_buttons > div[aria-disabled="true"]{opacity:.5;pointer-events:none;cursor:not-allowed}
-form button[type="submit"][aria-disabled="true"],form button[type="submit"][disabled],.enhanced-form-submit-btn[aria-disabled="true"]{opacity:.55;cursor:not-allowed;pointer-events:none;box-shadow:none;filter:grayscale(20%)}
 input[name="marketing"][data-bridge="true"]{display:none!important}
+.consent-error{display:none;color:#c62828;font-size:13px;margin:6px 0 0}
+.consent-error.visible{display:block}
 </style>
 <script>
+  // 初始化: 工具函数与上下文获取; 控制交互与同意上报
   (function(){
+    // 工具函数: nowTs/makeId/formatLocalTime/getCountryInfo
     function nowTs(){ return Math.floor(Date.now()/1000); }
     function makeId(){ try { return crypto.randomUUID(); } catch(e){ return 'id-' + Math.random().toString(36).slice(2); } }
     function formatLocalTime(){ var d = new Date(); function pad(n){ return (n<10?'0':'')+n; } var off = -d.getTimezoneOffset(); var sign = off>=0?'+':'-'; var oh = Math.floor(Math.abs(off)/60); var om = Math.abs(off)%60; var offset = sign + pad(oh) + ':' + pad(om); return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+' '+pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds())+' '+offset; }
     function getCountryInfo(){ var loc = null; try { loc = Intl.DateTimeFormat().resolvedOptions().locale; } catch(e){} if (!loc) { loc = (navigator.languages && navigator.languages[0]) || navigator.language || null; } var code = null; if (loc) { var parts = String(loc).split(/-|_/); if (parts.length>=2) { var last = parts[parts.length-1]; if (/^[A-Z]{2}$/.test(last)) code = last; } } var name = null; try { if (code && typeof Intl.DisplayNames === 'function') { var dn = new Intl.DisplayNames(['en'], { type: 'region' }); name = dn.of(code); } } catch(e){} return { locale: loc || null, country_code: code || null, country: name || null }; }
+    // 查找父级 form 与关键节点; 通过法律同意控制提交按钮与社交登录可用性
     var s = document.currentScript;
     var form = s && s.closest ? s.closest('form') : null;
     var legal = form ? form.querySelector('#legal_consent') : null;
+    var errorNode = form ? form.querySelector('#consent_error') : null;
     var btn = null;
+    // 与外部插件桥接的营销勾选 (input[name="marketing"])
     function resolveBtn(){ try { return form ? form.querySelector('button[type="submit"]') : null; } catch(e){ return null; } }
     var pluginMarketingName = 'marketing';
     var pluginMarketing = null;
@@ -79,6 +122,7 @@ input[name="marketing"][data-bridge="true"]{display:none!important}
     function b64uToJson(s){ try { var p = String(s||'').split('.'); if (p.length<2) return null; var b = p[1].replace(/-/g,'+').replace(/_/g,'/'); var pad = b.length%4; if (pad===2) b+='=='; else if (pad===3) b+='='; var txt = atob(b); return JSON.parse(txt); } catch(e){ return null; } }
     function getEmailFromJwt(t){ var j = b64uToJson(t); if (!j) return null; var e = j.email || j.emailAddress || null; if (!e && j.emails && j.emails.length) e = j.emails[0] && (j.emails[0].value || j.emails[0]); return e || null; }
     function resolveEmail(d){ var e = String(d.email||''); if (!e && d.user && d.user.email) e = String(d.user.email); if (!e && d.profile && d.profile.email) e = String(d.profile.email); if (!e) { var tok = d.id_token || d.token || d.credential || d.jwt || ''; var de = getEmailFromJwt(tok); if (de) e = String(de); } if (!e) { try { var se = sessionStorage.getItem('apple_last_email'); if (se) e = String(se); } catch(x){} } if (!e && lastEmail) e = String(lastEmail); return e; }
+    // 在内部复选框与外部插件之间同步勾选状态, 并在缺失时创建隐藏桥接输入
     function ensureBridge(){
       var ourLabel = form ? form.querySelector('label[for="accepts_marketing"]') : null;
       var our = ourLabel ? form.querySelector('#accepts_marketing') : null;
@@ -98,44 +142,31 @@ input[name="marketing"][data-bridge="true"]{display:none!important}
         pluginMarketing.addEventListener('change', function(){ if (our) our.checked = !!pluginMarketing.checked; });
       }
     }
-    function setSocialEnabled(enabled){
-      var nodes = document.querySelectorAll('[name="hiko-container"] .h_buttons > div');
-      nodes.forEach(function(n){
-        if (enabled) {
-          n.removeAttribute('aria-disabled');
-          n.removeAttribute('tabindex');
-          n.style.pointerEvents = '';
-          n.style.opacity = '';
-          n.style.cursor = '';
-        } else {
-          n.setAttribute('aria-disabled','true');
-          n.setAttribute('tabindex','-1');
-          n.style.pointerEvents = 'none';
-          n.style.opacity = '0.5';
-          n.style.cursor = 'not-allowed';
-        }
-      });
-    }
+    function showConsentError(){ try { if (errorNode) { errorNode.classList.add('visible'); errorNode.setAttribute('aria-hidden','false'); } } catch(e){} }
+    function hideConsentError(){ try { if (errorNode) { errorNode.classList.remove('visible'); errorNode.setAttribute('aria-hidden','true'); } } catch(e){} }
+    // 根据法律同意勾选实时更新提交按钮与社交登录可用性
     function update(){
       btn = resolveBtn();
       var ok = (!!legal && legal.checked);
-      if (btn) { btn.disabled = !ok; if (btn.disabled) { btn.setAttribute('aria-disabled','true'); } else { btn.removeAttribute('aria-disabled'); } }
-      setSocialEnabled(ok);
+      if (ok) hideConsentError();
     }
     if (legal) legal.addEventListener('change', update);
     update();
     ensureBridge();
+    // 监听 DOM 变化, 保持桥接与可用性状态正确
     if (legal) {
       var mo = new MutationObserver(function(){ update(); ensureBridge(); });
       mo.observe(document.body, { childList: true, subtree: true });
     }
+    // 主题设置与表单标题(可选), 用于构造上报 payload
     var endpoint = '{{ settings.consent_api_url | strip }}';
     var privacyVer = '{{ settings.privacy_version | default: "230220" | strip }}';
     var termsVer = '{{ settings.terms_version | default: "230220" | strip }}';
     var formTitle = {{ form_title_text | default: blank | json }};
     if (form) {
+      // 表单提交: 拦截未勾选; 构建同意 payload; 上报到 API
       form.addEventListener('submit', function(e){
-        if (!(legal && legal.checked)) { try { e.preventDefault(); } catch(x){} return; }
+        if (!(legal && legal.checked)) { try { e.preventDefault(); } catch(x){} showConsentError(); return; }
         var emailEl = form.querySelector('#email, input[name="customer[email]"], input[name="contact[email]"]');
         var marketingLabel = form.querySelector('label[for="accepts_marketing"]');
         var marketingEl = marketingLabel ? form.querySelector('#accepts_marketing') : null;
@@ -180,6 +211,7 @@ input[name="marketing"][data-bridge="true"]{display:none!important}
         }
         try { console.log('consent payload', payload); } catch(e) {}
         if (!endpoint) return;
+        // 优先使用 sendBeacon; 若不可用或失败则回退到 fetch (keepalive + CORS)
         try {
           var ok = navigator.sendBeacon(endpoint, JSON.stringify(payload));
           if (!ok) {
@@ -188,6 +220,21 @@ input[name="marketing"][data-bridge="true"]{display:none!important}
         } catch(e) {}
       });
     }
+    // 捕获社交按钮点击/键盘事件, 在未勾选法律同意时阻止并提示
+    document.addEventListener('click', function(ev){
+      var target = ev.target;
+      var node = target && target.closest ? target.closest('[name="hiko-container"] .h_buttons > div') : null;
+      if (node && !(legal && legal.checked)) { showConsentError(); try { ev.preventDefault(); ev.stopPropagation(); ev.stopImmediatePropagation(); } catch(e){} }
+    }, true);
+    document.addEventListener('keydown', function(ev){
+      var key = ev.key || ev.keyCode;
+      if (key === 'Enter' || key === ' ' || key === 13 || key === 32) {
+        var target = ev.target;
+        var node = target && target.closest ? target.closest('[name="hiko-container"] .h_buttons > div') : null;
+        if (node && !(legal && legal.checked)) { showConsentError(); try { ev.preventDefault(); ev.stopPropagation(); ev.stopImmediatePropagation(); } catch(e){} }
+      }
+    }, true);
+    // 社交登录事件: 记录并上报同意信息 (处理 Apple 邮箱缓存)
     document.addEventListener('hiko', function(event){
       var d = event && event.detail ? event.detail : {};
       var a = String(d.action || '');
@@ -207,6 +254,7 @@ input[name="marketing"][data-bridge="true"]{display:none!important}
         var emailVal = resolveEmail(d);
         if (socialVal==='apple' && emailVal) { try { sessionStorage.setItem('apple_last_email', emailVal); } catch(x){} }
         if (emailVal) lastEmail = emailVal;
+        // 构建并上报社交登录同意 payload
         var payload = {
           id: id,
           email: String(emailVal || ''),
