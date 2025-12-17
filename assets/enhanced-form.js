@@ -2968,8 +2968,25 @@ function initEnhancedFormMd3(scope) {
       if (clearIconSvg && !clearBtn.querySelector('svg')) {
         clearBtn.innerHTML = '';
         clearBtn.appendChild(clearIconSvg.cloneNode(true));
-      } else if (!clearIconSvg && !clearBtn.querySelector('svg') && clearBtn.textContent !== '×') {
-        clearBtn.textContent = '×';
+      } else if (!clearIconSvg && !clearBtn.querySelector('svg')) {
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+        svg.setAttribute('viewBox', '0 0 1024 1024');
+        svg.setAttribute('aria-hidden', 'true');
+        svg.setAttribute('focusable', 'false');
+        svg.setAttribute('role', 'presentation');
+        svg.setAttribute('class', 'icon icon--extra-small icon--type-close');
+
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute(
+          'd',
+          'M512 0C229.199448 0 0 229.199448 0 512S229.199448 1024 512 1024 1024 794.800552 1024 512 794.800552 0 512 0z m205.294345 666.906483a36.016552 36.016552 0 0 1-50.988138 50.776276l-154.306207-154.659311-154.306207 154.659311c-6.991448 7.13269-16.278069 10.593103-25.494069 10.593103a36.016552 36.016552 0 0 1-25.494069-61.40469L461.153103 512l-154.482758-154.906483a36.016552 36.016552 0 0 1 50.988138-50.776276l154.306207 154.659311 154.306207-154.765242a36.016552 36.016552 0 0 1 50.988137 50.776276L562.846897 512l154.482758 154.906483z'
+        );
+        path.setAttribute('fill', 'currentColor');
+        svg.appendChild(path);
+
+        clearBtn.innerHTML = '';
+        clearBtn.appendChild(svg);
       }
 
       const toggle = () => {
