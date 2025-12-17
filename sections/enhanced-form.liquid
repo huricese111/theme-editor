@@ -247,6 +247,18 @@
                       elsif block.settings.label_fi != blank and request.locale.iso_code == 'fi'
                         assign label_text = block.settings.label_fi
                       endif
+
+                      assign lang = request.locale.iso_code
+                      case lang
+                        when 'de'
+                          assign email_hint_invalid = 'Ungültige E-Mail-Adresse'
+                        when 'fr'
+                          assign email_hint_invalid = 'Adresse e-mail invalide'
+                        when 'fi'
+                          assign email_hint_invalid = 'Virheellinen sähköpostiosoite'
+                        else
+                          assign email_hint_invalid = 'Not valid email'
+                      endcase
                     -%}
                     <label class="enhanced-form-label" for="contact_email">
                       {{- label_text | escape -}}
@@ -262,11 +274,14 @@
                       {% endif %}
                       id="contact_email"
                       name="contact[email]"
+                      aria-describedby="enhanced_contact_email_hint_{{ section.id }}"
+                      aria-invalid="false"
                       autocomplete="email"
                       spellcheck="false"
                       autocapitalize="off"
                       value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
                     >
+                    <div class="input-hint error" id="enhanced_contact_email_hint_{{ section.id }}" data-email-hint="invalid" aria-hidden="true">{{ email_hint_invalid }}</div>
                     <!-- Ensure this email is also used as sender for notifications -->
                     <input
                       type="hidden"
@@ -1459,6 +1474,9 @@
 #enhanced-form-{{ section.id }} .form-actions .enhanced-form-submit-btn:focus-visible { outline: none; box-shadow: 0 0 0 4px rgba(0,0,0,0.18); }
 #enhanced-form-{{ section.id }} .form-actions .enhanced-form-submit-btn:disabled,
 #enhanced-form-{{ section.id }} .form-actions .enhanced-form-submit-btn[aria-disabled="true"] { opacity: .6; cursor: not-allowed; }
+#enhanced-form-{{ section.id }} .input-hint { font-size: 13px; margin-top: 6px; }
+#enhanced-form-{{ section.id }} .input-hint.error { color: #b00020; }
+#enhanced-form-{{ section.id }} .input-hint[aria-hidden="true"] { display: none; }
 </style>
 
 <script>

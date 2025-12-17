@@ -2230,6 +2230,58 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // 表单验证功能
+function validateEmailLoose(v) {
+  const s = String(v || '').trim();
+  if (s.length === 0) return true;
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s);
+}
+
+function getEmailHintForField(field) {
+  if (!field || field.type !== 'email') return null;
+  const container = field.closest('.column') || field.parentElement;
+  if (!container) return null;
+  return container.querySelector('.input-hint[data-email-hint="invalid"]');
+}
+
+function setEmailHintState(field, hint, ok) {
+  if (!field || !hint) return;
+  if (!ok) {
+    hint.setAttribute('aria-hidden', 'false');
+    hint.style.display = 'block';
+    field.classList.add('input-error');
+    field.setAttribute('aria-invalid', 'true');
+  } else {
+    hint.setAttribute('aria-hidden', 'true');
+    hint.style.display = 'none';
+    field.classList.remove('input-error');
+    field.setAttribute('aria-invalid', 'false');
+  }
+}
+
+function validateEmailFieldLoose(field) {
+  if (!field || field.type !== 'email') return true;
+
+  const hint = getEmailHintForField(field);
+  const value = String(field.value || '').trim();
+  const ok = validateEmailLoose(value);
+
+  if (hint) {
+    if (ok) {
+      clearFieldError(field);
+    }
+    setEmailHintState(field, hint, ok);
+    return ok;
+  }
+
+  if (value.length === 0) return true;
+  if (!ok) {
+    showFieldError(field, getLocalizedText('email_invalid'));
+    return false;
+  }
+
+  return true;
+}
+
 function initFormValidation() {
   const forms = document.querySelectorAll('form[action*="contact"]');
   
@@ -2278,6 +2330,13 @@ function initFormValidation() {
           if (!emailRegex.test(field.value.trim())) {
             return false;
           }
+        }
+      }
+
+      const emailFields = form.querySelectorAll('input[type="email"]');
+      for (let field of emailFields) {
+        if (!validateEmailLoose(field.value)) {
+          return false;
         }
       }
       
@@ -2385,6 +2444,19 @@ function initFormValidation() {
         });
       }
     });
+
+    const contactEmailFields = form.querySelectorAll('input[type="email"][name="contact[email]"]');
+    contactEmailFields.forEach((field) => {
+      const hint = getEmailHintForField(field);
+      if (!hint) return;
+      function update() {
+        validateEmailFieldLoose(field);
+        updateSubmitButtonState();
+      }
+      field.addEventListener('input', update);
+      field.addEventListener('blur', update);
+      update();
+    });
     
     // 为必填的多级下拉框添加验证
     const requiredDropdowns = form.querySelectorAll('.multilevel-dropdown-wrapper');
@@ -2421,6 +2493,14 @@ function validateForm(form) {
   
   requiredFields.forEach(field => {
     if (!validateField(field)) {
+      isValid = false;
+    }
+  });
+
+  const emailFields = form.querySelectorAll('input[type="email"]');
+  emailFields.forEach((field) => {
+    const value = String(field.value || '').trim();
+    if (value.length > 0 && !validateEmailFieldLoose(field)) {
       isValid = false;
     }
   });
@@ -2472,6 +2552,12 @@ function validateField(field) {
   if (fieldType === 'email') {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(value)) {
+      const hint = getEmailHintForField(field);
+      if (hint) {
+        clearFieldError(field);
+        setEmailHintState(field, hint, false);
+        return false;
+      }
       showFieldError(field, getLocalizedText('email_invalid'));
       return false;
     }
