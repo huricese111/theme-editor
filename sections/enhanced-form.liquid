@@ -166,10 +166,14 @@
 
           <div class="flexible-layout flexible-layout--form">
             {% for block in section.blocks %}
-              <div
-                class="column column--{% if block.settings.half_width %}half{% else %}full{% endif %}"
-                {{ block.shopify_attributes }}
-              >
+              {%- liquid
+                assign md3 = false
+                case block.type
+                  when 'first_name_input','last_name_input','email_input','phone_input','company_input','employer_id_input','company_code_input','user_id_input','street_address_input','address_line_2_input','city_input','state_province_input','postal_code_input','number_input','url_input'
+                    assign md3 = true
+                endcase
+              -%}
+              <div class="column column--{% if block.settings.half_width %}half{% else %}full{% endif %}{% if md3 %} md3-outlined{% endif %}" {{ block.shopify_attributes }}>
                 {% case block.type %}
                   {% when 'first_name_input' %}
                     {%- liquid
@@ -1417,6 +1421,26 @@
 #shopify-section-{{ section.id }} .legal-consent-row .legal-consent-label { display: inline-flex; align-items: center; gap: 8px; font-weight: 400; font-size: 14px; line-height: 1.6; }
 #shopify-section-{{ section.id }} .legal-consent-row input[type="checkbox"] { margin: 0; flex-shrink: 0; }
 #shopify-section-{{ section.id }} .legal-consent-row a.underline { text-underline-offset: 2px; text-decoration-thickness: 1px; }
+
+#enhanced-form-{{ section.id }} .enhanced-form-container .column { position: relative; margin-bottom: 26px; }
+#enhanced-form-{{ section.id }} .column.md3-outlined { position: relative; }
+#enhanced-form-{{ section.id }} .column.md3-outlined > label.enhanced-form-label { font-weight: 500; position: absolute !important; display: inline-block !important; left: 16px; top: 50%; transform: translateY(-50%); font-size: 14px; padding: 0 6px; border-radius: 4px; margin: 0 !important; background: transparent; color: rgba(0,0,0,0.68); z-index: 2; transition: all .15s ease; pointer-events: none; }
+#enhanced-form-{{ section.id }} .column.md3-outlined.active .enhanced-form-label { top: 0; transform: translateY(-50%); font-size: 12px; background: rgb(var(--body-bg-color)); }
+#enhanced-form-{{ section.id }} .column.md3-outlined .enhanced-form-input { width: 100%; border: 1px solid #e5e7eb; border-radius: 12px; padding: 12px 12px; background: #ffffff; transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease; }
+#enhanced-form-{{ section.id }} .column.md3-outlined.active .enhanced-form-input { border-color: rgba(0,0,0,0.38); background: transparent; }
+#enhanced-form-{{ section.id }} .column.md3-outlined .enhanced-form-input:focus { border-color: rgb(var(--link-color)); box-shadow: 0 0 0 2px rgba(var(--link-color) / 0.18); outline: none; }
+#enhanced-form-{{ section.id }} .column.md3-outlined .enhanced-form-input.input-error { border-color: #b00020; box-shadow: 0 0 0 2px rgba(176,0,32,0.14); background-color: transparent; }
+#enhanced-form-{{ section.id }} .column.md3-outlined .enhanced-form-input { padding-right: 42px; }
+#enhanced-form-{{ section.id }} .column.md3-outlined .clear-input { position: absolute; top: 50%; right: 14px; transform: translateY(-50%); width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 999px; border: 1px solid rgba(0,0,0,0.26); color: rgba(0,0,0,0.68); background: rgb(var(--body-bg-color)); cursor: pointer; opacity: 0; pointer-events: none; transition: opacity .15s ease, background-color .15s ease, border-color .15s ease; }
+#enhanced-form-{{ section.id }} .column.md3-outlined .clear-input:hover { background: rgba(0,0,0,0.06); border-color: rgba(0,0,0,0.38); }
+#enhanced-form-{{ section.id }} .column.md3-outlined .clear-input.visible { opacity: 1; pointer-events: auto; }
+
+#enhanced-form-{{ section.id }} .form-actions .btn { width: 100%; font-size: 16px; }
+#enhanced-form-{{ section.id }} .form-actions .enhanced-form-submit-btn { background-color: #000; color: #fff; border: 1px solid #000; border-radius: 6px; padding: 12px 18px; font-weight: 600; line-height: 1; min-height: 44px; transition: background-color .15s ease, box-shadow .15s ease, border-color .15s ease, opacity .15s ease; }
+#enhanced-form-{{ section.id }} .form-actions .enhanced-form-submit-btn:hover { background-color: #111; border-color: #111; }
+#enhanced-form-{{ section.id }} .form-actions .enhanced-form-submit-btn:focus-visible { outline: none; box-shadow: 0 0 0 4px rgba(0,0,0,0.18); }
+#enhanced-form-{{ section.id }} .form-actions .enhanced-form-submit-btn:disabled,
+#enhanced-form-{{ section.id }} .form-actions .enhanced-form-submit-btn[aria-disabled="true"] { opacity: .6; cursor: not-allowed; }
 </style>
 
 <script>
@@ -1437,7 +1461,53 @@
       }
     };
   {% endunless %}
-  document.addEventListener('DOMContentLoaded', function() {});
+  document.addEventListener('DOMContentLoaded', function() {
+    // MD3 floating label activation + clear button, aligned with main-register
+    var root = document.getElementById('enhanced-form-{{ section.id }}');
+    if (!root) return;
+    function bindRow(col){
+      if (!col) return;
+      var inp = col.querySelector('.enhanced-form-input');
+      if (!inp) return;
+      var type = (inp.tagName || '').toLowerCase() === 'input' ? (inp.type || 'text') : (inp.tagName || '').toLowerCase();
+      var eligible = (inp.tagName || '').toLowerCase() === 'input' && /^(text|email|tel|number|url|password)$/.test(type);
+      if (!eligible) return;
+      col.classList.add('md3-outlined');
+      var lbl = col.querySelector('.enhanced-form-label');
+      if (!inp || !lbl) return;
+      function refresh(){
+        var has = !!inp.value && inp.value.length > 0;
+        if (has || document.activeElement === inp) col.classList.add('active'); else col.classList.remove('active');
+      }
+      inp.addEventListener('focus', refresh);
+      inp.addEventListener('blur', refresh);
+      inp.addEventListener('input', refresh);
+      refresh();
+      var clr = col.querySelector('.clear-input');
+      if (!clr) {
+        clr = document.createElement('button');
+        clr.type = 'button';
+        clr.className = 'clear-input';
+        clr.setAttribute('aria-label','Clear');
+        clr.textContent = '×';
+        col.appendChild(clr);
+      }
+      function toggle(){
+        if (inp.value && inp.value.length > 0) { clr.classList.add('visible'); } else { clr.classList.remove('visible'); }
+      }
+      clr.addEventListener('click', function(){
+        inp.value = '';
+        inp.dispatchEvent(new Event('input', { bubbles: true }));
+        inp.focus();
+        toggle();
+      });
+      inp.addEventListener('input', toggle);
+      inp.addEventListener('focus', toggle);
+      inp.addEventListener('blur', toggle);
+      toggle();
+    }
+    root.querySelectorAll('.enhanced-form-container .column').forEach(bindRow);
+  });
 </script>
 
 {{ 'enhanced-form.js' | asset_url | script_tag }}

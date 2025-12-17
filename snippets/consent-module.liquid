@@ -80,11 +80,6 @@
     <label for="legal_consent" class="login"><input type="checkbox" id="legal_consent" name="legal_consent" aria-required="true" /> {{ legal_consent_label }}</label>
   </div>
   <div id="consent_alert" class="consent-alert" role="alert" aria-live="polite" aria-hidden="true">
-    <span class="consent-alert__icon" aria-hidden="true">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" focusable="false" aria-hidden="true">
-        <path d="M7.167 1.667a1 1 0 0 1 1.666 0l6 10a1 1 0 0 1-.833 1.5h-12a1 1 0 0 1-.833-1.5l6-10zM8 6.5a.75.75 0 0 0-.75.75v3a.75.75 0 1 0 1.5 0v-3A.75.75 0 0 0 8 6.5zm0 6a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"></path>
-      </svg>
-    </span>
     <span class="consent-alert__content">{{ consent_error_label }}</span>
   </div>
   {% if show_marketing_consent %}
@@ -103,10 +98,11 @@
 .consent-module .input-row input[type="checkbox"]{margin:0;flex-shrink:0}
 .consent-module .input-row a.underline{text-underline-offset:2px;text-decoration-thickness:1px}
 input[name="marketing"][data-bridge="true"]{display:none!important}
-.consent-alert{display:none;align-items:flex-start;gap:8px;padding:10px 12px;border:1px solid #ffa39e;background:#fff1f0;color:#a8071a;border-radius:6px;margin:8px 0 16px}
+.consent-alert{display:none;align-items:flex-start;gap:10px;padding:12px 14px;border:1px solid #ffa39e;background:#fff1f0;color:#a8071a;border-radius:10px;margin:10px 0 18px}
 .consent-alert.visible{display:flex}
-.consent-alert__icon{line-height:1;display:inline-flex;align-items:center;color:#ff4d4f}
-.consent-alert__content{font-size:13px}
+.consent-alert__icon{line-height:1;display:inline-flex;align-items:center;justify-content:center;color:#ff4d4f;width:24px;height:24px;border-radius:999px;border:2px solid #ff4d4f;background:#fff}
+.consent-alert__icon svg{width:16px;height:16px}
+.consent-alert__content{font-size:14px}
 </style>
 <script>
   // 初始化: 工具函数与上下文获取; 控制交互与同意上报
