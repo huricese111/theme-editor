@@ -348,17 +348,17 @@
             assign lang = request.locale.iso_code
             case lang
               when 'de'
-                assign privacy_settings_label = 'Datenschutzeinstellungen'
+                assign cookie_preferences_label = 'Cookie-Einstellungen'
               when 'fr'
-                assign privacy_settings_label = 'Paramètres de confidentialité'
+                assign cookie_preferences_label = 'Gérer les cookies'
               when 'fi'
-                assign privacy_settings_label = 'Tietosuoja-asetukset'
+                assign cookie_preferences_label = 'Evästeasetukset'
               else
-                assign privacy_settings_label = 'Privacy Settings'
+                assign cookie_preferences_label = 'Cookie Preferences'
             endcase
-          -%} 
+          -%}
           <div class="section-footer__privacy-settings">
-            <a href="#reopenBanner" class="footer-privacy-btn">Cookie Preferences</a>
+            <a href="#reopenBanner" class="footer-privacy-btn">{{ cookie_preferences_label }}</a>
           </div>
         </div>
       {% endif %}
@@ -366,30 +366,13 @@
     <div class="section-footer__row__col">
      {% if section.settings.enable_language_selector or section.settings.enable_country_selector %}
         <div class="section-footer__localization">
-          <!-- Enhanced Language Switcher Componentul>
-          {%- liquid
-            assign lang = request.locale.iso_code
-            case lang
-              when 'de'
-                assign privacy_settings_label = 'Datenschutzeinstellungen'
-              when 'fr'
-                assign privacy_settings_label = 'Paramètres de confidentialité'
-              when 'fi'
-                assign privacy_settings_label = 'Tietos oja-asetukset'
-              else
-                assign privacy_settings_label = 'Privacy Settings'
-            endcase
-          -%} 
-          <div class="section-footer__privacy-settings">
-            <a href="#reopenBanner" c-ass="footer-privacy-btn"-Cookie Preferences</a>>
-            {% render '  </div>
-      enhanced-language-switcher', 
-             enable_language_selector: section.settings.enable_language_selector, 
-             enable_country_selector: section.settings.enable_country_selector,
-             show_border: true,
-             button_size: 'large',
-             margin_bottom: '10px',
-             css_scope: 'footer' %}
+          {% render 'enhanced-language-switcher',
+            enable_language_selector: section.settings.enable_language_selector,
+            enable_country_selector: section.settings.enable_country_selector,
+            show_border: true,
+            button_size: 'large',
+            margin_bottom: '10px',
+            css_scope: 'footer' %}
         </div>
         {% endif %}
 

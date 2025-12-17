@@ -163,7 +163,7 @@
 .enhanced-form-section
   .column.md3-outlined.md3-fallback:not(.md3-active):not(:focus-within):not(.md3-multiline)
   .enhanced-form-label {
-  top: 34% !important;
+  top: 50% !important;
   transform: translateY(-50%) !important;
 }
 .enhanced-form-section
