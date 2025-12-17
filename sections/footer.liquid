@@ -124,21 +124,7 @@
 
 {% assign current_lang = request.locale.iso_code %}
 
-{%- liquid
-  assign footer_menu_block_total = 0
-  for footer_block in section.blocks
-    if footer_block.type == 'menu' and footer_block.settings.menu != blank
-      assign footer_menu_block_total = footer_menu_block_total | plus: 1
-    endif
-  endfor
-  assign footer_menu_block_index = 0
--%}
-
-{% if section.blocks != blank %}
-  <div class="container container--no-max section-footer__row-container">
-    <div class="section-footer__row section-footer__row--blocks" data-num-blocks="{{ section.blocks.size }}">
-      {% for block in section.blocks %}
-        {% assign block_title = block.settings.title %}
+{%  btle %}
         {% assign block_text = block.settings.text %}
 
         {% case current_lang %}
@@ -167,15 +153,13 @@
               {{ block.shopify_attributes }}
             >
               {% if block.settings.menu != blank %}
-                {%- assign footer_menu_block_index = footer_menu_block_index | plus: 1 -%}
                 <button
                   class="footer-menu-toggle"
                   aria-expanded="false"
                   aria-controls="menu-{{ block.id }}"
                 >
                   {% if block_title != blank %}
-                    {%- assign title_word_count = block_title | split: ' ' | size -%}
-                    <div class="section-footer__title heading-font h6{% if title_word_count < 4 %} no-wrap{% endif %}">
+                    {%- assign title_word_count = block_title | split' ' | size titlet < 4 %} no-wrap{% endif %}">
                       {{ block_title | escape }}
                       <svg
                         class="custom-arrow"
@@ -211,30 +195,6 @@
                       </a>
                     </li>
                   {% endfor %}
-                  {% if footer_menu_block_index == footer_menu_block_total %}
-                    <li class="section-footer__menu-cookie-preferences">
-                      {%- liquid
-                        assign lang = request.locale.iso_code
-                        case lang
-                          when 'de'
-                            assign cookie_preferences_label = 'Cookie-Einstellungen'
-                          when 'fr'
-                            assign cookie_preferences_label = 'Gérer les cookies'
-                          when 'fi'
-                            assign cookie_preferences_label = 'Evästeasetukset'
-                          else
-                            assign cookie_preferences_label = 'Cookie Preferences'
-                        endcase
-                      -%}
-                      <div class="section-footer__menu-cookie-preferences-divider" aria-hidden="true"></div>
-                      <a
-                        href="#reopenBanner"
-                        class="section-footer__menu-cookie-preferences-link heading-font h6 no-wrap"
-                      >
-                        {{ cookie_preferences_label }}
-                      </a>
-                    </li>
-                  {% endif %}
                 </ul>
               {% endif %}
             </div>
@@ -244,21 +204,8 @@
               class="section-footer__row__col section-footer__text-block {% if block.settings.text != blank %}section-footer__text-block--with-text{% endif %}"
               {{ block.shopify_attributes }}
             >
-              {% if block.settings.title != blank %}
-                {%- assign title_word_count = block.settings.title | split: ' ' | size -%}
-                <div class="section-footer__title heading-font h6{% if title_word_count < 4 %} no-wrap{% endif %}">
-                  {{ block.settings.title | escape }}
-                </div>
-              {% endif %}
-
-              {% if block.settings.text != blank %}
-                <div class="section-footer__text rte">
-                  {{ block.settings.text }}
-                </div>
-              {% endif %}
-
-              {% if block.settings.image != blank %}
-                <span class="section-footer__text-block__image" style="max-width: {{ block.settings.image_width }}px">
+              {% if b
+                {%- 's ete      <span class="section-footer__text-block__image" style="max-width: {{ block.settings.image_width }}px">
                   {%- liquid
                     assign image_sizes = block.settings.image_width | append: 'px'
                     assign image_widths = block.settings.image_width | times: 2 | prepend: ', ' | prepend: block.settings.image_width
@@ -397,14 +344,46 @@
               </li>
             {% endfor %}
           </ul>
+          {%- liquid
+            assign lang = request.locale.iso_code
+            case lang
+              when 'de'
+                assign privacy_settings_label = 'Datenschutzeinstellungen'
+              when 'fr'
+                assign privacy_settings_label = 'Paramètres de confidentialité'
+              when 'fi'
+                assign privacy_settings_label = 'Tietosuoja-asetukset'
+              else
+                assign privacy_settings_label = 'Privacy Settings'
+            endcase
+          -%} 
+          <div class="section-footer__privacy-settings">
+            <a href="#reopenBanner" class="footer-privacy-btn">Cookie Preferences</a>
+          </div>
         </div>
       {% endif %}
     </div>
     <div class="section-footer__row__col">
      {% if section.settings.enable_language_selector or section.settings.enable_country_selector %}
         <div class="section-footer__localization">
-          <!-- Enhanced Language Switcher Component -->
-          {% render 'enhanced-language-switcher', 
+          <!-- Enhanced Language Switcher Componentul>
+          {%- liquid
+            assign lang = request.locale.iso_code
+            case lang
+              when 'de'
+                assign privacy_settings_label = 'Datenschutzeinstellungen'
+              when 'fr'
+                assign privacy_settings_label = 'Paramètres de confidentialité'
+              when 'fi'
+                assign privacy_settings_label = 'Tietos oja-asetukset'
+              else
+                assign privacy_settings_label = 'Privacy Settings'
+            endcase
+          -%} 
+          <div class="section-footer__privacy-settings">
+            <a href="#reopenBanner" c-ass="footer-privacy-btn"-Cookie Preferences</a>>
+            {% render '  </div>
+      enhanced-language-switcher', 
              enable_language_selector: section.settings.enable_language_selector, 
              enable_country_selector: section.settings.enable_country_selector,
              show_border: true,
@@ -524,40 +503,16 @@
     white-space: nowrap;
     min-width: auto;
   }
-
-  .section-footer__menu-cookie-preferences-divider {
-    border-top: 1px solid rgb(154 154 154 / 30%);
-    margin: 12px 0 10px;
-    width: 100%;
-  }
-
-  .section-footer__menu-cookie-preferences-link {
-    color: inherit;
-    display: inline-block;
-    text-decoration: none;
-  }
-
-  .section-footer__menu-cookie-preferences-link:hover {
-    text-decoration: underline;
-    text-underline-offset: 2px;
-  }
+  .section-footer__privacy-settings { text-align: right; }
+  .section-footer__privacy-settings .footer-privacy-btn { font-size: 16px; line-height: 1.7; padding: 10px 0; background: none; border: none; color: inherit; text-decoration: underline; text-underline-offset: 2px; cursor: pointer; display: line-block; }
   
-  @media (max-width: 768px) {
-    .section-footer__row--blocks .section-footer__row__col:not(:last-child) {
-      margin-bottom: 0;
-    }
+privadyaswtti:g6  .t-xtoablslasragito0;    }
 
-    .section-footer__row__col {
-      flex: 0 1 100%;
-    }
-    .section-footer__menu-block__menu {
-      max-height: 0;
-      overflow: hidden;
-      opacity: 0;
-      width: 100%;
+    .sectionprivacy-sfttiogs .fr_torw_ iva
+y bt le1f0nt-size; 16px;l
+ e-  }gh:.1.7;sinddr_g:_10px_0;mba kg muadx-heigh b dd;r: noe;   l ::   wthit;
       padding: 0 20px;
-    }
-    .section-footer__menu-block__menu li {
+      .section-footer__menu-b; cursor: pointerl display:kinline-block;__menu li {
       width: 100%;
       padding: 10px 0;
       border-bottom: 1px solid rgb(154 154 154 / 10%);
