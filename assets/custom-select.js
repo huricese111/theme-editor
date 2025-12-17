@@ -6,11 +6,6 @@ if (!customElements.get('custom-select')) {
       this.listbox = this.querySelector('.custom-select__listbox');
       this.selectedOption = this.querySelector('[aria-selected="true"]');
 
-      // Set the selected option.
-      if (!this.selectedOption) {
-        this.selectedOption = this.listbox.firstElementChild;
-      }
-
       this.setButtonWidth();
       window.initLazyScript(this, this.init.bind(this));
     }
@@ -23,11 +18,6 @@ if (!customElements.get('custom-select')) {
       this.searchString = '';
       this.listboxOpen = false;
       this.selectedOption = this.querySelector('[aria-selected="true"]');
-
-      // Set the selected option.
-      if (!this.selectedOption) {
-        this.selectedOption = this.listbox.firstElementChild;
-      }
 
       this.addEventListener('keydown', this.handleKeydown.bind(this));
       this.button.addEventListener('mousedown', this.handleMousedown.bind(this));
@@ -133,7 +123,8 @@ if (!customElements.get('custom-select')) {
      * Handles 'mouseleave' events on the options list.
      */
     handleMouseleave() {
-      this.focusOption(this.selectedOption);
+      const optionToFocus = this.selectedOption || this.listbox.querySelector('.custom-select__option');
+      if (optionToFocus) this.focusOption(optionToFocus);
     }
 
     /**
@@ -214,6 +205,9 @@ if (!customElements.get('custom-select')) {
      * the button width from changing depending on the option selected.
      */
     setButtonWidth() {
+      const widthOption = this.selectedOption || this.listbox.firstElementChild;
+      if (!widthOption) return;
+
       // Get the width of an element without side padding.
       const getHorizontalPadding = (el) => {
         const elStyle = getComputedStyle(el);
@@ -221,9 +215,9 @@ if (!customElements.get('custom-select')) {
       };
 
       const buttonPadding = getHorizontalPadding(this.button);
-      const optionPadding = getHorizontalPadding(this.selectedOption);
+      const optionPadding = getHorizontalPadding(widthOption);
       const buttonBorder = this.button.offsetWidth - this.button.clientWidth;
-      const optionWidth = Math.ceil(this.selectedOption.getBoundingClientRect().width);
+      const optionWidth = Math.ceil(widthOption.getBoundingClientRect().width);
 
       this.button.style.setProperty('--custom-select-button-width', `${optionWidth - optionPadding + buttonPadding + buttonBorder}px`);
     }
@@ -241,7 +235,8 @@ if (!customElements.get('custom-select')) {
 
       // Slight delay required to prevent blur event being fired immediately.
       setTimeout(() => {
-        this.focusOption(this.selectedOption);
+        const optionToFocus = this.selectedOption || this.listbox.querySelector('.custom-select__option');
+        if (optionToFocus) this.focusOption(optionToFocus);
         this.listbox.focus();
 
         this.addListboxOpenListeners();
@@ -344,40 +339,38 @@ if (!customElements.get('custom-select')) {
      * @param {Element} option - Option <li> element.
      */
     selectOption(option) {
-      if (option !== this.selectedOption) {
-        // Switch aria-selected attribute to selected option.
-        option.setAttribute('aria-selected', 'true');
-        this.selectedOption.setAttribute('aria-selected', 'false');
+      const prev = this.selectedOption;
+      if (prev && prev !== option) prev.setAttribute('aria-selected', 'false');
+      option.setAttribute('aria-selected', 'true');
 
-        // Update swatch colour in the button.
-        if (this.swatches) {
-          this.button.dataset.swatch = option.dataset.swatch || '';
-          const nativeSwatchColor = option.style.getPropertyValue('--native-swatch-color');
-          if (nativeSwatchColor) {
-            this.button.style.setProperty('--native-swatch-color', nativeSwatchColor);
-            this.button.style.setProperty('--native-swatch-image', '');
-          }
-          const nativeSwatchImage = option.style.getPropertyValue('--native-swatch-image');
-          if (nativeSwatchImage) {
-            this.button.style.setProperty('--native-swatch-image', nativeSwatchImage);
-            this.button.style.setProperty('--native-swatch-color', '');
-          }
+      // Update swatch colour in the button.
+      if (this.swatches) {
+        this.button.dataset.swatch = option.dataset.swatch || '';
+        const nativeSwatchColor = option.style.getPropertyValue('--native-swatch-color');
+        if (nativeSwatchColor) {
+          this.button.style.setProperty('--native-swatch-color', nativeSwatchColor);
+          this.button.style.setProperty('--native-swatch-image', '');
         }
-
-        // Update the button text and set the option as active.
-        this.button.firstElementChild.textContent = option.firstElementChild.textContent;
-        this.listbox.setAttribute('aria-activedescendant', option.id);
-        this.selectedOption = document.getElementById(option.id);
-
-        // If a native <select> exists, update its selected value and dispatch a 'change' event.
-        if (this.nativeSelect) {
-          this.nativeSelect.value = option.dataset.value;
-          this.nativeSelect.dispatchEvent(new Event('change', { bubbles: true }));
-        } else {
-          // Dispatch a 'change' event on the custom select element.
-          const detail = { selectedValue: option.dataset.value };
-          this.dispatchEvent(new CustomEvent('change', { bubbles: true, detail }));
+        const nativeSwatchImage = option.style.getPropertyValue('--native-swatch-image');
+        if (nativeSwatchImage) {
+          this.button.style.setProperty('--native-swatch-image', nativeSwatchImage);
+          this.button.style.setProperty('--native-swatch-color', '');
         }
+      }
+
+      // Update the button text and set the option as active.
+      this.button.firstElementChild.textContent = option.firstElementChild.textContent;
+      this.listbox.setAttribute('aria-activedescendant', option.id);
+      this.selectedOption = document.getElementById(option.id);
+
+      // If a native <select> exists, update its selected value and dispatch a 'change' event.
+      if (this.nativeSelect) {
+        this.nativeSelect.value = option.dataset.value;
+        this.nativeSelect.dispatchEvent(new Event('change', { bubbles: true }));
+      } else {
+        // Dispatch a 'change' event on the custom select element.
+        const detail = { selectedValue: option.dataset.value };
+        this.dispatchEvent(new CustomEvent('change', { bubbles: true, detail }));
       }
 
       this.hideListbox();

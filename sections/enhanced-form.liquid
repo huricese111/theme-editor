@@ -626,6 +626,7 @@
                         id: input_id,
                         hide_label: true,
                         option_values: custom_options,
+                        default_option: '',
                         selected_value: '',
                         include_native: true,
                         native_name: input_name
@@ -659,6 +660,7 @@
                         id: input_id,
                         hide_label: true,
                         option_values: custom_options,
+                        default_option: '',
                         selected_value: '',
                         include_native: true,
                         native_name: input_name
@@ -729,6 +731,7 @@
                         id: input_id,
                         hide_label: true,
                         option_values: custom_options,
+                        default_option: '',
                         selected_value: '',
                         include_native: true,
                         native_name: input_name
@@ -1401,31 +1404,41 @@
 #enhanced-form-{{ section.id }} .column.md3-outlined .enhanced-form-label { font-weight: 500; line-height: 1.25; position: absolute !important; display: inline-block !important; left: 16px; margin: 0 !important; font-size: 14px; padding: 0 6px; border-radius: 4px; background: transparent; color: rgba(0,0,0,0.68); z-index: 2; transition: all .15s ease; pointer-events: none; }
 #enhanced-form-{{ section.id }} .column.md3-outlined:not(.md3-active):not(:focus-within):not(.md3-multiline):not(.md3-fallback) .enhanced-form-label { top: 50% !important; transform: translateY(-50%) !important; font-size: 14px !important; background: transparent !important; }
 #enhanced-form-{{ section.id }} .column.md3-outlined.md3-fallback:not(.md3-active):not(:focus-within):not(.md3-multiline) .enhanced-form-label { top: 34% !important; transform: translateY(-50%) !important; font-size: 14px !important; background: transparent !important; }
+#enhanced-form-{{ section.id }} .column.md3-outlined.md3-custom-select.md3-fallback:not(.md3-active):not(:focus-within):not(.md3-multiline) .enhanced-form-label { top: 50% !important; transform: translateY(-50%) !important; font-size: 14px !important; background: transparent !important; }
 #enhanced-form-{{ section.id }} .column.md3-outlined.md3-multiline:not(.md3-active):not(:focus-within) .enhanced-form-label { top: 14px !important; transform: none !important; font-size: 14px !important; background: transparent !important; }
 #enhanced-form-{{ section.id }} .column.md3-outlined.md3-active .enhanced-form-label,
 #enhanced-form-{{ section.id }} .column.md3-outlined:focus-within .enhanced-form-label { top: 0 !important; transform: translateY(-50%) !important; font-size: 12px; background: rgb(var(--body-bg-color)); }
 #enhanced-form-{{ section.id }} .column.md3-outlined .enhanced-form-input { width: 100%; border: 1px solid #e5e7eb; border-radius: 12px; padding: 12px 12px; background: #ffffff; transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease; }
-#enhanced-form-{{ section.id }} .column.md3-outlined.md3-active .enhanced-form-input { border-color: rgba(0,0,0,0.38); background: transparent; padding-top: 18px; }
-#enhanced-form-{{ section.id }} .column.md3-outlined:focus-within .enhanced-form-input { border-color: rgba(0,0,0,0.38); background: transparent; padding-top: 18px; }
-#enhanced-form-{{ section.id }} .column.md3-outlined .enhanced-form-input:focus { border-color: rgb(var(--link-color)); box-shadow: 0 0 0 2px rgba(var(--link-color) / 0.18); outline: none; }
+#enhanced-form-{{ section.id }} .column.md3-outlined .option-selector .custom-select__btn { width: 100%; border: 1px solid #e5e7eb; border-radius: 12px; padding: 12px 12px; background: #ffffff; transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease; box-shadow: none; }
+#enhanced-form-{{ section.id }} .multilevel-dropdown-wrapper .current-selection { width: 100%; border: 1px solid #e5e7eb; border-radius: 12px; padding: 12px 12px; background: #ffffff; display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 44px; cursor: pointer; user-select: none; box-shadow: none; transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease; }
+#enhanced-form-{{ section.id }} .column.md3-outlined.md3-active .enhanced-form-input { border-color: rgba(0,0,0,0.54); background: transparent; padding-top: 18px; }
+#enhanced-form-{{ section.id }} .column.md3-outlined:focus-within .enhanced-form-input { border-color: rgba(0,0,0,0.54); background: transparent; padding-top: 18px; }
+#enhanced-form-{{ section.id }} .column.md3-outlined.md3-active .option-selector .custom-select__btn,
+#enhanced-form-{{ section.id }} .column.md3-outlined:focus-within .option-selector .custom-select__btn { border-color: rgba(0,0,0,0.54); background: transparent; padding-top: 18px; }
+#enhanced-form-{{ section.id }} .column.md3-outlined .enhanced-form-input:focus { border-color: rgba(0,0,0,0.54); box-shadow: none; outline: none; transform: none; }
 #enhanced-form-{{ section.id }} .column.md3-outlined .enhanced-form-input.input-error { border-color: #b00020; box-shadow: 0 0 0 2px rgba(176,0,32,0.14); background-color: transparent; }
 #enhanced-form-{{ section.id }} .column.md3-outlined .enhanced-form-input { padding-right: 42px; }
 #enhanced-form-{{ section.id }} .column.md3-outlined textarea { width: 100%; border: 1px solid #e5e7eb; border-radius: 12px; padding: 12px 12px; background: #ffffff; transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease; }
-#enhanced-form-{{ section.id }} .column.md3-outlined.md3-active textarea { border-color: rgba(0,0,0,0.38); background: transparent; padding-top: 18px; }
-#enhanced-form-{{ section.id }} .column.md3-outlined:focus-within textarea { border-color: rgba(0,0,0,0.38); background: transparent; padding-top: 18px; }
-#enhanced-form-{{ section.id }} .column.md3-outlined textarea:focus { border-color: rgb(var(--link-color)); box-shadow: 0 0 0 2px rgba(var(--link-color) / 0.18); outline: none; }
+#enhanced-form-{{ section.id }} .column.md3-outlined.md3-active textarea { border-color: rgba(0,0,0,0.54); background: transparent; padding-top: 18px; }
+#enhanced-form-{{ section.id }} .column.md3-outlined:focus-within textarea { border-color: rgba(0,0,0,0.54); background: transparent; padding-top: 18px; }
+#enhanced-form-{{ section.id }} .column.md3-outlined textarea:focus { border-color: rgba(0,0,0,0.54); box-shadow: none; outline: none; transform: none; }
 #enhanced-form-{{ section.id }} .column.md3-outlined .clear-input { position: absolute; top: 50%; right: 14px; transform: translateY(-50%); width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 999px; border: 1px solid rgba(0,0,0,0.26); color: rgba(0,0,0,0.68); background: rgb(var(--body-bg-color)); cursor: pointer; opacity: 0; pointer-events: none; transition: opacity .15s ease, background-color .15s ease, border-color .15s ease; }
 #enhanced-form-{{ section.id }} .column.md3-outlined .clear-input:hover { background: rgba(0,0,0,0.06); border-color: rgba(0,0,0,0.38); }
 #enhanced-form-{{ section.id }} .column.md3-outlined .clear-input.visible { opacity: 1; pointer-events: auto; }
 
 #enhanced-form-{{ section.id }} .multilevel-dropdown-wrapper { position: relative; margin-bottom: 0; }
 #enhanced-form-{{ section.id }} .multilevel-dropdown-wrapper .current-selection { width: 100%; border: 1px solid #e5e7eb; border-radius: 12px; padding: 12px 12px; background: #ffffff; display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 44px; cursor: pointer; user-select: none; box-shadow: none; transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease; }
-#enhanced-form-{{ section.id }} .multilevel-dropdown-wrapper .current-selection:hover { border-color: rgba(0,0,0,0.38); box-shadow: none; }
-#enhanced-form-{{ section.id }} .multilevel-dropdown-wrapper .current-selection:focus { outline: none; border-color: rgb(var(--link-color)); box-shadow: 0 0 0 2px rgba(var(--link-color) / 0.18); }
+#enhanced-form-{{ section.id }} .multilevel-dropdown-wrapper .current-selection:hover { border-color: rgba(0,0,0,0.54); box-shadow: none; }
+#enhanced-form-{{ section.id }} .multilevel-dropdown-wrapper .current-selection:focus { outline: none; border-color: rgba(0,0,0,0.54); box-shadow: none; transform: none; }
 #enhanced-form-{{ section.id }} .multilevel-dropdown-wrapper .current-selection.active { box-shadow: none; }
 #enhanced-form-{{ section.id }} .column.md3-outlined.md3-active .multilevel-dropdown-wrapper .current-selection,
-#enhanced-form-{{ section.id }} .column.md3-outlined:focus-within .multilevel-dropdown-wrapper .current-selection { border-color: rgba(0,0,0,0.38); background: transparent; padding-top: 18px; }
+#enhanced-form-{{ section.id }} .column.md3-outlined:focus-within .multilevel-dropdown-wrapper .current-selection { border-color: rgba(0,0,0,0.54); background: transparent; padding-top: 18px; }
 #enhanced-form-{{ section.id }} .multilevel-dropdown-wrapper .current-selection.dropdown-error { border-color: #b00020 !important; box-shadow: 0 0 0 2px rgba(176,0,32,0.14) !important; background-color: transparent !important; }
+#enhanced-form-{{ section.id }} .column.md3-outlined.md3-active .enhanced-form-input:hover,
+#enhanced-form-{{ section.id }} .column.md3-outlined.md3-active textarea:hover,
+#enhanced-form-{{ section.id }} .column.md3-outlined.md3-active .option-selector .custom-select__btn:hover,
+#enhanced-form-{{ section.id }} .column.md3-outlined.md3-active .multilevel-dropdown-wrapper .current-selection:hover { border-color: rgba(0,0,0,0.54); }
+#enhanced-form-{{ section.id }} .column.md3-outlined .option-selector .custom-select__btn:focus { border-color: rgba(0,0,0,0.54); box-shadow: none; outline: none; transform: none; }
 #enhanced-form-{{ section.id }} .multilevel-dropdown-wrapper .selection-text { flex: 1; min-width: 0; font-size: 16px; line-height: 1.3; color: rgba(0,0,0,0.87); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 #enhanced-form-{{ section.id }} .multilevel-dropdown-wrapper .dropdown-arrow { width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; color: rgba(0,0,0,0.68); transition: color .2s ease; }
 #enhanced-form-{{ section.id }} .multilevel-dropdown-wrapper .dropdown-arrow svg { width: 20px; height: 20px; transition: transform .2s ease; }
@@ -1439,8 +1452,9 @@
 #enhanced-form-{{ section.id }} .multilevel-dropdown-wrapper .category-column .category-item.selected { background: rgba(var(--link-color) / 0.10); color: rgb(var(--link-color)); }
 #enhanced-form-{{ section.id }} .multilevel-dropdown-wrapper .category-column .category-item.selected::before { background: rgb(var(--link-color)); }
 
-#enhanced-form-{{ section.id }} .form-actions .btn { width: 100%; font-size: 16px; }
-#enhanced-form-{{ section.id }} .form-actions .enhanced-form-submit-btn { background-color: #000; color: #fff; border: 1px solid #000; border-radius: 6px; padding: 12px 18px; font-weight: 600; line-height: 1; min-height: 44px; transition: background-color .15s ease, box-shadow .15s ease, border-color .15s ease, opacity .15s ease; }
+#enhanced-form-{{ section.id }} .form-actions { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+#enhanced-form-{{ section.id }} .form-actions .btn { width: auto; font-size: 16px; }
+#enhanced-form-{{ section.id }} .form-actions .enhanced-form-submit-btn { display: inline-flex; justify-content: center; width: auto; background-color: #000; color: #fff; border: 1px solid #000; border-radius: 6px; padding: 12px 18px; font-weight: 600; line-height: 1; min-height: 44px; transition: background-color .15s ease, box-shadow .15s ease, border-color .15s ease, opacity .15s ease; }
 #enhanced-form-{{ section.id }} .form-actions .enhanced-form-submit-btn:hover { background-color: #111; border-color: #111; }
 #enhanced-form-{{ section.id }} .form-actions .enhanced-form-submit-btn:focus-visible { outline: none; box-shadow: 0 0 0 4px rgba(0,0,0,0.18); }
 #enhanced-form-{{ section.id }} .form-actions .enhanced-form-submit-btn:disabled,

@@ -2746,6 +2746,8 @@ function initEnhancedFormMd3(scope) {
           inputEl.classList.contains('custom-time-input') ||
           inputEl.classList.contains('custom-datetime-input'));
 
+      if (isCustomSelect) col.classList.add('md3-custom-select');
+
       let nativeCustomSelect = null;
       if (isCustomSelect) {
         const btnId = inputEl.id || '';
@@ -2758,16 +2760,35 @@ function initEnhancedFormMd3(scope) {
         ? inputEl.querySelector('span.text-start') || inputEl.querySelector('span')
         : null;
 
-      const hasValue = () => {
-        if (isText || isTextarea || isSelect || isCustomDate) return !!(inputEl.value || '').trim();
-        if (isCustomSelect) return !!((nativeCustomSelect && nativeCustomSelect.value) || '').trim();
-        return false;
-      };
-
       const supportsFallback = !col.classList.contains('md3-multiline');
       const isTouched = () => col.dataset.md3Touched === '1';
 
+      const customSelectHasPlaceholder = Boolean(
+        isCustomSelect &&
+          nativeCustomSelect &&
+          nativeCustomSelect.options &&
+          nativeCustomSelect.options[0] &&
+          ((nativeCustomSelect.options[0].value || '').trim() === '')
+      );
+
+      const ensureUntouchedEmpty = () => {
+        if (!isCustomSelect || !nativeCustomSelect || !customSelectHasPlaceholder) return;
+        if (isTouched()) return;
+        if ((nativeCustomSelect.value || '').trim() !== '') nativeCustomSelect.value = '';
+      };
+
+      const hasValue = () => {
+        if (isText || isTextarea || isSelect || isCustomDate) return !!(inputEl.value || '').trim();
+        if (isCustomSelect) {
+          ensureUntouchedEmpty();
+          if (customSelectHasPlaceholder && !isTouched()) return false;
+          return !!((nativeCustomSelect && nativeCustomSelect.value) || '').trim();
+        }
+        return false;
+      };
+
       const refresh = () => {
+        ensureUntouchedEmpty();
         const focused = col.matches(':focus-within');
         if (hasValue() || focused) col.classList.add('md3-active');
         else col.classList.remove('md3-active');
@@ -2832,10 +2853,16 @@ function initEnhancedFormMd3(scope) {
         });
       }
 
+      ensureUntouchedEmpty();
       refresh();
       setTimeout(() => {
+        ensureUntouchedEmpty();
         refresh();
       }, 0);
+      setTimeout(() => {
+        ensureUntouchedEmpty();
+        refresh();
+      }, 300);
 
       if (!isText) return;
       let clearBtn = col.querySelector('.clear-input');

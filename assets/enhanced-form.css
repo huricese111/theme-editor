@@ -166,6 +166,12 @@
   top: 34% !important;
   transform: translateY(-50%) !important;
 }
+.enhanced-form-section
+  .column.md3-outlined.md3-custom-select.md3-fallback:not(.md3-active):not(:focus-within):not(.md3-multiline)
+  .enhanced-form-label {
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+}
 .enhanced-form-section .column.md3-outlined.md3-multiline:not(.md3-active):not(:focus-within) .enhanced-form-label {
   top: 14px !important;
   transform: none !important;
@@ -1547,15 +1553,24 @@
 
 .enhanced-form-section .column.md3-outlined.md3-active .option-selector .custom-select__btn,
 .enhanced-form-section .column.md3-outlined:focus-within .option-selector .custom-select__btn {
-  border-color: rgba(0,0,0,0.38) !important;
+  border-color: rgba(0,0,0,0.54) !important;
   background: transparent !important;
   padding-top: 18px !important;
 }
 
 .enhanced-form-section .column.md3-outlined .option-selector .custom-select__btn:focus {
-  border-color: rgb(var(--link-color)) !important;
-  box-shadow: 0 0 0 2px rgba(var(--link-color) / 0.18) !important;
+  border-color: rgba(0,0,0,0.54) !important;
+  box-shadow: none !important;
   outline: none !important;
+  transform: none !important;
+}
+
+.enhanced-form-section .column.md3-outlined input:focus,
+.enhanced-form-section .column.md3-outlined select:focus,
+.enhanced-form-section .column.md3-outlined textarea:focus {
+  border-color: rgba(0,0,0,0.54) !important;
+  box-shadow: none !important;
+  transform: none !important;
 }
 
 /* 确保下拉框容器样式一致 */
@@ -1597,6 +1612,10 @@
   .enhanced-form-section .btn {
     width: 100%;
     padding: 1rem;
+  }
+
+  .enhanced-form-section .form-actions .enhanced-form-submit-btn {
+    width: auto !important;
   }
 }
 

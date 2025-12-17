@@ -85,11 +85,6 @@
     </button>
     <ul class="custom-select__listbox absolute invisible" role="listbox" tabindex="-1"
         aria-hidden="true" hidden{% if selected_value %} aria-activedescendant="{{ selected_id }}"{% endif %}>
-      {%- if selected_value == blank -%}
-        <li class="custom-select__option js-option" id="{{ id }}-opt-default" role="option" data-value="">
-          <span class="pointer-events-none">{{- default_option -}}</span>
-        </li>
-      {%- endif -%}
       {%- for value in option_values -%}
         <li class="custom-select__option flex items-center js-option" id="{{ id }}-opt-{{ forloop.index0 }}" role="option"
             data-value="{{ value | escape }}"
@@ -118,9 +113,9 @@
   {%- endif -%}
   <div class="js-hidden select inline-block relative">
     <select class="custom-select__native" id="{{ id }}-native"{% if native_name %} name="{{ native_name }}"{% endif %}{% if native_form_id %} form="{{ native_form_id }}"{% endif %}>
-      {%- unless selected_value -%}
+      {%- if selected_value == blank -%}
         <option value="">{{ default_option }}</option>
-      {%- endunless -%}
+      {%- endif -%}
       {%- for value in option_values -%}
         <option value="{{ value | escape }}"{% if value == selected_value %} selected{% endif %}>
           {{- option_names[forloop.index0] -}}
