@@ -2699,3 +2699,102 @@ function addValidationStyles() {
 
 // 初始化样式
 addValidationStyles();
+
+function initEnhancedFormMd3(scope) {
+  const root = scope || document;
+  const sections = root.querySelectorAll('.enhanced-form-section[id^="enhanced-form-"]');
+  sections.forEach((section) => {
+    section.querySelectorAll('.enhanced-form-container .column.md3-outlined').forEach((col) => {
+      if (col.dataset.md3Bound === '1') return;
+      col.dataset.md3Bound = '1';
+
+      const inputEl = col.querySelector(
+        '.enhanced-form-input, textarea, select, .option-selector .custom-select__btn, .custom-date-input, .custom-time-input, .custom-datetime-input'
+      );
+      if (!inputEl) return;
+
+      const tag = (inputEl.tagName || '').toLowerCase();
+      const type = tag === 'input' ? (inputEl.type || 'text') : tag;
+      const isText = tag === 'input' && /^(text|email|tel|number|url|password)$/.test(type);
+      const isTextarea = tag === 'textarea';
+      const isSelect = tag === 'select';
+      const isCustomSelect = inputEl.classList && inputEl.classList.contains('custom-select__btn');
+      const isCustomDate =
+        inputEl.classList &&
+        (inputEl.classList.contains('custom-date-input') ||
+          inputEl.classList.contains('custom-time-input') ||
+          inputEl.classList.contains('custom-datetime-input'));
+
+      let nativeCustomSelect = null;
+      if (isCustomSelect) {
+        const btnId = inputEl.id || '';
+        const baseId = btnId.replace(/-button$/, '');
+        if (baseId) nativeCustomSelect = document.getElementById(baseId + '-native');
+        if (!nativeCustomSelect) nativeCustomSelect = col.querySelector('.custom-select__native');
+      }
+
+      const hasValue = () => {
+        if (isText || isTextarea || isSelect || isCustomDate) return !!(inputEl.value || '').trim();
+        if (isCustomSelect) return !!((nativeCustomSelect && nativeCustomSelect.value) || '').trim();
+        return false;
+      };
+
+      const refresh = () => {
+        const focused = document.activeElement === inputEl;
+        if (hasValue() || focused) col.classList.add('md3-active');
+        else col.classList.remove('md3-active');
+      };
+
+      if (isCustomSelect) {
+        if (nativeCustomSelect) nativeCustomSelect.addEventListener('change', refresh);
+        inputEl.addEventListener('focus', refresh);
+        inputEl.addEventListener('blur', refresh);
+      } else if (isSelect) {
+        inputEl.addEventListener('change', refresh);
+        inputEl.addEventListener('focus', refresh);
+        inputEl.addEventListener('blur', refresh);
+      } else {
+        inputEl.addEventListener('focus', refresh);
+        inputEl.addEventListener('blur', refresh);
+        inputEl.addEventListener('input', refresh);
+        inputEl.addEventListener('change', refresh);
+      }
+
+      refresh();
+      setTimeout(refresh, 0);
+
+      if (!isText) return;
+      let clearBtn = col.querySelector('.clear-input');
+      if (!clearBtn) {
+        clearBtn = document.createElement('button');
+        clearBtn.type = 'button';
+        clearBtn.className = 'clear-input';
+        clearBtn.setAttribute('aria-label', 'Clear');
+        clearBtn.textContent = '×';
+        col.appendChild(clearBtn);
+      }
+
+      const toggle = () => {
+        if (inputEl.value && inputEl.value.length > 0) clearBtn.classList.add('visible');
+        else clearBtn.classList.remove('visible');
+      };
+
+      clearBtn.addEventListener('click', function () {
+        inputEl.value = '';
+        inputEl.dispatchEvent(new Event('input', { bubbles: true }));
+        inputEl.focus();
+        toggle();
+      });
+      inputEl.addEventListener('input', toggle);
+      inputEl.addEventListener('focus', toggle);
+      inputEl.addEventListener('blur', toggle);
+      toggle();
+    });
+  });
+}
+
+try {
+  initEnhancedFormMd3(document);
+  document.addEventListener('DOMContentLoaded', () => initEnhancedFormMd3(document));
+  document.addEventListener('shopify:section:load', (evt) => initEnhancedFormMd3(evt.target));
+} catch (e) {}
