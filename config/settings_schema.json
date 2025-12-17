@@ -1773,7 +1773,7 @@
         "id": "consent_api_url",
         "label": "Consent API URL",
         "info": "example：https://your-domain.com/api/consent",
-        "default": "https://example.com/api/consent"
+        "default": "https://103.215.83.188.nip.io/api/consent"
       },
       {
         "type": "text",
