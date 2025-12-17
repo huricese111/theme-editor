@@ -2975,7 +2975,7 @@ function initEnhancedFormMd3(scope) {
         svg.setAttribute('aria-hidden', 'true');
         svg.setAttribute('focusable', 'false');
         svg.setAttribute('role', 'presentation');
-        svg.setAttribute('class', 'icon icon--extra-small icon--type-close');
+        svg.setAttribute('class', 'icon icon--small icon--type-close');
 
         const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         path.setAttribute(
