@@ -403,6 +403,7 @@
             | t: year: copyright_year, shop_url: routes.root_url, shop_name: shop.name
           -}}
         </span>
+        <span class="copy copy--sync-test"> · SyncTest</span>
 
         {% if section.settings.show_powered_by %}
           {{ powered_by_link }}
@@ -507,6 +508,7 @@
   }
   .section-footer__privacy-settings { text-align: right; }
   .section-footer__privacy-settings .footer-privacy-btn { font-size: 18px; line-height: 1.7; padding: 10px 14px; background: none; border: none; color: inherit; text-decoration: underline; text-underline-offset: 2px; cursor: pointer; display: inline-block; }
+  .copy--sync-test { opacity: 0.7; font-size: 12px; }
   
   @media (max-width: 768px) {
     .section-footer__row--blocks .section-footer__row__col:not(:last-child) {
