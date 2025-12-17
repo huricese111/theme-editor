@@ -77,9 +77,16 @@
 -->
 <div class="consent-module">
   <div class="input-row">
-    <label for="legal_consent" class="login"><input type="checkbox" id="legal_consent" name="legal_consent" required /> {{ legal_consent_label }}</label>
+    <label for="legal_consent" class="login"><input type="checkbox" id="legal_consent" name="legal_consent" aria-required="true" /> {{ legal_consent_label }}</label>
   </div>
-  <p id="consent_error" class="consent-error" role="alert" aria-live="polite" aria-hidden="true">{{ consent_error_label }}</p>
+  <div id="consent_alert" class="consent-alert" role="alert" aria-live="polite" aria-hidden="true">
+    <span class="consent-alert__icon" aria-hidden="true">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" focusable="false" aria-hidden="true">
+        <path d="M7.167 1.667a1 1 0 0 1 1.666 0l6 10a1 1 0 0 1-.833 1.5h-12a1 1 0 0 1-.833-1.5l6-10zM8 6.5a.75.75 0 0 0-.75.75v3a.75.75 0 1 0 1.5 0v-3A.75.75 0 0 0 8 6.5zm0 6a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"></path>
+      </svg>
+    </span>
+    <span class="consent-alert__content">{{ consent_error_label }}</span>
+  </div>
   {% if show_marketing_consent %}
   <div class="input-row">
     <label for="accepts_marketing" class="login"><input type="checkbox" id="accepts_marketing" name="customer[accepts_marketing]" value="true" /> {{ marketing_consent_label }}</label>
@@ -96,8 +103,10 @@
 .consent-module .input-row input[type="checkbox"]{margin:0;flex-shrink:0}
 .consent-module .input-row a.underline{text-underline-offset:2px;text-decoration-thickness:1px}
 input[name="marketing"][data-bridge="true"]{display:none!important}
-.consent-error{display:none;color:#c62828;font-size:13px;margin:6px 0 0}
-.consent-error.visible{display:block}
+.consent-alert{display:none;align-items:flex-start;gap:8px;padding:10px 12px;border:1px solid #ffa39e;background:#fff1f0;color:#a8071a;border-radius:6px;margin:8px 0 16px}
+.consent-alert.visible{display:flex}
+.consent-alert__icon{line-height:1;display:inline-flex;align-items:center;color:#ff4d4f}
+.consent-alert__content{font-size:13px}
 </style>
 <script>
   // 初始化: 工具函数与上下文获取; 控制交互与同意上报
@@ -111,7 +120,7 @@ input[name="marketing"][data-bridge="true"]{display:none!important}
     var s = document.currentScript;
     var form = s && s.closest ? s.closest('form') : null;
     var legal = form ? form.querySelector('#legal_consent') : null;
-    var errorNode = form ? form.querySelector('#consent_error') : null;
+    var errorNode = form ? form.querySelector('#consent_alert') : null;
     var btn = null;
     // 与外部插件桥接的营销勾选 (input[name="marketing"])
     function resolveBtn(){ try { return form ? form.querySelector('button[type="submit"]') : null; } catch(e){ return null; } }
@@ -222,6 +231,16 @@ input[name="marketing"][data-bridge="true"]{display:none!important}
     }
     // 捕获社交按钮点击/键盘事件, 在未勾选法律同意时阻止并提示
     document.addEventListener('click', function(ev){
+      var target = ev.target;
+      var node = target && target.closest ? target.closest('[name="hiko-container"] .h_buttons > div') : null;
+      if (node && !(legal && legal.checked)) { showConsentError(); try { ev.preventDefault(); ev.stopPropagation(); ev.stopImmediatePropagation(); } catch(e){} }
+    }, true);
+    document.addEventListener('pointerdown', function(ev){
+      var target = ev.target;
+      var node = target && target.closest ? target.closest('[name="hiko-container"] .h_buttons > div') : null;
+      if (node && !(legal && legal.checked)) { showConsentError(); try { ev.preventDefault(); ev.stopPropagation(); ev.stopImmediatePropagation(); } catch(e){} }
+    }, true);
+    document.addEventListener('touchstart', function(ev){
       var target = ev.target;
       var node = target && target.closest ? target.closest('[name="hiko-container"] .h_buttons > div') : null;
       if (node && !(legal && legal.checked)) { showConsentError(); try { ev.preventDefault(); ev.stopPropagation(); ev.stopImmediatePropagation(); } catch(e){} }

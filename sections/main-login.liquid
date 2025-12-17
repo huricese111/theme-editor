@@ -9,12 +9,20 @@
             case lang
               when 'de'
                 assign login_note = 'Melden Sie sich an, um Bestellungen und Prämien zu verwalten.'
+                assign pwd_hint_minlen = 'Mindestens 8 Zeichen erforderlich.'
+                assign email_hint_invalid = 'Ungültige E-Mail-Adresse'
               when 'fr'
                 assign login_note = 'Connectez-vous pour gérer vos commandes et vos récompenses.'
+                assign pwd_hint_minlen = 'Au moins 8 caractères requis.'
+                assign email_hint_invalid = 'Adresse e-mail invalide'
               when 'fi'
                 assign login_note = 'Kirjaudu sisään hallitaksesi tilauksia ja palkintoja.'
+                assign pwd_hint_minlen = 'Vähintään 8 merkkiä vaaditaan.'
+                assign email_hint_invalid = 'Virheellinen sähköpostiosoite'
               else
                 assign login_note = 'Sign in to manage orders and rewards.'
+                assign pwd_hint_minlen = 'Must be at least 8 characters.'
+                assign email_hint_invalid = 'Not valid email'
             endcase
           -%}
           <p class="note">{{ login_note }}</p>
@@ -35,12 +43,13 @@
 
         {%- render 'form-errors', form: form -%}
 
-        <div id="login_email" class="input-row">
-          <label for="customer_email" class="login">{{ 'customer.login.email' | t }}</label>
+        <div id="login_email" class="input-row md3-outlined">
           <div class="input-with-icon">
-            <span class="input-icon-left">{% render 'icon', icon: 'mail', size: 'small' %}</span>
-            <input type="email" value="" name="customer[email]" id="customer_email" class="large" size="30" />
+            <label for="customer_email" class="login">{{ 'customer.login.email' | t }}</label>
+            <input type="email" value="" name="customer[email]" id="customer_email" class="large" size="30" autocomplete="username" spellcheck="false" autocapitalize="off" />
+            <button type="button" class="clear-input" data-target="customer_email" aria-label="Clear">×</button>
           </div>
+          <div class="input-hint error" id="login_email_hint" aria-hidden="true">{{ email_hint_invalid }}</div>
         </div>
 
         {% if form.password_needed %}
@@ -49,16 +58,17 @@
         Customer Account Login
         {% endcomment %}
 
-        <div id="login_password" class="input-row">
-          <label for="customer_password" class="login">{{ 'customer.login.password' | t }}</label>
+        <div id="login_password" class="input-row md3-outlined">
           <div class="text-over-input">
-            <span class="input-icon-left">{% render 'icon', icon: 'lock', size: 'small' %}</span>
-            <input type="password" value="" name="customer[password]" id="customer_password" class="large password" size="16" />
+            <label for="customer_password" class="login">{{ 'customer.login.password' | t }}</label>
+            <input type="password" value="" name="customer[password]" id="customer_password" class="large password" size="16" autocomplete="current-password" />
+            <button type="button" class="clear-input" data-target="customer_password" aria-label="Clear">×</button>
             <button type="button" class="password-toggle" data-target="customer_password" aria-pressed="true" aria-label="Show password">{% render 'icon', icon: 'eye', size: 'small' %}</button>
-            <div id="forgot_password" class="text-over-input__text">
-              <a class="underline" href="#" onclick="showRecoverPasswordForm();return false;">{{ 'customer.login.forgot_password' | t }}</a>
-            </div>
           </div>
+          <div id="forgot_password" class="input-support forgot-password">
+            <a class="underline" href="#" onclick="showRecoverPasswordForm();return false;">{{ 'customer.login.forgot_password' | t }}</a>
+          </div>
+          <div class="input-hint error" id="login_password_hint" aria-hidden="true">{{ pwd_hint_minlen }}</div>
         </div>
 
         {% endif %}
@@ -101,9 +111,10 @@
 
         {% else %}
 
-        <div id="recover_email" class="input-row">
+        <div id="recover_email" class="input-row md3-outlined">
           <label for="recover-email" class="large">{{ 'customer.recover_password.email' | t }}</label>
           <input type="email" value="" size="30" name="email" id="recover-email" class="large" />
+          <button type="button" class="clear-input" data-target="recover-email" aria-label="Clear">×</button>
         </div>
         <div class="lightly-spaced-row-above">
           <button class="btn" type="submit">{{ 'customer.recover_password.submit' | t }}</button>
@@ -138,28 +149,55 @@
 </div>
 
 <style>
-#shopify-section-{{ section.id }} .page-header .title { margin-bottom: 8px; }
-#shopify-section-{{ section.id }} .page-header .note { color: rgb(var(--text-2)); }
-#shopify-section-{{ section.id }} .auth-card { max-width: 520px; margin: 0 auto; padding: 24px; border: 1px solid rgba(0,0,0,0.06); border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.06); background: rgb(var(--body-bg-color)); }
-#shopify-section-{{ section.id }} .auth-card .input-row { margin-bottom: 14px; }
-#shopify-section-{{ section.id }} .auth-card .input-row label.login { font-weight: 600; }
-#shopify-section-{{ section.id }} .auth-card input.large { width: 100%; border: 1px solid #e5e7eb; border-radius: 8px; padding: 10px 12px; transition: border-color .2s ease, box-shadow .2s ease; }
+#shopify-section-{{ section.id }} .page-header .title { margin-bottom: 8px; text-align: center; }
+#shopify-section-{{ section.id }} .page-header .note { color: rgb(var(--text-2)); text-align: center; }
+#shopify-section-{{ section.id }} .auth-card { max-width: 520px; margin: 0 auto; padding: 0; border: none; border-radius: 12px; box-shadow: none; background: rgb(var(--body-bg-color)); }
+#shopify-section-{{ section.id }} .auth-card .input-row { margin-bottom: 26px; position: relative; }
+#shopify-section-{{ section.id }} .auth-card .input-row label.login { font-weight: 600; position: absolute; left: 16px; top: calc(50% + 1px); transform: translateY(-50%); font-size: 13px; padding: 0 6px; border-radius: 4px; background: transparent; color: #374151; }
+#shopify-section-{{ section.id }} .auth-card input.large { width: 100%; border: 1px solid #e5e7eb; border-radius: 10px; padding: 12px 12px; transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease; background-color: #ffffff; }
 #shopify-section-{{ section.id }} .auth-card input.large:focus { outline: 0; border-color: rgb(var(--link-color)); box-shadow: 0 0 0 4px rgba(var(--link-color) / 0.18); }
+#shopify-section-{{ section.id }} .auth-card input.large.input-error { border-color: #a8071a; box-shadow: 0 0 0 4px rgba(168, 7, 26, 0.12); background-color: #fff1f0; }
 #shopify-section-{{ section.id }} .auth-card .btn { width: 100%; }
 #shopify-section-{{ section.id }} .auth-card .input-with-icon { position: relative; }
-#shopify-section-{{ section.id }} .auth-card .input-with-icon input.large { padding-left: 42px; }
-#shopify-section-{{ section.id }} .auth-card .input-icon-left { position: absolute; top: 50%; left: 14px; transform: translateY(-50%); color: #6b7280; }
-#shopify-section-{{ section.id }} .input-icon-left .icon, #shopify-section-{{ section.id }} .input-icon-left .icon * { fill: currentColor !important; stroke: none !important; }
-#shopify-section-{{ section.id }} .auth-card input.password { padding-right: 42px; }
+#shopify-section-{{ section.id }} .auth-card .text-over-input { position: relative; }
+#shopify-section-{{ section.id }} .auth-card input.password { padding-right: 76px; }
 #shopify-section-{{ section.id }} .auth-card .password-toggle { position: absolute; top: 50%; right: 14px; transform: translateY(-50%); width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; color: #6b7280; }
 #shopify-section-{{ section.id }} .auth-card .password-toggle[aria-pressed="true"]::after { content: ""; position: absolute; width: 20px; border-top: 2px solid currentColor; transform: rotate(-45deg); }
-#shopify-section-{{ section.id }} .text-over-input input.large { padding-left: 42px; }
-#shopify-section-{{ section.id }} .text-over-input__text { right: 54px; }
+#shopify-section-{{ section.id }} .text-over-input input.large { padding-left: 12px; }
+#shopify-section-{{ section.id }} .auth-card .clear-input { position: absolute; top: 50%; right: 14px; transform: translateY(-50%); width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 999px; border: 1px solid rgba(0,0,0,0.26); color: rgba(0,0,0,0.68); background: rgb(var(--body-bg-color)); cursor: pointer; opacity: 0; pointer-events: none; transition: opacity .15s ease, background-color .15s ease, border-color .15s ease; }
+#shopify-section-{{ section.id }} .auth-card .clear-input:hover { background: rgba(0,0,0,0.06); border-color: rgba(0,0,0,0.38); }
+#shopify-section-{{ section.id }} .auth-card .input-row.md3-outlined.active .clear-input,
+#shopify-section-{{ section.id }} .auth-card .clear-input.visible { opacity: 1; pointer-events: auto; }
+#shopify-section-{{ section.id }} .auth-card .text-over-input .clear-input { right: 48px; }
+#shopify-section-{{ section.id }} .auth-card .input-with-icon input.large,
+#shopify-section-{{ section.id }} .auth-card .input-row.md3-outlined > input.large { padding-right: 42px; }
+#shopify-section-{{ section.id }} .forgot-password { margin-top: 8px; font-size: 14px; color: rgba(0,0,0,0.78); }
+#shopify-section-{{ section.id }} .forgot-password a { color: rgb(var(--link-color)); }
 #shopify-section-{{ section.id }} .auth-card .cancel-btn { margin-top: 12px; }
 #shopify-section-{{ section.id }} .auth-card label.login { display: inline; white-space: normal; }
 #shopify-section-{{ section.id }} .auth-card label.login input[type="checkbox"] { margin-right: 8px; margin-top: 2px; }
 #shopify-section-{{ section.id }} .auth-card .opposing-items { align-items: center; }
 #shopify-section-{{ section.id }} .auth-card .create-account-link { margin-top: 12px; }
+#shopify-section-{{ section.id }} .account-form .text-center { margin-bottom: 16px; }
+#shopify-section-{{ section.id }} .account-form .mt-4.mb-4 { margin: 16px 0 !important; }
+#shopify-section-{{ section.id }} .consent-module { margin-top: 6px; }
+#shopify-section-{{ section.id }} .consent-module .input-row { margin-bottom: 12px; }
+#shopify-section-{{ section.id }} .consent-module .input-row label.login { position: static !important; padding: 0 !important; background: transparent !important; font-size: 14px; }
+#shopify-section-{{ section.id }} .input-hint { font-size: 13px; margin-top: 6px; }
+#shopify-section-{{ section.id }} .input-hint.error { color: #b00020; }
+#shopify-section-{{ section.id }} .auth-card .input-row.md3-outlined { margin-bottom: 26px; }
+#shopify-section-{{ section.id }} .auth-card .input-row.md3-outlined label.login { font-weight: 500; position: absolute; left: 16px; top: calc(50% + 1px); transform: translateY(-50%); font-size: 14px; padding: 0 6px; border-radius: 4px; background: transparent; color: rgba(0,0,0,0.78); z-index: 2; transition: all .15s ease; pointer-events: none; }
+#shopify-section-{{ section.id }} .auth-card .input-row.md3-outlined.has-icon label.login { left: 16px; }
+#shopify-section-{{ section.id }} .auth-card .input-row.md3-outlined.active label.login { top: 0; transform: translateY(-50%); font-size: 12px; background: rgb(var(--body-bg-color)); }
+#shopify-section-{{ section.id }} .auth-card .input-row.md3-outlined .input-with-icon input.large,
+#shopify-section-{{ section.id }} .auth-card .input-row.md3-outlined .text-over-input input.large { width: 100%; border: 1px solid #e5e7eb; border-radius: 12px; padding: 16px 12px; background: #ffffff; transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease; }
+#shopify-section-{{ section.id }} .auth-card .input-row.md3-outlined.active .input-with-icon input.large,
+#shopify-section-{{ section.id }} .auth-card .input-row.md3-outlined.active .text-over-input input.large { border-color: rgba(0,0,0,0.38); background: transparent; }
+#shopify-section-{{ section.id }} .auth-card .input-row.md3-outlined .input-with-icon input.large { padding-left: 12px; }
+#shopify-section-{{ section.id }} .auth-card .input-row.md3-outlined .text-over-input input.large { padding-left: 12px; }
+#shopify-section-{{ section.id }} .auth-card .input-row.md3-outlined.active input.large:hover { border-color: rgba(0,0,0,0.54); }
+#shopify-section-{{ section.id }} .auth-card .input-row.md3-outlined input.large:focus { border-color: rgb(var(--link-color)); box-shadow: 0 0 0 2px rgba(var(--link-color) / 0.18); outline: none; }
+#shopify-section-{{ section.id }} .auth-card .input-row.md3-outlined input.large.input-error { border-color: #b00020; box-shadow: 0 0 0 2px rgba(176,0,32,0.14); background-color: transparent; }
 @media (max-width: 767.98px) { #shopify-section-{{ section.id }} .auth-card { padding: 18px; border-radius: 10px; } }
 </style>
 <script type="text/javascript">
@@ -178,12 +216,73 @@
   document.addEventListener('DOMContentLoaded', function(){
     var input = document.getElementById('customer_password');
     var btn = input ? input.parentNode.querySelector('.password-toggle[data-target="customer_password"]') : null;
-    if (!input || !btn) return;
-    btn.addEventListener('click', function(){
-      var visible = input.type === 'text';
-      input.type = visible ? 'password' : 'text';
-      btn.setAttribute('aria-pressed', input.type === 'password' ? 'true' : 'false');
-    });
+    if (input && btn) {
+      btn.addEventListener('click', function(){
+        var visible = input.type === 'text';
+        input.type = visible ? 'password' : 'text';
+        btn.setAttribute('aria-pressed', input.type === 'password' ? 'true' : 'false');
+      });
+    }
+    var hint = document.getElementById('login_password_hint');
+    function updateHint(){
+      if (!input || !hint) return;
+      var len = input.value.length;
+      if (len > 0 && len < 8) { hint.setAttribute('aria-hidden','false'); hint.style.display='block'; input.classList.add('input-error'); }
+      else { hint.setAttribute('aria-hidden','true'); hint.style.display='none'; input.classList.remove('input-error'); }
+    }
+    if (input) {
+      input.addEventListener('input', updateHint);
+      updateHint();
+    }
+    var emailInput = document.getElementById('customer_email');
+    var emailHint = document.getElementById('login_email_hint');
+    function validateEmail(v){
+      var s = String(v||'').trim();
+      if (s.length === 0) return true;
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s);
+    }
+    function updateEmail(){
+      if (!emailInput || !emailHint) return;
+      var ok = validateEmail(emailInput.value);
+      if (!ok) { emailHint.setAttribute('aria-hidden','false'); emailHint.style.display='block'; emailInput.classList.add('input-error'); }
+      else { emailHint.setAttribute('aria-hidden','true'); emailHint.style.display='none'; emailInput.classList.remove('input-error'); }
+    }
+    if (emailInput) {
+      emailInput.addEventListener('input', updateEmail);
+      emailInput.addEventListener('blur', updateEmail);
+      updateEmail();
+    }
+    function md3Bind(row){
+      var inp = row.querySelector('input.large');
+      if (!inp) return;
+      function refresh(){
+        var has = !!inp.value && inp.value.length > 0;
+        if (has || document.activeElement === inp) row.classList.add('active'); else row.classList.remove('active');
+      }
+      inp.addEventListener('focus', refresh);
+      inp.addEventListener('blur', refresh);
+      inp.addEventListener('input', refresh);
+      refresh();
+    }
+    function bindClear(row){
+      var inp = row.querySelector('input.large');
+      var clr = row.querySelector('.clear-input');
+      if (!inp || !clr) return;
+      function toggle(){
+        if (inp.value && inp.value.length > 0) clr.classList.add('visible'); else clr.classList.remove('visible');
+      }
+      clr.addEventListener('click', function(){
+        inp.value = '';
+        inp.dispatchEvent(new Event('input', { bubbles: true }));
+        inp.focus();
+        toggle();
+      });
+      inp.addEventListener('input', toggle);
+      inp.addEventListener('focus', toggle);
+      inp.addEventListener('blur', toggle);
+      toggle();
+    }
+    document.querySelectorAll('#shopify-section-{{ section.id }} .auth-card .input-row.md3-outlined').forEach(function(row){ md3Bind(row); bindClear(row); });
   });
 </script>
 
