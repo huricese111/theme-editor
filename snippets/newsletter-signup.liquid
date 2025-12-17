@@ -1,4 +1,10 @@
 {% assign not_null_form_id = id | default: 'contact_form' %}
+{%- liquid
+  assign is_footer_newsletter = false
+  if not_null_form_id contains 'footer_' or tags contains 'footer'
+    assign is_footer_newsletter = true
+  endif
+-%}
 <div class="signup-form">
   {% form 'customer', id: not_null_form_id %}
     {%- assign form_errors_id = section.id | append: '-error' -%}
@@ -16,7 +22,7 @@
           aria-invalid="true"
           aria-describedby="{{ form_errors_id }}"
         {%- endif %}
-        required />
+        {% unless is_footer_newsletter %}required{% endunless %} />
       <button class="btn btn--{{ block.settings.button_style }} signup-form__button" type="submit">
         {{- 'newsletter.button_label' | t -}}
       </button>
@@ -148,6 +154,36 @@
         closeNewsletterModal();
       }
     });
+
+    if ({{ is_footer_newsletter | json }}) {
+      const footerForm = document.getElementById({{ not_null_form_id | json }});
+      if (footerForm) {
+        footerForm.addEventListener(
+          'submit',
+          function(e) {
+            const emailInput = footerForm.querySelector('input[name="contact[email]"]');
+            const emailValue = String(emailInput && emailInput.value ? emailInput.value : '').trim();
+            if (!emailValue) {
+              e.preventDefault();
+              e.stopImmediatePropagation();
+
+              const fieldError = footerForm.querySelector('.error-message');
+              if (fieldError) fieldError.remove();
+
+              const formError = footerForm.querySelector('.form-error-message');
+              if (formError) formError.remove();
+
+              if (emailInput) {
+                emailInput.classList.remove('field-error');
+                emailInput.classList.remove('input-error');
+                emailInput.setAttribute('aria-invalid', 'false');
+              }
+            }
+          },
+          true
+        );
+      }
+    }
   });
   
   function openNewsletterModal() {
