@@ -124,6 +124,16 @@
 
 {% assign current_lang = request.locale.iso_code %}
 
+{%- liquid
+  assign footer_menu_block_total = 0
+  for footer_block in section.blocks
+    if footer_block.type == 'menu' and footer_block.settings.menu != blank
+      assign footer_menu_block_total = footer_menu_block_total | plus: 1
+    endif
+  endfor
+  assign footer_menu_block_index = 0
+-%}
+
 {% if section.blocks != blank %}
   <div class="container container--no-max section-footer__row-container">
     <div class="section-footer__row section-footer__row--blocks" data-num-blocks="{{ section.blocks.size }}">
@@ -157,6 +167,7 @@
               {{ block.shopify_attributes }}
             >
               {% if block.settings.menu != blank %}
+                {%- assign footer_menu_block_index = footer_menu_block_index | plus: 1 -%}
                 <button
                   class="footer-menu-toggle"
                   aria-expanded="false"
@@ -200,6 +211,30 @@
                       </a>
                     </li>
                   {% endfor %}
+                  {% if footer_menu_block_index == footer_menu_block_total %}
+                    <li class="section-footer__menu-cookie-preferences">
+                      {%- liquid
+                        assign lang = request.locale.iso_code
+                        case lang
+                          when 'de'
+                            assign cookie_preferences_label = 'Cookie-Einstellungen'
+                          when 'fr'
+                            assign cookie_preferences_label = 'Gérer les cookies'
+                          when 'fi'
+                            assign cookie_preferences_label = 'Evästeasetukset'
+                          else
+                            assign cookie_preferences_label = 'Cookie Preferences'
+                        endcase
+                      -%}
+                      <div class="section-footer__menu-cookie-preferences-divider" aria-hidden="true"></div>
+                      <a
+                        href="#reopenBanner"
+                        class="section-footer__menu-cookie-preferences-link heading-font h6 no-wrap"
+                      >
+                        {{ cookie_preferences_label }}
+                      </a>
+                    </li>
+                  {% endif %}
                 </ul>
               {% endif %}
             </div>
@@ -362,22 +397,6 @@
               </li>
             {% endfor %}
           </ul>
-          {%- liquid
-            assign lang = request.locale.iso_code
-            case lang
-              when 'de'
-                assign privacy_settings_label = 'Datenschutzeinstellungen'
-              when 'fr'
-                assign privacy_settings_label = 'Paramètres de confidentialité'
-              when 'fi'
-                assign privacy_settings_label = 'Tietosuoja-asetukset'
-              else
-                assign privacy_settings_label = 'Privacy Settings'
-            endcase
-          -%} 
-          <div class="section-footer__privacy-settings">
-            <a href="#reopenBanner" class="footer-privacy-btn">Cookie Preferences</a>
-          </div>
         </div>
       {% endif %}
     </div>
@@ -505,8 +524,23 @@
     white-space: nowrap;
     min-width: auto;
   }
-  .section-footer__privacy-settings { text-align: right; }
-  .section-footer__privacy-settings .footer-privacy-btn { font-size: 16px; line-height: 1.7; padding: 10px 0; background: none; border: none; color: inherit; text-decoration: underline; text-underline-offset: 2px; cursor: pointer; display: inline-block; }
+
+  .section-footer__menu-cookie-preferences-divider {
+    border-top: 1px solid rgb(154 154 154 / 30%);
+    margin: 12px 0 10px;
+    width: 100%;
+  }
+
+  .section-footer__menu-cookie-preferences-link {
+    color: inherit;
+    display: inline-block;
+    text-decoration: none;
+  }
+
+  .section-footer__menu-cookie-preferences-link:hover {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
   
   @media (max-width: 768px) {
     .section-footer__row--blocks .section-footer__row__col:not(:last-child) {
