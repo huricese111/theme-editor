@@ -2957,8 +2957,19 @@ function initEnhancedFormMd3(scope) {
         clearBtn.type = 'button';
         clearBtn.className = 'clear-input';
         clearBtn.setAttribute('aria-label', 'Clear');
-        clearBtn.textContent = '×';
         col.appendChild(clearBtn);
+      }
+
+      const sectionEl = col.closest('.enhanced-form-section');
+      const clearIconTemplate = sectionEl
+        ? sectionEl.querySelector('template[data-clear-icon-template="close"]')
+        : null;
+      const clearIconSvg = clearIconTemplate ? clearIconTemplate.content.querySelector('svg') : null;
+      if (clearIconSvg && !clearBtn.querySelector('svg')) {
+        clearBtn.innerHTML = '';
+        clearBtn.appendChild(clearIconSvg.cloneNode(true));
+      } else if (!clearIconSvg && !clearBtn.querySelector('svg') && clearBtn.textContent !== '×') {
+        clearBtn.textContent = '×';
       }
 
       const toggle = () => {

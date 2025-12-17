@@ -55,7 +55,9 @@
                   size="30"
                   autocomplete="given-name"
                 >
-                <button type="button" class="clear-input" data-target="first_name" aria-label="Clear">×</button>
+                <button type="button" class="clear-input" data-target="first_name" aria-label="Clear">
+                  {% render 'icon', icon: 'close', size: 'extra-small' %}
+                </button>
               </div>
             </div>
 
@@ -71,7 +73,9 @@
                   size="30"
                   autocomplete="family-name"
                 >
-                <button type="button" class="clear-input" data-target="last_name" aria-label="Clear">×</button>
+                <button type="button" class="clear-input" data-target="last_name" aria-label="Clear">
+                  {% render 'icon', icon: 'close', size: 'extra-small' %}
+                </button>
               </div>
             </div>
 
@@ -89,7 +93,9 @@
                   spellcheck="false"
                   autocapitalize="off"
                 >
-                <button type="button" class="clear-input" data-target="email" aria-label="Clear">×</button>
+                <button type="button" class="clear-input" data-target="email" aria-label="Clear">
+                  {% render 'icon', icon: 'close', size: 'extra-small' %}
+                </button>
               </div>
               <div class="input-hint error" id="register_email_hint" aria-hidden="true">{{ email_hint_invalid }}</div>
             </div>
@@ -106,7 +112,9 @@
                   size="30"
                   autocomplete="new-password"
                 >
-                <button type="button" class="clear-input" data-target="password" aria-label="Clear">×</button>
+                <button type="button" class="clear-input" data-target="password" aria-label="Clear">
+                  {% render 'icon', icon: 'close', size: 'extra-small' %}
+                </button>
                 <button
                   type="button"
                   class="password-toggle"
@@ -166,6 +174,7 @@
   #shopify-section-{{ section.id }} .auth-card .password-toggle[aria-pressed="true"]::after { content: ""; position: absolute; width: 20px; border-top: 2px solid currentColor; transform: rotate(-45deg); }
   #shopify-section-{{ section.id }} .text-over-input input.large { padding-left: 12px; }
   #shopify-section-{{ section.id }} .auth-card .clear-input { position: absolute; top: 50%; right: 14px; transform: translateY(-50%); width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 999px; border: 1px solid rgba(0,0,0,0.26); color: rgba(0,0,0,0.68); background: rgb(var(--body-bg-color)); cursor: pointer; opacity: 0; pointer-events: none; transition: opacity .15s ease, background-color .15s ease, border-color .15s ease; }
+  #shopify-section-{{ section.id }} .auth-card .clear-input .icon { pointer-events: none; }
   #shopify-section-{{ section.id }} .auth-card .clear-input:hover { background: rgba(0,0,0,0.06); border-color: rgba(0,0,0,0.38); }
   #shopify-section-{{ section.id }} .auth-card .input-row.md3-outlined.active .clear-input,
   #shopify-section-{{ section.id }} .auth-card .clear-input.visible { opacity: 1; pointer-events: auto; }
