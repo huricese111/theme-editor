@@ -94,6 +94,11 @@ if (!customElements.get('custom-select')) {
       if (this.listboxOpen) {
         this.handleKeyboardNav(evt);
       } else if (evt.key === 'ArrowUp' || evt.key === 'ArrowDown' || evt.key === ' ') {
+        const col = this.closest('.column.md3-outlined');
+        if (col) {
+          col.dataset.md3Touched = '1';
+          col.classList.remove('md3-fallback');
+        }
         evt.preventDefault();
         this.showListbox();
       }
@@ -105,6 +110,11 @@ if (!customElements.get('custom-select')) {
      */
     handleMousedown(evt) {
       if (!this.listboxOpen && evt.button === 0) {
+        const col = this.closest('.column.md3-outlined');
+        if (col) {
+          col.dataset.md3Touched = '1';
+          col.classList.remove('md3-fallback');
+        }
         this.showListbox();
       }
     }
@@ -142,7 +152,7 @@ if (!customElements.get('custom-select')) {
      */
     handleBlur() {
       if (this.listboxOpen) {
-        this.hideListbox();
+        this.hideListbox({ restoreFocus: false });
       }
     }
 
@@ -241,7 +251,8 @@ if (!customElements.get('custom-select')) {
     /**
      * Hides the options list.
      */
-    hideListbox() {
+    hideListbox(options) {
+      const { restoreFocus = true } = options || {};
       if (!this.listboxOpen) return;
 
       this.listbox.hidden = true;
@@ -256,8 +267,22 @@ if (!customElements.get('custom-select')) {
         this.focusedOption = null;
       }
 
-      this.button.focus();
+      if (restoreFocus) this.button.focus();
       this.removeListboxOpenListeners();
+
+      const col = this.closest('.column.md3-outlined');
+      if (col) {
+        col.dataset.md3Touched = '1';
+
+        const nativeValue = ((this.nativeSelect && this.nativeSelect.value) || '').trim();
+        const focused = col.matches(':focus-within');
+
+        if (nativeValue || focused) col.classList.add('md3-active');
+        else col.classList.remove('md3-active');
+
+        if (!nativeValue && !focused) col.classList.add('md3-fallback');
+        else col.classList.remove('md3-fallback');
+      }
     }
 
     /**

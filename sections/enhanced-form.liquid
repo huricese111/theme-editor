@@ -168,12 +168,16 @@
             {% for block in section.blocks %}
               {%- liquid
                 assign md3 = false
+                assign md3_multiline = false
                 case block.type
-                  when 'first_name_input','last_name_input','email_input','phone_input','company_input','employer_id_input','company_code_input','user_id_input','street_address_input','address_line_2_input','city_input','state_province_input','postal_code_input','number_input','url_input','message_input','country_dropdown','delivery_type_dropdown','multilevel_dropdown','date_input','time_input','datetime_input'
+                  when 'first_name_input','last_name_input','email_input','phone_input','company_input','employer_id_input','company_code_input','user_id_input','street_address_input','address_line_2_input','city_input','state_province_input','postal_code_input','building_number_input','number_input','url_input','message_input','country_dropdown','delivery_type_dropdown','multilevel_dropdown','date_input','time_input','datetime_input'
                     assign md3 = true
                 endcase
+                if block.type == 'message_input'
+                  assign md3_multiline = true
+                endif
               -%}
-              <div class="column column--{% if block.settings.half_width %}half{% else %}full{% endif %}{% if md3 %} md3-outlined{% endif %}" {{ block.shopify_attributes }}>
+              <div class="column column--{% if block.settings.half_width %}half{% else %}full{% endif %}{% if md3 %} md3-outlined{% endif %}{% if md3_multiline %} md3-multiline{% endif %}" {{ block.shopify_attributes }}>
                 {% case block.type %}
                   {% when 'first_name_input' %}
                     {%- liquid
@@ -622,7 +626,7 @@
                         id: input_id,
                         hide_label: true,
                         option_values: custom_options,
-                        selected_value: custom_options.first,
+                        selected_value: '',
                         include_native: true,
                         native_name: input_name
                       %}
@@ -655,7 +659,7 @@
                         id: input_id,
                         hide_label: true,
                         option_values: custom_options,
-                        selected_value: custom_options.first,
+                        selected_value: '',
                         include_native: true,
                         native_name: input_name
                       %}
@@ -725,7 +729,7 @@
                         id: input_id,
                         hide_label: true,
                         option_values: custom_options,
-                        selected_value: custom_options.first,
+                        selected_value: '',
                         include_native: true,
                         native_name: input_name
                       %}
@@ -1394,9 +1398,11 @@
 
 #enhanced-form-{{ section.id }} .enhanced-form-container .column { position: relative; margin-bottom: 26px; }
 #enhanced-form-{{ section.id }} .column.md3-outlined { position: relative; border-radius: 12px; overflow: visible; }
-#enhanced-form-{{ section.id }} .column.md3-outlined > label.enhanced-form-label { font-weight: 500; position: absolute !important; display: inline-block !important; left: 16px; top: calc(50% + 1px); transform: translateY(-50%); font-size: 14px; padding: 0 6px; border-radius: 4px; margin: 0 !important; background: transparent; color: rgba(0,0,0,0.68); z-index: 2; transition: all .15s ease; pointer-events: none; }
-#enhanced-form-{{ section.id }} .column.md3-outlined .enhanced-form-label { font-weight: 500; position: absolute !important; display: inline-block !important; left: 16px; top: calc(50% + 1px); transform: translateY(-50%); font-size: 14px; padding: 0 6px; border-radius: 4px; margin: 0 !important; background: transparent; color: rgba(0,0,0,0.68); z-index: 2; transition: all .15s ease; pointer-events: none; }
-#enhanced-form-{{ section.id }} .column.md3-outlined.md3-active .enhanced-form-label { top: 0 !important; transform: translateY(-50%) !important; font-size: 12px; background: rgb(var(--body-bg-color)); }
+#enhanced-form-{{ section.id }} .column.md3-outlined .enhanced-form-label { font-weight: 500; line-height: 1.25; position: absolute !important; display: inline-block !important; left: 16px; margin: 0 !important; font-size: 14px; padding: 0 6px; border-radius: 4px; background: transparent; color: rgba(0,0,0,0.68); z-index: 2; transition: all .15s ease; pointer-events: none; }
+#enhanced-form-{{ section.id }} .column.md3-outlined:not(.md3-active):not(:focus-within):not(.md3-multiline):not(.md3-fallback) .enhanced-form-label { top: 50% !important; transform: translateY(-50%) !important; font-size: 14px !important; background: transparent !important; }
+#enhanced-form-{{ section.id }} .column.md3-outlined.md3-fallback:not(.md3-active):not(:focus-within):not(.md3-multiline) .enhanced-form-label { top: 34% !important; transform: translateY(-50%) !important; font-size: 14px !important; background: transparent !important; }
+#enhanced-form-{{ section.id }} .column.md3-outlined.md3-multiline:not(.md3-active):not(:focus-within) .enhanced-form-label { top: 14px !important; transform: none !important; font-size: 14px !important; background: transparent !important; }
+#enhanced-form-{{ section.id }} .column.md3-outlined.md3-active .enhanced-form-label,
 #enhanced-form-{{ section.id }} .column.md3-outlined:focus-within .enhanced-form-label { top: 0 !important; transform: translateY(-50%) !important; font-size: 12px; background: rgb(var(--body-bg-color)); }
 #enhanced-form-{{ section.id }} .column.md3-outlined .enhanced-form-input { width: 100%; border: 1px solid #e5e7eb; border-radius: 12px; padding: 12px 12px; background: #ffffff; transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease; }
 #enhanced-form-{{ section.id }} .column.md3-outlined.md3-active .enhanced-form-input { border-color: rgba(0,0,0,0.38); background: transparent; padding-top: 18px; }
@@ -1408,17 +1414,15 @@
 #enhanced-form-{{ section.id }} .column.md3-outlined.md3-active textarea { border-color: rgba(0,0,0,0.38); background: transparent; padding-top: 18px; }
 #enhanced-form-{{ section.id }} .column.md3-outlined:focus-within textarea { border-color: rgba(0,0,0,0.38); background: transparent; padding-top: 18px; }
 #enhanced-form-{{ section.id }} .column.md3-outlined textarea:focus { border-color: rgb(var(--link-color)); box-shadow: 0 0 0 2px rgba(var(--link-color) / 0.18); outline: none; }
-#enhanced-form-{{ section.id }} .column.md3-outlined .option-selector .custom-select__btn { width: 100%; border: 1px solid #e5e7eb; border-radius: 12px; padding: 12px 12px; background: #ffffff; transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease; }
-#enhanced-form-{{ section.id }} .column.md3-outlined.md3-active .option-selector .custom-select__btn { border-color: rgba(0,0,0,0.38); background: transparent; padding-top: 18px; }
-#enhanced-form-{{ section.id }} .column.md3-outlined:focus-within .option-selector .custom-select__btn { border-color: rgba(0,0,0,0.38); background: transparent; padding-top: 18px; }
-#enhanced-form-{{ section.id }} .column.md3-outlined .option-selector .custom-select__btn:focus { border-color: rgb(var(--link-color)); box-shadow: 0 0 0 2px rgba(var(--link-color) / 0.18); outline: none; }
 #enhanced-form-{{ section.id }} .column.md3-outlined .clear-input { position: absolute; top: 50%; right: 14px; transform: translateY(-50%); width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 999px; border: 1px solid rgba(0,0,0,0.26); color: rgba(0,0,0,0.68); background: rgb(var(--body-bg-color)); cursor: pointer; opacity: 0; pointer-events: none; transition: opacity .15s ease, background-color .15s ease, border-color .15s ease; }
 #enhanced-form-{{ section.id }} .column.md3-outlined .clear-input:hover { background: rgba(0,0,0,0.06); border-color: rgba(0,0,0,0.38); }
 #enhanced-form-{{ section.id }} .column.md3-outlined .clear-input.visible { opacity: 1; pointer-events: auto; }
 
-#enhanced-form-{{ section.id }} .multilevel-dropdown-wrapper { position: relative; }
-#enhanced-form-{{ section.id }} .multilevel-dropdown-wrapper .current-selection { width: 100%; border: 1px solid #e5e7eb; border-radius: 12px; padding: 12px 12px; background: #ffffff; display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 44px; cursor: pointer; transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease; }
+#enhanced-form-{{ section.id }} .multilevel-dropdown-wrapper { position: relative; margin-bottom: 0; }
+#enhanced-form-{{ section.id }} .multilevel-dropdown-wrapper .current-selection { width: 100%; border: 1px solid #e5e7eb; border-radius: 12px; padding: 12px 12px; background: #ffffff; display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 44px; cursor: pointer; user-select: none; box-shadow: none; transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease; }
+#enhanced-form-{{ section.id }} .multilevel-dropdown-wrapper .current-selection:hover { border-color: rgba(0,0,0,0.38); box-shadow: none; }
 #enhanced-form-{{ section.id }} .multilevel-dropdown-wrapper .current-selection:focus { outline: none; border-color: rgb(var(--link-color)); box-shadow: 0 0 0 2px rgba(var(--link-color) / 0.18); }
+#enhanced-form-{{ section.id }} .multilevel-dropdown-wrapper .current-selection.active { box-shadow: none; }
 #enhanced-form-{{ section.id }} .column.md3-outlined.md3-active .multilevel-dropdown-wrapper .current-selection,
 #enhanced-form-{{ section.id }} .column.md3-outlined:focus-within .multilevel-dropdown-wrapper .current-selection { border-color: rgba(0,0,0,0.38); background: transparent; padding-top: 18px; }
 #enhanced-form-{{ section.id }} .multilevel-dropdown-wrapper .current-selection.dropdown-error { border-color: #b00020 !important; box-shadow: 0 0 0 2px rgba(176,0,32,0.14) !important; background-color: transparent !important; }

@@ -178,11 +178,64 @@ class FiveLevelDropdown {
       container.appendChild(column);
     }
   }
+
+  normalizeSelectedPath() {
+    this.selectedPath = (this.selectedPath || []).filter((item) => typeof item === 'string' && item.trim() !== '');
+  }
+
+  isDropdownOpen() {
+    if (!this.panel) return false;
+    return this.panel.style.display !== 'none' && this.panel.style.display !== '';
+  }
+
+  setMd3Active(active) {
+    const column = this.wrapper.closest('.column');
+    if (!column) return;
+    column.classList.toggle('md3-active', Boolean(active));
+  }
+
+  setExpanded(expanded) {
+    if (!this.selectionDisplay) return;
+    this.selectionDisplay.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+  }
+
+  setSelectionText(text) {
+    if (!this.selectionDisplay) return;
+
+    const selectionTextEl = this.selectionDisplay.querySelector('.selection-text');
+    if (selectionTextEl) {
+      selectionTextEl.textContent = text || '';
+      return;
+    }
+
+    const placeholder = this.selectionDisplay.querySelector('.placeholder');
+    if (!placeholder) return;
+
+    if (text) {
+      placeholder.textContent = text;
+      placeholder.classList.add('has-selection');
+    } else {
+      const originalPlaceholder = this.wrapper.querySelector('.current-selection')?.dataset?.placeholder || 'Select an option';
+      placeholder.textContent = originalPlaceholder;
+      placeholder.classList.remove('has-selection');
+    }
+  }
   
   bindEvents() {
     // Toggle dropdown
     this.selectionDisplay.addEventListener('click', () => {
       this.toggleDropdown();
+    });
+
+    this.selectionDisplay.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        this.toggleDropdown();
+      }
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        this.closeDropdown();
+      }
     });
     
     // Close on outside click
@@ -238,6 +291,8 @@ class FiveLevelDropdown {
   // Modify openDropdown method
   openDropdown() {
     this.selectionDisplay.classList.add('active');
+    this.setExpanded(true);
+    this.setMd3Active(true);
     
     if (this.isMobile()) {
       this.panel.style.display = 'block';
@@ -898,35 +953,24 @@ class FiveLevelDropdown {
   
   // Update selection display
   updateSelectionDisplay() {
-    if (this.selectedPath.length > 0) {
-      const selectedText = this.selectedPath.join(' > ');
-      const placeholder = this.selectionDisplay.querySelector('.placeholder');
-      if (placeholder) {
-        placeholder.textContent = selectedText;
-        placeholder.classList.add('has-selection');
-      }
-      
-      // Update hidden input
-      if (this.hiddenInput) {
-        this.hiddenInput.value = this.selectedPath.join('|');
-      }
+    this.normalizeSelectedPath();
+
+    const hasSelection = this.selectedPath.length > 0;
+    const selectedText = hasSelection ? this.selectedPath.join(' > ') : '';
+    this.setSelectionText(selectedText);
+
+    if (this.hiddenInput) {
+      this.hiddenInput.value = hasSelection ? this.selectedPath.join('|') : '';
     }
+
+    this.setMd3Active(hasSelection || this.isDropdownOpen());
   }
   
   // Modify clearSelection method to support mobile
   clearSelection() {
     this.selectedPath = [];
-    
-    const placeholder = this.selectionDisplay.querySelector('.placeholder');
-    if (placeholder) {
-      const originalPlaceholder = this.wrapper.querySelector('.current-selection').dataset.placeholder || 'Select an option';
-      placeholder.textContent = originalPlaceholder;
-      placeholder.classList.remove('has-selection');
-    }
-    
-    if (this.hiddenInput) {
-      this.hiddenInput.value = '';
-    }
+
+    this.updateSelectionDisplay();
     
     if (this.isMobile()) {
       // 重置到第一级显示
@@ -1002,6 +1046,8 @@ class FiveLevelDropdown {
   closeDropdown() {
     this.panel.style.display = 'none';
     this.selectionDisplay.classList.remove('active');
+    this.setExpanded(false);
+    this.setMd3Active(this.selectedPath.length > 0);
     
     // 移除点击外部关闭事件监听器
     if (this.outsideClickHandler) {
@@ -1261,15 +1307,12 @@ class FiveLevelDropdown {
   }
   
   finalizeSelection() {
+    this.normalizeSelectedPath();
     const selectedText = this.selectedPath.join(' > ');
     const selectedValue = this.selectedPath.join('|');
-    
-    // 更新显示文本
-    const placeholder = this.selectionDisplay.querySelector('.placeholder');
-    if (placeholder) {
-      placeholder.textContent = selectedText;
-      placeholder.classList.add('has-selection');
-    }
+
+    this.setSelectionText(selectedText);
+    this.setMd3Active(true);
     
     // 更新隐藏输入的值
     if (this.hiddenInput) {
@@ -1325,24 +1368,14 @@ class FiveLevelDropdown {
     
     // Truncate selectedPath to the target level
     this.selectedPath = this.selectedPath.slice(0, targetLevel);
+    this.normalizeSelectedPath();
     
     // Update hidden input value
     if (this.hiddenInput) {
       this.hiddenInput.value = this.selectedPath.join('|');
     }
     
-    // Update display text
-    const placeholder = this.selectionDisplay.querySelector('.placeholder');
-    if (placeholder) {
-      if (this.selectedPath.length > 0) {
-        placeholder.textContent = this.selectedPath.join(' > ');
-        placeholder.classList.add('has-selection');
-      } else {
-        const originalPlaceholder = this.wrapper.querySelector('.current-selection').dataset.placeholder || 'Select an option';
-        placeholder.textContent = originalPlaceholder;
-        placeholder.classList.remove('has-selection');
-      }
-    }
+    this.updateSelectionDisplay();
     
     // Show the appropriate level
     this.currentLevel = targetLevel;
@@ -1374,19 +1407,7 @@ class FiveLevelDropdown {
     if (!selectedPath || selectedPath.length === 0) return;
     
     this.selectedPath = selectedPath;
-    
-    // 更新显示文本
-    const selectedText = selectedPath.join(' > ');
-    const placeholder = this.selectionDisplay.querySelector('.placeholder');
-    if (placeholder) {
-      placeholder.textContent = selectedText;
-      placeholder.classList.add('has-selection');
-    }
-    
-    // 更新隐藏输入的值
-    if (this.hiddenInput) {
-      this.hiddenInput.value = selectedPath.join('|');
-    }
+    this.updateSelectionDisplay();
     
     // 更新面包屑
     this.updateBreadcrumb();
@@ -2733,35 +2754,88 @@ function initEnhancedFormMd3(scope) {
         if (!nativeCustomSelect) nativeCustomSelect = col.querySelector('.custom-select__native');
       }
 
+      const customSelectTextEl = isCustomSelect
+        ? inputEl.querySelector('span.text-start') || inputEl.querySelector('span')
+        : null;
+
       const hasValue = () => {
         if (isText || isTextarea || isSelect || isCustomDate) return !!(inputEl.value || '').trim();
         if (isCustomSelect) return !!((nativeCustomSelect && nativeCustomSelect.value) || '').trim();
         return false;
       };
 
+      const supportsFallback = !col.classList.contains('md3-multiline');
+      const isTouched = () => col.dataset.md3Touched === '1';
+
       const refresh = () => {
-        const focused = document.activeElement === inputEl;
+        const focused = col.matches(':focus-within');
         if (hasValue() || focused) col.classList.add('md3-active');
         else col.classList.remove('md3-active');
+
+        if (isCustomSelect && customSelectTextEl) {
+          const v = ((nativeCustomSelect && nativeCustomSelect.value) || '').trim();
+          if (!v) {
+            customSelectTextEl.textContent = '';
+          } else if (nativeCustomSelect) {
+            const opt = nativeCustomSelect.options && nativeCustomSelect.options[nativeCustomSelect.selectedIndex];
+            const label = opt ? (opt.textContent || '').trim() : '';
+            if (label) customSelectTextEl.textContent = label;
+          }
+        }
+      };
+
+      const applyFallback = () => {
+        if (!supportsFallback) return;
+        if (!isTouched()) return;
+        if (!hasValue() && !col.matches(':focus-within')) col.classList.add('md3-fallback');
+        else col.classList.remove('md3-fallback');
+      };
+
+      const handleFocus = () => {
+        col.dataset.md3Touched = '1';
+        if (supportsFallback) col.classList.remove('md3-fallback');
+        refresh();
+      };
+
+      const handleBlur = () => {
+        setTimeout(() => {
+          applyFallback();
+          refresh();
+        }, 0);
       };
 
       if (isCustomSelect) {
-        if (nativeCustomSelect) nativeCustomSelect.addEventListener('change', refresh);
-        inputEl.addEventListener('focus', refresh);
-        inputEl.addEventListener('blur', refresh);
+        if (nativeCustomSelect)
+          nativeCustomSelect.addEventListener('change', () => {
+            if (supportsFallback) col.classList.remove('md3-fallback');
+            refresh();
+          });
+        inputEl.addEventListener('focus', handleFocus);
+        inputEl.addEventListener('blur', handleBlur);
       } else if (isSelect) {
-        inputEl.addEventListener('change', refresh);
-        inputEl.addEventListener('focus', refresh);
-        inputEl.addEventListener('blur', refresh);
+        inputEl.addEventListener('change', () => {
+          if (supportsFallback) col.classList.remove('md3-fallback');
+          refresh();
+        });
+        inputEl.addEventListener('focus', handleFocus);
+        inputEl.addEventListener('blur', handleBlur);
       } else {
-        inputEl.addEventListener('focus', refresh);
-        inputEl.addEventListener('blur', refresh);
-        inputEl.addEventListener('input', refresh);
-        inputEl.addEventListener('change', refresh);
+        inputEl.addEventListener('focus', handleFocus);
+        inputEl.addEventListener('blur', handleBlur);
+        inputEl.addEventListener('input', () => {
+          if (supportsFallback) col.classList.remove('md3-fallback');
+          refresh();
+        });
+        inputEl.addEventListener('change', () => {
+          if (supportsFallback) col.classList.remove('md3-fallback');
+          refresh();
+        });
       }
 
       refresh();
-      setTimeout(refresh, 0);
+      setTimeout(() => {
+        refresh();
+      }, 0);
 
       if (!isText) return;
       let clearBtn = col.querySelector('.clear-input');
