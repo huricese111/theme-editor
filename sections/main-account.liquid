@@ -137,7 +137,8 @@
   #shopify-section-{{ section.id }} .account-header__title {
     margin: 0;
     text-align: left;
-    font-size: clamp(24px, 2.2vw, 30px);
+    font-size: clamp(26px, 2.6vw, 32px);
+    font-weight: 600;
   }
 
   #shopify-section-{{ section.id }} .account-header__logout {
@@ -202,10 +203,11 @@
 
   #shopify-section-{{ section.id }} .account-profile__address p {
     margin: 0;
+    line-height: 1.6;
   }
 
   #shopify-section-{{ section.id }} .account-profile__address p + p {
-    margin-top: 4px;
+    margin-top: 2px;
   }
 
   #shopify-section-{{ section.id }} .account-profile__addresses-link {
@@ -232,9 +234,9 @@
     font-size: 14px;
     line-height: 1.4;
     vertical-align: middle;
-    letter-spacing: 0.03em;
-    color: rgb(var(--text-2));
-    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: rgb(var(--heading-color));
+    font-weight: 600;
     border-bottom: 1px solid rgb(var(--text-color) / var(--divider-opacity));
   }
 
@@ -242,10 +244,15 @@
     padding: 14px 0;
     border-bottom: 1px solid rgb(var(--text-color) / var(--divider-opacity));
     font-size: 14px;
+    transition: background-color 0.16s ease;
   }
 
   #shopify-section-{{ section.id }} .account-card--orders tbody tr:last-child td {
     border-bottom-color: transparent;
+  }
+
+  #shopify-section-{{ section.id }} .account-card--orders tbody tr:hover td {
+    background-color: rgba(15, 23, 42, 0.02);
   }
 
   #shopify-section-{{ section.id }} .account-card--orders .responsive-table__cell-head a {
