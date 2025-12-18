@@ -11132,7 +11132,6 @@ label.checkbox-label input {
 }
 
 #customer_sidebar {
-  width: 33%;
   float: left;
 }
 
@@ -11143,7 +11142,6 @@ label.checkbox-label input {
 }
 
 #customer_orders {
-  width: 60%;
   float: right;
 }
 
