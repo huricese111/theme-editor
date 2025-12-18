@@ -2081,7 +2081,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   
   // 在页面加载时保存表单数据
-  const contactForm = document.querySelector('form[action*="contact"]');
+  const contactForm = document.querySelector('#enhanced-contact-form') || document.querySelector('form[action*="contact"]');
   let savedFormData = {};
   
   if (contactForm) {
@@ -2147,6 +2147,12 @@ document.addEventListener('DOMContentLoaded', function() {
       // 先进行表单验证
       if (!validateForm(contactForm)) {
         return; // 如果验证失败，不提交表单
+      }
+
+      const legalConsent = contactForm.querySelector('#legal_consent');
+      if (legalConsent && !legalConsent.checked) {
+        setConsentAlert(contactForm, true);
+        return;
       }
       
       // 保存表单数据
@@ -2280,6 +2286,19 @@ function validateEmailFieldLoose(field) {
   }
 
   return true;
+}
+
+function setConsentAlert(form, visible) {
+  if (!form) return;
+  const node = form.querySelector('#consent_alert');
+  if (!node) return;
+  if (visible) {
+    node.classList.add('visible');
+    node.setAttribute('aria-hidden', 'false');
+  } else {
+    node.classList.remove('visible');
+    node.setAttribute('aria-hidden', 'true');
+  }
 }
 
 function initFormValidation() {
@@ -2533,6 +2552,15 @@ function validateField(field) {
   const fieldType = field.type;
   const fieldName = field.name;
   if (fieldType === 'checkbox') {
+    if (field.id === 'legal_consent' || fieldName === 'legal_consent') {
+      const form = field.closest('form');
+      if (!field.checked) {
+        setConsentAlert(form, true);
+        return false;
+      }
+      setConsentAlert(form, false);
+      return true;
+    }
     if (!field.checked) {
       showFieldError(field, getLocalizedText('field_required'));
       return false;
@@ -2609,6 +2637,9 @@ function clearFieldError(field) {
   if (errorMessage) {
     errorMessage.remove();
   }
+  if (field && (field.id === 'legal_consent' || field.name === 'legal_consent')) {
+    setConsentAlert(field.closest('form'), false);
+  }
 }
 
 // 清除所有错误
@@ -2622,6 +2653,7 @@ function clearAllErrors(form) {
   errorMessages.forEach(msg => msg.remove());
   formErrors.forEach(msg => msg.remove());
   dropdownErrors.forEach(dropdown => dropdown.classList.remove('dropdown-error'));
+  setConsentAlert(form, false);
 }
 
 // 显示表单总体错误
