@@ -2,11 +2,13 @@
 <script src="{{ 'customer-addresses.js' | asset_url }}" defer></script>
 
 {% paginate customer.addresses by 10 %}
-<div class="container fully-spaced-row--small">
+<div class="container fully-spaced-row--small account-page account-addresses-page" style="--page-container-width: {{ settings.max_page_width | at_most: 1200 }}px;">
   <customer-addresses>
-    <div class="spaced-row" {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
-      <div class="lightly-spaced-row note"><a class="underline" href="{{ routes.account_url }}">{{ 'customer.account.home' | t }}</a></div>
-      <h2 class="title align-center">{{ 'customer.addresses.title' | t }}</h2>
+    <div class="account-header" {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
+      <div class="account-header__text">
+        <a class="account-header__back note underline" href="{{ routes.account_url }}">{{ 'customer.account.home' | t }}</a>
+        <h2 class="account-header__title title">{{ 'customer.addresses.title' | t }}</h2>
+      </div>
       <button class="btn btn--secondary js-add-address">{{ 'customer.addresses.add_new' | t }}</button>
     </div>
 
@@ -83,7 +85,7 @@
 
     <div class="address-tables" {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
       {% for address in customer.addresses %}
-      <div class="info-card spaced-row">
+      <div class="info-card spaced-row address-card">
         <div id="view_address_{{ address.id }}" class="customer_address">
           <h4 class="address_title">
             {{ address.street }}
@@ -193,3 +195,126 @@
   <div class="pagination-row">{% render 'pagination-control', paginate: paginate %}</div>
 </div>
 {% endpaginate %}
+
+<style>
+  #shopify-section-{{ section.id }} .account-addresses-page {
+    max-width: var(--page-container-width, 1200px);
+    margin-inline: auto;
+  }
+
+  #shopify-section-{{ section.id }} .account-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid rgb(var(--text-color) / var(--divider-opacity));
+    margin-bottom: 28px;
+  }
+
+  #shopify-section-{{ section.id }} .account-header__text {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  #shopify-section-{{ section.id }} .account-header__back {
+    font-size: 13px;
+  }
+
+  #shopify-section-{{ section.id }} .account-header__title {
+    margin: 0;
+    text-align: left;
+    font-size: clamp(22px, 2.2vw, 28px);
+    font-weight: 600;
+  }
+
+  #shopify-section-{{ section.id }} .address-tables {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+
+  #shopify-section-{{ section.id }} .address-card {
+    background: rgb(var(--body-bg-color));
+    border-radius: 12px;
+    padding: 18px 20px 20px;
+    border: 1px solid rgb(var(--text-color) / 0.06);
+    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.04);
+  }
+
+  #shopify-section-{{ section.id }} .address_title {
+    margin: 0 0 10px;
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  #shopify-section-{{ section.id }} .address_title .note {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-left: 6px;
+    color: rgb(var(--text-2));
+  }
+
+  #shopify-section-{{ section.id }} .view_address div {
+    line-height: 1.6;
+    font-size: 14px;
+  }
+
+  #shopify-section-{{ section.id }} .view_address div + div {
+    margin-top: 2px;
+  }
+
+  #shopify-section-{{ section.id }} .address-actions {
+    margin-top: 14px;
+    font-size: 13px;
+  }
+
+  #shopify-section-{{ section.id }} .address-actions a {
+    margin-right: 12px;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+  }
+
+  #shopify-section-{{ section.id }} .customer_address.account-form.edit_address.small-form,
+  #shopify-section-{{ section.id }} #add_address.customer_address.account-form.edit_address.small-form {
+    max-width: 520px;
+    margin-top: 22px;
+    padding: 20px 22px 24px;
+    border-radius: 12px;
+    border: 1px solid rgb(var(--text-color) / 0.06);
+    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.04);
+    background: rgb(var(--body-bg-color));
+  }
+
+  #shopify-section-{{ section.id }} .customer_address.account-form .input-row {
+    margin-bottom: 18px;
+  }
+
+  #shopify-section-{{ section.id }} .customer_address.account-form .input-row label {
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  #shopify-section-{{ section.id }} .customer_address.account-form .address_form {
+    width: 100%;
+  }
+
+  #shopify-section-{{ section.id }} .pagination-row {
+    margin-top: 24px;
+  }
+
+  @media (max-width: 767.98px) {
+    #shopify-section-{{ section.id }} .account-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    #shopify-section-{{ section.id }} .account-header__title {
+      font-size: 22px;
+    }
+  }
+</style>
