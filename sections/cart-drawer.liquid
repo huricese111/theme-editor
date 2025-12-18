@@ -281,12 +281,12 @@
       <div class="checkout-buttons{% if cart.items == empty %} hidden{% endif %}" data-merge-attributes="checkout-buttons">
         {% if section.settings.enable_direct_cart %}
           <a href="{{ routes.root_url | append: '/checkout' | replace: '//', '/' }}" 
-             class="btn btn--large btn--wide">
+             class="btn btn--large btn--wide cart-drawer__checkout-btn">
             {{ 'cart.summary.checkout' | t }}
           </a>
         {% else %}
           <a href="{{ routes.cart_url }}" 
-             class="btn btn--large btn--wide">
+             class="btn btn--large btn--wide cart-drawer__checkout-btn">
             {{ 'cart.summary.checkout' | t }}
           </a>
         {% endif %}
@@ -337,6 +337,20 @@
     </div>
   </cart-form>
 </cart-drawer>
+
+<style>
+  .cart-drawer .checkout-buttons .cart-drawer__checkout-btn.btn {
+    background-color: #000;
+    border-color: #000;
+    color: #fff;
+  }
+
+  .cart-drawer .checkout-buttons .cart-drawer__checkout-btn.btn:hover {
+    background-color: #111;
+    border-color: #111;
+    color: #fff;
+  }
+</style>
 {%- endunless -%}
 
 {% if section.settings.enable_product_limits %}
