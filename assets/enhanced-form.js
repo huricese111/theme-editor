@@ -2197,10 +2197,17 @@ document.addEventListener('DOMContentLoaded', function() {
         showSuccessModal();
         // 重置表单
         contactForm.reset();
+        setConsentAlert(contactForm, false);
         // 清除保存的数据
         localStorage.removeItem('formData');
         // 清除所有错误信息
         clearAllErrors(contactForm);
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.style.opacity = '0.5';
+          submitBtn.style.cursor = 'not-allowed';
+          submitBtn.setAttribute('title', getLocalizedText('form_incomplete'));
+        }
       } else {
         // 提交失败，显示错误信息
         throw new Error(`Form submission failed with status: ${response.status}`);
@@ -2309,6 +2316,7 @@ function initFormValidation() {
     
     // 监听submit按钮的鼠标点击事件
     const submitBtn = form.querySelector('.enhanced-form-submit-btn, button[type="submit"]');
+    const legalConsent = form.querySelector('#legal_consent');
     
     // 添加动态按钮状态控制函数
     function updateSubmitButtonState() {
@@ -2331,6 +2339,11 @@ function initFormValidation() {
     
     // 检查表单完整性的函数
     function checkFormValidity(form) {
+      const consent = form.querySelector('#legal_consent');
+      if (consent && !consent.checked) {
+        return false;
+      }
+
       // 检查所有必填的普通字段
       const requiredFields = form.querySelectorAll('input[required], select[required], textarea[required]');
       for (let field of requiredFields) {
@@ -2373,6 +2386,13 @@ function initFormValidation() {
     
     // 初始化按钮状态
     updateSubmitButtonState();
+
+    if (legalConsent) {
+      legalConsent.addEventListener('change', function() {
+        if (legalConsent.checked) setConsentAlert(form, false);
+        updateSubmitButtonState();
+      });
+    }
     
     if (submitBtn) {
       submitBtn.addEventListener('mousedown', function(event) {
@@ -2414,6 +2434,14 @@ function initFormValidation() {
       }
       
       if (!validateForm(this)) {
+        event.preventDefault();
+        event.stopPropagation();
+        return false;
+      }
+
+      const consent = this.querySelector('#legal_consent');
+      if (consent && !consent.checked) {
+        setConsentAlert(this, true);
         event.preventDefault();
         event.stopPropagation();
         return false;
