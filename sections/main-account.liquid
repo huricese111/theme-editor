@@ -1,33 +1,46 @@
-<div class="container fully-spaced-row--small">
-  <div class="spaced-row" {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
-    <div class="lightly-spaced-row align-end">
-      <a class="underline" href="{{ routes.account_logout_url }}">{{ 'customer.account.log_out' | t }}</a>
+<div class="container fully-spaced-row--small account-page" style="--page-container-width: {{ settings.max_page_width | at_most: 1200 }}px;">
+  <div class="account-header" {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
+    <div class="account-header__text">
+      <p class="account-header__eyebrow note">{{ 'customer.account.home' | t }}</p>
+      <h2 class="account-header__title title">{{ 'customer.account.title' | t }}</h2>
     </div>
-    <h2 class="title align-center">{{ 'customer.account.title' | t }}</h2>
+    <a class="account-header__logout underline" href="{{ routes.account_logout_url }}">{{ 'customer.account.log_out' | t }}</a>
   </div>
 
-  <div class="cf">
-    <div id="customer_sidebar" {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
-      <div id="customer_detail" class="group">
-        <h5 class="name">{{ customer.name }}</h5>
-        <p class="email note">{{ customer.email }}</p>
-        <div class="address note lightly-spaced-row">
-          {% if customer.default_address != nil %}
-            <p>{{ customer.default_address.address1 }}</p>
-            {% if customer.default_address.address2 != "" %}
-              <p>{{ customer.default_address.address2 }}</p>
-            {% endif %}
-            <p>{{ customer.default_address.city }}, {% if address.province_code %}{{ customer.default_address.province_code }}, {% endif %}{{ customer.default_address.country }}</p>
-            <p>{{ customer.default_address.zip }}</p>
-            <p class="address-phone">{{ customer.default_address.phone }}</p>
+  <div class="account-layout">
+    <aside id="customer_sidebar" class="account-card account-card--profile" {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
+      <div id="customer_detail" class="account-profile">
+        <div class="account-profile__avatar">
+          {% assign account_initial = customer.first_name | slice: 0, 1 %}
+          {% if account_initial == blank %}
+            {% assign account_initial = customer.name | slice: 0, 1 %}
           {% endif %}
+          <span>{{ account_initial | upcase }}</span>
         </div>
-
-        <a class="underline" href="{{ routes.account_addresses_url }}">{{ 'customer.account.view_addresses' | t }} ({{ customer.addresses_count }})</a>
+        <div class="account-profile__meta">
+          <h3 class="account-profile__name">{{ customer.name }}</h3>
+          <p class="account-profile__email note">{{ customer.email }}</p>
+        </div>
       </div>
-    </div>
 
-    <div id="customer_orders" {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
+      <div class="account-profile__divider"></div>
+
+      <div class="account-profile__address note">
+        {% if customer.default_address != nil %}
+          <p>{{ customer.default_address.address1 }}</p>
+          {% if customer.default_address.address2 != "" %}
+            <p>{{ customer.default_address.address2 }}</p>
+          {% endif %}
+          <p>{{ customer.default_address.city }}, {% if address.province_code %}{{ customer.default_address.province_code }}, {% endif %}{{ customer.default_address.country }}</p>
+          <p>{{ customer.default_address.zip }}</p>
+          <p class="address-phone">{{ customer.default_address.phone }}</p>
+        {% endif %}
+      </div>
+
+      <a class="underline account-profile__addresses-link" href="{{ routes.account_addresses_url }}">{{ 'customer.account.view_addresses' | t }} ({{ customer.addresses_count }})</a>
+    </aside>
+
+    <section id="customer_orders" class="account-card account-card--orders" {%- render 'animation-attrs', attrs: 'data-cc-animate' -%}>
       {% paginate customer.orders by 20 %}
         {% if customer.orders.size != 0 %}
           <link rel="stylesheet" href="{{ 'responsive-table.css' | asset_url }}">
@@ -83,11 +96,255 @@
             </table>
           </responsive-table>
         {% else %}
-          <p>{{ 'customer.orders.none' | t }}</p>
+          <p class="account-orders__empty">{{ 'customer.orders.none' | t }}</p>
         {% endif %}
 
-        <div class="pagination-row">{% render 'pagination-control', paginate: paginate %}</div>
+        <div class="pagination-row account-pagination-row">{% render 'pagination-control', paginate: paginate %}</div>
       {% endpaginate %}
-    </div>
+    </section>
   </div>
 </div>
+
+<style>
+  #shopify-section-{{ section.id }} .account-page {
+    max-width: var(--page-container-width, 1200px);
+    margin-inline: auto;
+  }
+
+  #shopify-section-{{ section.id }} .account-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 32px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid rgb(var(--text-color) / var(--divider-opacity));
+    margin-bottom: 32px;
+  }
+
+  #shopify-section-{{ section.id }} .account-header__text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  #shopify-section-{{ section.id }} .account-header__eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 11px;
+    color: rgb(var(--text-2));
+  }
+
+  #shopify-section-{{ section.id }} .account-header__title {
+    margin: 0;
+    text-align: left;
+    font-size: clamp(24px, 2.2vw, 30px);
+  }
+
+  #shopify-section-{{ section.id }} .account-header__logout {
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+  #shopify-section-{{ section.id }} .account-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
+    gap: 32px;
+    align-items: flex-start;
+  }
+
+  #shopify-section-{{ section.id }} .account-card {
+    background: rgb(var(--body-bg-color));
+    border-radius: 16px;
+    padding: 24px 24px 28px;
+    border: 1px solid rgb(var(--text-color) / 0.06);
+    box-shadow: 0 22px 45px rgba(15, 23, 42, 0.06);
+  }
+
+  #shopify-section-{{ section.id }} .account-card--profile {
+    position: sticky;
+    top: 120px;
+  }
+
+  #shopify-section-{{ section.id }} .account-profile {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+
+  #shopify-section-{{ section.id }} .account-profile__avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.24), transparent), linear-gradient(135deg, #111827, #4b5563);
+    color: #f9fafb;
+    font-weight: 600;
+    font-size: 20px;
+  }
+
+  #shopify-section-{{ section.id }} .account-profile__name {
+    margin: 0 0 4px;
+    font-size: 18px;
+  }
+
+  #shopify-section-{{ section.id }} .account-profile__email {
+    margin: 0;
+    font-size: 14px;
+  }
+
+  #shopify-section-{{ section.id }} .account-profile__divider {
+    height: 1px;
+    margin: 20px 0 18px;
+    background: linear-gradient(90deg, rgba(15, 23, 42, 0.2), rgba(15, 23, 42, 0.02));
+  }
+
+  #shopify-section-{{ section.id }} .account-profile__address p {
+    margin: 0;
+  }
+
+  #shopify-section-{{ section.id }} .account-profile__address p + p {
+    margin-top: 4px;
+  }
+
+  #shopify-section-{{ section.id }} .account-profile__addresses-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 18px;
+    font-size: 14px;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+  }
+
+  #shopify-section-{{ section.id }} .account-card--orders {
+    padding-top: 20px;
+  }
+
+  #shopify-section-{{ section.id }} .account-card--orders table.responsive-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  #shopify-section-{{ section.id }} .account-card--orders thead th {
+    padding: 0 0 14px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: rgb(var(--text-2));
+    font-weight: 500;
+    border-bottom: 1px solid rgb(var(--text-color) / var(--divider-opacity));
+  }
+
+  #shopify-section-{{ section.id }} .account-card--orders tbody td {
+    padding: 14px 0;
+    border-bottom: 1px solid rgb(var(--text-color) / var(--divider-opacity));
+    font-size: 14px;
+  }
+
+  #shopify-section-{{ section.id }} .account-card--orders tbody tr:last-child td {
+    border-bottom-color: transparent;
+  }
+
+  #shopify-section-{{ section.id }} .account-card--orders .responsive-table__cell-head a {
+    font-weight: 500;
+  }
+
+  #shopify-section-{{ section.id }} .account-card--orders .total {
+    font-weight: 600;
+  }
+
+  #shopify-section-{{ section.id }} .account-orders__empty {
+    margin: 4px 0 0;
+    font-size: 14px;
+  }
+
+  #shopify-section-{{ section.id }} .account-pagination-row {
+    margin-top: 18px;
+  }
+
+  #shopify-section-{{ section.id }} [class^="status_"],
+  #shopify-section-{{ section.id }} [class*=" status_"] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 96px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: capitalize;
+    background-color: rgba(15, 23, 42, 0.03);
+  }
+
+  #shopify-section-{{ section.id }} .status_paid,
+  #shopify-section-{{ section.id }} .status_authorized {
+    background-color: rgba(22, 163, 74, 0.12);
+    color: #166534;
+  }
+
+  #shopify-section-{{ section.id }} .status_pending {
+    background-color: rgba(245, 158, 11, 0.14);
+    color: #92400e;
+  }
+
+  #shopify-section-{{ section.id }} .status_refunded,
+  #shopify-section-{{ section.id }} .status_voided,
+  #shopify-section-{{ section.id }} .status_cancelled {
+    background-color: rgba(239, 68, 68, 0.12);
+    color: #991b1b;
+  }
+
+  #shopify-section-{{ section.id }} .status_fulfilled {
+    background-color: rgba(8, 145, 178, 0.12);
+    color: #0f766e;
+  }
+
+  #shopify-section-{{ section.id }} .status_unfulfilled,
+  #shopify-section-{{ section.id }} .status_partial {
+    background-color: rgba(148, 163, 184, 0.18);
+    color: #334155;
+  }
+
+  #shopify-section-{{ section.id }} .cancelled_order {
+    opacity: 0.7;
+  }
+
+  @media (max-width: 959.98px) {
+    #shopify-section-{{ section.id }} .account-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    #shopify-section-{{ section.id }} .account-header__logout {
+      font-size: 13px;
+    }
+
+    #shopify-section-{{ section.id }} .account-layout {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    #shopify-section-{{ section.id }} .account-card {
+      padding: 20px 18px 24px;
+      box-shadow: 0 16px 32px rgba(15, 23, 42, 0.05);
+    }
+
+    #shopify-section-{{ section.id }} .account-card--profile {
+      position: static;
+    }
+  }
+
+  @media (max-width: 767.98px) {
+    #shopify-section-{{ section.id }} .account-header__title {
+      font-size: 22px;
+    }
+
+    #shopify-section-{{ section.id }} .account-profile__avatar {
+      width: 46px;
+      height: 46px;
+      font-size: 18px;
+    }
+  }
+</style>
