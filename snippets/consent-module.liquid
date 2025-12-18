@@ -60,7 +60,7 @@
   {%- else -%}
     {%- capture legal_consent_label -%}I've read and agreed to HEPHA's <a class="underline" href="{{ terms_url }}" target="_blank" rel="noopener">{{ terms_policy_label }}</a> and <a class="underline" href="{{ privacy_url }}" target="_blank" rel="noopener">{{ privacy_policy_label }}</a>.{%- endcapture -%}
 {%- endcase -%}
-{%- case lang -%}
+{%- case lang -%} 
   {%- when 'de' -%}
     {%- assign consent_error_label = 'Um fortzufahren, stimmen Sie bitte unseren Nutzungsbedingungen und der Datenschutzerklärung zu.' -%}
   {%- when 'fr' -%}
