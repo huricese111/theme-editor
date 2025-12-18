@@ -328,7 +328,7 @@
 
         {%- if section.settings.empty_button_text != blank -%}
           <div class="button-row">
-            <a class="{% if section.settings.empty_button_style != 'link' %}btn btn--{{ section.settings.empty_button_style }}{% else %}small-feature-link{% endif %} button-row__btn" href="{{ section.settings.empty_button_link }}">{{ section.settings.empty_button_text | escape }}</a>
+            <a class="{% if section.settings.empty_button_style != 'link' %}btn btn--{{ section.settings.empty_button_style }}{% else %}small-feature-link{% endif %} button-row__btn cart-drawer__empty-btn" href="{{ section.settings.empty_button_link }}">{{ section.settings.empty_button_text | escape }}</a>
           </div>
         {%- endif -%}
 
@@ -339,16 +339,14 @@
 </cart-drawer>
 
 <style>
-  .cart-drawer .checkout-buttons .cart-drawer__checkout-btn.btn {
-    background-color: #000;
-    border-color: #000;
-    color: #fff;
-  }
-
-  .cart-drawer .checkout-buttons .cart-drawer__checkout-btn.btn:hover {
-    background-color: #111;
-    border-color: #111;
-    color: #fff;
+  .cart-drawer .cart-drawer__checkout-btn.btn,
+  .cart-drawer .cart-drawer__empty-btn.btn {
+    --btn-bg-color: 0, 0, 0;
+    --btn-bg-hover-color: 17, 17, 17;
+    --btn-border-color: 0, 0, 0;
+    --btn-border-hover-color: 17, 17, 17;
+    --btn-text-color: 255, 255, 255;
+    --btn-text-hover-color: 255, 255, 255;
   }
 </style>
 {%- endunless -%}
