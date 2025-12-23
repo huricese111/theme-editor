@@ -522,6 +522,18 @@
           "label": "Low Step Image"
         },
         {
+          "type": "checkbox",
+          "id": "show_size_s",
+          "label": "Show Size S Column",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "frame_height_low_S",
+          "label": "Frame Height S",
+          "default": "450 mm"
+        },
+        {
           "type": "text",
           "id": "frame_height_low",
           "label": "Frame Height M",
@@ -532,6 +544,12 @@
           "id": "frame_height_low_L",
           "label": "Frame Height L",
           "default": "490 mm"
+        },
+        {
+          "type": "text",
+          "id": "seat_tube_angle_low_S",
+          "label": "Seat Tube Angle S",
+          "default": "74°"
         },
         {
           "type": "text",
@@ -547,6 +565,12 @@
         },
         {
           "type": "text",
+          "id": "fork_offset_low_S",
+          "label": "Fork Offset S",
+          "default": "43 mm"
+        },
+        {
+          "type": "text",
           "id": "fork_offset_low",
           "label": "Fork Offset M",
           "default": "43 mm"
@@ -556,6 +580,12 @@
           "id": "fork_offset_low_L",
           "label": "Fork Offset L",
           "default": "43 mm"
+        },
+        {
+          "type": "text",
+          "id": "seat_angle_low_S",
+          "label": "Seat Angle S",
+          "default": "74°"
         },
         {
           "type": "text",
@@ -571,6 +601,12 @@
         },
         {
           "type": "text",
+          "id": "head_tube_length_low_S",
+          "label": "Head Tube Length S",
+          "default": "165 mm"
+        },
+        {
+          "type": "text",
           "id": "head_tube_length_low",
           "label": "Head Tube Length M",
           "default": "160 mm"
@@ -580,6 +616,12 @@
           "id": "head_tube_length_low_L",
           "label": "Head Tube Length L",
           "default": "170 mm"
+        },
+        {
+          "type": "text",
+          "id": "head_tube_angle_low_S",
+          "label": "Head Tube Angle S",
+          "default": "68.5°"
         },
         {
           "type": "text",
@@ -595,6 +637,12 @@
         },
         {
           "type": "text",
+          "id": "top_tube_horizontal_low_S",
+          "label": "Top Tube Horizontal S",
+          "default": "592 mm"
+        },
+        {
+          "type": "text",
           "id": "top_tube_horizontal_low",
           "label": "Top Tube Horizontal M",
           "default": "591 mm"
@@ -604,6 +652,12 @@
           "id": "top_tube_horizontal_low_L",
           "label": "Top Tube Horizontal L",
           "default": "629 mm"
+        },
+        {
+          "type": "text",
+          "id": "chain_stay_length_low_S",
+          "label": "Chain Stay Length S",
+          "default": "484 mm"
         },
         {
           "type": "text",
@@ -619,6 +673,12 @@
         },
         {
           "type": "text",
+          "id": "bottom_bracket_drop_low_S",
+          "label": "Bottom Bracket Drop S",
+          "default": "60 mm"
+        },
+        {
+          "type": "text",
           "id": "bottom_bracket_drop_low",
           "label": "Bottom Bracket Drop M",
           "default": "60 mm"
@@ -628,6 +688,12 @@
           "id": "bottom_bracket_drop_low_L",
           "label": "Bottom Bracket Drop L",
           "default": "60 mm"
+        },
+        {
+          "type": "text",
+          "id": "wheelbase_low_S",
+          "label": "Wheelbase S",
+          "default": "1164"
         },
         {
           "type": "text",
@@ -643,6 +709,12 @@
         },
         {
           "type": "text",
+          "id": "stack_low_S",
+          "label": "Stack S",
+          "default": "642 mm"
+        },
+        {
+          "type": "text",
           "id": "stack_low",
           "label": "Stack M",
           "default": "637 mm"
@@ -652,6 +724,12 @@
           "id": "stack_low_L",
           "label": "Stack L",
           "default": "647 mm"
+        },
+        {
+          "type": "text",
+          "id": "reach_low_S",
+          "label": "Reach S",
+          "default": "408 mm"
         },
         {
           "type": "text",
@@ -667,6 +745,12 @@
         },
         {
           "type": "text",
+          "id": "standover_height_low_S",
+          "label": "Standover Height S",
+          "default": "472"
+        },
+        {
+          "type": "text",
           "id": "standover_height_low",
           "label": "Standover Height M",
           "default": "720"
@@ -679,6 +763,12 @@
         },
         {
           "type": "text",
+          "id": "seat_height_min_low_S",
+          "label": "Seat Height Min S",
+          "default": "850"
+        },
+        {
+          "type": "text",
           "id": "seat_height_min_low",
           "label": "Seat Height Min M",
           "default": "850"
@@ -688,6 +778,12 @@
           "id": "seat_height_min_low_L",
           "label": "Seat Height Min L",
           "default": "850"
+        },
+        {
+          "type": "text",
+          "id": "seat_height_max_low_S",
+          "label": "Seat Height Max S",
+          "default": "1000"
         },
         {
           "type": "text",
@@ -1529,7 +1625,11 @@
                 </div>
                 <div class="sizechart-column">
                   <div class="table-container">
-                    {% render 'frame-size-table', block: block, type: 'low_step' %}
+                    {% render 'frame-size-table',
+                      block: block,
+                      type: 'low_step',
+                      show_size_s: block.settings.show_size_s
+                    %}
                   </div>
                 </div>
               </div>

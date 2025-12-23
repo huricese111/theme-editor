@@ -13,6 +13,9 @@
   {%- endif -%}
 {%- elsif type == 'low_step' -%}
   {%- assign sizes = 'M,L' | split: ',' -%}
+  {%- if show_size_s -%}
+    {%- assign sizes = 'S' | split: ',' | concat: sizes -%}
+  {%- endif -%}
 {%- elsif type == 'high_step' -%}
   {%- assign sizes = 'M,L' | split: ',' -%}
   {%- if show_size_xl -%}
@@ -230,7 +233,9 @@
               {% endif %}
 
             {% when 'low_step' %}
-              {% if size == 'M' %}
+              {% if size == 'S' %}
+                {% assign field_name = measurement | append: '_low_S' %}
+              {% elsif size == 'M' %}
                 {% assign field_name = measurement | append: '_low' %}
               {% elsif size == 'L' %}
                 {% assign field_name = measurement | append: '_low_L' %}
