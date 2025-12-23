@@ -21,6 +21,11 @@
   {%- if show_size_xl -%}
     {%- assign sizes = sizes | join: ',' | append: ',XL' | split: ',' -%}
   {%- endif -%}
+{%- elsif type == 'mountain' -%}
+  {%- assign sizes = 'M,L' | split: ',' -%}
+  {%- if show_size_s -%}
+    {%- assign sizes = 'S' | split: ',' | concat: sizes -%}
+  {%- endif -%}
 {%- else -%}
   {%- assign sizes = 'M,L' | split: ',' -%}
 {%- endif -%}
@@ -248,6 +253,15 @@
                 {% assign field_name = measurement | append: '_high_L' %}
               {% elsif size == 'XL' %}
                 {% assign field_name = measurement | append: '_high_XL' %}
+              {% endif %}
+
+            {% when 'mountain' %}
+              {% if size == 'S' %}
+                {% assign field_name = measurement | append: '_high_S' %}
+              {% elsif size == 'M' %}
+                {% assign field_name = measurement | append: '_high' %}
+              {% elsif size == 'L' %}
+                {% assign field_name = measurement | append: '_high_L' %}
               {% endif %}
 
             {% else %}
