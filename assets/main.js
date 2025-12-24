@@ -1615,7 +1615,7 @@ const GalleryViewer = class extends HTMLElement {
   setInitialImagePosition() {
     this.currentZoomImage.style.top = `${this.clientHeight / 2 - this.currentZoomImage.clientHeight / 2}px`;
     this.currentZoomImage.style.left = `${this.clientWidth / 2 - this.currentZoomImage.clientWidth / 2}px`;
-    this.setCurrentTransform(0, 0, 0); // centre, zoomed out
+    this.setCurrentTransform(0, 0, 1); // centre, show at native size by default
     this.classList.toggle('gallery-viewer--zoomable', this.currentZoomImage.naturalWidth > this.clientWidth || this.currentZoomImage.naturalHeight > this.clientHeight);
   }
 
