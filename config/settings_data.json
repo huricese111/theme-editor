@@ -510,7 +510,7 @@
     "after_add_to_cart": "drawer",
     "free_shipping_bar_col_under": "#171717",
     "image_quality": "1.25",
-    "privacy_policy_url": "shopify://policies/privacy-policy",
+    "privacy_policy_url": "/pages/privacy-policy",
     "terms_policy_url": "shopify://policies/terms-of-service",
     "content_for_index": [],
     "blocks": {
