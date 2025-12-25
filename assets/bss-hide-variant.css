@@ -4,7 +4,7 @@
     DO NOT MODIFY. The contents of BSS B2B Login 
     will overwrite any changes in the next update.
 
-    Updated at: Mon Jan 13 2025
+    Updated at: Thu Dec 25 2025
 {% endcomment -%}
 [id*='MainProduct']:has(.bsscommerce-hv-message) [id*='Quantity-Form']{
                 display: none
@@ -14,4 +14,6 @@
                 cursor: not-allowed;
                 opacity: .5;
                 pointer-events: none;
-            }
+            } .installments:has(#BsscommercePasswordForm) {
+            display: block
+        }
