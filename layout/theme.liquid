@@ -1,3 +1,7 @@
+
+{% comment %}BSS B2B Login{% endcomment %}
+{% capture bsscommerce_login_require_template %}{% include 'bsscommerce_login_require' %}{% endcapture %}{% unless bsscommerce_login_require_template contains "Liquid error" %}{{ bsscommerce_login_require_template }}{% endunless %}
+{% comment %}BSS B2B Login{% endcomment %}
 {%- liquid
   assign rtl_langs = 'ar,arc,dv,fa,ha,he,khw,ks,ku,ps,ur,yi' | split: ','
   assign current_lang = localization.language.iso_code | split: '-' | first
@@ -10,6 +14,10 @@
 <!doctype html>
 <html class="no-js" lang="{{ request.locale.iso_code }}" dir="{{ lang_dir }}">
   <head>
+{% comment %}BSS B2B Login{% endcomment %}
+{{ 'tiny.content.min.css' | asset_url | stylesheet_tag }}
+{% comment %}BSS B2B Login{% endcomment %}
+{{ 'bss-hide-variant.css' | asset_url | stylesheet_tag }}
     {% render 'redirect-rules' %}
     {%- render 'doc-head-core' -%}
     {%- render 'doc-head-social' -%}
@@ -197,7 +205,11 @@
       <div class="container cf">
         {{ content_for_layout }}
       </div>
-    </main>
+    
+{% comment %}BSS B2B Login{% endcomment %}
+{% capture bsscommerce_passcode_to_see_price_product_custom %}{% render 'bss-passcode-to-see-price-js.liquid' %}{% endcapture %}{% unless bsscommerce_passcode_to_see_price_product_custom contains "Liquid error" %}{% render 'bss-passcode-to-see-price-js.liquid' %}{% endunless %}{% capture bsscommerce_login_to_see_price_product_custom %}{% render 'bsscommerce-login-to-see-price-custom-js.liquid' %}{% endcapture %}{% unless bsscommerce_login_to_see_price_product_custom contains "Liquid error" %}{% render 'bsscommerce-login-to-see-price-custom-js.liquid' %}{% endunless %}{% capture bss_ltap_fl_redirect %}{% render 'bss-ltap-fl-redirect.liquid' %}{% endcapture %}{% unless bss_ltap_fl_redirect contains "Liquid error" %}{% render 'bss-ltap-fl-redirect.liquid' %}{% endunless %}
+{% comment %}BSS B2B Login{% endcomment %}
+</main>
 
     {%- if request.path != '/challenge' -%}
       <div id="pagefooter">
