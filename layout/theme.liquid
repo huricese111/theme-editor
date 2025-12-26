@@ -13,7 +13,7 @@
 -%}
 <!doctype html>
 <html class="no-js" lang="{{ request.locale.iso_code }}" dir="{{ lang_dir }}">
-  <head>
+  <head>{{ 'bss-hide-variant.css' | asset_url | stylesheet_tag }}
 {% comment %}BSS B2B Login{% endcomment %}
 {{ 'tiny.content.min.css' | asset_url | stylesheet_tag }}
 {% comment %}BSS B2B Login{% endcomment %}
