@@ -4,7 +4,7 @@
     DO NOT MODIFY. The contents of BSS B2B Login 
     will overwrite any changes in the next update.
 
-    Updated at: Thu Dec 25 2025
+    Updated at: Fri Dec 26 2025
 {% endcomment -%}
 {%- capture contentForQuerystring -%}{{ content_for_header }}{%- endcapture -%}
 {%- assign page_url = contentForQuerystring | split:'"pageurl":"' | last | split:'"' | first | split:'.myshopify.com' | last |   replace:'\\/','/' |    replace:'%20',' ' |    replace:'\u0026','&' | replace:'\/', '/'  -%}
